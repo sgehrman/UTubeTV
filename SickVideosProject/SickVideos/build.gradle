@@ -24,4 +24,6 @@ android {
 
 dependencies {
 	compile 'com.android.support:support-v13:+'
+
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.8'
 }
