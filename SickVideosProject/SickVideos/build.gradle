@@ -20,10 +20,31 @@ android {
         minSdkVersion 17
         targetSdkVersion 18
     }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
 }
 
 dependencies {
 	compile 'com.android.support:support-v13:+'
 
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.8'
+    compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
+
+
+
+    compile 'com.google.apis:google-api-services-youtube:v3-rev79-1.17.+'
+    compile 'com.google.http-client:google-http-client-jackson2:1.17.+'
+    compile 'com.google.api-client:google-api-client:1.17.+'
+
+    compile 'com.google.android.gms:play-services:3.2.+'
+
+    compile 'com.google.api-client:google-api-client-android:1.17.+'
+
+
+
 }
