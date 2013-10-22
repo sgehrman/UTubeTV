@@ -170,7 +170,7 @@ public class YouTubeFragment extends Fragment
       holder.text.setText((String) getItem(position).get("title"));
 
       // load more data if at the end
-      if (position-1 == mAdapter.getCount()) {
+      if (position == (getCount()-1)) {
         mList.moreData();
       }
 
