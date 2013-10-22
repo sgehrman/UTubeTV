@@ -36,6 +36,12 @@ public class YouTubeFragment extends Fragment
   }
 
   private MyAdapter mAdapter;
+  private int mType;
+
+  YouTubeFragment(int t) {
+    super();
+    mType = t;
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +50,7 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    mAdapter = new MyAdapter(getActivity(), 2);
+    mAdapter = new MyAdapter(getActivity(), mType);
     listView.setAdapter(mAdapter);
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,7 +96,7 @@ public class YouTubeFragment extends Fragment
 
       switch (type) {
         case 0:
-          mSearch = new YouTubePlaylist().start(YouTubeFragment.this);
+          mSearch = new YouTubeChannelList(0).start(YouTubeFragment.this);
 
           break;
         case 1:
@@ -98,7 +104,7 @@ public class YouTubeFragment extends Fragment
 
           break;
         case 2:
-          mSearch = new YouTubeChannelList().start(YouTubeFragment.this);
+          mSearch = new YouTubeChannelList(3).start(YouTubeFragment.this);
 
           break;
       }

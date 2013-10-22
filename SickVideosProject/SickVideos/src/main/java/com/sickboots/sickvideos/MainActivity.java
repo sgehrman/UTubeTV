@@ -142,13 +142,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             // Return a PlaceholderFragment (defined as a static inner class below).
           switch (position) {
             case 0:
-              result = new YouTubeFragment();
+              result = new YouTubeFragment(0);
             break;
             case 1:
-              result = PlaceholderFragment.newInstance(position + 1);
+              result = new YouTubeFragment(1);
             break;
             default:
-              result = PlaceholderFragment.newInstance(position + 1);
+              result = new YouTubeFragment(2);
             break;
           }
 

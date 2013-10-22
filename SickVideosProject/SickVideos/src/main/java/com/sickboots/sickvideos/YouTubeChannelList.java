@@ -24,7 +24,14 @@ import java.util.Map;
 public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
+  private int mChannelID;
   private static final int REQUEST_AUTHORIZATION = 444;
+
+  YouTubeChannelList(int channelID) {
+    super();
+
+    mChannelID = channelID;
+  }
 
   @Override
   public YouTubeFragment.YouTubeListProvider start(Util.ListResultListener l) {
@@ -192,7 +199,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     private List<Map> playlist(YouTube youTube) {
       List<Map> result = new ArrayList<Map>();
 
-      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, playlistID(youTube, 1));
+      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, playlistID(youTube, mChannelID));
 
       // convert the list into hash maps of video info
       for (PlaylistItem playlistItem: playlistItemList) {
