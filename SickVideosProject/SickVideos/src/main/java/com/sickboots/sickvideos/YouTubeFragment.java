@@ -33,14 +33,20 @@ public class YouTubeFragment extends Fragment
   public interface YouTubeListProvider {
     public YouTubeListProvider start(Util.ListResultListener l);  // could I make a generic constructor?
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
+    public void refresh();
+    public void moreData();
   }
 
   private MyAdapter mAdapter;
   private int mType;
+  private static final String ARG_TYPE_NUMBER = "TYPENUMber";
 
-  YouTubeFragment(int t) {
-    super();
-    mType = t;
+  public static YouTubeFragment newInstance(int type) {
+    YouTubeFragment fragment = new YouTubeFragment();
+    Bundle args = new Bundle();
+    args.putInt(ARG_TYPE_NUMBER, type);
+    fragment.setArguments(args);
+    return fragment;
   }
 
   @Override
@@ -50,7 +56,7 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    mAdapter = new MyAdapter(getActivity(), mType);
+    mAdapter = new MyAdapter(getActivity(), getArguments().getInt(ARG_TYPE_NUMBER));
     listView.setAdapter(mAdapter);
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,8 +71,6 @@ public class YouTubeFragment extends Fragment
     // Add the Refreshable View and provide the refresh listener;
     ((MainActivity)getActivity()).mPullToRefreshAttacher.addRefreshableView(listView, this);
 
-    String scope = "oauth2:" + YouTubeScopes.YOUTUBE_READONLY;
-
     return rootView;
   }
 
@@ -74,13 +78,15 @@ public class YouTubeFragment extends Fragment
     new android.os.Handler().postDelayed(
         new Runnable() {
           public void run() {
+            mAdapter.mList.refresh();
+
             ((MainActivity) getActivity()).mPullToRefreshAttacher.setRefreshComplete();
           }
         }, 2000);
   }
 
   private class MyAdapter extends ArrayAdapter<Map> implements View.OnClickListener {
-    private YouTubeListProvider mSearch;
+    private YouTubeListProvider mList;
 
     public void onClick(View v) {
       int position = v.getId();
@@ -96,22 +102,22 @@ public class YouTubeFragment extends Fragment
 
       switch (type) {
         case 0:
-          mSearch = new YouTubeChannelList(0).start(YouTubeFragment.this);
+          mList = new YouTubeChannelList(0).start(YouTubeFragment.this);
 
           break;
         case 1:
-          mSearch = new YouTubeSearch().start(YouTubeFragment.this);
+          mList = new YouTubeSearch().start(YouTubeFragment.this);
 
           break;
         case 2:
-          mSearch = new YouTubeChannelList(3).start(YouTubeFragment.this);
+          mList = new YouTubeChannelList(3).start(YouTubeFragment.this);
 
           break;
       }
     }
 
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
-      boolean handled = mSearch.handleActivityResult(requestCode, requestCode, data);
+      boolean handled = mList.handleActivityResult(requestCode, requestCode, data);
 
       if (!handled) {
         switch (requestCode) {
@@ -162,6 +168,11 @@ public class YouTubeFragment extends Fragment
       holder.button.setId(position);
 
       holder.text.setText((String) getItem(position).get("title"));
+
+      // load more data if at the end
+      if (position-1 == mAdapter.getCount()) {
+        mList.moreData();
+      }
 
       return convertView;
     }

@@ -24,13 +24,14 @@ import java.util.Map;
 public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
-  private int mChannelID;
+  private int channelID;
   private static final int REQUEST_AUTHORIZATION = 444;
+  private PlaylistItemListResponse currentItemListResponse;
 
-  YouTubeChannelList(int channelID) {
+  YouTubeChannelList(int c) {
     super();
 
-    mChannelID = channelID;
+    channelID = c;
   }
 
   @Override
@@ -62,6 +63,33 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     return handled;
   }
 
+  @Override
+  public void moreData() {
+    loadData(false);
+  }
+
+  @Override
+  public void refresh() {
+    // this will make nextToken be ""
+    currentItemListResponse = null;
+
+    loadData(false);
+  }
+
+  private String nextToken() {
+    String result = null;
+
+    if (currentItemListResponse != null) {
+      result = currentItemListResponse.getNextPageToken();
+    }
+
+    if (result == null) {
+      result = "";
+    }
+
+    return result;
+  }
+
   private void loadData(boolean askUser) {
     GoogleAccountCredential credential = account.credential(askUser);
 
@@ -70,7 +98,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     }
   }
 
-  @Override
+  @Override   // in GoogleAccountDelegate
   public void credentialIsReady() {
     loadData(false);
   }
@@ -170,22 +198,10 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
 
           playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
-          String nextToken = "";
+          playlistItemRequest.setPageToken(nextToken());
+          currentItemListResponse = playlistItemRequest.execute();
 
-          do {
-            playlistItemRequest.setPageToken(nextToken);
-            PlaylistItemListResponse playlistItemResult = playlistItemRequest.execute();
-
-            result.addAll(playlistItemResult.getItems());
-
-            nextToken = playlistItemResult.getNextPageToken();
-
-            // ####
-            // disabled for now for speed
-            nextToken = null;
-
-          } while (nextToken != null);
-
+          result.addAll(currentItemListResponse.getItems());
         } catch (UserRecoverableAuthIOException e) {
           handleException(e);
         } catch (Exception e) {
@@ -199,7 +215,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     private List<Map> playlist(YouTube youTube) {
       List<Map> result = new ArrayList<Map>();
 
-      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, playlistID(youTube, mChannelID));
+      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, playlistID(youTube, channelID));
 
       // convert the list into hash maps of video info
       for (PlaylistItem playlistItem: playlistItemList) {

@@ -40,7 +40,15 @@ public class YouTubeSearch implements YouTubeFragment.YouTubeListProvider {
     return handled;
   }
 
-    private class YouTubeSearchTask extends AsyncTask<Void, Void, List<Map>> {
+  @Override
+  public void moreData() {
+  }
+
+  @Override
+  public void refresh() {
+  }
+
+  private class YouTubeSearchTask extends AsyncTask<Void, Void, List<Map>> {
     protected List<Map> doInBackground(Void... params) {
       return startSearch();
     }
