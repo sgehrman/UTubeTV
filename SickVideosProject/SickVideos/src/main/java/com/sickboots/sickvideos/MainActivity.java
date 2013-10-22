@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -99,7 +100,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
-                return true;
+              Intent intent = new Intent();
+              intent.setClass(MainActivity.this, SettingsActivity.class);
+              startActivity(intent);
+
+              return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,0 +1,23 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Account Settings -->
+    <string name="pref_header_general">Account Settings</string>
+
+    <string name="pref_title_user_name">User name</string>
+    <string name="pref_title_user_handle">Handle</string>
+    <string name="pref_title_password">Password</string>
+    <string name="pref_title_picture">Profile Picture</string>
+    <string name="pref_title_logout">Logout</string>
+
+    <!-- Share Settings -->
+    <string name="pref_header_sharing">Share Settings</string>
+
+    <string name="pref_sharing_facebook">Facebook</string>
+    <string name="pref_sharing_twitter">Twitter</string>
+
+    <string name="pref_header_about">About</string>
+    <string name="pref_title_privacy_policy">Privacy Policy</string>
+    <string name="pref_title_tos">Terms of Service</string>
+
+</resources>

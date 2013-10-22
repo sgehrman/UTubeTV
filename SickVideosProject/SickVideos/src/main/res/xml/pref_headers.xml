@@ -1,0 +1,36 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header
+        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
+        android:title="@string/pref_header_general"
+        android:summary="An example of some preferences.">
+
+        <extra android:name="fragmentID" android:value="general" />
+    </header>
+
+
+    <header
+        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
+        android:title="@string/pref_header_sharing">
+
+        <extra android:name="fragmentID" android:value="sharing" />
+    </header>
+
+    <header
+        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
+        android:title="@string/pref_header_about">
+
+        <extra android:name="fragmentID" android:value="about" />
+    </header>
+
+    <header
+        android:title="Sick Boots"
+        android:summary="Check out our home page.">
+
+        <intent android:action="android.intent.action.VIEW"
+            android:data="http://www.sickboots.com" />
+    </header>
+
+</preference-headers>
+
+
