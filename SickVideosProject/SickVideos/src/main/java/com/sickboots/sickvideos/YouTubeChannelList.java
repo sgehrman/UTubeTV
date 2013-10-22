@@ -10,6 +10,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecovera
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
+import com.google.api.services.youtube.model.ChannelContentDetails;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
@@ -108,7 +109,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
       }
     }
 
-    private String uploadsPlaylistID(YouTube youTube) {
+    private String playlistID(YouTube youTube, int channelID) {
       String result = null;
 
       try {
@@ -120,9 +121,28 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
 
         List<Channel> channelsList = channelResult.getItems();
 
+        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+
         if (channelsList != null) {
           // Gets user's default channel id (first channel in list).
-          result = channelsList.get(0).getContentDetails().getRelatedPlaylists().getUploads();
+          switch (channelID)
+          {
+              case 0:
+                  result = relatedPlaylists.getFavorites();
+                  break;
+              case 1:
+                  result = relatedPlaylists.getLikes();
+                  break;
+              case 2:
+                  result = relatedPlaylists.getUploads();
+                  break;
+              case 3:
+                  result = relatedPlaylists.getWatchHistory();
+                  break;
+              case 4:
+                  result = relatedPlaylists.getWatchLater();
+                  break;
+          }
         }
       } catch (UserRecoverableAuthIOException e) {
         handleException(e);
@@ -172,7 +192,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     private List<Map> playlist(YouTube youTube) {
       List<Map> result = new ArrayList<Map>();
 
-      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, uploadsPlaylistID(youTube));
+      List<PlaylistItem> playlistItemList = playlistItemsForID(youTube, playlistID(youTube, 1));
 
       // convert the list into hash maps of video info
       for (PlaylistItem playlistItem: playlistItemList) {
