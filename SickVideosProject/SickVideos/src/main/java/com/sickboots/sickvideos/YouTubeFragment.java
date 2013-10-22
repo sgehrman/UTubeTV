@@ -44,7 +44,7 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    mAdapter = new MyAdapter(getActivity(), 1);
+    mAdapter = new MyAdapter(getActivity(), 0);
     listView.setAdapter(mAdapter);
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
