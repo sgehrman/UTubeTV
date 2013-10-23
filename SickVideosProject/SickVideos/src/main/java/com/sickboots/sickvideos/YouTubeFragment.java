@@ -33,11 +33,13 @@ public class YouTubeFragment extends Fragment
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
     public void refresh();
     public void moreData();
+    public void handleClick(Map itemMap, boolean clickedIcon);
   }
 
   private MyAdapter mAdapter;
   private int mType;
   private static final String ARG_TYPE_NUMBER = "TYPENUMber";
+  private YouTubeListProvider mList;
 
   public static YouTubeFragment newInstance(int type) {
     YouTubeFragment fragment = new YouTubeFragment();
@@ -54,14 +56,27 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    mAdapter = new MyAdapter(getActivity(), getArguments().getInt(ARG_TYPE_NUMBER));
+    int tabIndex = getArguments().getInt(ARG_TYPE_NUMBER);
+    switch (tabIndex) {
+      case 0:
+        mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), YouTubeFragment.this);
+        break;
+      case 1:
+        mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Hippie"), YouTubeFragment.this);
+        break;
+      case 2:
+        mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), YouTubeFragment.this);
+        break;
+    }
+
+    mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        String movieID = (String) mAdapter.getItem(position).get("video");
+      Map map = mAdapter.getItem(position);
 
-        YouTubeHelper.playMovie(getActivity(), movieID);
+      mList.handleClick(map, false);
       }
     });
 
@@ -75,49 +90,43 @@ public class YouTubeFragment extends Fragment
     new android.os.Handler().postDelayed(
         new Runnable() {
           public void run() {
-            mAdapter.mList.refresh();
+            mList.refresh();
 
             ((MainActivity) getActivity()).mPullToRefreshAttacher.setRefreshComplete();
           }
         }, 2000);
   }
 
-  private class MyAdapter extends ArrayAdapter<Map> implements View.OnClickListener {
-    private YouTubeListProvider mList;
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    boolean handled = mList.handleActivityResult(requestCode, requestCode, data);
 
+    if (!handled) {
+      switch (requestCode) {
+      }
+    }
+  }
+
+  @Override
+  public void onResults(Util.ListResultListener search, List<Map> result) {
+    for (Map map : result) {
+      mAdapter.add(map);
+    }
+  }
+
+  // ===========================================================================
+  // Adapter
+
+  private class MyAdapter extends ArrayAdapter<Map> implements View.OnClickListener {
     public void onClick(View v) {
       int position = v.getId();
+      Map map = mAdapter.getItem(position);
 
-      String movieID = (String) getItem(position).get("video");
-
-      YouTubeHelper.playMovie(getActivity(), movieID);
+      mList.handleClick(map, true);
     }
 
-    public MyAdapter(Context context, int type) {
-      super(context, 0);
-
-      switch (type) {
-        case 0:
-          mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), YouTubeFragment.this);
-          break;
-        case 1:
-          mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Hippie"), YouTubeFragment.this);
-          break;
-        case 2:
-          mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), YouTubeFragment.this);
-          break;
-      }
-    }
-
-    public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
-      boolean handled = mList.handleActivityResult(requestCode, requestCode, data);
-
-      if (!handled) {
-        switch (requestCode) {
-        }
-      }
-
-      return handled;
+    public MyAdapter() {
+      super(getActivity(), 0);
     }
 
     class ViewHolder {
@@ -169,30 +178,9 @@ public class YouTubeFragment extends Fragment
 
       return convertView;
     }
-
-    public void handleResults(List<Map> result) {
-      for (Map map : result) {
-        add(map);
-      }
-
-    }
-
   }
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    boolean handled = mAdapter.handleActivityResult(requestCode, requestCode, data);
-
-    if (!handled) {
-      switch (requestCode) {
-      }
-    }
-  }
-
-  @Override
-  public void onResults(Util.ListResultListener search, List<Map> result) {
-    mAdapter.handleResults(result);
-  }
+  // ===========================================================================
 
 }
 

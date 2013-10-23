@@ -74,6 +74,14 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
   }
 
+  public void handleClick(Map itemMap, boolean clickedIcon) {
+    String movieID = (String) itemMap.get("video");
+
+    if (movieID != null) {
+      YouTubeHelper.playMovie(getActivity(), movieID);
+    }
+  }
+
   // =================================================================================
   // YouTubeHelperListener
 
