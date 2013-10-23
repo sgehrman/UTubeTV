@@ -29,7 +29,7 @@ public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, Util.ListResultListener {
 
   public interface YouTubeListProvider {
-    public YouTubeListProvider start(Util.ListResultListener l);  // could I make a generic constructor?
+    public YouTubeListProvider start(YouTubeListSpec s, Util.ListResultListener l);  // could I make a generic constructor?
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
     public void refresh();
     public void moreData();
@@ -98,16 +98,13 @@ public class YouTubeFragment extends Fragment
 
       switch (type) {
         case 0:
-          mList = new YouTubeList(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES)).start(YouTubeFragment.this);
-
+          mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), YouTubeFragment.this);
           break;
         case 1:
-          mList = new YouTubeList(YouTubeListSpec.searchSpec("Hippie")).start(YouTubeFragment.this);
-
+          mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Hippie"), YouTubeFragment.this);
           break;
         case 2:
-          mList = new YouTubeList(YouTubeListSpec.subscriptionsSpec()).start(YouTubeFragment.this);
-
+          mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), YouTubeFragment.this);
           break;
       }
     }

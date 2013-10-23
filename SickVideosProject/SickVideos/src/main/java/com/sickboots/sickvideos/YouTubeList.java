@@ -18,16 +18,11 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   private static final int REQUEST_AUTHORIZATION = 444;
   YouTubeHelper youTubeHelper;
 
-  YouTubeList(YouTubeListSpec r) {
-    super();
-
-    listSpec = r;
-  }
-
   @Override
-  public YouTubeFragment.YouTubeListProvider start(Util.ListResultListener l) {
-    account = GoogleAccount.newYouTube(this);
+  public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, Util.ListResultListener l) {
+    listSpec = s;
     listener = l;
+    account = GoogleAccount.newYouTube(this);
 
     loadData(true);
 
