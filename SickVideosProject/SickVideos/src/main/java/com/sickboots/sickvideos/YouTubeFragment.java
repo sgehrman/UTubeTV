@@ -98,15 +98,15 @@ public class YouTubeFragment extends Fragment
 
       switch (type) {
         case 0:
-          mList = new YouTubeSubscriptionList(0).start(YouTubeFragment.this);
+          mList = new YouTubeList(-1).start(YouTubeFragment.this);
 
           break;
         case 1:
-          mList = new YouTubeSubscriptionList(33).start(YouTubeFragment.this);
+          mList = new YouTubeList(-2).start(YouTubeFragment.this);
 
           break;
         case 2:
-          mList = new YouTubeChannelList(3).start(YouTubeFragment.this);
+          mList = new YouTubeList(0).start(YouTubeFragment.this);
 
           break;
       }

@@ -6,21 +6,22 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.youtube.model.PlaylistItem;
 
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
+public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
-  YouTubeHelper youTubeHelper;
-  private int channelID;
+  private int relatedPlaylistID;
   private static final int REQUEST_AUTHORIZATION = 444;
+  YouTubeHelper youTubeHelper;
 
-  YouTubeSubscriptionList(int c) {
+  YouTubeList(int r) {
     super();
 
-    channelID = c;
+    relatedPlaylistID = r;
   }
 
   @Override
@@ -59,7 +60,6 @@ public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDeleg
 
   @Override
   public void refresh() {
-    // this will make nextToken be ""
     youTubeHelper.refresh();
 
     loadData(false);
@@ -70,7 +70,7 @@ public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDeleg
       GoogleAccountCredential credential = account.credential(askUser);
 
       if (credential != null) {
-        youTubeHelper = new YouTubeHelper(credential, null);
+        youTubeHelper = new YouTubeHelper(credential, this);
       }
     }
 
@@ -78,6 +78,26 @@ public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDeleg
       new YouTubePlaylistTask().execute();
     }
   }
+
+  // =================================================================================
+  // YouTubeHelperListener
+
+  @Override
+  public void handleAuthIntent(Intent intent) {
+    Util.toast(getActivity(), "Need Authorization");
+
+    Fragment f = (Fragment)listener;
+
+    // start intent asking the user to authorize the app for google api
+    f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
+  }
+
+  @Override
+  public void handleExceptionMessage(String message) {
+    Util.toast(getActivity(), message);
+  }
+
+  // =================================================================================
 
   @Override   // in GoogleAccountDelegate
   public void credentialIsReady() {
@@ -93,17 +113,24 @@ public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDeleg
 
   private class YouTubePlaylistTask extends AsyncTask<Void, Void, List<Map>> {
     protected List<Map> doInBackground(Void... params) {
-      if (channelID == 0) {
-        return youTubeHelper.subscriptionsListToMap();
+      List<Map> result = null;
+
+      if (relatedPlaylistID == -1) {
+        result = youTubeHelper.subscriptionsListToMap();
+      } else if (relatedPlaylistID == -2) {
+        result = youTubeHelper.searchListToMap("The Doors");
       } else {
-        return youTubeHelper.searchListToMap("The Doors");
+        List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(relatedPlaylistID));
+
+        result = youTubeHelper.playlistItemsToMap(playlistItemList);
       }
+
+      return result;
     }
 
     protected void onPostExecute(List<Map> result) {
-      listener.onResults(YouTubeSubscriptionList.this.listener, result);
+      listener.onResults(YouTubeList.this.listener, result);
     }
-
   }
 
 }
