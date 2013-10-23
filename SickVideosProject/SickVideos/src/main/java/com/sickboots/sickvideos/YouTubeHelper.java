@@ -1,5 +1,9 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -12,43 +16,58 @@ import java.io.IOException;
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
+  private YouTubeHelperListener listener;
+  private HttpRequestInitializer credential;
+  private YouTube youTube;
 
-  /**
-   * Please replace this with a valid API key which is enabled for the YouTube
-   * Data API v3 service. Go to the <a
-   * href="https://code.google.com/apis/console/">Google APIs Console</a> to
-   * register a new developer key.
-   */
-  public static final String DEVELOPER_KEY = "AIzaSyD0gRStgO5O0hBRp4UeAxtsLFFw9bMinOI";
+  // must implement this listener
+  public interface YouTubeHelperListener {
+    public void handleAuthIntent(Intent authIntent);
+  }
+
+  public YouTubeHelper(HttpRequestInitializer c, YouTubeHelperListener l) {
+    super();
+
+    listener = l;
+
+    if (c == null) {
+      c = new HttpRequestInitializer() {
+        public void initialize(HttpRequest request) throws IOException {}
+      };
+    }
+
+    credential = c;
+  }
+
+  public static String devKey() {
+    return "AIzaSyD0gRStgO5O0hBRp4UeAxtsLFFw9bMinOI";
+  }
+
+  public static void playMovie(Activity activity, String movieID) {
+    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, true);
+    activity.startActivity(intent);
+  }
+
+  public YouTube youTube() {
+    if (youTube == null) {
+      try {
+        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName("YouTubeHelper").build();
+      } catch (Exception e) {
+        e.printStackTrace();
+      } catch (Throwable t) {
+        t.printStackTrace();
+      }
+    }
+
+    return youTube;
+  }
+}
+
+/*
 
   public static final String TEST_MOVIE_ID = "Il1IGKaol_M";  // XuBdf9jYj7o
   public static final String TEST_PLAYLIST_ID = "FLCXAzufqBhwf_ib6xLv7gMw";
   public static final String DEV_PLAYLIST_ID = "PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju";
-  private static final String APP_NAME = "SickBoots";
-
-  public static YouTube youTube(HttpRequestInitializer credential) {
-    YouTube result=null;
-
-    try {
-      if (credential == null) {
-        credential = new HttpRequestInitializer() {
-          public void initialize(HttpRequest request) throws IOException {}
-        };
-      }
-
-      result = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName(APP_NAME).build();
-    } catch (Exception e) {
-      e.printStackTrace();
-    } catch (Throwable t) {
-      t.printStackTrace();
-    }
-
-    return result;
-  }
-}
-
-
-/*
 
 App goals:
 
@@ -81,7 +100,5 @@ fields: items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pag
 https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
-
-
 
  */

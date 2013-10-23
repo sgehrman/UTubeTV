@@ -9,11 +9,9 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.Channel;
-import com.google.api.services.youtube.model.ChannelContentDetails;
-import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
-import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.Subscription;
+import com.google.api.services.youtube.model.SubscriptionListResponse;
 import com.google.api.services.youtube.model.ThumbnailDetails;
 
 import java.util.ArrayList;
@@ -21,18 +19,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
+public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
-  private int relatedPlaylistID;
-  private static final int REQUEST_AUTHORIZATION = 444;
-  private PlaylistItemListResponse currentItemListResponse;
   YouTubeHelper youTubeHelper;
+  private int channelID;
+  private static final int REQUEST_AUTHORIZATION = 444;
+  private SubscriptionListResponse currentItemListResponse;
 
-  YouTubeChannelList(int r) {
+  YouTubeSubscriptionList(int c) {
     super();
 
-    relatedPlaylistID = r;
+    channelID = c;
   }
 
   @Override
@@ -123,7 +121,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     }
 
     protected void onPostExecute(List<Map> result) {
-      listener.onResults(YouTubeChannelList.this.listener, result);
+      listener.onResults(YouTubeSubscriptionList.this.listener, result);
     }
 
     private void handleException(Exception e) {
@@ -147,62 +145,17 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
       }
     }
 
-    private String playlistID() {
-      String result = null;
+    private List<Subscription> playlistItemsForID() {
+      List<Subscription> result = new ArrayList<Subscription>();
 
-      try {
-        YouTube.Channels.List channelRequest = youTubeHelper.youTube().channels().list("contentDetails");
-        channelRequest.setMine(true);
-
-        channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
-        ChannelListResponse channelResult = channelRequest.execute();
-
-        List<Channel> channelsList = channelResult.getItems();
-
-        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
-
-        if (channelsList != null) {
-          // Gets user's default channel id (first channel in list).
-          switch (relatedPlaylistID)
-          {
-              case 0:
-                  result = relatedPlaylists.getFavorites();
-                  break;
-              case 1:
-                  result = relatedPlaylists.getLikes();
-                  break;
-              case 2:
-                  result = relatedPlaylists.getUploads();
-                  break;
-              case 3:
-                  result = relatedPlaylists.getWatchHistory();
-                  break;
-              case 4:
-                  result = relatedPlaylists.getWatchLater();
-                  break;
-          }
-        }
-      } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
-      } catch (Exception e) {
-        handleException(e);
-      }
-
-      return result;
-    }
-
-    private List<PlaylistItem> playlistItemsForID(String playlistID) {
-      List<PlaylistItem> result = new ArrayList<PlaylistItem>();
-
-      if (playlistID != null) {
         try {
-          YouTube.PlaylistItems.List playlistItemRequest = youTubeHelper.youTube().playlistItems().list("id, contentDetails, snippet");
-          playlistItemRequest.setPlaylistId(playlistID);
+          YouTube.Subscriptions.List listRequest = youTubeHelper.youTube().subscriptions().list("id, contentDetails, snippet");
+          listRequest.setMine(true);
 
-          playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+          listRequest.setFields("items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
-          playlistItemRequest.setPageToken(nextToken());
-          currentItemListResponse = playlistItemRequest.execute();
+          listRequest.setPageToken(nextToken());
+          currentItemListResponse = listRequest.execute();
 
           result.addAll(currentItemListResponse.getItems());
         } catch (UserRecoverableAuthIOException e) {
@@ -210,7 +163,6 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
         } catch (Exception e) {
           handleException(e);
         }
-      }
 
       return result;
     }
@@ -218,10 +170,10 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
     private List<Map> playlist() {
       List<Map> result = new ArrayList<Map>();
 
-      List<PlaylistItem> playlistItemList = playlistItemsForID(playlistID());
+      List<Subscription> playlistItemList = playlistItemsForID();
 
       // convert the list into hash maps of video info
-      for (PlaylistItem playlistItem: playlistItemList) {
+      for (Subscription playlistItem: playlistItemList) {
         HashMap map = new HashMap();
 
         String thumbnail = "";
@@ -230,8 +182,9 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
           thumbnail = details.getDefault().getUrl();
         }
 
-        map.put("video", playlistItem.getContentDetails().getVideoId());
+        map.put("id", playlistItem.getId());
         map.put("title", playlistItem.getSnippet().getTitle());
+        map.put("description", playlistItem.getSnippet().getDescription());
         map.put("thumbnail", thumbnail);
 
         result.add(map);

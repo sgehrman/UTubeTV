@@ -67,14 +67,16 @@ public class YouTubeSearch implements YouTubeFragment.YouTubeListProvider {
       List<Map> result = new ArrayList<Map>();
 
       try {
-        YouTube youtube = YouTubeHelper.youTube(null);
+        YouTubeHelper youTubeHelper = new YouTubeHelper(null, null);
+
+        YouTube youtube = youTubeHelper.youTube();
 
         String queryTerm = getInputQuery();
 
         YouTube.Search.List search = youtube.search().list("id,snippet");
 
         search.setQ(queryTerm);
-        search.setKey(YouTubeHelper.DEVELOPER_KEY);
+        search.setKey(YouTubeHelper.devKey());
         search.setType(SEARCH_TYPE);
         search.setFields(SEARCH_FIELDS);
         search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);

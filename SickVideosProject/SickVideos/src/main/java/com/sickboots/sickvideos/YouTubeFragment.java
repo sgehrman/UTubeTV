@@ -63,8 +63,7 @@ public class YouTubeFragment extends Fragment
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         String movieID = (String) mAdapter.getItem(position).get("video");
 
-        Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), YouTubeHelper.DEVELOPER_KEY, movieID, 0, true, true);
-        startActivity(intent);
+        YouTubeHelper.playMovie(getActivity(), movieID);
       }
     });
 
@@ -93,8 +92,7 @@ public class YouTubeFragment extends Fragment
 
       String movieID = (String) getItem(position).get("video");
 
-      Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), YouTubeHelper.DEVELOPER_KEY, movieID, 0, true, true);
-      startActivity(intent);
+      YouTubeHelper.playMovie(getActivity(), movieID);
     }
 
     public MyAdapter(Context context, int type) {
@@ -102,7 +100,7 @@ public class YouTubeFragment extends Fragment
 
       switch (type) {
         case 0:
-          mList = new YouTubeChannelList(0).start(YouTubeFragment.this);
+          mList = new YouTubeSubscriptionList(0).start(YouTubeFragment.this);
 
           break;
         case 1:
