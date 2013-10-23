@@ -15,8 +15,11 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelContentDetails;
 import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +29,7 @@ public class YouTubeHelper {
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
+  private PlaylistItemListResponse playlistItemListResponse;
 
   // must implement this listener
   public interface YouTubeHelperListener {
@@ -115,6 +119,93 @@ public class YouTubeHelper {
 
       e.printStackTrace();
     }
+  }
+
+  public String relatedPlaylistID(int relatedPlaylistIndex) {
+    String result = null;
+
+    try {
+      YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
+      channelRequest.setMine(true);
+
+      channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
+      ChannelListResponse channelResult = channelRequest.execute();
+
+      List<Channel> channelsList = channelResult.getItems();
+
+      ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+
+      if (channelsList != null) {
+        // Gets user's default channel id (first channel in list).
+        switch (relatedPlaylistIndex)
+        {
+          case 0:
+            result = relatedPlaylists.getFavorites();
+            break;
+          case 1:
+            result = relatedPlaylists.getLikes();
+            break;
+          case 2:
+            result = relatedPlaylists.getUploads();
+            break;
+          case 3:
+            result = relatedPlaylists.getWatchHistory();
+            break;
+          case 4:
+            result = relatedPlaylists.getWatchLater();
+            break;
+        }
+      }
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
+
+    return result;
+  }
+
+  public List<PlaylistItem> playlistItemsForID(String playlistID) {
+    List<PlaylistItem> result = new ArrayList<PlaylistItem>();
+
+    if (playlistID != null) {
+      try {
+        YouTube.PlaylistItems.List playlistItemRequest = youTube().playlistItems().list("id, contentDetails, snippet");
+        playlistItemRequest.setPlaylistId(playlistID);
+
+        playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+        playlistItemRequest.setPageToken(nextPlaylistToken());
+        playlistItemListResponse = playlistItemRequest.execute();
+
+        result.addAll(playlistItemListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+    }
+
+    return result;
+  }
+
+  private String nextPlaylistToken() {
+    String result = null;
+
+    if (playlistItemListResponse != null) {
+      result = playlistItemListResponse.getNextPageToken();
+    }
+
+    if (result == null) {
+      result = "";
+    }
+
+    return result;
+  }
+
+  public void refresh() {
+    // this will make nextPlaylistToken be ""
+    playlistItemListResponse = null;
   }
 
 }

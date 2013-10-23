@@ -26,7 +26,6 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
   private GoogleAccount account;
   private int relatedPlaylistID;
   private static final int REQUEST_AUTHORIZATION = 444;
-  private PlaylistItemListResponse currentItemListResponse;
   YouTubeHelper youTubeHelper;
 
   YouTubeChannelList(int r) {
@@ -71,24 +70,9 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
 
   @Override
   public void refresh() {
-    // this will make nextToken be ""
-    currentItemListResponse = null;
+    youTubeHelper.refresh();
 
     loadData(false);
-  }
-
-  private String nextToken() {
-    String result = null;
-
-    if (currentItemListResponse != null) {
-      result = currentItemListResponse.getNextPageToken();
-    }
-
-    if (result == null) {
-      result = "";
-    }
-
-    return result;
   }
 
   private void loadData(boolean askUser) {
@@ -146,99 +130,10 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
       listener.onResults(YouTubeChannelList.this.listener, result);
     }
 
-    private void handleException(Exception e) {
-      if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
-        UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
-        Util.toast(getActivity(), "Need Authorization");
-
-        Fragment f = (Fragment)listener;
-
-        // start intent asking the user to authorize the app for google api
-        f.startActivityForResult(r.getIntent(), REQUEST_AUTHORIZATION);
-      } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
-        GoogleJsonResponseException r = (GoogleJsonResponseException) e;
-
-        Util.toast(getActivity(), "JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
-        e.printStackTrace();
-      } else {
-        Util.toast(getActivity(), "Exception Occurred");
-
-        e.printStackTrace();
-      }
-    }
-
-    private String playlistID() {
-      String result = null;
-
-      try {
-        YouTube.Channels.List channelRequest = youTubeHelper.youTube().channels().list("contentDetails");
-        channelRequest.setMine(true);
-
-        channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
-        ChannelListResponse channelResult = channelRequest.execute();
-
-        List<Channel> channelsList = channelResult.getItems();
-
-        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
-
-        if (channelsList != null) {
-          // Gets user's default channel id (first channel in list).
-          switch (relatedPlaylistID)
-          {
-              case 0:
-                  result = relatedPlaylists.getFavorites();
-                  break;
-              case 1:
-                  result = relatedPlaylists.getLikes();
-                  break;
-              case 2:
-                  result = relatedPlaylists.getUploads();
-                  break;
-              case 3:
-                  result = relatedPlaylists.getWatchHistory();
-                  break;
-              case 4:
-                  result = relatedPlaylists.getWatchLater();
-                  break;
-          }
-        }
-      } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
-      } catch (Exception e) {
-        handleException(e);
-      }
-
-      return result;
-    }
-
-    private List<PlaylistItem> playlistItemsForID(String playlistID) {
-      List<PlaylistItem> result = new ArrayList<PlaylistItem>();
-
-      if (playlistID != null) {
-        try {
-          YouTube.PlaylistItems.List playlistItemRequest = youTubeHelper.youTube().playlistItems().list("id, contentDetails, snippet");
-          playlistItemRequest.setPlaylistId(playlistID);
-
-          playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
-
-          playlistItemRequest.setPageToken(nextToken());
-          currentItemListResponse = playlistItemRequest.execute();
-
-          result.addAll(currentItemListResponse.getItems());
-        } catch (UserRecoverableAuthIOException e) {
-          handleException(e);
-        } catch (Exception e) {
-          handleException(e);
-        }
-      }
-
-      return result;
-    }
-
     private List<Map> playlist() {
       List<Map> result = new ArrayList<Map>();
 
-      List<PlaylistItem> playlistItemList = playlistItemsForID(playlistID());
+      List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(relatedPlaylistID));
 
       // convert the list into hash maps of video info
       for (PlaylistItem playlistItem: playlistItemList) {
