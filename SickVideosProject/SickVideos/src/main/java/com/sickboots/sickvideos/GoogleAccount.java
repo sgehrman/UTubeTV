@@ -14,10 +14,7 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTubeScopes;
 
 import java.util.Arrays;
-
-/**
- *   "https://www.googleapis.com/auth/youtubepartner-channel-audit");
- */
+import java.util.List;
 
 public class GoogleAccount {
   public interface GoogleAccountDelegate {
@@ -27,19 +24,24 @@ public class GoogleAccount {
 
   private final String ACCOUNT_KEY = "account-name";
   private GoogleAccountCredential credential;
+  private List<String> scopes;
   private final int REQUEST_ACCOUNT_PICKER = 33008;
   private final String ACCOUNT_FRAGMENT_NAME = "AccountFragment";
   private GoogleAccountDelegate delegate;
 
-  public GoogleAccount(GoogleAccountDelegate d) {
-    super();
+  // helper to create a YouTube credential
+  public static GoogleAccount newYouTube(GoogleAccountDelegate d) {
+    GoogleAccount result = new GoogleAccount();
 
-    delegate = d;
+    result.scopes = Arrays.asList(YouTubeScopes.YOUTUBE);
+    result.delegate = d;
+
+    return result;
   }
 
   public GoogleAccountCredential credential(boolean askUser) {
     if (credential == null) {
-      setupCredential(delegate.getActivity());
+      setupCredential();
     }
 
     // return null if no name set
@@ -54,9 +56,12 @@ public class GoogleAccount {
     return null;
   }
 
-  private void setupCredential(Activity activity) {
-    credential = GoogleAccountCredential.usingOAuth2(activity, Arrays.asList(YouTubeScopes.YOUTUBE));
+  private void setupCredential() {
+    Activity activity = delegate.getActivity();
 
+    credential = GoogleAccountCredential.usingOAuth2(activity, scopes);
+
+    // example code had this, no idea if needed
     credential.setBackOff(new ExponentialBackOff());
 
     loadAccount(activity);

@@ -6,18 +6,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.Channel;
-import com.google.api.services.youtube.model.ChannelContentDetails;
-import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.model.PlaylistItem;
-import com.google.api.services.youtube.model.PlaylistItemListResponse;
-import com.google.api.services.youtube.model.ThumbnailDetails;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +28,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
 
   @Override
   public YouTubeFragment.YouTubeListProvider start(Util.ListResultListener l) {
-    account = new GoogleAccount(this);
+    account = GoogleAccount.newYouTube(this);
     listener = l;
 
     loadData(true);
@@ -123,36 +115,15 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
 
   private class YouTubePlaylistTask extends AsyncTask<Void, Void, List<Map>> {
     protected List<Map> doInBackground(Void... params) {
-      return playlist();
+      List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(relatedPlaylistID));
+
+      List<Map> result = youTubeHelper.playlistItemsToMap(playlistItemList);
+
+      return result;
     }
 
     protected void onPostExecute(List<Map> result) {
       listener.onResults(YouTubeChannelList.this.listener, result);
-    }
-
-    private List<Map> playlist() {
-      List<Map> result = new ArrayList<Map>();
-
-      List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(relatedPlaylistID));
-
-      // convert the list into hash maps of video info
-      for (PlaylistItem playlistItem: playlistItemList) {
-        HashMap map = new HashMap();
-
-        String thumbnail = "";
-        ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
-        if (details != null) {
-          thumbnail = details.getDefault().getUrl();
-        }
-
-        map.put("video", playlistItem.getContentDetails().getVideoId());
-        map.put("title", playlistItem.getSnippet().getTitle());
-        map.put("thumbnail", thumbnail);
-
-        result.add(map);
-      }
-
-      return result;
     }
   }
 

@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -17,10 +16,15 @@ import com.google.api.services.youtube.model.ChannelContentDetails;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.Subscription;
+import com.google.api.services.youtube.model.SubscriptionListResponse;
+import com.google.api.services.youtube.model.ThumbnailDetails;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Static container class for holding a reference to your YouTube Developer Key.
@@ -30,6 +34,7 @@ public class YouTubeHelper {
   private HttpRequestInitializer credential;
   private YouTube youTube;
   private PlaylistItemListResponse playlistItemListResponse;
+  private SubscriptionListResponse subscriptionListResponse;
 
   // must implement this listener
   public interface YouTubeHelperListener {
@@ -204,9 +209,101 @@ public class YouTubeHelper {
   }
 
   public void refresh() {
-    // this will make nextPlaylistToken be ""
+    // this will make nextPlaylistToken/nextSubscriptionListToken be ""
     playlistItemListResponse = null;
+    subscriptionListResponse = null;
   }
+
+  public List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+    List<Map> result = new ArrayList<Map>();
+
+    // convert the list into hash maps of video info
+    for (PlaylistItem playlistItem: playlistItemList) {
+      HashMap map = new HashMap();
+
+      String thumbnail = "";
+      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
+      if (details != null) {
+        thumbnail = details.getDefault().getUrl();
+      }
+
+      map.put("video", playlistItem.getContentDetails().getVideoId());
+      map.put("title", playlistItem.getSnippet().getTitle());
+      map.put("thumbnail", thumbnail);
+
+      result.add(map);
+    }
+
+    return result;
+  }
+
+  // ========================================================
+  // subscriptions
+
+  private String nextSubscriptionListToken() {
+    String result = null;
+
+    if (subscriptionListResponse != null) {
+      result = subscriptionListResponse.getNextPageToken();
+    }
+
+    if (result == null) {
+      result = "";
+    }
+
+    return result;
+  }
+
+  public List<Subscription> subscriptionsList() {
+    List<Subscription> result = new ArrayList<Subscription>();
+
+    try {
+      YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
+      listRequest.setMine(true);
+
+      listRequest.setFields("items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+      listRequest.setPageToken(nextSubscriptionListToken());
+      subscriptionListResponse = listRequest.execute();
+
+      result.addAll(subscriptionListResponse.getItems());
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
+
+    return result;
+  }
+
+  public List<Map> subscriptionsListToMap() {
+    List<Map> result = new ArrayList<Map>();
+
+    List<Subscription> playlistItemList = subscriptionsList();
+
+    // convert the list into hash maps of video info
+    for (Subscription playlistItem: playlistItemList) {
+      HashMap map = new HashMap();
+
+      String thumbnail = "";
+      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
+      if (details != null) {
+        thumbnail = details.getDefault().getUrl();
+      }
+
+      map.put("id", playlistItem.getId());
+      map.put("title", playlistItem.getSnippet().getTitle());
+      map.put("description", playlistItem.getSnippet().getDescription());
+      map.put("thumbnail", thumbnail);
+
+      result.add(map);
+    }
+
+    return result;
+  }
+
+  // ========================================================
+
 
 }
 
