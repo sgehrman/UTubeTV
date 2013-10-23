@@ -93,7 +93,11 @@ public class YouTubeSubscriptionList implements GoogleAccount.GoogleAccountDeleg
 
   private class YouTubePlaylistTask extends AsyncTask<Void, Void, List<Map>> {
     protected List<Map> doInBackground(Void... params) {
-      return youTubeHelper.subscriptionsListToMap();
+      if (channelID == 0) {
+        return youTubeHelper.subscriptionsListToMap();
+      } else {
+        return youTubeHelper.searchListToMap("The Doors");
+      }
     }
 
     protected void onPostExecute(List<Map> result) {

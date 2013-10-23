@@ -326,12 +326,12 @@ public class YouTubeHelper {
     List<SearchResult> result = new ArrayList<SearchResult>();
 
     try {
-      YouTube.Search.List listRequest = youTube().search().list("id, contentDetails, snippet");
+      YouTube.Search.List listRequest = youTube().search().list("id, snippet");
 
       listRequest.setQ(query);
       listRequest.setKey(YouTubeHelper.devKey());
       listRequest.setType("video");
-      listRequest.setFields("items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+      listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
       listRequest.setPageToken(nextSubscriptionListToken());
       searchListResponse = listRequest.execute();
@@ -346,13 +346,13 @@ public class YouTubeHelper {
     return result;
   }
 
-  public List<Map> searchListToMap() {
+  public List<Map> searchListToMap(String query) {
     List<Map> result = new ArrayList<Map>();
 
-    List<Subscription> playlistItemList = subscriptionsList();
+    List<SearchResult> playlistItemList = searchList(query);
 
     // convert the list into hash maps of video info
-    for (Subscription playlistItem: playlistItemList) {
+    for (SearchResult playlistItem: playlistItemList) {
       HashMap map = new HashMap();
 
       String thumbnail = "";
@@ -361,9 +361,8 @@ public class YouTubeHelper {
         thumbnail = details.getDefault().getUrl();
       }
 
-      map.put("id", playlistItem.getId());
+      map.put("video", playlistItem.getId().getVideoId());
       map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("description", playlistItem.getSnippet().getDescription());
       map.put("thumbnail", thumbnail);
 
       result.add(map);
@@ -392,6 +391,7 @@ App goals:
 6) Channel management (playlists)
 7) Send playlists to friends.  Email or SMS or tap etc.
 8) Educational playlists
+2) ability to repeat vids
 9) record favorite moments (bookmarks) in video with single click, remember list of points to be rewatched later
 10) What youtube should be, but simplified for watching only.  No comments or sharing etc, just watching experience
 11) Killer features

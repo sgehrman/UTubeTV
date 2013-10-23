@@ -102,7 +102,7 @@ public class YouTubeFragment extends Fragment
 
           break;
         case 1:
-          mList = new YouTubeSearch().start(YouTubeFragment.this);
+          mList = new YouTubeSubscriptionList(33).start(YouTubeFragment.this);
 
           break;
         case 2:
