@@ -22,7 +22,6 @@ import java.util.Map;
 public class YouTubeSearch implements YouTubeFragment.YouTubeListProvider {
   private static final String SEARCH_FIELDS = "items(id/kind, id/videoId, snippet/title, snippet/thumbnails/default/url)";
   private static final String SEARCH_TYPE = "video";
-  private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
   private Util.ListResultListener listener;
 
   @Override
@@ -54,7 +53,7 @@ public class YouTubeSearch implements YouTubeFragment.YouTubeListProvider {
     }
 
     protected void onPostExecute(List<Map> result) {
-      listener.onResults(com.sickboots.sickvideos.YouTubeSearch.this.listener, result);
+      listener.onResults(YouTubeSearch.this.listener, result);
     }
 
     private Activity getActivity() {
@@ -79,7 +78,6 @@ public class YouTubeSearch implements YouTubeFragment.YouTubeListProvider {
         search.setKey(YouTubeHelper.devKey());
         search.setType(SEARCH_TYPE);
         search.setFields(SEARCH_FIELDS);
-        search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 
         SearchListResponse searchResponse = search.execute();
         List<SearchResult> searchResultList = searchResponse.getItems();

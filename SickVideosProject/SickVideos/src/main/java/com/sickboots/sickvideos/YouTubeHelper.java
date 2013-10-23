@@ -16,6 +16,8 @@ import com.google.api.services.youtube.model.ChannelContentDetails;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionListResponse;
 import com.google.api.services.youtube.model.ThumbnailDetails;
@@ -35,6 +37,7 @@ public class YouTubeHelper {
   private YouTube youTube;
   private PlaylistItemListResponse playlistItemListResponse;
   private SubscriptionListResponse subscriptionListResponse;
+  private SearchListResponse searchListResponse;
 
   // must implement this listener
   public interface YouTubeHelperListener {
@@ -100,6 +103,12 @@ public class YouTubeHelper {
     }
 
     return result;
+  }
+
+  public void refresh() {
+    // this will make nextPlaylistToken/nextSubscriptionListToken be ""
+    playlistItemListResponse = null;
+    subscriptionListResponse = null;
   }
 
   private void handleException(Exception e) {
@@ -208,12 +217,6 @@ public class YouTubeHelper {
     return result;
   }
 
-  public void refresh() {
-    // this will make nextPlaylistToken/nextSubscriptionListToken be ""
-    playlistItemListResponse = null;
-    subscriptionListResponse = null;
-  }
-
   public List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
     List<Map> result = new ArrayList<Map>();
 
@@ -303,7 +306,73 @@ public class YouTubeHelper {
   }
 
   // ========================================================
+  // search
 
+  private String nextSearchListToken() {
+    String result = null;
+
+    if (searchListResponse != null) {
+      result = searchListResponse.getNextPageToken();
+    }
+
+    if (result == null) {
+      result = "";
+    }
+
+    return result;
+  }
+
+  public List<SearchResult> searchList(String query) {
+    List<SearchResult> result = new ArrayList<SearchResult>();
+
+    try {
+      YouTube.Search.List listRequest = youTube().search().list("id, contentDetails, snippet");
+
+      listRequest.setQ(query);
+      listRequest.setKey(YouTubeHelper.devKey());
+      listRequest.setType("video");
+      listRequest.setFields("items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+      listRequest.setPageToken(nextSubscriptionListToken());
+      searchListResponse = listRequest.execute();
+
+      result.addAll(searchListResponse.getItems());
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
+
+    return result;
+  }
+
+  public List<Map> searchListToMap() {
+    List<Map> result = new ArrayList<Map>();
+
+    List<Subscription> playlistItemList = subscriptionsList();
+
+    // convert the list into hash maps of video info
+    for (Subscription playlistItem: playlistItemList) {
+      HashMap map = new HashMap();
+
+      String thumbnail = "";
+      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
+      if (details != null) {
+        thumbnail = details.getDefault().getUrl();
+      }
+
+      map.put("id", playlistItem.getId());
+      map.put("title", playlistItem.getSnippet().getTitle());
+      map.put("description", playlistItem.getSnippet().getDescription());
+      map.put("thumbnail", thumbnail);
+
+      result.add(map);
+    }
+
+    return result;
+  }
+
+  // ========================================================
 
 }
 
