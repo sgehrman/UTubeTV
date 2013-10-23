@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.model.PlaylistItem;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

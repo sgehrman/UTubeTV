@@ -6,17 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.YouTubeScopes;
-import com.google.api.services.youtube.model.Subscription;
-import com.google.api.services.youtube.model.SubscriptionListResponse;
-import com.google.api.services.youtube.model.ThumbnailDetails;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
