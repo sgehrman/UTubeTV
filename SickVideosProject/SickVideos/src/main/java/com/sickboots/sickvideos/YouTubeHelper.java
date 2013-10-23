@@ -1,16 +1,23 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.Channel;
+import com.google.api.services.youtube.model.ChannelContentDetails;
+import com.google.api.services.youtube.model.ChannelListResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Static container class for holding a reference to your YouTube Developer Key.
@@ -23,6 +30,7 @@ public class YouTubeHelper {
   // must implement this listener
   public interface YouTubeHelperListener {
     public void handleAuthIntent(Intent authIntent);
+    public void handleExceptionMessage(String message);
   }
 
   public YouTubeHelper(HttpRequestInitializer c, YouTubeHelperListener l) {
@@ -61,6 +69,54 @@ public class YouTubeHelper {
 
     return youTube;
   }
+
+  public String channelID() {
+    String result = null;
+
+    try {
+      YouTube.Channels.List channelRequest = youTube().channels().list("id");
+      channelRequest.setMine(true);
+      channelRequest.setMaxResults(1L);
+
+      channelRequest.setFields("items/id");
+      ChannelListResponse channelResult = channelRequest.execute();
+
+      List<Channel> channelsList = channelResult.getItems();
+
+      result = channelsList.get(0).getId();
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
+
+    return result;
+  }
+
+  private void handleException(Exception e) {
+    if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
+      UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
+
+      if (listener != null) {
+        listener.handleAuthIntent(r.getIntent());
+      }
+    } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
+      GoogleJsonResponseException r = (GoogleJsonResponseException) e;
+
+      e.printStackTrace();
+
+      if (listener != null) {
+        listener.handleExceptionMessage( "JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
+      }
+    } else {
+      if (listener != null) {
+        listener.handleExceptionMessage( "Exception Occurred");
+      }
+
+      e.printStackTrace();
+    }
+  }
+
 }
 
 /*

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, YouTubeFragment.YouTubeListProvider {
+public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
   private int relatedPlaylistID;
@@ -96,7 +96,7 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
       GoogleAccountCredential credential = account.credential(askUser);
 
       if (credential != null) {
-        youTubeHelper = new YouTubeHelper(credential, null);
+        youTubeHelper = new YouTubeHelper(credential, this);
       }
     }
 
@@ -104,6 +104,26 @@ public class YouTubeChannelList implements GoogleAccount.GoogleAccountDelegate, 
       new YouTubePlaylistTask().execute();
     }
   }
+
+  // =================================================================================
+  // YouTubeHelperListener
+
+  @Override
+  public void handleAuthIntent(Intent intent) {
+    Util.toast(getActivity(), "Need Authorization");
+
+    Fragment f = (Fragment)listener;
+
+    // start intent asking the user to authorize the app for google api
+    f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
+  }
+
+  @Override
+  public void handleExceptionMessage(String message) {
+    Util.toast(getActivity(), message);
+  }
+
+  // =================================================================================
 
   @Override   // in GoogleAccountDelegate
   public void credentialIsReady() {
