@@ -32,6 +32,8 @@ import java.util.Map;
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
+//  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER};
+
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;

@@ -6,36 +6,37 @@ import java.util.HashMap;
  * Created by sgehrman on 10/23/13.
  */
 public class YouTubeListSpec {
+  public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH};
+
   private HashMap data;
+  ListType type;
 
   public static YouTubeListSpec playlistSpec(String playlistID) {
-    YouTubeListSpec result = emptySpec();
+    YouTubeListSpec result = emptySpec(ListType.PLAYLIST);
 
-    result.data.put("type", "playlist");
+    result.data.put("id", playlistID);
 
     return result;
   }
 
-  public static YouTubeListSpec relatedPlaylistSpec(int relatedPlayListIndex) {
-    YouTubeListSpec result = emptySpec();
+  public static YouTubeListSpec relatedSpec(int relatedPlayListType) {
+    YouTubeListSpec result = emptySpec(ListType.RELATED);
 
-    result.data.put("type", "related");
+    result.data.put("type", relatedPlayListType);
 
     return result;
   }
 
   public static YouTubeListSpec searchSpec(String query) {
-    YouTubeListSpec result = emptySpec();
+    YouTubeListSpec result = emptySpec(ListType.SEARCH);
 
-    result.data.put("type", "search");
+    result.data.put("query", query);
 
     return result;
   }
 
-  public static YouTubeListSpec subscriptionsSpec(String query) {
-    YouTubeListSpec result = emptySpec();
-
-    result.data.put("type", "subscriptions");
+  public static YouTubeListSpec subscriptionsSpec() {
+    YouTubeListSpec result = emptySpec(ListType.SUBSCRIPTIONS);
 
     return result;
   }
@@ -43,9 +44,10 @@ public class YouTubeListSpec {
   // ===================================================================
   // private
 
-  private static YouTubeListSpec emptySpec() {
+  private static YouTubeListSpec emptySpec(ListType type) {
     YouTubeListSpec result = new YouTubeListSpec();
 
+    result.type = type;
     result.data = new HashMap();
 
     return result;
