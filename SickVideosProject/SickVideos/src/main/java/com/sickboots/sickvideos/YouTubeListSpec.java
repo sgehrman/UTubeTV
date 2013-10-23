@@ -19,7 +19,7 @@ public class YouTubeListSpec {
     return result;
   }
 
-  public static YouTubeListSpec relatedSpec(int relatedPlayListType) {
+  public static YouTubeListSpec relatedSpec(YouTubeHelper.RelatedPlaylistType relatedPlayListType) {
     YouTubeListSpec result = emptySpec(ListType.RELATED);
 
     result.data.put("type", relatedPlayListType);
@@ -39,6 +39,10 @@ public class YouTubeListSpec {
     YouTubeListSpec result = emptySpec(ListType.SUBSCRIPTIONS);
 
     return result;
+  }
+
+  public Object getData(String key) {
+    return data.get(key);
   }
 
   // ===================================================================

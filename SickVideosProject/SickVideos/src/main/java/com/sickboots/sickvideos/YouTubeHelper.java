@@ -32,7 +32,7 @@ import java.util.Map;
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
-//  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER};
+  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER};
 
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
@@ -137,7 +137,7 @@ public class YouTubeHelper {
     }
   }
 
-  public String relatedPlaylistID(int relatedPlaylistIndex) {
+  public String relatedPlaylistID(RelatedPlaylistType type) {
     String result = null;
 
     try {
@@ -153,21 +153,21 @@ public class YouTubeHelper {
 
       if (channelsList != null) {
         // Gets user's default channel id (first channel in list).
-        switch (relatedPlaylistIndex)
+        switch (type)
         {
-          case 0:
+          case FAVORITES:
             result = relatedPlaylists.getFavorites();
             break;
-          case 1:
+          case LIKES:
             result = relatedPlaylists.getLikes();
             break;
-          case 2:
+          case UPLOADS:
             result = relatedPlaylists.getUploads();
             break;
-          case 3:
+          case WATCHED:
             result = relatedPlaylists.getWatchHistory();
             break;
-          case 4:
+          case WATCHLATER:
             result = relatedPlaylists.getWatchLater();
             break;
         }

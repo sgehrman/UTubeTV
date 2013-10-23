@@ -14,14 +14,14 @@ import java.util.Map;
 public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener, YouTubeFragment.YouTubeListProvider {
   private Util.ListResultListener listener;
   private GoogleAccount account;
-  private int relatedPlaylistID;
+  private YouTubeListSpec listSpec;
   private static final int REQUEST_AUTHORIZATION = 444;
   YouTubeHelper youTubeHelper;
 
-  YouTubeList(int r) {
+  YouTubeList(YouTubeListSpec r) {
     super();
 
-    relatedPlaylistID = r;
+    listSpec = r;
   }
 
   @Override
@@ -115,14 +115,25 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     protected List<Map> doInBackground(Void... params) {
       List<Map> result = null;
 
-      if (relatedPlaylistID == -1) {
-        result = youTubeHelper.subscriptionsListToMap();
-      } else if (relatedPlaylistID == -2) {
-        result = youTubeHelper.searchListToMap("The Doors");
-      } else {
-        List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(relatedPlaylistID));
+      switch (listSpec.type)
+      {
+        case SUBSCRIPTIONS:
+          result = youTubeHelper.subscriptionsListToMap();
+          break;
 
-        result = youTubeHelper.playlistItemsToMap(playlistItemList);
+        case RELATED:
+          YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
+
+          List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(type));
+
+          result = youTubeHelper.playlistItemsToMap(playlistItemList);
+          break;
+
+        case SEARCH:
+          String query = (String) listSpec.getData("query");
+
+          result = youTubeHelper.searchListToMap(query);
+          break;
       }
 
       return result;
