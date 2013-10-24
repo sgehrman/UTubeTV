@@ -22,6 +22,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionListResponse;
+import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.ThumbnailDetails;
 
 import java.io.IOException;
@@ -229,17 +230,30 @@ public class YouTubeHelper {
     for (PlaylistItem playlistItem: playlistItemList) {
       HashMap map = new HashMap();
 
-      String thumbnail = "";
-      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
-      if (details != null) {
-        thumbnail = details.getDefault().getUrl();
-      }
-
       map.put("video", playlistItem.getContentDetails().getVideoId());
       map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("thumbnail", thumbnail);
+      map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
       result.add(map);
+    }
+
+    return result;
+  }
+
+  private String thumbnailURL(ThumbnailDetails details) {
+    String result = null;
+
+    if (details != null) {
+      Thumbnail thumbnail = details.getMaxres();
+
+      // is this necessary?  not sure
+      if (thumbnail == null) {
+        thumbnail = details.getDefault();
+      }
+
+      if (thumbnail != null) {
+        result = thumbnail.getUrl();
+      }
     }
 
     return result;
@@ -293,16 +307,10 @@ public class YouTubeHelper {
     for (Subscription subscription: subscriptionsList) {
       HashMap map = new HashMap();
 
-      String thumbnail = "";
-      ThumbnailDetails details = subscription.getSnippet().getThumbnails();
-      if (details != null) {
-        thumbnail = details.getDefault().getUrl();
-      }
-
       map.put("id", subscription.getId());
       map.put("title", subscription.getSnippet().getTitle());
       map.put("description", subscription.getSnippet().getDescription());
-      map.put("thumbnail", thumbnail);
+      map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
 
       result.add(map);
     }
@@ -360,15 +368,9 @@ public class YouTubeHelper {
     for (SearchResult playlistItem: playlistItemList) {
       HashMap map = new HashMap();
 
-      String thumbnail = "";
-      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
-      if (details != null) {
-        thumbnail = details.getDefault().getUrl();
-      }
-
       map.put("video", playlistItem.getId().getVideoId());
       map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("thumbnail", thumbnail);
+      map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
       result.add(map);
     }
