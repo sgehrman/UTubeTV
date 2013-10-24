@@ -248,6 +248,10 @@ public class YouTubeHelper {
 
       // is this necessary?  not sure
       if (thumbnail == null) {
+        thumbnail = details.getHigh();
+      }
+
+      if (thumbnail == null) {
         thumbnail = details.getDefault();
       }
 
