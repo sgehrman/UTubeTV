@@ -4,12 +4,6 @@
     <!-- Account Settings -->
     <string name="pref_header_general">Account Settings</string>
 
-    <string name="pref_title_user_name">User name</string>
-    <string name="pref_title_user_handle">Handle</string>
-    <string name="pref_title_password">Password</string>
-    <string name="pref_title_picture">Profile Picture</string>
-    <string name="pref_title_logout">Logout</string>
-
     <string name="pref_play_full_screen">Play full screen</string>
     <string name="pref_play_full_screen_summary">Play movies in full screen mode.</string>
 
