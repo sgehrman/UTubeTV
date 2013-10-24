@@ -2,17 +2,17 @@ package com.sickboots.sickvideos;
 
 import java.util.HashMap;
 
-public class YouTubeListCache {
-  private static YouTubeListCache instance = null;
+public class AppData {
+  private static AppData instance = null;
   private HashMap data;
 
-  private YouTubeListCache(){
+  private AppData(){
     data = new HashMap();
   }
 
-  public static YouTubeListCache getInstance(){
+  public static AppData getInstance(){
     if(instance == null) {
-      instance = new YouTubeListCache();
+      instance = new AppData();
     }
     return instance;
   }

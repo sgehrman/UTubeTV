@@ -39,13 +39,13 @@ public class YouTubeFragment extends Fragment
 
   private MyAdapter mAdapter;
   private int mType;
-  private static final String ARG_TYPE_NUMBER = "TYPENUMber";
+  private static final String TAB_INDEX = "TYPENUMber";
   private YouTubeListProvider mList;
 
   public static YouTubeFragment newInstance(int type) {
     YouTubeFragment fragment = new YouTubeFragment();
     Bundle args = new Bundle();
-    args.putInt(ARG_TYPE_NUMBER, type);
+    args.putInt(TAB_INDEX, type);
     fragment.setArguments(args);
     return fragment;
   }
@@ -57,29 +57,8 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    int tabIndex = getArguments().getInt(ARG_TYPE_NUMBER);
-    UIAccess access = new UIAccess(this, tabIndex);
-
-    final String keyPrefix = "list-";
-    mList = (YouTubeListProvider) YouTubeListCache.getInstance().getData(keyPrefix + tabIndex);
-    if (mList != null) {
-      mList.restart(access);
-    } else {
-      switch (tabIndex) {
-        case 0:
-          mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), access);
-          break;
-        case 1:
-          mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Pigmies"), access);
-          break;
-        case 2:
-          mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), access);
-          break;
-      }
-
-      // save in cache
-      YouTubeListCache.getInstance().setData(keyPrefix + tabIndex, mList);
-    }
+    int tabIndex = getArguments().getInt(TAB_INDEX);
+    mList = createListForIndex(tabIndex);
 
     mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
@@ -126,6 +105,35 @@ public class YouTubeFragment extends Fragment
   public void onResults() {
     mAdapter.clear();
     mAdapter.addAll(mList.getItems());
+  }
+
+  private YouTubeListProvider createListForIndex(int tabIndex) {
+    YouTubeListProvider result = null;
+
+    UIAccess access = new UIAccess(this, tabIndex);
+
+    final String keyPrefix = "list-";
+    result = (YouTubeListProvider) AppData.getInstance().getData(keyPrefix + tabIndex);
+    if (result != null) {
+      result.restart(access);
+    } else {
+      switch (tabIndex) {
+        case 0:
+          result = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), access);
+          break;
+        case 1:
+          result = new YouTubeList().start(YouTubeListSpec.searchSpec("Pigmies"), access);
+          break;
+        case 2:
+          result = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), access);
+          break;
+      }
+
+      // save in cache
+      AppData.getInstance().setData(keyPrefix + tabIndex, result);
+    }
+
+    return result;
   }
 
   // ===========================================================================
