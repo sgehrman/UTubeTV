@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class YouTubeHelper {
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER};
-
+  public static final int REQ_PLAYER_CODE = 334443;
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
@@ -72,7 +72,7 @@ public class YouTubeHelper {
     boolean fullScreen = sp.getBoolean("play_full_screen", false);
 
     Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, !fullScreen);
-    activity.startActivity(intent);
+    activity.startActivityForResult(intent, REQ_PLAYER_CODE);
   }
 
   public YouTube youTube() {

@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,6 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.common.data.d;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import java.util.Locale;
 
@@ -28,40 +33,42 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
 
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+      activateStrictMode();
 
-        // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
+      // Set up the action bar.
+      final ActionBar actionBar = getActionBar();
+      actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+      // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
+      mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+      // Create the adapter that will return a fragment for each of the three
+      // primary sections of the activity.
+      mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
+      // Set up the ViewPager with the sections adapter.
+      mViewPager = (ViewPager) findViewById(R.id.pager);
+      mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            actionBar.addTab(actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
+      // When swiping between different sections, select the corresponding
+      // tab. We can also use ActionBar.Tab#select() to do this if we have
+      // a reference to the Tab.
+      mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+          @Override
+          public void onPageSelected(int position) {
+              actionBar.setSelectedNavigationItem(position);
+          }
+      });
+
+      // For each of the sections in the app, add a tab to the action bar.
+      for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+          actionBar.addTab(actionBar.newTab()
+                          .setText(mSectionsPagerAdapter.getPageTitle(i))
+                          .setTabListener(this));
+      }
     }
 
     @Override
@@ -150,97 +157,45 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             return null;
         }
     }
-}
-
-
-
-
-
-/*
-
-
-
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    Intent intent;
-
-    // Handle item selection
-    switch (item.getItemId()) {
-      case R.id.action_settings:
-        intent = new Intent();
-        intent.setClass(MainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-
-        return true;
-      case R.id.action_find_friends:
-        intent = new Intent();
-        intent.setClass(MainActivity.this, FindFriendsActivity.class);
-        startActivity(intent);
-
-        return true;
-      case R.id.action_refresh:
-        Boolean useCustomCamera = true;
-
-        intent = new Intent();
-        if (useCustomCamera) {
-          intent.setClass(MainActivity.this, CameraActivity.class);
-        } else {
-          intent.setClass(MainActivity.this, CameraIntentActivity.class);
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      // called when playing a movie, could fail and this dialog shows the user how to fix it
+      case YouTubeHelper.REQ_PLAYER_CODE:
+        if (resultCode != RESULT_OK) {
+          YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
+          if (errorReason.isUserRecoverableError()) {
+            errorReason.getErrorDialog(this, 0).show();
+          } else {
+            String errorMessage = String.format("PLAYER ERROR!! - %s", errorReason.toString());
+            Util.toast(this, errorMessage);
+          }
         }
-        startActivityForResult(intent, 1337);
 
-        // changes animation of activity
-        MainActivity.this.overridePendingTransition(R.anim.activity_in_down, R.anim.activity_out_down);
-
-        return true;
-
-      case R.id.action_camera:
-        intent = new Intent();
-        intent.setClass(MainActivity.this, CameraIntentActivity.class);
-        startActivityForResult(intent, 1337);
-
-        // changes animation of activity
-        MainActivity.this.overridePendingTransition(R.anim.activity_in_down, R.anim.activity_out_down);
-
-        return true;
-      case R.id.action_custom_camera:
-        CameraActivity.showCameraActivity(MainActivity.this, "Camera");
-
-        return true;
-
-      case R.id.action_intro:
-        intent = new Intent();
-        intent.setClass(MainActivity.this, IntroActivity.class);
-        startActivity(intent);
-
-        return true;
+        break;
       default:
-        return super.onOptionsItemSelected(item);
+        super.onActivityResult(requestCode, resultCode, data);
     }
   }
-
 
   private void activateStrictMode() {
     if (Util.isDebugMode(this)) {
       StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-//          .detectAll() // for all detectable problems
-          .detectDiskReads()
-          .detectDiskWrites()
-          .detectNetwork()
+          .detectAll() // for all detectable problems
+//          .detectDiskReads()
+//          .detectDiskWrites()
+//          .detectNetwork()
           .penaltyLog()
           .build());
       StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
           .detectLeakedSqlLiteObjects()
           .detectLeakedClosableObjects()
           .penaltyLog()
-//          .penaltyDeath()
+          .penaltyDeath()
           .build());
     }
   }
 
 }
 
-
-
- */
