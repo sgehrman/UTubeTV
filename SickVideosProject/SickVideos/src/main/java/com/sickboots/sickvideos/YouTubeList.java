@@ -149,7 +149,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         case RELATED:
           YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
 
-          List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(type, null));
+          List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(type, youTubeHelper.channelID()));
 
           result = youTubeHelper.playlistItemsToMap(playlistItemList);
           break;
