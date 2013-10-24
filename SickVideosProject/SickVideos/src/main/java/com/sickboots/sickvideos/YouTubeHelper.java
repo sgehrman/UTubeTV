@@ -2,6 +2,8 @@ package com.sickboots.sickvideos;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -66,9 +68,10 @@ public class YouTubeHelper {
   }
 
   public static void playMovie(Activity activity, String movieID) {
-    boolean lightboxMode = false;
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+    boolean fullScreen = sp.getBoolean("play_full_screen", false);
 
-    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, lightboxMode);
+    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivity(intent);
   }
 

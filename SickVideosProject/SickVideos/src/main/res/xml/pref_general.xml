@@ -1,5 +1,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <SwitchPreference
+        android:key="play_full_screen"
+        android:title="@string/pref_play_full_screen"
+        android:summary="@string/pref_play_full_screen_summary"
+        android:defaultValue="false" />
+
     <EditTextPreference
         android:key="user_name"
         android:title="@string/pref_title_user_name"
