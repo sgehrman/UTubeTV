@@ -58,6 +58,10 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return items;
   }
 
+  public YouTubeListSpec.ListType type() {
+    return listSpec.type;
+  }
+
   @Override
   public void moreData() {
     loadData(false);
@@ -85,10 +89,20 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   }
 
   public void handleClick(Map itemMap, boolean clickedIcon) {
-    String movieID = (String) itemMap.get("video");
+    switch (type()) {
+      case RELATED:
+      case SEARCH:
+      case PLAYLIST:
+        String movieID = (String) itemMap.get("video");
 
-    if (movieID != null) {
-      YouTubeHelper.playMovie(getActivity(), movieID);
+        if (movieID != null) {
+          YouTubeHelper.playMovie(getActivity(), movieID);
+        }
+        break;
+      case SUBSCRIPTIONS:
+        Util.toast(getActivity(), "Fuck off");
+        // todo: slide in another fragment of subscriptions lists/vids?
+        break;
     }
   }
 

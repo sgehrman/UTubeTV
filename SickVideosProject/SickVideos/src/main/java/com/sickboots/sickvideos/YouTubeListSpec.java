@@ -9,7 +9,7 @@ public class YouTubeListSpec {
   public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH};
 
   private HashMap data;
-  ListType type;
+  public ListType type;
 
   public static YouTubeListSpec playlistSpec(String playlistID) {
     YouTubeListSpec result = emptySpec(ListType.PLAYLIST);

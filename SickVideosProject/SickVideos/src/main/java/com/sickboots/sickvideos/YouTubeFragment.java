@@ -39,14 +39,16 @@ public class YouTubeFragment extends Fragment
 
   private MyAdapter mAdapter;
   private int mType;
-  private static final String TAB_INDEX = "TYPENUMber";
+  private static final String TAB_INDEX = "tabIndex";
   private YouTubeListProvider mList;
 
   public static YouTubeFragment newInstance(int type) {
     YouTubeFragment fragment = new YouTubeFragment();
+
     Bundle args = new Bundle();
     args.putInt(TAB_INDEX, type);
     fragment.setArguments(args);
+
     return fragment;
   }
 

@@ -66,7 +66,9 @@ public class YouTubeHelper {
   }
 
   public static void playMovie(Activity activity, String movieID) {
-    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, true);
+    boolean lightboxMode = false;
+
+    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeHelper.devKey(), movieID, 0, true, lightboxMode);
     activity.startActivity(intent);
   }
 
