@@ -26,6 +26,7 @@ import com.google.api.services.youtube.model.ThumbnailDetails;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,40 +143,37 @@ public class YouTubeHelper {
     }
   }
 
-  public String relatedPlaylistID(RelatedPlaylistType type) {
-    String result = null;
+  // pass null for channelid to get our own channel
+  public String relatedPlaylistID(RelatedPlaylistType type, String channelID) {
+    Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
+
+    return playlistMap.get(type);
+  }
+
+    // pass null for channelid to get our own channel
+  public Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
+    Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
 
     try {
       YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
-      channelRequest.setMine(true);
+      if (channelID != null) {
+        channelRequest.setId(channelID);
+      } else {
+        channelRequest.setMine(true);
+      }
 
       channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
-
-      ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
-
       if (channelsList != null) {
-        // Gets user's default channel id (first channel in list).
-        switch (type)
-        {
-          case FAVORITES:
-            result = relatedPlaylists.getFavorites();
-            break;
-          case LIKES:
-            result = relatedPlaylists.getLikes();
-            break;
-          case UPLOADS:
-            result = relatedPlaylists.getUploads();
-            break;
-          case WATCHED:
-            result = relatedPlaylists.getWatchHistory();
-            break;
-          case WATCHLATER:
-            result = relatedPlaylists.getWatchLater();
-            break;
-        }
+        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+
+        result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
+        result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
+        result.put(RelatedPlaylistType.UPLOADS, relatedPlaylists.getUploads());
+        result.put(RelatedPlaylistType.WATCHED, relatedPlaylists.getWatchHistory());
+        result.put(RelatedPlaylistType.WATCHLATER, relatedPlaylists.getWatchLater());
       }
     } catch (UserRecoverableAuthIOException e) {
       handleException(e);
@@ -387,6 +385,8 @@ public class YouTubeHelper {
   public static final String TEST_MOVIE_ID = "Il1IGKaol_M";  // XuBdf9jYj7o
   public static final String TEST_PLAYLIST_ID = "FLCXAzufqBhwf_ib6xLv7gMw";
   public static final String DEV_PLAYLIST_ID = "PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju";
+
+channel id = UCtVd0c0tGXuTSbU5d8cSBUg
 
 App goals:
 
