@@ -287,21 +287,21 @@ public class YouTubeHelper {
   public List<Map> subscriptionsListToMap() {
     List<Map> result = new ArrayList<Map>();
 
-    List<Subscription> playlistItemList = subscriptionsList();
+    List<Subscription> subscriptionsList = subscriptionsList();
 
     // convert the list into hash maps of video info
-    for (Subscription playlistItem: playlistItemList) {
+    for (Subscription subscription: subscriptionsList) {
       HashMap map = new HashMap();
 
       String thumbnail = "";
-      ThumbnailDetails details = playlistItem.getSnippet().getThumbnails();
+      ThumbnailDetails details = subscription.getSnippet().getThumbnails();
       if (details != null) {
         thumbnail = details.getDefault().getUrl();
       }
 
-      map.put("id", playlistItem.getId());
-      map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("description", playlistItem.getSnippet().getDescription());
+      map.put("id", subscription.getId());
+      map.put("title", subscription.getSnippet().getTitle());
+      map.put("description", subscription.getSnippet().getDescription());
       map.put("thumbnail", thumbnail);
 
       result.add(map);
