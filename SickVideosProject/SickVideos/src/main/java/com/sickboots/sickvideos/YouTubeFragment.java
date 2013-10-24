@@ -39,14 +39,16 @@ public class YouTubeFragment extends Fragment
 
   private MyAdapter mAdapter;
   private int mType;
-  private static final String TAB_INDEX = "tat";
+  private static final String TAB_INDEX = "index";
+  private static final String CHANNEL_ID = "channel";
   private YouTubeListProvider mList;
 
-  public static YouTubeFragment newInstance(int type) {
+  public static YouTubeFragment newInstance(int type, String channelID) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
     args.putInt(TAB_INDEX, type);
+    args.putString(CHANNEL_ID, channelID);
     fragment.setArguments(args);
 
     return fragment;
@@ -60,7 +62,8 @@ public class YouTubeFragment extends Fragment
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
     int tabIndex = getArguments().getInt(TAB_INDEX);
-    mList = createListForIndex(tabIndex);
+    String channelID = getArguments().getString(CHANNEL_ID);
+    mList = createListForIndex(tabIndex, channelID);
 
     mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
@@ -109,7 +112,7 @@ public class YouTubeFragment extends Fragment
     mAdapter.addAll(mList.getItems());
   }
 
-  private YouTubeListProvider createListForIndex(int tabIndex) {
+  private YouTubeListProvider createListForIndex(int tabIndex, String channelID) {
     YouTubeListProvider result = null;
 
     UIAccess access = new UIAccess(this, tabIndex);
@@ -121,7 +124,7 @@ public class YouTubeFragment extends Fragment
     } else {
       switch (tabIndex) {
         case 0:
-          result = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), access);
+          result = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES, channelID), access);
           break;
         case 1:
           result = new YouTubeList().start(YouTubeListSpec.searchSpec("Pigmies"), access);

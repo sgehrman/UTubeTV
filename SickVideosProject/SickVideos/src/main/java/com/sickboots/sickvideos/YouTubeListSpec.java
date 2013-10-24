@@ -19,10 +19,11 @@ public class YouTubeListSpec {
     return result;
   }
 
-  public static YouTubeListSpec relatedSpec(YouTubeHelper.RelatedPlaylistType relatedPlayListType) {
+  public static YouTubeListSpec relatedSpec(YouTubeHelper.RelatedPlaylistType relatedPlayListType, String channelID) {
     YouTubeListSpec result = emptySpec(ListType.RELATED);
 
     result.data.put("type", relatedPlayListType);
+    result.data.put("channel", channelID);
 
     return result;
   }

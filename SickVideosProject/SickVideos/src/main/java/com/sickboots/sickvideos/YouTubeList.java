@@ -2,6 +2,8 @@ package com.sickboots.sickvideos;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
 
@@ -100,8 +102,19 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         }
         break;
       case SUBSCRIPTIONS:
-        Util.toast(getActivity(), "Fuck off");
-        // todo: slide in another fragment of subscriptions lists/vids?
+        String channel = (String) itemMap.get("channel");
+
+        Util.toast(getActivity(), channel != null ? channel : "no channel");
+
+        Fragment frag = YouTubeFragment.newInstance(0, channel);
+
+        FragmentManager fragmentManager = getActivity().getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(frag, "scusk");
+        fragmentTransaction.commit();
+
+
         break;
     }
   }
@@ -148,8 +161,9 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
         case RELATED:
           YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
+          String channel = (String) listSpec.getData("channel");
 
-          List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(type, youTubeHelper.channelID()));
+          List<PlaylistItem> playlistItemList = youTubeHelper.playlistItemsForID(youTubeHelper.relatedPlaylistID(type, channel));
 
           result = youTubeHelper.playlistItemsToMap(playlistItemList);
           break;

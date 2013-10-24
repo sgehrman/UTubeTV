@@ -287,7 +287,7 @@ public class YouTubeHelper {
       YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
       listRequest.setMine(true);
 
-      listRequest.setFields("items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+      listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
       listRequest.setPageToken(nextSubscriptionListToken());
       subscriptionListResponse = listRequest.execute();
@@ -313,6 +313,7 @@ public class YouTubeHelper {
 
       map.put("id", subscription.getId());
       map.put("title", subscription.getSnippet().getTitle());
+      map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
       map.put("description", subscription.getSnippet().getDescription());
       map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
 
