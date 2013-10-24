@@ -39,7 +39,7 @@ public class YouTubeFragment extends Fragment
 
   private MyAdapter mAdapter;
   private int mType;
-  private static final String TAB_INDEX = "tabIndex";
+  private static final String TAB_INDEX = "tat";
   private YouTubeListProvider mList;
 
   public static YouTubeFragment newInstance(int type) {
@@ -181,7 +181,7 @@ public class YouTubeFragment extends Fragment
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-            ScaleAnimation scale = new ScaleAnimation(0, 1, 0, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
             scale.setDuration(300);
             scale.setInterpolator(new OvershootInterpolator());
             imageView.startAnimation(scale);
