@@ -14,12 +14,6 @@ import java.util.Map;
  * Created by sgehrman on 9/24/13.
  */
 public class Util {
-
-  // interface for getting results
-  public interface ListResultListener {
-    public void onResults(ListResultListener listener, List<Map> result);
-  }
-
   // interface for getting results
   public interface StringResultListener {
     public void onResults(StringResultListener listener, String result);

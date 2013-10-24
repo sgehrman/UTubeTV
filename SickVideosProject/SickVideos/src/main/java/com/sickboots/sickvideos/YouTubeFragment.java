@@ -26,14 +26,16 @@ import java.util.Map;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, Util.ListResultListener {
+    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
 
   public interface YouTubeListProvider {
-    public YouTubeListProvider start(YouTubeListSpec s, Util.ListResultListener l);  // could I make a generic constructor?
+    public YouTubeListProvider start(YouTubeListSpec s, UIAccess a);
+    public void restart(UIAccess a);
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
     public void refresh();
     public void moreData();
     public void handleClick(Map itemMap, boolean clickedIcon);
+    public List<Map>getItems();
   }
 
   private MyAdapter mAdapter;
@@ -57,16 +59,27 @@ public class YouTubeFragment extends Fragment
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
     int tabIndex = getArguments().getInt(ARG_TYPE_NUMBER);
-    switch (tabIndex) {
-      case 0:
-        mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), YouTubeFragment.this);
-        break;
-      case 1:
-        mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Hippie"), YouTubeFragment.this);
-        break;
-      case 2:
-        mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), YouTubeFragment.this);
-        break;
+    UIAccess access = new UIAccess(this, tabIndex);
+
+    final String keyPrefix = "list-";
+    mList = (YouTubeListProvider) YouTubeListCache.getInstance().getData(keyPrefix + tabIndex);
+    if (mList != null) {
+      mList.restart(access);
+    } else {
+      switch (tabIndex) {
+        case 0:
+          mList = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES), access);
+          break;
+        case 1:
+          mList = new YouTubeList().start(YouTubeListSpec.searchSpec("Pigmies"), access);
+          break;
+        case 2:
+          mList = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), access);
+          break;
+      }
+
+      // save in cache
+      YouTubeListCache.getInstance().setData(keyPrefix + tabIndex, mList);
     }
 
     mAdapter = new MyAdapter();
@@ -82,6 +95,9 @@ public class YouTubeFragment extends Fragment
 
     // Add the Refreshable View and provide the refresh listener;
     ((MainActivity)getActivity()).mPullToRefreshAttacher.addRefreshableView(listView, this);
+
+    // load data if we have it already
+    onResults();
 
     return rootView;
   }
@@ -108,10 +124,9 @@ public class YouTubeFragment extends Fragment
   }
 
   @Override
-  public void onResults(Util.ListResultListener search, List<Map> result) {
-    for (Map map : result) {
-      mAdapter.add(map);
-    }
+  public void onResults() {
+    mAdapter.clear();
+    mAdapter.addAll(mList.getItems());
   }
 
   // ===========================================================================

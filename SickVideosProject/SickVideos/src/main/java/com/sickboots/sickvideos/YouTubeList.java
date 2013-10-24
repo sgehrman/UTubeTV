@@ -5,28 +5,35 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.google.android.gms.internal.ac;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.youtube.model.PlaylistItem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener, YouTubeFragment.YouTubeListProvider {
-  private Util.ListResultListener listener;
+  private UIAccess access;
   private GoogleAccount account;
   private YouTubeListSpec listSpec;
   private static final int REQUEST_AUTHORIZATION = 444;
-  YouTubeHelper youTubeHelper;
+  private YouTubeHelper youTubeHelper;
+  private List<Map> items = new ArrayList<Map>();
 
   @Override
-  public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, Util.ListResultListener l) {
+  public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, UIAccess a) {
     listSpec = s;
-    listener = l;
+    access = a;
     account = GoogleAccount.newYouTube(this);
 
     loadData(true);
 
     return this;
+  }
+
+  public void restart(UIAccess a) {
+    access = a;
   }
 
   @Override
@@ -46,6 +53,10 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
 
     return handled;
+  }
+
+  public List<Map>getItems() {
+    return items;
   }
 
   @Override
@@ -89,7 +100,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   public void handleAuthIntent(Intent intent) {
     Util.toast(getActivity(), "Need Authorization");
 
-    Fragment f = (Fragment)listener;
+    Fragment f = access.fragment();
 
     // start intent asking the user to authorize the app for google api
     f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
@@ -109,9 +120,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
   @Override
   public Activity getActivity() {
-    Fragment f = (Fragment)listener;
-
-    return f.getActivity();
+    return access.fragment().getActivity();
   }
 
   private class YouTubePlaylistTask extends AsyncTask<Void, Void, List<Map>> {
@@ -143,7 +152,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
 
     protected void onPostExecute(List<Map> result) {
-      listener.onResults(YouTubeList.this.listener, result);
+      items.addAll(result);
+      access.onListResults();
     }
   }
 
