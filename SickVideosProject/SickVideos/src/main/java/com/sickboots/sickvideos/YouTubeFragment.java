@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;

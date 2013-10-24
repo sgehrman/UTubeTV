@@ -3,8 +3,6 @@ package com.sickboots.sickvideos;
 import android.app.Fragment;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sgehrman on 10/23/13.

@@ -7,9 +7,6 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by sgehrman on 9/24/13.
  */
