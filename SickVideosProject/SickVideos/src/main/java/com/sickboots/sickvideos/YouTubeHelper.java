@@ -205,7 +205,7 @@ public class YouTubeHelper {
           playlistItemRequest.setPageToken(token);
           PlaylistItemListResponse playListResponse = playlistItemRequest.execute();
 
-          totalItem = playListResponse.getPageInfo().getTotalResults();
+          totalItems = playListResponse.getPageInfo().getTotalResults();
 
           playlistItemList = playListResponse.getItems();
           response = playListResponse;
@@ -306,7 +306,7 @@ public class YouTubeHelper {
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
 
-        totalItem = searchListResponse.getPageInfo().getTotalResults();
+        totalItems = searchListResponse.getPageInfo().getTotalResults();
 
         // nasty double cast?
         response = searchListResponse;
@@ -363,7 +363,7 @@ public class YouTubeHelper {
         SubscriptionListResponse subscriptionListResponse = listRequest.execute();
 
         response = subscriptionListResponse;
-        totalItem = subscriptionListResponse.getPageInfo().getTotalResults();
+        totalItems = subscriptionListResponse.getPageInfo().getTotalResults();
 
         result.addAll(subscriptionListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
@@ -401,7 +401,7 @@ public class YouTubeHelper {
   abstract public class BaseListResults {
     protected Object response;
     protected List<Map> items;
-    protected int totalItem;
+    protected int totalItems;
     private int highestLoadedPosition = 0;
 
     // subclasses must implement
@@ -414,7 +414,7 @@ public class YouTubeHelper {
     public boolean getNext() {
       boolean result = false;
 
-      if (totalItem > items.size()) {
+      if (totalItems > items.size()) {
         String token = nextToken();
 
         if (token != null) {
@@ -431,6 +431,10 @@ public class YouTubeHelper {
       return result;
     }
 
+    public int getTotalItems() {
+      return totalItems;
+    }
+
     public boolean shouldLoadNextPage(int position) {
       if (position >= highestLoadedPosition) {
         int loadedToPosition = (items.size() - 1);
@@ -440,7 +444,7 @@ public class YouTubeHelper {
         if (position >= highestLoadedPosition) {
           highestLoadedPosition = position;
 
-          if (position < (totalItem-1)) {
+          if (position < (totalItems-1)) {
             return true;
           }
         }

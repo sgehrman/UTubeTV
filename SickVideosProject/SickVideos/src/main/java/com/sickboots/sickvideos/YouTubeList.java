@@ -12,6 +12,7 @@ import android.view.ViewParent;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -184,6 +185,15 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       }
 
       result = listResults.getItems();
+
+      // add empty entries
+      int diff = (listResults.getTotalItems() - result.size());
+      if (diff > 0) {
+        HashMap empty = new HashMap();
+        while (diff-- > 0) {
+          result.add(empty);
+        }
+      }
 
       return result;
     }
