@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewParent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.services.youtube.model.PlaylistItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return handled;
   }
 
-  public List<Map>getItems() {
+  public List<Map> getItems() {
     return items;
   }
 
@@ -167,22 +166,21 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       if (listResults != null) {
         listResults.getNext();
       } else {
-        switch (listSpec.type)
-        {
+        switch (listSpec.type) {
           case SUBSCRIPTIONS:
-              listResults = youTubeHelper.subscriptionListResults();
+            listResults = youTubeHelper.subscriptionListResults();
             break;
 
           case RELATED:
             YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
             String channel = (String) listSpec.getData("channel");
-              listResults = youTubeHelper.playListResults(type, channel);
+            listResults = youTubeHelper.playListResults(type, channel);
 
             break;
 
           case SEARCH:
             String query = (String) listSpec.getData("query");
-              listResults = youTubeHelper.searchListResults(query);
+            listResults = youTubeHelper.searchListResults(query);
             break;
         }
       }

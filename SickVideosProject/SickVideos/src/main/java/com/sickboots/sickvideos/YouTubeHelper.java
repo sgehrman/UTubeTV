@@ -36,7 +36,9 @@ import java.util.Map;
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
-  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER};
+  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
+
+  ;
   public static final int REQ_PLAYER_CODE = 334443;
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
@@ -45,6 +47,7 @@ public class YouTubeHelper {
   // must implement this listener
   public interface YouTubeHelperListener {
     public void handleAuthIntent(Intent authIntent);
+
     public void handleExceptionMessage(String message);
   }
 
@@ -55,7 +58,8 @@ public class YouTubeHelper {
 
     if (c == null) {
       c = new HttpRequestInitializer() {
-        public void initialize(HttpRequest request) throws IOException {}
+        public void initialize(HttpRequest request) throws IOException {
+        }
       };
     }
 
@@ -124,11 +128,11 @@ public class YouTubeHelper {
       e.printStackTrace();
 
       if (listener != null) {
-        listener.handleExceptionMessage( "JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
+        listener.handleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
       }
     } else {
       if (listener != null) {
-        listener.handleExceptionMessage( "Exception Occurred");
+        listener.handleExceptionMessage("Exception Occurred");
       }
 
       e.printStackTrace();
@@ -142,7 +146,7 @@ public class YouTubeHelper {
     return playlistMap.get(type);
   }
 
-    // pass null for channelid to get our own channel
+  // pass null for channelid to get our own channel
   public Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
     Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
 
@@ -259,8 +263,7 @@ public class YouTubeHelper {
       items = itemsForNextToken("");
     }
 
-    protected List<Map> itemsForNextToken(String token)
-    {
+    protected List<Map> itemsForNextToken(String token) {
       Map resultMap = playlistItemsForID(playlistID, token);
 
       List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
@@ -274,7 +277,7 @@ public class YouTubeHelper {
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
-      for (PlaylistItem playlistItem: playlistItemList) {
+      for (PlaylistItem playlistItem : playlistItemList) {
         HashMap map = new HashMap();
 
         map.put("video", playlistItem.getContentDetails().getVideoId());
@@ -299,10 +302,9 @@ public class YouTubeHelper {
       items = itemsForNextToken("");
     }
 
-    protected List<Map> itemsForNextToken(String token)
-    {
+    protected List<Map> itemsForNextToken(String token) {
       List<SearchResult> result = new ArrayList<SearchResult>();
-      SearchListResponse searchListResponse=null;
+      SearchListResponse searchListResponse = null;
 
       try {
         YouTube.Search.List listRequest = youTube().search().list("id, snippet");
@@ -334,7 +336,7 @@ public class YouTubeHelper {
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
-      for (SearchResult playlistItem: playlistItemList) {
+      for (SearchResult playlistItem : playlistItemList) {
         HashMap map = new HashMap();
 
         map.put("video", playlistItem.getId().getVideoId());
@@ -359,8 +361,7 @@ public class YouTubeHelper {
       items = itemsForNextToken("");
     }
 
-    protected List<Map> itemsForNextToken(String token)
-    {
+    protected List<Map> itemsForNextToken(String token) {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
@@ -389,7 +390,7 @@ public class YouTubeHelper {
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
-      for (Subscription subscription: subscriptionsList) {
+      for (Subscription subscription : subscriptionsList) {
         HashMap map = new HashMap();
 
         map.put("id", subscription.getId());
@@ -437,9 +438,8 @@ public class YouTubeHelper {
       return result;
     }
 
-    protected List<Map> itemsForNextToken(String token)
-    {
-     // subclass this shit
+    protected List<Map> itemsForNextToken(String token) {
+      // subclass this shit
 
       return null;
     }
@@ -450,13 +450,11 @@ public class YouTubeHelper {
       if (response != null) {
         // is there a better way of doing this?
         if (response instanceof SearchListResponse) {
-          result = ((SearchListResponse)response).getNextPageToken();
-        }
-        else if (response instanceof PlaylistItemListResponse) {
-          result = ((PlaylistItemListResponse)response).getNextPageToken();
-        }
-        else if (response instanceof SubscriptionListResponse) {
-          result = ((SubscriptionListResponse)response).getNextPageToken();
+          result = ((SearchListResponse) response).getNextPageToken();
+        } else if (response instanceof PlaylistItemListResponse) {
+          result = ((PlaylistItemListResponse) response).getNextPageToken();
+        } else if (response instanceof SubscriptionListResponse) {
+          result = ((SubscriptionListResponse) response).getNextPageToken();
         }
       }
 

@@ -6,7 +6,9 @@ import java.util.HashMap;
  * Created by sgehrman on 10/23/13.
  */
 public class YouTubeListSpec {
-  public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH};
+  public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH}
+
+  ;
 
   private HashMap data;
   public ListType type;

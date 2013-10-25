@@ -6,12 +6,12 @@ public class AppData {
   private static AppData instance = null;
   private HashMap data;
 
-  private AppData(){
+  private AppData() {
     data = new HashMap();
   }
 
-  public static AppData getInstance(){
-    if(instance == null) {
+  public static AppData getInstance() {
+    if (instance == null) {
       instance = new AppData();
     }
     return instance;
@@ -21,7 +21,7 @@ public class AppData {
     return data.get(key);
   }
 
-  public void setData(String key, Object value){
+  public void setData(String key, Object value) {
     data.put(key, value);
   }
 }

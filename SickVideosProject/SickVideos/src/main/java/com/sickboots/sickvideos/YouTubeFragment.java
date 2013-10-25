@@ -29,12 +29,18 @@ public class YouTubeFragment extends Fragment
 
   public interface YouTubeListProvider {
     public YouTubeListProvider start(YouTubeListSpec s, UIAccess a);
+
     public void restart(UIAccess a);
+
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
+
     public void refresh();
+
     public void moreData();
+
     public void handleClick(Map itemMap, boolean clickedIcon);
-    public List<Map>getItems();
+
+    public List<Map> getItems();
   }
 
   private MyAdapter mAdapter;
@@ -70,14 +76,14 @@ public class YouTubeFragment extends Fragment
 
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-      Map map = mAdapter.getItem(position);
+        Map map = mAdapter.getItem(position);
 
-      mList.handleClick(map, false);
+        mList.handleClick(map, false);
       }
     });
 
     // Add the Refreshable View and provide the refresh listener;
-    ((MainActivity)getActivity()).mPullToRefreshAttacher.addRefreshableView(listView, this);
+    ((MainActivity) getActivity()).mPullToRefreshAttacher.addRefreshableView(listView, this);
 
     // load data if we have it already
     onResults();
@@ -164,8 +170,7 @@ public class YouTubeFragment extends Fragment
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-      if (convertView == null)
-      {
+      if (convertView == null) {
         int resID = R.layout.youtube_list_item_large;
 //        if (true) resID = R.layout.youtube_list_item;
 
@@ -182,7 +187,7 @@ public class YouTubeFragment extends Fragment
       holder.button.setAnimation(null);
 
       // yep, that's it. it handles the downloading and showing an interstitial image automagically.
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String)getItem(position).get("thumbnail"), android.R.drawable.ic_input_get, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), android.R.drawable.ic_input_get, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -202,7 +207,7 @@ public class YouTubeFragment extends Fragment
       holder.text.setText((String) getItem(position).get("title"));
 
       // load more data if at the end
-      if (position == (getCount()-1)) {
+      if (position == (getCount() - 1)) {
         mList.moreData();
       }
 

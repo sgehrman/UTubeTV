@@ -19,6 +19,7 @@ import java.util.List;
 public class GoogleAccount {
   public interface GoogleAccountDelegate {
     public Activity getActivity();
+
     public void credentialIsReady();
   }
 
