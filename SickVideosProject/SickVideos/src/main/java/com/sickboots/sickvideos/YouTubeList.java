@@ -23,7 +23,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   private static final int REQUEST_AUTHORIZATION = 444;
   private YouTubeHelper youTubeHelper;
   private List<Map> items = new ArrayList<Map>();
-  YouTubeHelper.PlayListResults playlistResults;
+  private YouTubeHelper.BaseListResults listResults;
 
   @Override
   public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, UIAccess a) {
@@ -74,7 +74,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
   @Override
   public void refresh() {
-    youTubeHelper.refresh();
+    listResults = null;
 
     loadData(false);
   }
@@ -163,31 +163,31 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     protected List<Map> doInBackground(Void... params) {
       List<Map> result = null;
 
-      switch (listSpec.type)
-      {
-        case SUBSCRIPTIONS:
-          result = youTubeHelper.subscriptionsListToMap();
-          break;
 
-        case RELATED:
-          YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
-          String channel = (String) listSpec.getData("channel");
+      if (listResults != null) {
+        listResults.getNext();
+      } else {
+        switch (listSpec.type)
+        {
+          case SUBSCRIPTIONS:
+              listResults = youTubeHelper.subscriptionListResults();
+            break;
 
-          if (playlistResults != null) {
-            playlistResults.getNext();
-          } else {
-            playlistResults = youTubeHelper.playListResults(type, channel);
-          }
+          case RELATED:
+            YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
+            String channel = (String) listSpec.getData("channel");
+              listResults = youTubeHelper.playListResults(type, channel);
 
-          result = playlistResults.getItems();
-          break;
+            break;
 
-        case SEARCH:
-          String query = (String) listSpec.getData("query");
-
-          result = youTubeHelper.searchListToMap(query);
-          break;
+          case SEARCH:
+            String query = (String) listSpec.getData("query");
+              listResults = youTubeHelper.searchListResults(query);
+            break;
+        }
       }
+
+      result = listResults.getItems();
 
       return result;
     }

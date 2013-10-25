@@ -41,8 +41,6 @@ public class YouTubeHelper {
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
-  private SubscriptionListResponse subscriptionListResponse;
-  private SearchListResponse searchListResponse;
 
   // must implement this listener
   public interface YouTubeHelperListener {
@@ -111,12 +109,6 @@ public class YouTubeHelper {
     }
 
     return result;
-  }
-
-  public void refresh() {
-    // this will make nextPlaylistToken/nextSubscriptionListToken be ""
-    subscriptionListResponse = null;
-    searchListResponse = null;
   }
 
   private void handleException(Exception e) {
@@ -190,6 +182,18 @@ public class YouTubeHelper {
     return result;
   }
 
+  public SearchListResults searchListResults(String query) {
+    SearchListResults result = new SearchListResults(query);
+
+    return result;
+  }
+
+  public SubscriptionListResults subscriptionListResults() {
+    SubscriptionListResults result = new SubscriptionListResults();
+
+    return result;
+  }
+
   public Map playlistItemsForID(String playlistID, String nextToken) {
     HashMap result = new HashMap();
 
@@ -243,142 +247,171 @@ public class YouTubeHelper {
   }
 
   // ========================================================
-  // subscriptions
-
-  private String nextSubscriptionListToken() {
-    String result = null;
-
-    if (subscriptionListResponse != null) {
-      result = subscriptionListResponse.getNextPageToken();
-    }
-
-    if (result == null) {
-      result = "";
-    }
-
-    return result;
-  }
-
-  public List<Subscription> subscriptionsList() {
-    List<Subscription> result = new ArrayList<Subscription>();
-
-    try {
-      YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
-      listRequest.setMine(true);
-
-      listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/default/url), nextPageToken, pageInfo");
-
-      listRequest.setPageToken(nextSubscriptionListToken());
-      subscriptionListResponse = listRequest.execute();
-
-      result.addAll(subscriptionListResponse.getItems());
-    } catch (UserRecoverableAuthIOException e) {
-      handleException(e);
-    } catch (Exception e) {
-      handleException(e);
-    }
-
-    return result;
-  }
-
-  public List<Map> subscriptionsListToMap() {
-    List<Map> result = new ArrayList<Map>();
-
-    List<Subscription> subscriptionsList = subscriptionsList();
-
-    // convert the list into hash maps of video info
-    for (Subscription subscription: subscriptionsList) {
-      HashMap map = new HashMap();
-
-      map.put("id", subscription.getId());
-      map.put("title", subscription.getSnippet().getTitle());
-      map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
-      map.put("description", subscription.getSnippet().getDescription());
-      map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
-
-      result.add(map);
-    }
-
-    return result;
-  }
-
-  // ========================================================
-  // search
-
-  private String nextSearchListToken() {
-    String result = null;
-
-    if (searchListResponse != null) {
-      result = searchListResponse.getNextPageToken();
-    }
-
-    if (result == null) {
-      result = "";
-    }
-
-    return result;
-  }
-
-  public List<SearchResult> searchList(String query) {
-    List<SearchResult> result = new ArrayList<SearchResult>();
-
-    try {
-      YouTube.Search.List listRequest = youTube().search().list("id, snippet");
-
-      listRequest.setQ(query);
-      listRequest.setKey(YouTubeHelper.devKey());
-      listRequest.setType("video");
-      listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
-
-      listRequest.setPageToken(nextSubscriptionListToken());
-      searchListResponse = listRequest.execute();
-
-      result.addAll(searchListResponse.getItems());
-    } catch (UserRecoverableAuthIOException e) {
-      handleException(e);
-    } catch (Exception e) {
-      handleException(e);
-    }
-
-    return result;
-  }
-
-  public List<Map> searchListToMap(String query) {
-    List<Map> result = new ArrayList<Map>();
-
-    List<SearchResult> playlistItemList = searchList(query);
-
-    // convert the list into hash maps of video info
-    for (SearchResult playlistItem: playlistItemList) {
-      HashMap map = new HashMap();
-
-      map.put("video", playlistItem.getId().getVideoId());
-      map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
-
-      result.add(map);
-    }
-
-    return result;
-  }
-
-  // ========================================================
   // PlayListResults
 
-  public class PlayListResults {
-    private List<Map> items;
-    private int totalItem;
-    private PlaylistItemListResponse response;
-    private YouTubeHelper.RelatedPlaylistType type;
-    private String channel;
+  public class PlayListResults extends BaseListResults {
     private String playlistID;
 
-    public PlayListResults(YouTubeHelper.RelatedPlaylistType t, String c) {
-      type = t;
-      channel = c;
+    public PlayListResults(YouTubeHelper.RelatedPlaylistType type, String channel) {
+      super();
+
       playlistID = relatedPlaylistID(type, channel);
       items = itemsForNextToken("");
     }
+
+    protected List<Map> itemsForNextToken(String token)
+    {
+      Map resultMap = playlistItemsForID(playlistID, token);
+
+      List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
+      response = resultMap.get("response");
+      totalItem = ((Integer) resultMap.get("total")).intValue();
+
+      return playlistItemsToMap(playlistItemList);
+    }
+
+    private List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (PlaylistItem playlistItem: playlistItemList) {
+        HashMap map = new HashMap();
+
+        map.put("video", playlistItem.getContentDetails().getVideoId());
+        map.put("title", playlistItem.getSnippet().getTitle());
+        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // SearchListResults
+
+  public class SearchListResults extends BaseListResults {
+    private String query;
+
+    public SearchListResults(String q) {
+      query = q;
+      items = itemsForNextToken("");
+    }
+
+    protected List<Map> itemsForNextToken(String token)
+    {
+      List<SearchResult> result = new ArrayList<SearchResult>();
+      SearchListResponse searchListResponse=null;
+
+      try {
+        YouTube.Search.List listRequest = youTube().search().list("id, snippet");
+
+        listRequest.setQ(query);
+        listRequest.setKey(YouTubeHelper.devKey());
+        listRequest.setType("video");
+        listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+        listRequest.setPageToken(token);
+        searchListResponse = listRequest.execute();
+
+        totalItem = searchListResponse.getPageInfo().getTotalResults();
+
+        // nasty double cast?
+        response = searchListResponse;
+
+        result.addAll(searchListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return searchResultsToMap(result);
+    }
+
+    private List<Map> searchResultsToMap(List<SearchResult> playlistItemList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (SearchResult playlistItem: playlistItemList) {
+        HashMap map = new HashMap();
+
+        map.put("video", playlistItem.getId().getVideoId());
+        map.put("title", playlistItem.getSnippet().getTitle());
+        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+
+  }
+
+  // ========================================================
+  // SubscriptionListResults
+
+  public class SubscriptionListResults extends BaseListResults {
+    public SubscriptionListResults() {
+      super();
+
+      items = itemsForNextToken("");
+    }
+
+    protected List<Map> itemsForNextToken(String token)
+    {
+      List<Subscription> result = new ArrayList<Subscription>();
+
+      try {
+        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
+        listRequest.setMine(true);
+
+        listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+        listRequest.setPageToken(token);
+        SubscriptionListResponse subscriptionListResponse = listRequest.execute();
+
+        response = subscriptionListResponse;
+        totalItem = subscriptionListResponse.getPageInfo().getTotalResults();
+
+        result.addAll(subscriptionListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return playlistItemsToMap(result);
+    }
+
+    private List<Map> playlistItemsToMap(List<Subscription> subscriptionsList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (Subscription subscription: subscriptionsList) {
+        HashMap map = new HashMap();
+
+        map.put("id", subscription.getId());
+        map.put("title", subscription.getSnippet().getTitle());
+        map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
+        map.put("description", subscription.getSnippet().getDescription());
+        map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // BaseListResults
+
+  public class BaseListResults {
+    protected Object response;
+    protected List<Map> items;
+    protected int totalItem;
 
     public List<Map> getItems() {
       return items;
@@ -404,39 +437,27 @@ public class YouTubeHelper {
       return result;
     }
 
-    private List<Map> itemsForNextToken(String token)
+    protected List<Map> itemsForNextToken(String token)
     {
-      Map resultMap = playlistItemsForID(playlistID, token);
+     // subclass this shit
 
-      List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
-      response = (PlaylistItemListResponse) resultMap.get("response");
-      totalItem = ((Integer) resultMap.get("total")).intValue();
-
-      return playlistItemsToMap(playlistItemList);
-    }
-
-    private List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
-      List<Map> result = new ArrayList<Map>();
-
-      // convert the list into hash maps of video info
-      for (PlaylistItem playlistItem: playlistItemList) {
-        HashMap map = new HashMap();
-
-        map.put("video", playlistItem.getContentDetails().getVideoId());
-        map.put("title", playlistItem.getSnippet().getTitle());
-        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
-
-        result.add(map);
-      }
-
-      return result;
+      return null;
     }
 
     private String nextToken() {
       String result = null;
 
       if (response != null) {
-        result = response.getNextPageToken();
+        // is there a better way of doing this?
+        if (response instanceof SearchListResponse) {
+          result = ((SearchListResponse)response).getNextPageToken();
+        }
+        else if (response instanceof PlaylistItemListResponse) {
+          result = ((PlaylistItemListResponse)response).getNextPageToken();
+        }
+        else if (response instanceof SubscriptionListResponse) {
+          result = ((SubscriptionListResponse)response).getNextPageToken();
+        }
       }
 
       return result;
