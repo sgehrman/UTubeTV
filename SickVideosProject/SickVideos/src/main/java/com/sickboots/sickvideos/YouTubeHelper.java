@@ -138,47 +138,6 @@ public class YouTubeHelper {
     }
   }
 
-  // pass null for channelid to get our own channel
-  public String relatedPlaylistID(RelatedPlaylistType type, String channelID) {
-    Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
-
-    return playlistMap.get(type);
-  }
-
-  // pass null for channelid to get our own channel
-  public Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
-    Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
-
-    try {
-      YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
-      if (channelID != null) {
-        channelRequest.setId(channelID);
-      } else {
-        channelRequest.setMine(true);
-      }
-
-      channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
-      ChannelListResponse channelResult = channelRequest.execute();
-
-      List<Channel> channelsList = channelResult.getItems();
-      if (channelsList != null) {
-        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
-
-        result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
-        result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
-        result.put(RelatedPlaylistType.UPLOADS, relatedPlaylists.getUploads());
-        result.put(RelatedPlaylistType.WATCHED, relatedPlaylists.getWatchHistory());
-        result.put(RelatedPlaylistType.WATCHLATER, relatedPlaylists.getWatchLater());
-      }
-    } catch (UserRecoverableAuthIOException e) {
-      handleException(e);
-    } catch (Exception e) {
-      handleException(e);
-    }
-
-    return result;
-  }
-
   public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
     PlayListResults result = new PlayListResults(type, channelID);
 
@@ -193,35 +152,6 @@ public class YouTubeHelper {
 
   public SubscriptionListResults subscriptionListResults() {
     SubscriptionListResults result = new SubscriptionListResults();
-
-    return result;
-  }
-
-  public Map playlistItemsForID(String playlistID, String nextToken) {
-    HashMap result = new HashMap();
-
-    if (playlistID != null) {
-      try {
-        YouTube.PlaylistItems.List playlistItemRequest = youTube().playlistItems().list("id, contentDetails, snippet");
-        playlistItemRequest.setPlaylistId(playlistID);
-
-        playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
-
-        playlistItemRequest.setPageToken(nextToken);
-        PlaylistItemListResponse response = playlistItemRequest.execute();
-
-        int totalResults = response.getPageInfo().getTotalResults();
-
-        result.put("items", response.getItems());
-        result.put("total", totalResults);
-        result.put("response", response);
-
-      } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
-      } catch (Exception e) {
-        handleException(e);
-      }
-    }
 
     return result;
   }
@@ -263,11 +193,29 @@ public class YouTubeHelper {
     }
 
     protected List<Map> itemsForNextToken(String token) {
-      Map resultMap = playlistItemsForID(playlistID, token);
+      List<PlaylistItem> playlistItemList=null;
 
-      List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
-      response = resultMap.get("response");
-      totalItem = ((Integer) resultMap.get("total")).intValue();
+      if (playlistID != null) {
+        try {
+          YouTube.PlaylistItems.List playlistItemRequest = youTube().playlistItems().list("id, contentDetails, snippet");
+          playlistItemRequest.setPlaylistId(playlistID);
+
+          playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+
+          playlistItemRequest.setPageToken(token);
+          PlaylistItemListResponse playListResponse = playlistItemRequest.execute();
+
+          totalItem = playListResponse.getPageInfo().getTotalResults();
+
+          playlistItemList = playListResponse.getItems();
+          response = playListResponse;
+
+        } catch (UserRecoverableAuthIOException e) {
+          handleException(e);
+        } catch (Exception e) {
+          handleException(e);
+        }
+      }
 
       return playlistItemsToMap(playlistItemList);
     }
@@ -288,6 +236,48 @@ public class YouTubeHelper {
 
       return result;
     }
+
+    // pass null for channelid to get our own channel
+    public String relatedPlaylistID(RelatedPlaylistType type, String channelID) {
+      Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
+
+      return playlistMap.get(type);
+    }
+
+    // pass null for channelid to get our own channel
+    public Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
+      Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
+
+      try {
+        YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
+        if (channelID != null) {
+          channelRequest.setId(channelID);
+        } else {
+          channelRequest.setMine(true);
+        }
+
+        channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
+        ChannelListResponse channelResult = channelRequest.execute();
+
+        List<Channel> channelsList = channelResult.getItems();
+        if (channelsList != null) {
+          ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+
+          result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
+          result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
+          result.put(RelatedPlaylistType.UPLOADS, relatedPlaylists.getUploads());
+          result.put(RelatedPlaylistType.WATCHED, relatedPlaylists.getWatchHistory());
+          result.put(RelatedPlaylistType.WATCHLATER, relatedPlaylists.getWatchLater());
+        }
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return result;
+    }
+
   }
 
   // ========================================================
