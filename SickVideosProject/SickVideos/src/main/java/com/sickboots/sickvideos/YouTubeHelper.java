@@ -41,7 +41,6 @@ public class YouTubeHelper {
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
-  private PlaylistItemListResponse playlistItemListResponse;
   private SubscriptionListResponse subscriptionListResponse;
   private SearchListResponse searchListResponse;
 
@@ -116,7 +115,6 @@ public class YouTubeHelper {
 
   public void refresh() {
     // this will make nextPlaylistToken/nextSubscriptionListToken be ""
-    playlistItemListResponse = null;
     subscriptionListResponse = null;
     searchListResponse = null;
   }
@@ -186,8 +184,8 @@ public class YouTubeHelper {
     return result;
   }
 
-  public List<PlaylistItem> playlistItemsForID(String playlistID) {
-    List<PlaylistItem> result = new ArrayList<PlaylistItem>();
+  public Map playlistItemsForID(String playlistID, String nextToken) {
+    HashMap result = new HashMap();
 
     if (playlistID != null) {
       try {
@@ -196,10 +194,15 @@ public class YouTubeHelper {
 
         playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
-        playlistItemRequest.setPageToken(nextPlaylistToken());
-        playlistItemListResponse = playlistItemRequest.execute();
+        playlistItemRequest.setPageToken(nextToken);
+        PlaylistItemListResponse response = playlistItemRequest.execute();
 
-        result.addAll(playlistItemListResponse.getItems());
+        int totalResults = response.getPageInfo().getTotalResults();
+
+        result.put("items", response.getItems());
+        result.put("total", totalResults);
+        result.put("response", response);
+
       } catch (UserRecoverableAuthIOException e) {
         handleException(e);
       } catch (Exception e) {
@@ -210,33 +213,8 @@ public class YouTubeHelper {
     return result;
   }
 
-  private String nextPlaylistToken() {
-    String result = null;
-
-    if (playlistItemListResponse != null) {
-      result = playlistItemListResponse.getNextPageToken();
-    }
-
-    if (result == null) {
-      result = "";
-    }
-
-    return result;
-  }
-
-  public List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
-    List<Map> result = new ArrayList<Map>();
-
-    // convert the list into hash maps of video info
-    for (PlaylistItem playlistItem: playlistItemList) {
-      HashMap map = new HashMap();
-
-      map.put("video", playlistItem.getContentDetails().getVideoId());
-      map.put("title", playlistItem.getSnippet().getTitle());
-      map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
-
-      result.add(map);
-    }
+  public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
+    PlayListResults result = new PlayListResults(type, channelID);
 
     return result;
   }
@@ -385,6 +363,84 @@ public class YouTubeHelper {
   }
 
   // ========================================================
+  // PlayListResults
+
+  public class PlayListResults {
+    private List<Map> items;
+    private int totalItem;
+    private PlaylistItemListResponse response;
+    YouTubeHelper.RelatedPlaylistType type;
+    String channel;
+
+    public PlayListResults(YouTubeHelper.RelatedPlaylistType t, String c) {
+      type = t;
+      channel = c;
+      items = itemsForNextToken("");
+    }
+
+    public List<Map> getItems() {
+      return items;
+    }
+
+    public boolean getNext() {
+      boolean result = false;
+
+      if (totalItem > items.size()) {
+        String token = nextToken();
+
+        if (token != null) {
+          List<Map> newItems = itemsForNextToken(token);
+
+          if (newItems != null) {
+            items.addAll(newItems);
+
+            result = true;
+          }
+        }
+      }
+
+      return result;
+    }
+
+    private List<Map> itemsForNextToken(String token)
+    {
+      Map resultMap = playlistItemsForID(relatedPlaylistID(type, channel), token);
+
+      List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
+      response = (PlaylistItemListResponse) resultMap.get("response");
+      totalItem = ((Integer) resultMap.get("total")).intValue();
+
+      return playlistItemsToMap(playlistItemList);
+    }
+
+    private List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (PlaylistItem playlistItem: playlistItemList) {
+        HashMap map = new HashMap();
+
+        map.put("video", playlistItem.getContentDetails().getVideoId());
+        map.put("title", playlistItem.getSnippet().getTitle());
+        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+
+    private String nextToken() {
+      String result = null;
+
+      if (response != null) {
+        result = response.getNextPageToken();
+      }
+
+      return result;
+    }
+
+  }
 
 }
 
