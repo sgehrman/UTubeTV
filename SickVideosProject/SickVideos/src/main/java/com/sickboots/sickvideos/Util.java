@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,4 +41,23 @@ public class Util {
     }
     return true;
   }
+
+  public static void activateStrictMode(Context context) {
+    if (Util.isDebugMode(context)) {
+      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+          .detectAll() // for all detectable problems
+//          .detectDiskReads()
+//          .detectDiskWrites()
+//          .detectNetwork()
+          .penaltyLog()
+          .build());
+      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+          .detectLeakedSqlLiteObjects()
+          .detectLeakedClosableObjects()
+          .penaltyLog()
+          .penaltyDeath()
+          .build());
+    }
+  }
+
 }

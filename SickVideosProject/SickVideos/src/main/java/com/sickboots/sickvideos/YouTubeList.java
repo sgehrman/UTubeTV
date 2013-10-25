@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.view.ViewParent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.youtube.model.PlaylistItem;
@@ -106,14 +108,21 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
         Util.toast(getActivity(), channel != null ? channel : "no channel");
 
-        Fragment frag = YouTubeFragment.newInstance(0, channel);
+        ViewParent parent = access.fragment().getView().getParent();
 
-        FragmentManager fragmentManager = getActivity().getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if ((channel != null) && (parent instanceof View)) {
+          View parentView = (View) parent;
 
-        fragmentTransaction.add(frag, "scusk");
-        fragmentTransaction.commit();
+          Fragment frag = YouTubeFragment.newInstance(0, channel);
 
+          FragmentManager fragmentManager = getActivity().getFragmentManager();
+          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+          fragmentTransaction.add(parentView.getId(), frag).show(frag).hide(access.fragment());
+          fragmentTransaction.addToBackStack(null);
+
+          fragmentTransaction.commit();
+        }
 
         break;
     }

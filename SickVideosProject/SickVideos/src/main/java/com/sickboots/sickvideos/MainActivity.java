@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
-      activateStrictMode();
+//      Util.activateStrictMode(this);
 
       // Set up the action bar.
       final ActionBar actionBar = getActionBar();
@@ -176,24 +176,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         break;
       default:
         super.onActivityResult(requestCode, resultCode, data);
-    }
-  }
-
-  private void activateStrictMode() {
-    if (Util.isDebugMode(this)) {
-      StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-          .detectAll() // for all detectable problems
-//          .detectDiskReads()
-//          .detectDiskWrites()
-//          .detectNetwork()
-          .penaltyLog()
-          .build());
-      StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-          .detectLeakedSqlLiteObjects()
-          .detectLeakedClosableObjects()
-          .penaltyLog()
-          .penaltyDeath()
-          .build());
     }
   }
 
