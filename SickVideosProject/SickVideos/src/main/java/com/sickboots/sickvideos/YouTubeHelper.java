@@ -38,7 +38,6 @@ import java.util.Map;
 public class YouTubeHelper {
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
-  ;
   public static final int REQ_PLAYER_CODE = 334443;
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
@@ -409,10 +408,13 @@ public class YouTubeHelper {
   // ========================================================
   // BaseListResults
 
-  public class BaseListResults {
+  abstract public class BaseListResults {
     protected Object response;
     protected List<Map> items;
     protected int totalItem;
+
+    // subclasses must implement
+    abstract protected List<Map> itemsForNextToken(String token);
 
     public List<Map> getItems() {
       return items;
@@ -436,12 +438,6 @@ public class YouTubeHelper {
       }
 
       return result;
-    }
-
-    protected List<Map> itemsForNextToken(String token) {
-      // subclass this shit
-
-      return null;
     }
 
     private String nextToken() {
