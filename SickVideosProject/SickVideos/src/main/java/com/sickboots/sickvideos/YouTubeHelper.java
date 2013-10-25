@@ -118,6 +118,7 @@ public class YouTubeHelper {
     // this will make nextPlaylistToken/nextSubscriptionListToken be ""
     playlistItemListResponse = null;
     subscriptionListResponse = null;
+    searchListResponse = null;
   }
 
   private void handleException(Exception e) {
