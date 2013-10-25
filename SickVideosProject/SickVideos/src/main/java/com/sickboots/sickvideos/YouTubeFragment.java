@@ -26,28 +26,11 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
-
-  public interface YouTubeListProvider {
-    public YouTubeListProvider start(YouTubeListSpec s, UIAccess a);
-
-    public void restart(UIAccess a);
-
-    public boolean handleActivityResult(int requestCode, int resultCode, Intent data);
-
-    public void refresh();
-
-    public void moreData();
-
-    public void handleClick(Map itemMap, boolean clickedIcon);
-
-    public List<Map> getItems();
-  }
-
   private MyAdapter mAdapter;
   private int mType;
   private static final String TAB_INDEX = "index";
   private static final String CHANNEL_ID = "channel";
-  private YouTubeListProvider mList;
+  private YouTubeList mList;
 
   public static YouTubeFragment newInstance(int type, String channelID) {
     YouTubeFragment fragment = new YouTubeFragment();
@@ -118,13 +101,13 @@ public class YouTubeFragment extends Fragment
     mAdapter.addAll(mList.getItems());
   }
 
-  private YouTubeListProvider createListForIndex(int tabIndex, String channelID) {
-    YouTubeListProvider result = null;
+  private YouTubeList createListForIndex(int tabIndex, String channelID) {
+    YouTubeList result = null;
 
     UIAccess access = new UIAccess(this, tabIndex);
 
     final String keyPrefix = "list-";
-    result = (YouTubeListProvider) AppData.getInstance().getData(keyPrefix + tabIndex);
+    result = (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
     if (result != null) {
       result.restart(access);
     } else {
@@ -207,9 +190,7 @@ public class YouTubeFragment extends Fragment
       holder.text.setText((String) getItem(position).get("title"));
 
       // load more data if at the end
-      if (position == (getCount() - 1)) {
-        mList.moreData();
-      }
+      mList.loadToIndex(position);
 
       return convertView;
     }

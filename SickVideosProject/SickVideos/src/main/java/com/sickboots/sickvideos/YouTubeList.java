@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener, YouTubeFragment.YouTubeListProvider {
+public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener {
   private UIAccess access;
   private GoogleAccount account;
   private YouTubeListSpec listSpec;
@@ -24,8 +24,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   private List<Map> items = new ArrayList<Map>();
   private YouTubeHelper.BaseListResults listResults;
 
-  @Override
-  public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, UIAccess a) {
+  public YouTubeList start(YouTubeListSpec s, UIAccess a) {
     listSpec = s;
     access = a;
     account = GoogleAccount.newYouTube(this);
@@ -39,7 +38,6 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     access = a;
   }
 
-  @Override
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
     boolean handled = false;
 
@@ -66,12 +64,12 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return listSpec.type;
   }
 
-  @Override
-  public void moreData() {
-    loadData(false);
+  public void loadToIndex(int position) {
+    if (listResults.shouldLoadNextPage(position)) {
+      loadData(false);
+    }
   }
 
-  @Override
   public void refresh() {
     listResults = null;
 
