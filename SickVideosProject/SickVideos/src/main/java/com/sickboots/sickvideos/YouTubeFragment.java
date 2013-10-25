@@ -113,13 +113,13 @@ public class YouTubeFragment extends Fragment
     } else {
       switch (tabIndex) {
         case 0:
-          result = new YouTubeList().start(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES, channelID), access);
+          result = new YouTubeList(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES, channelID), access);
           break;
         case 1:
-          result = new YouTubeList().start(YouTubeListSpec.searchSpec("Pigmies"), access);
+          result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
           break;
         case 2:
-          result = new YouTubeList().start(YouTubeListSpec.subscriptionsSpec(), access);
+          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
           break;
       }
 
@@ -190,7 +190,7 @@ public class YouTubeFragment extends Fragment
       holder.text.setText((String) getItem(position).get("title"));
 
       // load more data if at the end
-      mList.loadToIndex(position);
+      mList.updateHighestDisplayedIndex(position);
 
       return convertView;
     }

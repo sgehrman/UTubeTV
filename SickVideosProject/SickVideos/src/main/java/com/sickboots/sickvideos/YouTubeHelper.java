@@ -402,7 +402,7 @@ public class YouTubeHelper {
     protected Object response;
     protected List<Map> items;
     protected int totalItems;
-    private int highestLoadedPosition = 0;
+    private int highestDisplayedIndex = 0;
 
     // subclasses must implement
     abstract protected List<Map> itemsForNextToken(String token);
@@ -435,22 +435,14 @@ public class YouTubeHelper {
       return totalItems;
     }
 
-    public boolean shouldLoadNextPage(int position) {
-      if (position >= highestLoadedPosition) {
-        int loadedToPosition = (items.size() - 1);
+    public int getHighestDisplayedIndex() {
+      return highestDisplayedIndex;
+    }
 
-        highestLoadedPosition = loadedToPosition;
-
-        if (position >= highestLoadedPosition) {
-          highestLoadedPosition = position;
-
-          if (position < (totalItems-1)) {
-            return true;
-          }
-        }
+    public void updateHighestDisplayedIndex(int index) {
+      if (index > highestDisplayedIndex) {
+        highestDisplayedIndex = index;
       }
-
-      return false;
     }
 
     private String nextToken() {

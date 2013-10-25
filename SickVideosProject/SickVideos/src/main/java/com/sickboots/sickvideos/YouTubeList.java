@@ -25,14 +25,14 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   private List<Map> items = new ArrayList<Map>();
   private YouTubeHelper.BaseListResults listResults;
 
-  public YouTubeList start(YouTubeListSpec s, UIAccess a) {
+  public YouTubeList(YouTubeListSpec s, UIAccess a) {
+    super();
+
     listSpec = s;
     access = a;
     account = GoogleAccount.newYouTube(this);
 
     loadData(true);
-
-    return this;
   }
 
   public void restart(UIAccess a) {
@@ -65,9 +65,18 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return listSpec.type;
   }
 
-  public void loadToIndex(int position) {
-    if (listResults.shouldLoadNextPage(position)) {
-      loadData(false);
+  public void updateHighestDisplayedIndex(int position) {
+    listResults.updateHighestDisplayedIndex(position);
+
+    if (listResults != null) {
+      // don't reload if already loading
+//      if (!listResult.isReloading()) {
+//
+//
+//        if (listResults.needsToLoadMoreItems()) {
+//          loadData(false);
+//        }
+//      }
     }
   }
 
