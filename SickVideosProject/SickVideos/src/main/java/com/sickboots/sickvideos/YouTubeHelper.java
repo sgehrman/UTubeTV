@@ -184,6 +184,12 @@ public class YouTubeHelper {
     return result;
   }
 
+  public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
+    PlayListResults result = new PlayListResults(type, channelID);
+
+    return result;
+  }
+
   public Map playlistItemsForID(String playlistID, String nextToken) {
     HashMap result = new HashMap();
 
@@ -209,12 +215,6 @@ public class YouTubeHelper {
         handleException(e);
       }
     }
-
-    return result;
-  }
-
-  public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
-    PlayListResults result = new PlayListResults(type, channelID);
 
     return result;
   }
@@ -369,12 +369,14 @@ public class YouTubeHelper {
     private List<Map> items;
     private int totalItem;
     private PlaylistItemListResponse response;
-    YouTubeHelper.RelatedPlaylistType type;
-    String channel;
+    private YouTubeHelper.RelatedPlaylistType type;
+    private String channel;
+    private String playlistID;
 
     public PlayListResults(YouTubeHelper.RelatedPlaylistType t, String c) {
       type = t;
       channel = c;
+      playlistID = relatedPlaylistID(type, channel);
       items = itemsForNextToken("");
     }
 
@@ -404,7 +406,7 @@ public class YouTubeHelper {
 
     private List<Map> itemsForNextToken(String token)
     {
-      Map resultMap = playlistItemsForID(relatedPlaylistID(type, channel), token);
+      Map resultMap = playlistItemsForID(playlistID, token);
 
       List<PlaylistItem> playlistItemList = (List<PlaylistItem>) resultMap.get("items");
       response = (PlaylistItemListResponse) resultMap.get("response");

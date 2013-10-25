@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
-      Util.activateStrictMode(this);
+//      Util.activateStrictMode(this);
 
       // Set up the action bar.
       final ActionBar actionBar = getActionBar();

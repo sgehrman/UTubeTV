@@ -23,6 +23,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   private static final int REQUEST_AUTHORIZATION = 444;
   private YouTubeHelper youTubeHelper;
   private List<Map> items = new ArrayList<Map>();
+  YouTubeHelper.PlayListResults playlistResults;
 
   @Override
   public YouTubeFragment.YouTubeListProvider start(YouTubeListSpec s, UIAccess a) {
@@ -172,9 +173,13 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
           YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
           String channel = (String) listSpec.getData("channel");
 
-          YouTubeHelper.PlayListResults results = youTubeHelper.playListResults(type, channel);
+          if (playlistResults != null) {
+            playlistResults.getNext();
+          } else {
+            playlistResults = youTubeHelper.playListResults(type, channel);
+          }
 
-          result = results.getItems();
+          result = playlistResults.getItems();
           break;
 
         case SEARCH:
@@ -188,7 +193,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
 
     protected void onPostExecute(List<Map> result) {
-      items.addAll(result);
+      items = result;
       access.onListResults();
     }
   }

@@ -69,6 +69,8 @@ public class GoogleAccount {
 
   private void loadAccount(Activity activity) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
+
+    // ### hits main thread with read to disk, fix this later.
     String accountName = sp.getString(ACCOUNT_KEY, null);
 
     if (accountName != null) {
