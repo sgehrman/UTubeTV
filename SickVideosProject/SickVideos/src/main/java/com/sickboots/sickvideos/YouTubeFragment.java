@@ -166,7 +166,10 @@ public class YouTubeFragment extends Fragment
 
       if (convertView == null)
       {
-        convertView = getActivity().getLayoutInflater().inflate(R.layout.youtube_list_item_large, null);
+        int resID = R.layout.youtube_list_item_large;
+//        if (true) resID = R.layout.youtube_list_item;
+
+        convertView = getActivity().getLayoutInflater().inflate(resID, null);
 
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageButton) convertView.findViewById(R.id.image);
