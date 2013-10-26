@@ -119,7 +119,8 @@ public class YouTubeFragment extends Fragment
           result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
           break;
         case 2:
-          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+//          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
           break;
       }
 

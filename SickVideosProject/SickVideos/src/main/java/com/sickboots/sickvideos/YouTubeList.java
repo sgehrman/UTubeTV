@@ -148,6 +148,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         }
 
         break;
+      case CATEGORIES:
+        break;
     }
   }
 
@@ -191,6 +193,9 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         switch (listSpec.type) {
           case SUBSCRIPTIONS:
             listResults = youTubeHelper.subscriptionListResults();
+            break;
+          case CATEGORIES:
+            listResults = youTubeHelper.categoriesListResults("US");
             break;
 
           case RELATED:

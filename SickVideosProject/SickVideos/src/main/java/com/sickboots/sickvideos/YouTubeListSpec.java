@@ -6,9 +6,7 @@ import java.util.HashMap;
  * Created by sgehrman on 10/23/13.
  */
 public class YouTubeListSpec {
-  public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH}
-
-  ;
+  public enum ListType {PLAYLIST, RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES}
 
   private HashMap data;
   public ListType type;
@@ -40,6 +38,12 @@ public class YouTubeListSpec {
 
   public static YouTubeListSpec subscriptionsSpec() {
     YouTubeListSpec result = emptySpec(ListType.SUBSCRIPTIONS);
+
+    return result;
+  }
+
+  public static YouTubeListSpec categoriesSpec() {
+    YouTubeListSpec result = emptySpec(ListType.CATEGORIES);
 
     return result;
   }

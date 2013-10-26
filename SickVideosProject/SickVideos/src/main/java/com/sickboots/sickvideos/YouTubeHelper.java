@@ -25,6 +25,8 @@ import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionListResponse;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.ThumbnailDetails;
+import com.google.api.services.youtube.model.VideoCategory;
+import com.google.api.services.youtube.model.VideoCategoryListResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -158,6 +160,12 @@ public class YouTubeHelper {
     return result;
   }
 
+  public CategoriesListResults categoriesListResults(String regionCode) {
+    CategoriesListResults result = new CategoriesListResults(regionCode);
+
+    return result;
+  }
+
   private String thumbnailURL(ThumbnailDetails details) {
     String result = null;
 
@@ -283,7 +291,6 @@ public class YouTubeHelper {
 
       return result;
     }
-
   }
 
   // ========================================================
@@ -338,6 +345,57 @@ public class YouTubeHelper {
         map.put("video", playlistItem.getId().getVideoId());
         map.put("title", playlistItem.getSnippet().getTitle());
         map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // CategoriesListResults
+
+  public class CategoriesListResults extends BaseListResults {
+    public CategoriesListResults(String regionCode) {
+      setItems(itemsForNextToken(regionCode));
+    }
+
+    protected List<Map> itemsForNextToken(String regionCode) {
+      List<VideoCategory> result = new ArrayList<VideoCategory>();
+      VideoCategoryListResponse categoryListResponse = null;
+
+      try {
+        YouTube.VideoCategories.List listRequest = youTube().videoCategories().list("id, snippet");
+
+        listRequest.setKey(YouTubeHelper.devKey());
+        listRequest.setRegionCode(regionCode);
+        listRequest.setFields("items(snippet/title, snippet/channelId)");
+
+        categoryListResponse = listRequest.execute();
+
+        result.addAll(categoryListResponse.getItems());
+
+        totalItems = result.size();
+        response = categoryListResponse;
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return searchResultsToMap(result);
+    }
+
+    private List<Map> searchResultsToMap(List<VideoCategory> itemList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (VideoCategory category : itemList) {
+        HashMap map = new HashMap();
+
+        map.put("channel", category.getSnippet().getChannelId());
+        map.put("title", category.getSnippet().getTitle());
 
         result.add(map);
       }
