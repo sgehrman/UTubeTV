@@ -34,10 +34,13 @@
         android:id="@+id/page_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="8dp"
 
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
            android:layout_alignParentRight="true"
-
-        style="?android:attr/borderlessButtonStyle" />
+           android:background="#8000"
+           android:textColor="#fff" />
 
 </RelativeLayout>

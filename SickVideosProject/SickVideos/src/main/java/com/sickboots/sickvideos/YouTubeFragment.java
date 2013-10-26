@@ -149,6 +149,7 @@ public class YouTubeFragment extends Fragment
 
     class ViewHolder {
       TextView text;
+      TextView pageNumber;
       ImageButton button;
     }
 
@@ -164,6 +165,7 @@ public class YouTubeFragment extends Fragment
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageButton) convertView.findViewById(R.id.image);
         holder.text = (TextView) convertView.findViewById(R.id.text_view);
+        holder.pageNumber = (TextView) convertView.findViewById(R.id.page_number);
         convertView.setTag(holder);
       }
 
@@ -189,6 +191,7 @@ public class YouTubeFragment extends Fragment
       holder.button.setId(position);
 
       holder.text.setText((String) getItem(position).get("title"));
+      holder.pageNumber.setText(Integer.toString(position+1));
 
       // load more data if at the end
       mList.updateHighestDisplayedIndex(position);
