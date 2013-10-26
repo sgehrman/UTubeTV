@@ -120,6 +120,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       case RELATED:
       case SEARCH:
       case PLAYLIST:
+      case LIKED:
         String movieID = (String) itemMap.get("video");
 
         if (movieID != null) {
@@ -196,6 +197,9 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
             break;
           case CATEGORIES:
             listResults = youTubeHelper.categoriesListResults("US");
+            break;
+          case LIKED:
+            listResults = youTubeHelper.likedVideosListResults();
             break;
 
           case RELATED:

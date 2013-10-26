@@ -120,7 +120,8 @@ public class YouTubeFragment extends Fragment
           break;
         case 2:
 //          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
-          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
+//          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
+          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
           break;
       }
 

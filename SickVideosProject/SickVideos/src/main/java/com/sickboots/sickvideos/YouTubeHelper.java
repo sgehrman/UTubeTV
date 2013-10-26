@@ -25,8 +25,10 @@ import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionListResponse;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.ThumbnailDetails;
+import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
+import com.google.api.services.youtube.model.VideoListResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -166,6 +168,12 @@ public class YouTubeHelper {
     return result;
   }
 
+  public LikedVideosListResults likedVideosListResults() {
+    LikedVideosListResults result = new LikedVideosListResults();
+
+    return result;
+  }
+
   private String thumbnailURL(ThumbnailDetails details) {
     String result = null;
 
@@ -210,7 +218,7 @@ public class YouTubeHelper {
           YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
           listRequest.setPlaylistId(playlistID);
 
-          listRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+          listRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
@@ -314,7 +322,7 @@ public class YouTubeHelper {
         listRequest.setQ(query);
         listRequest.setKey(YouTubeHelper.devKey());
         listRequest.setType("video");
-        listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+        listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -343,6 +351,62 @@ public class YouTubeHelper {
         HashMap map = new HashMap();
 
         map.put("video", playlistItem.getId().getVideoId());
+        map.put("title", playlistItem.getSnippet().getTitle());
+        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // LikedVideosListResults
+
+  public class LikedVideosListResults extends BaseListResults {
+    public LikedVideosListResults() {
+      setItems(itemsForNextToken(""));
+    }
+
+    protected List<Map> itemsForNextToken(String token) {
+      List<Video> result = new ArrayList<Video>();
+      VideoListResponse searchListResponse = null;
+
+      try {
+        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet");
+
+        listRequest.setKey(YouTubeHelper.devKey());
+        listRequest.setFields("items(id, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
+        listRequest.setMyRating("like");
+        listRequest.setMaxResults(getMaxResultsNeeded());
+
+        listRequest.setPageToken(token);
+        searchListResponse = listRequest.execute();
+
+        totalItems = searchListResponse.getPageInfo().getTotalResults();
+
+        // nasty double cast?
+        response = searchListResponse;
+
+        result.addAll(searchListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return searchResultsToMap(result);
+    }
+
+    private List<Map> searchResultsToMap(List<Video> playlistItemList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (Video playlistItem : playlistItemList) {
+        HashMap map = new HashMap();
+
+        map.put("video", playlistItem.getId());
         map.put("title", playlistItem.getSnippet().getTitle());
         map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
@@ -421,7 +485,7 @@ public class YouTubeHelper {
         YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
         listRequest.setMine(true);
 
-        listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+        listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/high/url), nextPageToken, pageInfo");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -595,7 +659,7 @@ console play
 https://developers.google.com/youtube/v3/docs/activities/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 part id: "snippet"
-fields: items(snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo
+fields: items(snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo
 
 
 
