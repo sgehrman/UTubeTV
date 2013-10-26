@@ -651,7 +651,7 @@ App goals:
     1) always restores where you were last time you watched
 12) Get lists of playlists from youtube by users
 13) Auto import your own youtube playlist
-14)
+14) stationary header, page numbers and floating overlay showing when scrolling
 
 
 console play

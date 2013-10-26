@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+
+                android:background="@drawable/dropshadow"
+                android:descendantFocusability="blocksDescendants">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:descendantFocusability="blocksDescendants"
               android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_gravity="right" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/text_view"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textAllCaps="false"
+        android:paddingLeft="10dp"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:layout_gravity="center_vertical"
         android:singleLine="true"
         android:layout_height="wrap_content" />
 
 </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/page_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+
+        style="?android:attr/borderlessButtonStyle" />
+
+</RelativeLayout>

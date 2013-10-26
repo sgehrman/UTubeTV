@@ -27,10 +27,10 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
   private MyAdapter mAdapter;
-  private int mType;
   private static final String TAB_INDEX = "index";
   private static final String CHANNEL_ID = "channel";
   private YouTubeList mList;
+  private int tabIndex=0;
 
   public static YouTubeFragment newInstance(int type, String channelID) {
     YouTubeFragment fragment = new YouTubeFragment();
@@ -50,7 +50,7 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    int tabIndex = getArguments().getInt(TAB_INDEX);
+    tabIndex = getArguments().getInt(TAB_INDEX);
     String channelID = getArguments().getString(CHANNEL_ID);
     mList = createListForIndex(tabIndex, channelID);
 
@@ -157,7 +157,7 @@ public class YouTubeFragment extends Fragment
 
       if (convertView == null) {
         int resID = R.layout.youtube_list_item_large;
-//        if (true) resID = R.layout.youtube_list_item;
+        if (tabIndex == 2) resID = R.layout.youtube_list_item;
 
         convertView = getActivity().getLayoutInflater().inflate(resID, null);
 
