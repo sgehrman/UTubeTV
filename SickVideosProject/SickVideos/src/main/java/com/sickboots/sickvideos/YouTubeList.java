@@ -185,7 +185,6 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     protected List<Map> doInBackground(Void... params) {
       List<Map> result = null;
 
-
       if (listResults != null) {
         listResults.getNext();
       } else {
