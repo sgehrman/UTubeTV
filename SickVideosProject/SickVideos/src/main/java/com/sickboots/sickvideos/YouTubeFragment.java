@@ -169,7 +169,6 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      // yep, that's it. it handles the downloading and showing an interstitial image automagically.
       UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), android.R.drawable.ic_input_get, new UrlImageViewCallback() {
 
         @Override

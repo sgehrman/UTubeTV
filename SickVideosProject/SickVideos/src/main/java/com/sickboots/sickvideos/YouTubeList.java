@@ -68,15 +68,18 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   public void updateHighestDisplayedIndex(int position) {
     listResults.updateHighestDisplayedIndex(position);
 
+    loadMoreIfNeeded();
+  }
+
+  private void loadMoreIfNeeded() {
     if (listResults != null) {
       // don't reload if already loading
-//      if (!listResult.isReloading()) {
-//
-//
-//        if (listResults.needsToLoadMoreItems()) {
-//          loadData(false);
-//        }
-//      }
+      if (!listResults.isReloading()) {
+
+        if (listResults.needsToLoadMoreItems()) {
+          loadData(false);
+        }
+      }
     }
   }
 
@@ -96,7 +99,19 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
 
     if (youTubeHelper != null) {
-      new YouTubePlaylistTask().execute();
+      boolean startTask = false;
+
+      // don't launch twice if it's busy running
+      if (listResults == null) {
+        startTask = true;
+      } else if (!listResults.isReloading()) {
+        startTask = true;
+        listResults.setIsReloading(true);
+      }
+
+      if (startTask) {
+        new YouTubePlaylistTask().execute();
+      }
     }
   }
 
@@ -198,6 +213,9 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       // add empty entries
       int diff = (listResults.getTotalItems() - result.size());
       if (diff > 0) {
+        // don't mutate the original, make a new copy first
+        result = new ArrayList<Map>(result);
+
         HashMap empty = new HashMap();
         while (diff-- > 0) {
           result.add(empty);
@@ -208,8 +226,12 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     }
 
     protected void onPostExecute(List<Map> result) {
+      listResults.setIsReloading(false);
+
       items = result;
       access.onListResults();
+
+      loadMoreIfNeeded();
     }
   }
 

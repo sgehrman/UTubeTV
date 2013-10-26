@@ -31,6 +31,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Static container class for holding a reference to your YouTube Developer Key.
@@ -189,7 +190,7 @@ public class YouTubeHelper {
       super();
 
       playlistID = relatedPlaylistID(type, channel);
-      items = itemsForNextToken("");
+      setItems(itemsForNextToken(""));
     }
 
     protected List<Map> itemsForNextToken(String token) {
@@ -288,7 +289,7 @@ public class YouTubeHelper {
 
     public SearchListResults(String q) {
       query = q;
-      items = itemsForNextToken("");
+      setItems(itemsForNextToken(""));
     }
 
     protected List<Map> itemsForNextToken(String token) {
@@ -347,7 +348,7 @@ public class YouTubeHelper {
     public SubscriptionListResults() {
       super();
 
-      items = itemsForNextToken("");
+      setItems(itemsForNextToken(""));
     }
 
     protected List<Map> itemsForNextToken(String token) {
@@ -400,15 +401,20 @@ public class YouTubeHelper {
 
   abstract public class BaseListResults {
     protected Object response;
-    protected List<Map> items;
+    private List<Map> items;
     protected int totalItems;
     private int highestDisplayedIndex = 0;
+    private boolean reloadingFlag = false;
 
     // subclasses must implement
     abstract protected List<Map> itemsForNextToken(String token);
 
     public List<Map> getItems() {
       return items;
+    }
+
+    public void setItems(List<Map> l) {
+      items = l;
     }
 
     public boolean getNext() {
@@ -462,6 +468,21 @@ public class YouTubeHelper {
       return result;
     }
 
+    public boolean needsToLoadMoreItems() {
+      if (items != null) {
+        return highestDisplayedIndex >= items.size();
+      }
+
+      return false;
+    }
+
+    public void setIsReloading(boolean set) {
+      reloadingFlag = set;
+    }
+
+    public boolean isReloading() {
+      return reloadingFlag;
+    }
   }
 
 }
