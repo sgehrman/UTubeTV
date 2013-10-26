@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -198,13 +199,14 @@ public class YouTubeHelper {
 
       if (playlistID != null) {
         try {
-          YouTube.PlaylistItems.List playlistItemRequest = youTube().playlistItems().list("id, contentDetails, snippet");
-          playlistItemRequest.setPlaylistId(playlistID);
+          YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
+          listRequest.setPlaylistId(playlistID);
 
-          playlistItemRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+          listRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
 
-          playlistItemRequest.setPageToken(token);
-          PlaylistItemListResponse playListResponse = playlistItemRequest.execute();
+          listRequest.setPageToken(token);
+          listRequest.setMaxResults(getMaxResultsNeeded());
+          PlaylistItemListResponse playListResponse = listRequest.execute();
 
           totalItems = playListResponse.getPageInfo().getTotalResults();
 
@@ -222,6 +224,9 @@ public class YouTubeHelper {
     }
 
     private List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+      // check parameters
+      if (playlistItemList == null) return null;
+
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
@@ -303,6 +308,7 @@ public class YouTubeHelper {
         listRequest.setKey(YouTubeHelper.devKey());
         listRequest.setType("video");
         listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+        listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
@@ -338,7 +344,6 @@ public class YouTubeHelper {
 
       return result;
     }
-
   }
 
   // ========================================================
@@ -359,6 +364,7 @@ public class YouTubeHelper {
         listRequest.setMine(true);
 
         listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/default/url), nextPageToken, pageInfo");
+        listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         SubscriptionListResponse subscriptionListResponse = listRequest.execute();
@@ -482,6 +488,17 @@ public class YouTubeHelper {
 
     public boolean isReloading() {
       return reloadingFlag;
+    }
+
+    protected long getMaxResultsNeeded() {
+      long result = 5;
+
+      if (needsToLoadMoreItems()) {
+        result = highestDisplayedIndex - (items.size()-1);
+      }
+
+      // avoid exception with setMaxResults: "Invalid value '52'. Values must be within the range: [0, 50]",
+      return Math.min(50, result);
     }
   }
 
