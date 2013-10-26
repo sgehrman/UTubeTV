@@ -10,30 +10,30 @@
                 android:background="@drawable/dropshadow"
                 android:descendantFocusability="blocksDescendants">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_gravity="center" />
+        <ImageButton
+            android:id="@+id/image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="10dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_gravity="center_vertical"
-        android:singleLine="true"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:singleLine="true"
+            android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    </LinearLayout>
 
 
     <TextView
@@ -47,6 +47,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="#8000"
-        android:textColor="#fff" />
+        android:textColor="#fff"/>
 
 </RelativeLayout>

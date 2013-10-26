@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingBottom="16dp"
-              android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:paddingTop="10dp"
 
-              android:background="@drawable/dropshadow"
-              android:descendantFocusability="blocksDescendants">
+                android:background="@drawable/dropshadow"
+                android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/text_view"
@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:singleLine="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <ImageButton
         android:scaleType="centerCrop"
@@ -28,7 +28,7 @@
 
         android:layout_below="@+id/text_view"
 
-        style="?android:attr/borderlessButtonStyle" />
+        style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
         android:id="@+id/page_number"
@@ -39,8 +39,8 @@
         android:padding="8dp"
 
         android:layout_alignParentBottom="true"
-           android:layout_alignParentRight="true"
-           android:background="#8000"
-           android:textColor="#fff" />
+        android:layout_alignParentRight="true"
+        android:background="#8000"
+        android:textColor="#fff"/>
 
 </RelativeLayout>
