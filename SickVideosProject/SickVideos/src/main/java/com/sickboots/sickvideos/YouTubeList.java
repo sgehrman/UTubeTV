@@ -66,7 +66,9 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   }
 
   public void updateHighestDisplayedIndex(int position) {
-    listResults.updateHighestDisplayedIndex(position);
+    if (listResults != null) {
+      listResults.updateHighestDisplayedIndex(position);
+    }
 
     loadMoreIfNeeded();
   }
@@ -188,6 +190,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     protected List<Map> doInBackground(Void... params) {
       List<Map> result = null;
 
+      Util.log("started youtubelist task");
+
       if (listResults != null) {
         listResults.getNext();
       } else {
@@ -235,6 +239,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
     protected void onPostExecute(List<Map> result) {
       listResults.setIsReloading(false);
+
+      Util.log("finished youtubelist task");
 
       items = result;
       access.onListResults();

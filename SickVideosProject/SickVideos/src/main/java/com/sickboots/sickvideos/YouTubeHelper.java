@@ -559,7 +559,13 @@ public class YouTubeHelper {
 
             result = true;
           }
+        } else {
+          // need to set this to stop it trying to get items it thinks are still available
+          // lame hack, not sure why total items is less than returned items, deleted videos don't return I guess
+          totalItems = items.size();
+          highestDisplayedIndex = totalItems-1;
         }
+
       }
 
       return result;
