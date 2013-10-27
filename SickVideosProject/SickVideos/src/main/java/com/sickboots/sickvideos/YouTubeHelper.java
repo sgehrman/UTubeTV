@@ -596,6 +596,10 @@ public class YouTubeHelper {
           result = ((PlaylistItemListResponse) response).getNextPageToken();
         } else if (response instanceof SubscriptionListResponse) {
           result = ((SubscriptionListResponse) response).getNextPageToken();
+        } else if (response instanceof VideoListResponse) {
+          result = ((VideoListResponse) response).getNextPageToken();
+        } else {
+          Util.log("nextToken not handed, this is a bug");
         }
       }
 

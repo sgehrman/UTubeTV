@@ -31,7 +31,10 @@ public class UIAccess {
 
   public void onListResults() {
     UIAccessListener listener = (UIAccessListener) fragment();
-    listener.onResults();
+
+    if (listener != null) {
+      listener.onResults();
+    }
   }
 
 }
