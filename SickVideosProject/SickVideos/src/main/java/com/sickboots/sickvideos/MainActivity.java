@@ -124,7 +124,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
           result = YouTubeFragment.newInstance(1, null);
           break;
         default:
-          result = YouTubeFragment.newInstance(2, null);
+//          result = YouTubeFragment.newInstance(2, null);
+          result = new FragmentHost();
           break;
       }
 
