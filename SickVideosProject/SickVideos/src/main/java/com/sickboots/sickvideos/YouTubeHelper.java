@@ -119,6 +119,42 @@ public class YouTubeHelper {
     return result;
   }
 
+  public RelatedListResults relatedListResults(RelatedPlaylistType type, String channelID) {
+    RelatedListResults result = new RelatedListResults(type, channelID);
+
+    return result;
+  }
+
+  public PlaylistListResults playlistListResults(String channelID) {
+    PlaylistListResults result = new PlaylistListResults(channelID);
+
+    return result;
+  }
+
+  public SearchListResults searchListResults(String query) {
+    SearchListResults result = new SearchListResults(query);
+
+    return result;
+  }
+
+  public SubscriptionListResults subscriptionListResults() {
+    SubscriptionListResults result = new SubscriptionListResults();
+
+    return result;
+  }
+
+  public CategoriesListResults categoriesListResults(String regionCode) {
+    CategoriesListResults result = new CategoriesListResults(regionCode);
+
+    return result;
+  }
+
+  public LikedVideosListResults likedVideosListResults() {
+    LikedVideosListResults result = new LikedVideosListResults();
+
+    return result;
+  }
+
   private void handleException(Exception e) {
     if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
@@ -154,36 +190,6 @@ public class YouTubeHelper {
     return result;
   }
 
-  public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
-    PlayListResults result = new PlayListResults(type, channelID);
-
-    return result;
-  }
-
-  public SearchListResults searchListResults(String query) {
-    SearchListResults result = new SearchListResults(query);
-
-    return result;
-  }
-
-  public SubscriptionListResults subscriptionListResults() {
-    SubscriptionListResults result = new SubscriptionListResults();
-
-    return result;
-  }
-
-  public CategoriesListResults categoriesListResults(String regionCode) {
-    CategoriesListResults result = new CategoriesListResults(regionCode);
-
-    return result;
-  }
-
-  public LikedVideosListResults likedVideosListResults() {
-    LikedVideosListResults result = new LikedVideosListResults();
-
-    return result;
-  }
-
   private String thumbnailURL(ThumbnailDetails details) {
     String result = null;
 
@@ -208,12 +214,12 @@ public class YouTubeHelper {
   }
 
   // ========================================================
-  // PlayListResults
+  // RelatedListResults
 
-  public class PlayListResults extends BaseListResults {
+  public class RelatedListResults extends BaseListResults {
     private String playlistID;
 
-    public PlayListResults(YouTubeHelper.RelatedPlaylistType type, String channel) {
+    public RelatedListResults(YouTubeHelper.RelatedPlaylistType type, String channel) {
       super();
 
       playlistID = relatedPlaylistID(type, channel);
@@ -483,6 +489,62 @@ public class YouTubeHelper {
 
   public class SubscriptionListResults extends BaseListResults {
     public SubscriptionListResults() {
+      super();
+
+      setItems(itemsForNextToken(""));
+    }
+
+    protected List<Map> itemsForNextToken(String token) {
+      List<Subscription> result = new ArrayList<Subscription>();
+
+      try {
+        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
+        listRequest.setMine(true);
+
+        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setMaxResults(getMaxResultsNeeded());
+
+        listRequest.setPageToken(token);
+        SubscriptionListResponse subscriptionListResponse = listRequest.execute();
+
+        response = subscriptionListResponse;
+        totalItems = subscriptionListResponse.getPageInfo().getTotalResults();
+
+        result.addAll(subscriptionListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+      return playlistItemsToMap(result);
+    }
+
+    private List<Map> playlistItemsToMap(List<Subscription> subscriptionsList) {
+      List<Map> result = new ArrayList<Map>();
+
+      // convert the list into hash maps of video info
+      for (Subscription subscription : subscriptionsList) {
+        HashMap map = new HashMap();
+
+        map.put("id", subscription.getId());
+        map.put("title", subscription.getSnippet().getTitle());
+        map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
+        map.put("description", subscription.getSnippet().getDescription());
+        map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // PlaylistListResults
+
+  public class PlaylistListResults extends BaseListResults {
+    public PlaylistListResults(String channelID) {
       super();
 
       setItems(itemsForNextToken(""));

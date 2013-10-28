@@ -123,13 +123,14 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     switch (type()) {
       case RELATED:
       case SEARCH:
-      case PLAYLIST:
       case LIKED:
         String movieID = (String) itemMap.get("video");
 
         if (movieID != null) {
           YouTubeHelper.playMovie(getActivity(), movieID);
         }
+        break;
+      case PLAYLISTS:
         break;
       case SUBSCRIPTIONS:
         String channel = (String) itemMap.get("channel");
@@ -197,6 +198,12 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
           case SUBSCRIPTIONS:
             listResults = youTubeHelper.subscriptionListResults();
             break;
+          case PLAYLISTS: {
+            String channel = (String) listSpec.getData("channel");
+
+            listResults = youTubeHelper.playlistListResults(channel);
+          }
+            break;
           case CATEGORIES:
             listResults = youTubeHelper.categoriesListResults("US");
             break;
@@ -204,16 +211,17 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
             listResults = youTubeHelper.likedVideosListResults();
             break;
 
-          case RELATED:
+          case RELATED: {
             YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
             String channel = (String) listSpec.getData("channel");
-            listResults = youTubeHelper.playListResults(type, channel);
-
+            listResults = youTubeHelper.relatedListResults(type, channel);
+          }
             break;
 
-          case SEARCH:
+          case SEARCH: {
             String query = (String) listSpec.getData("query");
             listResults = youTubeHelper.searchListResults(query);
+          }
             break;
         }
       }
