@@ -108,11 +108,13 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         startTask = true;
       } else if (!listResults.isReloading()) {
         startTask = true;
-        listResults.setIsReloading(true);
       }
 
       if (startTask) {
-        new YouTubePlaylistTask().execute();
+        if (listResults != null)
+        listResults.setIsReloading(true);
+
+        new YouTubeListTask().execute();
       }
     }
   }
@@ -182,11 +184,11 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return access.fragment().getActivity();
   }
 
-  private class YouTubePlaylistTask extends AsyncTask<Void, Void, List<Map>> {
+  private class YouTubeListTask extends AsyncTask<Void, Void, List<Map>> {
     protected List<Map> doInBackground(Void... params) {
       List<Map> result = null;
 
-      Util.log("started youtubelist task");
+      Util.log("YouTubeListTask: started");
 
       if (listResults != null) {
         listResults.getNext();
@@ -238,7 +240,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     protected void onPostExecute(List<Map> result) {
       listResults.setIsReloading(false);
 
-      Util.log("finished youtubelist task");
+      Util.log("YouTubeListTask: finished");
 
       items = result;
       access.onListResults();
