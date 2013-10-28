@@ -134,17 +134,13 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
         Util.toast(getActivity(), channel != null ? channel : "no channel");
 
-        ViewParent parent = access.fragment().getView().getParent();
-
-        if ((channel != null) && (parent instanceof View)) {
-          View parentView = (View) parent;
-
+        if (channel != null) {
           Fragment frag = YouTubeFragment.newInstance(0, channel);
 
           FragmentManager fragmentManager = getActivity().getFragmentManager();
           FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-          fragmentTransaction.add(parentView.getId(), frag).show(frag).hide(access.fragment());
+          fragmentTransaction.replace(R.id.fragment_container, frag);
           fragmentTransaction.addToBackStack(null);
 
           fragmentTransaction.commit();
@@ -222,15 +218,17 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
       result = listResults.getItems();
 
-      // add empty entries
-      int diff = (listResults.getTotalItems() - result.size());
-      if (diff > 0) {
-        // don't mutate the original, make a new copy first
-        result = new ArrayList<Map>(result);
+      if (result != null) {
+        // add empty entries
+        int diff = (listResults.getTotalItems() - result.size());
+        if (diff > 0) {
+          // don't mutate the original, make a new copy first
+          result = new ArrayList<Map>(result);
 
-        HashMap empty = new HashMap();
-        while (diff-- > 0) {
-          result.add(empty);
+          HashMap empty = new HashMap();
+          while (diff-- > 0) {
+            result.add(empty);
+          }
         }
       }
 

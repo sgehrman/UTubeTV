@@ -98,7 +98,11 @@ public class YouTubeFragment extends Fragment
   @Override
   public void onResults() {
     mAdapter.clear();
-    mAdapter.addAll(mList.getItems());
+
+    List items = mList.getItems();
+
+    if (items != null)
+      mAdapter.addAll(items);
   }
 
   private YouTubeList createListForIndex(int tabIndex, String channelID) {
@@ -119,9 +123,9 @@ public class YouTubeFragment extends Fragment
           result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
           break;
         case 2:
-//          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
 //          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
-          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
+//          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
           break;
       }
 

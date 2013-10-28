@@ -19,7 +19,7 @@ public class FragmentHost extends Fragment {
 
   public void onActivityCreated (Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    
+
     // Check that the activity is using the layout version with
     // the fragment_container FrameLayout
     if (getActivity().findViewById(R.id.fragment_container) != null) {
