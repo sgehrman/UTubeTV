@@ -43,7 +43,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class YouTubeHelper {
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
-
   public static final int REQ_PLAYER_CODE = 334443;
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
@@ -144,6 +143,17 @@ public class YouTubeHelper {
     }
   }
 
+  private String thumbnailField() {
+    String result = "snippet/thumbnails/default/url";
+
+    boolean highQuality = false;
+
+    if (highQuality)
+      result = "snippet/thumbnails/high/url";
+
+    return result;
+  }
+
   public PlayListResults playListResults(RelatedPlaylistType type, String channelID) {
     PlayListResults result = new PlayListResults(type, channelID);
 
@@ -218,7 +228,7 @@ public class YouTubeHelper {
           YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
           listRequest.setPlaylistId(playlistID);
 
-          listRequest.setFields("items(contentDetails/videoId, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
+          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, %s), nextPageToken, pageInfo", thumbnailField()));
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
@@ -322,7 +332,7 @@ public class YouTubeHelper {
         listRequest.setQ(query);
         listRequest.setKey(YouTubeHelper.devKey());
         listRequest.setType("video");
-        listRequest.setFields("items(id/videoId, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
+        listRequest.setFields(String.format("items(id/videoId, snippet/title, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -377,7 +387,7 @@ public class YouTubeHelper {
         YouTube.Videos.List listRequest = youTube().videos().list("id, snippet");
 
         listRequest.setKey(YouTubeHelper.devKey());
-        listRequest.setFields("items(id, snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo");
+        listRequest.setFields(String.format("items(id, snippet/title, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMyRating("like");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
@@ -485,7 +495,7 @@ public class YouTubeHelper {
         YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
         listRequest.setMine(true);
 
-        listRequest.setFields("items(snippet/title, snippet/resourceId, snippet/thumbnails/high/url), nextPageToken, pageInfo");
+        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
