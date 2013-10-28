@@ -533,6 +533,7 @@ public class YouTubeHelper {
     protected int totalItems;
     private int highestDisplayedIndex = 0;
     private boolean reloadingFlag = false;
+    private boolean reachedEndOfList = false;
 
     // subclasses must implement
     abstract protected List<Map> itemsForNextToken(String token);
@@ -548,24 +549,19 @@ public class YouTubeHelper {
     public boolean getNext() {
       boolean result = false;
 
-      if (totalItems > items.size()) {
-        String token = nextToken();
+      String token = nextToken();
+      if (token != null) {
+        List<Map> newItems = itemsForNextToken(token);
 
-        if (token != null) {
-          List<Map> newItems = itemsForNextToken(token);
+        if (newItems != null) {
+          items.addAll(newItems);
 
-          if (newItems != null) {
-            items.addAll(newItems);
-
-            result = true;
-          }
-        } else {
-          // need to set this to stop it trying to get items it thinks are still available
-          // lame hack, not sure why total items is less than returned items, deleted videos don't return I guess
-          totalItems = items.size();
-          highestDisplayedIndex = totalItems-1;
+          result = true;
         }
-
+      } else {
+        // set a flag to stop trying to get more data.  the totalItems is not accurrate.  We don't get results for deleted videos.
+        totalItems = items.size();
+        reachedEndOfList = true;
       }
 
       return result;
@@ -607,7 +603,7 @@ public class YouTubeHelper {
     }
 
     public boolean needsToLoadMoreItems() {
-      if (items != null) {
+      if (items != null && !reachedEndOfList) {
         return highestDisplayedIndex >= items.size();
       }
 
