@@ -110,7 +110,7 @@ public class YouTubeFragment extends Fragment
 
     UIAccess access = new UIAccess(this, tabIndex);
 
-    final String keyPrefix = "list-";
+    final String keyPrefix = "list-" + channelID;
     result = (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
     if (result != null) {
       result.restart(access);

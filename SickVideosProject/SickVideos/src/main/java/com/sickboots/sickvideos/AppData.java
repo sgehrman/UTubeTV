@@ -18,10 +18,10 @@ public class AppData {
   }
 
   public Object getData(String key) {
-    return null; // disabled for now    data.get(key);
+    return data.get(key);
   }
 
   public void setData(String key, Object value) {
-// disabled for now   data.put(key, value);
+    data.put(key, value);
   }
 }
