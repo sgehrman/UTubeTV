@@ -30,17 +30,19 @@ public class YouTubeFragment extends Fragment
   private static final String ITEM_RES_ID = "res_id";
   private static final String LIST_TYPE = "list_type";
   private static final String CHANNEL_ID = "channel";
+  private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeList mList;
   private int itemResID=0;
   YouTubeListSpec.ListType listType;
 
-  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID) {
+  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
 
     args.putSerializable(LIST_TYPE, listType);
+    args.putSerializable(RELATED_TYPE, relatedType);
     args.putString(CHANNEL_ID, channelID);
     args.putString(PLAYLIST_ID, playlistID);
 
@@ -81,7 +83,8 @@ public class YouTubeFragment extends Fragment
 
     String channelID = getArguments().getString(CHANNEL_ID);
     String playlistID = getArguments().getString(PLAYLIST_ID);
-    mList = createListForIndex(channelID, playlistID);
+    YouTubeHelper.RelatedPlaylistType relatedType = (YouTubeHelper.RelatedPlaylistType) getArguments().getSerializable(RELATED_TYPE);
+    mList = createListForIndex(channelID, playlistID, relatedType);
 
     mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
@@ -134,7 +137,7 @@ public class YouTubeFragment extends Fragment
       mAdapter.addAll(items);
   }
 
-  private YouTubeList createListForIndex(String channelID, String playlistID) {
+  private YouTubeList createListForIndex(String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
     YouTubeList result = null;
 
     UIAccess access = new UIAccess(this);
@@ -158,7 +161,7 @@ public class YouTubeFragment extends Fragment
           result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
           break;
         case RELATED:
-          result = new YouTubeList(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES, channelID), access);
+          result = new YouTubeList(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
           break;
         case SEARCH:
           result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);

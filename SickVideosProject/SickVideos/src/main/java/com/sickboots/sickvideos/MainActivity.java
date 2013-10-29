@@ -119,10 +119,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
       switch (position) {
         case 0:
-          result = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null);
+          result = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
           break;
         case 1:
-          result = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SEARCH, null, null);
+          result = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null);
           break;
         default:
           result = new FragmentHost();

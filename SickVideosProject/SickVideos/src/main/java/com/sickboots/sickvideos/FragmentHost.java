@@ -32,7 +32,7 @@ public class FragmentHost extends Fragment {
       }
 
       // Create a new Fragment to be placed in the activity layout
-      YouTubeFragment firstFragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null);
+      YouTubeFragment firstFragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null);
 
       // Add the fragment to the 'fragment_container' FrameLayout
       getFragmentManager().beginTransaction()
