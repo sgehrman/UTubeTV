@@ -138,7 +138,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         Util.toast(getActivity(), channel != null ? channel : "no channel");
 
         if (channel != null) {
-          Fragment frag = YouTubeFragment.newInstance(0, channel);
+          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, channel);
 
           FragmentManager fragmentManager = getActivity().getFragmentManager();
           FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -14,15 +14,9 @@ public class UIAccess {
   }
 
   private WeakReference<Fragment> fragmentRef;
-  private int uiID;
 
-  public UIAccess(Fragment f, int id) {
+  public UIAccess(Fragment f) {
     fragmentRef = new WeakReference<Fragment>(f);
-    uiID = id;
-  }
-
-  public int uiID() {
-    return uiID;
   }
 
   public Fragment fragment() {

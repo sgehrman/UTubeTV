@@ -27,21 +27,36 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
   private MyAdapter mAdapter;
-  private static final String TAB_INDEX = "index";
   private static final String ITEM_RES_ID = "res_id";
+  private static final String LIST_TYPE = "list_type";
   private static final String CHANNEL_ID = "channel";
   private YouTubeList mList;
   private int itemResID=0;
+  YouTubeListSpec.ListType listType;
 
-  public static YouTubeFragment newInstance(int type, String channelID) {
+  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
-    args.putInt(TAB_INDEX, type);
+
+    args.putSerializable(LIST_TYPE, listType);
     args.putString(CHANNEL_ID, channelID);
 
+    // item resource id
     int resID = R.layout.youtube_list_item_large;
-    if (type == 2) resID = R.layout.youtube_list_item;
+    switch (listType) {
+      case PLAYLISTS:
+      case CATEGORIES:
+      case SUBSCRIPTIONS:
+        resID = R.layout.youtube_list_item;
+        break;
+      case LIKED:
+        break;
+      case RELATED:
+        break;
+      case SEARCH:
+        break;
+    }
     args.putInt(ITEM_RES_ID, resID);
 
     fragment.setArguments(args);
@@ -56,11 +71,12 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    int tabIndex = getArguments().getInt(TAB_INDEX);
     itemResID = getArguments().getInt(ITEM_RES_ID);
 
+    listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
+
     String channelID = getArguments().getString(CHANNEL_ID);
-    mList = createListForIndex(tabIndex, channelID);
+    mList = createListForIndex(channelID);
 
     mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
@@ -113,32 +129,39 @@ public class YouTubeFragment extends Fragment
       mAdapter.addAll(items);
   }
 
-  private YouTubeList createListForIndex(int tabIndex, String channelID) {
+  private YouTubeList createListForIndex(String channelID) {
     YouTubeList result = null;
 
-    UIAccess access = new UIAccess(this, tabIndex);
+    UIAccess access = new UIAccess(this);
 
     final String keyPrefix = "list-" + channelID;
-    result = (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
+    result = null; // (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
     if (result != null) {
       result.restart(access);
     } else {
-      switch (tabIndex) {
-        case 0:
+      switch (listType) {
+        case SUBSCRIPTIONS:
+          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+          break;
+        case PLAYLISTS:
+          result = new YouTubeList(YouTubeListSpec.playlistsSpec(channelID), access);
+          break;
+        case CATEGORIES:
+          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
+          break;
+        case LIKED:
+          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
+          break;
+        case RELATED:
           result = new YouTubeList(YouTubeListSpec.relatedSpec(YouTubeHelper.RelatedPlaylistType.FAVORITES, channelID), access);
           break;
-        case 1:
+        case SEARCH:
           result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
-          break;
-        case 2:
-          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
-//          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
-//          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
           break;
       }
 
       // save in cache
-      AppData.getInstance().setData(keyPrefix + tabIndex, result);
+//      AppData.getInstance().setData(keyPrefix + tabIndex, result);
     }
 
     return result;

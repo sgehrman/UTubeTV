@@ -564,7 +564,7 @@ public class YouTubeHelper {
         YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet");
         listRequest.setChannelId(channelID);
 
-        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
