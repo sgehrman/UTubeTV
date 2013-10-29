@@ -22,7 +22,7 @@ public class Util {
     if (activity != null && message != null) {
       activity.runOnUiThread(new Runnable() {
         public void run() {
-          Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+          Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
         }
       });
     }

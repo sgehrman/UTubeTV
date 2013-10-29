@@ -156,6 +156,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
   @Override
   public void onBackPressed() {
     if (getFragmentManager().getBackStackEntryCount() == 0) {
+      Util.toast(this, ":(");
       // do nothing, we don't want the app to disappear
       return;
     }
