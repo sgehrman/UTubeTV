@@ -128,8 +128,8 @@ public class YouTubeHelper {
     return result;
   }
 
-  public PlaylistListResults playlistListResults(String channelID) {
-    PlaylistListResults result = new PlaylistListResults(channelID);
+  public PlaylistListResults playlistListResults(String channelID, boolean addRelatedPlaylists) {
+    PlaylistListResults result = new PlaylistListResults(channelID, addRelatedPlaylists);
 
     return result;
   }
@@ -549,12 +549,49 @@ public class YouTubeHelper {
   public class PlaylistListResults extends BaseListResults {
     private String channelID;
 
-    public PlaylistListResults(String c) {
+    public PlaylistListResults(String c, boolean addRelated) {
       super();
 
       channelID = c;
 
-      setItems(itemsForNextToken(""));
+      List<Map> related = new ArrayList<Map>();
+      if (addRelated) {
+        Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(c);
+
+        for (Map.Entry<RelatedPlaylistType, String> entry : playlistMap.entrySet()) {
+          String playlistID = entry.getValue();
+
+          if (playlistID != null) {
+            HashMap map = new HashMap();
+
+            map.put("playlist", playlistID);
+
+            switch (entry.getKey()) {
+              case FAVORITES:
+                map.put("title", "Favorites");
+                break;
+              case LIKES:
+                map.put("title", "LIKES");
+                break;
+              case UPLOADS:
+                map.put("title", "UPLOADS");
+                break;
+              case WATCHED:
+                map.put("title", "WATCHED");
+                break;
+              case WATCHLATER:
+                map.put("title", "WATCHLATER");
+                break;
+            }
+
+            related.add(map);
+          }
+        }
+      }
+
+      related.addAll(itemsForNextToken(""));
+
+      setItems(related);
     }
 
     protected List<Map> itemsForNextToken(String token) {

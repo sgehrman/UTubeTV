@@ -212,7 +212,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
           case PLAYLISTS: {
             String channel = (String) listSpec.getData("channel");
 
-            listResults = youTubeHelper.playlistListResults(channel);
+            listResults = youTubeHelper.playlistListResults(channel, true);
             break;
           }
           case CATEGORIES:
