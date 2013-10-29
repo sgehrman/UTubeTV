@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">Sick Videos</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Favorites</string>
+    <string name="title_section2">Search</string>
+    <string name="title_section3">Subscriptions</string>
     <string name="action_settings">Settings</string>
 
 </resources>
