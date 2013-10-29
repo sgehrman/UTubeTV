@@ -504,7 +504,7 @@ public class YouTubeHelper {
         YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, snippet");
         listRequest.setMine(true);
 
-        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);

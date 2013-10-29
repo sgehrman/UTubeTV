@@ -194,7 +194,8 @@ public class YouTubeFragment extends Fragment
     }
 
     class ViewHolder {
-      TextView text;
+      TextView title;
+      TextView description;
       TextView pageNumber;
       ImageButton button;
     }
@@ -207,7 +208,8 @@ public class YouTubeFragment extends Fragment
 
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageButton) convertView.findViewById(R.id.image);
-        holder.text = (TextView) convertView.findViewById(R.id.text_view);
+        holder.title = (TextView) convertView.findViewById(R.id.text_view);
+        holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.pageNumber = (TextView) convertView.findViewById(R.id.page_number);
         convertView.setTag(holder);
       }
@@ -233,8 +235,20 @@ public class YouTubeFragment extends Fragment
       holder.button.setOnClickListener(this);
       holder.button.setId(position);
 
-      holder.text.setText((String) getItem(position).get("title"));
+      holder.title.setText((String) getItem(position).get("title"));
       holder.pageNumber.setText(Integer.toString(position+1));
+
+      // hide description if empty
+      if (holder.description != null) {
+        String desc = (String) getItem(position).get("description");
+        if (desc != null && (desc.length() > 0)) {
+          holder.description.setVisibility(View.VISIBLE);
+
+        holder.description.setText(desc);
+        } else {
+          holder.description.setVisibility(View.GONE);
+        }
+      }
 
       // load more data if at the end
       mList.updateHighestDisplayedIndex(position);
