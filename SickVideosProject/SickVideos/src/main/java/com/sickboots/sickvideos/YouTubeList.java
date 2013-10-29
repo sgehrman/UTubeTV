@@ -124,6 +124,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       case RELATED:
       case SEARCH:
       case LIKED:
+      case VIDEOS:
         String movieID = (String) itemMap.get("video");
 
         if (movieID != null) {
@@ -131,28 +132,38 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         }
         break;
       case PLAYLISTS:
+      {
+        String playlistID = (String) itemMap.get("playlist");
+
+        if (playlistID != null) {
+          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.VIDEOS, null, playlistID);
+
+          replaceFragment(frag);
+        }
+      }
         break;
       case SUBSCRIPTIONS:
         String channel = (String) itemMap.get("channel");
 
-        Util.toast(getActivity(), channel != null ? channel : "no channel");
-
         if (channel != null) {
-          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, channel);
+          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, channel, null);
 
-          FragmentManager fragmentManager = getActivity().getFragmentManager();
-          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-          fragmentTransaction.replace(R.id.fragment_container, frag);
-          fragmentTransaction.addToBackStack(null);
-
-          fragmentTransaction.commit();
+          replaceFragment(frag);
         }
-
         break;
       case CATEGORIES:
         break;
     }
+  }
+
+  private void replaceFragment(Fragment fragment) {
+    FragmentManager fragmentManager = getActivity().getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    fragmentTransaction.replace(R.id.fragment_container, fragment);
+    fragmentTransaction.addToBackStack(null);
+
+    fragmentTransaction.commit();
   }
 
   // =================================================================================
@@ -202,8 +213,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
             String channel = (String) listSpec.getData("channel");
 
             listResults = youTubeHelper.playlistListResults(channel);
-          }
             break;
+          }
           case CATEGORIES:
             listResults = youTubeHelper.categoriesListResults("US");
             break;
@@ -213,16 +224,24 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
           case RELATED: {
             YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
-            String channel = (String) listSpec.getData("channel");
-            listResults = youTubeHelper.relatedListResults(type, channel);
-          }
-            break;
+            String channelID = (String) listSpec.getData("channel");
 
+            String playlistID = youTubeHelper.relatedPlaylistID(type, channelID);
+
+            listResults = youTubeHelper.videoListResults(playlistID);
+            break;
+          }
+          case VIDEOS: {
+            String playlistID = (String) listSpec.getData("playlist");
+
+            listResults = youTubeHelper.videoListResults(playlistID);
+            break;
+          }
           case SEARCH: {
             String query = (String) listSpec.getData("query");
             listResults = youTubeHelper.searchListResults(query);
-          }
             break;
+          }
         }
       }
 

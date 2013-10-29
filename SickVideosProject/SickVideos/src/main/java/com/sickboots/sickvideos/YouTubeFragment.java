@@ -30,17 +30,19 @@ public class YouTubeFragment extends Fragment
   private static final String ITEM_RES_ID = "res_id";
   private static final String LIST_TYPE = "list_type";
   private static final String CHANNEL_ID = "channel";
+  private static final String PLAYLIST_ID = "playlist";
   private YouTubeList mList;
   private int itemResID=0;
   YouTubeListSpec.ListType listType;
 
-  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID) {
+  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
 
     args.putSerializable(LIST_TYPE, listType);
     args.putString(CHANNEL_ID, channelID);
+    args.putString(PLAYLIST_ID, playlistID);
 
     // item resource id
     int resID = R.layout.youtube_list_item_large;
@@ -55,6 +57,8 @@ public class YouTubeFragment extends Fragment
       case RELATED:
         break;
       case SEARCH:
+        break;
+      case VIDEOS:
         break;
     }
     args.putInt(ITEM_RES_ID, resID);
@@ -76,7 +80,8 @@ public class YouTubeFragment extends Fragment
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     String channelID = getArguments().getString(CHANNEL_ID);
-    mList = createListForIndex(channelID);
+    String playlistID = getArguments().getString(PLAYLIST_ID);
+    mList = createListForIndex(channelID, playlistID);
 
     mAdapter = new MyAdapter();
     listView.setAdapter(mAdapter);
@@ -129,13 +134,13 @@ public class YouTubeFragment extends Fragment
       mAdapter.addAll(items);
   }
 
-  private YouTubeList createListForIndex(String channelID) {
+  private YouTubeList createListForIndex(String channelID, String playlistID) {
     YouTubeList result = null;
 
     UIAccess access = new UIAccess(this);
 
     final String keyPrefix = "list-" + channelID;
-    result = null; // (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
+    result = null; // disabled: (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
     if (result != null) {
       result.restart(access);
     } else {
@@ -157,6 +162,9 @@ public class YouTubeFragment extends Fragment
           break;
         case SEARCH:
           result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
+          break;
+        case VIDEOS:
+          result = new YouTubeList(YouTubeListSpec.videosSpec(playlistID), access);
           break;
       }
 

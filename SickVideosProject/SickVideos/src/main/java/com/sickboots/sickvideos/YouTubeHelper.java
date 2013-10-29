@@ -122,8 +122,8 @@ public class YouTubeHelper {
     return result;
   }
 
-  public RelatedListResults relatedListResults(RelatedPlaylistType type, String channelID) {
-    RelatedListResults result = new RelatedListResults(type, channelID);
+  public VideoListResults videoListResults(String playlistID) {
+    VideoListResults result = new VideoListResults(playlistID);
 
     return result;
   }
@@ -154,6 +154,47 @@ public class YouTubeHelper {
 
   public LikedVideosListResults likedVideosListResults() {
     LikedVideosListResults result = new LikedVideosListResults();
+
+    return result;
+  }
+
+  // pass null for channelid to get our own channel
+  public String relatedPlaylistID(RelatedPlaylistType type, String channelID) {
+    Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
+
+    return playlistMap.get(type);
+  }
+
+  // pass null for channelid to get our own channel
+  private Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
+    Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
+
+    try {
+      YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
+      if (channelID != null) {
+        channelRequest.setId(channelID);
+      } else {
+        channelRequest.setMine(true);
+      }
+
+      channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
+      ChannelListResponse channelResult = channelRequest.execute();
+
+      List<Channel> channelsList = channelResult.getItems();
+      if (channelsList != null) {
+        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+
+        result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
+        result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
+        result.put(RelatedPlaylistType.UPLOADS, relatedPlaylists.getUploads());
+        result.put(RelatedPlaylistType.WATCHED, relatedPlaylists.getWatchHistory());
+        result.put(RelatedPlaylistType.WATCHLATER, relatedPlaylists.getWatchLater());
+      }
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
 
     return result;
   }
@@ -217,15 +258,15 @@ public class YouTubeHelper {
   }
 
   // ========================================================
-  // RelatedListResults
+  // VideoListResults
 
-  public class RelatedListResults extends BaseListResults {
+  public class VideoListResults extends BaseListResults {
     private String playlistID;
 
-    public RelatedListResults(YouTubeHelper.RelatedPlaylistType type, String channel) {
+    public VideoListResults(String p) {
       super();
 
-      playlistID = relatedPlaylistID(type, channel);
+      playlistID = p;
       setItems(itemsForNextToken(""));
     }
 
@@ -273,47 +314,6 @@ public class YouTubeHelper {
         map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
         result.add(map);
-      }
-
-      return result;
-    }
-
-    // pass null for channelid to get our own channel
-    public String relatedPlaylistID(RelatedPlaylistType type, String channelID) {
-      Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
-
-      return playlistMap.get(type);
-    }
-
-    // pass null for channelid to get our own channel
-    public Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
-      Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
-
-      try {
-        YouTube.Channels.List channelRequest = youTube().channels().list("contentDetails");
-        if (channelID != null) {
-          channelRequest.setId(channelID);
-        } else {
-          channelRequest.setMine(true);
-        }
-
-        channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
-        ChannelListResponse channelResult = channelRequest.execute();
-
-        List<Channel> channelsList = channelResult.getItems();
-        if (channelsList != null) {
-          ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
-
-          result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
-          result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
-          result.put(RelatedPlaylistType.UPLOADS, relatedPlaylists.getUploads());
-          result.put(RelatedPlaylistType.WATCHED, relatedPlaylists.getWatchHistory());
-          result.put(RelatedPlaylistType.WATCHLATER, relatedPlaylists.getWatchLater());
-        }
-      } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
-      } catch (Exception e) {
-        handleException(e);
       }
 
       return result;
@@ -564,7 +564,7 @@ public class YouTubeHelper {
         YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet");
         listRequest.setChannelId(channelID);
 
-        listRequest.setFields(String.format("items(snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -590,7 +590,7 @@ public class YouTubeHelper {
       for (Playlist subscription : subscriptionsList) {
         HashMap map = new HashMap();
 
-        map.put("id", subscription.getId());
+        map.put("playlist", subscription.getId());
         map.put("title", subscription.getSnippet().getTitle());
         map.put("description", subscription.getSnippet().getDescription());
         map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
