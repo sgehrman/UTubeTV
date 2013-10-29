@@ -28,9 +28,10 @@ public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
   private MyAdapter mAdapter;
   private static final String TAB_INDEX = "index";
+  private static final String ITEM_RES_ID = "res_id";
   private static final String CHANNEL_ID = "channel";
   private YouTubeList mList;
-  private int tabIndex=0;
+  private int itemResID=0;
 
   public static YouTubeFragment newInstance(int type, String channelID) {
     YouTubeFragment fragment = new YouTubeFragment();
@@ -38,6 +39,11 @@ public class YouTubeFragment extends Fragment
     Bundle args = new Bundle();
     args.putInt(TAB_INDEX, type);
     args.putString(CHANNEL_ID, channelID);
+
+    int resID = R.layout.youtube_list_item_large;
+    if (type == 2) resID = R.layout.youtube_list_item;
+    args.putInt(ITEM_RES_ID, resID);
+
     fragment.setArguments(args);
 
     return fragment;
@@ -50,7 +56,9 @@ public class YouTubeFragment extends Fragment
 
     ListView listView = (ListView) rootView.findViewById(R.id.listview);
 
-    tabIndex = getArguments().getInt(TAB_INDEX);
+    int tabIndex = getArguments().getInt(TAB_INDEX);
+    itemResID = getArguments().getInt(ITEM_RES_ID);
+
     String channelID = getArguments().getString(CHANNEL_ID);
     mList = createListForIndex(tabIndex, channelID);
 
@@ -161,10 +169,7 @@ public class YouTubeFragment extends Fragment
     public View getView(int position, View convertView, ViewGroup parent) {
 
       if (convertView == null) {
-        int resID = R.layout.youtube_list_item_large;
-        if (tabIndex == 2) resID = R.layout.youtube_list_item;
-
-        convertView = getActivity().getLayoutInflater().inflate(resID, null);
+        convertView = getActivity().getLayoutInflater().inflate(itemResID, null);
 
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageButton) convertView.findViewById(R.id.image);
@@ -177,7 +182,7 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), android.R.drawable.ic_input_get, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), android.R.drawable.ic_media_play, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {

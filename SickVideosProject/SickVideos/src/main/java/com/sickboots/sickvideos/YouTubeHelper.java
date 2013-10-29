@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.android.gms.internal.ch;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -17,8 +18,10 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelContentDetails;
 import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.model.Playlist;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.PlaylistListResponse;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Subscription;
@@ -498,7 +501,7 @@ public class YouTubeHelper {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
-        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
+        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, snippet");
         listRequest.setMine(true);
 
         listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
@@ -517,10 +520,10 @@ public class YouTubeHelper {
         handleException(e);
       }
 
-      return playlistItemsToMap(result);
+      return subscriptionListToMap(result);
     }
 
-    private List<Map> playlistItemsToMap(List<Subscription> subscriptionsList) {
+    private List<Map> subscriptionListToMap(List<Subscription> subscriptionsList) {
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
@@ -544,24 +547,28 @@ public class YouTubeHelper {
   // PlaylistListResults
 
   public class PlaylistListResults extends BaseListResults {
-    public PlaylistListResults(String channelID) {
+    private String channelID;
+
+    public PlaylistListResults(String c) {
       super();
+
+      channelID = c;
 
       setItems(itemsForNextToken(""));
     }
 
     protected List<Map> itemsForNextToken(String token) {
-      List<Subscription> result = new ArrayList<Subscription>();
+      List<Playlist> result = new ArrayList<Playlist>();
 
       try {
-        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, contentDetails, snippet");
-        listRequest.setMine(true);
+        YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet");
+        listRequest.setChannelId(channelID);
 
         listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
-        SubscriptionListResponse subscriptionListResponse = listRequest.execute();
+        PlaylistListResponse subscriptionListResponse = listRequest.execute();
 
         response = subscriptionListResponse;
         totalItems = subscriptionListResponse.getPageInfo().getTotalResults();
@@ -576,16 +583,15 @@ public class YouTubeHelper {
       return playlistItemsToMap(result);
     }
 
-    private List<Map> playlistItemsToMap(List<Subscription> subscriptionsList) {
+    private List<Map> playlistItemsToMap(List<Playlist> subscriptionsList) {
       List<Map> result = new ArrayList<Map>();
 
       // convert the list into hash maps of video info
-      for (Subscription subscription : subscriptionsList) {
+      for (Playlist subscription : subscriptionsList) {
         HashMap map = new HashMap();
 
         map.put("id", subscription.getId());
         map.put("title", subscription.getSnippet().getTitle());
-        map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
         map.put("description", subscription.getSnippet().getDescription());
         map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
 
