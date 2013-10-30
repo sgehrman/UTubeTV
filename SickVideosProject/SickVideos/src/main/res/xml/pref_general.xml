@@ -4,7 +4,7 @@
         android:key="play_full_screen"
         android:title="@string/pref_play_full_screen"
         android:summary="@string/pref_play_full_screen_summary"
-        android:defaultValue="false" />
+        android:defaultValue="false"/>
 
 </PreferenceScreen>
 

@@ -3,11 +3,11 @@
     <SwitchPreference
         android:key="share_facebook"
         android:title="@string/pref_sharing_facebook"
-        android:defaultValue="false" />
+        android:defaultValue="false"/>
 
     <SwitchPreference
         android:key="share_twitter"
         android:title="@string/pref_sharing_twitter"
-        android:defaultValue="false" />
+        android:defaultValue="false"/>
 
 </PreferenceScreen>

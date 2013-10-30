@@ -17,7 +17,7 @@ public class FragmentHost extends Fragment {
     return inflater.inflate(R.layout.fragment_host, container, false);
   }
 
-  public void onActivityCreated (Bundle savedInstanceState) {
+  public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
     // Check that the activity is using the layout version with

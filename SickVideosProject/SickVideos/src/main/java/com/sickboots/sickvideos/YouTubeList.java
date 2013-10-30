@@ -6,8 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.View;
-import android.view.ViewParent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
@@ -112,7 +110,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
 
       if (startTask) {
         if (listResults != null)
-        listResults.setIsReloading(true);
+          listResults.setIsReloading(true);
 
         new YouTubeListTask().execute();
       }
@@ -131,8 +129,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
           YouTubeHelper.playMovie(getActivity(), movieID);
         }
         break;
-      case PLAYLISTS:
-      {
+      case PLAYLISTS: {
         String playlistID = (String) itemMap.get("playlist");
 
         if (playlistID != null) {
@@ -141,7 +138,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
           replaceFragment(frag);
         }
       }
-        break;
+      break;
       case SUBSCRIPTIONS:
         String channel = (String) itemMap.get("channel");
 

@@ -33,7 +33,7 @@ public class YouTubeFragment extends Fragment
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeList mList;
-  private int itemResID=0;
+  private int itemResID = 0;
   YouTubeListSpec.ListType listType;
 
   public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
@@ -236,7 +236,7 @@ public class YouTubeFragment extends Fragment
       holder.button.setId(position);
 
       holder.title.setText((String) getItem(position).get("title"));
-      holder.pageNumber.setText(Integer.toString(position+1));
+      holder.pageNumber.setText(Integer.toString(position + 1));
 
       // hide description if empty
       if (holder.description != null) {
@@ -244,7 +244,7 @@ public class YouTubeFragment extends Fragment
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
 
-        holder.description.setText(desc);
+          holder.description.setText(desc);
         } else {
           holder.description.setVisibility(View.GONE);
         }

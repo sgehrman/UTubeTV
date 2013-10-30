@@ -2,13 +2,17 @@
 
     <Preference android:title="@string/pref_title_privacy_policy">
         <intent android:action="rs.undefeatedgames.dareshare.InfoActivity">
-            <extra android:name="infoID" android:value="pp" />
+            <extra
+                android:name="infoID"
+                android:value="pp"/>
         </intent>
     </Preference>
 
     <Preference android:title="@string/pref_title_tos">
         <intent android:action="rs.undefeatedgames.dareshare.InfoActivity">
-            <extra android:name="infoID" android:value="tos" />
+            <extra
+                android:name="infoID"
+                android:value="tos"/>
         </intent>
     </Preference>
 

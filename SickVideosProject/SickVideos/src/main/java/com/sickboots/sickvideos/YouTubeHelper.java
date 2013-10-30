@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.google.android.gms.internal.ch;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -39,13 +37,13 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
+
   public static final int REQ_PLAYER_CODE = 334443;
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
@@ -271,7 +269,7 @@ public class YouTubeHelper {
     }
 
     protected List<Map> itemsForNextToken(String token) {
-      List<PlaylistItem> playlistItemList=null;
+      List<PlaylistItem> playlistItemList = null;
 
       if (playlistID != null) {
         try {
@@ -742,7 +740,7 @@ public class YouTubeHelper {
       long result = 5;
 
       if (needsToLoadMoreItems()) {
-        result = highestDisplayedIndex - (items.size()-1);
+        result = highestDisplayedIndex - (items.size() - 1);
       }
 
       // avoid exception with setMaxResults: "Invalid value '52'. Values must be within the range: [0, 50]",
