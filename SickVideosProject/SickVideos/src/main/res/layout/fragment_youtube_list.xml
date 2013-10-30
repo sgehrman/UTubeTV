@@ -12,8 +12,7 @@
               android:horizontalSpacing="10dp"
               android:background="#eee"
               android:fastScrollEnabled="true"
-              android:divider="#aaa"
-              android:dividerHeight="1dp"
+              android:divider="@null"
               android:stretchMode="columnWidth"
               android:gravity="center"
         />

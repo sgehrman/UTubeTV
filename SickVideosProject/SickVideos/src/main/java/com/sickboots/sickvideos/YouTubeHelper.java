@@ -48,6 +48,7 @@ public class YouTubeHelper {
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
+  boolean highQualityImages = true;
 
   // must implement this listener
   public interface YouTubeHelperListener {
@@ -224,9 +225,7 @@ public class YouTubeHelper {
   private String thumbnailField() {
     String result = "snippet/thumbnails/default/url";
 
-    boolean highQuality = false;
-
-    if (highQuality)
+    if (highQualityImages)
       result = "snippet/thumbnails/high/url";
 
     return result;
@@ -695,7 +694,7 @@ public class YouTubeHelper {
 
     public void updateHighestDisplayedIndex(int index) {
       if (index > highestDisplayedIndex) {
-        highestDisplayedIndex = index;
+        highestDisplayedIndex = index + 4; // load a few more
       }
     }
 
@@ -743,7 +742,7 @@ public class YouTubeHelper {
         result = highestDisplayedIndex - (items.size() - 1);
       }
 
-      // avoid exception with setMaxResults: "Invalid value '52'. Values must be within the range: [0, 50]",
+      // avoid exception with setMaxResults: Values must be within the range: [0, 50]
       return Math.min(50, result);
     }
   }

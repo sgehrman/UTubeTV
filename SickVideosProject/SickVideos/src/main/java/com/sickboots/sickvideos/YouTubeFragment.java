@@ -226,7 +226,7 @@ public class YouTubeFragment extends Fragment
           if (!loadedFromCache) {
 //            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
             AlphaAnimation scale = new AlphaAnimation(0, 1);
-            scale.setDuration(300);
+            scale.setDuration(400);
 //            scale.setInterpolator(new OvershootInterpolator());
             imageView.startAnimation(scale);
           }
