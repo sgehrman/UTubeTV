@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -197,20 +197,21 @@ public class YouTubeFragment extends Fragment
       TextView title;
       TextView description;
       TextView pageNumber;
-      ImageButton button;
+      ImageView button;
+      View gradient_overlay;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
       if (convertView == null) {
         convertView = getActivity().getLayoutInflater().inflate(itemResID, null);
 
         ViewHolder holder = new ViewHolder();
-        holder.button = (ImageButton) convertView.findViewById(R.id.image);
+        holder.button = (ImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.pageNumber = (TextView) convertView.findViewById(R.id.page_number);
+        holder.gradient_overlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
       }
 
@@ -218,14 +219,15 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), android.R.drawable.ic_media_play, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), 0, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+//            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+            AlphaAnimation scale = new AlphaAnimation(0, 1);
             scale.setDuration(300);
-            scale.setInterpolator(new OvershootInterpolator());
+//            scale.setInterpolator(new OvershootInterpolator());
             imageView.startAnimation(scale);
           }
         }
@@ -247,6 +249,14 @@ public class YouTubeFragment extends Fragment
           holder.description.setText(desc);
         } else {
           holder.description.setVisibility(View.GONE);
+        }
+      }
+
+      if (holder.gradient_overlay != null) {
+        if ((position % 2) == 0) {
+          holder.gradient_overlay.setBackgroundResource(R.drawable.blue_gradient);
+        } else {
+          holder.gradient_overlay.setBackgroundResource(R.drawable.black_gradient);
         }
       }
 
