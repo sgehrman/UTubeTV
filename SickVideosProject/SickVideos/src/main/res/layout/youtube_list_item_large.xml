@@ -6,7 +6,6 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="16dp"
                 android:paddingTop="10dp"
-
                 android:background="@drawable/dropshadow"
                 android:descendantFocusability="blocksDescendants">
 
@@ -21,13 +20,10 @@
 
     <ImageButton
         android:scaleType="centerCrop"
-
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-
         android:layout_below="@+id/text_view"
-
         style="?android:attr/borderlessButtonStyle"/>
 
     <TextView
@@ -37,10 +33,8 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:padding="8dp"
-
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="#8000"
         android:textColor="#fff"/>
-
 </RelativeLayout>
