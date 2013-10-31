@@ -27,11 +27,16 @@
             android:name="com.sickboots.sickvideos.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
+
         <activity
             android:name="com.sickboots.sickvideos.TabActivity"
             android:label="@string/title_activity_tabs">
         </activity>
 
+        <activity
+            android:name="com.sickboots.sickvideos.PlaylistChooserActivity"
+            android:label="@string/title_activity_playlist_chooser">
+        </activity>
 
     </application>
 

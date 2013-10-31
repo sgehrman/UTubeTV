@@ -167,13 +167,9 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
         return true;
       case R.id.action_websearch:
-        // create intent to perform web search for this planet
-        intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-        // catch event that there's no activity to handle intent
-        if (intent.resolveActivity(getPackageManager()) != null) {
-          startActivity(intent);
-        }
+        intent = new Intent();
+        intent.setClass(MainActivity.this, PlaylistChooserActivity.class);
+        startActivity(intent);
 
         return true;
       default:
