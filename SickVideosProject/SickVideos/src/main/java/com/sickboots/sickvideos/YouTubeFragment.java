@@ -22,6 +22,7 @@ import org.joda.time.Seconds;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -244,14 +245,18 @@ public class YouTubeFragment extends Fragment
 
       String duration = (String) itemMap.get("duration");
       if (duration != null) {
+        holder.pageNumber.setVisibility(View.VISIBLE);
+
         PeriodFormatter formatter = ISOPeriodFormat.standard();
         Period p = formatter.parsePeriod(duration);
         Seconds s = p.toStandardSeconds();
 
-        holder.pageNumber.setText("00:" + 0 + ":" + s.getSeconds());
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        df.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
 
+        holder.pageNumber.setText(df.format(s.getSeconds()*1000));
       } else {
-        holder.pageNumber.setText(Integer.toString(position + 1));
+        holder.pageNumber.setVisibility(View.GONE);
       }
 
       // hide description if empty
