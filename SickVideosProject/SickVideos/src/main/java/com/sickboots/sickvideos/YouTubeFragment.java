@@ -254,7 +254,7 @@ public class YouTubeFragment extends Fragment
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         df.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
 
-        holder.pageNumber.setText(df.format(s.getSeconds()*1000));
+        holder.pageNumber.setText(df.format(s.getSeconds() * 1000));
       } else {
         holder.pageNumber.setVisibility(View.GONE);
       }

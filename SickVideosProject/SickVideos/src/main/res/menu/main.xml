@@ -9,4 +9,9 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"/>
+    <item
+        android:id="@+id/action_tabs"
+        android:title="Tabs UI"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
 </menu>

@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.SearchManager;
@@ -155,16 +154,18 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     }
     // Handle action buttons
     switch (item.getItemId()) {
-
-
       case R.id.action_settings:
         intent = new Intent();
         intent.setClass(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
 
         return true;
+      case R.id.action_tabs:
+        intent = new Intent();
+        intent.setClass(MainActivity.this, TabActivity.class);
+        startActivity(intent);
 
-
+        return true;
       case R.id.action_websearch:
         // create intent to perform web search for this planet
         intent = new Intent(Intent.ACTION_WEB_SEARCH);
@@ -172,9 +173,8 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         // catch event that there's no activity to handle intent
         if (intent.resolveActivity(getPackageManager()) != null) {
           startActivity(intent);
-        } else {
-          Util.toast(this, "duh");
         }
+
         return true;
       default:
         return super.onOptionsItemSelected(item);
