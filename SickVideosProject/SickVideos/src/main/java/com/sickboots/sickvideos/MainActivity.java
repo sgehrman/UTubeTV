@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     // Set up the action bar.
     final ActionBar actionBar = getActionBar();
-    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);

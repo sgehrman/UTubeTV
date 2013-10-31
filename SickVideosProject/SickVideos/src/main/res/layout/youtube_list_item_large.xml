@@ -39,6 +39,18 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/text_view"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:textColor="#fff"
+        android:singleLine="false"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
         android:id="@+id/page_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
