@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -37,7 +38,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     setContentView(R.layout.activity_main);
 
     mTitle = mDrawerTitle = getTitle();
-    String[] names = new String[]{"craplets", "shitballs", "nuggets"};
+    String[] names = new String[]{"Favorites", "Uploads", "Watched", "Liked", "Subscriptions", "Playlists"};
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -189,9 +190,28 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   }
 
   private void selectItem(int position) {
-    // update the main content by replacing fragments
-//    YouTubeFragment fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
-    YouTubeFragment fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.LIKED, null, null, null);
+    YouTubeFragment fragment=null;
+
+    switch (position) {
+      case 0:
+          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.FAVORITES);
+        break;
+      case 1:
+          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
+        break;
+      case 2:
+          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.WATCHED);
+        break;
+      case 3:
+        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.LIKED, null, null, null);
+        break;
+      case 4:
+        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null);
+        break;
+      case 5:
+        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, null, null, null);
+        break;
+    }
 
     FragmentManager fragmentManager = getFragmentManager();
     fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
