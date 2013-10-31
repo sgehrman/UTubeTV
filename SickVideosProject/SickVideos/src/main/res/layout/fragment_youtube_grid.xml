@@ -6,10 +6,10 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="90dp"
+        android:columnWidth="220dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"
         android:background="#eee"
         android:fastScrollEnabled="true"
 
