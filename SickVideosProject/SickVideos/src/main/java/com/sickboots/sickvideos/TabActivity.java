@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class MainActivity extends Activity implements ActionBar.TabListener, Util.PullToRefreshListener {
+public class TabActivity extends Activity implements ActionBar.TabListener, Util.PullToRefreshListener {
   SectionsPagerAdapter mSectionsPagerAdapter;
   ViewPager mViewPager;
 
@@ -80,7 +80,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Uti
     switch (item.getItemId()) {
       case R.id.action_settings:
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this, SettingsActivity.class);
+        intent.setClass(TabActivity.this, SettingsActivity.class);
         startActivity(intent);
 
         return true;

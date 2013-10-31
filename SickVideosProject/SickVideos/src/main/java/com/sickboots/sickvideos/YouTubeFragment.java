@@ -98,7 +98,8 @@ public class YouTubeFragment extends Fragment
     });
 
     // Add the Refreshable View and provide the refresh listener;
-    ((MainActivity) getActivity()).mPullToRefreshAttacher.addRefreshableView(listView, this);
+    Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
+    ptrl.addRefreshableView(listView, this);
 
     // load data if we have it already
     onResults();
@@ -112,7 +113,8 @@ public class YouTubeFragment extends Fragment
           public void run() {
             mList.refresh();
 
-            ((MainActivity) getActivity()).mPullToRefreshAttacher.setRefreshComplete();
+            Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
+            ptrl.setRefreshComplete();
           }
         }, 2000);
   }

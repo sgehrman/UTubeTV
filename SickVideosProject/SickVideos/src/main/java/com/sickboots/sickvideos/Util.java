@@ -6,12 +6,21 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
  * Created by sgehrman on 9/24/13.
  */
 public class Util {
+
+  public interface PullToRefreshListener {
+    void addRefreshableView(View theView, PullToRefreshAttacher.OnRefreshListener listener);
+    public void setRefreshComplete();
+  }
+
   // interface for getting results
   public interface StringResultListener {
     public void onResults(StringResultListener listener, String result);
