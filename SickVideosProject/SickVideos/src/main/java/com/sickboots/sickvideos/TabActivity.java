@@ -29,7 +29,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_tabs);
 
 //      Util.activateStrictMode(this);
 

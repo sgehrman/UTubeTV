@@ -18,6 +18,7 @@ public class Util {
 
   public interface PullToRefreshListener {
     void addRefreshableView(View theView, PullToRefreshAttacher.OnRefreshListener listener);
+
     public void setRefreshComplete();
   }
 
