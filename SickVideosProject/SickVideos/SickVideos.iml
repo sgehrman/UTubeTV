@@ -84,6 +84,7 @@
     <orderEntry type="library" exported="" name="YouTubeAndroidPlayerApi" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-youtube-v3-rev79-1.17.0-rc" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
   </component>
 </module>
 

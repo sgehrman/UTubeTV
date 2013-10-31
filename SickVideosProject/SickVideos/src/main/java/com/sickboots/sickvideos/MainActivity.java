@@ -81,10 +81,6 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
 //      Util.activateStrictMode(this);
 
-    // Set up the action bar.
-    final ActionBar actionBar = getActionBar();
-    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
   }
@@ -195,14 +191,15 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
   private void selectItem(int position) {
     // update the main content by replacing fragments
-    YouTubeFragment fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
+//    YouTubeFragment fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
+    YouTubeFragment fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.LIKED, null, null, null);
 
     FragmentManager fragmentManager = getFragmentManager();
     fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);
-    setTitle("duh here");
+    setTitle(fragment.title());
     mDrawerLayout.closeDrawer(mDrawerList);
   }
 

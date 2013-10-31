@@ -17,6 +17,11 @@ import android.widget.TextView;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import org.joda.time.Period;
+import org.joda.time.Seconds;
+import org.joda.time.format.ISOPeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +29,15 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
-  private MyAdapter mAdapter;
   private static final String ITEM_RES_ID = "res_id";
   private static final String LIST_TYPE = "list_type";
   private static final String CHANNEL_ID = "channel";
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
+  YouTubeListSpec.ListType listType;
+  private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
-  YouTubeListSpec.ListType listType;
 
   public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
     YouTubeFragment fragment = new YouTubeFragment();
@@ -66,6 +71,10 @@ public class YouTubeFragment extends Fragment
     fragment.setArguments(args);
 
     return fragment;
+  }
+
+  public String title() {
+    return "Favorites";
   }
 
   @Override
@@ -182,23 +191,15 @@ public class YouTubeFragment extends Fragment
   // Adapter
 
   private class MyAdapter extends ArrayAdapter<Map> implements View.OnClickListener {
+    public MyAdapter() {
+      super(getActivity(), 0);
+    }
+
     public void onClick(View v) {
       int position = v.getId();
       Map map = mAdapter.getItem(position);
 
       mList.handleClick(map, true);
-    }
-
-    public MyAdapter() {
-      super(getActivity(), 0);
-    }
-
-    class ViewHolder {
-      TextView title;
-      TextView description;
-      TextView pageNumber;
-      ImageView button;
-      View gradient_overlay;
     }
 
     @Override
@@ -217,9 +218,11 @@ public class YouTubeFragment extends Fragment
 
       ViewHolder holder = (ViewHolder) convertView.getTag();
 
+      Map itemMap = getItem(position);
+
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) getItem(position).get("thumbnail"), 0, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get("thumbnail"), 0, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -237,14 +240,31 @@ public class YouTubeFragment extends Fragment
       holder.button.setOnClickListener(this);
       holder.button.setId(position);
 
-      holder.title.setText((String) getItem(position).get("title"));
-      holder.pageNumber.setText(Integer.toString(position + 1));
+      holder.title.setText((String) itemMap.get("title"));
+
+      String duration = (String) itemMap.get("duration");
+      if (duration != null) {
+        PeriodFormatter formatter = ISOPeriodFormat.standard();
+        Period p = formatter.parsePeriod(duration);
+        Seconds s = p.toStandardSeconds();
+
+        holder.pageNumber.setText("00:" + 0 + ":" + s.getSeconds());
+
+      } else {
+        holder.pageNumber.setText(Integer.toString(position + 1));
+      }
 
       // hide description if empty
       if (holder.description != null) {
-        String desc = (String) getItem(position).get("description");
+        String desc = (String) itemMap.get("description");
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
+
+          // shorten description
+          if (desc.length() > 100) {
+            desc = desc.substring(0, Math.min(desc.length(), 100));
+            desc += "...";
+          }
 
           holder.description.setText(desc);
         } else {
@@ -264,6 +284,14 @@ public class YouTubeFragment extends Fragment
       mList.updateHighestDisplayedIndex(position);
 
       return convertView;
+    }
+
+    class ViewHolder {
+      TextView title;
+      TextView description;
+      TextView pageNumber;
+      ImageView button;
+      View gradient_overlay;
     }
   }
 

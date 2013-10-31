@@ -392,10 +392,10 @@ public class YouTubeHelper {
       VideoListResponse searchListResponse = null;
 
       try {
-        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet");
+        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
 
         listRequest.setKey(YouTubeHelper.devKey());
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMyRating("like");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
@@ -428,6 +428,7 @@ public class YouTubeHelper {
         map.put("title", playlistItem.getSnippet().getTitle());
         map.put("description", playlistItem.getSnippet().getDescription());
         map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.put("duration", playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }
