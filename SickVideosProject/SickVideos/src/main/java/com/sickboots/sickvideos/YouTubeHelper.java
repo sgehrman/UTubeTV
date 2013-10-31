@@ -203,7 +203,14 @@ public class YouTubeHelper {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
 
       if (listener != null) {
-        listener.handleAuthIntent(r.getIntent());
+        Intent intent=null;
+        try {
+          intent = r.getIntent();
+        } catch (Exception ee) {
+          // ignore, this happens if we kill the activity quickly before our async task finishes
+        }
+        if (intent != null)
+          listener.handleAuthIntent(intent);
       }
     } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
       GoogleJsonResponseException r = (GoogleJsonResponseException) e;
@@ -287,9 +294,9 @@ public class YouTubeHelper {
           response = playListResponse;
 
         } catch (UserRecoverableAuthIOException e) {
-          handleException(e);
+          handleResultsException(e);
         } catch (Exception e) {
-          handleException(e);
+          handleResultsException(e);
         }
       }
 
@@ -352,9 +359,9 @@ public class YouTubeHelper {
 
         result.addAll(searchListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
+        handleResultsException(e);
       } catch (Exception e) {
-        handleException(e);
+        handleResultsException(e);
       }
 
       return searchResultsToMap(result);
@@ -409,9 +416,9 @@ public class YouTubeHelper {
 
         result.addAll(searchListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
+        handleResultsException(e);
       } catch (Exception e) {
-        handleException(e);
+        handleResultsException(e);
       }
 
       return searchResultsToMap(result);
@@ -463,9 +470,9 @@ public class YouTubeHelper {
         totalItems = result.size();
         response = categoryListResponse;
       } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
+        handleResultsException(e);
       } catch (Exception e) {
-        handleException(e);
+        handleResultsException(e);
       }
 
       return searchResultsToMap(result);
@@ -516,9 +523,9 @@ public class YouTubeHelper {
 
         result.addAll(subscriptionListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
+        handleResultsException(e);
       } catch (Exception e) {
-        handleException(e);
+        handleResultsException(e);
       }
 
       return subscriptionListToMap(result);
@@ -618,9 +625,9 @@ public class YouTubeHelper {
 
         result.addAll(subscriptionListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
-        handleException(e);
+        handleResultsException(e);
       } catch (Exception e) {
-        handleException(e);
+        handleResultsException(e);
       }
 
       return playlistItemsToMap(result);
@@ -680,9 +687,8 @@ public class YouTubeHelper {
           result = true;
         }
       } else {
-        // set a flag to stop trying to get more data.  the totalItems is not accurrate.  We don't get results for deleted videos.
-        totalItems = items.size();
-        reachedEndOfList = true;
+        // no more tokens, we are done
+        done();
       }
 
       return result;
@@ -749,6 +755,20 @@ public class YouTubeHelper {
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
       return Math.min(50, result);
     }
+
+    private void done() {
+      // set a flag to stop trying to get more data.  the totalItems is not accurrate.  We don't get results for deleted videos.
+      if (items != null)
+        totalItems = items.size();
+      reachedEndOfList = true;
+    }
+
+    protected void handleResultsException(Exception e) {
+      // must call done otherwise we get an endless loop as it continues to retry since it thinks there are still items to fetch
+      done();
+      handleException(e);
+    }
+
   }
 
 }

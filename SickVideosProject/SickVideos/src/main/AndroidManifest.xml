@@ -28,6 +28,10 @@
             android:name="com.sickboots.sickvideos.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
+        <activity
+            android:name="com.sickboots.sickvideos.TabActivity"
+            android:label="@string/title_activity_tabs">
+        </activity>
 
 
     </application>

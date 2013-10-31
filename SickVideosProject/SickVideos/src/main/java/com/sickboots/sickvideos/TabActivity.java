@@ -31,8 +31,6 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_tabs);
 
-//      Util.activateStrictMode(this);
-
     // Set up the action bar.
     final ActionBar actionBar = getActionBar();
     actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -151,17 +149,6 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
       }
       return null;
     }
-  }
-
-  @Override
-  public void onBackPressed() {
-    if (getFragmentManager().getBackStackEntryCount() == 0) {
-      Util.toast(this, ":(");
-      // do nothing, we don't want the app to disappear
-      return;
-    }
-
-    super.onBackPressed();
   }
 
   // Add the Refreshable View and provide the refresh listener;

@@ -1,5 +1,6 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_tabs">Tab UI</string>
 
     <!-- Account Settings -->
     <string name="pref_header_general">Account Settings</string>
