@@ -29,24 +29,17 @@
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
-        android:textAllCaps="false"
-        android:padding="8dp"
         android:layout_alignParentTop="true"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#fff"
         android:singleLine="true"
+        style = "@style/VideoTextTitle"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/description_view"
         android:layout_width="match_parent"
         android:layout_below="@+id/text_view"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:textColor="#fff"
         android:singleLine="false"
+        style = "@style/VideoTextDescription"
         android:layout_height="wrap_content"/>
 
 
