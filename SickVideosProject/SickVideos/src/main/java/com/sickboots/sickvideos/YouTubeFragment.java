@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -81,9 +82,18 @@ public class YouTubeFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_youtube_list, container, false);
+    boolean useGridView = true;
 
-    ListView listView = (ListView) rootView.findViewById(R.id.listview);
+    View rootView = null;
+    View listOrGridView = null;
+
+    if (useGridView) {
+      rootView = inflater.inflate(R.layout.fragment_youtube_grid, container, false);
+      listOrGridView = rootView.findViewById(R.id.gridview);
+    } else {
+      rootView = inflater.inflate(R.layout.fragment_youtube_list, container, false);
+      listOrGridView = rootView.findViewById(R.id.listview);
+    }
 
     itemResID = getArguments().getInt(ITEM_RES_ID);
 
@@ -95,19 +105,34 @@ public class YouTubeFragment extends Fragment
     mList = createListForIndex(channelID, playlistID, relatedType);
 
     mAdapter = new MyAdapter();
-    listView.setAdapter(mAdapter);
 
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Map map = mAdapter.getItem(position);
+    if (listOrGridView instanceof ListView) {
+      ListView lv = (ListView) listOrGridView;
+      lv.setAdapter(mAdapter);
 
-        mList.handleClick(map, false);
-      }
-    });
+      lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+          Map map = mAdapter.getItem(position);
+
+          mList.handleClick(map, false);
+        }
+      });
+    } else {
+      GridView gv = (GridView) listOrGridView;
+      gv.setAdapter(mAdapter);
+
+      gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+          Map map = mAdapter.getItem(position);
+
+          mList.handleClick(map, false);
+        }
+      });
+    }
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.addRefreshableView(listView, this);
+    ptrl.addRefreshableView(listOrGridView, this);
 
     // load data if we have it already
     onResults();
