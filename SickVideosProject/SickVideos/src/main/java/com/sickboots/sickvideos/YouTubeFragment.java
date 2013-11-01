@@ -246,17 +246,10 @@ public class YouTubeFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class MyAdapter extends ArrayAdapter<Map> { // implements View.OnClickListener {
+  private class MyAdapter extends ArrayAdapter<Map> {
     public MyAdapter() {
       super(getActivity(), 0);
     }
-
-//    public void onClick(View v) {
-//      int position = v.getId();
-//      Map map = mAdapter.getItem(position);
-//
-//      mList.handleClick(map, true);
-//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -292,9 +285,6 @@ public class YouTubeFragment extends Fragment
         }
 
       });
-
-//      holder.button.setOnClickListener(this);
-//      holder.button.setId(position);
 
       holder.title.setText((String) itemMap.get("title"));
 
