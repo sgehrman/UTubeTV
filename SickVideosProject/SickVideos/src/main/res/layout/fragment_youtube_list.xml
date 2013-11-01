@@ -6,14 +6,12 @@
               android:id="@+id/listview"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:columnWidth="90dp"
-              android:numColumns="auto_fit"
               android:verticalSpacing="10dp"
               android:horizontalSpacing="10dp"
               android:background="#eee"
               android:fastScrollEnabled="true"
+              android:drawSelectorOnTop="true"
               android:divider="@null"
-              android:stretchMode="columnWidth"
               android:gravity="center"
         />
 

@@ -12,7 +12,7 @@
         android:horizontalSpacing="4dp"
         android:background="#eee"
         android:fastScrollEnabled="true"
-
+        android:drawSelectorOnTop="true"
         android:stretchMode="columnWidth"
         android:gravity="center"
         />
