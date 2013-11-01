@@ -7,7 +7,10 @@ import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
+
+import java.lang.reflect.Field;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -50,6 +53,20 @@ public class Util {
     } catch (PackageManager.NameNotFoundException e) {
     }
     return true;
+  }
+
+  public static void ignoreObsoleteCapacitiveMenuButton(Context  context) {
+    try {
+      ViewConfiguration config = ViewConfiguration.get(context);
+      Field menuKeyField = ViewConfiguration.class
+          .getDeclaredField("sHasPermanentMenuKey");
+      if (menuKeyField != null) {
+        menuKeyField.setAccessible(true);
+        menuKeyField.setBoolean(config, false);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public static void activateStrictMode(Context context) {

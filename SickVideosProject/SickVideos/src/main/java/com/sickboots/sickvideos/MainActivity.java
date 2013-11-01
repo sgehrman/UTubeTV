@@ -78,7 +78,9 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
       selectItem(0);
     }
 
-//    Util.activateStrictMode(this);
+    // general app tweaks
+//  Util.activateStrictMode(this);
+    Util.ignoreObsoleteCapacitiveMenuButton(this);
 
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
