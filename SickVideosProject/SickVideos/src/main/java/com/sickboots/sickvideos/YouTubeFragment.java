@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
@@ -110,11 +111,16 @@ public class YouTubeFragment extends Fragment
 
     mAdapter = new MyAdapter();
 
-    if (listOrGridView instanceof ListView) {
-      ListView lv = (ListView) listOrGridView;
-      lv.setAdapter(mAdapter);
+    // .015 is the default
+    float friction = 0.01f;
 
-      lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    if (listOrGridView instanceof ListView) {
+      ListView v = (ListView) listOrGridView;
+      v.setAdapter(mAdapter);
+
+      v.setFriction(friction);
+
+      v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
           Map map = mAdapter.getItem(position);
 
@@ -122,10 +128,12 @@ public class YouTubeFragment extends Fragment
         }
       });
     } else {
-      GridView gv = (GridView) listOrGridView;
-      gv.setAdapter(mAdapter);
+      GridView v = (GridView) listOrGridView;
+      v.setAdapter(mAdapter);
 
-      gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      v.setFriction(friction);
+
+      v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
           Map map = mAdapter.getItem(position);
 
