@@ -246,17 +246,17 @@ public class YouTubeFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class MyAdapter extends ArrayAdapter<Map> implements View.OnClickListener {
+  private class MyAdapter extends ArrayAdapter<Map> { // implements View.OnClickListener {
     public MyAdapter() {
       super(getActivity(), 0);
     }
 
-    public void onClick(View v) {
-      int position = v.getId();
-      Map map = mAdapter.getItem(position);
-
-      mList.handleClick(map, true);
-    }
+//    public void onClick(View v) {
+//      int position = v.getId();
+//      Map map = mAdapter.getItem(position);
+//
+//      mList.handleClick(map, true);
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -285,7 +285,7 @@ public class YouTubeFragment extends Fragment
           if (!loadedFromCache) {
 //            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
             AlphaAnimation scale = new AlphaAnimation(0, 1);
-            scale.setDuration(400);
+            scale.setDuration(300);
 //            scale.setInterpolator(new OvershootInterpolator());
             imageView.startAnimation(scale);
           }
@@ -293,8 +293,8 @@ public class YouTubeFragment extends Fragment
 
       });
 
-      holder.button.setOnClickListener(this);
-      holder.button.setId(position);
+//      holder.button.setOnClickListener(this);
+//      holder.button.setId(position);
 
       holder.title.setText((String) itemMap.get("title"));
 

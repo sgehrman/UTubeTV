@@ -19,7 +19,7 @@
             android:id="@+id/image"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            style="?android:attr/borderlessButtonStyle"
+            android:clickable="false"
             android:layout_gravity="center"/>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
