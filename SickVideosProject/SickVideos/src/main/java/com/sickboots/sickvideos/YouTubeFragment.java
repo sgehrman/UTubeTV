@@ -239,7 +239,7 @@ public class YouTubeFragment extends Fragment
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.pageNumber = (TextView) convertView.findViewById(R.id.page_number);
-        holder.gradient_overlay = (View) convertView.findViewById(R.id.gradient_overlay);
+        holder.gradientOverlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
       }
 
@@ -303,11 +303,11 @@ public class YouTubeFragment extends Fragment
         }
       }
 
-      if (holder.gradient_overlay != null) {
+      if (holder.gradientOverlay != null) {
         if ((position % 2) == 0) {
-          holder.gradient_overlay.setBackgroundResource(R.drawable.blue_gradient);
+          holder.gradientOverlay.setBackgroundResource(R.drawable.blue_gradient);
         } else {
-          holder.gradient_overlay.setBackgroundResource(R.drawable.black_gradient);
+          holder.gradientOverlay.setBackgroundResource(R.drawable.black_gradient);
         }
       }
 
@@ -322,11 +322,9 @@ public class YouTubeFragment extends Fragment
       TextView description;
       TextView pageNumber;
       ImageView button;
-      View gradient_overlay;
+      View gradientOverlay;
     }
   }
-
-  // ===========================================================================
 
 }
 
