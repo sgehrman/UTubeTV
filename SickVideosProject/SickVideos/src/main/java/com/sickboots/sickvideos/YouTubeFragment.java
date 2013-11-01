@@ -31,17 +31,40 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
     implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
-  private static final String ITEM_RES_ID = "res_id";
-  private static final String LIST_TYPE = "list_type";
+  private static final String SEARCH_QUERY = "query";
+  private static final String LIST_TYPE = "type";
   private static final String CHANNEL_ID = "channel";
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
-  YouTubeListSpec.ListType listType;
+  private YouTubeListSpec.ListType listType;
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
 
-  public static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
+  public static YouTubeFragment relatedFragment(YouTubeHelper.RelatedPlaylistType relatedType) {
+    return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
+  }
+
+  public static YouTubeFragment videosFragment(String playlistID) {
+    return newInstance(YouTubeListSpec.ListType.VIDEOS, null, playlistID, null, null);
+  }
+
+  public static YouTubeFragment playlistsFragment(String channelID) {
+    return newInstance(YouTubeListSpec.ListType.PLAYLISTS, channelID, null, null, null);
+  }
+
+  public static YouTubeFragment likedFragment() {
+    return newInstance(YouTubeListSpec.ListType.LIKED, null, null, null, null);
+  }
+
+  public static YouTubeFragment subscriptionsFragment() {
+    return newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null, null);
+  }
+  public static YouTubeFragment searchFragment(String searchQuery) {
+    return newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null, searchQuery);
+  }
+
+  private static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType, String searchQuery) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
@@ -50,25 +73,7 @@ public class YouTubeFragment extends Fragment
     args.putSerializable(RELATED_TYPE, relatedType);
     args.putString(CHANNEL_ID, channelID);
     args.putString(PLAYLIST_ID, playlistID);
-
-    // item resource id
-    int resID = R.layout.youtube_list_item_large;
-    switch (listType) {
-      case PLAYLISTS:
-      case CATEGORIES:
-      case SUBSCRIPTIONS:
-        resID = R.layout.youtube_list_item;
-        break;
-      case LIKED:
-        break;
-      case RELATED:
-        break;
-      case SEARCH:
-        break;
-      case VIDEOS:
-        break;
-    }
-    args.putInt(ITEM_RES_ID, resID);
+    args.putString(SEARCH_QUERY, searchQuery);
 
     fragment.setArguments(args);
 
@@ -95,14 +100,13 @@ public class YouTubeFragment extends Fragment
       listOrGridView = rootView.findViewById(R.id.listview);
     }
 
-    itemResID = getArguments().getInt(ITEM_RES_ID);
-
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     String channelID = getArguments().getString(CHANNEL_ID);
     String playlistID = getArguments().getString(PLAYLIST_ID);
+    String query = getArguments().getString(SEARCH_QUERY);
     YouTubeHelper.RelatedPlaylistType relatedType = (YouTubeHelper.RelatedPlaylistType) getArguments().getSerializable(RELATED_TYPE);
-    mList = createListForIndex(channelID, playlistID, relatedType);
+    mList = createListForIndex(channelID, playlistID, relatedType, query);
 
     mAdapter = new MyAdapter();
 
@@ -140,6 +144,26 @@ public class YouTubeFragment extends Fragment
     return rootView;
   }
 
+  private int itemResourceID() {
+    if (itemResID == 0) {
+      itemResID = R.layout.youtube_list_item_large;
+      switch (listType) {
+        case PLAYLISTS:
+        case CATEGORIES:
+        case SUBSCRIPTIONS:
+          itemResID = R.layout.youtube_list_item;
+          break;
+        case LIKED:
+        case RELATED:
+        case SEARCH:
+        case VIDEOS:
+          break;
+      }
+    }
+
+    return itemResID;
+  }
+
   public void onRefreshStarted(View view) {
     new android.os.Handler().postDelayed(
         new Runnable() {
@@ -173,7 +197,7 @@ public class YouTubeFragment extends Fragment
     }
   }
 
-  private YouTubeList createListForIndex(String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {
+  private YouTubeList createListForIndex(String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType, String query) {
     YouTubeList result = null;
 
     UIAccess access = new UIAccess(this);
@@ -200,7 +224,7 @@ public class YouTubeFragment extends Fragment
           result = new YouTubeList(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
           break;
         case SEARCH:
-          result = new YouTubeList(YouTubeListSpec.searchSpec("Keyboard cat"), access);
+          result = new YouTubeList(YouTubeListSpec.searchSpec(query), access);
           break;
         case VIDEOS:
           result = new YouTubeList(YouTubeListSpec.videosSpec(playlistID), access);
@@ -232,7 +256,7 @@ public class YouTubeFragment extends Fragment
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
-        convertView = getActivity().getLayoutInflater().inflate(itemResID, null);
+        convertView = getActivity().getLayoutInflater().inflate(itemResourceID(), null);
 
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageView) convertView.findViewById(R.id.image);

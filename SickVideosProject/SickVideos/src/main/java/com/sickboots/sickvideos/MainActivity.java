@@ -190,22 +190,22 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
     switch (position) {
       case 0:
-          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.FAVORITES);
+          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.FAVORITES);
         break;
       case 1:
-          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.UPLOADS);
+          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.UPLOADS);
         break;
       case 2:
-          fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.RELATED, null, null, YouTubeHelper.RelatedPlaylistType.WATCHED);
+          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.WATCHED);
         break;
       case 3:
-        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.LIKED, null, null, null);
+        fragment = YouTubeFragment.likedFragment();
         break;
       case 4:
-        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null);
+        fragment = YouTubeFragment.subscriptionsFragment();
         break;
       case 5:
-        fragment = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, null, null, null);
+        fragment = YouTubeFragment.playlistsFragment(null);
         break;
     }
 

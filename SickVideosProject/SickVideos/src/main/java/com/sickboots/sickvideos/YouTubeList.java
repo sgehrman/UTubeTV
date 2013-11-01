@@ -133,7 +133,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         String playlistID = (String) itemMap.get("playlist");
 
         if (playlistID != null) {
-          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.VIDEOS, null, playlistID, null);
+          Fragment frag = YouTubeFragment.videosFragment(playlistID);
 
           replaceFragment(frag);
         }
@@ -143,7 +143,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
         String channel = (String) itemMap.get("channel");
 
         if (channel != null) {
-          Fragment frag = YouTubeFragment.newInstance(YouTubeListSpec.ListType.PLAYLISTS, channel, null, null);
+          Fragment frag = YouTubeFragment.playlistsFragment(channel);
 
           replaceFragment(frag);
         }
