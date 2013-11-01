@@ -48,7 +48,7 @@ public class YouTubeHelper {
   private YouTubeHelperListener listener;
   private HttpRequestInitializer credential;
   private YouTube youTube;
-  boolean highQualityImages = true;
+  boolean highQualityImages = false;
 
   // must implement this listener
   public interface YouTubeHelperListener {

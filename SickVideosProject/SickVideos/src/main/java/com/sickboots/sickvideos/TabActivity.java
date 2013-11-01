@@ -24,7 +24,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
   SectionsPagerAdapter mSectionsPagerAdapter;
   ViewPager mViewPager;
 
-  public PullToRefreshAttacher mPullToRefreshAttacher;
+  private PullToRefreshAttacher mPullToRefreshAttacher;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

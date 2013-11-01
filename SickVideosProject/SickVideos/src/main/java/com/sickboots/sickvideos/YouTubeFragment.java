@@ -168,8 +168,9 @@ public class YouTubeFragment extends Fragment
 
     List items = mList.getItems();
 
-    if (items != null)
+    if (items != null) {
       mAdapter.addAll(items);
+    }
   }
 
   private YouTubeList createListForIndex(String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType) {

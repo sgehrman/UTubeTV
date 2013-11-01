@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   private CharSequence mDrawerTitle;
   private CharSequence mTitle;
 
-  public PullToRefreshAttacher mPullToRefreshAttacher;
+  private PullToRefreshAttacher mPullToRefreshAttacher;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
