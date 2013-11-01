@@ -60,6 +60,7 @@ public class YouTubeFragment extends Fragment
   public static YouTubeFragment subscriptionsFragment() {
     return newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null, null);
   }
+
   public static YouTubeFragment searchFragment(String searchQuery) {
     return newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null, searchQuery);
   }
@@ -102,11 +103,7 @@ public class YouTubeFragment extends Fragment
 
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
-    String channelID = getArguments().getString(CHANNEL_ID);
-    String playlistID = getArguments().getString(PLAYLIST_ID);
-    String query = getArguments().getString(SEARCH_QUERY);
-    YouTubeHelper.RelatedPlaylistType relatedType = (YouTubeHelper.RelatedPlaylistType) getArguments().getSerializable(RELATED_TYPE);
-    mList = createListForIndex(channelID, playlistID, relatedType, query);
+    mList = createList(getArguments());
 
     mAdapter = new MyAdapter();
 
@@ -197,8 +194,13 @@ public class YouTubeFragment extends Fragment
     }
   }
 
-  private YouTubeList createListForIndex(String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType, String query) {
+  private YouTubeList createList(Bundle argsBundle) {
     YouTubeList result = null;
+
+    String channelID = argsBundle.getString(CHANNEL_ID);
+    String playlistID = argsBundle.getString(PLAYLIST_ID);
+    String query = argsBundle.getString(SEARCH_QUERY);
+    YouTubeHelper.RelatedPlaylistType relatedType = (YouTubeHelper.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
 
     UIAccess access = new UIAccess(this);
 
