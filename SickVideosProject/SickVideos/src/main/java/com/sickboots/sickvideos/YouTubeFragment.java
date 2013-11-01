@@ -82,7 +82,10 @@ public class YouTubeFragment extends Fragment
   }
 
   public String title() {
-    return "Favorites";
+    if (mList != null)
+      return mList.name();
+
+    return "WTF";
   }
 
   @Override

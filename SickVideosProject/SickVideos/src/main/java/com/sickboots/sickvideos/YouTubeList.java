@@ -63,6 +63,36 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return listSpec.type;
   }
 
+  public String name() {
+    String result = "YouTube";
+    switch (type()) {
+      case SUBSCRIPTIONS:
+        result = "Subscriptions";
+        break;
+      case PLAYLISTS:
+        result = "Playlists";
+        break;
+      case CATEGORIES:
+        result = "Categories";
+        break;
+      case LIKED:
+        result = "Liked";
+        break;
+      case RELATED:
+        result = "Related Playlists";
+        break;
+      case VIDEOS:
+        result = "Videos";
+        break;
+      case SEARCH:
+        result = "Search";
+        break;
+    }
+
+    return result;
+  }
+
+
   public void updateHighestDisplayedIndex(int position) {
     if (listResults != null) {
       listResults.updateHighestDisplayedIndex(position);
@@ -202,7 +232,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       if (listResults != null) {
         listResults.getNext();
       } else {
-        switch (listSpec.type) {
+        switch (type()) {
           case SUBSCRIPTIONS:
             listResults = youTubeHelper.subscriptionListResults();
             break;
