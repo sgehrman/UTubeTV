@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -84,12 +85,17 @@ public class YouTubeFragment extends Fragment
   }
 
   private void setActionBarTitle() {
-    CharSequence title = null;
-    if (mList != null)
-      title = mList.name();
+    ActionBar actionBar = getActivity().getActionBar();
 
-    if (title != null)
-      getActivity().getActionBar().setTitle(title);
+    // not every host activity has an ActionBar
+    if (actionBar != null) {
+      CharSequence title = null;
+      if (mList != null)
+        title = mList.name();
+
+      if (title != null)
+        actionBar.setTitle(title);
+     }
   }
 
   @Override
