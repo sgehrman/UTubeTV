@@ -1,9 +1,6 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -182,17 +179,17 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   }
 
   private void selectItem(int position) {
-    YouTubeFragment fragment=null;
+    YouTubeFragment fragment = null;
 
     switch (position) {
       case 0:
-          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.FAVORITES);
+        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.FAVORITES);
         break;
       case 1:
-          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.UPLOADS);
+        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.UPLOADS);
         break;
       case 2:
-          fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.WATCHED);
+        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.WATCHED);
         break;
       case 3:
         fragment = YouTubeFragment.likedFragment();

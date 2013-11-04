@@ -1,14 +1,12 @@
 package com.sickboots.sickvideos;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
@@ -95,7 +93,7 @@ public class YouTubeFragment extends Fragment
 
       if (title != null)
         actionBar.setTitle(title);
-     }
+    }
   }
 
   @Override
@@ -224,37 +222,28 @@ public class YouTubeFragment extends Fragment
 
     UIAccess access = new UIAccess(this);
 
-    final String keyPrefix = "list-" + channelID;
-    result = null; // disabled: (YouTubeList) AppData.getInstance().getData(keyPrefix + tabIndex);
-    if (result != null) {
-      result.restart(access);
-    } else {
-      switch (listType) {
-        case SUBSCRIPTIONS:
-          result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
-          break;
-        case PLAYLISTS:
-          result = new YouTubeList(YouTubeListSpec.playlistsSpec(channelID), access);
-          break;
-        case CATEGORIES:
-          result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
-          break;
-        case LIKED:
-          result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
-          break;
-        case RELATED:
-          result = new YouTubeList(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
-          break;
-        case SEARCH:
-          result = new YouTubeList(YouTubeListSpec.searchSpec(query), access);
-          break;
-        case VIDEOS:
-          result = new YouTubeList(YouTubeListSpec.videosSpec(playlistID), access);
-          break;
-      }
-
-      // save in cache
-//      AppData.getInstance().setData(keyPrefix + tabIndex, result);
+    switch (listType) {
+      case SUBSCRIPTIONS:
+        result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+        break;
+      case PLAYLISTS:
+        result = new YouTubeList(YouTubeListSpec.playlistsSpec(channelID), access);
+        break;
+      case CATEGORIES:
+        result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
+        break;
+      case LIKED:
+        result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
+        break;
+      case RELATED:
+        result = new YouTubeList(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
+        break;
+      case SEARCH:
+        result = new YouTubeList(YouTubeListSpec.searchSpec(query), access);
+        break;
+      case VIDEOS:
+        result = new YouTubeList(YouTubeListSpec.videosSpec(playlistID), access);
+        break;
     }
 
     return result;

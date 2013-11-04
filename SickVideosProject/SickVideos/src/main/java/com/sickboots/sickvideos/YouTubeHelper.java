@@ -212,7 +212,7 @@ public class YouTubeHelper {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
 
       if (listener != null) {
-        Intent intent=null;
+        Intent intent = null;
         try {
           intent = r.getIntent();
         } catch (Exception ee) {

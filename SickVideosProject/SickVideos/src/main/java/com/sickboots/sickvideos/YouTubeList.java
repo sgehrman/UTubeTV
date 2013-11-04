@@ -33,10 +33,6 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     loadData(true);
   }
 
-  public void restart(UIAccess a) {
-    access = a;
-  }
-
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
     boolean handled = false;
 

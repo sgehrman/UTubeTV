@@ -58,7 +58,7 @@ public class Util {
     return true;
   }
 
-  public static void ignoreObsoleteCapacitiveMenuButton(Context  context) {
+  public static void ignoreObsoleteCapacitiveMenuButton(Context context) {
     try {
       ViewConfiguration config = ViewConfiguration.get(context);
       Field menuKeyField = ViewConfiguration.class
@@ -94,7 +94,7 @@ public class Util {
     FragmentManager fragmentManager = activity.getFragmentManager();
     FragmentTransaction ft = fragmentManager.beginTransaction();
 
-    ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right );
+    ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
     ft.replace(resID, fragment);
 
     if (addToBackStack)
