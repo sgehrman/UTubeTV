@@ -42,6 +42,15 @@ import java.util.Map;
  * Static container class for holding a reference to your YouTube Developer Key.
  */
 public class YouTubeHelper {
+  // constants used in Maps for youtube data
+  public static final String PLAYLIST_KEY = "playlist";
+  public static final String CHANNEL_KEY = "channel";
+  public static final String VIDEO_KEY = "video";
+  public static final String TITLE_KEY = "title";
+  public static final String DESCRIPTION_KEY = "description";
+  public static final String THUMBNAIL_KEY = "thumbnail";
+  public static final String DURATION_KEY = "duration";
+
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
   public static final int REQ_PLAYER_CODE = 334443;
@@ -313,10 +322,10 @@ public class YouTubeHelper {
       for (PlaylistItem playlistItem : playlistItemList) {
         HashMap map = new HashMap();
 
-        map.put("video", playlistItem.getContentDetails().getVideoId());
-        map.put("title", playlistItem.getSnippet().getTitle());
-        map.put("description", playlistItem.getSnippet().getDescription());
-        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.put(VIDEO_KEY, playlistItem.getContentDetails().getVideoId());
+        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
+        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
         result.add(map);
       }
@@ -345,7 +354,7 @@ public class YouTubeHelper {
 
         listRequest.setQ(query);
         listRequest.setKey(YouTubeHelper.devKey());
-        listRequest.setType("video");
+        listRequest.setType(VIDEO_KEY);
         listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
@@ -374,10 +383,10 @@ public class YouTubeHelper {
       for (SearchResult playlistItem : playlistItemList) {
         HashMap map = new HashMap();
 
-        map.put("video", playlistItem.getId().getVideoId());
-        map.put("title", playlistItem.getSnippet().getTitle());
-        map.put("description", playlistItem.getSnippet().getDescription());
-        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.put(VIDEO_KEY, playlistItem.getId().getVideoId());
+        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
+        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
         result.add(map);
       }
@@ -431,11 +440,11 @@ public class YouTubeHelper {
       for (Video playlistItem : playlistItemList) {
         HashMap map = new HashMap();
 
-        map.put("video", playlistItem.getId());
-        map.put("title", playlistItem.getSnippet().getTitle());
-        map.put("description", playlistItem.getSnippet().getDescription());
-        map.put("thumbnail", thumbnailURL(playlistItem.getSnippet().getThumbnails()));
-        map.put("duration", playlistItem.getContentDetails().get("duration"));
+        map.put(VIDEO_KEY, playlistItem.getId());
+        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
+        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.put(DURATION_KEY, playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }
@@ -485,8 +494,8 @@ public class YouTubeHelper {
       for (VideoCategory category : itemList) {
         HashMap map = new HashMap();
 
-        map.put("channel", category.getSnippet().getChannelId());
-        map.put("title", category.getSnippet().getTitle());
+        map.put(CHANNEL_KEY, category.getSnippet().getChannelId());
+        map.put(TITLE_KEY, category.getSnippet().getTitle());
 
         result.add(map);
       }
@@ -538,11 +547,10 @@ public class YouTubeHelper {
       for (Subscription subscription : subscriptionsList) {
         HashMap map = new HashMap();
 
-        map.put("id", subscription.getId());
-        map.put("title", subscription.getSnippet().getTitle());
-        map.put("channel", subscription.getSnippet().getResourceId().getChannelId());
-        map.put("description", subscription.getSnippet().getDescription());
-        map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
+        map.put(TITLE_KEY, subscription.getSnippet().getTitle());
+        map.put(CHANNEL_KEY, subscription.getSnippet().getResourceId().getChannelId());
+        map.put(DESCRIPTION_KEY, subscription.getSnippet().getDescription());
+        map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
 
         result.add(map);
       }
@@ -572,23 +580,23 @@ public class YouTubeHelper {
           if (playlistID != null) {
             HashMap map = new HashMap();
 
-            map.put("playlist", playlistID);
+            map.put(PLAYLIST_KEY, playlistID);
 
             switch (entry.getKey()) {
               case FAVORITES:
-                map.put("title", "Favorites");
+                map.put(TITLE_KEY, "Favorites");
                 break;
               case LIKES:
-                map.put("title", "LIKES");
+                map.put(TITLE_KEY, "LIKES");
                 break;
               case UPLOADS:
-                map.put("title", "UPLOADS");
+                map.put(TITLE_KEY, "UPLOADS");
                 break;
               case WATCHED:
-                map.put("title", "WATCHED");
+                map.put(TITLE_KEY, "WATCHED");
                 break;
               case WATCHLATER:
-                map.put("title", "WATCHLATER");
+                map.put(TITLE_KEY, "WATCHLATER");
                 break;
             }
 
@@ -640,10 +648,10 @@ public class YouTubeHelper {
       for (Playlist subscription : subscriptionsList) {
         HashMap map = new HashMap();
 
-        map.put("playlist", subscription.getId());
-        map.put("title", subscription.getSnippet().getTitle());
-        map.put("description", subscription.getSnippet().getDescription());
-        map.put("thumbnail", thumbnailURL(subscription.getSnippet().getThumbnails()));
+        map.put(PLAYLIST_KEY, subscription.getId());
+        map.put(TITLE_KEY, subscription.getSnippet().getTitle());
+        map.put(DESCRIPTION_KEY, subscription.getSnippet().getDescription());
+        map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
 
         result.add(map);
       }
@@ -774,7 +782,6 @@ public class YouTubeHelper {
 }
 
 /*
-
   public static final String TEST_MOVIE_ID = "Il1IGKaol_M";  // XuBdf9jYj7o
   public static final String TEST_PLAYLIST_ID = "FLCXAzufqBhwf_ib6xLv7gMw";
   public static final String DEV_PLAYLIST_ID = "PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju";
@@ -796,10 +803,11 @@ App goals:
 10) What youtube should be, but simplified for watching only.  No comments or sharing etc, just watching experience
 11) Killer features
     1) always restores where you were last time you watched
+    2) speed, cached lists
+    3) share with friends
 12) Get lists of playlists from youtube by users
 13) Auto import your own youtube playlist
 14) stationary header, page numbers and floating overlay showing when scrolling
-
 
 console play
 
@@ -807,8 +815,6 @@ https://developers.google.com/youtube/v3/docs/activities/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 part id: "snippet"
 fields: items(snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo
-
-
 
 https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"

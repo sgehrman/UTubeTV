@@ -105,11 +105,11 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
   private Map cursorToVideo(Cursor cursor) {
     Map result = new HashMap();
 
-    result.put("video", cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO)));
-    result.put("title", cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE)));
-    result.put("description", cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
-    result.put("thumbnail", cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL)));
-    result.put("duration", cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION)));
+    result.put(YouTubeHelper.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO)));
+    result.put(YouTubeHelper.TITLE_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE)));
+    result.put(YouTubeHelper.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
+    result.put(YouTubeHelper.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL)));
+    result.put(YouTubeHelper.DURATION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION)));
 
     return result;
   }
@@ -118,11 +118,11 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
     // Create a new map of values, where column names are the keys
     ContentValues values = new ContentValues();
 
-    values.put(VideoEntry.COLUMN_NAME_VIDEO, (String) video.get("video"));
-    values.put(VideoEntry.COLUMN_NAME_TITLE, (String) video.get("title"));
-    values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get("description"));
-    values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get("thumbnail"));
-    values.put(VideoEntry.COLUMN_NAME_DURATION, (String) video.get("duration"));
+    values.put(VideoEntry.COLUMN_NAME_VIDEO, (String) video.get(YouTubeHelper.VIDEO_KEY));
+    values.put(VideoEntry.COLUMN_NAME_TITLE, (String) video.get(YouTubeHelper.TITLE_KEY));
+    values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get(YouTubeHelper.DESCRIPTION_KEY));
+    values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get(YouTubeHelper.THUMBNAIL_KEY));
+    values.put(VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeHelper.DURATION_KEY));
 
     // Insert the new row, returning the primary key value of the new row
     long newRowId = db.insert(

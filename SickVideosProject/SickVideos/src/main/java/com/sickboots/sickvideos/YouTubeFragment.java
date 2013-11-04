@@ -292,7 +292,7 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get("thumbnail"), 0, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeHelper.THUMBNAIL_KEY), 0, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -307,9 +307,9 @@ public class YouTubeFragment extends Fragment
 
       });
 
-      holder.title.setText((String) itemMap.get("title"));
+      holder.title.setText((String) itemMap.get(YouTubeHelper.TITLE_KEY));
 
-      String duration = (String) itemMap.get("duration");
+      String duration = (String) itemMap.get(YouTubeHelper.DURATION_KEY);
       if (duration != null) {
         holder.duration.setVisibility(View.VISIBLE);
 
@@ -327,7 +327,7 @@ public class YouTubeFragment extends Fragment
 
       // hide description if empty
       if (holder.description != null) {
-        String desc = (String) itemMap.get("description");
+        String desc = (String) itemMap.get(YouTubeHelper.DURATION_KEY);
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
 
