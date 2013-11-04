@@ -281,7 +281,7 @@ public class YouTubeFragment extends Fragment
         holder.button = (ImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
-        holder.pageNumber = (TextView) convertView.findViewById(R.id.page_number);
+        holder.duration = (TextView) convertView.findViewById(R.id.duration);
         holder.gradientOverlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
       }
@@ -311,7 +311,7 @@ public class YouTubeFragment extends Fragment
 
       String duration = (String) itemMap.get("duration");
       if (duration != null) {
-        holder.pageNumber.setVisibility(View.VISIBLE);
+        holder.duration.setVisibility(View.VISIBLE);
 
         PeriodFormatter formatter = ISOPeriodFormat.standard();
         Period p = formatter.parsePeriod(duration);
@@ -320,9 +320,9 @@ public class YouTubeFragment extends Fragment
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         df.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
 
-        holder.pageNumber.setText(df.format(s.getSeconds() * 1000));
+        holder.duration.setText(df.format(s.getSeconds() * 1000));
       } else {
-        holder.pageNumber.setVisibility(View.GONE);
+        holder.duration.setVisibility(View.GONE);
       }
 
       // hide description if empty
@@ -360,7 +360,7 @@ public class YouTubeFragment extends Fragment
     class ViewHolder {
       TextView title;
       TextView description;
-      TextView pageNumber;
+      TextView duration;
       ImageView button;
       View gradientOverlay;
     }
