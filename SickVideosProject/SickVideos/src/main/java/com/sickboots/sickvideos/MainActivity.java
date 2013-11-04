@@ -27,9 +27,6 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
 
-  private CharSequence mDrawerTitle;
-  private CharSequence mTitle;
-
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
   @Override
@@ -37,7 +34,6 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    mTitle = mDrawerTitle = getTitle();
     String[] names = new String[]{"Favorites", "Uploads", "Watched", "Liked", "Subscriptions", "Playlists"};
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -63,12 +59,10 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         R.string.drawer_close  /* "close drawer" description for accessibility */
     ) {
       public void onDrawerClosed(View view) {
-        getActionBar().setTitle(mTitle);
         invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
       }
 
       public void onDrawerOpened(View drawerView) {
-        getActionBar().setTitle(mDrawerTitle);
         invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
       }
     };
@@ -215,14 +209,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);
-    setTitle(fragment.title());
     mDrawerLayout.closeDrawer(mDrawerList);
-  }
-
-  @Override
-  public void setTitle(CharSequence title) {
-    mTitle = title;
-    getActionBar().setTitle(mTitle);
   }
 
   /**

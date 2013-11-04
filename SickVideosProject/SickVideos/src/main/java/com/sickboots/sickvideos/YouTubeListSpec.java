@@ -66,6 +66,54 @@ public class YouTubeListSpec {
     return data.get(key);
   }
 
+  public String name() {
+    String result = "YouTube";
+    switch (type) {
+      case SUBSCRIPTIONS:
+        result = "Subscriptions";
+        break;
+      case PLAYLISTS:
+        result = "Playlists";
+        break;
+      case CATEGORIES:
+        result = "Categories";
+        break;
+      case LIKED:
+        result = "Liked";
+        break;
+      case RELATED:
+        result = "Related Playlists";
+
+        YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) getData("type");
+        switch (type) {
+          case FAVORITES:
+            result = "Favorites";
+            break;
+          case LIKES:
+            result = "Likes";
+            break;
+          case UPLOADS:
+            result = "Uploads";
+            break;
+          case WATCHED:
+            result = "History";
+            break;
+          case WATCHLATER:
+            result = "Watch later";
+            break;
+        }
+        break;
+      case VIDEOS:
+        result = "Videos";
+        break;
+      case SEARCH:
+        result = "Search";
+        break;
+    }
+
+    return result;
+  }
+
   // ===================================================================
   // private
 

@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -82,11 +83,13 @@ public class YouTubeFragment extends Fragment
     return fragment;
   }
 
-  public String title() {
+  private void setActionBarTitle() {
+    CharSequence title = null;
     if (mList != null)
-      return mList.name();
+      title = mList.name();
 
-    return "WTF";
+    if (title != null)
+      getActivity().getActionBar().setTitle(title);
   }
 
   @Override
@@ -106,7 +109,6 @@ public class YouTubeFragment extends Fragment
     }
 
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
-
     mList = createList(getArguments());
 
     mAdapter = new MyAdapter();
@@ -148,6 +150,7 @@ public class YouTubeFragment extends Fragment
 
     // load data if we have it already
     onResults();
+    setActionBarTitle();
 
     return rootView;
   }

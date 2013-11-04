@@ -64,34 +64,8 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   }
 
   public String name() {
-    String result = "YouTube";
-    switch (type()) {
-      case SUBSCRIPTIONS:
-        result = "Subscriptions";
-        break;
-      case PLAYLISTS:
-        result = "Playlists";
-        break;
-      case CATEGORIES:
-        result = "Categories";
-        break;
-      case LIKED:
-        result = "Liked";
-        break;
-      case RELATED:
-        result = "Related Playlists";
-        break;
-      case VIDEOS:
-        result = "Videos";
-        break;
-      case SEARCH:
-        result = "Search";
-        break;
-    }
-
-    return result;
+    return listSpec.name();
   }
-
 
   public void updateHighestDisplayedIndex(int position) {
     if (listResults != null) {
