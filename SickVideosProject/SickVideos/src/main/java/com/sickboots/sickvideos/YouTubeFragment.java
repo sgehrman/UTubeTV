@@ -258,14 +258,18 @@ public class YouTubeFragment extends Fragment
   // Adapter
 
   private class MyAdapter extends ArrayAdapter<Map> {
+    private final LayoutInflater inflater;
+
     public MyAdapter() {
       super(getActivity(), 0);
+
+      inflater = getActivity().getLayoutInflater();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
-        convertView = getActivity().getLayoutInflater().inflate(itemResourceID(), null);
+        convertView = inflater.inflate(itemResourceID(), null);
 
         ViewHolder holder = new ViewHolder();
         holder.button = (ImageView) convertView.findViewById(R.id.image);
