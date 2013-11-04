@@ -29,8 +29,7 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
       + VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP
       + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE + COMMA_SEP
       + " )";
-  private static final String SQL_DELETE_ENTRIES =
-      "DROP TABLE IF EXISTS " + VideoEntry.TABLE_NAME;
+  private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + VideoEntry.TABLE_NAME;
   private static final int DATABASE_VERSION = 1;
   private static final String DATABASE_NAME = "YouTube.db";
 
