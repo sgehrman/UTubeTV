@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 /**
- * Created by sgehrman on 11/1/13.
+ * This was added so we could do a custom sliding animation for fragments.
  */
   public class FragmentFrameLayout extends FrameLayout {
 

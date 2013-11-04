@@ -10,7 +10,7 @@
         android:numColumns="auto_fit"
         android:verticalSpacing="4dp"
         android:horizontalSpacing="4dp"
-        android:background="#f0e"
+        android:background="#eee"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
         android:stretchMode="columnWidth"

@@ -211,12 +211,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         break;
     }
 
-    FragmentManager fragmentManager = getFragmentManager();
-    fragmentManager.beginTransaction()
-        .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right )
-        .replace(R.id.content_frame, fragment)
-        .addToBackStack("cunt")
-        .commit();
+    Util.showFragment(this, fragment, R.id.content_frame, false);
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);

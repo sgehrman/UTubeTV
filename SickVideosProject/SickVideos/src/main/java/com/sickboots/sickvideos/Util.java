@@ -1,6 +1,9 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -85,6 +88,19 @@ public class Util {
           .penaltyDeath()
           .build());
     }
+  }
+
+  public static void showFragment(Activity activity, Fragment fragment, int resID, boolean addToBackStack) {
+    FragmentManager fragmentManager = activity.getFragmentManager();
+    FragmentTransaction ft = fragmentManager.beginTransaction();
+
+    ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right );
+    ft.replace(resID, fragment);
+
+    if (addToBackStack)
+      ft.addToBackStack(null);
+
+    ft.commit();
   }
 
 }
