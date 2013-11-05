@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.FrameLayout.LayoutParams;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
@@ -102,50 +105,47 @@ public class YouTubeFragment extends Fragment
 
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
-    View rootView = null;
-    View listOrGridView = null;
+    ViewGroup rootView = null;
+    AdapterView listOrGridView = null;
 
     if (useGridView(getArguments())) {
-      rootView = inflater.inflate(R.layout.fragment_youtube_grid, container, false);
-      listOrGridView = rootView.findViewById(R.id.gridview);
+      rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
+      listOrGridView = (AdapterView) rootView.findViewById(R.id.gridview);
     } else {
-      rootView = inflater.inflate(R.layout.fragment_youtube_list, container, false);
-      listOrGridView = rootView.findViewById(R.id.listview);
+      rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
+      listOrGridView = (AdapterView) rootView.findViewById(R.id.listview);
     }
 
     mList = createList(getArguments());
 
+    // Create a progress bar to display while the list loads
+    ProgressBar progressBar = new ProgressBar(this.getActivity());
+    progressBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+        LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+    progressBar.setIndeterminate(true);
+    listOrGridView.setEmptyView(progressBar);
+    rootView.addView(progressBar);
+
     mAdapter = new MyAdapter();
+
+    listOrGridView.setAdapter(mAdapter);
+    listOrGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        Map map = mAdapter.getItem(position);
+
+        mList.handleClick(map, false);
+      }
+    });
 
     // .015 is the default
     float friction = 0.01f;
 
     if (listOrGridView instanceof ListView) {
       ListView v = (ListView) listOrGridView;
-      v.setAdapter(mAdapter);
-
       v.setFriction(friction);
-
-      v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-          Map map = mAdapter.getItem(position);
-
-          mList.handleClick(map, false);
-        }
-      });
     } else {
       GridView v = (GridView) listOrGridView;
-      v.setAdapter(mAdapter);
-
       v.setFriction(friction);
-
-      v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-          Map map = mAdapter.getItem(position);
-
-          mList.handleClick(map, false);
-        }
-      });
     }
 
     // Add the Refreshable View and provide the refresh listener;
