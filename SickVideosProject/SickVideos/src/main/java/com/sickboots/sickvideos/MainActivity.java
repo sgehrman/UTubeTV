@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     mDrawerLayout.setDrawerListener(mDrawerToggle);
 
     if (savedInstanceState == null) {
-      selectItem(0);
+      selectItem(0, false);
     }
 
     // general app tweaks
@@ -126,7 +126,6 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     }
   }
 
-
   /* Called whenever we call invalidateOptionsMenu() */
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
@@ -174,11 +173,11 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   private class DrawerItemClickListener implements ListView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      selectItem(position);
+      selectItem(position, true);
     }
   }
 
-  private void selectItem(int position) {
+  private void selectItem(int position, boolean animate) {
     YouTubeFragment fragment = null;
 
     switch (position) {
@@ -202,7 +201,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         break;
     }
 
-    Util.showFragment(this, fragment, R.id.content_frame, false);
+    Util.showFragment(this, fragment, R.id.content_frame, animate, false);
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);
