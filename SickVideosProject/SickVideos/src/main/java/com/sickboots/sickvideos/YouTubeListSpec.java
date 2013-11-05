@@ -114,6 +114,34 @@ public class YouTubeListSpec {
     return result;
   }
 
+  // a new database is created for every list, so need a unique name that can match the spec
+  public String databaseName() {
+    String result = name();
+
+    switch (type) {
+      case SUBSCRIPTIONS:
+        break;
+      case PLAYLISTS:
+        result += getData("channel");
+        break;
+      case CATEGORIES:
+        break;
+      case LIKED:
+        break;
+      case RELATED:
+        result += getData("channel");
+        break;
+      case VIDEOS:
+        result += getData("playlist");
+        break;
+      case SEARCH:
+        result += getData("query");
+        break;
+    }
+
+    return result;
+  }
+
   // ===================================================================
   // private
 

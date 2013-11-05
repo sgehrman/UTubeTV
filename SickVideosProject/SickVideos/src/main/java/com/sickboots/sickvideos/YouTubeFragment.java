@@ -231,10 +231,10 @@ public class YouTubeFragment extends Fragment
 
     switch (listType) {
       case SUBSCRIPTIONS:
-        result = new YouTubeListLive(YouTubeListSpec.subscriptionsSpec(), access);
+        result = new YouTubeListDB(YouTubeListSpec.subscriptionsSpec(), access);
         break;
       case PLAYLISTS:
-        result = new YouTubeListLive(YouTubeListSpec.playlistsSpec(channelID), access);
+        result = new YouTubeListDB(YouTubeListSpec.playlistsSpec(channelID), access);
         break;
       case CATEGORIES:
         result = new YouTubeListLive(YouTubeListSpec.categoriesSpec(), access);
@@ -244,7 +244,6 @@ public class YouTubeFragment extends Fragment
         break;
       case RELATED:
         result = new YouTubeListDB(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
-//        result = new YouTubeListLive(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
         break;
       case SEARCH:
         result = new YouTubeListLive(YouTubeListSpec.searchSpec(query), access);

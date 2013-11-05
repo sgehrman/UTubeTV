@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Fragment;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -12,8 +13,7 @@ public class YouTubeListDB extends YouTubeList {
   public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-    String tableName = s.name();
-    database = new YouTubeDatabase(getActivity(), tableName);
+    database = new YouTubeDatabase(getActivity(), s.databaseName());
 
     loadData(true);
   }
@@ -45,10 +45,25 @@ public class YouTubeListDB extends YouTubeList {
 
   @Override
   public void handleClick(Map itemMap, boolean clickedIcon) {
-    String movieID = (String) itemMap.get("video");
+    switch (type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        String movieID = (String) itemMap.get("video");
 
-    if (movieID != null) {
-      YouTubeAPI.playMovie(getActivity(), movieID);
+        if (movieID != null) {
+          YouTubeAPI.playMovie(getActivity(), movieID);
+        }
+        break;
+      case PLAYLISTS:
+
+      break;
+      case SUBSCRIPTIONS:
+
+        break;
+      case CATEGORIES:
+        break;
     }
   }
 
@@ -63,17 +78,40 @@ public class YouTubeListDB extends YouTubeList {
       result = database.getVideos();
 
       if (result.size() == 0) {
-        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
-        String channelID = (String) listSpec.getData("channel");
+        YouTubeAPI.BaseListResults listResults=null;
 
-        String playlistID = helper.relatedPlaylistID(type, channelID);
+        switch (type()) {
+          case RELATED:
+            YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
+            String channelID = (String) listSpec.getData("channel");
 
-        YouTubeAPI.BaseListResults listResults = helper.videoListResults(playlistID, true);
-        while (listResults.getNext()) {
-          // getting all
+            String playlistID = helper.relatedPlaylistID(type, channelID);
+
+            listResults = helper.videoListResults(playlistID, true);
+            break;
+          case SEARCH:
+          case LIKED:
+          case VIDEOS:
+            break;
+          case PLAYLISTS:
+            String channel = (String) listSpec.getData("channel");
+
+            listResults = helper.playlistListResults(channel, true);
+            break;
+          case SUBSCRIPTIONS:
+            listResults = helper.subscriptionListResults();
+            break;
+          case CATEGORIES:
+            break;
         }
 
-        result = listResults.getItems();
+        if (listResults != null) {
+          while (listResults.getNext()) {
+            // getting all
+          }
+
+          result = listResults.getItems();
+        }
 
         // add results to DB
         database.insertVideos(result);
