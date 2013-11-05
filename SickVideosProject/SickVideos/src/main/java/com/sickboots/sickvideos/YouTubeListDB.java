@@ -1,21 +1,18 @@
 package com.sickboots.sickvideos;
 
 import android.os.AsyncTask;
-
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sgehrman on 11/4/13.
- */
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
-  YouTubeDBHelper database;
+  YouTubeDatabase database;
 
   public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-    database = new YouTubeDBHelper(getActivity());
+    String tableName = s.name();
+    database = new YouTubeDatabase(getActivity(), tableName);
 
     loadData(true);
   }
@@ -27,7 +24,10 @@ public class YouTubeListDB extends YouTubeList {
 
   @Override
   public void refresh() {
-    // empty DB and refetch
+    // does this need to go in a task?
+    database.deleteAllRows();
+
+    loadData(false);
   }
 
   @Override
@@ -49,7 +49,6 @@ public class YouTubeListDB extends YouTubeList {
     if (movieID != null) {
       YouTubeAPI.playMovie(getActivity(), movieID);
     }
-
   }
 
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
