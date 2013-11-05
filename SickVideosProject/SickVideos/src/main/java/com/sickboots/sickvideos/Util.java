@@ -90,13 +90,20 @@ public class Util {
     }
   }
 
-  public static void showFragment(Activity activity, Fragment fragment, int resID, boolean animate, boolean addToBackStack) {
+  public static void showFragment(Activity activity, Fragment fragment, int resID, int animationType, boolean addToBackStack) {
     FragmentManager fragmentManager = activity.getFragmentManager();
     FragmentTransaction ft = fragmentManager.beginTransaction();
 
-    if (animate)
-//      ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
-      ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
+    switch (animationType) {
+      case 0:
+        break;
+      case 1:
+        ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
+        break;
+      case 2:
+        ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
+        break;
+    }
 
     ft.replace(resID, fragment);
 
