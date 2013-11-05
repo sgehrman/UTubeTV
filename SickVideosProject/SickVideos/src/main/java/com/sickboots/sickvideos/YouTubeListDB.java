@@ -69,6 +69,9 @@ public class YouTubeListDB extends YouTubeList {
         String playlistID = helper.relatedPlaylistID(type, channelID);
 
         YouTubeHelper.BaseListResults listResults = helper.videoListResults(playlistID);
+        while (listResults.getNext()) {
+          // getting all
+        }
 
         result = listResults.getItems();
 
