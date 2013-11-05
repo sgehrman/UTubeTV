@@ -5,6 +5,6 @@
         android:propertyName="xFraction"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:valueType="floatType"
-        android:duration="@android:integer/config_mediumAnimTime" />
+        android:duration="@android:integer/config_mediumAnimTime"/>
 
 </set>
