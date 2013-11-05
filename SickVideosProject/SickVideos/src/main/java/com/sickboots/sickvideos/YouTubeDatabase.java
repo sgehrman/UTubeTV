@@ -19,7 +19,7 @@ public class YouTubeDatabase extends SQLiteOpenHelper {
   private static final int DATABASE_VERSION = 21;
 
   public YouTubeDatabase(Context context, String databaseName) {
-    super(context, databaseName.toLowerCase()+".db", null, DATABASE_VERSION);
+    super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
 
     mTableName = "item_table";
   }

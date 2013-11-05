@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.FrameLayout.LayoutParams;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
@@ -106,14 +105,14 @@ public class YouTubeFragment extends Fragment
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     ViewGroup rootView = null;
-    AdapterView listOrGridView = null;
+    AbsListView listOrGridView = null;
 
     if (useGridView(getArguments())) {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
-      listOrGridView = (AdapterView) rootView.findViewById(R.id.gridview);
+      listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
     } else {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
-      listOrGridView = (AdapterView) rootView.findViewById(R.id.listview);
+      listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
     }
 
     mList = createList(getArguments());
@@ -138,15 +137,7 @@ public class YouTubeFragment extends Fragment
     });
 
     // .015 is the default
-    float friction = 0.01f;
-
-    if (listOrGridView instanceof ListView) {
-      ListView v = (ListView) listOrGridView;
-      v.setFriction(friction);
-    } else {
-      GridView v = (GridView) listOrGridView;
-      v.setFriction(friction);
-    }
+    listOrGridView.setFriction(0.01f);
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
