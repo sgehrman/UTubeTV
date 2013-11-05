@@ -99,12 +99,13 @@ public class YouTubeFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    boolean useGridView = true;
+
+    listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     View rootView = null;
     View listOrGridView = null;
 
-    if (useGridView) {
+    if (useGridView(getArguments())) {
       rootView = inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = rootView.findViewById(R.id.gridview);
     } else {
@@ -112,7 +113,6 @@ public class YouTubeFragment extends Fragment
       listOrGridView = rootView.findViewById(R.id.listview);
     }
 
-    listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
     mList = createList(getArguments());
 
     mAdapter = new MyAdapter();
@@ -177,6 +177,22 @@ public class YouTubeFragment extends Fragment
     }
 
     return itemResID;
+  }
+
+  private boolean useGridView(Bundle argsBundle) {
+    switch (listType) {
+      case PLAYLISTS:
+      case CATEGORIES:
+      case SUBSCRIPTIONS:
+        return false;
+      case LIKED:
+      case RELATED:
+      case SEARCH:
+      case VIDEOS:
+        break;
+    }
+
+    return true;
   }
 
   public void onRefreshStarted(View view) {

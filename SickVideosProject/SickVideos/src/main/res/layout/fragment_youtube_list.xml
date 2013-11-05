@@ -11,7 +11,8 @@
               android:background="#eee"
               android:fastScrollEnabled="true"
               android:drawSelectorOnTop="true"
-              android:divider="@null"
+              android:divider="#4000"
+              android:dividerHeight="1dp"
               android:gravity="center"
         />
 
