@@ -36,7 +36,7 @@ public class PlaylistChooserActivity extends Activity implements Util.PullToRefr
     FrameLayout container = (FrameLayout) findViewById(R.id.fragment_container);
     if (container != null) {
       // Create a new Fragment to be placed in the activity layout
-      YouTubeFragment firstFragment = YouTubeFragment.subscriptionsFragment();
+      YouTubeFragment firstFragment = YouTubeFragment.playlistsFragment("UC4a-Gbdw7vOaccHmFo40b9g");
 
       // Add the fragment to the 'fragment_container' FrameLayout
       getFragmentManager().beginTransaction()

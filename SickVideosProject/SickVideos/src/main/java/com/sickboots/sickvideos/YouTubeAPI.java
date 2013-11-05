@@ -737,8 +737,10 @@ public class YouTubeAPI {
           result = ((SubscriptionListResponse) response).getNextPageToken();
         } else if (response instanceof VideoListResponse) {
           result = ((VideoListResponse) response).getNextPageToken();
+        } else if (response instanceof PlaylistListResponse) {
+          result = ((PlaylistListResponse) response).getNextPageToken();
         } else {
-          Util.log("nextToken not handed, this is a bug");
+          listener.handleExceptionMessage("nextToken bug!");
         }
       }
 
