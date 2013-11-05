@@ -9,13 +9,13 @@ import java.util.Map;
  * Created by sgehrman on 11/4/13.
  */
 public class YouTubeListDB extends YouTubeList {
-  YouTubeListDBTask runningTask=null;
+  YouTubeListDBTask runningTask = null;
   YouTubeDBHelper database;
 
   public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-       database = new YouTubeDBHelper(getActivity());
+    database = new YouTubeDBHelper(getActivity());
 
     loadData(true);
   }

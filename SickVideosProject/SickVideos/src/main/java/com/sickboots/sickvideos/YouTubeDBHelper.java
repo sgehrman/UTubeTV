@@ -13,12 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sgehrman on 11/4/13.
- */
 public class YouTubeDBHelper extends SQLiteOpenHelper {
   private static final String TEXT_TYPE = " TEXT";
   private static final String COMMA_SEP = ",";
+
   private static final String SQL_CREATE_ENTRIES = "CREATE TABLE "
       + VideoEntry.TABLE_NAME
       + " ("
@@ -33,6 +31,7 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
       + COMMA_SEP
       + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
       + " )";
+
   private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + VideoEntry.TABLE_NAME;
   private static final int DATABASE_VERSION = 8;
   private static final String DATABASE_NAME = "YouTube.db";
@@ -67,8 +66,7 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
           insertVideo(db, video);
 
         db.setTransactionSuccessful();
-      }
-      catch(Exception e) {
+      } catch (Exception e) {
         Util.log("Insert Videos exception: " + e.getMessage());
       } finally {
         db.endTransaction();
@@ -103,8 +101,7 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {
-      Map comment = cursorToVideo(cursor);
-      result.add(comment);
+      result.add(cursorToVideo(cursor));
       cursor.moveToNext();
     }
 
@@ -140,10 +137,6 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
     values.put(VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeAPI.DURATION_KEY));
 
     // Insert the new row, returning the primary key value of the new row
-    long newRowId = db.insert(
-        VideoEntry.TABLE_NAME,
-        null,
-        values);
+    db.insert(VideoEntry.TABLE_NAME, null, values);
   }
-
 }

@@ -667,7 +667,7 @@ public class YouTubeAPI {
     private int highestDisplayedIndex = 0;
     private boolean reloadingFlag = false;
     private boolean reachedEndOfList = false;
-    private boolean getMaxItems=false;
+    private boolean getMaxItems = false;
 
     // subclasses must implement
     abstract protected List<Map> itemsForNextToken(String token);
