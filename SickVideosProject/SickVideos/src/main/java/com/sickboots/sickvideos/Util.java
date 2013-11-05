@@ -95,6 +95,7 @@ public class Util {
     FragmentTransaction ft = fragmentManager.beginTransaction();
 
     if (animate)
+//      ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
       ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
 
     ft.replace(resID, fragment);
