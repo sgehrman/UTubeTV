@@ -34,7 +34,7 @@
         </activity>
 
         <activity
-            android:theme="@android:style/Theme.Dialog"
+            android:theme="@android:style/Theme.Holo.Dialog"
             android:name="com.sickboots.sickvideos.PlaylistChooserActivity"
             android:label="@string/title_activity_playlist_chooser">
         </activity>
