@@ -18,6 +18,8 @@ public class YouTubeListDB extends YouTubeList {
     super(s, a);
 
        database = new YouTubeDBHelper(getActivity());
+
+    loadData(true);
   }
 
   @Override
@@ -68,7 +70,7 @@ public class YouTubeListDB extends YouTubeList {
 
         String playlistID = helper.relatedPlaylistID(type, channelID);
 
-        YouTubeHelper.BaseListResults listResults = helper.videoListResults(playlistID);
+        YouTubeHelper.BaseListResults listResults = helper.videoListResults(playlistID, true);
         while (listResults.getNext()) {
           // getting all
         }

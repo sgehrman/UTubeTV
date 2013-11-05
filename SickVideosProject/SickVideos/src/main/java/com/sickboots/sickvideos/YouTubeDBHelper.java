@@ -34,7 +34,7 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
       + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
       + " )";
   private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + VideoEntry.TABLE_NAME;
-  private static final int DATABASE_VERSION = 2;
+  private static final int DATABASE_VERSION = 7;
   private static final String DATABASE_NAME = "YouTube.db";
 
   public YouTubeDBHelper(Context context) {
@@ -61,10 +61,19 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
       // Gets the data repository in write mode
       SQLiteDatabase db = getWritableDatabase();
 
-      for (Map video : videos)
-        insertVideo(db, video);
+      db.beginTransaction();
+      try {
+        for (Map video : videos)
+          insertVideo(db, video);
 
-      db.close();
+        db.setTransactionSuccessful();
+      }
+      catch(Exception e) {
+        Util.log("Insert Videos exception: " + e.getMessage());
+      } finally {
+        db.endTransaction();
+        db.close();
+      }
     }
   }
 

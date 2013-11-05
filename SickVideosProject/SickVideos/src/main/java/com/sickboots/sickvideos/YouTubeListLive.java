@@ -15,6 +15,8 @@ public class YouTubeListLive extends YouTubeList {
 
   public YouTubeListLive(YouTubeListSpec s, UIAccess a) {
     super(s, a);
+
+    loadData(true);
   }
 
   @Override
@@ -148,13 +150,13 @@ public class YouTubeListLive extends YouTubeList {
 
             String playlistID = helper.relatedPlaylistID(type, channelID);
 
-            listResults = helper.videoListResults(playlistID);
+            listResults = helper.videoListResults(playlistID, false);
             break;
           }
           case VIDEOS: {
             String playlistID = (String) listSpec.getData("playlist");
 
-            listResults = helper.videoListResults(playlistID);
+            listResults = helper.videoListResults(playlistID, false);
             break;
           }
           case SEARCH: {

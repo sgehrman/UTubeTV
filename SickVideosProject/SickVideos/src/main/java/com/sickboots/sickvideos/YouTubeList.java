@@ -36,8 +36,6 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
     listSpec = s;
     access = a;
     account = GoogleAccount.newYouTube(this);
-
-    loadData(true);
   }
 
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {

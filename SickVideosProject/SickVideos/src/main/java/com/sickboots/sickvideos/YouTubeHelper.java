@@ -130,8 +130,8 @@ public class YouTubeHelper {
     return result;
   }
 
-  public VideoListResults videoListResults(String playlistID) {
-    VideoListResults result = new VideoListResults(playlistID);
+  public VideoListResults videoListResults(String playlistID, boolean getMaximum) {
+    VideoListResults result = new VideoListResults(playlistID, getMaximum);
 
     return result;
   }
@@ -276,8 +276,8 @@ public class YouTubeHelper {
   public class VideoListResults extends BaseListResults {
     private String playlistID;
 
-    public VideoListResults(String p) {
-      super();
+    public VideoListResults(String p, boolean getMaximum) {
+      super(getMaximum);
 
       playlistID = p;
       setItems(itemsForNextToken(""));
@@ -670,9 +670,20 @@ public class YouTubeHelper {
     private int highestDisplayedIndex = 0;
     private boolean reloadingFlag = false;
     private boolean reachedEndOfList = false;
+    private boolean getMaxItems=false;
 
     // subclasses must implement
     abstract protected List<Map> itemsForNextToken(String token);
+
+    public BaseListResults() {
+      super();
+    }
+
+    public BaseListResults(boolean getMaximum) {
+      super();
+
+      getMaxItems = getMaximum;
+    }
 
     public List<Map> getItems() {
       return items;
@@ -756,8 +767,12 @@ public class YouTubeHelper {
     protected long getMaxResultsNeeded() {
       long result = 5;
 
-      if (needsToLoadMoreItems()) {
-        result = highestDisplayedIndex - (items.size() - 1);
+      if (getMaxItems)
+        result = 50;
+      else {
+        if (needsToLoadMoreItems()) {
+          result = highestDisplayedIndex - (items.size() - 1);
+        }
       }
 
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
