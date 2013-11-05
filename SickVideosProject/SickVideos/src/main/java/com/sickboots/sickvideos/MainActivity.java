@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
       // called when playing a movie, could fail and this dialog shows the user how to fix it
-      case YouTubeHelper.REQ_PLAYER_CODE:
+      case YouTubeAPI.REQ_PLAYER_CODE:
         if (resultCode != RESULT_OK) {
           YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
           if (errorReason.isUserRecoverableError()) {
@@ -182,13 +182,13 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
 
     switch (position) {
       case 0:
-        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.FAVORITES);
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.FAVORITES);
         break;
       case 1:
-        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.UPLOADS);
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
         break;
       case 2:
-        fragment = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.WATCHED);
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHED);
         break;
       case 3:
         fragment = YouTubeFragment.likedFragment();

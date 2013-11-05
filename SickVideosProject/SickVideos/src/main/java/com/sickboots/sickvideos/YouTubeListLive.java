@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class YouTubeListLive extends YouTubeList {
-  private YouTubeHelper.BaseListResults listResults;
+  private YouTubeAPI.BaseListResults listResults;
 
   public YouTubeListLive(YouTubeListSpec s, UIAccess a) {
     super(s, a);
@@ -49,7 +49,7 @@ public class YouTubeListLive extends YouTubeList {
 
   @Override
   protected void loadData(boolean askUser) {
-    YouTubeHelper helper = youTubeHelper(askUser);
+    YouTubeAPI helper = youTubeHelper(askUser);
 
     if (helper != null) {
       boolean startTask = false;
@@ -80,7 +80,7 @@ public class YouTubeListLive extends YouTubeList {
         String movieID = (String) itemMap.get("video");
 
         if (movieID != null) {
-          YouTubeHelper.playMovie(getActivity(), movieID);
+          YouTubeAPI.playMovie(getActivity(), movieID);
         }
         break;
       case PLAYLISTS: {
@@ -117,9 +117,9 @@ public class YouTubeListLive extends YouTubeList {
     fragmentTransaction.commit();
   }
 
-  private class YouTubeListLiveTask extends AsyncTask<YouTubeHelper, Void, List<Map>> {
-    protected List<Map> doInBackground(YouTubeHelper... params) {
-      YouTubeHelper helper = params[0];
+  private class YouTubeListLiveTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
+    protected List<Map> doInBackground(YouTubeAPI... params) {
+      YouTubeAPI helper = params[0];
       List<Map> result = null;
 
       Util.log("YouTubeListLiveTask: started");
@@ -145,7 +145,7 @@ public class YouTubeListLive extends YouTubeList {
             break;
 
           case RELATED: {
-            YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
+            YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
             String channelID = (String) listSpec.getData("channel");
 
             String playlistID = helper.relatedPlaylistID(type, channelID);

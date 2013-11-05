@@ -42,7 +42,7 @@ public class YouTubeFragment extends Fragment
   private YouTubeList mList;
   private int itemResID = 0;
 
-  public static YouTubeFragment relatedFragment(YouTubeHelper.RelatedPlaylistType relatedType) {
+  public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
   }
 
@@ -66,7 +66,7 @@ public class YouTubeFragment extends Fragment
     return newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null, searchQuery);
   }
 
-  private static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeHelper.RelatedPlaylistType relatedType, String searchQuery) {
+  private static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
     YouTubeFragment fragment = new YouTubeFragment();
 
     Bundle args = new Bundle();
@@ -218,7 +218,7 @@ public class YouTubeFragment extends Fragment
     String channelID = argsBundle.getString(CHANNEL_ID);
     String playlistID = argsBundle.getString(PLAYLIST_ID);
     String query = argsBundle.getString(SEARCH_QUERY);
-    YouTubeHelper.RelatedPlaylistType relatedType = (YouTubeHelper.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
+    YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
 
     UIAccess access = new UIAccess(this);
 
@@ -282,7 +282,7 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeHelper.THUMBNAIL_KEY), 0, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), 0, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -297,9 +297,9 @@ public class YouTubeFragment extends Fragment
 
       });
 
-      holder.title.setText((String) itemMap.get(YouTubeHelper.TITLE_KEY));
+      holder.title.setText((String) itemMap.get(YouTubeAPI.TITLE_KEY));
 
-      String duration = (String) itemMap.get(YouTubeHelper.DURATION_KEY);
+      String duration = (String) itemMap.get(YouTubeAPI.DURATION_KEY);
       if (duration != null) {
         holder.duration.setVisibility(View.VISIBLE);
 
@@ -317,7 +317,7 @@ public class YouTubeFragment extends Fragment
 
       // hide description if empty
       if (holder.description != null) {
-        String desc = (String) itemMap.get(YouTubeHelper.DURATION_KEY);
+        String desc = (String) itemMap.get(YouTubeAPI.DESCRIPTION_KEY);
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
 

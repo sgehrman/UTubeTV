@@ -117,7 +117,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
 
       switch (position) {
         case 0:
-          result = YouTubeFragment.relatedFragment(YouTubeHelper.RelatedPlaylistType.UPLOADS);
+          result = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
           break;
         case 1:
           result = YouTubeFragment.searchFragment("Disco skate afro");
@@ -166,7 +166,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
       // called when playing a movie, could fail and this dialog shows the user how to fix it
-      case YouTubeHelper.REQ_PLAYER_CODE:
+      case YouTubeAPI.REQ_PLAYER_CODE:
         if (resultCode != RESULT_OK) {
           YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
           if (errorReason.isUserRecoverableError()) {

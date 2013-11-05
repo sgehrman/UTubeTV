@@ -2,8 +2,6 @@ package com.sickboots.sickvideos;
 
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +32,7 @@ public class YouTubeListDB extends YouTubeList {
 
   @Override
   protected void loadData(boolean askUser) {
-    YouTubeHelper helper = youTubeHelper(askUser);
+    YouTubeAPI helper = youTubeHelper(askUser);
 
     if (helper != null) {
       if (runningTask == null) {
@@ -49,14 +47,14 @@ public class YouTubeListDB extends YouTubeList {
     String movieID = (String) itemMap.get("video");
 
     if (movieID != null) {
-      YouTubeHelper.playMovie(getActivity(), movieID);
+      YouTubeAPI.playMovie(getActivity(), movieID);
     }
 
   }
 
-  private class YouTubeListDBTask extends AsyncTask<YouTubeHelper, Void, List<Map>> {
-    protected List<Map> doInBackground(YouTubeHelper... params) {
-      YouTubeHelper helper = params[0];
+  private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
+    protected List<Map> doInBackground(YouTubeAPI... params) {
+      YouTubeAPI helper = params[0];
       List<Map> result = null;
 
       Util.log("YouTubeListDBTask: started");
@@ -65,12 +63,12 @@ public class YouTubeListDB extends YouTubeList {
       result = database.getVideos();
 
       if (result.size() == 0) {
-        YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
+        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
         String channelID = (String) listSpec.getData("channel");
 
         String playlistID = helper.relatedPlaylistID(type, channelID);
 
-        YouTubeHelper.BaseListResults listResults = helper.videoListResults(playlistID, true);
+        YouTubeAPI.BaseListResults listResults = helper.videoListResults(playlistID, true);
         while (listResults.getNext()) {
           // getting all
         }

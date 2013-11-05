@@ -11,7 +11,7 @@ public class YouTubeListSpec {
   private HashMap data;
   public ListType type;
 
-  public static YouTubeListSpec relatedSpec(YouTubeHelper.RelatedPlaylistType relatedPlayListType, String channelID) {
+  public static YouTubeListSpec relatedSpec(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
     YouTubeListSpec result = emptySpec(ListType.RELATED);
 
     result.data.put("type", relatedPlayListType);
@@ -84,7 +84,7 @@ public class YouTubeListSpec {
       case RELATED:
         result = "Related Playlists";
 
-        YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) getData("type");
+        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
         switch (type) {
           case FAVORITES:
             result = "Favorites";

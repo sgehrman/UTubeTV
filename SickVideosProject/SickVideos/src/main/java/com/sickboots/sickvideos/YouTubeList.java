@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener {
+public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeAPI.YouTubeHelperListener {
 
   // subclasses must implement
   abstract public void updateHighestDisplayedIndex(int position);
@@ -28,7 +28,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
   protected List<Map> items = new ArrayList<Map>();
 
   // use accessor in subclasses
-  private YouTubeHelper youTubeHelper;
+  private YouTubeAPI youTubeHelper;
 
   public YouTubeList(YouTubeListSpec s, UIAccess a) {
     super();
@@ -68,12 +68,12 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
     return listSpec.name();
   }
 
-  protected YouTubeHelper youTubeHelper(boolean askUser) {
+  protected YouTubeAPI youTubeHelper(boolean askUser) {
     if (youTubeHelper == null) {
       GoogleAccountCredential credential = account.credential(askUser);
 
       if (credential != null) {
-        youTubeHelper = new YouTubeHelper(credential, this);
+        youTubeHelper = new YouTubeAPI(credential, this);
       }
     }
 
