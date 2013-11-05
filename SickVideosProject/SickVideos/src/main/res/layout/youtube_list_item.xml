@@ -4,10 +4,6 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-
-                android:background="@drawable/dropshadow"
                 android:descendantFocusability="blocksDescendants">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
