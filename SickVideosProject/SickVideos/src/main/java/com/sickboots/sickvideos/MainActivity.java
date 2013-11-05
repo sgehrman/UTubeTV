@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    String[] names = new String[]{"Favorites", "Uploads", "Watched", "Liked", "Subscriptions", "Playlists"};
+    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later"};
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -185,19 +185,16 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.FAVORITES);
         break;
       case 1:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.LIKES);
         break;
       case 2:
         fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHED);
         break;
       case 3:
-        fragment = YouTubeFragment.likedFragment();
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
         break;
       case 4:
-        fragment = YouTubeFragment.subscriptionsFragment();
-        break;
-      case 5:
-        fragment = YouTubeFragment.playlistsFragment(null);
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
         break;
     }
 
