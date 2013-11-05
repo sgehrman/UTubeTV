@@ -212,8 +212,8 @@ public class YouTubeFragment extends Fragment
     }
   }
 
-  private YouTubeListLive createList(Bundle argsBundle) {
-    YouTubeListLive result = null;
+  private YouTubeList createList(Bundle argsBundle) {
+    YouTubeList result = null;
 
     String channelID = argsBundle.getString(CHANNEL_ID);
     String playlistID = argsBundle.getString(PLAYLIST_ID);
@@ -236,7 +236,8 @@ public class YouTubeFragment extends Fragment
         result = new YouTubeListLive(YouTubeListSpec.likedSpec(), access);
         break;
       case RELATED:
-        result = new YouTubeListLive(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
+        result = new YouTubeListDB(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
+//        result = new YouTubeListLive(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
         break;
       case SEARCH:
         result = new YouTubeListLive(YouTubeListSpec.searchSpec(query), access);

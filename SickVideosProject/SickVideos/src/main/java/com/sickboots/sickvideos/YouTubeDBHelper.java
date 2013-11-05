@@ -23,11 +23,15 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
       + VideoEntry.TABLE_NAME
       + " ("
       + VideoEntry._ID + " INTEGER PRIMARY KEY,"
-      + VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE + COMMA_SEP
-      + VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
-      + VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP
-      + VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP
-      + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE + COMMA_SEP
+      + VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
+      + COMMA_SEP
+      + VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
+      + COMMA_SEP
+      + VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+      + COMMA_SEP
+      + VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+      + COMMA_SEP
+      + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
       + " )";
   private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + VideoEntry.TABLE_NAME;
   private static final int DATABASE_VERSION = 1;
@@ -53,13 +57,15 @@ public class YouTubeDBHelper extends SQLiteOpenHelper {
   }
 
   public void insertVideos(List<Map> videos) {
-    // Gets the data repository in write mode
-    SQLiteDatabase db = getWritableDatabase();
+    if (videos != null) {
+      // Gets the data repository in write mode
+      SQLiteDatabase db = getWritableDatabase();
 
-    for (Map video : videos)
-      insertVideo(db, video);
+      for (Map video : videos)
+        insertVideo(db, video);
 
-    db.close();
+      db.close();
+    }
   }
 
   public List<Map> getVideos() {

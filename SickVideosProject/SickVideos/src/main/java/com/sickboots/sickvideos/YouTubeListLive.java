@@ -63,7 +63,7 @@ public class YouTubeListLive extends YouTubeList {
         if (listResults != null)
           listResults.setIsReloading(true);
 
-        new YouTubeListTask().execute(helper);
+        new YouTubeListLiveTask().execute(helper);
       }
     }
   }
@@ -115,12 +115,12 @@ public class YouTubeListLive extends YouTubeList {
     fragmentTransaction.commit();
   }
 
-  private class YouTubeListTask extends AsyncTask<YouTubeHelper, Void, List<Map>> {
+  private class YouTubeListLiveTask extends AsyncTask<YouTubeHelper, Void, List<Map>> {
     protected List<Map> doInBackground(YouTubeHelper... params) {
       YouTubeHelper helper = params[0];
       List<Map> result = null;
 
-      Util.log("YouTubeListTask: started");
+      Util.log("YouTubeListLiveTask: started");
 
       if (listResults != null) {
         listResults.getNext();
@@ -187,7 +187,7 @@ public class YouTubeListLive extends YouTubeList {
     protected void onPostExecute(List<Map> result) {
       listResults.setIsReloading(false);
 
-      Util.log("YouTubeListTask: finished");
+      Util.log("YouTubeListLiveTask: finished");
 
       items = result;
       access.onListResults();
