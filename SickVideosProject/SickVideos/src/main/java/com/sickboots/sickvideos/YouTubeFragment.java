@@ -39,7 +39,7 @@ public class YouTubeFragment extends Fragment
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeListSpec.ListType listType;
   private MyAdapter mAdapter;
-  private YouTubeList mList;
+  private YouTubeListLive mList;
   private int itemResID = 0;
 
   public static YouTubeFragment relatedFragment(YouTubeHelper.RelatedPlaylistType relatedType) {
@@ -212,8 +212,8 @@ public class YouTubeFragment extends Fragment
     }
   }
 
-  private YouTubeList createList(Bundle argsBundle) {
-    YouTubeList result = null;
+  private YouTubeListLive createList(Bundle argsBundle) {
+    YouTubeListLive result = null;
 
     String channelID = argsBundle.getString(CHANNEL_ID);
     String playlistID = argsBundle.getString(PLAYLIST_ID);
@@ -224,25 +224,25 @@ public class YouTubeFragment extends Fragment
 
     switch (listType) {
       case SUBSCRIPTIONS:
-        result = new YouTubeList(YouTubeListSpec.subscriptionsSpec(), access);
+        result = new YouTubeListLive(YouTubeListSpec.subscriptionsSpec(), access);
         break;
       case PLAYLISTS:
-        result = new YouTubeList(YouTubeListSpec.playlistsSpec(channelID), access);
+        result = new YouTubeListLive(YouTubeListSpec.playlistsSpec(channelID), access);
         break;
       case CATEGORIES:
-        result = new YouTubeList(YouTubeListSpec.categoriesSpec(), access);
+        result = new YouTubeListLive(YouTubeListSpec.categoriesSpec(), access);
         break;
       case LIKED:
-        result = new YouTubeList(YouTubeListSpec.likedSpec(), access);
+        result = new YouTubeListLive(YouTubeListSpec.likedSpec(), access);
         break;
       case RELATED:
-        result = new YouTubeList(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
+        result = new YouTubeListLive(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
         break;
       case SEARCH:
-        result = new YouTubeList(YouTubeListSpec.searchSpec(query), access);
+        result = new YouTubeListLive(YouTubeListSpec.searchSpec(query), access);
         break;
       case VIDEOS:
-        result = new YouTubeList(YouTubeListSpec.videosSpec(playlistID), access);
+        result = new YouTubeListLive(YouTubeListSpec.videosSpec(playlistID), access);
         break;
     }
 

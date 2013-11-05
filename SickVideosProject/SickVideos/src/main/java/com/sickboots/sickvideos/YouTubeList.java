@@ -14,14 +14,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener {
-  private UIAccess access;
-  private GoogleAccount account;
-  private YouTubeListSpec listSpec;
-  private static final int REQUEST_AUTHORIZATION = 444;
+public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeHelper.YouTubeHelperListener {
+
+  // subclasses must implement
+  abstract public void updateHighestDisplayedIndex(int position);
+  abstract public void refresh();
+  abstract protected void loadData(boolean askUser);
+  abstract public void handleClick(Map itemMap, boolean clickedIcon);
+
+  protected UIAccess access;
+  protected GoogleAccount account;
+  protected YouTubeListSpec listSpec;
+  protected static final int REQUEST_AUTHORIZATION = 444;
+  protected List<Map> items = new ArrayList<Map>();
+
+  // use accessor in subclasses
   private YouTubeHelper youTubeHelper;
-  private List<Map> items = new ArrayList<Map>();
-  private YouTubeHelper.BaseListResults listResults;
 
   public YouTubeList(YouTubeListSpec s, UIAccess a) {
     super();
@@ -63,33 +71,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
     return listSpec.name();
   }
 
-  public void updateHighestDisplayedIndex(int position) {
-    if (listResults != null) {
-      listResults.updateHighestDisplayedIndex(position);
-    }
-
-    loadMoreIfNeeded();
-  }
-
-  private void loadMoreIfNeeded() {
-    if (listResults != null) {
-      // don't reload if already loading
-      if (!listResults.isReloading()) {
-
-        if (listResults.needsToLoadMoreItems()) {
-          loadData(false);
-        }
-      }
-    }
-  }
-
-  public void refresh() {
-    listResults = null;
-
-    loadData(false);
-  }
-
-  private void loadData(boolean askUser) {
+  protected YouTubeHelper youTubeHelper(boolean askUser) {
     if (youTubeHelper == null) {
       GoogleAccountCredential credential = account.credential(askUser);
 
@@ -98,69 +80,7 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
       }
     }
 
-    if (youTubeHelper != null) {
-      boolean startTask = false;
-
-      // don't launch twice if it's busy running
-      if (listResults == null) {
-        startTask = true;
-      } else if (!listResults.isReloading()) {
-        startTask = true;
-      }
-
-      if (startTask) {
-        if (listResults != null)
-          listResults.setIsReloading(true);
-
-        new YouTubeListTask().execute();
-      }
-    }
-  }
-
-  public void handleClick(Map itemMap, boolean clickedIcon) {
-    switch (type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        String movieID = (String) itemMap.get("video");
-
-        if (movieID != null) {
-          YouTubeHelper.playMovie(getActivity(), movieID);
-        }
-        break;
-      case PLAYLISTS: {
-        String playlistID = (String) itemMap.get("playlist");
-
-        if (playlistID != null) {
-          Fragment frag = YouTubeFragment.videosFragment(playlistID);
-
-          replaceFragment(frag);
-        }
-      }
-      break;
-      case SUBSCRIPTIONS:
-        String channel = (String) itemMap.get("channel");
-
-        if (channel != null) {
-          Fragment frag = YouTubeFragment.playlistsFragment(channel);
-
-          replaceFragment(frag);
-        }
-        break;
-      case CATEGORIES:
-        break;
-    }
-  }
-
-  private void replaceFragment(Fragment fragment) {
-    FragmentManager fragmentManager = getActivity().getFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-    fragmentTransaction.replace(R.id.fragment_container, fragment);
-    fragmentTransaction.addToBackStack(null);
-
-    fragmentTransaction.commit();
+    return youTubeHelper;
   }
 
   // =================================================================================
@@ -191,86 +111,6 @@ public class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTube
   @Override
   public Activity getActivity() {
     return access.fragment().getActivity();
-  }
-
-  private class YouTubeListTask extends AsyncTask<Void, Void, List<Map>> {
-    protected List<Map> doInBackground(Void... params) {
-      List<Map> result = null;
-
-      Util.log("YouTubeListTask: started");
-
-      if (listResults != null) {
-        listResults.getNext();
-      } else {
-        switch (type()) {
-          case SUBSCRIPTIONS:
-            listResults = youTubeHelper.subscriptionListResults();
-            break;
-          case PLAYLISTS: {
-            String channel = (String) listSpec.getData("channel");
-
-            listResults = youTubeHelper.playlistListResults(channel, true);
-            break;
-          }
-          case CATEGORIES:
-            listResults = youTubeHelper.categoriesListResults("US");
-            break;
-          case LIKED:
-            listResults = youTubeHelper.likedVideosListResults();
-            break;
-
-          case RELATED: {
-            YouTubeHelper.RelatedPlaylistType type = (YouTubeHelper.RelatedPlaylistType) listSpec.getData("type");
-            String channelID = (String) listSpec.getData("channel");
-
-            String playlistID = youTubeHelper.relatedPlaylistID(type, channelID);
-
-            listResults = youTubeHelper.videoListResults(playlistID);
-            break;
-          }
-          case VIDEOS: {
-            String playlistID = (String) listSpec.getData("playlist");
-
-            listResults = youTubeHelper.videoListResults(playlistID);
-            break;
-          }
-          case SEARCH: {
-            String query = (String) listSpec.getData("query");
-            listResults = youTubeHelper.searchListResults(query);
-            break;
-          }
-        }
-      }
-
-      result = listResults.getItems();
-
-      if (result != null) {
-        // add empty entries
-        int diff = (listResults.getTotalItems() - result.size());
-        if (diff > 0) {
-          // don't mutate the original, make a new copy first
-          result = new ArrayList<Map>(result);
-
-          HashMap empty = new HashMap();
-          while (diff-- > 0) {
-            result.add(empty);
-          }
-        }
-      }
-
-      return result;
-    }
-
-    protected void onPostExecute(List<Map> result) {
-      listResults.setIsReloading(false);
-
-      Util.log("YouTubeListTask: finished");
-
-      items = result;
-      access.onListResults();
-
-      loadMoreIfNeeded();
-    }
   }
 
 }
