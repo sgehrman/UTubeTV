@@ -2,15 +2,11 @@ package com.sickboots.sickvideos;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +14,11 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   // subclasses must implement
   abstract public void updateHighestDisplayedIndex(int position);
+
   abstract public void refresh();
+
   abstract protected void loadData(boolean askUser);
+
   abstract public void handleClick(Map itemMap, boolean clickedIcon);
 
   protected UIAccess access;

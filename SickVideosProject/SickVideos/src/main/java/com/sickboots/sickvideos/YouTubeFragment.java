@@ -39,7 +39,7 @@ public class YouTubeFragment extends Fragment
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeListSpec.ListType listType;
   private MyAdapter mAdapter;
-  private YouTubeListLive mList;
+  private YouTubeList mList;
   private int itemResID = 0;
 
   public static YouTubeFragment relatedFragment(YouTubeHelper.RelatedPlaylistType relatedType) {
