@@ -1,22 +1,19 @@
 
-    <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- As the main content view, the view below consumes the entire
+     space available using match_parent in both dimensions. -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
 
-        android:id="@+id/content_frame"
-        android:background="#eee"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+    android:id="@+id/content_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <FrameLayout
-                 android:id="@+id/fragment_container"
-                 android:background="#f90"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent">
+             android:id="@+id/fragment_container"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     </FrameLayout>
 
 
-    </RelativeLayout>
+</RelativeLayout>
