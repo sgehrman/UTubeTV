@@ -326,13 +326,6 @@ public class YouTubeFragment extends Fragment
         String desc = (String) itemMap.get(YouTubeAPI.DESCRIPTION_KEY);
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
-
-          // shorten description
-          if (desc.length() > 100) {
-            desc = desc.substring(0, Math.min(desc.length(), 100));
-            desc += "...";
-          }
-
           holder.description.setText(desc);
         } else {
           holder.description.setVisibility(View.GONE);

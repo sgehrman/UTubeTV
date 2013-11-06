@@ -170,6 +170,10 @@ public class YouTubeAPI {
     return playlistMap.get(type);
   }
 
+  private String removeNewLinesFromString(String text) {
+    return text.replace('\n',' ');
+  }
+
   // pass null for channelid to get our own channel
   private Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
     Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
@@ -321,7 +325,7 @@ public class YouTubeAPI {
 
         map.put(VIDEO_KEY, playlistItem.getContentDetails().getVideoId());
         map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
         map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
         result.add(map);
@@ -382,7 +386,7 @@ public class YouTubeAPI {
 
         map.put(VIDEO_KEY, playlistItem.getId().getVideoId());
         map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
         map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
 
         result.add(map);
@@ -439,7 +443,7 @@ public class YouTubeAPI {
 
         map.put(VIDEO_KEY, playlistItem.getId());
         map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, playlistItem.getSnippet().getDescription());
+        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
         map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
         map.put(DURATION_KEY, playlistItem.getContentDetails().get("duration"));
 
@@ -546,7 +550,7 @@ public class YouTubeAPI {
 
         map.put(TITLE_KEY, subscription.getSnippet().getTitle());
         map.put(CHANNEL_KEY, subscription.getSnippet().getResourceId().getChannelId());
-        map.put(DESCRIPTION_KEY, subscription.getSnippet().getDescription());
+        map.put(DESCRIPTION_KEY, removeNewLinesFromString(subscription.getSnippet().getDescription()));
         map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
 
         result.add(map);
@@ -647,7 +651,7 @@ public class YouTubeAPI {
 
         map.put(PLAYLIST_KEY, subscription.getId());
         map.put(TITLE_KEY, subscription.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, subscription.getSnippet().getDescription());
+        map.put(DESCRIPTION_KEY, removeNewLinesFromString(subscription.getSnippet().getDescription()));
         map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
 
         result.add(map);
