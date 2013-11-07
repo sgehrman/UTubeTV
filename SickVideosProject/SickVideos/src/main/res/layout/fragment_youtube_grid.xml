@@ -10,8 +10,6 @@
         android:layout_height="match_parent"
         android:columnWidth="220dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
         android:stretchMode="columnWidth"

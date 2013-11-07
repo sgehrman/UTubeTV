@@ -5,6 +5,9 @@
         android:endColor="#99386f70"
         android:gradientRadius="426"
         android:type="radial"/>
+
+    <stroke android:width="1dp" android:color="#a000"/>
+
 </shape>
 
 
