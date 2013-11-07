@@ -1,5 +1,7 @@
 <com.sickboots.sickvideos.FragmentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+                                              android:background="#333"
+
+                                              android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
     <GridView
@@ -10,7 +12,6 @@
         android:numColumns="auto_fit"
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
-        android:background="#eee"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
         android:stretchMode="columnWidth"

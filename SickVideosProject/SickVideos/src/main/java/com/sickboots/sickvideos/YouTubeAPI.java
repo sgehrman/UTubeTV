@@ -838,4 +838,26 @@ https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
 
+
+Joe Rogan,
+NeuroSoup,
+Terrance McKenna
+Khan Academy
+Cosmos
+Neil DeGrasse
+AstroPsyics
+Derby
+Vice
+Big Think
+Android Developers
+UFO Videos
+James Burke Connections
+SF Travel
+Skateboard Tricks
+
+
+
+
+
+
  */

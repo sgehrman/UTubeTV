@@ -288,7 +288,8 @@ public class YouTubeFragment extends Fragment
 
       holder.button.setAnimation(null);
 
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), 0, new UrlImageViewCallback() {
+      int defaultImageResID = 0; // looks better black or try this: R.drawable.loading_thumbnail;
+      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), defaultImageResID, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
