@@ -116,34 +116,6 @@ public class YouTubeFragment extends Fragment
     if (useGridView(getArguments())) {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
-
-
-      // video player
-      videoBox = rootView.findViewById(R.id.video_box);
-
-      ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
-      b.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          videoBox.animate()
-              .translationYBy(videoBox.getHeight())
-              .setDuration(300)
-              .withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                  videoBox.setVisibility(View.INVISIBLE);
-                }
-              });
-        }
-
-      });
-
-
-
-
-
-
-
     } else {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
@@ -179,19 +151,14 @@ public class YouTubeFragment extends Fragment
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     ptrl.addRefreshableView(listOrGridView, this);
 
+    setupSlideInPlayerView(rootView);
+
     // load data if we have it already
     onResults();
     setActionBarTitle();
 
     return rootView;
   }
-
-
-
-
-
-
-
 
   public void handleClick(Map itemMap, boolean clickedIcon) {
     String videoId = (String) itemMap.get("video");
@@ -215,13 +182,28 @@ public class YouTubeFragment extends Fragment
     }
   }
 
+  private void setupSlideInPlayerView(View rootView) {
+    // video player
+    videoBox = rootView.findViewById(R.id.slide_in_player_box);
+    videoBox.setVisibility(View.INVISIBLE);
 
+    ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        videoBox.animate()
+            .translationYBy(videoBox.getHeight())
+            .setDuration(300)
+            .withEndAction(new Runnable() {
+              @Override
+              public void run() {
+                videoBox.setVisibility(View.INVISIBLE);
+              }
+            });
+      }
 
-
-
-
-
-
+    });
+  }
 
   private int itemResourceID() {
     if (itemResID == 0) {

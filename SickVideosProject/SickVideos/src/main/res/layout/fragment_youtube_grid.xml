@@ -17,8 +17,8 @@
         />
 
     <LinearLayout
-        android:id="@+id/video_box"
-        android:layout_width="wrap_content"
+        android:id="@+id/slide_in_player_box"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="vertical">
@@ -37,7 +37,5 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-
 
 </com.sickboots.sickvideos.AnimatedFrameLayout>
