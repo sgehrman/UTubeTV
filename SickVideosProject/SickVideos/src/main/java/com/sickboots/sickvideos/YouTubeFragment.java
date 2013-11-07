@@ -265,7 +265,7 @@ public class YouTubeFragment extends Fragment
     public MyAdapter() {
       super(getActivity(), 0);
 
-      inflater = getActivity().getLayoutInflater();
+      inflater = LayoutInflater.from(getActivity());
     }
 
     @Override
