@@ -1,4 +1,4 @@
-<com.sickboots.sickvideos.FragmentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sickboots.sickvideos.AnimatedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -14,4 +14,4 @@
               android:gravity="center"
         />
 
-</com.sickboots.sickvideos.FragmentFrameLayout>
+</com.sickboots.sickvideos.AnimatedFrameLayout>
