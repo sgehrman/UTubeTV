@@ -3,6 +3,7 @@ package com.sickboots.sickvideos;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,7 +14,9 @@ import android.view.animation.AlphaAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +46,9 @@ public class YouTubeFragment extends Fragment
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
+
+  // video player
+  private View videoBox;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -110,6 +116,34 @@ public class YouTubeFragment extends Fragment
     if (useGridView(getArguments())) {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
+
+
+      // video player
+      videoBox = rootView.findViewById(R.id.video_box);
+
+      ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
+      b.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          videoBox.animate()
+              .translationYBy(videoBox.getHeight())
+              .setDuration(300)
+              .withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                  videoBox.setVisibility(View.INVISIBLE);
+                }
+              });
+        }
+
+      });
+
+
+
+
+
+
+
     } else {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
@@ -132,7 +166,9 @@ public class YouTubeFragment extends Fragment
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         Map map = mAdapter.getItem(position);
 
-        mList.handleClick(map, false);
+//        mList.handleClick(map, false);
+        handleClick(map, false);
+
       }
     });
 
@@ -149,6 +185,43 @@ public class YouTubeFragment extends Fragment
 
     return rootView;
   }
+
+
+
+
+
+
+
+
+  public void handleClick(Map itemMap, boolean clickedIcon) {
+    String videoId = (String) itemMap.get("video");
+
+    VideoPlayerFragment videoFragment =
+        (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+    videoFragment.setVideoId(videoId);
+
+    // The videoBox is INVISIBLE if no video was previously selected, so we need to show it now.
+    if (videoBox.getVisibility() != View.VISIBLE) {
+      if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        // Initially translate off the screen so that it can be animated in from below.
+        videoBox.setTranslationY(videoBox.getHeight());
+      }
+      videoBox.setVisibility(View.VISIBLE);
+    }
+
+    // If the fragment is off the screen, we animate it in.
+    if (videoBox.getTranslationY() > 0) {
+      videoBox.animate().translationY(0).setDuration(300);
+    }
+  }
+
+
+
+
+
+
+
+
 
   private int itemResourceID() {
     if (itemResID == 0) {
@@ -274,7 +347,7 @@ public class YouTubeFragment extends Fragment
         convertView = inflater.inflate(itemResourceID(), null);
 
         ViewHolder holder = new ViewHolder();
-        holder.button = (ImageView) convertView.findViewById(R.id.image);
+        holder.image = (ImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.duration = (TextView) convertView.findViewById(R.id.duration);
@@ -286,10 +359,10 @@ public class YouTubeFragment extends Fragment
 
       Map itemMap = getItem(position);
 
-      holder.button.setAnimation(null);
+      holder.image.setAnimation(null);
 
       int defaultImageResID = 0; // looks better black or try this: R.drawable.loading_thumbnail;
-      UrlImageViewHelper.setUrlDrawable(holder.button, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), defaultImageResID, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.image, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), defaultImageResID, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -351,7 +424,7 @@ public class YouTubeFragment extends Fragment
       TextView title;
       TextView description;
       TextView duration;
-      ImageView button;
+      ImageView image;
       View gradientOverlay;
     }
   }
