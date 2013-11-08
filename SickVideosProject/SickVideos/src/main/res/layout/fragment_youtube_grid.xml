@@ -20,21 +20,22 @@
         android:id="@+id/slide_in_player_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="top"
         android:orientation="vertical">
-
-        <ImageButton
-            android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@android:drawable/btn_dialog"/>
 
         <fragment
             class="com.sickboots.sickvideos.VideoPlayerFragment"
             android:id="@+id/video_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/shadow_top_gradient"
+            android:src="@android:drawable/btn_dialog"/>
 
     </LinearLayout>
 

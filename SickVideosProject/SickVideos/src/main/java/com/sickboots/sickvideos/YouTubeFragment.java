@@ -171,13 +171,13 @@ public class YouTubeFragment extends Fragment
     if (videoBox.getVisibility() != View.VISIBLE) {
       if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
         // Initially translate off the screen so that it can be animated in from below.
-        videoBox.setTranslationY(videoBox.getHeight());
+        videoBox.setTranslationY(-videoBox.getHeight());
       }
       videoBox.setVisibility(View.VISIBLE);
     }
 
     // If the fragment is off the screen, we animate it in.
-    if (videoBox.getTranslationY() > 0) {
+    if (videoBox.getTranslationY() < 0) {
       videoBox.animate().translationY(0).setDuration(300);
     }
   }
@@ -192,7 +192,7 @@ public class YouTubeFragment extends Fragment
       @Override
       public void onClick(View v) {
         videoBox.animate()
-            .translationYBy(videoBox.getHeight())
+            .translationYBy(-videoBox.getHeight())
             .setDuration(300)
             .withEndAction(new Runnable() {
               @Override
