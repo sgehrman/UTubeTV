@@ -5,7 +5,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-
     <style name="VideoTextTitle">
         <item name="android:padding">8dp</item>
         <item name="android:textColor">#ffffffff</item>
