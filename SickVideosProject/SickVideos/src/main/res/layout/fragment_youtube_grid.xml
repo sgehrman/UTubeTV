@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/shadow_top_gradient"
+            android:background="@drawable/shadow_gradient_bottom"
             android:src="@android:drawable/btn_dialog"/>
 
     </LinearLayout>
