@@ -34,7 +34,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment implements 
     if (videoId != null && !videoId.equals(this.videoId)) {
       this.videoId = videoId;
       if (player != null) {
-        player.cueVideo(videoId);
+        player.loadVideo(videoId);
       }
     }
   }
@@ -51,7 +51,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment implements 
     player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
     player.setOnFullscreenListener(this);
     if (!restored && videoId != null) {
-      player.cueVideo(videoId);
+      player.loadVideo(videoId);
     }
   }
 
