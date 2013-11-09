@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubePlayer;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
@@ -118,13 +119,6 @@ public class YouTubeFragment extends Fragment
     if (useGridView(getArguments())) {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
-
-      // had to add this manually rather than setting the class in xml to avoid duplicate id errors
-      Fragment fragment = new VideoPlayerFragment();
-      FragmentManager fm = getFragmentManager();
-      FragmentTransaction ft = fm.beginTransaction();
-      ft.replace(R.id.video_fragment_container, fragment);
-      ft.commit();
     } else {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
@@ -188,6 +182,13 @@ public class YouTubeFragment extends Fragment
   }
 
   private void setupSlideInPlayerView(View rootView) {
+    // had to add this manually rather than setting the class in xml to avoid duplicate id errors
+    Fragment fragment = new VideoPlayerFragment();
+    FragmentManager fm = getFragmentManager();
+    FragmentTransaction ft = fm.beginTransaction();
+    ft.replace(R.id.video_fragment_container, fragment);
+    ft.commit();
+
     // video player
     videoBox = rootView.findViewById(R.id.slide_in_player_box);
     videoBox.setVisibility(View.INVISIBLE);
