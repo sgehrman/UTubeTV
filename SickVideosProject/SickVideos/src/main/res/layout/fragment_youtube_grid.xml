@@ -23,8 +23,7 @@
         android:layout_gravity="top"
         android:orientation="vertical">
 
-        <fragment
-            class="com.sickboots.sickvideos.VideoPlayerFragment"
+        <FrameLayout
             android:id="@+id/video_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

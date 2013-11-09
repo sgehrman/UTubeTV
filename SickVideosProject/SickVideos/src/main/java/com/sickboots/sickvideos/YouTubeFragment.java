@@ -2,6 +2,8 @@ package com.sickboots.sickvideos;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -116,6 +118,13 @@ public class YouTubeFragment extends Fragment
     if (useGridView(getArguments())) {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
+
+      // had to add this manually rather than setting the class in xml to avoid duplicate id errors
+      Fragment fragment = new VideoPlayerFragment();
+      FragmentManager fm = getFragmentManager();
+      FragmentTransaction ft = fm.beginTransaction();
+      ft.replace(R.id.video_fragment_container, fragment);
+      ft.commit();
     } else {
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
@@ -123,13 +132,9 @@ public class YouTubeFragment extends Fragment
 
     mList = createList(getArguments());
 
-    // Create a progress bar to display while the list loads
-    ProgressBar progressBar = new ProgressBar(this.getActivity());
-    progressBar.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-        LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-    progressBar.setIndeterminate(true);
-    listOrGridView.setEmptyView(progressBar);
-    rootView.addView(progressBar);
+    View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
+    listOrGridView.setEmptyView(emptyView);
+    rootView.addView(emptyView);
 
     mAdapter = new MyAdapter();
 

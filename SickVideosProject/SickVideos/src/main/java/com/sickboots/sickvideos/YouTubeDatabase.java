@@ -16,7 +16,7 @@ import java.util.Map;
 public class YouTubeDatabase extends SQLiteOpenHelper {
   String mTableName;
 
-  private static final int DATABASE_VERSION = 21;
+  private static final int DATABASE_VERSION = 22;
 
   public YouTubeDatabase(Context context, String databaseName) {
     super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
