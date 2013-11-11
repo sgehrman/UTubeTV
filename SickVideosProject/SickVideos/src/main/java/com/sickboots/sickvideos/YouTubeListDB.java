@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos;
 
-import android.app.Fragment;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -58,7 +57,7 @@ public class YouTubeListDB extends YouTubeList {
         break;
       case PLAYLISTS:
 
-      break;
+        break;
       case SUBSCRIPTIONS:
 
         break;
@@ -78,7 +77,7 @@ public class YouTubeListDB extends YouTubeList {
       result = database.getVideos();
 
       if (result.size() == 0) {
-        YouTubeAPI.BaseListResults listResults=null;
+        YouTubeAPI.BaseListResults listResults = null;
 
         switch (type()) {
           case RELATED:

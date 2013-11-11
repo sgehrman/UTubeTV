@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements Util.PullToRefreshListener
         break;
     }
 
-    Util.showFragment(this, fragment, R.id.content_frame, animate ? 1:0, false);
+    Util.showFragment(this, fragment, R.id.content_frame, animate ? 1 : 0, false);
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);

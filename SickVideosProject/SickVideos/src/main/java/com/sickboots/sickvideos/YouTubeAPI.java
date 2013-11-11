@@ -171,7 +171,7 @@ public class YouTubeAPI {
   }
 
   private String removeNewLinesFromString(String text) {
-    return text.replace('\n',' ');
+    return text.replace('\n', ' ');
   }
 
   // pass null for channelid to get our own channel

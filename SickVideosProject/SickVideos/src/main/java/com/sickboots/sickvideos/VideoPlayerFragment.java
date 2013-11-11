@@ -9,10 +9,10 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
-  private boolean mAutorepeat=false;
+  private boolean mAutorepeat = false;
   private YouTubePlayer player;
   private String videoId;
-  private boolean mMuteState=false;
+  private boolean mMuteState = false;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
@@ -96,41 +96,47 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     });
   }
 
- private void setupStateChangeListener() {
-   if (player == null)
-     return;
+  private void setupStateChangeListener() {
+    if (player == null)
+      return;
 
-   player.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
-     @Override
-     public void onLoading() {
+    player.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+      @Override
+      public void onLoading() {
 
-     }
+      }
 
-     @Override
-     public void onLoaded(String s) {
+      @Override
+      public void onLoaded(String s) {
 
-     }
+      }
 
-     @Override
-     public void onAdStarted() {
+      @Override
+      public void onAdStarted() {
+        if (!isMute()) {
+          mMutedForAd = true;
+          mute(true);
+        }
+      }
 
-     }
+      @Override
+      public void onVideoStarted() {
+        if (mMutedForAd) {
+          mMutedForAd = false;
+          mute(false);
+        }
+      }
 
-     @Override
-     public void onVideoStarted() {
+      @Override
+      public void onVideoEnded() {
+        if (mAutorepeat)
+          player.play();  // back to the start
+      }
 
-     }
+      @Override
+      public void onError(YouTubePlayer.ErrorReason errorReason) {
 
-     @Override
-     public void onVideoEnded() {
-      if (mAutorepeat)
-        player.play();  // back to the start
-     }
-
-     @Override
-     public void onError(YouTubePlayer.ErrorReason errorReason) {
-
-     }
-   });
- }
+      }
+    });
+  }
 }
