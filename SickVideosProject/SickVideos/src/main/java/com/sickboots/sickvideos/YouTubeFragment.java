@@ -190,14 +190,12 @@ public class YouTubeFragment extends Fragment
 
     // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
-
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
 
         // pause immediately on click for better UX
-        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-        videoFragment.pause();
+        videoFragment().pause();
 
         videoBox.animate()
             .translationYBy(-videoBox.getHeight())
@@ -212,31 +210,40 @@ public class YouTubeFragment extends Fragment
 
     });
 
-    // hook up mute button
+    // Mute button
     b = (ImageButton) rootView.findViewById(R.id.mute_button);
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
-        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-        videoFragment.mute(!videoFragment.isMute());
-      }
-
-      ;
+        videoFragment().mute(!videoFragment().isMute());
+      };
     });
 
-    // hook up mute button
+    // Full screen button
     b = (ImageButton) rootView.findViewById(R.id.full_screen_button);
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
-        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-        videoFragment.setFullscreen(true);
-      }
-
-      ;
+        videoFragment().setFullscreen(true);
+      };
     });
+
+    // Skip ahead button
+    b = (ImageButton) rootView.findViewById(R.id.skip_ahead_button);
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        videoFragment().seekRelativeSeconds(10);
+        Util.toast(getActivity(), "fuck");
+      };
+    });
+
+  }
+
+  private VideoPlayerFragment videoFragment() {
+    VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+
+    return videoFragment;
   }
 
   private int itemResourceID() {

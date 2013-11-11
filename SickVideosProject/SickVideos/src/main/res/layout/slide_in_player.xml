@@ -34,6 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/mute_button"
+            android:src="@android:drawable/ic_dialog_dialer"/>
+
+        <ImageButton
+            android:id="@+id/skip_ahead_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/full_screen_button"
             android:src="@android:drawable/ic_media_next"/>
     </RelativeLayout>
 
