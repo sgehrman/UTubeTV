@@ -193,6 +193,7 @@ public class YouTubeFragment extends Fragment
     videoBox = rootView.findViewById(R.id.slide_in_player_box);
     videoBox.setVisibility(View.INVISIBLE);
 
+    // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -208,6 +209,17 @@ public class YouTubeFragment extends Fragment
             });
       }
 
+    });
+
+    // hook up mute button
+    b = (ImageButton) rootView.findViewById(R.id.mute_button);
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+        videoFragment.mute(!videoFragment.isMute());
+      };
     });
   }
 

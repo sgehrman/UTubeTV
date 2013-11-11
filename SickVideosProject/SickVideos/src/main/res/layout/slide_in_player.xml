@@ -10,12 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <RelativeLayout
+        android:background="@drawable/shadow_gradient_bottom"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <ImageButton
         android:id="@+id/close_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/shadow_gradient_bottom"
         android:src="@android:drawable/btn_dialog"/>
+
+    <ImageButton
+        android:id="@+id/mute_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/close_button"
+        android:src="@android:drawable/btn_star"/>
+    </RelativeLayout>
 
 </LinearLayout>

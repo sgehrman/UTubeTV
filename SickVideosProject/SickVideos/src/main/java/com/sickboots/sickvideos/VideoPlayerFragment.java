@@ -1,5 +1,7 @@
 package com.sickboots.sickvideos;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -10,6 +12,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mAutorepeat=false;
   private YouTubePlayer player;
   private String videoId;
+  private boolean mMuteState=false;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
@@ -65,6 +68,18 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     if (player != null) {
       player.pause();
     }
+  }
+
+  public void mute(boolean muteState) {
+    AudioManager manager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+    if (mMuteState != muteState) {
+      mMuteState = muteState;
+      manager.setStreamMute(AudioManager.STREAM_MUSIC, mMuteState);
+    }
+  }
+
+  public boolean isMute() {
+    return mMuteState;
   }
 
   private void setupFullscreenListener() {
