@@ -234,7 +234,6 @@ public class YouTubeFragment extends Fragment
       @Override
       public void onClick(View v) {
         videoFragment().seekRelativeSeconds(10);
-        Util.toast(getActivity(), "fuck");
       };
     });
 
