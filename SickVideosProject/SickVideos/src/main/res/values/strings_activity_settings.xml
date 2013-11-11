@@ -9,6 +9,9 @@
     <string name="pref_play_full_screen">Play full screen</string>
     <string name="pref_play_full_screen_summary">Play movies in full screen mode.</string>
 
+    <string name="pref_mute_ads">Mute volume during ads</string>
+    <string name="pref_mute_ads_summary">Volume muted at start of ad.  Unmuted at end of ad.</string>
+
     <!-- Share Settings -->
     <string name="pref_header_sharing">Share Settings</string>
 

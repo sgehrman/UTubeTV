@@ -6,6 +6,12 @@
         android:summary="@string/pref_play_full_screen_summary"
         android:defaultValue="false"/>
 
+    <SwitchPreference
+        android:key="mute_ads"
+        android:title="@string/pref_mute_ads"
+        android:summary="@string/pref_mute_ads_summary"
+        android:defaultValue="true"/>
+
 </PreferenceScreen>
 
 
