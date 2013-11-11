@@ -2,17 +2,17 @@ package com.sickboots.sickvideos;
 
 import java.util.HashMap;
 
-public class AppData {
-  private static AppData instance = null;
+public class ApplicationHub {
+  private static ApplicationHub instance = null;
   private HashMap data;
 
-  private AppData() {
+  private ApplicationHub() {
     data = new HashMap();
   }
 
-  public static AppData getInstance() {
+  public static ApplicationHub getInstance() {
     if (instance == null) {
-      instance = new AppData();
+      instance = new ApplicationHub();
     }
     return instance;
   }
