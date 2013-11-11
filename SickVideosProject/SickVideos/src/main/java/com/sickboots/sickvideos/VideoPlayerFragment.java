@@ -13,6 +13,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private YouTubePlayer player;
   private String videoId;
   private boolean mMuteState = false;
+  private boolean mMutedForAd = false;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
