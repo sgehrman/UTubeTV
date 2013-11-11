@@ -218,6 +218,22 @@ public class YouTubeFragment extends Fragment
 
       ;
     });
+
+    // hook up mute button
+    b = (ImageButton) rootView.findViewById(R.id.full_screen_button);
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+        videoFragment.setFullscreen(true);
+      }
+
+      ;
+    });
+
+
+
   }
 
   private int itemResourceID() {

@@ -83,6 +83,27 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     return mMuteState;
   }
 
+
+
+  public void setFullscreen(boolean state) {
+    if (player != null) {
+      player.setFullscreen(state);
+    }
+  }
+
+  public boolean fullScreen() {
+    if (player != null) {
+      return false;  // SNG needs fix
+    }
+
+    return false;
+  }
+
+
+
+
+
+
   private void setupFullscreenListener() {
     if (player == null)
       return;
