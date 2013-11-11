@@ -190,9 +190,15 @@ public class YouTubeFragment extends Fragment
 
     // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
+
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+
+        // pause immediately on click for better UX
+        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+        videoFragment.pause();
+
         videoBox.animate()
             .translationYBy(-videoBox.getHeight())
             .setDuration(300)
@@ -231,9 +237,6 @@ public class YouTubeFragment extends Fragment
 
       ;
     });
-
-
-
   }
 
   private int itemResourceID() {
