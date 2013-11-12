@@ -216,7 +216,9 @@ public class YouTubeFragment extends Fragment
       @Override
       public void onClick(View v) {
         videoFragment().mute(!videoFragment().isMute());
-      };
+      }
+
+      ;
     });
 
     // Full screen button
@@ -225,7 +227,9 @@ public class YouTubeFragment extends Fragment
       @Override
       public void onClick(View v) {
         videoFragment().setFullscreen(true);
-      };
+      }
+
+      ;
     });
 
     // Skip ahead button
@@ -234,7 +238,9 @@ public class YouTubeFragment extends Fragment
       @Override
       public void onClick(View v) {
         videoFragment().seekRelativeSeconds(10);
-      };
+      }
+
+      ;
     });
 
   }

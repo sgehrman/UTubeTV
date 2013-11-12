@@ -99,7 +99,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void seekRelativeSeconds(int seconds) {
     if (player != null) {
-      player.seekRelativeMillis(seconds*1000);
+      player.seekRelativeMillis(seconds * 1000);
     }
   }
 

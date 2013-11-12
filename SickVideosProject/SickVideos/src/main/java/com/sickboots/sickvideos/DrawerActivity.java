@@ -1,25 +1,25 @@
 
 
-    package com.sickboots.sickvideos;
+package com.sickboots.sickvideos;
 
-    import android.app.Activity;
-    import android.content.Intent;
-    import android.content.res.Configuration;
-    import android.os.Bundle;
-    import android.support.v4.app.ActionBarDrawerToggle;
-    import android.support.v4.view.GravityCompat;
-    import android.support.v4.widget.DrawerLayout;
-    import android.view.Menu;
-    import android.view.MenuItem;
-    import android.view.View;
-    import android.widget.AdapterView;
-    import android.widget.ArrayAdapter;
-    import android.widget.ListView;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-    import com.google.android.youtube.player.YouTubeInitializationResult;
-    import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
-    import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class DrawerActivity extends Activity implements Util.PullToRefreshListener {
   private DrawerLayout mDrawerLayout;

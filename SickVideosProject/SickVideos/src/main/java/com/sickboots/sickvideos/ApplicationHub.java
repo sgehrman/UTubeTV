@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
 
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
 
   private ApplicationHub(Context context) {
-     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
     notificationCenter = new NotificationCenter();
     mainThreadHandler = new Handler(Looper.getMainLooper());
@@ -89,7 +88,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
       Util.log("Application not ready you freakin moron");
 
     if (!cachingPrefKey(key))
-      Util.log("Key is not handled by ApplicationHub: "+key);
+      Util.log("Key is not handled by ApplicationHub: " + key);
   }
 
   public String getPref(String key) {
@@ -106,8 +105,8 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   }
 
   private void loadPrefsCache(final Runnable callbackRunnable) {
-    Thread thread1 = new Thread(){
-      public void run(){
+    Thread thread1 = new Thread() {
+      public void run() {
         // GOOGLE_ACCOUNT
         String account = sharedPreferences.getString(GOOGLE_ACCOUNT_PREF, null);
         if (account != null)
@@ -121,7 +120,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   }
 
   private void savePrefsCache() {
-    SharedPreferences.Editor editor =  sharedPreferences.edit();
+    SharedPreferences.Editor editor = sharedPreferences.edit();
 
     String value = (String) prefs.get(GOOGLE_ACCOUNT_PREF);
     editor.putString(GOOGLE_ACCOUNT_PREF, value);
@@ -161,7 +160,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
 
   public void sendNotification(final String message) {
     // always sends on main thread
-    runOnMainThread( new Runnable() {
+    runOnMainThread(new Runnable() {
       @Override
       public void run() {
         notificationCenter.sendNotification(message);
