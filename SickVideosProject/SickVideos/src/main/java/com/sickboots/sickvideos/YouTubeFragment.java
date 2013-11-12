@@ -160,7 +160,7 @@ public class YouTubeFragment extends Fragment
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     ptrl.addRefreshableView(listOrGridView, this);
 
-    setupSlideInPlayerView(rootView);
+    setupSlideInPlayerView(savedInstanceState, rootView);
 
     // load data if we have it already
     onResults();
@@ -207,16 +207,20 @@ public class YouTubeFragment extends Fragment
     }
   }
 
-  private void setupSlideInPlayerView(View rootView) {
-    // had to add this manually rather than setting the class in xml to avoid duplicate id errors
-    Fragment fragment = new VideoPlayerFragment();
-    FragmentManager fm = getFragmentManager();
-    FragmentTransaction ft = fm.beginTransaction();
-    ft.replace(R.id.video_fragment_container, fragment);
-    ft.commit();
+  private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
+    // Don't add the fragment if restoring, it's already set up
+    if (savedInstanceState == null) {
+      // had to add this manually rather than setting the class in xml to avoid duplicate id errors
+      Fragment fragment = new VideoPlayerFragment();
+      FragmentManager fm = getFragmentManager();
+      FragmentTransaction ft = fm.beginTransaction();
+      ft.replace(R.id.video_fragment_container, fragment);
+      ft.commit();
+    }
 
     // video player
     videoBox = rootView.findViewById(R.id.slide_in_player_box);
+
     videoBox.setVisibility(View.INVISIBLE);
 
     // close button
