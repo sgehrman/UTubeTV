@@ -25,6 +25,11 @@
         </activity>
 
         <activity
+            android:name="com.sickboots.sickvideos.DrawerActivity"
+            android:label="@string/title_activity_drawer">
+        </activity>
+
+        <activity
             android:name="com.sickboots.sickvideos.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>

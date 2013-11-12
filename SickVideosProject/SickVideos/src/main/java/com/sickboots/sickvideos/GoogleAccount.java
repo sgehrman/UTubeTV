@@ -23,7 +23,6 @@ public class GoogleAccount {
     public void credentialIsReady();
   }
 
-  private final String ACCOUNT_KEY = "account-name";
   private GoogleAccountCredential credential;
   private List<String> scopes;
   private final int REQUEST_ACCOUNT_PICKER = 33008;
@@ -72,7 +71,7 @@ public class GoogleAccount {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
 
     // ### hits main thread with read to disk, fix this later.
-    String accountName = sp.getString(ACCOUNT_KEY, null);
+    String accountName = ApplicationHub.instance().getPref(ApplicationHub.GOOGLE_ACCOUNT_PREF);
 
     if (accountName != null) {
       credential.setSelectedAccountName(accountName);
@@ -80,8 +79,7 @@ public class GoogleAccount {
   }
 
   private void saveAccount(Activity activity) {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
-    sp.edit().putString(ACCOUNT_KEY, credential.getSelectedAccountName()).commit();
+    ApplicationHub.instance().setPref(ApplicationHub.GOOGLE_ACCOUNT_PREF, credential.getSelectedAccountName());
   }
 
   private void chooseAccount(Activity activity) {
