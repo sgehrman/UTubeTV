@@ -27,6 +27,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
+  public static final String BACK_BUTTON_NOTIFICATION = "back_button";
 
   private ApplicationHub(Context context) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

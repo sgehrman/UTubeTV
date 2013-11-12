@@ -30,11 +30,13 @@ import org.joda.time.format.PeriodFormatter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
+    implements Observer, PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
   private static final String SEARCH_QUERY = "query";
   private static final String LIST_TYPE = "type";
   private static final String CHANNEL_ID = "channel";
@@ -102,6 +104,19 @@ public class YouTubeFragment extends Fragment
     }
   }
 
+  // Observer
+  @Override
+  public void update(Observable observable, Object data) {
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(ApplicationHub.BACK_BUTTON_NOTIFICATION)) {
+        // if the video player is visible, close it
+        closeVideoPlayer();
+      }
+    }
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -154,6 +169,22 @@ public class YouTubeFragment extends Fragment
     return rootView;
   }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    // for back button notification
+    ApplicationHub.instance().addObserver(this);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+
+    // for back button notification
+    ApplicationHub.instance().deleteObserver(this);
+  }
+
   public void handleClick(Map itemMap, boolean clickedIcon) {
     String videoId = (String) itemMap.get("video");
 
@@ -193,21 +224,8 @@ public class YouTubeFragment extends Fragment
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
-        // pause immediately on click for better UX
-        videoFragment().pause();
-
-        videoBox.animate()
-            .translationYBy(-videoBox.getHeight())
-            .setDuration(300)
-            .withEndAction(new Runnable() {
-              @Override
-              public void run() {
-                videoBox.setVisibility(View.INVISIBLE);
-              }
-            });
+        closeVideoPlayer();
       }
-
     });
 
     // Mute button
@@ -243,6 +261,23 @@ public class YouTubeFragment extends Fragment
       ;
     });
 
+  }
+
+  private void closeVideoPlayer() {
+    if (videoBox.getVisibility() == View.VISIBLE) {
+      // pause immediately on click for better UX
+      videoFragment().pause();
+
+      videoBox.animate()
+          .translationYBy(-videoBox.getHeight())
+          .setDuration(300)
+          .withEndAction(new Runnable() {
+            @Override
+            public void run() {
+              videoBox.setVisibility(View.INVISIBLE);
+            }
+          });
+    }
   }
 
   private VideoPlayerFragment videoFragment() {

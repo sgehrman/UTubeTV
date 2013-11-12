@@ -88,7 +88,10 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
   @Override
   public void onBackPressed() {
     if (getFragmentManager().getBackStackEntryCount() == 0) {
-      Util.toast(this, "--");
+
+      // hides the video player if visible
+      ApplicationHub.instance().sendNotification(ApplicationHub.BACK_BUTTON_NOTIFICATION);
+
       // do nothing, we don't want the app to disappear
       return;
     }
