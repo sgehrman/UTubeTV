@@ -434,7 +434,7 @@ public class YouTubeFragment extends Fragment
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-          float imageAlpha = .6f;
+          float imageAlpha = .8f;
           if (!loadedFromCache) {
 //            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
 //            scale.setInterpolator(new OvershootInterpolator());
