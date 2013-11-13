@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:background="#000"
+        android:background="#d000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

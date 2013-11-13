@@ -29,7 +29,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         VideoPlayerFragment.this.player = player;
         player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
 
-        player.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+        player.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
 
         setupFullscreenListener();
         setupStateChangeListener();
