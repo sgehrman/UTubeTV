@@ -428,18 +428,26 @@ public class YouTubeFragment extends Fragment
 
       holder.image.setAnimation(null);
 
-      int defaultImageResID = 0; // looks better black or try this: R.drawable.loading_thumbnail;
+      int defaultImageResID = 0;
+
       UrlImageViewHelper.setUrlDrawable(holder.image, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), defaultImageResID, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+          float imageAlpha = .6f;
           if (!loadedFromCache) {
 //            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
-            AlphaAnimation scale = new AlphaAnimation(0, 1);
-            scale.setDuration(300);
 //            scale.setInterpolator(new OvershootInterpolator());
-            imageView.startAnimation(scale);
+//            scale.setDuration(400);
+//            imageView.startAnimation(scale);
+
+            AlphaAnimation alpha = new AlphaAnimation(0, imageAlpha);
+            alpha.setFillAfter(true);
+            alpha.setDuration(200);
+            imageView.startAnimation(alpha);
           }
+          else
+            imageView.setAlpha(imageAlpha);
         }
 
       });
@@ -474,11 +482,11 @@ public class YouTubeFragment extends Fragment
       }
 
       if (holder.gradientOverlay != null) {
-        if ((position % 2) == 0) {
-          holder.gradientOverlay.setBackgroundResource(R.drawable.blue_gradient);
-        } else {
-          holder.gradientOverlay.setBackgroundResource(R.drawable.black_gradient);
-        }
+//        if ((position % 2) == 0) {
+//          holder.gradientOverlay.setBackgroundResource(R.drawable.blue_gradient);
+//        } else {
+//          holder.gradientOverlay.setBackgroundResource(R.drawable.black_gradient);
+//        }
       }
 
       // load more data if at the end

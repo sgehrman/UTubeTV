@@ -2,17 +2,22 @@
  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#000"
 
     android:descendantFocusability="blocksDescendants">
 
-    <ImageView
-        android:scaleType="centerCrop"
+    <com.makeramen.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/image"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:clickable="false"
-        />
 
+        app:corner_radius="10dip"
+        app:border_width="1dip"
+        app:border_color="#f00"
+        app:round_background="true" />
 
     <View
         android:layout_width="match_parent"
