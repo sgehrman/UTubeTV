@@ -1,16 +1,17 @@
 <com.sickboots.sickvideos.AnimatedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              android:background="@color/content_background"
+                android:background="@color/content_background"
 
-                                              android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:columnWidth="220dp"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
         android:numColumns="auto_fit"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
