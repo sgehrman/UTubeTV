@@ -188,9 +188,11 @@ public class YouTubeFragment extends Fragment
   public void handleClick(Map itemMap, boolean clickedIcon) {
     String videoId = (String) itemMap.get("video");
 
-    VideoPlayerFragment videoFragment =
-        (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+    VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
     videoFragment.setVideoId(videoId);
+
+    // set the activity's title to the videos title
+    getActivity().getActionBar().setTitle((String) itemMap.get("title"));
 
     // The videoBox is INVISIBLE if no video was previously selected, so we need to show it now.
     if (videoBox.getVisibility() != View.VISIBLE) {
@@ -271,6 +273,10 @@ public class YouTubeFragment extends Fragment
     if (videoBox.getVisibility() == View.VISIBLE) {
       // pause immediately on click for better UX
       videoFragment().pause();
+
+      // set the activity's title back ##### TEMPORARY FIX HEREEEEE  #######
+      getActivity().getActionBar().setTitle("Favorites");
+
 
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())

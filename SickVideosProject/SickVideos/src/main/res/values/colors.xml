@@ -2,4 +2,5 @@
 <resources>
     <color name="action_bar">#ffff4200</color>
     <color name="content_background">#ffff4200</color>
+    <color name="content_background_alpha">#ddff4200</color>
 </resources>
