@@ -51,11 +51,11 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
     getActionBar().setHomeButtonEnabled(true);
 
     // set custom color
-    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
-    if (customColor != null) {
-      int color = Integer.parseInt(customColor);
-      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
-    }
+//    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
+//    if (customColor != null) {
+//      int color = Integer.parseInt(customColor);
+//      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
+//    }
 
     // ActionBarDrawerToggle ties together the the proper interactions
     // between the sliding drawer and the action bar app icon

@@ -1,16 +1,16 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-
+        <item name="android:windowBackground">@color/content_background</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar"
-           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">#333</item>
+           parent="android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@color/action_bar</item>
     </style>
 
     <style name="VideoTextTitle">
