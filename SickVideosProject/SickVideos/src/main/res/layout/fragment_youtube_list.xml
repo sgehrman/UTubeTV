@@ -2,18 +2,18 @@
                                               android:background="@color/content_background"
 
                                               android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                                              android:layout_height="match_parent">
 
     <ListView
-              android:id="@+id/listview"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="#eee"
-              android:fastScrollEnabled="true"
-              android:drawSelectorOnTop="true"
-              android:divider="#4000"
-              android:dividerHeight="1dp"
-              android:gravity="center"
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#eee"
+        android:fastScrollEnabled="true"
+        android:drawSelectorOnTop="true"
+        android:divider="#4000"
+        android:dividerHeight="1dp"
+        android:gravity="center"
         />
 
     <include layout="@layout/slide_in_player"/>

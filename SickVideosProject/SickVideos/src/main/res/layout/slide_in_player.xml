@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/slide_in_player_box"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:id="@+id/slide_in_player_box"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <FrameLayout
         android:paddingTop="8dp"
@@ -12,60 +12,59 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:background="@color/content_background_alpha"
+        android:background="@drawable/toolbar_gradient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:layout_margin="12px"
-        android:id="@+id/close_button"
-        android:background="@null"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/btn_dialog"/>
-
-        <ImageButton
-            android:id="@+id/mute_button"
-            android:background="@null"
-            android:layout_margin="12px"
-
+        <RelativeLayout
+            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/close_button"
-            android:src="@android:drawable/ic_btn_speak_now"/>
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/full_screen_button"
-            android:layout_width="wrap_content"
-            android:background="@null"
-            android:layout_margin="12px"
+            <ImageButton
+                android:layout_margin="12px"
+                android:id="@+id/close_button"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_dialog"/>
 
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/mute_button"
-            android:src="@android:drawable/ic_dialog_dialer"/>
+            <ImageButton
+                android:id="@+id/mute_button"
+                android:background="@null"
+                android:layout_margin="12px"
 
-        <ImageButton
-            android:id="@+id/skip_ahead_button"
-            android:layout_width="wrap_content"
-            android:background="@null"
-            android:layout_margin="12px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/close_button"
+                android:src="@android:drawable/ic_btn_speak_now"/>
 
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/full_screen_button"
-            android:src="@android:drawable/ic_media_next"/>
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/full_screen_button"
+                android:layout_width="wrap_content"
+                android:background="@null"
+                android:layout_margin="12px"
+
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/mute_button"
+                android:src="@android:drawable/ic_dialog_dialer"/>
+
+            <ImageButton
+                android:id="@+id/skip_ahead_button"
+                android:layout_width="wrap_content"
+                android:background="@null"
+                android:layout_margin="12px"
+
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/full_screen_button"
+                android:src="@android:drawable/ic_media_next"/>
+        </RelativeLayout>
     </FrameLayout>
 
     <FrameLayout
         android:background="@drawable/dark_top_shadow"
         android:layout_width="match_parent"
         android:layout_height="40dp"/>
-
 
 
 </LinearLayout>

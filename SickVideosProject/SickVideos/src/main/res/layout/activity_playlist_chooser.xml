@@ -1,4 +1,3 @@
-
 <!-- As the main content view, the view below consumes the entire
      space available using match_parent in both dimensions. -->
 <RelativeLayout
@@ -6,12 +5,12 @@
 
     android:id="@+id/content_frame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <FrameLayout
-             android:id="@+id/fragment_container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
 

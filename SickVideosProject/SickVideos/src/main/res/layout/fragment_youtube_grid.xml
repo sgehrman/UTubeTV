@@ -1,8 +1,8 @@
 <com.sickboots.sickvideos.AnimatedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@color/content_background"
+                                              android:background="@color/content_background"
 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent">
 
     <GridView
         android:id="@+id/gridview"
