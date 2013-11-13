@@ -29,8 +29,11 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     SaturationBar saturationBar = (SaturationBar) rootView.findViewById(R.id.saturationbar);
     ValueBar valueBar = (ValueBar) rootView.findViewById(R.id.valuebar);
 
-    picker.addSVBar(svBar);
-    picker.addOpacityBar(opacityBar);
+//  picker.addSVBar(svBar);
+//  picker.addOpacityBar(opacityBar);
+    svBar.setVisibility(View.GONE);  // hide it, not used
+    opacityBar.setVisibility(View.GONE);  // hide it, not used
+
     picker.addSaturationBar(saturationBar);
     picker.addValueBar(valueBar);
 
@@ -49,7 +52,10 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     bar.setBackgroundDrawable(new ColorDrawable(i));
 
     // this here to trigger a refresh only
-    bar.setTitle("Choose Color");
+    bar.setTitle(bar.getTitle());
+
+    // log it in a format xml can use
+    Util.log("color: #" + Integer.toHexString(i));
 
     // save the preference
     ApplicationHub.instance().setPref(ApplicationHub.ACTION_BAR_COLOR, Integer.toString(i));
