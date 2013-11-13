@@ -6,18 +6,13 @@
 
     android:descendantFocusability="blocksDescendants">
 
-    <com.makeramen.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:id="@+id/image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:clickable="false"
-
-        app:corner_radius="10dip"
-        app:border_width="1dip"
-        app:border_color="#f00"
-        app:round_background="true" />
+        />
 
     <View
         android:layout_width="match_parent"
