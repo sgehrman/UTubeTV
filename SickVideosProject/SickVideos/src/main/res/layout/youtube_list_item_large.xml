@@ -16,11 +16,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="40dp"
         android:id="@+id/gradient_overlay"
-        android:background="@drawable/white_frame"
+        android:background="@drawable/dark_bottom_shadow"
 
-        android:layout_alignTop="@+id/image"
+        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/image"
         />
 
