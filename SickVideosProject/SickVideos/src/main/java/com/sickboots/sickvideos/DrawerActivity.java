@@ -3,8 +3,10 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -47,6 +49,13 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
+
+    // set custom color
+    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
+    if (customColor != null) {
+      int color = Integer.parseInt(customColor);
+      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
+    }
 
     // ActionBarDrawerToggle ties together the the proper interactions
     // between the sliding drawer and the action bar app icon
@@ -183,7 +192,7 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
   }
 
   private void selectItem(int position, boolean animate) {
-    YouTubeFragment fragment = null;
+    Fragment fragment = null;
 
     switch (position) {
       case 0:
@@ -199,7 +208,8 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
         fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
         break;
       case 4:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
+        fragment = new ColorPickerFragment();
+//        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
         break;
     }
 

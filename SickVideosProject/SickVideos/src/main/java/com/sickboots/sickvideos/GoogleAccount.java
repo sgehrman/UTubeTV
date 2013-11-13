@@ -71,7 +71,7 @@ public class GoogleAccount {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
 
     // ### hits main thread with read to disk, fix this later.
-    String accountName = ApplicationHub.instance().getPref(ApplicationHub.GOOGLE_ACCOUNT_PREF);
+    String accountName = ApplicationHub.instance().getPref(ApplicationHub.GOOGLE_ACCOUNT_PREF, null);
 
     if (accountName != null) {
       credential.setSelectedAccountName(accountName);

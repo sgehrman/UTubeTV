@@ -44,4 +44,5 @@ dependencies {
     compile 'com.google.api-client:google-api-client-android:1.17.+'
 
     compile 'joda-time:joda-time:2.3'
+    compile 'com.larswerkman:HoloColorPicker:1.1'
 }

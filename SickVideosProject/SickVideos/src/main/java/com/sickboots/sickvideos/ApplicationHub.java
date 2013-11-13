@@ -7,8 +7,11 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
+import static java.util.Arrays.asList;
 
 // Three things this hub does:
 // Notification center
@@ -23,9 +26,13 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private Handler mainThreadHandler;
   private NotificationCenter notificationCenter;
   private boolean mApplicationReady = false;
+  List<String> preferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR);
 
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";
+  public static final String ACTION_BAR_COLOR = "action_bar_color";
+
+  // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
   public static final String BACK_BUTTON_NOTIFICATION = "back_button";
 
@@ -92,10 +99,15 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
       Util.log("Key is not handled by ApplicationHub: " + key);
   }
 
-  public String getPref(String key) {
+  public String getPref(String key, String defaultValue) {
     preflight(key);
 
-    return (String) prefs.get(key);
+    String result = (String) prefs.get(key);
+
+    if (result == null)
+      result = defaultValue;
+
+    return result;
   }
 
   public void setPref(String key, String value) {
@@ -108,10 +120,8 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private void loadPrefsCache(final Runnable callbackRunnable) {
     Thread thread1 = new Thread() {
       public void run() {
-        // GOOGLE_ACCOUNT
-        String account = sharedPreferences.getString(GOOGLE_ACCOUNT_PREF, null);
-        if (account != null)
-          prefs.put(GOOGLE_ACCOUNT_PREF, account);
+        for (String key: preferenceKeys)
+          prefs.put(key, sharedPreferences.getString(key, null));
 
         // signal that thread is done so we can initialize the rest of the app
         runOnMainThread(callbackRunnable);
@@ -123,17 +133,14 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private void savePrefsCache() {
     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-    String value = (String) prefs.get(GOOGLE_ACCOUNT_PREF);
-    editor.putString(GOOGLE_ACCOUNT_PREF, value);
+    for (String key: preferenceKeys)
+      editor.putString(key, (String) prefs.get(key));
 
     editor.apply();  // this call writes to disk async
   }
 
   private boolean cachingPrefKey(String key) {
-    if (key.equals(GOOGLE_ACCOUNT_PREF))
-      return true;
-
-    return false;
+    return preferenceKeys.contains(key);
   }
 
   // SharedPreferences.OnSharedPreferenceChangeListener
