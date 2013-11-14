@@ -2,12 +2,13 @@
 <resources>
 
     <color name="action_bar">#ff202020</color>
-    <color name="content_background">@android:color/holo_blue_dark</color>
+    <color name="content_background">#C0362C</color>
 
 
     <!--other colors I'm saving for possible future usage -->
     <color name="engineering_orange">#BA160C</color>
     <color name="aerospace_orange">#FF4F00</color>
     <color name="ggbridge_orange">#C0362C</color>
+    <color name="holo_blue">@android:color/holo_blue_dark</color>
 
 </resources>
