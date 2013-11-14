@@ -2,8 +2,8 @@
 <resources>
 
     <color name="action_bar">#ff202020</color>
-    <color name="content_background">#ffC0362C</color>
-    <color name="content_background_light">#99C0362C</color>
+    <color name="content_background">@android:color/holo_blue_dark</color>
+
 
     <!--other colors I'm saving for possible future usage -->
     <color name="engineering_orange">#BA160C</color>
