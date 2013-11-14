@@ -120,7 +120,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private void loadPrefsCache(final Runnable callbackRunnable) {
     Thread thread1 = new Thread() {
       public void run() {
-        for (String key: preferenceKeys)
+        for (String key : preferenceKeys)
           prefs.put(key, sharedPreferences.getString(key, null));
 
         // signal that thread is done so we can initialize the rest of the app
@@ -133,7 +133,7 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private void savePrefsCache() {
     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-    for (String key: preferenceKeys)
+    for (String key : preferenceKeys)
       editor.putString(key, (String) prefs.get(key));
 
     editor.apply();  // this call writes to disk async

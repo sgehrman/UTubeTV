@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -48,8 +51,20 @@ public class YouTubeFragment extends Fragment
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
+
+  private View mBackgroundDimmer;
   private Animation mInAnimation = null;
   private Animation mOutAnimation = null;
+  private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+  private final Runnable mBackgroundDimmerFadeRunnable = new Runnable() {
+    @Override
+    public void run() {
+      if (mOutAnimation != null) {
+        mBackgroundDimmer.startAnimation(mOutAnimation);
+      }
+    }
+  };
 
   // video player
   private View videoBox;
@@ -170,7 +185,8 @@ public class YouTubeFragment extends Fragment
     onResults();
     setActionBarTitle();
 
-    setupScrollAnimations();
+    mBackgroundDimmer = rootView.findViewById();
+    setupScrollAnimations(listOrGridView);
 
     return rootView;
   }
@@ -215,87 +231,58 @@ public class YouTubeFragment extends Fragment
     }
   }
 
+  private void setupScrollAnimations(AbsListView absListView) {
+    final int scrollBarPanelFadeDuration = ViewConfiguration.getScrollBarFadeDuration();
 
+    mOutAnimation = new AlphaAnimation(0, 1);
+    mOutAnimation.setFillAfter(true);
+    mOutAnimation.setDuration(scrollBarPanelFadeDuration);
 
-
-
-
-
-
-
-
-  
-
-  private void setupScrollAnimations() {
-
+    mInAnimation = new AlphaAnimation(1, 0);
+    mInAnimation.setFillAfter(true);
+    mInAnimation.setDuration(scrollBarPanelFadeDuration);
 
     // listen for scroll, animate glow effect
-//    AbsListView.OnScrollListener listener = new AbsListView.OnScrollListener() {
-//      @Override
-//      public void onScrollStateChanged(AbsListView view, int scrollState) {
-//        private Animation mInAnimation = null;
-//        private Animation mOutAnimation = null
-//
-//        final int scrollBarPanelFadeDuration = ViewConfiguration.getScrollBarFadeDuration();
-//
-//
-//        mOutAnimation = AnimationUtils.loadAnimation(getContext(), scrollBarPanelOutAnimation);
-//        mOutAnimation.setDuration(scrollBarPanelFadeDuration);
-//
-//
-//        mInAnimation = AnimationUtils.loadAnimation(getActivity(), scrollBarPanelInAnimation);
-//
-//        mScrollBarPanel.startAnimation(mInAnimation);
-//
-//
-//        mOutAnimation = AnimationUtils.loadAnimation(getContext(), scrollBarPanelOutAnimation);
-//        mOutAnimation.setDuration(scrollBarPanelFadeDuration);
-//
-//        mOutAnimation.setAnimationListener(new AnimationListener() {
-//
-//          @Override
-//          public void onAnimationStart(Animation animation) {
-//          }
-//
-//          @Override
-//          public void onAnimationRepeat(Animation animation) {
-//
-//          }
-//
-//          @Override
-//          public void onAnimationEnd(Animation animation) {
-//            if (mScrollBarPanel != null) {
-//              mScrollBarPanel.setVisibility(View.GONE);
-//            }
-//          }
-//        });
-//
-//
-//
-//
-//      }
-//
-//      @Override
-//      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-//                           int totalItemCount) {
-//
-//      }
-//
-//    };
+    AbsListView.OnScrollListener listener = new AbsListView.OnScrollListener() {
 
+      @Override
+      public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+        String res = "unknown: " + scrollState;
+        switch (scrollState) {
+          case SCROLL_STATE_IDLE:
+            res = "idle";
+
+            mHandler.removeCallbacks(mBackgroundDimmerFadeRunnable);
+            mHandler.postAtTime(mBackgroundDimmerFadeRunnable, AnimationUtils.currentAnimationTimeMillis());
+
+            break;
+          case SCROLL_STATE_TOUCH_SCROLL:
+            res = "touch";
+            mBackgroundDimmer.startAnimation(mInAnimation);
+
+            break;
+          case SCROLL_STATE_FLING:
+            res = "fling";
+            break;
+          default:
+            break;
+
+        }
+        Util.log("onScrollStateChanged: " + res);
+      }
+
+      @Override
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+                           int totalItemCount) {
+        Util.log("onScroll first: " + firstVisibleItem + " visibleItemCount: " + visibleItemCount);
+
+      }
+
+    };
+
+    absListView.setOnScrollListener(listener);
   }
-
-
-
-
-
-
-
-
-
-
-
 
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // Don't add the fragment if restoring, it's already set up
@@ -539,8 +526,7 @@ public class YouTubeFragment extends Fragment
             alpha.setFillAfter(true);
             alpha.setDuration(200);
             imageView.startAnimation(alpha);
-          }
-          else
+          } else
             imageView.setAlpha(imageAlpha);
         }
 
