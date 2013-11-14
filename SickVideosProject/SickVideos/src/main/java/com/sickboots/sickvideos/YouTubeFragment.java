@@ -185,7 +185,7 @@ public class YouTubeFragment extends Fragment
     onResults();
     setActionBarTitle();
 
-    mBackgroundDimmer = rootView.findViewById();
+    mBackgroundDimmer = rootView.findViewById(R.id.dimmer);
     setupScrollAnimations(listOrGridView);
 
     return rootView;
@@ -237,10 +237,12 @@ public class YouTubeFragment extends Fragment
     mOutAnimation = new AlphaAnimation(0, 1);
     mOutAnimation.setFillAfter(true);
     mOutAnimation.setDuration(scrollBarPanelFadeDuration);
+    mOutAnimation.setZAdjustment(Animation.ZORDER_BOTTOM);
 
     mInAnimation = new AlphaAnimation(1, 0);
     mInAnimation.setFillAfter(true);
     mInAnimation.setDuration(scrollBarPanelFadeDuration);
+    mInAnimation.setZAdjustment(Animation.ZORDER_BOTTOM);
 
     // listen for scroll, animate glow effect
     AbsListView.OnScrollListener listener = new AbsListView.OnScrollListener() {

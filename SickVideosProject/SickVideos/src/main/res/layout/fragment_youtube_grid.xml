@@ -4,21 +4,32 @@
                                               android:layout_width="match_parent"
                                               android:layout_height="match_parent">
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:columnWidth="220dp"
-        android:horizontalSpacing="4dp"
-        android:verticalSpacing="4dp"
-        android:numColumns="auto_fit"
-        android:fastScrollEnabled="true"
-        android:drawSelectorOnTop="true"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        />
+
+        <FrameLayout
+            android:background="#400"
+            android:id="@+id/dimmer"
+            android:alpha="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:columnWidth="220dp"
+            android:horizontalSpacing="4dp"
+            android:verticalSpacing="4dp"
+            android:numColumns="auto_fit"
+            android:fastScrollEnabled="true"
+            android:drawSelectorOnTop="true"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            />
+
 
     <include layout="@layout/slide_in_player"/>
 
