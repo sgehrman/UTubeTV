@@ -16,53 +16,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:id="@+id/close_button"
-                android:background="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:layout_margin="12dp"
+
+                android:background="@null"
                 android:src="@android:drawable/btn_dialog"/>
 
             <ImageButton
                 android:id="@+id/mute_button"
-                android:background="@null"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/close_button"
+
+                android:layout_margin="12dp"
+
+                android:background="@null"
                 android:src="@android:drawable/ic_btn_speak_now"/>
 
             <ImageButton
                 android:id="@+id/full_screen_button"
                 android:layout_width="wrap_content"
-                android:background="@null"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/mute_button"
+
+                android:layout_margin="12dp"
+
+                android:background="@null"
                 android:src="@android:drawable/ic_dialog_dialer"/>
 
             <ImageButton
                 android:id="@+id/skip_ahead_button"
                 android:layout_width="wrap_content"
-                android:background="@null"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/full_screen_button"
+
+                android:layout_margin="12dp"
+
+                android:background="@null"
                 android:src="@android:drawable/ic_media_next"/>
-        </RelativeLayout>
+        </LinearLayout>
     </FrameLayout>
 
     <FrameLayout
