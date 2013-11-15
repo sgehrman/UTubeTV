@@ -428,10 +428,22 @@ public class YouTubeFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-      ViewHolder holder = (ViewHolder) v.getTag();
+      final ViewHolder holder = (ViewHolder) v.getTag();
 
       if (holder != null) {
-        holder.image.animate().alpha(0).scaleX(.5f).scaleY(.5f);
+        holder.image.animate().alpha(0).setDuration(500).scaleX(.5f).scaleY(.5f).withEndAction(new Runnable() {
+          public void run() {
+
+            holder.image.setScaleX(1.0f);
+            holder.image.setScaleY(1.0f);
+
+            holder.image.animate().setDuration(500).alpha(1).withEndAction(new Runnable() {
+              public void run() {
+                Util.log("OK, now what?");
+              }
+            });
+          }
+        });
 
         Map map = getItem(position);
         handleClick(map);
@@ -458,7 +470,7 @@ public class YouTubeFragment extends Fragment
       else {
         holder = (ViewHolder) convertView.getTag();
 
-        // reset some stuff that might have been set on an existing view
+        // reset some stuff that might have been set on an animation (not sure if this is needed)
         holder.image.setAlpha(1.0f);
         holder.image.setScaleX(1.0f);
         holder.image.setScaleY(1.0f);
@@ -476,15 +488,9 @@ public class YouTubeFragment extends Fragment
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           float imageAlpha = .6f;
           if (!loadedFromCache) {
-//            ScaleAnimation scale = new ScaleAnimation(.6f, 1, .6f, 1, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
-//            scale.setInterpolator(new OvershootInterpolator());
-//            scale.setDuration(400);
-//            imageView.startAnimation(scale);
 
-            AlphaAnimation alpha = new AlphaAnimation(0, imageAlpha);
-            alpha.setFillAfter(true);
-            alpha.setDuration(200);
-            imageView.startAnimation(alpha);
+            imageView.setAlpha(0.0f);
+            imageView.animate().setDuration(1000).alpha(imageAlpha);
           } else
             imageView.setAlpha(imageAlpha);
         }
