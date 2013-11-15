@@ -10,8 +10,9 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mAutorepeat = false;
-  private YouTubePlayer player;
-  private String videoId;
+  private YouTubePlayer mPlayer;
+  private String mVideoId;
+  private String mTitle;
   private boolean mMuteState = false;
   private boolean mMutedForAd = false;
 
@@ -26,7 +27,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     initialize(YouTubeAPI.devKey(), new YouTubePlayer.OnInitializedListener() {
       @Override
       public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
-        VideoPlayerFragment.this.player = player;
+        VideoPlayerFragment.this.mPlayer = player;
         player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
 
         player.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
@@ -34,40 +35,47 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         setupFullscreenListener();
         setupStateChangeListener();
 
-        if (!restored && videoId != null) {
-          player.loadVideo(videoId);
+        if (!restored && mVideoId != null) {
+          player.loadVideo(mVideoId);
         }
       }
 
       @Override
       public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult result) {
-        VideoPlayerFragment.this.player = null;
+        VideoPlayerFragment.this.mPlayer = null;
       }
     });
   }
 
   @Override
   public void onDestroy() {
-    if (player != null) {
-      player.release();
-      player = null;
+    if (mPlayer != null) {
+      mPlayer.release();
+      mPlayer = null;
     }
 
     super.onDestroy();
   }
 
-  public void setVideoId(String videoId) {
-    if (videoId != null && !videoId.equals(this.videoId)) {
-      this.videoId = videoId;
-      if (player != null) {
-        player.loadVideo(videoId);
+  public String getTitle() {
+    return mTitle;
+  }
+
+  public void setVideo(String videoId, String title) {
+    if (videoId != null && !videoId.equals(mVideoId)) {
+
+      mVideoId = videoId;
+      mTitle = title;
+
+      if (mPlayer != null) {
+        mPlayer.loadVideo(mVideoId);
       }
     }
   }
 
   public void pause() {
-    if (player != null) {
-      player.pause();
+    if (mPlayer != null) {
+      mPlayer.pause();
     }
   }
 
@@ -84,13 +92,13 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   public void setFullscreen(boolean state) {
-    if (player != null) {
-      player.setFullscreen(state);
+    if (mPlayer != null) {
+      mPlayer.setFullscreen(state);
     }
   }
 
   public boolean fullScreen() {
-    if (player != null) {
+    if (mPlayer != null) {
       return false;  // SNG needs fix
     }
 
@@ -98,16 +106,16 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   public void seekRelativeSeconds(int seconds) {
-    if (player != null) {
-      player.seekRelativeMillis(seconds * 1000);
+    if (mPlayer != null) {
+      mPlayer.seekRelativeMillis(seconds * 1000);
     }
   }
 
   private void setupFullscreenListener() {
-    if (player == null)
+    if (mPlayer == null)
       return;
 
-    player.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+    mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
 //    this.isFullscreen = isFullscreen;
 //
@@ -118,10 +126,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   private void setupStateChangeListener() {
-    if (player == null)
+    if (mPlayer == null)
       return;
 
-    player.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+    mPlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
       @Override
       public void onLoading() {
 
@@ -151,7 +159,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onVideoEnded() {
         if (mAutorepeat)
-          player.play();  // back to the start
+          mPlayer.play();  // back to the start
       }
 
       @Override

@@ -105,6 +105,12 @@ public class YouTubeFragment extends Fragment
       if (mList != null)
         title = mList.name();
 
+      // if video player is up, show the video title
+      if (videoPlayerIsVisible()) {
+        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
+        title = videoFragment.getTitle();
+      }
+
       if (title != null)
         actionBar.setTitle(title);
     }
@@ -196,15 +202,13 @@ public class YouTubeFragment extends Fragment
 
   public void handleClick(Map itemMap, boolean clickedIcon) {
     String videoId = (String) itemMap.get("video");
+    String title = (String) itemMap.get("title");
 
     VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-    videoFragment.setVideoId(videoId);
-
-    // set the activity's title to the videos title
-    getActivity().getActionBar().setTitle((String) itemMap.get("title"));
+    videoFragment.setVideo(videoId, title);
 
     // The videoBox is INVISIBLE if no video was previously selected, so we need to show it now.
-    if (videoBox.getVisibility() != View.VISIBLE) {
+    if (!videoPlayerIsVisible()) {
       if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
         // Initially translate off the screen so that it can be animated in from below.
         videoBox.setTranslationY(-videoBox.getHeight());
@@ -216,6 +220,10 @@ public class YouTubeFragment extends Fragment
     if (videoBox.getTranslationY() < 0) {
       videoBox.animate().translationY(0).setDuration(300);
     }
+  }
+
+  private boolean videoPlayerIsVisible() {
+    return (videoBox.getVisibility() == View.VISIBLE);
   }
 
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
@@ -279,13 +287,9 @@ public class YouTubeFragment extends Fragment
   }
 
   private void closeVideoPlayer() {
-    if (videoBox.getVisibility() == View.VISIBLE) {
+    if (videoPlayerIsVisible()) {
       // pause immediately on click for better UX
       videoFragment().pause();
-
-      // set the activity's title back ##### TEMPORARY FIX HEREEEEE  #######
-      getActivity().getActionBar().setTitle("Favorites");
-
 
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
@@ -294,6 +298,9 @@ public class YouTubeFragment extends Fragment
             @Override
             public void run() {
               videoBox.setVisibility(View.INVISIBLE);
+
+              // set the activity's title back
+              setActionBarTitle();
             }
           });
     }
