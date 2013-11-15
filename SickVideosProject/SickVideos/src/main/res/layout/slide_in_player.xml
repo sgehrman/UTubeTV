@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <FrameLayout
-        android:paddingTop="8dp"
+        android:paddingTop="0dp"
         android:background="#000"
         android:id="@+id/video_fragment_container"
         android:layout_width="match_parent"

@@ -430,7 +430,7 @@ public class YouTubeFragment extends Fragment
       ViewHolder holder = (ViewHolder) v.getTag();
 
       if (holder != null) {
-        ScaleAnimation scale = new ScaleAnimation(1, .9f, 1, .9f, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+        ScaleAnimation scale = new ScaleAnimation(1.2f, 1.0f, 1.2f, 1.0f, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
         scale.setInterpolator(new AccelerateDecelerateInterpolator());
         scale.setRepeatCount(1);
         scale.setRepeatMode(Animation.REVERSE);
