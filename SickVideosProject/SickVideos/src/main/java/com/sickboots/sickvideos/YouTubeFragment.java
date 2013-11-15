@@ -431,9 +431,7 @@ public class YouTubeFragment extends Fragment
       ViewHolder holder = (ViewHolder) v.getTag();
 
       if (holder != null) {
-        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.item_click);
-        // holder.image.startAnimation(scale);
-        v.startAnimation(animation);
+        holder.image.animate().alpha(0).scaleX(.5f).scaleY(.5f);
 
         Map map = getItem(position);
         handleClick(map);
@@ -444,10 +442,12 @@ public class YouTubeFragment extends Fragment
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+      ViewHolder holder = null;
+
       if (convertView == null) {
         convertView = inflater.inflate(itemResourceID(), null);
 
-        ViewHolder holder = new ViewHolder();
+        holder = new ViewHolder();
         holder.image = (ImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
@@ -455,8 +455,14 @@ public class YouTubeFragment extends Fragment
         holder.gradientOverlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
       }
+      else {
+        holder = (ViewHolder) convertView.getTag();
 
-      ViewHolder holder = (ViewHolder) convertView.getTag();
+        // reset some stuff that might have been set on an existing view
+        holder.image.setAlpha(1.0f);
+        holder.image.setScaleX(1.0f);
+        holder.image.setScaleY(1.0f);
+      }
 
       Map itemMap = getItem(position);
 
