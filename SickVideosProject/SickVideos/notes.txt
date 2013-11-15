@@ -1,0 +1,57 @@
+  public static final String TEST_MOVIE_ID = "Il1IGKaol_M";  // XuBdf9jYj7o
+  public static final String TEST_PLAYLIST_ID = "FLCXAzufqBhwf_ib6xLv7gMw";
+  public static final String DEV_PLAYLIST_ID = "PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju";
+
+channel id = UCtVd0c0tGXuTSbU5d8cSBUg
+
+App goals:
+
+1) Simply watch a playlist of movies.
+2) Mark which have been watched.
+3) Remember where paused or stopped and resume next time
+4) Display Full Title and credits below in a nice way
+5) Should feel easy to watch a bit, relaunch and it takes you exactly back
+6) Channel management (playlists)
+7) Send playlists to friends.  Email or SMS or tap etc.
+8) Educational playlists
+2) ability to repeat vids
+9) record favorite moments (bookmarks) in video with single click, remember list of points to be rewatched later
+10) What youtube should be, but simplified for watching only.  No comments or sharing etc, just watching experience
+11) Killer features
+    1) always restores where you were last time you watched
+    2) speed, cached lists
+    3) share with friends
+12) Get lists of playlists from youtube by users
+13) Auto import your own youtube playlist
+14) stationary header, page numbers and floating overlay showing when scrolling
+
+console play
+
+https://developers.google.com/youtube/v3/docs/activities/list
+channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
+part id: "snippet"
+fields: items(snippet/title, snippet/thumbnails/high/url), nextPageToken, pageInfo
+
+https://developers.google.com/youtube/v3/docs/subscriptions/list
+channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
+items/snippet/title
+
+
+Joe Rogan,
+NeuroSoup,
+Terrance McKenna
+Khan Academy
+Cosmos
+Neil DeGrasse
+AstroPsyics
+Derby
+Vice
+Big Think
+Android Developers
+UFO Videos
+James Burke Connections
+SF Travel
+Skateboard Tricks
+Fractals
+Doremon
+
