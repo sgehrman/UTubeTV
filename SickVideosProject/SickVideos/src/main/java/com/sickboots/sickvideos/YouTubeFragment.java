@@ -14,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -155,15 +158,7 @@ public class YouTubeFragment extends Fragment
     mAdapter = new MyAdapter();
 
     listOrGridView.setAdapter(mAdapter);
-    listOrGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Map map = mAdapter.getItem(position);
-
-//        mList.handleClick(map, false);
-        handleClick(map, false);
-
-      }
-    });
+    listOrGridView.setOnItemClickListener(mAdapter);
 
     // .015 is the default
     listOrGridView.setFriction(0.01f);
@@ -200,7 +195,7 @@ public class YouTubeFragment extends Fragment
     ApplicationHub.instance().deleteObserver(this);
   }
 
-  public void handleClick(Map itemMap, boolean clickedIcon) {
+  public void handleClick(Map itemMap) {
     String videoId = (String) itemMap.get("video");
     String title = (String) itemMap.get("title");
 
@@ -421,13 +416,33 @@ public class YouTubeFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class MyAdapter extends ArrayAdapter<Map> {
+  private class MyAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener {
     private final LayoutInflater inflater;
 
     public MyAdapter() {
       super(getActivity(), 0);
 
       inflater = LayoutInflater.from(getActivity());
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+      ViewHolder holder = (ViewHolder) v.getTag();
+
+      if (holder != null) {
+        ScaleAnimation scale = new ScaleAnimation(1, .9f, 1, .9f, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
+        scale.setInterpolator(new AccelerateDecelerateInterpolator());
+        scale.setRepeatCount(1);
+        scale.setRepeatMode(Animation.REVERSE);
+        scale.setDuration(20);
+        // holder.image.startAnimation(scale);
+        v.startAnimation(scale);
+
+        Map map = getItem(position);
+        handleClick(map);
+      } else {
+        Util.log("no holder on click?");
+      }
     }
 
     @Override

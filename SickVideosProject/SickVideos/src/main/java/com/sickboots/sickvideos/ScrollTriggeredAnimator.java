@@ -34,7 +34,7 @@ public class ScrollTriggeredAnimator {
   }
 
   private void createAnimations() {
-     int scrollBarPanelFadeDuration = ViewConfiguration.getScrollBarFadeDuration();
+     int scrollBarPanelFadeDuration = 500; // ViewConfiguration.getScrollBarFadeDuration();
 
     mOutAnimation = new AlphaAnimation(0, 1);
     mOutAnimation.setFillAfter(true);
