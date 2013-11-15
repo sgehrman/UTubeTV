@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -430,13 +431,9 @@ public class YouTubeFragment extends Fragment
       ViewHolder holder = (ViewHolder) v.getTag();
 
       if (holder != null) {
-        ScaleAnimation scale = new ScaleAnimation(1.2f, 1.0f, 1.2f, 1.0f, ScaleAnimation.RELATIVE_TO_SELF, .5f, ScaleAnimation.RELATIVE_TO_SELF, .5f);
-        scale.setInterpolator(new AccelerateDecelerateInterpolator());
-        scale.setRepeatCount(1);
-        scale.setRepeatMode(Animation.REVERSE);
-        scale.setDuration(20);
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.item_click);
         // holder.image.startAnimation(scale);
-        v.startAnimation(scale);
+        v.startAnimation(animation);
 
         Map map = getItem(position);
         handleClick(map);
