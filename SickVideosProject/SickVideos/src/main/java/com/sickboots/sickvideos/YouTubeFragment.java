@@ -495,8 +495,8 @@ public class YouTubeFragment extends Fragment
           float imageAlpha = .6f;
           if (!loadedFromCache) {
 
-            imageView.setAlpha(0.0f);
-            imageView.animate().setDuration(1000).alpha(imageAlpha);
+            imageView.setAlpha(0.15f);
+            imageView.animate().setDuration(600).alpha(imageAlpha);
           } else
             imageView.setAlpha(imageAlpha);
         }
