@@ -16,6 +16,8 @@
 
         <GridView
             android:id="@+id/gridview"
+            android:cacheColorHint="#000"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="5dp"
