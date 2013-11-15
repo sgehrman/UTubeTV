@@ -426,24 +426,30 @@ public class YouTubeFragment extends Fragment
       inflater = LayoutInflater.from(getActivity());
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-      final ViewHolder holder = (ViewHolder) v.getTag();
-
-      if (holder != null) {
-        holder.image.animate().alpha(0).setDuration(500).scaleX(.5f).scaleY(.5f).withEndAction(new Runnable() {
+    private void animateViewForClick(final View theView) {
+      if (theView != null) {
+        theView.animate().alpha(0).setDuration(500).scaleX(.5f).scaleY(.5f).withEndAction(new Runnable() {
           public void run() {
 
-            holder.image.setScaleX(1.0f);
-            holder.image.setScaleY(1.0f);
+            theView.setScaleX(1.0f);
+            theView.setScaleY(1.0f);
 
-            holder.image.animate().setDuration(500).alpha(1).withEndAction(new Runnable() {
+            theView.animate().setDuration(500).alpha(1).withEndAction(new Runnable() {
               public void run() {
-                Util.log("OK, now what?");
+
               }
             });
           }
         });
+      }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        ViewHolder holder = (ViewHolder) v.getTag();
+
+      if (holder != null) {
+        animateViewForClick(holder.image);
 
         Map map = getItem(position);
         handleClick(map);
