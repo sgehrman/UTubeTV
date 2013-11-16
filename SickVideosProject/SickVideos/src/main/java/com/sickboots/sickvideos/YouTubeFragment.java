@@ -8,21 +8,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.OvershootInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -448,7 +438,6 @@ public class YouTubeFragment extends Fragment
             });
 
 
-
           }
 
         });
@@ -458,7 +447,7 @@ public class YouTubeFragment extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        ViewHolder holder = (ViewHolder) v.getTag();
+      ViewHolder holder = (ViewHolder) v.getTag();
 
       if (holder != null) {
         animateViewForClick(holder.image);
@@ -484,8 +473,7 @@ public class YouTubeFragment extends Fragment
         holder.duration = (TextView) convertView.findViewById(R.id.duration);
         holder.gradientOverlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
-      }
-      else {
+      } else {
         holder = (ViewHolder) convertView.getTag();
 
         // reset some stuff that might have been set on an animation (not sure if this is needed)

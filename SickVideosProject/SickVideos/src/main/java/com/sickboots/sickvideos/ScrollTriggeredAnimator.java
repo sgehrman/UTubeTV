@@ -3,24 +3,21 @@ package com.sickboots.sickvideos;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 
 public class ScrollTriggeredAnimator {
-  private Animation mInAnimation;
-  private Animation mOutAnimation;
+  private int mInDuration;
+  private int mOutDuration;
   private View mAnimationTarget;
-  private boolean mGlowing=false;
+  private boolean mGlowing = false;
   private final Handler mHandler = new Handler(Looper.getMainLooper());
 
   private final Runnable mBackgroundDimmerFadeRunnable = new Runnable() {
     @Override
     public void run() {
-        mGlowing = false;
-        mAnimationTarget.startAnimation(mOutAnimation);
+    mGlowing = false;
+    mAnimationTarget.animate().setDuration(mOutDuration).alpha(1);
     }
   };
 
@@ -34,17 +31,10 @@ public class ScrollTriggeredAnimator {
   }
 
   private void createAnimations() {
-     int scrollBarPanelFadeDuration = 500; // ViewConfiguration.getScrollBarFadeDuration();
+    int scrollBarPanelFadeDuration = 500; // ViewConfiguration.getScrollBarFadeDuration();
 
-    mOutAnimation = new AlphaAnimation(0, 1);
-    mOutAnimation.setFillAfter(true);
-    mOutAnimation.setDuration(scrollBarPanelFadeDuration * 2);
-    mOutAnimation.setZAdjustment(Animation.ZORDER_BOTTOM);
-
-    mInAnimation = new AlphaAnimation(1, 0);
-    mInAnimation.setFillAfter(true);
-    mInAnimation.setDuration(scrollBarPanelFadeDuration / 2);
-    mInAnimation.setZAdjustment(Animation.ZORDER_BOTTOM);
+    mInDuration = scrollBarPanelFadeDuration / 2;
+    mOutDuration = scrollBarPanelFadeDuration * 2;
   }
 
   private AbsListView.OnScrollListener setupListener() {
@@ -67,7 +57,7 @@ public class ScrollTriggeredAnimator {
             // make it glow bright
             if (!mGlowing) {
               mGlowing = true;
-              mAnimationTarget.startAnimation(mInAnimation);
+              mAnimationTarget.animate().setDuration(mInDuration).alpha(0);
             }
 
             break;
