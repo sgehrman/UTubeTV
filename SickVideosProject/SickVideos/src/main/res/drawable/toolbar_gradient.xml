@@ -6,7 +6,7 @@
     </shape>
 </item>
 
-<item android:bottom="1dp">
+<item android:bottom="0dp">
         <shape android:shape="rectangle">
             <gradient
                 android:startColor="@color/holo_blue"

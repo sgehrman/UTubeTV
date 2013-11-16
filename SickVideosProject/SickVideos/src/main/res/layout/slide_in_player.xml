@@ -5,8 +5,8 @@
               android:orientation="vertical">
 
     <FrameLayout
-        android:paddingTop="0dp"
-        android:background="#000"
+        android:paddingTop="4dp"
+        android:background="@color/holo_blue"
         android:id="@+id/video_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
