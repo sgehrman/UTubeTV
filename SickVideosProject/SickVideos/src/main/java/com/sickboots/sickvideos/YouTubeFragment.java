@@ -211,7 +211,7 @@ public class YouTubeFragment extends Fragment
 
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
-      videoBox.animate().translationY(0).setInterpolator(new OvershootInterpolator()).setDuration(300);
+      videoBox.animate().translationY(-Util.dpToPx(45, getActivity())).setInterpolator(new OvershootInterpolator()).setDuration(300);
     }
   }
 

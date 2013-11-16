@@ -5,8 +5,13 @@
               android:orientation="vertical">
 
     <FrameLayout
-        android:paddingTop="4dp"
-        android:background="@color/holo_blue"
+        android:background="#000"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+
+    <FrameLayout
+        android:paddingTop="5dp"
+        android:background="@drawable/toolbar_gradient"
         android:id="@+id/video_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

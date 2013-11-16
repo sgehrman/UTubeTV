@@ -22,8 +22,6 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="Doing stuff..."
-
-            android:textColor="#000"/>
-
+            android:textColor="#fff"/>
     </LinearLayout>
 </FrameLayout>
