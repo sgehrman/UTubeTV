@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -192,6 +193,10 @@ public class YouTubeFragment extends Fragment
     String videoId = (String) itemMap.get("video");
     String title = (String) itemMap.get("title");
 
+    openVideoPlayer(videoId, title);
+  }
+
+  private void openVideoPlayer(String videoId, String title) {
     VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
     videoFragment.setVideo(videoId, title);
 
@@ -206,7 +211,7 @@ public class YouTubeFragment extends Fragment
 
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
-      videoBox.animate().translationY(0).setDuration(300);
+      videoBox.animate().translationY(0).setInterpolator(new OvershootInterpolator()).setDuration(300);
     }
   }
 
@@ -281,6 +286,7 @@ public class YouTubeFragment extends Fragment
 
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
+          .setInterpolator(new AnticipateInterpolator())
           .setDuration(300)
           .withEndAction(new Runnable() {
             @Override
@@ -436,12 +442,9 @@ public class YouTubeFragment extends Fragment
                 });
               }
             });
-
-
           }
 
         });
-
       }
     }
 
