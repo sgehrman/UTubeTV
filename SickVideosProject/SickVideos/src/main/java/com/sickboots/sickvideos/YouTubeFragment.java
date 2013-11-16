@@ -19,6 +19,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
@@ -428,19 +430,29 @@ public class YouTubeFragment extends Fragment
 
     private void animateViewForClick(final View theView) {
       if (theView != null) {
-        theView.animate().alpha(0).setDuration(500).scaleX(.5f).scaleY(.5f).withEndAction(new Runnable() {
+        theView.animate().alpha(.9f).setDuration(100).scaleX(.9f).scaleY(.9f).withEndAction(new Runnable() {
           public void run() {
 
-            theView.setScaleX(1.0f);
-            theView.setScaleY(1.0f);
-
-            theView.animate().setDuration(500).alpha(1).withEndAction(new Runnable() {
+            theView.animate().setInterpolator(new AnticipateInterpolator()).translationYBy(-theView.getHeight()).setDuration(200).withEndAction(new Runnable() {
               public void run() {
 
+                theView.setAlpha(0.0f);
+                theView.setTranslationY(theView.getHeight());
+
+                theView.animate().setDuration(200).alpha(1).setStartDelay(200).translationY(0).scaleX(1.0f).scaleY(1.0f).setInterpolator(new BounceInterpolator()).withEndAction(new Runnable() {
+                  public void run() {
+
+                  }
+                });
               }
             });
+
+
+
           }
+
         });
+
       }
     }
 
