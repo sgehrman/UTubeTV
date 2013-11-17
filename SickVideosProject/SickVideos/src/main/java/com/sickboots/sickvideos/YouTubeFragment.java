@@ -508,9 +508,8 @@ public class YouTubeFragment extends Fragment
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-
-            imageView.setAlpha(0.15f);
-            imageView.animate().setDuration(600).alpha(mImageAlpha);
+            imageView.setAlpha(mImageAlpha/2);
+            imageView.animate().setDuration(800).alpha(mImageAlpha);
           } else
             imageView.setAlpha(mImageAlpha);
         }
