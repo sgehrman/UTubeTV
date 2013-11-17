@@ -438,21 +438,23 @@ public class YouTubeFragment extends Fragment
 
     private void animateViewForClick(final View theView) {
 
-      switch (animationID) {
-        case 0:
-          StandardAnimations.dosomething(theView);
-          break;
-        case 1:
-          StandardAnimations.upAndAway(theView);
-          break;
-        case 2:
-          StandardAnimations.rockBounce(theView);
-          break;
-        default:
-          StandardAnimations.rubberClick(theView);
-          animationID = -1;
-          break;
-      }
+      StandardAnimations.rubberClick(theView);
+
+//      switch (animationID) {
+//        case 0:
+//          StandardAnimations.dosomething(theView);
+//          break;
+//        case 1:
+//          StandardAnimations.upAndAway(theView);
+//          break;
+//        case 2:
+//          StandardAnimations.rockBounce(theView);
+//          break;
+//        default:
+//          StandardAnimations.rubberClick(theView);
+//          animationID = -1;
+//          break;
+//      }
 
       animationID += 1;
     }

@@ -42,6 +42,30 @@ public class StandardAnimations {
   }
 
   public static final void rubberClick(final View theView) {
+    ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 60f);
+    ObjectAnimator rotateBack = ObjectAnimator.ofFloat(theView, "rotationY", 0f);
+    ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", .4f);
+    ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", .4f);
+    ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", 1f);
+    ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", 1f);
+
+    AnimatorSet bouncer = new AnimatorSet();
+    bouncer.setInterpolator(new AnticipateOvershootInterpolator());
+    bouncer.play(scaleXDown).with(scaleYDown);
+    bouncer.play(scaleXBack).with(scaleYBack);
+    bouncer.play(scaleXBack).after(scaleXDown);
+    bouncer.play(rotateAnim).after(scaleXBack);
+    bouncer.play(rotateBack).after(rotateAnim);
+
+    ObjectAnimator fadeOut = ObjectAnimator.ofFloat(theView, "alpha", 0f);
+    ObjectAnimator fadeBack = ObjectAnimator.ofFloat(theView, "alpha", 1f);
+    fadeOut.setDuration(250);
+    fadeBack.setDuration(250);
+    AnimatorSet animatorSet = new AnimatorSet();
+    animatorSet.play(bouncer).before(fadeOut);
+    animatorSet.play(fadeBack).after(fadeOut);
+    animatorSet.start();
+
     theView.animate().scaleX(.8f).scaleY(.8f).setDuration(200).setInterpolator(new AnticipateOvershootInterpolator()).withEndAction(new Runnable() {
       @Override
       public void run() {
@@ -49,7 +73,6 @@ public class StandardAnimations {
       }
     });
   }
-
 
   public static final void dosomething(View theView) {
     ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 0f, 60f);
