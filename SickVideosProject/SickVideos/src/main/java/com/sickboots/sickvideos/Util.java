@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -131,6 +133,11 @@ public class Util {
 
   public static float dpToPx(float dp, Context context) {
     return dp * context.getResources().getDisplayMetrics().density;
+  }
+
+  public static int randomColor() {
+    Random random = new Random();
+    return Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
   }
 
 }
