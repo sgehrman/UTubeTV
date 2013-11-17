@@ -3,6 +3,7 @@ package com.sickboots.sickvideos;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -66,12 +67,28 @@ public class StandardAnimations {
     animatorSet.play(fadeBack).after(fadeOut);
     animatorSet.start();
 
-    theView.animate().scaleX(.8f).scaleY(.8f).setDuration(200).setInterpolator(new AnticipateOvershootInterpolator()).withEndAction(new Runnable() {
-      @Override
-      public void run() {
-        theView.animate().setDuration(100).scaleX(1.0f).scaleY(1.0f).setInterpolator(new AnticipateOvershootInterpolator()).start();
-      }
-    });
+//    theView.animate().scaleX(.8f).scaleY(.8f).setDuration(200).setInterpolator(new AnticipateOvershootInterpolator()).withEndAction(new Runnable() {
+//      @Override
+//      public void run() {
+//        theView.animate().setDuration(100).scaleX(1.0f).scaleY(1.0f).setInterpolator(new AnticipateOvershootInterpolator()).start();
+//      }
+//    });
+  }
+
+  public static void winky(View theView, float normalImageAlpha) {
+
+    ObjectAnimator fadeIn = ObjectAnimator.ofFloat(theView, "alpha", 1f);
+    ObjectAnimator fadeOut = ObjectAnimator.ofFloat(theView, "alpha", 0f);
+    ObjectAnimator fadeBack = ObjectAnimator.ofFloat(theView, "alpha", normalImageAlpha);
+    fadeIn.setDuration(150);
+    fadeOut.setDuration(150);
+    fadeBack.setDuration(250);
+    AnimatorSet animatorSet = new AnimatorSet();
+    animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+
+    animatorSet.play(fadeIn).after(fadeOut);
+    animatorSet.play(fadeBack).after(fadeOut);
+    animatorSet.start();
   }
 
   public static final void dosomething(View theView) {

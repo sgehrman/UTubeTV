@@ -49,6 +49,7 @@ public class YouTubeFragment extends Fragment
   private YouTubeList mList;
   private int itemResID = 0;
   private ScrollTriggeredAnimator mScrollAnimator;
+  private final float mImageAlpha = .6f;
 
   // video player
   private View videoBox;
@@ -447,6 +448,9 @@ public class YouTubeFragment extends Fragment
         case 2:
           StandardAnimations.rockBounce(theView);
           break;
+        case 3:
+          StandardAnimations.winky(theView, mImageAlpha);
+          break;
         default:
           StandardAnimations.rubberClick(theView);
           animationID = -1;
@@ -503,13 +507,12 @@ public class YouTubeFragment extends Fragment
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-          float imageAlpha = .6f;
           if (!loadedFromCache) {
 
             imageView.setAlpha(0.15f);
-            imageView.animate().setDuration(600).alpha(imageAlpha);
+            imageView.animate().setDuration(600).alpha(mImageAlpha);
           } else
-            imageView.setAlpha(imageAlpha);
+            imageView.setAlpha(mImageAlpha);
         }
 
       });
