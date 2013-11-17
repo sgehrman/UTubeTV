@@ -428,6 +428,7 @@ public class YouTubeFragment extends Fragment
 
   private class MyAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener {
     private final LayoutInflater inflater;
+    int animationID = 0;
 
     public MyAdapter() {
       super(getActivity(), 0);
@@ -436,7 +437,6 @@ public class YouTubeFragment extends Fragment
     }
 
     private void animateViewForClick(final View theView) {
-      int animationID = 0;
 
       switch (animationID) {
         case 0:
@@ -446,8 +446,12 @@ public class YouTubeFragment extends Fragment
           StandardAnimations.rockBounce(theView);
           break;
         default:
+          StandardAnimations.rubberClick(theView);
+          animationID = -1;
           break;
       }
+
+      animationID += 1;
     }
 
     @Override

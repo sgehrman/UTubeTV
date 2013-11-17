@@ -2,11 +2,17 @@ package com.sickboots.sickvideos;
 
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 
 public class StandardAnimations {
-  public static final void rockBounce(View theView) {
-    theView.animate().alpha(1.0f);
+  public static final void rockBounce(final View theView) {
+    theView.animate().rotationXBy(30.0f).setDuration(200).setInterpolator(new AnticipateOvershootInterpolator()).withEndAction(new Runnable() {
+      @Override
+      public void run() {
+        theView.animate().setDuration(100).rotationX(0).setInterpolator(new AnticipateOvershootInterpolator()).start();
+      }
+    });
   }
 
   public static final void upAndAway(final View theView) {
@@ -24,12 +30,22 @@ public class StandardAnimations {
                 public void run() {
 
                 }
-              });
+              }).start();
             }
-          });
+          }).start();
         }
 
       });
     }
   }
+
+  public static final void rubberClick(final View theView) {
+    theView.animate().scaleX(.8f).scaleY(.8f).setDuration(200).setInterpolator(new AnticipateOvershootInterpolator()).withEndAction(new Runnable() {
+      @Override
+      public void run() {
+        theView.animate().setDuration(100).scaleX(1.0f).scaleY(1.0f).setInterpolator(new AnticipateOvershootInterpolator()).start();
+      }
+    });
+  }
+
 }
