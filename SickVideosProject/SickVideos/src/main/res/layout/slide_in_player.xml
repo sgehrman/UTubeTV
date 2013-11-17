@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_margin="12dp"
+                android:layout_margin="10dp"
 
                 android:background="@null"
                 android:src="@android:drawable/btn_dialog"/>
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_margin="12dp"
+                android:layout_margin="10dp"
 
                 android:background="@null"
                 android:src="@android:drawable/ic_btn_speak_now"/>
@@ -52,20 +52,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_margin="12dp"
+                android:layout_margin="10dp"
 
                 android:background="@null"
                 android:src="@android:drawable/ic_dialog_dialer"/>
 
             <ImageButton
+                android:id="@+id/skip_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="10dp"
+
+                android:background="@null"
+                android:src="@android:drawable/ic_media_previous"/>
+            <ImageButton
                 android:id="@+id/skip_ahead_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_margin="12dp"
+                android:layout_margin="10dp"
 
                 android:background="@null"
                 android:src="@android:drawable/ic_media_next"/>
+
         </LinearLayout>
     </FrameLayout>
 

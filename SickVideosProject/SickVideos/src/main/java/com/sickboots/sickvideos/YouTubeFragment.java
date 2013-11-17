@@ -266,6 +266,17 @@ public class YouTubeFragment extends Fragment
       ;
     });
 
+    // Skip back button
+    b = (ImageButton) rootView.findViewById(R.id.skip_back_button);
+    b.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        videoFragment().seekRelativeSeconds(-10);
+      }
+
+      ;
+    });
+
     // Skip ahead button
     b = (ImageButton) rootView.findViewById(R.id.skip_ahead_button);
     b.setOnClickListener(new View.OnClickListener() {
