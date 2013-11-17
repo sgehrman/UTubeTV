@@ -440,9 +440,12 @@ public class YouTubeFragment extends Fragment
 
       switch (animationID) {
         case 0:
-          StandardAnimations.upAndAway(theView);
+          StandardAnimations.dosomething(theView);
           break;
         case 1:
+          StandardAnimations.upAndAway(theView);
+          break;
+        case 2:
           StandardAnimations.rockBounce(theView);
           break;
         default:
