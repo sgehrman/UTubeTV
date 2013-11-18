@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -214,13 +215,11 @@ public class YouTubeFragment extends Fragment
     b = (ImageButton) rootView.findViewById(R.id.mute_button);
 
 
-    Icon[] valuesArray = null;
-    valuesArray = EntypoIcon.values();
-    Icon icon = valuesArray[0];
+    Icon icon = EntypoIcon.BAR_GRAPH;
 
     IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getActivity());
     iconicFontDrawable.setIcon(icon);
-    iconicFontDrawable.setIconColor(Util.randomColor());
+    iconicFontDrawable.setIconColor(Color.parseColor("#ffffff"));
     b.setBackground(iconicFontDrawable);
 
 
