@@ -53,9 +53,7 @@ public class YouTubeFragment extends Fragment
   private int itemResID = 0;
   private ScrollTriggeredAnimator mScrollAnimator;
   private final float mImageAlpha = .6f;
-
-  // video player
-  private View videoBox;
+  private VideoPlayer player;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -107,9 +105,8 @@ public class YouTubeFragment extends Fragment
         title = mList.name();
 
       // if video player is up, show the video title
-      if (videoPlayerIsVisible()) {
-        VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-        title = videoFragment.getTitle();
+      if (player.visible()) {
+        title = player.title();
       }
 
       if (title != null)
@@ -125,7 +122,7 @@ public class YouTubeFragment extends Fragment
 
       if (input.equals(ApplicationHub.BACK_BUTTON_NOTIFICATION)) {
         // if the video player is visible, close it
-        closeVideoPlayer();
+        player.close();
       }
     }
   }
@@ -197,54 +194,19 @@ public class YouTubeFragment extends Fragment
     String videoId = (String) itemMap.get("video");
     String title = (String) itemMap.get("title");
 
-    openVideoPlayer(videoId, title);
-  }
-
-  private void openVideoPlayer(String videoId, String title) {
-    VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-    videoFragment.setVideo(videoId, title);
-
-    if (!videoPlayerIsVisible()) {
-      if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-        // Initially translate off the screen so that it can be animated in from below.
-        videoBox.setTranslationY(-videoBox.getHeight());
-      }
-      videoBox.setVisibility(View.VISIBLE);
-    }
-
-    // If the fragment is off the screen, we animate it in.
-    if (videoBox.getTranslationY() < 0) {
-      Util.vibrate(getActivity());
-      videoBox.animate().translationY(-Util.dpToPx(45, getActivity())).setInterpolator(new OvershootInterpolator()).setDuration(300);
-    }
-  }
-
-  private boolean videoPlayerIsVisible() {
-    return (videoBox.getVisibility() == View.VISIBLE);
+    player.open(videoId, title);
   }
 
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
-    // Don't add the fragment if restoring, it's already set up
-    if (savedInstanceState == null) {
-      // had to add this manually rather than setting the class in xml to avoid duplicate id errors
-      Fragment fragment = new VideoPlayerFragment();
-      FragmentManager fm = getFragmentManager();
-      FragmentTransaction ft = fm.beginTransaction();
-      ft.replace(R.id.video_fragment_container, fragment);
-      ft.commit();
-    }
-
     // video player
-    videoBox = rootView.findViewById(R.id.slide_in_player_box);
-
-    videoBox.setVisibility(View.INVISIBLE);
+     player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container);
 
     // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        closeVideoPlayer();
+        player.close();
       }
     });
 
@@ -262,14 +224,10 @@ public class YouTubeFragment extends Fragment
       b.setBackground(iconicFontDrawable);
 
 
-
-
-
-
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        videoFragment().mute(!videoFragment().isMute());
+        player.toggleMute();
       }
 
       ;
@@ -280,7 +238,7 @@ public class YouTubeFragment extends Fragment
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        videoFragment().setFullscreen(true);
+        player.toggleFullscreen();
       }
 
       ;
@@ -291,7 +249,7 @@ public class YouTubeFragment extends Fragment
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        videoFragment().seekRelativeSeconds(-10);
+        player.skip(-10);
       }
 
       ;
@@ -302,40 +260,12 @@ public class YouTubeFragment extends Fragment
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        videoFragment().seekRelativeSeconds(10);
+        player.skip(10);
       }
 
       ;
     });
 
-  }
-
-  private void closeVideoPlayer() {
-    if (videoPlayerIsVisible()) {
-      // pause immediately on click for better UX
-      videoFragment().pause();
-
-      Util.vibrate(getActivity());
-      videoBox.animate()
-          .translationYBy(-videoBox.getHeight())
-          .setInterpolator(new AnticipateInterpolator())
-          .setDuration(300)
-          .withEndAction(new Runnable() {
-            @Override
-            public void run() {
-              videoBox.setVisibility(View.INVISIBLE);
-
-              // set the activity's title back
-              setActionBarTitle();
-            }
-          });
-    }
-  }
-
-  private VideoPlayerFragment videoFragment() {
-    VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
-
-    return videoFragment;
   }
 
   private int itemResourceID() {
