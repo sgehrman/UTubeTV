@@ -200,6 +200,12 @@ public class YouTubeFragment extends Fragment
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // video player
      player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container);
+    player.setStateListener(new VideoPlayer.VideoPlayerStateListener() {
+      @Override
+      public void stateChanged() {
+        setActionBarTitle();
+      }
+    });
 
     // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);

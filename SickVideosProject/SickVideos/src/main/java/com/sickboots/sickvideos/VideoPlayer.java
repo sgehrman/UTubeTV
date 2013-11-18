@@ -15,6 +15,11 @@ public class VideoPlayer {
   private View videoBox;
   Context mContext;
   VideoPlayerFragment mVideoFragment;
+  VideoPlayerStateListener mListener;
+
+  abstract public interface VideoPlayerStateListener {
+    abstract public void stateChanged();
+  }
 
   public VideoPlayer(Activity activity, View view, int fragmentContainerResID) {
     super();
@@ -35,6 +40,10 @@ public class VideoPlayer {
     videoBox.setVisibility(View.INVISIBLE);
   }
 
+  public void setStateListener(VideoPlayerStateListener l) {
+    mListener = l;
+  }
+
   public void open(String videoId, String title) {
     videoFragment().setVideo(videoId, title);
 
@@ -49,7 +58,14 @@ public class VideoPlayer {
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
       Util.vibrate(mContext);
-      videoBox.animate().translationY(-Util.dpToPx(45, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300);
+      videoBox.animate().translationY(-Util.dpToPx(45, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction( new Runnable() {
+        @Override
+        public void run() {
+          if (mListener != null) {
+            mListener.stateChanged();
+          }
+        }
+      });
     }
   }
 
@@ -68,8 +84,9 @@ public class VideoPlayer {
             public void run() {
               videoBox.setVisibility(View.INVISIBLE);
 
-              // set the activity's title back
-              // setActionBarTitle();
+              if (mListener != null) {
+                mListener.stateChanged();
+              }
             }
           });
     }
