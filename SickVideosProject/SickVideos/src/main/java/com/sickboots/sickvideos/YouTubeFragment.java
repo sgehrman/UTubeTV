@@ -224,8 +224,8 @@ public class YouTubeFragment extends Fragment
 
     IconicFontDrawable result = new IconicFontDrawable(getActivity());
     result.setIcon(icon);
-    result.setIconColor(Color.parseColor("#ffffff"));
-  result.setContour(Color.GRAY, 1);
+    result.setIconColor(Color.WHITE);
+    result.setContour(Color.GRAY, 1);
     result.setIconPadding(8);
 
     return result;
