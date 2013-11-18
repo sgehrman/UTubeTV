@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.StrictMode;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,6 +139,12 @@ public class Util {
   public static int randomColor() {
     Random random = new Random();
     return Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  }
+
+  public static void vibrate(Context context) {
+    Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
+    vibe.vibrate(5);
   }
 
 }

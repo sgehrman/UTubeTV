@@ -201,7 +201,6 @@ public class YouTubeFragment extends Fragment
     VideoPlayerFragment videoFragment = (VideoPlayerFragment) getFragmentManager().findFragmentById(R.id.video_fragment_container);
     videoFragment.setVideo(videoId, title);
 
-    // The videoBox is INVISIBLE if no video was previously selected, so we need to show it now.
     if (!videoPlayerIsVisible()) {
       if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
         // Initially translate off the screen so that it can be animated in from below.
@@ -212,6 +211,7 @@ public class YouTubeFragment extends Fragment
 
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
+      Util.vibrate(getActivity());
       videoBox.animate().translationY(-Util.dpToPx(45, getActivity())).setInterpolator(new OvershootInterpolator()).setDuration(300);
     }
   }
@@ -296,6 +296,7 @@ public class YouTubeFragment extends Fragment
       // pause immediately on click for better UX
       videoFragment().pause();
 
+      Util.vibrate(getActivity());
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
           .setInterpolator(new AnticipateInterpolator())
