@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IconicDroid/IconicDroid.iml" filepath="$PROJECT_DIR$/IconicDroid/IconicDroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/SickVideos/SickVideos.iml" filepath="$PROJECT_DIR$/SickVideos/SickVideos.iml" />
       <module fileurl="file://$PROJECT_DIR$/SickVideosProject.iml" filepath="$PROJECT_DIR$/SickVideosProject.iml" />
     </modules>

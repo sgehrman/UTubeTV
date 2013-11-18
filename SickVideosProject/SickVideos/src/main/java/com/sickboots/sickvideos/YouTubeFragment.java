@@ -23,6 +23,9 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.iconicdroid.IconicFontDrawable;
+import com.sickboots.iconicdroid.icon.EntypoIcon;
+import com.sickboots.iconicdroid.icon.Icon;
 
 import org.joda.time.Period;
 import org.joda.time.Seconds;
@@ -247,6 +250,22 @@ public class YouTubeFragment extends Fragment
 
     // Mute button
     b = (ImageButton) rootView.findViewById(R.id.mute_button);
+
+
+    Icon[] valuesArray = null;
+    valuesArray = EntypoIcon.values();
+    Icon icon = valuesArray[0];
+
+    IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getActivity());
+    iconicFontDrawable.setIcon(icon);
+    iconicFontDrawable.setIconColor(Util.randomColor());
+      b.setBackground(iconicFontDrawable);
+
+
+
+
+
+
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

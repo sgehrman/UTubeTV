@@ -1,1 +1,1 @@
-include ':SickVideos'
+include ':SickVideos', ':IconicDroid'
