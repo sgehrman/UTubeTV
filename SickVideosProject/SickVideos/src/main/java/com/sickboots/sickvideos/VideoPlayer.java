@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.res.Configuration;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.ImageButton;
 
 public class VideoPlayer {
   private View videoBox;
@@ -58,7 +56,7 @@ public class VideoPlayer {
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
       Util.vibrate(mContext);
-      videoBox.animate().translationY(-Util.dpToPx(45, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction( new Runnable() {
+      videoBox.animate().translationY(-Util.dpToPx(45, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction(new Runnable() {
         @Override
         public void run() {
           if (mListener != null) {
@@ -98,24 +96,25 @@ public class VideoPlayer {
   }
 
 
-public String title() {
-  return videoFragment().getTitle();
+  public String title() {
+    return videoFragment().getTitle();
 
-}
+  }
+
   public boolean visible() {
     return (videoBox.getVisibility() == View.VISIBLE);
   }
 
-    public void toggleMute() {
-      videoFragment().mute(!videoFragment().isMute());
-    }
+  public void toggleMute() {
+    videoFragment().mute(!videoFragment().isMute());
+  }
 
-    public void toggleFullscreen() {
-      videoFragment().setFullscreen(true);
-    }
+  public void toggleFullscreen() {
+    videoFragment().setFullscreen(true);
+  }
 
-    public void skip(int seconds) {
-      videoFragment().seekRelativeSeconds(seconds);
-    }
+  public void skip(int seconds) {
+    videoFragment().seekRelativeSeconds(seconds);
+  }
 
 }

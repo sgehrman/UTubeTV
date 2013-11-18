@@ -2,18 +2,12 @@ package com.sickboots.sickvideos;
 
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -199,7 +193,7 @@ public class YouTubeFragment extends Fragment
 
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // video player
-     player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container);
+    player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container);
     player.setStateListener(new VideoPlayer.VideoPlayerStateListener() {
       @Override
       public void stateChanged() {
@@ -227,7 +221,7 @@ public class YouTubeFragment extends Fragment
     IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getActivity());
     iconicFontDrawable.setIcon(icon);
     iconicFontDrawable.setIconColor(Util.randomColor());
-      b.setBackground(iconicFontDrawable);
+    b.setBackground(iconicFontDrawable);
 
 
     b.setOnClickListener(new View.OnClickListener() {
@@ -464,7 +458,7 @@ public class YouTubeFragment extends Fragment
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-            imageView.setAlpha(mImageAlpha/2);
+            imageView.setAlpha(mImageAlpha / 2);
             imageView.animate().setDuration(800).alpha(mImageAlpha);
           } else
             imageView.setAlpha(mImageAlpha);

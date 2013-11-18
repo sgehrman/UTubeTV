@@ -16,8 +16,8 @@ public class ScrollTriggeredAnimator {
   private final Runnable mBackgroundDimmerFadeRunnable = new Runnable() {
     @Override
     public void run() {
-    mGlowing = false;
-    mAnimationTarget.animate().setDuration(mOutDuration).alpha(1);
+      mGlowing = false;
+      mAnimationTarget.animate().setDuration(mOutDuration).alpha(1);
     }
   };
 
