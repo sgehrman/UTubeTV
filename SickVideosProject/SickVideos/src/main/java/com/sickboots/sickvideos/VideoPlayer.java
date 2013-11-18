@@ -19,7 +19,7 @@ public class VideoPlayer {
     abstract public void stateChanged();
   }
 
-  public VideoPlayer(Activity activity, View view, int fragmentContainerResID) {
+  public VideoPlayer(Activity activity, View view, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
 
     // will already exist if restoring fragments
@@ -33,13 +33,11 @@ public class VideoPlayer {
       ft.commit();
     }
 
+    mListener = l;
+
     mContext = activity.getApplicationContext();
     videoBox = view;
     videoBox.setVisibility(View.INVISIBLE);
-  }
-
-  public void setStateListener(VideoPlayerStateListener l) {
-    mListener = l;
   }
 
   public void open(String videoId, String title) {
@@ -90,11 +88,9 @@ public class VideoPlayer {
     }
   }
 
-
   private VideoPlayerFragment videoFragment() {
     return mVideoFragment;
   }
-
 
   public String title() {
     return videoFragment().getTitle();

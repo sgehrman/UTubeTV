@@ -194,8 +194,7 @@ public class YouTubeFragment extends Fragment
 
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // video player
-    player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container);
-    player.setStateListener(new VideoPlayer.VideoPlayerStateListener() {
+    player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
       @Override
       public void stateChanged() {
         setActionBarTitle();
@@ -214,14 +213,12 @@ public class YouTubeFragment extends Fragment
     // Mute button
     b = (ImageButton) rootView.findViewById(R.id.mute_button);
 
-
     Icon icon = EntypoIcon.BAR_GRAPH;
 
     IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getActivity());
     iconicFontDrawable.setIcon(icon);
     iconicFontDrawable.setIconColor(Color.parseColor("#ffffff"));
     b.setBackground(iconicFontDrawable);
-
 
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -264,7 +261,6 @@ public class YouTubeFragment extends Fragment
 
       ;
     });
-
   }
 
   private int itemResourceID() {
