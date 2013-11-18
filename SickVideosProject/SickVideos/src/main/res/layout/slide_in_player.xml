@@ -29,18 +29,18 @@
 
             <ImageButton
                 android:id="@+id/close_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
 
                 android:layout_margin="10dp"
 
                 android:background="@null"
-                android:src="@android:drawable/btn_dialog"/>
+                />
 
             <ImageButton
                 android:id="@+id/mute_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
 
                 android:layout_margin="10dp"
 
@@ -49,32 +49,32 @@
 
             <ImageButton
                 android:id="@+id/full_screen_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
 
                 android:layout_margin="10dp"
 
                 android:background="@null"
-                android:src="@android:drawable/ic_dialog_dialer"/>
+                />
 
             <ImageButton
                 android:id="@+id/skip_back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
 
                 android:layout_margin="10dp"
 
                 android:background="@null"
-                android:src="@android:drawable/ic_media_previous"/>
+                />
             <ImageButton
                 android:id="@+id/skip_ahead_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
 
                 android:layout_margin="10dp"
 
                 android:background="@null"
-                android:src="@android:drawable/ic_media_next"/>
+                />
 
         </LinearLayout>
     </FrameLayout>

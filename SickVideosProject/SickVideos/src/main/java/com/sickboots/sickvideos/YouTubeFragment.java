@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.iconicdroid.IconicFontDrawable;
 import com.sickboots.iconicdroid.icon.EntypoIcon;
+import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 
 import org.joda.time.Period;
@@ -49,6 +51,7 @@ public class YouTubeFragment extends Fragment
   private ScrollTriggeredAnimator mScrollAnimator;
   private final float mImageAlpha = .6f;
   private VideoPlayer player;
+  public enum IconID {MUTE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -192,6 +195,40 @@ public class YouTubeFragment extends Fragment
     player.open(videoId, title);
   }
 
+  private Drawable icon(IconID iconID) {
+    Icon icon=null;
+
+    switch (iconID) {
+      case MUTE:
+        icon = FontAwesomeIcon.VOLUME_OFF;
+        break;
+      case SOUND:
+        icon = FontAwesomeIcon.VOLUME_UP;
+        break;
+      case STEP_BACK:
+        icon = FontAwesomeIcon.STEP_BACKWARD;
+        break;
+      case STEP_FORWARD:
+        icon = FontAwesomeIcon.STEP_FORWARD;
+        break;
+      case CLOSE:
+        icon = FontAwesomeIcon.REMOVE_SIGN;
+        break;
+      case FULLSCREEN:
+        icon = FontAwesomeIcon.FULLSCREEN;
+        break;
+      default:
+        icon = EntypoIcon.NEW;  // error
+        break;
+    }
+
+    IconicFontDrawable result = new IconicFontDrawable(getActivity());
+    result.setIcon(icon);
+    result.setIconColor(Color.parseColor("#ffffff"));
+
+    return result;
+  }
+
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // video player
     player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
@@ -203,6 +240,7 @@ public class YouTubeFragment extends Fragment
 
     // close button
     ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
+    b.setBackground(icon(IconID.CLOSE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -212,14 +250,7 @@ public class YouTubeFragment extends Fragment
 
     // Mute button
     b = (ImageButton) rootView.findViewById(R.id.mute_button);
-
-    Icon icon = EntypoIcon.BAR_GRAPH;
-
-    IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getActivity());
-    iconicFontDrawable.setIcon(icon);
-    iconicFontDrawable.setIconColor(Color.parseColor("#ffffff"));
-    b.setBackground(iconicFontDrawable);
-
+    b.setBackground(icon(IconID.MUTE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -231,6 +262,7 @@ public class YouTubeFragment extends Fragment
 
     // Full screen button
     b = (ImageButton) rootView.findViewById(R.id.full_screen_button);
+    b.setBackground(icon(IconID.FULLSCREEN));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -242,6 +274,7 @@ public class YouTubeFragment extends Fragment
 
     // Skip back button
     b = (ImageButton) rootView.findViewById(R.id.skip_back_button);
+    b.setBackground(icon(IconID.STEP_BACK));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -253,6 +286,7 @@ public class YouTubeFragment extends Fragment
 
     // Skip ahead button
     b = (ImageButton) rootView.findViewById(R.id.skip_ahead_button);
+    b.setBackground(icon(IconID.STEP_FORWARD));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
