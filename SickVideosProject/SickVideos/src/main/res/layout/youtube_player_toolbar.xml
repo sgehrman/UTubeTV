@@ -17,9 +17,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            android:layout_margin="10dp"
-
-            android:background="@null"
+            android:layout_margin="6dp"
             />
 
         <ImageButton
@@ -27,9 +25,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            android:layout_margin="10dp"
-
-            android:background="@null"
+            android:layout_margin="6dp"
             />
 
         <ImageButton
@@ -39,9 +35,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            android:layout_margin="10dp"
-
-            android:background="@null"
+            android:layout_margin="6dp"
             />
 
         <ImageButton
@@ -49,9 +43,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            android:layout_margin="10dp"
-
-            android:background="@null"
+            android:layout_margin="6dp"
             />
 
         <ImageButton
@@ -59,9 +51,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            android:layout_margin="10dp"
-
-            android:background="@null"
+            android:layout_margin="6dp"
             />
 
     </LinearLayout>
