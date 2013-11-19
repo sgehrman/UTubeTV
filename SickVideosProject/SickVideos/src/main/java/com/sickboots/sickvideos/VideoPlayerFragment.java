@@ -3,6 +3,7 @@ package com.sickboots.sickvideos;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -19,6 +20,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mMuteState = false;
   private boolean mMutedForAd = false;
   private Timer mTimer;
+  private TextView mTimeRemainingView;
+
+  // added for debugging, remove this shit once we know it's solid
+  private String mLastTimeString;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
@@ -116,6 +121,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     }
   }
 
+  public void setTimeRemainingView(TextView timeRemainingView) {
+    mTimeRemainingView = timeRemainingView;
+  }
+
   private void setupFullscreenListener() {
     if (mPlayer == null)
       return;
@@ -196,12 +205,12 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onBuffering(boolean b) {
-        stopElapsedTimer();
+        Util.log("buffering: " + ((b) ? "yes" : "no"));
       }
 
       @Override
       public void onSeekTo(int i) {
-        stopElapsedTimer();
+        Util.log("seeking: " + i + " seconds");
       }
     });
 
@@ -220,8 +229,30 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
+          if (mTimeRemainingView != null) {
+            long millis = 0;
 
-          Util.log("video time: " + mPlayer.getCurrentTimeMillis());
+            if (mPlayer != null)
+              millis = mPlayer.getCurrentTimeMillis();
+
+            final String timeString = Util.millisecondsToDuration(millis);
+
+            // added for debugging, remove this shit once we know it's solid
+            mLastTimeString = (mLastTimeString == null) ? "" : mLastTimeString;
+            if (timeString.equals(mLastTimeString))
+              Util.log("equal to last");
+            else {
+              mLastTimeString = timeString;
+            }
+
+            ApplicationHub.instance().runOnMainThread(new Runnable() {
+              @Override
+              public void run() {
+                // we're on the main thread...
+                mTimeRemainingView.setText(timeString);
+              }
+            });
+          }
         }
       };
 

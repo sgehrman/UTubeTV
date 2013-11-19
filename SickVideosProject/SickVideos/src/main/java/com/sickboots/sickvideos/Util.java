@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
@@ -145,6 +146,20 @@ public class Util {
     Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
     vibe.vibrate(5);
+  }
+
+  public static String millisecondsToDuration(long milliseconds) {
+    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+    df.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
+
+    String result = df.format(milliseconds);
+
+    // strip off 00: from begining if present
+    final String zeros = "00:";
+    if (result.startsWith(zeros))
+      result = result.substring(zeros.length());
+
+    return result;
   }
 
 }

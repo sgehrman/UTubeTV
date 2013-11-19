@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.sickboots.iconicdroid.IconicFontDrawable;
 import com.sickboots.iconicdroid.icon.EntypoIcon;
@@ -40,6 +41,7 @@ public class VideoPlayer {
   public VideoPlayer(Activity activity, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
 
+    // this might be bullshit, need to investigate
     // will already exist if restoring fragments
     mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
     if (mVideoFragment == null) {
@@ -81,18 +83,6 @@ public class VideoPlayer {
     });
     updateMuteButton();
 
-    // Full screen button
-    b = (ImageButton) videoBox.findViewById(R.id.full_screen_button);
-    b.setBackground(icon(IconID.FULLSCREEN));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        toggleFullscreen();
-      }
-
-      ;
-    });
-
     // Skip back button
     b = (ImageButton) videoBox.findViewById(R.id.skip_back_button);
     b.setBackground(icon(IconID.STEP_BACK));
@@ -116,10 +106,25 @@ public class VideoPlayer {
 
       ;
     });
+
+    TextView timeRemainingView;
+    timeRemainingView = (TextView) videoBox.findViewById(R.id.time_remaining);
+    // we let the video fragment update us in it's own timer
+    mVideoFragment.setTimeRemainingView(timeRemainingView);
+    timeRemainingView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Util.log("text clicked, fix later");
+      }
+
+      ;
+    });
+
+
   }
 
   public void open(String videoId, String title) {
-    videoFragment().setVideo(videoId, title);
+    mVideoFragment.setVideo(videoId, title);
 
     if (!visible()) {
       if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -146,7 +151,7 @@ public class VideoPlayer {
   public void close() {
     if (visible()) {
       // pause immediately on click for better UX
-      videoFragment().pause();
+      mVideoFragment.pause();
 
       Util.vibrate(mContext);
       videoBox.animate()
@@ -166,12 +171,8 @@ public class VideoPlayer {
     }
   }
 
-  private VideoPlayerFragment videoFragment() {
-    return mVideoFragment;
-  }
-
   public String title() {
-    return videoFragment().getTitle();
+    return mVideoFragment.getTitle();
   }
 
   public boolean visible() {
@@ -179,17 +180,17 @@ public class VideoPlayer {
   }
 
   public void toggleMute() {
-    videoFragment().mute(!videoFragment().isMute());
+    mVideoFragment.mute(!mVideoFragment.isMute());
 
     updateMuteButton();
   }
 
   public void toggleFullscreen() {
-    videoFragment().setFullscreen(true);
+    mVideoFragment.setFullscreen(true);
   }
 
   public void skip(int seconds) {
-    videoFragment().seekRelativeSeconds(seconds);
+    mVideoFragment.seekRelativeSeconds(seconds);
   }
 
   private Drawable icon(IconID iconID) {
@@ -197,7 +198,7 @@ public class VideoPlayer {
   }
 
   private void updateMuteButton() {
-    if (videoFragment().isMute())
+    if (mVideoFragment.isMute())
       mMuteButton.setBackground(icon(IconID.SOUND, Color.RED));
     else
       mMuteButton.setBackground(icon(IconID.SOUND));

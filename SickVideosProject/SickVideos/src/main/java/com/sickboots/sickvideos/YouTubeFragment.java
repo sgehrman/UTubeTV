@@ -405,10 +405,7 @@ public class YouTubeFragment extends Fragment
         Period p = formatter.parsePeriod(duration);
         Seconds s = p.toStandardSeconds();
 
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-        df.setTimeZone(java.util.TimeZone.getTimeZone("GMT"));
-
-        holder.duration.setText(df.format(s.getSeconds() * 1000));
+        holder.duration.setText(Util.millisecondsToDuration(s.getSeconds() * 1000));
       } else {
         holder.duration.setVisibility(View.GONE);
       }
