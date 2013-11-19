@@ -50,7 +50,6 @@ public class YouTubeFragment extends Fragment
   private int itemResID = 0;
   private ScrollTriggeredAnimator mScrollAnimator;
   private final float mImageAlpha = .6f;
-  private VideoPlayer player;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -102,8 +101,8 @@ public class YouTubeFragment extends Fragment
         title = mList.name();
 
       // if video player is up, show the video title
-      if (player.visible()) {
-        title = player.title();
+      if (player().visible()) {
+        title = player().title();
       }
 
       if (title != null)
@@ -119,7 +118,7 @@ public class YouTubeFragment extends Fragment
 
       if (input.equals(ApplicationHub.BACK_BUTTON_NOTIFICATION)) {
         // if the video player is visible, close it
-        player.close();
+        player().close();
       }
     }
   }
@@ -159,8 +158,6 @@ public class YouTubeFragment extends Fragment
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     ptrl.addRefreshableView(listOrGridView, this);
 
-    setupSlideInPlayerView(savedInstanceState, rootView);
-
     // load data if we have it already
     onResults();
     setActionBarTitle();
@@ -191,17 +188,13 @@ public class YouTubeFragment extends Fragment
     String videoId = (String) itemMap.get("video");
     String title = (String) itemMap.get("title");
 
-    player.open(videoId, title);
+    player().open(videoId, title);
   }
 
-  private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
-    // video player
-    player = new VideoPlayer(getActivity(), rootView, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
-      @Override
-      public void stateChanged() {
-        setActionBarTitle();
-      }
-    });
+  private VideoPlayer player() {
+    VideoPlayer.PlayerProvider provider = (VideoPlayer.PlayerProvider) getActivity();
+
+    return provider.videoPlayer();
   }
 
   private int itemResourceID() {

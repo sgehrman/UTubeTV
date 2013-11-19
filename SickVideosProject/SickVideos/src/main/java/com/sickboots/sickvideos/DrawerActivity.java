@@ -22,10 +22,11 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements Util.PullToRefreshListener {
+public class DrawerActivity extends Activity implements VideoPlayer.PlayerProvider, Util.PullToRefreshListener {
   private DrawerLayout mDrawerLayout;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
+  VideoPlayer mPlayer;
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -237,6 +238,19 @@ public class DrawerActivity extends Activity implements Util.PullToRefreshListen
     super.onConfigurationChanged(newConfig);
     // Pass any configuration change to the drawer toggls
     mDrawerToggle.onConfigurationChanged(newConfig);
+  }
+
+  public VideoPlayer videoPlayer() {
+    if (mPlayer == null) {
+      mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+        @Override
+        public void stateChanged() {
+          //     setActionBarTitle();
+        }
+      });
+    }
+
+    return mPlayer;
   }
 
 }

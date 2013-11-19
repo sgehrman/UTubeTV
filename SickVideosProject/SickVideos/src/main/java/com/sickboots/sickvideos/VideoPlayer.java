@@ -19,6 +19,7 @@ import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 
 public class VideoPlayer {
+
   private View videoBox;
   Context mContext;
   VideoPlayerFragment mVideoFragment;
@@ -27,11 +28,16 @@ public class VideoPlayer {
 
   public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
+  // Activity should host a player
+  public interface PlayerProvider {
+    public VideoPlayer videoPlayer();
+  }
+
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
   }
 
-  public VideoPlayer(Activity activity, View rootView, int fragmentContainerResID, VideoPlayerStateListener l) {
+  public VideoPlayer(Activity activity, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
 
     // will already exist if restoring fragments
