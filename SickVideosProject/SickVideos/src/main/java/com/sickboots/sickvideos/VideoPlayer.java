@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -220,13 +221,23 @@ public class VideoPlayer {
         break;
     }
 
-    IconicFontDrawable result = new IconicFontDrawable(mContext);
-    result.setIcon(icon);
-    result.setIconColor(iconColor);
-    result.setContour(Color.GRAY, 1);
-    result.setIconPadding(8);
+    IconicFontDrawable pressed = new IconicFontDrawable(mContext);
+    pressed.setIcon(icon);
+    pressed.setIconColor(mContext.getResources().getColor(R.color.content_background));
+    pressed.setContour(Color.GRAY, 1);
+    pressed.setIconPadding(8);
 
-    return result;
+    IconicFontDrawable normal = new IconicFontDrawable(mContext);
+    normal.setIcon(icon);
+    normal.setIconColor(iconColor);
+    normal.setContour(Color.GRAY, 1);
+    normal.setIconPadding(8);
+
+    StateListDrawable states = new StateListDrawable();
+    states.addState(new int[] {android.R.attr.state_pressed}, pressed);
+    states.addState(new int[] { }, normal);
+
+    return states;
   }
 
 
