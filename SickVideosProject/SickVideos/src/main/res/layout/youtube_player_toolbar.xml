@@ -33,6 +33,8 @@
             />
 
         <ImageButton
+            android:visibility="gone"
+
             android:id="@+id/full_screen_button"
             android:layout_width="30dp"
             android:layout_height="30dp"

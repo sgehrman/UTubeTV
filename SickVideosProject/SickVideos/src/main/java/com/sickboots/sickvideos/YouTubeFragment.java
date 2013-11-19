@@ -51,7 +51,6 @@ public class YouTubeFragment extends Fragment
   private ScrollTriggeredAnimator mScrollAnimator;
   private final float mImageAlpha = .6f;
   private VideoPlayer player;
-  public enum IconID {MUTE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -195,107 +194,13 @@ public class YouTubeFragment extends Fragment
     player.open(videoId, title);
   }
 
-  private Drawable icon(IconID iconID) {
-    Icon icon=null;
-
-    switch (iconID) {
-      case MUTE:
-        icon = FontAwesomeIcon.VOLUME_OFF;
-        break;
-      case SOUND:
-        icon = FontAwesomeIcon.VOLUME_UP;
-        break;
-      case STEP_BACK:
-        icon = FontAwesomeIcon.STEP_BACKWARD;
-        break;
-      case STEP_FORWARD:
-        icon = FontAwesomeIcon.STEP_FORWARD;
-        break;
-      case CLOSE:
-        icon = FontAwesomeIcon.REMOVE_SIGN;
-        break;
-      case FULLSCREEN:
-        icon = FontAwesomeIcon.FULLSCREEN;
-        break;
-      default:
-        icon = EntypoIcon.NEW;  // error
-        break;
-    }
-
-    IconicFontDrawable result = new IconicFontDrawable(getActivity());
-    result.setIcon(icon);
-    result.setIconColor(Color.WHITE);
-    result.setContour(Color.GRAY, 1);
-    result.setIconPadding(8);
-
-    return result;
-  }
-
   private void setupSlideInPlayerView(Bundle savedInstanceState, View rootView) {
     // video player
-    player = new VideoPlayer(getActivity(), rootView.findViewById(R.id.slide_in_player_box), R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+    player = new VideoPlayer(getActivity(), rootView, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
       @Override
       public void stateChanged() {
         setActionBarTitle();
       }
-    });
-
-    // close button
-    ImageButton b = (ImageButton) rootView.findViewById(R.id.close_button);
-    b.setBackground(icon(IconID.CLOSE));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        player.close();
-      }
-    });
-
-    // Mute button
-    b = (ImageButton) rootView.findViewById(R.id.mute_button);
-    b.setBackground(icon(IconID.MUTE));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        player.toggleMute();
-      }
-
-      ;
-    });
-
-    // Full screen button
-    b = (ImageButton) rootView.findViewById(R.id.full_screen_button);
-    b.setBackground(icon(IconID.FULLSCREEN));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        player.toggleFullscreen();
-      }
-
-      ;
-    });
-
-    // Skip back button
-    b = (ImageButton) rootView.findViewById(R.id.skip_back_button);
-    b.setBackground(icon(IconID.STEP_BACK));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        player.skip(-10);
-      }
-
-      ;
-    });
-
-    // Skip ahead button
-    b = (ImageButton) rootView.findViewById(R.id.skip_ahead_button);
-    b.setBackground(icon(IconID.STEP_FORWARD));
-    b.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        player.skip(10);
-      }
-
-      ;
     });
   }
 
