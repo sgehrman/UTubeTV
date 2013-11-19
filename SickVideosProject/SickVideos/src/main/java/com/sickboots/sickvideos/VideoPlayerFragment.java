@@ -34,6 +34,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
         setupFullscreenListener();
         setupStateChangeListener();
+        setupPlaybackEventListener();
 
         if (!restored && mVideoId != null) {
           player.loadVideo(mVideoId);
@@ -168,4 +169,38 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       }
     });
   }
+
+  private void setupPlaybackEventListener() {
+    if (mPlayer == null)
+      return;
+
+    mPlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+      @Override
+      public void onPlaying() {
+
+      }
+
+      @Override
+      public void onPaused() {
+
+      }
+
+      @Override
+      public void onStopped() {
+
+      }
+
+      @Override
+      public void onBuffering(boolean b) {
+
+      }
+
+      @Override
+      public void onSeekTo(int i) {
+
+      }
+    });
+
+  }
+
 }
