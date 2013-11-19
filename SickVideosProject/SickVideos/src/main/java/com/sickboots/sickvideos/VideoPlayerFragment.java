@@ -8,6 +8,9 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mAutorepeat = false;
   private YouTubePlayer mPlayer;
@@ -15,6 +18,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private String mTitle;
   private boolean mMuteState = false;
   private boolean mMutedForAd = false;
+  private Timer mTimer;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
@@ -177,30 +181,52 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     mPlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
       @Override
       public void onPlaying() {
-
+        startElapsedTimer();
       }
 
       @Override
       public void onPaused() {
-
+        stopElapsedTimer();
       }
 
       @Override
       public void onStopped() {
-
+        stopElapsedTimer();
       }
 
       @Override
       public void onBuffering(boolean b) {
-
+        stopElapsedTimer();
       }
 
       @Override
       public void onSeekTo(int i) {
-
+        stopElapsedTimer();
       }
     });
 
+  }
+
+  private void stopElapsedTimer() {
+    if (mTimer != null) {
+      mTimer.cancel();
+      mTimer = null;
+    }
+  }
+
+  private void startElapsedTimer() {
+  if (mTimer == null) {
+      mTimer = new Timer();
+      TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+
+          Util.log("video time: " + mPlayer.getCurrentTimeMillis());
+        }
+      };
+
+      mTimer.schedule(timerTask, 0, 1000);
+    }
   }
 
 }
