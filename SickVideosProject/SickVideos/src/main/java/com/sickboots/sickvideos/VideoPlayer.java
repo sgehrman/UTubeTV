@@ -48,13 +48,13 @@ public class VideoPlayer {
     mListener = l;
 
     mContext = activity.getApplicationContext();
-    videoBox = rootView.findViewById(R.id.slide_in_player_box);
+    videoBox = activity.findViewById(R.id.video_player_box);
     videoBox.setVisibility(View.INVISIBLE);
 
     ImageButton b;
 
     // close button
-    b = (ImageButton) (ImageButton) rootView.findViewById(R.id.close_button);
+    b = (ImageButton) (ImageButton) videoBox.findViewById(R.id.close_button);
     b.setBackground(icon(IconID.CLOSE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -64,7 +64,7 @@ public class VideoPlayer {
     });
 
     // Mute button
-    mMuteButton = (ImageButton) rootView.findViewById(R.id.mute_button);
+    mMuteButton = (ImageButton) videoBox.findViewById(R.id.mute_button);
     mMuteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -76,7 +76,7 @@ public class VideoPlayer {
     updateMuteButton();
 
     // Full screen button
-    b = (ImageButton) rootView.findViewById(R.id.full_screen_button);
+    b = (ImageButton) videoBox.findViewById(R.id.full_screen_button);
     b.setBackground(icon(IconID.FULLSCREEN));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -88,7 +88,7 @@ public class VideoPlayer {
     });
 
     // Skip back button
-    b = (ImageButton) rootView.findViewById(R.id.skip_back_button);
+    b = (ImageButton) videoBox.findViewById(R.id.skip_back_button);
     b.setBackground(icon(IconID.STEP_BACK));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -100,7 +100,7 @@ public class VideoPlayer {
     });
 
     // Skip ahead button
-    b = (ImageButton) rootView.findViewById(R.id.skip_ahead_button);
+    b = (ImageButton) videoBox.findViewById(R.id.skip_ahead_button);
     b.setBackground(icon(IconID.STEP_FORWARD));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
