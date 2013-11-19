@@ -16,6 +16,6 @@
         android:gravity="center"
         />
 
-    <include layout="@layout/slide_in_player"/>
+    <include layout="@layout/youtube_player"/>
 
 </com.sickboots.sickvideos.AnimatedFrameLayout>

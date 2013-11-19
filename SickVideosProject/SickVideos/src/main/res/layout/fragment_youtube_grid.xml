@@ -5,34 +5,34 @@
                                               android:layout_height="match_parent">
 
 
-        <FrameLayout
-            android:background="#8000"
-            android:id="@+id/dimmer"
-            android:alpha="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
+    <FrameLayout
+        android:background="#8000"
+        android:id="@+id/dimmer"
+        android:alpha="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 
-        <GridView
-            android:id="@+id/gridview"
-            android:cacheColorHint="#000"
+    <GridView
+        android:id="@+id/gridview"
+        android:cacheColorHint="#000"
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:columnWidth="220dp"
-            android:horizontalSpacing="4dp"
-            android:verticalSpacing="4dp"
-            android:numColumns="auto_fit"
-            android:fastScrollEnabled="true"
-            android:drawSelectorOnTop="true"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:columnWidth="220dp"
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"
+        android:numColumns="auto_fit"
+        android:fastScrollEnabled="true"
+        android:drawSelectorOnTop="true"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
 
 
-    <include layout="@layout/slide_in_player"/>
+    <include layout="@layout/youtube_player"/>
 
 </com.sickboots.sickvideos.AnimatedFrameLayout>

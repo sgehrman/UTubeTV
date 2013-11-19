@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:background="@drawable/toolbar_gradient"
+             android:clickable="true"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_margin="10dp"
+
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/mute_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_margin="10dp"
+
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/full_screen_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_margin="10dp"
+
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/skip_back_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_margin="10dp"
+
+            android:background="@null"
+            />
+
+        <ImageButton
+            android:id="@+id/skip_ahead_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_margin="10dp"
+
+            android:background="@null"
+            />
+
+    </LinearLayout>
+</FrameLayout>
+
