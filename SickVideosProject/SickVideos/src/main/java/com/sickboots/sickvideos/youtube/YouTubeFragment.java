@@ -121,7 +121,7 @@ public class YouTubeFragment extends Fragment
 
       if (input.equals(ApplicationHub.BACK_BUTTON_NOTIFICATION)) {
         // if the video player is visible, close it
-        player().close();
+        player().close(true);
       }
     }
   }
@@ -194,7 +194,7 @@ public class YouTubeFragment extends Fragment
     String videoId = (String) itemMap.get("video");
     String title = (String) itemMap.get("title");
 
-    player().open(videoId, title);
+    player().open(videoId, title, true);
   }
 
   private VideoPlayer player() {

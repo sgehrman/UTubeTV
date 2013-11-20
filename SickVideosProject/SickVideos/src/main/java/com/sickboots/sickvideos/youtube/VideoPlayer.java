@@ -31,10 +31,9 @@ public class VideoPlayer {
   private final int mExtraSpaceOnTopOfPlayerView = 75;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
+  private final int mAnimationDuration=300;
 
-  public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE}
-
-  ;
+  public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
@@ -67,7 +66,7 @@ public class VideoPlayer {
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        close();
+        close(true);
       }
     });
 
@@ -136,7 +135,7 @@ public class VideoPlayer {
     });
   }
 
-  public void open(String videoId, String title) {
+  public void open(String videoId, String title, boolean animate) {
     mVideoFragment.setVideo(videoId, title);
 
     if (!visible()) {
@@ -150,7 +149,11 @@ public class VideoPlayer {
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
       Util.vibrate(mContext);
-      videoBox.animate().translationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction(new Runnable() {
+      videoBox.animate()
+          .translationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext))
+          .setInterpolator(new OvershootInterpolator())
+          .setDuration(animate ? mAnimationDuration : 0)
+          .withEndAction(new Runnable() {
         @Override
         public void run() {
           if (mListener != null) {
@@ -161,7 +164,7 @@ public class VideoPlayer {
     }
   }
 
-  public void close() {
+  public void close(boolean animate) {
     if (visible()) {
       // pause immediately on click for better UX
       mVideoFragment.pause();
@@ -170,7 +173,7 @@ public class VideoPlayer {
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
           .setInterpolator(new AnticipateInterpolator())
-          .setDuration(300)
+          .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
             @Override
             public void run() {
