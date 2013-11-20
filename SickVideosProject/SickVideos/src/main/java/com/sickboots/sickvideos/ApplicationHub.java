@@ -26,11 +26,13 @@ public class ApplicationHub implements SharedPreferences.OnSharedPreferenceChang
   private Handler mainThreadHandler;
   private NotificationCenter notificationCenter;
   private boolean mApplicationReady = false;
-  List<String> preferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR);
 
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";
   public static final String ACTION_BAR_COLOR = "action_bar_color";
+  public static final String DRAWER_SECTION_INDEX = "drawer_section_index";
+
+  List<String> preferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR, DRAWER_SECTION_INDEX);
 
   // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";

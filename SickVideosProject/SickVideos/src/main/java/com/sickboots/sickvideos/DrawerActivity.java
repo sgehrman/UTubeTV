@@ -80,6 +80,9 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 
     if (savedInstanceState != null) {
       mCurrentSection = savedInstanceState.getInt("section");
+    } else {
+       String sectionIndexString = ApplicationHub.instance().getPref(ApplicationHub.DRAWER_SECTION_INDEX, "0");
+      mCurrentSection = Integer.parseInt(sectionIndexString);
     }
 
     selectSection(mCurrentSection, false);
@@ -94,11 +97,17 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
-    // save the current section
-    outState.putInt("section", mCurrentSection);
-
-    // Always call the superclass so it can save the view hierarchy state
     super.onSaveInstanceState(outState);
+
+    outState.putInt("section", mCurrentSection);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+
+    // save current section to prefs file so we can start where the user left off on a relaunch
+    ApplicationHub.instance().setPref(ApplicationHub.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
   }
 
   @Override
