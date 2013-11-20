@@ -153,7 +153,7 @@ public class YouTubeFragment extends Fragment
     listOrGridView.setAdapter(mAdapter);
     listOrGridView.setOnItemClickListener(mAdapter);
 
-    // .015 is the default  // Activity should host a player
+    // .015 is the default
     listOrGridView.setFriction(0.01f);
 
     // Add the Refreshable View and provide the refresh listener;
