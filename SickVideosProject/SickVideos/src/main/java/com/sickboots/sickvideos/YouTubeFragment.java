@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +40,13 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeFragment extends Fragment
     implements Observer, PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
+
+  // Activity should host a player
+  public interface PlayerProvider {
+    public VideoPlayer videoPlayer();
+    void fragmentInstalled();
+  }
+
   private static final String SEARCH_QUERY = "query";
   private static final String LIST_TYPE = "type";
   private static final String CHANNEL_ID = "channel";
@@ -91,23 +99,17 @@ public class YouTubeFragment extends Fragment
     return fragment;
   }
 
-  private void setActionBarTitle() {
-    ActionBar actionBar = getActivity().getActionBar();
+  public CharSequence actionBarTitle() {
+    CharSequence title = null;
+    if (mList != null)
+      title = mList.name();
 
-    // not every host activity has an ActionBar
-    if (actionBar != null) {
-      CharSequence title = null;
-      if (mList != null)
-        title = mList.name();
-
-      // if video player is up, show the video title
-      if (player().visible()) {
-        title = player().title();
-      }
-
-      if (title != null)
-        actionBar.setTitle(title);
+    // if video player is up, show the video title
+    if (player().visible()) {
+      title = player().title();
     }
+
+    return title;
   }
 
   // Observer
@@ -151,7 +153,7 @@ public class YouTubeFragment extends Fragment
     listOrGridView.setAdapter(mAdapter);
     listOrGridView.setOnItemClickListener(mAdapter);
 
-    // .015 is the default
+    // .015 is the default  // Activity should host a player
     listOrGridView.setFriction(0.01f);
 
     // Add the Refreshable View and provide the refresh listener;
@@ -160,10 +162,13 @@ public class YouTubeFragment extends Fragment
 
     // load data if we have it already
     onResults();
-    setActionBarTitle();
 
     View dimmerView = rootView.findViewById(R.id.dimmer);
     mScrollAnimator = new ScrollTriggeredAnimator(listOrGridView, dimmerView);
+
+    // triggers an update for the title, lame hack
+    PlayerProvider provider = (PlayerProvider) getActivity();
+    provider.fragmentInstalled();
 
     return rootView;
   }
@@ -192,7 +197,7 @@ public class YouTubeFragment extends Fragment
   }
 
   private VideoPlayer player() {
-    VideoPlayer.PlayerProvider provider = (VideoPlayer.PlayerProvider) getActivity();
+    PlayerProvider provider = (PlayerProvider) getActivity();
 
     return provider.videoPlayer();
   }

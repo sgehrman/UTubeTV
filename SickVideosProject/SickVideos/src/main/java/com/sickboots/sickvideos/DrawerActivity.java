@@ -2,8 +2,10 @@
 
 package com.sickboots.sickvideos;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,7 +25,7 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements VideoPlayer.PlayerProvider, Util.PullToRefreshListener {
+public class DrawerActivity extends Activity implements YouTubeFragment.PlayerProvider, Util.PullToRefreshListener {
   private DrawerLayout mDrawerLayout;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
@@ -214,11 +217,20 @@ public class DrawerActivity extends Activity implements VideoPlayer.PlayerProvid
         break;
     }
 
-    Util.showFragment(this, fragment, R.id.content_frame, animate ? 1 : 0, false);
+    Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, false);
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);
     mDrawerLayout.closeDrawer(mDrawerList);
+  }
+
+  private YouTubeFragment installedFragment() {
+    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
+
+    if (fragment instanceof YouTubeFragment)
+      return (YouTubeFragment) fragment;
+
+    return null;
   }
 
   /**
@@ -240,12 +252,32 @@ public class DrawerActivity extends Activity implements VideoPlayer.PlayerProvid
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
+  private void updateActionBarTitle() {
+    YouTubeFragment fragment = installedFragment();
+    CharSequence title=null;
+
+    if (fragment != null)
+      title = fragment.actionBarTitle();
+
+    if (title != null)
+      getActionBar().setTitle(title);
+  }
+
+  @Override
+  public void fragmentInstalled() {
+    updateActionBarTitle();
+  }
+
+  @Override
   public VideoPlayer videoPlayer() {
     if (mPlayer == null) {
       mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+
+        // called when the video player opens or closes, adjust the action bar title
+
         @Override
         public void stateChanged() {
-          //     setActionBarTitle();
+          updateActionBarTitle();
         }
       });
     }

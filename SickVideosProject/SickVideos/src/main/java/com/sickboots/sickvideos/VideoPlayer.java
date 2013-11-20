@@ -29,11 +29,6 @@ public class VideoPlayer {
 
   public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
-  // Activity should host a player
-  public interface PlayerProvider {
-    public VideoPlayer videoPlayer();
-  }
-
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
   }
@@ -57,7 +52,6 @@ public class VideoPlayer {
 
     mContext = activity.getApplicationContext();
     videoBox = activity.findViewById(R.id.video_player_box);
-    videoBox.setVisibility(View.INVISIBLE);
 
     ImageButton b;
 
