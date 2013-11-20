@@ -13,6 +13,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
+
+  public interface TimeRemainingListener {
+    // call this on the main thread
+    public void setTimeRemainingText(String timeRemaining);
+    public void setSeekFlashText(String seekFlash);
+  }
+
   private boolean mAutorepeat = false;
   private YouTubePlayer mPlayer;
   private String mVideoId;
@@ -20,7 +27,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mMuteState = false;
   private boolean mMutedForAd = false;
   private Timer mTimer;
-  private TextView mTimeRemainingView;
+  TimeRemainingListener mTimeRemainingListener;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
@@ -121,8 +128,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     }
   }
 
-  public void setTimeRemainingView(TextView timeRemainingView) {
-    mTimeRemainingView = timeRemainingView;
+  public void setTimeRemainingListener(TimeRemainingListener listener) {
+    mTimeRemainingListener = listener;
   }
 
   private void setupFullscreenListener() {
@@ -229,7 +236,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-          if (mTimeRemainingView != null) {
+          if (mTimeRemainingListener != null) {
             long millis = 0;
 
             if (mPlayer != null)
@@ -249,7 +256,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
               @Override
               public void run() {
                 // we're on the main thread...
-                mTimeRemainingView.setText(timeString);
+                mTimeRemainingListener.setTimeRemainingText(timeString);
               }
             });
           }

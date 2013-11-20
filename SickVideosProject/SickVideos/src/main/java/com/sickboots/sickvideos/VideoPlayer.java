@@ -26,6 +26,8 @@ public class VideoPlayer {
   private VideoPlayerStateListener mListener;
   private ImageButton mMuteButton;
   private final int mExtraSpaceOnTopOfPlayerView = 75;
+  private TextView mSeekFlashTextView;
+  private TextView mTimeRemainingTextView;
 
   public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
@@ -36,8 +38,7 @@ public class VideoPlayer {
   public VideoPlayer(Activity activity, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
 
-    // this might be bullshit, need to investigate
-    // will already exist if restoring fragments
+    // will already exist if restoring Activity
     mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
     if (mVideoFragment == null) {
       // had to add this manually rather than setting the class in xml to avoid duplicate id errors
@@ -101,11 +102,8 @@ public class VideoPlayer {
       ;
     });
 
-    TextView timeRemainingView;
-    timeRemainingView = (TextView) videoBox.findViewById(R.id.time_remaining);
-    // we let the video fragment update us in it's own timer
-    mVideoFragment.setTimeRemainingView(timeRemainingView);
-    timeRemainingView.setOnClickListener(new View.OnClickListener() {
+    mTimeRemainingTextView = (TextView) videoBox.findViewById(R.id.time_remaining);
+    mTimeRemainingTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Util.log("text clicked, fix later");
@@ -114,7 +112,22 @@ public class VideoPlayer {
       ;
     });
 
+      mSeekFlashTextView = (TextView) videoBox.findViewById(R.id.seek_flash);
 
+    // we let the video fragment update us in it's own timer
+    mVideoFragment.setTimeRemainingListener(new VideoPlayerFragment.TimeRemainingListener() {
+
+      // call this on the main thread
+      @Override
+      public void setTimeRemainingText(String timeRemaining){
+        mTimeRemainingTextView.setText(timeRemaining);
+      }
+      @Override
+      public void setSeekFlashText(String seekFlash) {
+        mSeekFlashTextView.setText(seekFlash);
+      }
+
+    });
   }
 
   public void open(String videoId, String title) {
