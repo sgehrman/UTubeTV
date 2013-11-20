@@ -6,16 +6,4 @@
         android:orderInCategory="100"
         android:showAsAction="never"/>
 
-    <item android:id="@+id/action_websearch"
-          android:icon="@drawable/action_search"
-          android:title="@string/action_websearch"
-          android:orderInCategory="111"
-          android:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_tabs"
-        android:title="Tabs UI"
-        android:orderInCategory="122"
-        android:showAsAction="never"/>
-
 </menu>

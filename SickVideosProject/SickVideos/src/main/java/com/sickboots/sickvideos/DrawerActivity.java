@@ -144,15 +144,6 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
     }
   }
 
-  /* Called whenever we call invalidateOptionsMenu() */
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu) {
-    // If the nav drawer is open, hide action items related to the content view
-    boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-    menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-    return super.onPrepareOptionsMenu(menu);
-  }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -167,18 +158,6 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
       case R.id.action_settings:
         intent = new Intent();
         intent.setClass(DrawerActivity.this, SettingsActivity.class);
-        startActivity(intent);
-
-        return true;
-      case R.id.action_tabs:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, TabActivity.class);
-        startActivity(intent);
-
-        return true;
-      case R.id.action_websearch:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, PlaylistChooserActivity.class);
         startActivity(intent);
 
         return true;
