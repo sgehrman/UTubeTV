@@ -2,10 +2,8 @@
 
 package com.sickboots.sickvideos;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,6 +27,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   VideoPlayer mPlayer;
+  private int mCurrentSection=0;
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -80,9 +78,11 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
     };
     mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-    if (savedInstanceState == null) {
-      selectItem(0, false);
+    if (savedInstanceState != null) {
+      mCurrentSection = savedInstanceState.getInt("section");
     }
+
+    selectSection(mCurrentSection, false);
 
     // general app tweaks
 //  Util.activateStrictMode(this);
@@ -90,6 +90,15 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    // save the current section
+    outState.putInt("section", mCurrentSection);
+
+    // Always call the superclass so it can save the view hierarchy state
+    super.onSaveInstanceState(outState);
   }
 
   @Override
@@ -170,11 +179,11 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
   private class DrawerItemClickListener implements ListView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      selectItem(position, true);
+      selectSection(position, true);
     }
   }
 
-  private void selectItem(int position, boolean animate) {
+  private void selectSection(int position, boolean animate) {
     Fragment fragment = null;
 
     switch (position) {
@@ -195,6 +204,8 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 //        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
         break;
     }
+
+    mCurrentSection = position;
 
     Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, false);
 
