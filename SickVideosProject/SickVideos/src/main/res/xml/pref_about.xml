@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference android:title="@string/pref_title_privacy_policy">
-        <intent android:action="rs.undefeatedgames.dareshare.InfoActivity">
+        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
             <extra
                 android:name="infoID"
                 android:value="pp"/>
@@ -9,7 +9,7 @@
     </Preference>
 
     <Preference android:title="@string/pref_title_tos">
-        <intent android:action="rs.undefeatedgames.dareshare.InfoActivity">
+        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
             <extra
                 android:name="infoID"
                 android:value="tos"/>

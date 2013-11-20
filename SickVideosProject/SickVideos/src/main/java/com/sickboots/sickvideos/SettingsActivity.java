@@ -23,13 +23,6 @@ public class SettingsActivity extends PreferenceActivity {
   }
 
   @Override
-  protected void onPostCreate(Bundle savedInstanceState) {
-    super.onPostCreate(savedInstanceState);
-
-    setupSimplePreferencesScreen();
-  }
-
-  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       // Respond to the action bar's Up/Home button
@@ -42,9 +35,7 @@ public class SettingsActivity extends PreferenceActivity {
 
   @Override
   public void onBuildHeaders(List<Header> target) {
-    if (!isSimplePreferences(this)) {
       loadHeadersFromResource(R.xml.pref_headers, target);
-    }
   }
 
   private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
@@ -85,64 +76,10 @@ public class SettingsActivity extends PreferenceActivity {
       String settings = getArguments().getString("fragmentID");
       if ("general".equals(settings)) {
         addPreferencesFromResource(R.xml.pref_general);
-      } else if ("sharing".equals(settings)) {
-        addPreferencesFromResource(R.xml.pref_sharing);
       } else if ("about".equals(settings)) {
         addPreferencesFromResource(R.xml.pref_about);
       }
-
-      // Bind the summaries of EditText/List/Dialog preferences
-      // to their values. When their values change, their summaries are
-      // updated to reflect the new value, per the Android Design
-      // guidelines.
-      bindPreferenceSummaryToValue(findPreference("user_name"));
-      bindPreferenceSummaryToValue(findPreference("user_handle"));
     }
-  }
-
-  private void setupSimplePreferencesScreen() {
-    if (!isSimplePreferences(this)) {
-      return;
-    }
-
-    // getPreferenceScreen() returns null unless we call this first
-    addPreferencesFromResource(R.xml.pref_empty);
-
-    PreferenceCategory fakeHeader = new PreferenceCategory(this);
-    fakeHeader.setTitle(R.string.pref_header_general);
-    getPreferenceScreen().addPreference(fakeHeader);
-    addPreferencesFromResource(R.xml.pref_general);
-
-    fakeHeader = new PreferenceCategory(this);
-    fakeHeader.setTitle(R.string.pref_header_sharing);
-    getPreferenceScreen().addPreference(fakeHeader);
-    addPreferencesFromResource(R.xml.pref_sharing);
-
-    fakeHeader = new PreferenceCategory(this);
-    fakeHeader.setTitle(R.string.pref_header_about);
-    getPreferenceScreen().addPreference(fakeHeader);
-    addPreferencesFromResource(R.xml.pref_about);
-
-    // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
-    // their values. When their values change, their summaries are updated
-    // to reflect the new value, per the Android Design guidelines.
-    bindPreferenceSummaryToValue(findPreference("user_name"));
-    bindPreferenceSummaryToValue(findPreference("user_handle"));
-  }
-
-  @Override
-  public boolean onIsMultiPane() {
-    return isXLargeTablet(this) && !isSimplePreferences(this);
-  }
-
-  private static boolean isXLargeTablet(Context context) {
-    return (context.getResources().getConfiguration().screenLayout
-        & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-  }
-
-  private static boolean isSimplePreferences(Context context) {
-    return Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-        || !isXLargeTablet(context);
   }
 }
 

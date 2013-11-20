@@ -2,22 +2,11 @@
 
     <header
         android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
-        android:title="@string/pref_header_general"
-        android:summary="An example of some preferences.">
+        android:title="@string/pref_header_general">
 
         <extra
             android:name="fragmentID"
             android:value="general"/>
-    </header>
-
-
-    <header
-        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
-        android:title="@string/pref_header_sharing">
-
-        <extra
-            android:name="fragmentID"
-            android:value="sharing"/>
     </header>
 
     <header
@@ -31,7 +20,7 @@
 
     <header
         android:title="Sick Boots"
-        android:summary="Check out our home page.">
+        android:summary="Check out our other apps.">
 
         <intent
             android:action="android.intent.action.VIEW"
