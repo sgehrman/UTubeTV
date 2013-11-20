@@ -19,7 +19,6 @@ import com.sickboots.iconicdroid.icon.EntypoIcon;
 import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.VideoPlayerFragment;
 import com.sickboots.sickvideos.misc.Util;
 
 public class VideoPlayer {
