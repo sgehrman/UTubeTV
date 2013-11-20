@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.sickboots.sickvideos.misc.ApplicationHub;
+
 import java.util.Observable;
 import java.util.Observer;
 

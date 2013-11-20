@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sickboots.sickvideos.youtube.YouTubeFragment;
+
 /**
  * Created by sgehrman on 10/28/13.
  */

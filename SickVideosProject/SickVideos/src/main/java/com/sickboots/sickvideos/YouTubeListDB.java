@@ -2,6 +2,10 @@ package com.sickboots.sickvideos;
 
 import android.os.AsyncTask;
 
+import com.sickboots.sickvideos.database.YouTubeDatabase;
+import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeAPI;
+
 import java.util.List;
 import java.util.Map;
 

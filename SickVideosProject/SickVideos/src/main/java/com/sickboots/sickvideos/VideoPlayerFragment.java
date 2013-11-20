@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.Timer;
 import java.util.TimerTask;

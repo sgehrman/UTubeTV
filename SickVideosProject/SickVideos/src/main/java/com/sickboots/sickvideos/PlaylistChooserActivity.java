@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeFragment;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
