@@ -20,12 +20,12 @@ import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 
 public class VideoPlayer {
-
   private View videoBox;
-  Context mContext;
-  VideoPlayerFragment mVideoFragment;
-  VideoPlayerStateListener mListener;
-  ImageButton mMuteButton;
+  private Context mContext;
+  private VideoPlayerFragment mVideoFragment;
+  private VideoPlayerStateListener mListener;
+  private ImageButton mMuteButton;
+  private final int mExtraSpaceOnTopOfPlayerView = 75;
 
   public enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
 
@@ -131,7 +131,7 @@ public class VideoPlayer {
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
       Util.vibrate(mContext);
-      videoBox.animate().translationY(-Util.dpToPx(45, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction(new Runnable() {
+      videoBox.animate().translationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext)).setInterpolator(new OvershootInterpolator()).setDuration(300).withEndAction(new Runnable() {
         @Override
         public void run() {
           if (mListener != null) {
