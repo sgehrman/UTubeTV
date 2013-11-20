@@ -135,6 +135,12 @@ public class VideoPlayer {
     });
   }
 
+  // video player fragment restores itself, so just show it and let it do its thing
+  public void restore() {
+    videoBox.setTranslationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext));
+    videoBox.setVisibility(View.VISIBLE);
+  }
+
   public void open(String videoId, String title, boolean animate) {
     mVideoFragment.setVideo(videoId, title);
 
@@ -154,13 +160,13 @@ public class VideoPlayer {
           .setInterpolator(new OvershootInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
-        @Override
-        public void run() {
-          if (mListener != null) {
-            mListener.stateChanged();
-          }
-        }
-      });
+            @Override
+            public void run() {
+              if (mListener != null) {
+                mListener.stateChanged();
+              }
+            }
+          });
     }
   }
 

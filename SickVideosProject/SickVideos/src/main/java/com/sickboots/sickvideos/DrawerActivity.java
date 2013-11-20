@@ -99,6 +99,16 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
+
+
+    // show player if activity was destroyed and recreated
+    if (savedInstanceState != null) {
+      boolean showPlayer = savedInstanceState.getBoolean("player_visible");
+
+      // video player fragment restores itself, so just show it and let it do its thing
+      if (showPlayer)
+        videoPlayer().restore();
+    }
   }
 
   @Override
@@ -106,6 +116,13 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
     super.onSaveInstanceState(outState);
 
     outState.putInt("section", mCurrentSection);
+
+    if (mPlayer != null) {
+      if (mPlayer.visible()) {
+        outState.putBoolean("player_visible", true);
+      }
+    }
+
   }
 
   @Override
