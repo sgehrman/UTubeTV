@@ -55,3 +55,9 @@ Skateboard Tricks
 Fractals
 Doremon
 
+
+todo:
+- add hidden flag to hide videos, checkbox in ui in info area
+  do we add to the database, or have a pref that holds hidden video ids?  if in the database, we can't wipe it everytime, must do some kind of transfer.
+
+
