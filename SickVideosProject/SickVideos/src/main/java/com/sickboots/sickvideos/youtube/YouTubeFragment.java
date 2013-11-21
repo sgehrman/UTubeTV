@@ -371,7 +371,6 @@ public class YouTubeFragment extends Fragment
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.duration = (TextView) convertView.findViewById(R.id.duration);
-        holder.gradientOverlay = (View) convertView.findViewById(R.id.gradient_overlay);
         convertView.setTag(holder);
       } else {
         holder = (ViewHolder) convertView.getTag();
@@ -427,14 +426,6 @@ public class YouTubeFragment extends Fragment
         }
       }
 
-      if (holder.gradientOverlay != null) {
-//        if ((position % 2) == 0) {
-//          holder.gradientOverlay.setBackgroundResource(R.drawable.blue_gradient);
-//        } else {
-//          holder.gradientOverlay.setBackgroundResource(R.drawable.black_gradient);
-//        }
-      }
-
       // load more data if at the end
       mList.updateHighestDisplayedIndex(position);
 
@@ -446,7 +437,6 @@ public class YouTubeFragment extends Fragment
       TextView description;
       TextView duration;
       ImageView image;
-      View gradientOverlay;
     }
   }
 

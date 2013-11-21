@@ -17,7 +17,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:id="@+id/gradient_overlay"
         android:background="@drawable/dark_bottom_shadow"
 
         android:layout_alignParentBottom="true"
