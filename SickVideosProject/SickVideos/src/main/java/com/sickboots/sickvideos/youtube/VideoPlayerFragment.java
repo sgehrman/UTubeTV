@@ -158,7 +158,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public int getDurationMillis() {
     if (mPlayer != null)
-      return mPlayer.getCurrentTimeMillis();
+      return mPlayer.getDurationMillis();
     else
       Util.log("getDurationMillis: mPlayer is null...");
 

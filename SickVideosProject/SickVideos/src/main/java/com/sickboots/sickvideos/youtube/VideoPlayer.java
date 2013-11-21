@@ -263,25 +263,19 @@ public class VideoPlayer {
     View popupContentsView = inflater.inflate(R.layout.video_seek_popup, null);
     final PopupWindow pw = new PopupWindow(popupContentsView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
 
-    // bugfix: must set some kind of background so that clicking outside the view will dismiss the popup
+    // hack_alert: must set some kind of background so that clicking outside the view will dismiss the popup (known bug in Android)
     pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     pw.setOutsideTouchable(true);
     pw.showAsDropDown(anchorView);
 
-    // setup slider to update textview
+    float time = mVideoFragment.getCurrentTimeMillis();
+    float duration = mVideoFragment.getDurationMillis();
+    float currentPercent = time/duration;
+    int startValue = (int) (currentPercent * 100);
+
     SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);
-
-    sb.setMax(100);
-    sb.setProgress(50);
-
-
-    int time = mVideoFragment.getCurrentTimeMillis();
-
-    int duration = mVideoFragment.getDurationMillis();
-
-
-
-
+    sb.setMax(100);   // using max like a percent
+    sb.setProgress(startValue);
 
     sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override
@@ -291,14 +285,16 @@ public class VideoPlayer {
 
       @Override
       public void onStartTrackingTouch(SeekBar seekBar) {
-
       }
 
       @Override
       public void onStopTrackingTouch(SeekBar seekBar) {
         // seek when released
-        int progress = seekBar.getProgress();
-        mVideoFragment.seekToMillis(progress);
+        float percentDone = seekBar.getProgress() / 100.0f;
+        float duration = mVideoFragment.getDurationMillis();
+        int seekTo = (int) (percentDone * duration);
+
+        mVideoFragment.seekToMillis(seekTo);
 
         pw.dismiss();
       }
