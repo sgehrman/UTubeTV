@@ -11,6 +11,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -123,27 +124,39 @@ public class VideoPlayer {
 
       // call this on the main thread
       @Override
-      public void setTimeRemainingText(String timeRemaining) {
+      public void setTimeRemainingText(final String timeRemaining) {
         mTimeRemainingTextView.setText(timeRemaining);
       }
 
       @Override
-      public void setSeekFlashText(String seekFlash) {
+      public void setSeekFlashText(final String seekFlash) {
         mSeekFlashTextView.setText(seekFlash);
-        mTimeRemainingTextView.setText(seekFlash);  // set to same duration just so we never see it display the old value (not sure if this happens, but doing for completeness)
 
+        int duration = 300;
+
+        // fade old one out
+        mTimeRemainingTextView.animate()
+          .setDuration(duration)
+          .alpha(0.0f);
+
+        // start off off the screen, make visible
+        mSeekFlashTextView.setTranslationY(-60.0f);
         mSeekFlashTextView.setVisibility(View.VISIBLE);
-        mTimeRemainingTextView.setVisibility(View.INVISIBLE);
 
-        // is this the best way to do a simple delayed runnable?
-        new Handler().postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            mSeekFlashTextView.setVisibility(View.INVISIBLE);
-            mTimeRemainingTextView.setVisibility(View.VISIBLE);
-          }
-        }, 2000);
+        // run animation, new time slides in from top, old time slides off
+        mSeekFlashTextView.animate()
+          .setDuration(duration)
+          .translationY(0)
+          .setInterpolator(new BounceInterpolator())
+          .withEndAction(new Runnable() {
+            @Override
+            public void run() {
+              mSeekFlashTextView.setVisibility(View.INVISIBLE);
 
+              mTimeRemainingTextView.setText(seekFlash);
+              mTimeRemainingTextView.setAlpha(1.0f);
+            }
+          });
       }
 
     });

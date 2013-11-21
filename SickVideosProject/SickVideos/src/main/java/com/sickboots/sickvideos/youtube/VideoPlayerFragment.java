@@ -17,8 +17,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public interface TimeRemainingListener {
     // call this on the main thread
-    public void setTimeRemainingText(String timeRemaining);
-    public void setSeekFlashText(String seekFlash);
+    public void setTimeRemainingText(final String timeRemaining);
+    public void setSeekFlashText(final String seekFlash);
   }
 
   private boolean mAutorepeat = false;

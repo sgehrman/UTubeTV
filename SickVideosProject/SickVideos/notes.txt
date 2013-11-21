@@ -37,6 +37,14 @@ channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
 
 
+  // is this the best way to do a simple delayed runnable?
+        new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+          }
+        }, 2000);
+
+
 Joe Rogan,
 NeuroSoup,
 Terrance McKenna
