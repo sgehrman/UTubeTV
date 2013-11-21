@@ -26,9 +26,9 @@ public class ScrollTriggeredAnimator {
 
     mAnimationTarget = animationTarget;
 
-    int scrollBarPanelFadeDuration = 500; // ViewConfiguration.getScrollBarFadeDuration();
+    int scrollBarPanelFadeDuration = 250; // ViewConfiguration.getScrollBarFadeDuration();
     mInDuration = scrollBarPanelFadeDuration;
-    mOutDuration = scrollBarPanelFadeDuration * 2;
+    mOutDuration = scrollBarPanelFadeDuration * 4;
 
     absListView.setOnScrollListener(setupListener());
   }
