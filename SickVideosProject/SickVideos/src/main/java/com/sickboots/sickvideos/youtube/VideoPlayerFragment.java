@@ -28,7 +28,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mMuteState = false;
   private boolean mMutedForAd = false;
   private Timer mTimer;
-  TimeRemainingListener mTimeRemainingListener;
+  private TimeRemainingListener mTimeRemainingListener;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
