@@ -28,7 +28,7 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
+        android:id="@+id/video_seek_bar"
         android:layout_gravity="center_vertical"
         />
 

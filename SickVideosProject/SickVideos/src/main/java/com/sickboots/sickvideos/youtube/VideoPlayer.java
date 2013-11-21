@@ -20,6 +20,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sickboots.iconicdroid.IconicFontDrawable;
@@ -259,17 +260,36 @@ public class VideoPlayer {
 
   private void showSeekPopupWindow(View anchorView) {
     LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    View layout = inflater.inflate(R.layout.video_seek_popup, null);
-    final PopupWindow pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
+    View popupContentsView = inflater.inflate(R.layout.video_seek_popup, null);
+    final PopupWindow pw = new PopupWindow(popupContentsView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
 
     // bugfix: must set some kind of background so that clicking outside the view will dismiss the popup
     pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     pw.setOutsideTouchable(true);
     pw.showAsDropDown(anchorView);
 
-    // wire up views, set initial values etc.
+    // setup slider to update textview
+    SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);
 
+    sb.setMax(1000);
+    sb.setProgress(500);
 
+    sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      @Override
+      public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        mTimeRemainingTextView.setText(Util.millisecondsToDuration(progress*1000));
+      }
+
+      @Override
+      public void onStartTrackingTouch(SeekBar seekBar) {
+
+      }
+
+      @Override
+      public void onStopTrackingTouch(SeekBar seekBar) {
+        pw.dismiss();
+      }
+    });
 
   }
 }
