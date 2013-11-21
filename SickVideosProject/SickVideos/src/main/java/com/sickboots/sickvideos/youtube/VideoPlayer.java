@@ -6,14 +6,19 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sickboots.iconicdroid.IconicFontDrawable;
@@ -110,6 +115,7 @@ public class VideoPlayer {
     mTimeRemainingTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        showSeekPopupWindow(mTimeRemainingTextView);
         Util.log("text clicked, fix later");
       }
 
@@ -246,5 +252,16 @@ public class VideoPlayer {
       mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.RED));
     else
       mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE));
+  }
+
+  private void showSeekPopupWindow(View anchorView) {
+    PopupWindow pw;
+    LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    View layout = inflater.inflate(R.layout.video_seek_popup, null);
+    pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+    pw.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.video_seek_background));
+    pw.setOutsideTouchable(true);
+    pw.showAsDropDown(anchorView);
+
   }
 }
