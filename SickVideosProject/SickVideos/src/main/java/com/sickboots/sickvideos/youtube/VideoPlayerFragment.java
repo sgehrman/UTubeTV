@@ -147,6 +147,31 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     });
   }
 
+  public int getCurrentTimeMillis() {
+    if (mPlayer != null)
+      return mPlayer.getCurrentTimeMillis();
+    else
+      Util.log("getCurrentTimeMillis: mPlayer is null...");
+
+    return 0;
+  }
+
+  public int getDurationMillis() {
+    if (mPlayer != null)
+      return mPlayer.getCurrentTimeMillis();
+    else
+      Util.log("getDurationMillis: mPlayer is null...");
+
+    return 0;
+  }
+
+  public void seekToMillis(int i) {
+    if (mPlayer != null)
+      mPlayer.seekToMillis(i);
+    else
+      Util.log("seekToMillis: mPlayer is null...");
+  }
+
   private void setupStateChangeListener() {
     if (mPlayer == null)
       return;

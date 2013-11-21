@@ -271,13 +271,22 @@ public class VideoPlayer {
     // setup slider to update textview
     SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);
 
-    sb.setMax(1000);
-    sb.setProgress(500);
+    sb.setMax(100);
+    sb.setProgress(50);
+
+
+    int time = mVideoFragment.getCurrentTimeMillis();
+
+    int duration = mVideoFragment.getDurationMillis();
+
+
+
+
 
     sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override
       public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mTimeRemainingTextView.setText(Util.millisecondsToDuration(progress*1000));
+        mTimeRemainingTextView.setText(Util.millisecondsToDuration(progress * 1000));
       }
 
       @Override
@@ -287,6 +296,10 @@ public class VideoPlayer {
 
       @Override
       public void onStopTrackingTouch(SeekBar seekBar) {
+        // seek when released
+        int progress = seekBar.getProgress();
+        mVideoFragment.seekToMillis(progress);
+
         pw.dismiss();
       }
     });
