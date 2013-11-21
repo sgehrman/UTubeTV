@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -129,6 +130,20 @@ public class VideoPlayer {
       @Override
       public void setSeekFlashText(String seekFlash) {
         mSeekFlashTextView.setText(seekFlash);
+        mTimeRemainingTextView.setText(seekFlash);  // set to same duration just so we never see it display the old value (not sure if this happens, but doing for completeness)
+
+        mSeekFlashTextView.setVisibility(View.VISIBLE);
+        mTimeRemainingTextView.setVisibility(View.INVISIBLE);
+
+        // is this the best way to do a simple delayed runnable?
+        new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            mSeekFlashTextView.setVisibility(View.INVISIBLE);
+            mTimeRemainingTextView.setVisibility(View.VISIBLE);
+          }
+        }, 2000);
+
       }
 
     });

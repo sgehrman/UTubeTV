@@ -217,8 +217,18 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       }
 
       @Override
-      public void onSeekTo(int i) {
-        Util.log("seeking: " + i + " seconds");
+      public void onSeekTo(int newPositionMillis) {
+        Util.log("seeking: " + newPositionMillis/1000 + " seconds");
+
+        final String seekString = Util.millisecondsToDuration(newPositionMillis);
+        ApplicationHub.instance().runOnMainThread(new Runnable() {
+          @Override
+          public void run() {
+            // we're on the main thread...
+            mTimeRemainingListener.setSeekFlashText(seekString);
+          }
+        });
+
       }
     });
 

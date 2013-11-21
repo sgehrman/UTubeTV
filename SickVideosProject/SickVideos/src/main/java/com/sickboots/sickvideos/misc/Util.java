@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.os.Vibrator;
 import android.util.Log;
@@ -161,6 +162,13 @@ public class Util {
       result = result.substring(zeros.length());
 
     return result;
+  }
+
+  public static boolean onMainThread() {
+    // can also use this
+    // Looper.getMainLooper().getThread() == Thread.currentThread();
+
+    return Looper.myLooper() == Looper.getMainLooper();
   }
 
 }
