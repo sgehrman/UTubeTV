@@ -7,7 +7,11 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.os.Vibrator;
@@ -169,6 +173,22 @@ public class Util {
     // Looper.getMainLooper().getThread() == Thread.currentThread();
 
     return Looper.myLooper() == Looper.getMainLooper();
+  }
+
+  public static Bitmap drawableToBitmap(Drawable drawable, int size) {
+    if (drawable instanceof BitmapDrawable) {
+      return ((BitmapDrawable)drawable).getBitmap();
+    }
+
+    // original code  used this for width and height, but our icons don't have Intrinsic size
+    // drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight()
+
+    Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+    Canvas canvas = new Canvas(bitmap);
+    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+    drawable.draw(canvas);
+
+    return bitmap;
   }
 
 }

@@ -122,7 +122,6 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
         outState.putBoolean("player_visible", true);
       }
     }
-
   }
 
   @Override

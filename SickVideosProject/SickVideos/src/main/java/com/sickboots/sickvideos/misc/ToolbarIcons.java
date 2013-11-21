@@ -1,7 +1,9 @@
 package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
@@ -59,6 +61,17 @@ public class ToolbarIcons {
     states.addState(new int[]{}, normal);
 
     return states;
+  }
+
+  // this doesn't have the states like above. used to convert an icon to a simple bitmap, assuming things like animations will be faster with a bitmap over a text based drawable
+  public static BitmapDrawable iconBitmap(Context context, IconID iconID, int iconColor, int size) {
+    BitmapDrawable result = null;
+
+    Drawable iconDrawable = icon(context, iconID, iconColor);
+
+    Bitmap map = Util.drawableToBitmap(iconDrawable, size);
+
+    return new BitmapDrawable(context.getResources(), map);
   }
 
 }

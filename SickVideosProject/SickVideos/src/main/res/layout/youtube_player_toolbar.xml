@@ -52,7 +52,6 @@
                 android:textColor="@android:color/white"
                 android:text="00:00"
                 />
-
         </RelativeLayout>
 
         <ImageButton

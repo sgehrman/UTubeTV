@@ -29,8 +29,6 @@ public class InfoActivity extends Activity {
         webview.loadUrl("file:///android_asset/tos.html");
       }
     }
-
-
   }
 
   @Override
@@ -43,6 +41,4 @@ public class InfoActivity extends Activity {
     }
     return super.onOptionsItemSelected(item);
   }
-
-
 }
