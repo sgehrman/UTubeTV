@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.unused;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeFragment;
 

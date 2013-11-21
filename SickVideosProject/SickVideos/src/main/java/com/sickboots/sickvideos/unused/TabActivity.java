@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.unused;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.SettingsActivity;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import com.sickboots.sickvideos.youtube.YouTubeFragment;

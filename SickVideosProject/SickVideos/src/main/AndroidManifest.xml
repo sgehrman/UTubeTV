@@ -51,7 +51,7 @@
 
         <activity
             android:theme="@android:style/Theme.Holo.Dialog"
-            android:name="com.sickboots.sickvideos.PlaylistChooserActivity"
+            android:name=".unused.PlaylistChooserActivity"
             android:label="@string/title_activity_playlist_chooser">
         </activity>
 

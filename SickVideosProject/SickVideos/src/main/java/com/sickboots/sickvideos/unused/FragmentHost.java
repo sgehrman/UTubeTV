@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.unused;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.youtube.YouTubeFragment;
 
 /**
