@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -115,8 +116,10 @@ public class VideoPlayer {
     mTimeRemainingTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        showSeekPopupWindow(mTimeRemainingTextView);
-        Util.log("text clicked, fix later");
+        // put it below toolbar
+        View tb = (View) videoBox.findViewById(R.id.video_toolbar_view);
+
+        showSeekPopupWindow(tb);
       }
 
       ;
@@ -255,13 +258,18 @@ public class VideoPlayer {
   }
 
   private void showSeekPopupWindow(View anchorView) {
-    PopupWindow pw;
     LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View layout = inflater.inflate(R.layout.video_seek_popup, null);
-    pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
-    pw.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.video_seek_background));
+    final PopupWindow pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
+
+    // bugfix: must set some kind of background so that clicking outside the view will dismiss the popup
+    pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     pw.setOutsideTouchable(true);
     pw.showAsDropDown(anchorView);
+
+    // wire up views, set initial values etc.
+
+
 
   }
 }

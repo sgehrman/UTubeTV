@@ -1,20 +1,25 @@
 <FrameLayout
-    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/video_seek_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:padding="12dp"
         android:layout_width="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+
         android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="12:20"
+
+        android:text="00:00"
         android:textSize="14sp"
         android:textColor="#fff"
         />
@@ -31,7 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="12:20"
+
+        android:text="00:00"
         android:textSize="14sp"
         android:textColor="#fff"
         />

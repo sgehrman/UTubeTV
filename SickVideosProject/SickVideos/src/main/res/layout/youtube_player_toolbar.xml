@@ -3,6 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:background="@drawable/toolbar_gradient"
              android:clickable="true"
+             android:id="@+id/video_toolbar_view"
              android:layout_width="match_parent"
              android:layout_height="wrap_content">
 
