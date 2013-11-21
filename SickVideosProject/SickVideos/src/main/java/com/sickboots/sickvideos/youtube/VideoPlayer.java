@@ -258,7 +258,7 @@ public class VideoPlayer {
     PopupWindow pw;
     LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View layout = inflater.inflate(R.layout.video_seek_popup, null);
-    pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+    pw = new PopupWindow(layout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
     pw.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.video_seek_background));
     pw.setOutsideTouchable(true);
     pw.showAsDropDown(anchorView);
