@@ -1,10 +1,11 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.lists;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeFragment;

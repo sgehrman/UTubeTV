@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.lists;
 
 import android.app.Activity;
 import android.app.Fragment;
