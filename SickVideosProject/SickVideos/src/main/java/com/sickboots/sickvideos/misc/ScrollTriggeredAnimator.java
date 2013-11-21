@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.misc;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.ScrollTriggeredAnimator;
+import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.UIAccess;
 import com.sickboots.sickvideos.YouTubeList;
 import com.sickboots.sickvideos.YouTubeListDB;
