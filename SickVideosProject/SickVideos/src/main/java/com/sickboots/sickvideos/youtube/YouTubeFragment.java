@@ -57,8 +57,7 @@ public class YouTubeFragment extends Fragment
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
-  private ScrollTriggeredAnimator mScrollAnimator;
-  private final float mImageAlpha = .6f;
+  private final float mImageAlpha = .8f;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -165,7 +164,8 @@ public class YouTubeFragment extends Fragment
     onResults();
 
     View dimmerView = rootView.findViewById(R.id.dimmer);
-    mScrollAnimator = new ScrollTriggeredAnimator(listOrGridView, dimmerView);
+
+    new ScrollTriggeredAnimator(listOrGridView, dimmerView);
 
     // triggers an update for the title, lame hack
     PlayerProvider provider = (PlayerProvider) getActivity();
