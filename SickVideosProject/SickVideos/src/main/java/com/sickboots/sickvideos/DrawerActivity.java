@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -201,6 +202,14 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
         startActivity(intent);
 
         return true;
+
+      case R.id.action_more_apps:
+           intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://search?q=pub:Sick Boots"));
+        startActivity(intent);
+
+        return true;
+
       default:
         return super.onOptionsItemSelected(item);
     }
