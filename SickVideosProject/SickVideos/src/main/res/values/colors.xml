@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dark_gray">#ff202020</color>
-    <color name="light_gray">#ff383838</color>
+    <color name="light_gray">#ff343434</color>
     <color name="engineering_orange">#BA160C</color>
     <color name="aerospace_orange">#FF4F00</color>
     <color name="ggbridge_orange">#C0362C</color>
@@ -9,6 +9,6 @@
 
     <color name="action_bar">@color/dark_gray</color>
     <color name="action_bar_light">@color/light_gray</color>
-    
+
     <color name="content_background">@color/holo_blue</color>
 </resources>
