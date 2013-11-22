@@ -2,6 +2,8 @@ package com.sickboots.sickvideos.lists;
 
 import android.os.AsyncTask;
 
+import com.sickboots.sickvideos.database.BaseDatabase;
+import com.sickboots.sickvideos.database.PlaylistDatabase;
 import com.sickboots.sickvideos.database.VideoDatabase;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -11,12 +13,23 @@ import java.util.Map;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
-  VideoDatabase database;
+  BaseDatabase database;
 
   public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-    database = new VideoDatabase(getActivity(), s.databaseName());
+    switch (s.type) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        database = new VideoDatabase(getActivity(), s.databaseName());
+
+        break;
+      case PLAYLISTS:
+        database = new PlaylistDatabase(getActivity(), s.databaseName());
+        break;
+    }
 
     loadData(true);
   }
@@ -78,7 +91,7 @@ public class YouTubeListDB extends YouTubeList {
       Util.log("YouTubeListDBTask: started");
 
       // are the results already in the DB?
-      result = database.getVideos();
+      result = database.getItems();
 
       if (result.size() == 0) {
         YouTubeAPI.BaseListResults listResults = null;
@@ -117,7 +130,7 @@ public class YouTubeListDB extends YouTubeList {
         }
 
         // add results to DB
-        database.insertVideos(result);
+        database.insertItems(result);
       }
 
       return result;

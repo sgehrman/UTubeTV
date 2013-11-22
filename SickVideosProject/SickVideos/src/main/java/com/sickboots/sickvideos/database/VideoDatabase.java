@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -14,140 +15,80 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VideoDatabase extends SQLiteOpenHelper {
-  String mTableName;
-
-  private static final int DATABASE_VERSION = 22;
+public class VideoDatabase extends BaseDatabase {
+  // stores information about a video
+  public static class VideoEntry implements BaseColumns {
+    public static final String COLUMN_NAME_VIDEO = "video";
+    public static final String COLUMN_NAME_TITLE = "title";
+    public static final String COLUMN_NAME_DESCRIPTION = "description";
+    public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+    public static final String COLUMN_NAME_DURATION = "duration";
+  }
 
   public VideoDatabase(Context context, String databaseName) {
-    super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
-
-    mTableName = "item_table";
+    super(context, databaseName);
   }
 
-  public void onCreate(SQLiteDatabase db) {
-    db.execSQL(createTableSQL());
-  }
-
-  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    // This database is only a cache for online data, so its upgrade policy is
-    // to simply to discard the data and start over
-    db.execSQL("DROP TABLE IF EXISTS " + mTableName);
-    onCreate(db);
-  }
-
-  public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    onUpgrade(db, oldVersion, newVersion);
-  }
-
-  public void deleteAllRows() {
-    SQLiteDatabase db = getWritableDatabase();
-
-    db.delete(mTableName, null, null);
-  }
-
-  public void insertVideos(List<Map> videos) {
-    if (videos != null) {
-      // Gets the data repository in write mode
-      SQLiteDatabase db = getWritableDatabase();
-
-      db.beginTransaction();
-      try {
-        for (Map video : videos)
-          insertVideo(db, video);
-
-        db.setTransactionSuccessful();
-      } catch (Exception e) {
-        Util.log("Insert Videos exception: " + e.getMessage());
-      } finally {
-        db.endTransaction();
-        db.close();
-      }
-    }
-  }
-
-  public List<Map> getVideos() {
-    List<Map> result = new ArrayList<Map>();
-
-    SQLiteDatabase db = getReadableDatabase();
-
-    String[] projection = {
-        DatabaseContracts.VideoEntry._ID,
-        DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO,
-        DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE,
-        DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION,
-        DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL,
-        DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION
+  @Override
+  protected String[] projection() {
+    String[] result = {
+        VideoEntry._ID,
+        VideoEntry.COLUMN_NAME_VIDEO,
+        VideoEntry.COLUMN_NAME_TITLE,
+        VideoEntry.COLUMN_NAME_DESCRIPTION,
+        VideoEntry.COLUMN_NAME_THUMBNAIL,
+        VideoEntry.COLUMN_NAME_DURATION
     };
 
-    Cursor cursor = db.query(
-        mTableName,                     // The table to query
-        projection,                     // The columns to return
-        null,                           // The columns for the WHERE clause
-        null,                           // The values for the WHERE clause
-        null,                           // don't group the rows
-        null,                           // don't filter by row groups
-        null                            // The sort order
-    );
-
-    cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
-      result.add(cursorToVideo(cursor));
-      cursor.moveToNext();
-    }
-
-    cursor.close();
-    db.close();
-
     return result;
   }
 
-  // ============================================================
-  // private
-
-  private Map cursorToVideo(Cursor cursor) {
+  @Override
+  protected Map cursorToItem(Cursor cursor) {
     Map result = new HashMap();
 
-    result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO)));
-    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE)));
-    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION)));
-    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL)));
-    result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION)));
+    result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO)));
+    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE)));
+    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
+    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL)));
+    result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION)));
 
     return result;
   }
 
-  private void insertVideo(SQLiteDatabase db, Map video) {
+  @Override
+  protected void insertItem(SQLiteDatabase db, Map video) {
     // Create a new map of values, where column names are the keys
     ContentValues values = new ContentValues();
 
-    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO, (String) video.get(YouTubeAPI.VIDEO_KEY));
-    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE, (String) video.get(YouTubeAPI.TITLE_KEY));
-    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get(YouTubeAPI.DESCRIPTION_KEY));
-    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get(YouTubeAPI.THUMBNAIL_KEY));
-    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeAPI.DURATION_KEY));
+    values.put(VideoEntry.COLUMN_NAME_VIDEO, (String) video.get(YouTubeAPI.VIDEO_KEY));
+    values.put(VideoEntry.COLUMN_NAME_TITLE, (String) video.get(YouTubeAPI.TITLE_KEY));
+    values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get(YouTubeAPI.DESCRIPTION_KEY));
+    values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get(YouTubeAPI.THUMBNAIL_KEY));
+    values.put(VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeAPI.DURATION_KEY));
 
     // Insert the new row, returning the primary key value of the new row
     db.insert(mTableName, null, values);
   }
 
-  private String createTableSQL() {
+  @Override
+  protected String createTableSQL() {
     String TEXT_TYPE = " TEXT";
     String COMMA_SEP = ",";
 
     String result = "CREATE TABLE "
         + mTableName
         + " ("
-        + DatabaseContracts.VideoEntry._ID + " INTEGER PRIMARY KEY,"
-        + DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
+        + VideoEntry._ID + " INTEGER PRIMARY KEY,"
+        + VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
         + COMMA_SEP
-        + DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
+        + VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
         + COMMA_SEP
-        + DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+        + VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
         + COMMA_SEP
-        + DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+        + VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
         + COMMA_SEP
-        + DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
+        + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
         + " )";
 
     return result;
