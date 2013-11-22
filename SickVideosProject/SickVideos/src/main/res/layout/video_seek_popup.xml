@@ -14,32 +14,12 @@
 
         android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-
-        android:text="00:00"
-        android:textSize="14sp"
-        android:textColor="#fff"
-        />
-
     <SeekBar
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/video_seek_bar"
         android:layout_gravity="center_vertical"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-
-        android:text="00:00"
-        android:textSize="14sp"
-        android:textColor="#fff"
         />
 
     </LinearLayout>

@@ -44,4 +44,16 @@
 
     </style>
 
+    <style name="VideoPlayerToolbarTextStyle">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+
+        <item name="android:shadowColor">#000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:text">00:00</item>
+    </style>
+
 </resources>

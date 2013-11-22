@@ -269,7 +269,7 @@ public class VideoPlayer {
     pw.showAsDropDown(anchorView);
 
     float time = mVideoFragment.getCurrentTimeMillis();
-    float duration = mVideoFragment.getDurationMillis();
+    final float duration = mVideoFragment.getDurationMillis();
     float currentPercent = time/duration;
     int startValue = (int) (currentPercent * 100);
 
@@ -280,7 +280,10 @@ public class VideoPlayer {
     sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override
       public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mTimeRemainingTextView.setText(Util.millisecondsToDuration(progress * 1000));
+        float progressPercent = progress / 100.0f;
+        int seekTo = (int) (progressPercent * duration);
+
+        mTimeRemainingTextView.setText(Util.millisecondsToDuration(seekTo));
       }
 
       @Override
@@ -290,9 +293,8 @@ public class VideoPlayer {
       @Override
       public void onStopTrackingTouch(SeekBar seekBar) {
         // seek when released
-        float percentDone = seekBar.getProgress() / 100.0f;
-        float duration = mVideoFragment.getDurationMillis();
-        int seekTo = (int) (percentDone * duration);
+        float progressPercent = seekBar.getProgress() / 100.0f;
+        int seekTo = (int) (progressPercent * duration);
 
         mVideoFragment.seekToMillis(seekTo);
 

@@ -39,9 +39,7 @@
                 android:id="@+id/time_remaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:text="00:00"
+                style="@style/VideoPlayerToolbarTextStyle"
                 />
 
             <TextView
@@ -49,9 +47,7 @@
                 android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:text="00:00"
+                style="@style/VideoPlayerToolbarTextStyle"
                 />
         </RelativeLayout>
 
