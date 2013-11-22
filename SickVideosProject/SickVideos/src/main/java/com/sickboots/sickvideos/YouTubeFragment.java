@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.youtube;
+package com.sickboots.sickvideos;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -15,16 +15,17 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.lists.YouTubeListLive;
 import com.sickboots.sickvideos.lists.YouTubeListSpec;
 import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.VideoPlayer;
+import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import org.joda.time.Period;
 import org.joda.time.Seconds;
@@ -44,7 +45,9 @@ public class YouTubeFragment extends Fragment
   // Activity should host a player
   public interface HostActivitySupport {
     public VideoPlayer videoPlayer();
+
     void fragmentInstalled();
+
     public void installFragment(Fragment fragment, boolean animate);
   }
 

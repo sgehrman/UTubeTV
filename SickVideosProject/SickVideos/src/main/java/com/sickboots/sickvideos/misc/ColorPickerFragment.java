@@ -14,7 +14,6 @@ import com.larswerkman.holocolorpicker.SVBar;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.ApplicationHub;
 
 /**
  * Created by sgehrman on 11/12/13.

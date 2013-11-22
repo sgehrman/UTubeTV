@@ -7,8 +7,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.YouTubeFragment;
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeFragment;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 

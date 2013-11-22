@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.youtube.YouTubeFragment;
+import com.sickboots.sickvideos.YouTubeFragment;
 
 /**
  * Created by sgehrman on 10/28/13.

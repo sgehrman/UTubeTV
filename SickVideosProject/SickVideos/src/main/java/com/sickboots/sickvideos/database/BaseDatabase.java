@@ -1,16 +1,13 @@
 package com.sickboots.sickvideos.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +17,11 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   // subclasses must take care of this shit
   protected abstract String[] projection();
+
   abstract protected Map cursorToItem(Cursor cursor);
+
   abstract protected void insertItem(SQLiteDatabase db, Map video);
+
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {

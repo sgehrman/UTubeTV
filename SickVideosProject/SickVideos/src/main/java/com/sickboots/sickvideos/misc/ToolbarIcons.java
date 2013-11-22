@@ -18,7 +18,9 @@ import com.sickboots.sickvideos.R;
  */
 public class ToolbarIcons {
 
-  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE};
+  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE}
+
+  ;
 
   public static Drawable icon(Context context, IconID iconID, int iconColor) {
     Icon icon = null;

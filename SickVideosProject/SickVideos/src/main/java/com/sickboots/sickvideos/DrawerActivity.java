@@ -25,7 +25,6 @@ import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-import com.sickboots.sickvideos.youtube.YouTubeFragment;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -34,7 +33,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   VideoPlayer mPlayer;
-  private int mCurrentSection=0;
+  private int mCurrentSection = 0;
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -88,7 +87,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
     if (savedInstanceState != null) {
       mCurrentSection = savedInstanceState.getInt("section");
     } else {
-       String sectionIndexString = ApplicationHub.instance().getPref(ApplicationHub.DRAWER_SECTION_INDEX, "0");
+      String sectionIndexString = ApplicationHub.instance().getPref(ApplicationHub.DRAWER_SECTION_INDEX, "0");
       mCurrentSection = Integer.parseInt(sectionIndexString);
     }
 
@@ -204,7 +203,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
         return true;
 
       case R.id.action_more_apps:
-           intent = new Intent(Intent.ACTION_VIEW);
+        intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://search?q=pub:Sick Boots"));
         startActivity(intent);
 
@@ -289,7 +288,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
 
   private void updateActionBarTitle() {
     YouTubeFragment fragment = installedFragment();
-    CharSequence title=null;
+    CharSequence title = null;
 
     if (fragment != null)
       title = fragment.actionBarTitle();

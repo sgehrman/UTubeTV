@@ -2,13 +2,11 @@ package com.sickboots.sickvideos.youtube;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.google.android.gms.R;
 import com.sickboots.sickvideos.misc.Util;
 
 /**
@@ -20,17 +18,17 @@ public class VideoImageView extends ImageView {
   private int mCachedWidth = 0;
   private int mGradientHeight;
 
-    public VideoImageView(Context context, AttributeSet attrs) {
-      super(context, attrs);
+  public VideoImageView(Context context, AttributeSet attrs) {
+    super(context, attrs);
 
-      mGradientHeight = (int) Util.dpToPx(40.0f, getContext());
+    mGradientHeight = (int) Util.dpToPx(40.0f, getContext());
 
-      int topColors[] = { 0xaa000000, 0x00000000 };
-      mTopGradient = createGradient(topColors);
+    int topColors[] = {0xaa000000, 0x00000000};
+    mTopGradient = createGradient(topColors);
 
-      int bottomColors[] = { 0x00000000, 0xaa000000 };
-      mBottomGradient = createGradient(bottomColors);
-    }
+    int bottomColors[] = {0x00000000, 0xaa000000};
+    mBottomGradient = createGradient(bottomColors);
+  }
 
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
@@ -39,7 +37,7 @@ public class VideoImageView extends ImageView {
 
     mTopGradient.draw(canvas);
 
-    int y = getHeight()-mGradientHeight;
+    int y = getHeight() - mGradientHeight;
     canvas.translate(0, y);
     mBottomGradient.draw(canvas);
     canvas.translate(0, -y);

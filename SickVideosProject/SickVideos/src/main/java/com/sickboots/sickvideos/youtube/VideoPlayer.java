@@ -6,13 +6,8 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -23,10 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.sickboots.iconicdroid.IconicFontDrawable;
-import com.sickboots.iconicdroid.icon.EntypoIcon;
-import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
-import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Util;
@@ -40,7 +31,7 @@ public class VideoPlayer {
   private final int mExtraSpaceOnTopOfPlayerView = 75;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
-  private final int mAnimationDuration=300;
+  private final int mAnimationDuration = 300;
 
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
@@ -145,8 +136,8 @@ public class VideoPlayer {
 
         // fade old one out
         mTimeRemainingTextView.animate()
-          .setDuration(duration)
-          .alpha(0.0f);
+            .setDuration(duration)
+            .alpha(0.0f);
 
         // start off off the screen, make visible
         mSeekFlashTextView.setTranslationY(-60.0f);
@@ -154,18 +145,18 @@ public class VideoPlayer {
 
         // run animation, new time slides in from top, old time slides off
         mSeekFlashTextView.animate()
-          .setDuration(duration)
-          .translationY(0)
-          .setInterpolator(new BounceInterpolator())
-          .withEndAction(new Runnable() {
-            @Override
-            public void run() {
-              mSeekFlashTextView.setVisibility(View.INVISIBLE);
+            .setDuration(duration)
+            .translationY(0)
+            .setInterpolator(new BounceInterpolator())
+            .withEndAction(new Runnable() {
+              @Override
+              public void run() {
+                mSeekFlashTextView.setVisibility(View.INVISIBLE);
 
-              mTimeRemainingTextView.setText(seekFlash);
-              mTimeRemainingTextView.setAlpha(1.0f);
-            }
-          });
+                mTimeRemainingTextView.setText(seekFlash);
+                mTimeRemainingTextView.setAlpha(1.0f);
+              }
+            });
       }
 
     });
@@ -259,7 +250,7 @@ public class VideoPlayer {
   }
 
   private void showSeekPopupWindow(View anchorView) {
-    LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View popupContentsView = inflater.inflate(R.layout.video_seek_popup, null);
     final PopupWindow pw = new PopupWindow(popupContentsView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
 
@@ -270,7 +261,7 @@ public class VideoPlayer {
 
     float time = mVideoFragment.getCurrentTimeMillis();
     final float duration = mVideoFragment.getDurationMillis();
-    float currentPercent = time/duration;
+    float currentPercent = time / duration;
     int startValue = (int) (currentPercent * 100);
 
     SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);

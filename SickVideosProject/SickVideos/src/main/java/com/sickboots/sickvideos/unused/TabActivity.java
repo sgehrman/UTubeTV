@@ -17,9 +17,9 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.SettingsActivity;
+import com.sickboots.sickvideos.YouTubeFragment;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-import com.sickboots.sickvideos.youtube.YouTubeFragment;
 
 import java.util.Locale;
 

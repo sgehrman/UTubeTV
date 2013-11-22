@@ -18,6 +18,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   public interface TimeRemainingListener {
     // call this on the main thread
     public void setTimeRemainingText(final String timeRemaining);
+
     public void setSeekFlashText(final String seekFlash);
   }
 
@@ -243,7 +244,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onSeekTo(int newPositionMillis) {
-        Util.log("seeking: " + newPositionMillis/1000 + " seconds");
+        Util.log("seeking: " + newPositionMillis / 1000 + " seconds");
 
         final String seekString = Util.millisecondsToDuration(newPositionMillis);
         ApplicationHub.instance().runOnMainThread(new Runnable() {
@@ -267,7 +268,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   private void startElapsedTimer() {
-  if (mTimer == null) {
+    if (mTimer == null) {
       mTimer = new Timer();
       TimerTask timerTask = new TimerTask() {
         @Override

@@ -23,12 +23,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sickboots.sickvideos.R;
+
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import com.sickboots.sickvideos.R;
 
 /**
  * Created by sgehrman on 9/24/13.
@@ -177,7 +178,7 @@ public class Util {
 
   public static Bitmap drawableToBitmap(Drawable drawable, int size) {
     if (drawable instanceof BitmapDrawable) {
-      return ((BitmapDrawable)drawable).getBitmap();
+      return ((BitmapDrawable) drawable).getBitmap();
     }
 
     // original code  used this for width and height, but our icons don't have Intrinsic size
