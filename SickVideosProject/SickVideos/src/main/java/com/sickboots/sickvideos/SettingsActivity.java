@@ -81,5 +81,13 @@ public class SettingsActivity extends PreferenceActivity {
       }
     }
   }
+
+  @Override
+  protected boolean isValidFragment(String fragmentName) {
+    if (fragmentName.equals("com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"))
+      return true;
+
+    return false;
+  }
 }
 
