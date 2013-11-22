@@ -57,7 +57,7 @@ public class YouTubeFragment extends Fragment
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
-  private final float mImageAlpha = .8f;
+  private final float mImageAlpha = .7f;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);

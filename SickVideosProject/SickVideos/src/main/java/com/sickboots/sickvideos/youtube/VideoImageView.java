@@ -23,7 +23,7 @@ public class VideoImageView extends ImageView {
     public VideoImageView(Context context, AttributeSet attrs) {
       super(context, attrs);
 
-      mGradientHeight = (int) Util.dpToPx(60.0f, getContext());
+      mGradientHeight = (int) Util.dpToPx(40.0f, getContext());
 
       int topColors[] = { 0xaa000000, 0x00000000 };
       mTopGradient = createGradient(topColors);
