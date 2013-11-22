@@ -6,9 +6,14 @@
         </shape>
     </item>
 
-    <item android:bottom="1dp">
+    <item android:bottom="1dp"
+          android:top="1dp">
         <shape>
-            <solid android:color="@color/action_bar"/>
+            <gradient
+                android:startColor="@color/action_bar_light"
+                android:endColor="@color/action_bar"
+                android:angle="270"
+                android:type="linear"/>
         </shape>
 
     </item>
