@@ -132,42 +132,35 @@ public class YouTubeFragment extends Fragment
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     ViewGroup rootView = null;
-    AbsListView listOrGridView = null;
+    AbsListView gridView = null;
 
-    if (useGridView(getArguments())) {
-      rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
-      listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
-    } else {
-      mImageAlpha = 1.0f;  // turn this off for list view on white background
-
-      rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
-      listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
-    }
+    rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
+    gridView = (AbsListView) rootView.findViewById(R.id.gridview);
 
     mList = createList(getArguments());
 
     View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
-    listOrGridView.setEmptyView(emptyView);
+    gridView.setEmptyView(emptyView);
     rootView.addView(emptyView);
 
     mAdapter = new MyAdapter();
 
-    listOrGridView.setAdapter(mAdapter);
-    listOrGridView.setOnItemClickListener(mAdapter);
+    gridView.setAdapter(mAdapter);
+    gridView.setOnItemClickListener(mAdapter);
 
     // .015 is the default
-    listOrGridView.setFriction(0.01f);
+    gridView.setFriction(0.01f);
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.addRefreshableView(listOrGridView, this);
+    ptrl.addRefreshableView(gridView, this);
 
     // load data if we have it already
     onResults();
 
     View dimmerView = rootView.findViewById(R.id.dimmer);
 
-    new ScrollTriggeredAnimator(listOrGridView, dimmerView);
+    new ScrollTriggeredAnimator(gridView, dimmerView);
 
     // triggers an update for the title, lame hack
     HostActivitySupport provider = (HostActivitySupport) getActivity();
@@ -222,42 +215,6 @@ public class YouTubeFragment extends Fragment
     HostActivitySupport provider = (HostActivitySupport) getActivity();
 
     return provider.videoPlayer();
-  }
-
-  private int itemResourceID() {
-    if (itemResID == 0) {
-      itemResID = R.layout.youtube_list_item_large;
-      switch (listType) {
-        case PLAYLISTS:
-        case CATEGORIES:
-        case SUBSCRIPTIONS:
-          itemResID = R.layout.youtube_list_item;
-          break;
-        case LIKED:
-        case RELATED:
-        case SEARCH:
-        case VIDEOS:
-          break;
-      }
-    }
-
-    return itemResID;
-  }
-
-  private boolean useGridView(Bundle argsBundle) {
-    switch (listType) {
-      case PLAYLISTS:
-      case CATEGORIES:
-      case SUBSCRIPTIONS:
-        return false;
-      case LIKED:
-      case RELATED:
-      case SEARCH:
-      case VIDEOS:
-        break;
-    }
-
-    return true;
   }
 
   public void onRefreshStarted(View view) {
@@ -385,7 +342,7 @@ public class YouTubeFragment extends Fragment
       ViewHolder holder = null;
 
       if (convertView == null) {
-        convertView = inflater.inflate(itemResourceID(), null);
+        convertView = inflater.inflate(R.layout.youtube_grid_item, null);
 
         holder = new ViewHolder();
         holder.image = (ImageView) convertView.findViewById(R.id.image);

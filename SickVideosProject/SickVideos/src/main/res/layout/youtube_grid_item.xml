@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000"
+
+                android:descendantFocusability="blocksDescendants">
+
+    <com.sickboots.sickvideos.youtube.VideoImageView
+        android:id="@+id/image"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:clickable="false"
+        />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:maxLines="2"
+        android:ellipsize="end"
+        style="@style/VideoTextTitle"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/text_view"
+        android:maxLines="4"
+        android:ellipsize="end"
+        style="@style/VideoTextDescription"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#8000"
+        android:textColor="#fff"/>
+</RelativeLayout>

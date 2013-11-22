@@ -28,6 +28,7 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
+        <item name="android:lineSpacingExtra">-2sp</item>
     </style>
 
     <style name="VideoTextDescription">
@@ -41,6 +42,7 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
+        <item name="android:lineSpacingExtra">-2sp</item>
 
     </style>
 

@@ -127,7 +127,7 @@ public class Util {
   }
 
   public static View emptyListView(Context context, String message) {
-    ViewGroup result = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.empty_list_view, null);
+    ViewGroup result = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.empty_view_grid, null);
 
     TextView textView = (TextView) result.findViewById(R.id.message);
     textView.setText(message);
