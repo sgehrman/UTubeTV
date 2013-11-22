@@ -2,13 +2,9 @@ package com.sickboots.sickvideos.database;
 
 import android.provider.BaseColumns;
 
-public final class YouTubeDBContract {
-  // To prevent someone from accidentally instantiating the contract class,
-  // give it an empty constructor.
-  public YouTubeDBContract() {
-  }
+public final class DatabaseContracts {
 
-  /* Inner class that defines the table contents */
+  // stores information about a video
   public static class VideoEntry implements BaseColumns {
     public static final String COLUMN_NAME_VIDEO = "video";
     public static final String COLUMN_NAME_TITLE = "title";
@@ -16,5 +12,14 @@ public final class YouTubeDBContract {
     public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
     public static final String COLUMN_NAME_DURATION = "duration";
   }
+
+  // stores information about a playlist
+  public static class PlaylistEntry implements BaseColumns {
+    public static final String COLUMN_NAME_PLAYLIST = "playlist";
+    public static final String COLUMN_NAME_TITLE = "title";
+    public static final String COLUMN_NAME_DESCRIPTION = "description";
+    public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+  }
+
 }
 

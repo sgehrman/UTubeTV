@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class YouTubeDatabase extends SQLiteOpenHelper {
+public class VideoDatabase extends SQLiteOpenHelper {
   String mTableName;
 
   private static final int DATABASE_VERSION = 22;
 
-  public YouTubeDatabase(Context context, String databaseName) {
+  public VideoDatabase(Context context, String databaseName) {
     super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
 
     mTableName = "item_table";
@@ -72,12 +72,12 @@ public class YouTubeDatabase extends SQLiteOpenHelper {
     SQLiteDatabase db = getReadableDatabase();
 
     String[] projection = {
-        YouTubeDBContract.VideoEntry._ID,
-        YouTubeDBContract.VideoEntry.COLUMN_NAME_VIDEO,
-        YouTubeDBContract.VideoEntry.COLUMN_NAME_TITLE,
-        YouTubeDBContract.VideoEntry.COLUMN_NAME_DESCRIPTION,
-        YouTubeDBContract.VideoEntry.COLUMN_NAME_THUMBNAIL,
-        YouTubeDBContract.VideoEntry.COLUMN_NAME_DURATION
+        DatabaseContracts.VideoEntry._ID,
+        DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO,
+        DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE,
+        DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION,
+        DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL,
+        DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION
     };
 
     Cursor cursor = db.query(
@@ -108,11 +108,11 @@ public class YouTubeDatabase extends SQLiteOpenHelper {
   private Map cursorToVideo(Cursor cursor) {
     Map result = new HashMap();
 
-    result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(YouTubeDBContract.VideoEntry.COLUMN_NAME_VIDEO)));
-    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(YouTubeDBContract.VideoEntry.COLUMN_NAME_TITLE)));
-    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(YouTubeDBContract.VideoEntry.COLUMN_NAME_DESCRIPTION)));
-    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(YouTubeDBContract.VideoEntry.COLUMN_NAME_THUMBNAIL)));
-    result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(YouTubeDBContract.VideoEntry.COLUMN_NAME_DURATION)));
+    result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO)));
+    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE)));
+    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION)));
+    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL)));
+    result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION)));
 
     return result;
   }
@@ -121,11 +121,11 @@ public class YouTubeDatabase extends SQLiteOpenHelper {
     // Create a new map of values, where column names are the keys
     ContentValues values = new ContentValues();
 
-    values.put(YouTubeDBContract.VideoEntry.COLUMN_NAME_VIDEO, (String) video.get(YouTubeAPI.VIDEO_KEY));
-    values.put(YouTubeDBContract.VideoEntry.COLUMN_NAME_TITLE, (String) video.get(YouTubeAPI.TITLE_KEY));
-    values.put(YouTubeDBContract.VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get(YouTubeAPI.DESCRIPTION_KEY));
-    values.put(YouTubeDBContract.VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get(YouTubeAPI.THUMBNAIL_KEY));
-    values.put(YouTubeDBContract.VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeAPI.DURATION_KEY));
+    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO, (String) video.get(YouTubeAPI.VIDEO_KEY));
+    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE, (String) video.get(YouTubeAPI.TITLE_KEY));
+    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION, (String) video.get(YouTubeAPI.DESCRIPTION_KEY));
+    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL, (String) video.get(YouTubeAPI.THUMBNAIL_KEY));
+    values.put(DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION, (String) video.get(YouTubeAPI.DURATION_KEY));
 
     // Insert the new row, returning the primary key value of the new row
     db.insert(mTableName, null, values);
@@ -138,16 +138,16 @@ public class YouTubeDatabase extends SQLiteOpenHelper {
     String result = "CREATE TABLE "
         + mTableName
         + " ("
-        + YouTubeDBContract.VideoEntry._ID + " INTEGER PRIMARY KEY,"
-        + YouTubeDBContract.VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
+        + DatabaseContracts.VideoEntry._ID + " INTEGER PRIMARY KEY,"
+        + DatabaseContracts.VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
         + COMMA_SEP
-        + YouTubeDBContract.VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
+        + DatabaseContracts.VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
         + COMMA_SEP
-        + YouTubeDBContract.VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+        + DatabaseContracts.VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
         + COMMA_SEP
-        + YouTubeDBContract.VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+        + DatabaseContracts.VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
         + COMMA_SEP
-        + YouTubeDBContract.VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
+        + DatabaseContracts.VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
         + " )";
 
     return result;

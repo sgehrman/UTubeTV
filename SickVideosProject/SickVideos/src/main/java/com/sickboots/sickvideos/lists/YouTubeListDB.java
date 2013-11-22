@@ -2,7 +2,7 @@ package com.sickboots.sickvideos.lists;
 
 import android.os.AsyncTask;
 
-import com.sickboots.sickvideos.database.YouTubeDatabase;
+import com.sickboots.sickvideos.database.VideoDatabase;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -11,12 +11,12 @@ import java.util.Map;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
-  YouTubeDatabase database;
+  VideoDatabase database;
 
   public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-    database = new YouTubeDatabase(getActivity(), s.databaseName());
+    database = new VideoDatabase(getActivity(), s.databaseName());
 
     loadData(true);
   }
