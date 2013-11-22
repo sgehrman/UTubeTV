@@ -17,7 +17,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.SettingsActivity;
-import com.sickboots.sickvideos.YouTubeFragment;
+import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -122,10 +122,10 @@ public class TabActivity extends Activity implements ActionBar.TabListener, Util
 
       switch (position) {
         case 0:
-          result = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
+          result = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
           break;
         case 1:
-          result = YouTubeFragment.searchFragment("Disco skate afro");
+          result = YouTubeGridFragment.searchFragment("Disco skate afro");
           break;
         default:
           result = new FragmentHost();

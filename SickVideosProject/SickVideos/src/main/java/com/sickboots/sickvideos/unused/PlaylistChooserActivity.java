@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeFragment;
+import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.misc.Util;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
@@ -40,7 +40,7 @@ public class PlaylistChooserActivity extends Activity implements Util.PullToRefr
     FrameLayout container = (FrameLayout) findViewById(R.id.fragment_container);
     if (container != null) {
       // Create a new Fragment to be placed in the activity layout
-      YouTubeFragment firstFragment = YouTubeFragment.playlistsFragment("UC4a-Gbdw7vOaccHmFo40b9g");
+      YouTubeGridFragment firstFragment = YouTubeGridFragment.playlistsFragment("UC4a-Gbdw7vOaccHmFo40b9g");
 
       // Add the fragment to the 'fragment_container' FrameLayout
       getFragmentManager().beginTransaction()

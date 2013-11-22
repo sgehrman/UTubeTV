@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeFragment;
+import com.sickboots.sickvideos.YouTubeGridFragment;
 
 /**
  * Created by sgehrman on 10/28/13.
@@ -35,7 +35,7 @@ public class FragmentHost extends Fragment {
       }
 
       // Create a new Fragment to be placed in the activity layout
-      YouTubeFragment firstFragment = YouTubeFragment.subscriptionsFragment();
+      YouTubeGridFragment firstFragment = YouTubeGridFragment.subscriptionsFragment();
 
       // Add the fragment to the 'fragment_container' FrameLayout
       getFragmentManager().beginTransaction()

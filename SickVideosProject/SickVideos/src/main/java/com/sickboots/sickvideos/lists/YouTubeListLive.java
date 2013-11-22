@@ -6,7 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeFragment;
+import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -92,7 +92,7 @@ public class YouTubeListLive extends YouTubeList {
         String playlistID = (String) itemMap.get("playlist");
 
         if (playlistID != null) {
-          Fragment frag = YouTubeFragment.videosFragment(playlistID);
+          Fragment frag = YouTubeGridFragment.videosFragment(playlistID);
 
           replaceFragment(frag);
         }
@@ -102,7 +102,7 @@ public class YouTubeListLive extends YouTubeList {
         String channel = (String) itemMap.get("channel");
 
         if (channel != null) {
-          Fragment frag = YouTubeFragment.playlistsFragment(channel);
+          Fragment frag = YouTubeGridFragment.playlistsFragment(channel);
 
           replaceFragment(frag);
         }

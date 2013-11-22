@@ -28,7 +28,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements YouTubeFragment.HostActivitySupport, Util.PullToRefreshListener {
+public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Util.PullToRefreshListener {
   private DrawerLayout mDrawerLayout;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
@@ -227,25 +227,25 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
 
     switch (position) {
       case 0:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.FAVORITES);
+        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.FAVORITES);
         break;
       case 1:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.LIKES);
+        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.LIKES);
         break;
       case 2:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHED);
+        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHED);
         break;
       case 3:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
+        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
         break;
       case 4:
-        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
+        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
         break;
       case 5:
         fragment = new ColorPickerFragment();
         break;
       case 6:
-        fragment = YouTubeFragment.playlistsFragment("UC07XXQh04ukEX68loZFgnVw");
+        fragment = YouTubeGridFragment.playlistsFragment("UC07XXQh04ukEX68loZFgnVw");
         break;
     }
 
@@ -258,11 +258,11 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
     mDrawerLayout.closeDrawer(mDrawerList);
   }
 
-  private YouTubeFragment installedFragment() {
+  private YouTubeGridFragment installedFragment() {
     Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
 
-    if (fragment instanceof YouTubeFragment)
-      return (YouTubeFragment) fragment;
+    if (fragment instanceof YouTubeGridFragment)
+      return (YouTubeGridFragment) fragment;
 
     return null;
   }
@@ -287,7 +287,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.HostActi
   }
 
   private void updateActionBarTitle() {
-    YouTubeFragment fragment = installedFragment();
+    YouTubeGridFragment fragment = installedFragment();
     CharSequence title = null;
 
     if (fragment != null)

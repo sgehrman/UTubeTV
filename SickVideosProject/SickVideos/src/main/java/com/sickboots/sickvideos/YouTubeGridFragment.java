@@ -39,7 +39,7 @@ import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class YouTubeFragment extends Fragment
+public class YouTubeGridFragment extends Fragment
     implements Observer, PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
 
   // Activity should host a player
@@ -62,32 +62,32 @@ public class YouTubeFragment extends Fragment
   private int itemResID = 0;
   private float mImageAlpha = .6f;
 
-  public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
+  public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
   }
 
-  public static YouTubeFragment videosFragment(String playlistID) {
+  public static YouTubeGridFragment videosFragment(String playlistID) {
     return newInstance(YouTubeListSpec.ListType.VIDEOS, null, playlistID, null, null);
   }
 
-  public static YouTubeFragment playlistsFragment(String channelID) {
+  public static YouTubeGridFragment playlistsFragment(String channelID) {
     return newInstance(YouTubeListSpec.ListType.PLAYLISTS, channelID, null, null, null);
   }
 
-  public static YouTubeFragment likedFragment() {
+  public static YouTubeGridFragment likedFragment() {
     return newInstance(YouTubeListSpec.ListType.LIKED, null, null, null, null);
   }
 
-  public static YouTubeFragment subscriptionsFragment() {
+  public static YouTubeGridFragment subscriptionsFragment() {
     return newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null, null);
   }
 
-  public static YouTubeFragment searchFragment(String searchQuery) {
+  public static YouTubeGridFragment searchFragment(String searchQuery) {
     return newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null, searchQuery);
   }
 
-  private static YouTubeFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
-    YouTubeFragment fragment = new YouTubeFragment();
+  private static YouTubeGridFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
+    YouTubeGridFragment fragment = new YouTubeGridFragment();
 
     Bundle args = new Bundle();
 
@@ -203,7 +203,7 @@ public class YouTubeFragment extends Fragment
         String playlistID = (String) itemMap.get("playlist");
 
         if (playlistID != null) {
-          Fragment frag = YouTubeFragment.videosFragment(playlistID);
+          Fragment frag = YouTubeGridFragment.videosFragment(playlistID);
 
           HostActivitySupport provider = (HostActivitySupport) getActivity();
 
