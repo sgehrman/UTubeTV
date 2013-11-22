@@ -104,12 +104,18 @@ public class YouTubeAPI {
     return youTube;
   }
 
-  public String channelID() {
+  // pass null for your personal channelID
+  public String channelID(String userName) {
     String result = null;
 
     try {
       YouTube.Channels.List channelRequest = youTube().channels().list("id");
-      channelRequest.setMine(true);
+
+      if (userName != null)
+        channelRequest.setForUsername(userName);  // for example: JamesBurkeConnection
+      else
+        channelRequest.setMine(true);
+
       channelRequest.setMaxResults(1L);
 
       channelRequest.setFields("items/id");

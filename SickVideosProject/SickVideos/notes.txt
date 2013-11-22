@@ -75,4 +75,26 @@ todo:
 - add hidden flag to hide videos, checkbox in ui in info area
   do we add to the database, or have a pref that holds hidden video ids?  if in the database, we can't wipe it everytime, must do some kind of transfer.
 
+- add menu button to video view
+  more info
+  show on youtube
+  share
 
+- get duration value by querying twice
+
+- given channel name, fill out a database of playlist ids
+  plug it in to ui. Playlists in drawer?  Or a button called playlists?
+
+
+channel name to id
+https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?part=id&forUsername=JamesBurkeConnection&_h=2&
+
+// --------------------------------------------------------
+// --------------------------------------------------------
+
+PROJECTS:
+
+Project one is Connections by James Burke.
+
+https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?part=id&forUsername=JamesBurkeConnection&_h=2&
+channel ID: "UC07XXQh04ukEX68loZFgnVw"
