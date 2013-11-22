@@ -6,21 +6,12 @@
 
                 android:descendantFocusability="blocksDescendants">
 
-    <ImageView
+    <com.sickboots.sickvideos.youtube.VideoImageView
         android:id="@+id/image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:clickable="false"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@drawable/dark_bottom_shadow"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/image"
         />
 
     <TextView
