@@ -2,9 +2,14 @@
 <resources>
     <color name="dark_gray">#ff202020</color>
     <color name="light_gray">#ff343434</color>
+    
     <color name="engineering_orange">#BA160C</color>
     <color name="aerospace_orange">#FF4F00</color>
     <color name="ggbridge_orange">#C0362C</color>
+
+    <color name="pmf_orange">#ffdb3036</color>
+    <color name="pmf_orange_dark">#ffA21E22</color>
+
     <color name="holo_blue">@android:color/holo_blue_dark</color>
 
     <color name="action_bar">@color/dark_gray</color>
