@@ -42,10 +42,10 @@ public class YouTubeFragment extends Fragment
     implements Observer, PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
 
   // Activity should host a player
-  public interface PlayerProvider {
+  public interface HostActivitySupport {
     public VideoPlayer videoPlayer();
-
     void fragmentInstalled();
+    public void installFragment(Fragment fragment, boolean animate);
   }
 
   private static final String SEARCH_QUERY = "query";
@@ -57,7 +57,7 @@ public class YouTubeFragment extends Fragment
   private MyAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
-  private final float mImageAlpha = .6f;
+  private float mImageAlpha = .6f;
 
   public static YouTubeFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -138,6 +138,8 @@ public class YouTubeFragment extends Fragment
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.gridview);
     } else {
+      mImageAlpha = 1.0f;  // turn this off for list view on white background
+
       rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_list, container, false);
       listOrGridView = (AbsListView) rootView.findViewById(R.id.listview);
     }
@@ -168,7 +170,7 @@ public class YouTubeFragment extends Fragment
     new ScrollTriggeredAnimator(listOrGridView, dimmerView);
 
     // triggers an update for the title, lame hack
-    PlayerProvider provider = (PlayerProvider) getActivity();
+    HostActivitySupport provider = (HostActivitySupport) getActivity();
     provider.fragmentInstalled();
 
     return rootView;
@@ -191,14 +193,33 @@ public class YouTubeFragment extends Fragment
   }
 
   public void handleClick(Map itemMap) {
-    String videoId = (String) itemMap.get("video");
-    String title = (String) itemMap.get("title");
+    switch (mList.type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        String videoId = (String) itemMap.get("video");
+        String title = (String) itemMap.get("title");
 
-    player().open(videoId, title, true);
+        player().open(videoId, title, true);
+        break;
+      case PLAYLISTS: {
+        String playlistID = (String) itemMap.get("playlist");
+
+        if (playlistID != null) {
+          Fragment frag = YouTubeFragment.videosFragment(playlistID);
+
+          HostActivitySupport provider = (HostActivitySupport) getActivity();
+
+          provider.installFragment(frag, true);
+        }
+      }
+      break;
+    }
   }
 
   private VideoPlayer player() {
-    PlayerProvider provider = (PlayerProvider) getActivity();
+    HostActivitySupport provider = (HostActivitySupport) getActivity();
 
     return provider.videoPlayer();
   }

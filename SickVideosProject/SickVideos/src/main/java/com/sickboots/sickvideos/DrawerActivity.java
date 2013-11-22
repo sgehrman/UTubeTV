@@ -29,7 +29,7 @@ import com.sickboots.sickvideos.youtube.YouTubeFragment;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements YouTubeFragment.PlayerProvider, Util.PullToRefreshListener {
+public class DrawerActivity extends Activity implements YouTubeFragment.HostActivitySupport, Util.PullToRefreshListener {
   private DrawerLayout mDrawerLayout;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
@@ -43,7 +43,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
 
-    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later"};
+    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections"};
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -240,8 +240,13 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
         fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
         break;
       case 4:
+        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
+        break;
+      case 5:
         fragment = new ColorPickerFragment();
-//        fragment = YouTubeFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
+        break;
+      case 6:
+        fragment = YouTubeFragment.playlistsFragment("UC07XXQh04ukEX68loZFgnVw");
         break;
     }
 
@@ -293,6 +298,14 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
       getActionBar().setTitle(title);
   }
 
+  // ----------------------------------------------------
+  // HostActivitySupport
+
+  @Override
+  public void installFragment(Fragment fragment, boolean animate) {
+    Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
+  }
+
   @Override
   public void fragmentInstalled() {
     updateActionBarTitle();
@@ -314,5 +327,7 @@ public class DrawerActivity extends Activity implements YouTubeFragment.PlayerPr
 
     return mPlayer;
   }
+
+  // ----------------------------------------------------
 
 }
