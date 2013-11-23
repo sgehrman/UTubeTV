@@ -27,7 +27,7 @@ public class VideoPlayer {
   private Context mContext;
   private VideoPlayerFragment mVideoFragment;
   private VideoPlayerStateListener mListener;
-  private ImageButton mMuteButton;
+  private View mMuteButton;
   private final int mExtraSpaceOnTopOfPlayerView = 75;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
@@ -56,10 +56,10 @@ public class VideoPlayer {
     mContext = activity.getApplicationContext();
     videoBox = activity.findViewById(R.id.video_player_box);
 
-    ImageButton b;
+    View b;
 
     // close button
-    b = (ImageButton) (ImageButton) videoBox.findViewById(R.id.close_button);
+    b = videoBox.findViewById(R.id.close_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CLOSE, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -69,7 +69,7 @@ public class VideoPlayer {
     });
 
     // Mute button
-    mMuteButton = (ImageButton) videoBox.findViewById(R.id.mute_button);
+    mMuteButton = videoBox.findViewById(R.id.mute_button);
     mMuteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -81,7 +81,7 @@ public class VideoPlayer {
     updateMuteButton();
 
     // Skip back button
-    b = (ImageButton) videoBox.findViewById(R.id.skip_back_button);
+    b = videoBox.findViewById(R.id.skip_back_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_BACK, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -93,7 +93,7 @@ public class VideoPlayer {
     });
 
     // Skip ahead button
-    b = (ImageButton) videoBox.findViewById(R.id.skip_ahead_button);
+    b = videoBox.findViewById(R.id.skip_ahead_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_FORWARD, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override

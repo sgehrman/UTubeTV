@@ -1,18 +1,28 @@
 package com.sickboots.sickvideos;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 
-public class VideoMenuView extends ImageButton {
+import com.sickboots.sickvideos.misc.ToolbarIcons;
+
+public class VideoMenuView extends View {
+  @Override
+  protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+  }
 
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
-    setImageResource(R.drawable.o);
+    setBackground(ToolbarIcons.icon(getContext(), ToolbarIcons.IconID.STEP_FORWARD, Color.WHITE));
 
     final PopupMenu popupMenu = new PopupMenu(getContext(), this);
     popupMenu.inflate(R.menu.video_menu);

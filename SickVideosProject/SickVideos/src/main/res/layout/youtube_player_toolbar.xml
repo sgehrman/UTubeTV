@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <View
             android:id="@+id/close_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -21,7 +21,7 @@
             android:layout_margin="6dp"
             />
 
-        <ImageButton
+        <View
             android:id="@+id/mute_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -51,7 +51,7 @@
                 />
         </RelativeLayout>
 
-        <ImageButton
+        <View
             android:id="@+id/skip_back_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -59,7 +59,7 @@
             android:layout_margin="6dp"
             />
 
-        <ImageButton
+        <View
             android:id="@+id/skip_ahead_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
