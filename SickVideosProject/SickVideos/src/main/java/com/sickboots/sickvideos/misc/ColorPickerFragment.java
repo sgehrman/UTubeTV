@@ -15,9 +15,6 @@ import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
 import com.sickboots.sickvideos.R;
 
-/**
- * Created by sgehrman on 11/12/13.
- */
 public class ColorPickerFragment extends Fragment implements ColorPicker.OnColorChangedListener {
 
   @Override

@@ -43,4 +43,12 @@
         android:layout_alignParentRight="true"
         android:background="#8000"
         android:textColor="#fff"/>
+
+    <com.sickboots.sickvideos.VideoMenuView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+
 </RelativeLayout>

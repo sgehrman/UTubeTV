@@ -31,9 +31,6 @@ import java.util.Random;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-/**
- * Created by sgehrman on 9/24/13.
- */
 public class Util {
 
   public interface PullToRefreshListener {

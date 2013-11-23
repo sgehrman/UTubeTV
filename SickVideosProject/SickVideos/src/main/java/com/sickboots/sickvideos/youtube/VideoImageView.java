@@ -9,9 +9,6 @@ import android.widget.ImageView;
 
 import com.sickboots.sickvideos.misc.Util;
 
-/**
- * Created by sgehrman on 11/21/13.
- */
 public class VideoImageView extends ImageView {
   private GradientDrawable mTopGradient;
   private GradientDrawable mBottomGradient;

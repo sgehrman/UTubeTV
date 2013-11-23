@@ -4,9 +4,6 @@ import android.app.Fragment;
 
 import java.lang.ref.WeakReference;
 
-/**
- * Created by sgehrman on 10/23/13.
- */
 public class UIAccess {
   // interface for getting results
   public interface UIAccessListener {

@@ -12,9 +12,6 @@ import com.sickboots.sickvideos.misc.Util;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-/**
- * Created by sgehrman on 10/31/13.
- */
 public class PlaylistChooserActivity extends Activity implements Util.PullToRefreshListener {
 //  private PullToRefreshAttacher mPullToRefreshAttacher;
 

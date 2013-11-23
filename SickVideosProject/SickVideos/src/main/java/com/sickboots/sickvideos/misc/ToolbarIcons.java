@@ -13,9 +13,6 @@ import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;
 
-/**
- * Created by sgehrman on 11/20/13.
- */
 public class ToolbarIcons {
 
   public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE}

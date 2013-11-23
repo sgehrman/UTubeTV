@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.YouTubeGridFragment;
 
-/**
- * Created by sgehrman on 10/28/13.
- */
 public class FragmentHost extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

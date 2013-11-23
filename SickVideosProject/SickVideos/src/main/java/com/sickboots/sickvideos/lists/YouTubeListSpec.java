@@ -4,9 +4,6 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 
-/**
- * Created by sgehrman on 10/23/13.
- */
 public class YouTubeListSpec {
   public enum ListType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
 
