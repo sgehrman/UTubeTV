@@ -15,7 +15,7 @@ import com.sickboots.sickvideos.R;
 
 public class ToolbarIcons {
 
-  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE}
+  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE, OVERFLOW}
 
   ;
 
@@ -38,22 +38,53 @@ public class ToolbarIcons {
       case FULLSCREEN:
         icon = FontAwesomeIcon.FULLSCREEN;
         break;
+      case OVERFLOW:
+        // icon = null, makes icon from drawable further down
+        break;
       default:
-        icon = EntypoIcon.NEW;  // error
         break;
     }
 
-    IconicFontDrawable pressed = new IconicFontDrawable(context);
-    pressed.setIcon(icon);
-    pressed.setIconColor(context.getResources().getColor(R.color.content_background));
-    pressed.setContour(Color.GRAY, 1);
-    pressed.setIconPadding(8);
+    Drawable pressed = null;
+    Drawable normal = null;
 
-    IconicFontDrawable normal = new IconicFontDrawable(context);
-    normal.setIcon(icon);
-    normal.setIconColor(iconColor);
-    normal.setContour(Color.GRAY, 1);
-    normal.setIconPadding(8);
+    if (icon != null) {
+      IconicFontDrawable fpressed = new IconicFontDrawable(context);
+      fpressed.setIcon(icon);
+      fpressed.setIconColor(context.getResources().getColor(R.color.content_background));
+      fpressed.setContour(Color.GRAY, 1);
+      fpressed.setIconPadding(8);
+
+      IconicFontDrawable fnormal = new IconicFontDrawable(context);
+      fnormal.setIcon(icon);
+      fnormal.setIconColor(iconColor);
+      fnormal.setContour(Color.GRAY, 1);
+      fnormal.setIconPadding(8);
+
+      normal = fnormal;
+      pressed = fpressed;
+    } else {
+      Drawable drawable = null;
+
+      switch (iconID) {
+        case SOUND:
+        case STEP_BACK:
+        case STEP_FORWARD:
+        case CLOSE:
+        case FULLSCREEN:
+          Util.log("WTF, toolbar iconID bad?");
+          break;
+        case OVERFLOW:
+          drawable = context.getResources().getDrawable(R.drawable.action_bar);
+          normal = drawable;
+          pressed = drawable;
+
+          break;
+        default:
+          break;
+      }
+    }
+
 
     StateListDrawable states = new StateListDrawable();
     states.addState(new int[]{android.R.attr.state_pressed}, pressed);
