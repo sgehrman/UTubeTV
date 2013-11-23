@@ -75,7 +75,7 @@ public class ToolbarIcons {
           Util.log("WTF, toolbar iconID bad?");
           break;
         case OVERFLOW:
-          drawable = context.getResources().getDrawable(R.drawable.action_bar);
+          drawable = context.getResources().getDrawable(R.drawable.ic_action_overflow);
           normal = drawable;
           pressed = drawable;
 
@@ -84,7 +84,6 @@ public class ToolbarIcons {
           break;
       }
     }
-
 
     StateListDrawable states = new StateListDrawable();
     states.addState(new int[]{android.R.attr.state_pressed}, pressed);
