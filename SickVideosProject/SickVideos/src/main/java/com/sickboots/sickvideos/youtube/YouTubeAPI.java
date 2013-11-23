@@ -1,10 +1,12 @@
 package com.sickboots.sickvideos.youtube;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -88,6 +90,11 @@ public class YouTubeAPI {
 
     Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeAPI.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivityForResult(intent, REQ_PLAYER_CODE);
+  }
+
+  public static void playMovieUsingIntent(Context context, String videoId) {
+    Intent intent = YouTubeIntents.createPlayVideoIntent(context, videoId);
+    context.startActivity(intent);
   }
 
   public YouTube youTube() {
