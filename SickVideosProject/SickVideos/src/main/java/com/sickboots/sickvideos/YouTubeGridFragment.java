@@ -352,6 +352,8 @@ public class YouTubeGridFragment extends Fragment
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.duration = (TextView) convertView.findViewById(R.id.duration);
+        holder.menuButton = (VideoMenuView) convertView.findViewById(R.id.menu_button);
+
         convertView.setTag(holder);
       } else {
         holder = (ViewHolder) convertView.getTag();
@@ -407,6 +409,16 @@ public class YouTubeGridFragment extends Fragment
         }
       }
 
+
+      // set video id on menu button so clicking can know what video to act on
+      String videoId = (String) itemMap.get(YouTubeAPI.VIDEO_KEY);
+      if (videoId != null && (videoId.length() > 0)) {
+        holder.menuButton.setVisibility(View.VISIBLE);
+        holder.menuButton.mVideoId = videoId;
+      } else {
+        holder.menuButton.setVisibility(View.GONE);
+      }
+
       // load more data if at the end
       mList.updateHighestDisplayedIndex(position);
 
@@ -418,6 +430,7 @@ public class YouTubeGridFragment extends Fragment
       TextView description;
       TextView duration;
       ImageView image;
+      VideoMenuView menuButton;
     }
   }
 

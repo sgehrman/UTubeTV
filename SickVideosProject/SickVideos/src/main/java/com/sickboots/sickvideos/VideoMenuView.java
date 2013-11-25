@@ -15,6 +15,7 @@ import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 public class VideoMenuView extends ImageView {
+  public String mVideoId;
 
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -38,7 +39,7 @@ public class VideoMenuView extends ImageView {
           case R.id.video_menu_info:
             break;
           case R.id.video_menu_youtube:
-//            YouTubeAPI.playMovieUsingIntent(getContext(), videoId);
+            YouTubeAPI.playMovieUsingIntent(getContext(), mVideoId);
             break;
           case R.id.video_menu_hide:
             break;
