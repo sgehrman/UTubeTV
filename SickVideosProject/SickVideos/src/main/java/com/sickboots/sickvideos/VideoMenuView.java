@@ -14,12 +14,12 @@ import android.widget.PopupMenu;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
-public class VideoMenuView extends View {
+public class VideoMenuView extends ImageView {
 
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
-    setBackground(ToolbarIcons.icon(getContext(), ToolbarIcons.IconID.OVERFLOW, Color.WHITE));
+    setImageDrawable(ToolbarIcons.icon(getContext(), ToolbarIcons.IconID.OVERFLOW, Color.WHITE));
 
     final PopupMenu popupMenu = new PopupMenu(getContext(), this);
     popupMenu.inflate(R.menu.video_menu);

@@ -44,19 +44,13 @@
         android:background="#8000"
         android:textColor="#fff"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="6dp"
+    <com.sickboots.sickvideos.VideoMenuView
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:scaleType="centerInside"
         android:layout_alignParentBottom="true"
-        >
-
-        <com.sickboots.sickvideos.VideoMenuView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="bottom|right"
-            />
-
-    </FrameLayout>
+        android:layout_alignParentRight="true"
+        />
 
 </RelativeLayout>
