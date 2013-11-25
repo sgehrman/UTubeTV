@@ -13,15 +13,13 @@ import java.util.Map;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   String mTableName;
-  protected static final int DATABASE_VERSION = 100;
+  protected static final int DATABASE_VERSION = 101;
 
   // subclasses must take care of this shit
-  protected abstract String[] projection();
-
+  abstract protected String[] projection();
   abstract protected Map cursorToItem(Cursor cursor);
-
-  abstract protected void insertItem(SQLiteDatabase db, Map video);
-
+  abstract protected void insertItem(SQLiteDatabase db, Map item);
+  abstract protected void updateItem(SQLiteDatabase db, Map item);
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {
@@ -51,19 +49,19 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     db.delete(mTableName, null, null);
   }
 
-  public void insertItems(List<Map> videos) {
-    if (videos != null) {
+  public void insertItems(List<Map> items) {
+    if (items != null) {
       // Gets the data repository in write mode
       SQLiteDatabase db = getWritableDatabase();
 
       db.beginTransaction();
       try {
-        for (Map video : videos)
-          insertItem(db, video);
+        for (Map item : items)
+          insertItem(db, item);
 
         db.setTransactionSuccessful();
       } catch (Exception e) {
-        Util.log("Insert Videos exception: " + e.getMessage());
+        Util.log("Insert item exception: " + e.getMessage());
       } finally {
         db.endTransaction();
         db.close();

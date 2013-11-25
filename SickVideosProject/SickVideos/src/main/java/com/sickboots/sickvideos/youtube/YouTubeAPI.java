@@ -49,6 +49,7 @@ public class YouTubeAPI {
   public static final String DESCRIPTION_KEY = "description";
   public static final String THUMBNAIL_KEY = "thumbnail";
   public static final String DURATION_KEY = "duration";
+  public static final String HIDDEN_KEY = "hidden";
 
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
