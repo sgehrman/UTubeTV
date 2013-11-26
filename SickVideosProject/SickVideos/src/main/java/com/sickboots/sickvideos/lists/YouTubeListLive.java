@@ -112,6 +112,11 @@ public class YouTubeListLive extends YouTubeList {
     }
   }
 
+  @Override
+  public void hideItem(Map itemMap) {
+    // not supported for now
+  }
+
   private void replaceFragment(Fragment fragment) {
     FragmentManager fragmentManager = getActivity().getFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

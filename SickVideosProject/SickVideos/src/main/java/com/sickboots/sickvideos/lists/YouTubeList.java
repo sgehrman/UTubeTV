@@ -17,12 +17,10 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   // subclasses must implement
   abstract public void updateHighestDisplayedIndex(int position);
-
   abstract public void refresh();
-
   abstract protected void loadData(boolean askUser);
-
   abstract public void handleClick(Map itemMap, boolean clickedIcon);
+  abstract public void hideItem(Map itemMap);
 
   protected UIAccess access;
   protected GoogleAccount account;

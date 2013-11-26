@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
@@ -45,6 +46,7 @@ public class VideoDatabase extends BaseDatabase {
   protected Map cursorToItem(Cursor cursor) {
     Map result = new HashMap();
 
+    result.put(YouTubeAPI.ID_KEY, cursor.getLong(cursor.getColumnIndex(VideoEntry._ID)));
     result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO)));
     result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE)));
     result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
@@ -74,7 +76,7 @@ public class VideoDatabase extends BaseDatabase {
   @Override
   protected String createTableSQL() {
     final String TEXT_TYPE = " TEXT";
-    final String INT_TYPE = " INT";
+    final String INT_TYPE = " INTEGER";
     final String COMMA_SEP = ",";
 
     String result = "CREATE TABLE "
@@ -95,9 +97,5 @@ public class VideoDatabase extends BaseDatabase {
         + " )";
 
     return result;
-  }
-
-  protected void updateItem(SQLiteDatabase db, Map item) {
-
   }
 }

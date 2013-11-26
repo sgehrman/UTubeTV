@@ -14,8 +14,18 @@ import android.widget.PopupMenu;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import java.util.Map;
+
 public class VideoMenuView extends ImageView {
-  public String mVideoId;
+
+  public interface VideoMenuViewListener {
+    public void showVideoInfo(Map videoMap);
+    public void showVideoOnYouTube(Map videoMap);
+    public void hideVideo(Map videoMap);
+  }
+
+  public Map mVideoMap;
+  private VideoMenuViewListener mListener;
 
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -37,11 +47,18 @@ public class VideoMenuView extends ImageView {
       public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
           case R.id.video_menu_info:
+            if (mListener != null)
+              mListener.showVideoInfo(mVideoMap);
+
             break;
           case R.id.video_menu_youtube:
-            YouTubeAPI.playMovieUsingIntent(getContext(), mVideoId);
+            if (mListener != null)
+              mListener.showVideoOnYouTube(mVideoMap);
             break;
           case R.id.video_menu_hide:
+            if (mListener != null)
+              mListener.hideVideo(mVideoMap);
+
             break;
         }
         return true;
@@ -49,6 +66,9 @@ public class VideoMenuView extends ImageView {
     });
   }
 
-}
+  public void setListener(VideoMenuViewListener listener) {
+    mListener = listener;
+  }
 
+}
 

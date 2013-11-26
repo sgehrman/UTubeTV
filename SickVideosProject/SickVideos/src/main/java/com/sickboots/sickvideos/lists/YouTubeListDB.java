@@ -83,6 +83,11 @@ public class YouTubeListDB extends YouTubeList {
     }
   }
 
+  @Override
+  public void hideItem(Map itemMap) {
+    database.updateItem(itemMap);
+  }
+
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
     protected List<Map> doInBackground(YouTubeAPI... params) {
       YouTubeAPI helper = params[0];

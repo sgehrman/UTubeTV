@@ -42,6 +42,7 @@ public class PlaylistDatabase extends BaseDatabase {
   protected Map cursorToItem(Cursor cursor) {
     Map result = new HashMap();
 
+    result.put(YouTubeAPI.ID_KEY, cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID)));
     result.put(YouTubeAPI.PLAYLIST_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_PLAYLIST)));
     result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_TITLE)));
     result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_DESCRIPTION)));
@@ -83,9 +84,5 @@ public class PlaylistDatabase extends BaseDatabase {
         + " )";
 
     return result;
-  }
-
-  protected void updateItem(SQLiteDatabase db, Map item) {
-    // unused for playlists for now
   }
 }

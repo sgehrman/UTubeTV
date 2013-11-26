@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +14,12 @@ import java.util.Map;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   String mTableName;
-  protected static final int DATABASE_VERSION = 101;
+  protected static final int DATABASE_VERSION = 102;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
   abstract protected Map cursorToItem(Cursor cursor);
   abstract protected void insertItem(SQLiteDatabase db, Map item);
-  abstract protected void updateItem(SQLiteDatabase db, Map item);
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {
@@ -69,7 +69,24 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     }
   }
 
+  public Map getItemWithID(Long id) {
+    Map result=null;
+    List<Map> results = getItems("_id=?", new String[] { id.toString() });
+
+    if (results.size() == 1) {
+      result = results.get(0);
+    } else {
+      Util.log("getItemWithID not found or too many results?");
+    }
+
+    return result;
+  }
+
   public List<Map> getItems() {
+    return getItems(null, null);
+  }
+
+  public List<Map> getItems(String selection, String[] selectionArgs) {
     List<Map> result = new ArrayList<Map>();
 
     SQLiteDatabase db = getReadableDatabase();
@@ -79,8 +96,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     Cursor cursor = db.query(
         mTableName,                     // The table to query
         projection,                     // The columns to return
-        null,                           // The columns for the WHERE clause
-        null,                           // The values for the WHERE clause
+        selection,                      // The columns for the WHERE clause
+        selectionArgs,                  // The values for the WHERE clause
         null,                           // don't group the rows
         null,                           // don't filter by row groups
         null                            // The sort order
@@ -96,6 +113,12 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     db.close();
 
     return result;
+  }
+
+  public void updateItem(Map item) {
+    Map map = getItemWithID((Long) item.get(YouTubeAPI.ID_KEY));
+
+    Util.log(map.toString());
   }
 
 }

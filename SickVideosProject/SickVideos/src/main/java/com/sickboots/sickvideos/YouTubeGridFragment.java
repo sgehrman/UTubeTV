@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
@@ -293,7 +294,7 @@ public class YouTubeGridFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class MyAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener {
+  private class MyAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
     private final LayoutInflater inflater;
     int animationID = 0;
 
@@ -409,12 +410,13 @@ public class YouTubeGridFragment extends Fragment
         }
       }
 
-
       // set video id on menu button so clicking can know what video to act on
+      // only set if there is a videoId, playlists and others don't need this menu
       String videoId = (String) itemMap.get(YouTubeAPI.VIDEO_KEY);
       if (videoId != null && (videoId.length() > 0)) {
         holder.menuButton.setVisibility(View.VISIBLE);
-        holder.menuButton.mVideoId = videoId;
+        holder.menuButton.setListener(this);
+        holder.menuButton.mVideoMap = itemMap;
       } else {
         holder.menuButton.setVisibility(View.GONE);
       }
@@ -423,6 +425,24 @@ public class YouTubeGridFragment extends Fragment
       mList.updateHighestDisplayedIndex(position);
 
       return convertView;
+    }
+
+    // VideoMenuViewListener
+    @Override
+    public void showVideoInfo(Map videoMap) {
+
+    }
+
+    // VideoMenuViewListener
+    @Override
+    public void showVideoOnYouTube(Map videoMap) {
+      YouTubeAPI.playMovieUsingIntent(getActivity(), (String) videoMap.get(YouTubeAPI.VIDEO_KEY));
+    }
+
+    // VideoMenuViewListener
+    @Override
+    public void hideVideo(Map videoMap) {
+      mList.hideItem(videoMap);
     }
 
     class ViewHolder {

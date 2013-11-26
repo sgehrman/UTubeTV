@@ -42,6 +42,7 @@ import java.util.Map;
 
 public class YouTubeAPI {
   // constants used in Maps for youtube data
+  public static final String ID_KEY = "id"; // id is used to find an item to update it
   public static final String PLAYLIST_KEY = "playlist";
   public static final String CHANNEL_KEY = "channel";
   public static final String VIDEO_KEY = "video";
