@@ -98,3 +98,13 @@ Project one is Connections by James Burke.
 
 https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?part=id&forUsername=JamesBurkeConnection&_h=2&
 channel ID: "UC07XXQh04ukEX68loZFgnVw"
+
+
+
+empty view
+
+uiaccess stuff necessary?
+
+hidden where clause stuff
+
+remove credential shit

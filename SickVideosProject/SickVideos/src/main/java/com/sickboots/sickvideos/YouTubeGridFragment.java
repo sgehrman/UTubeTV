@@ -61,6 +61,7 @@ public class YouTubeGridFragment extends Fragment
   private YouTubeList mList;
   private int itemResID = 0;
   private float mImageAlpha = .6f;
+  private View mEmptyView;
 
   public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -134,17 +135,18 @@ public class YouTubeGridFragment extends Fragment
 
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
-    ViewGroup rootView = null;
-    AbsListView gridView = null;
+    ViewGroup rootView;
+    AbsListView gridView;
 
     rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
     gridView = (AbsListView) rootView.findViewById(R.id.gridview);
 
     mList = createList(getArguments());
 
-    View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
-    gridView.setEmptyView(emptyView);
-    rootView.addView(emptyView);
+    mEmptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
+    rootView.addView(mEmptyView);
+
+    gridView.setEmptyView(mEmptyView);
 
     mAdapter = new YouTubeListAdapter();
 
@@ -159,7 +161,7 @@ public class YouTubeGridFragment extends Fragment
     ptrl.addRefreshableView(gridView, this);
 
     // load data if we have it already
-    onResults();
+    loadFromList();
 
     View dimmerView = rootView.findViewById(R.id.dimmer);
 
@@ -222,6 +224,10 @@ public class YouTubeGridFragment extends Fragment
 
   public void onRefreshStarted(View view) {
     mList.refresh();
+
+    AbsListView gridView = (AbsListView) getView().findViewById(R.id.gridview);
+    if (gridView != null)
+      gridView.setEmptyView(mEmptyView);
   }
 
   @Override
@@ -236,13 +242,22 @@ public class YouTubeGridFragment extends Fragment
 
   @Override
   public void onResults() {
+    loadFromList();
+
+    // get rid of the empty view.  Its not used after initial load, and this also
+    // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
+    AbsListView gridView = (AbsListView) getView().findViewById(R.id.gridview);
+    if (gridView != null)
+      gridView.setEmptyView(null);
+  }
+
+  private void loadFromList() {
     mAdapter.clear();
 
     List items = mList.getItems();
 
-    if (items != null) {
+    if (items != null)
       mAdapter.addAll(items);
-    }
 
     // stop the pull to refresh indicator
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
