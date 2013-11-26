@@ -94,4 +94,15 @@ public class VideoDatabase extends BaseDatabase {
 
     return result;
   }
+
+  @Override
+  protected String getItemsWhereClause() {
+    return null;
+  }
+
+  @Override
+  protected String[] getItemsWhereArgs() {
+    return null;
+  }
+
 }

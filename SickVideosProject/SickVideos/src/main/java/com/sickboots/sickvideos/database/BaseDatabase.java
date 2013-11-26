@@ -26,6 +26,9 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   abstract protected String createTableSQL();
 
+  abstract protected String getItemsWhereClause();
+  abstract protected String[] getItemsWhereArgs();
+
   public BaseDatabase(Context context, String databaseName) {
     super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
 
@@ -87,7 +90,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public List<Map> getItems() {
-    return getItems(null, null);
+    return getItems(getItemsWhereClause(), getItemsWhereArgs());
   }
 
   public List<Map> getItems(String selection, String[] selectionArgs) {
