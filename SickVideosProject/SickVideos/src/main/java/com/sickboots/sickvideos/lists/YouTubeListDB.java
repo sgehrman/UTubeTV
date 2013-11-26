@@ -96,7 +96,7 @@ public class YouTubeListDB extends YouTubeList {
       Util.log("YouTubeListDBTask: started");
 
       // filter out hidden values
-      database.setFlags(44);
+//      database.setFlags(44);
 
       // are the results already in the DB?
       result = database.getItems();

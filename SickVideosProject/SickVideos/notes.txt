@@ -100,8 +100,7 @@ https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?
 channel ID: "UC07XXQh04ukEX68loZFgnVw"
 
 
-
-empty view
+don't try to refetch from youtube if database has data, but just returned zero results (all hidden for example)
 
 uiaccess stuff necessary?
 
