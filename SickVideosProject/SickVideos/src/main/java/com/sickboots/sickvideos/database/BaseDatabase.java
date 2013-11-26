@@ -15,7 +15,7 @@ import java.util.Map;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   String mTableName;
-  protected static final int DATABASE_VERSION = 102;
+  protected static final int DATABASE_VERSION = 112;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
