@@ -221,15 +221,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void onRefreshStarted(View view) {
-    new android.os.Handler().postDelayed(
-        new Runnable() {
-          public void run() {
-            mList.refresh();
-
-            Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-            ptrl.setRefreshComplete();
-          }
-        }, 2000);
+    mList.refresh();
   }
 
   @Override
@@ -251,6 +243,10 @@ public class YouTubeGridFragment extends Fragment
     if (items != null) {
       mAdapter.addAll(items);
     }
+
+    // stop the pull to refresh indicator
+    Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
+    ptrl.setRefreshComplete();
   }
 
   private YouTubeList createList(Bundle argsBundle) {
