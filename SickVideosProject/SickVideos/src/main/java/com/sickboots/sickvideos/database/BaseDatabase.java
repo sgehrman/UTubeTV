@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
-  String mTableName;
-  protected static final int DATABASE_VERSION = 112;
+  protected String mTableName;
+  protected int mFlags=0;  // can be used for any flags need in a subclass
+
+  protected static final int DATABASE_VERSION = 122;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
@@ -87,6 +89,10 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     }
 
     return result;
+  }
+
+  public void setFlags(int flags) {
+    mFlags = flags;
   }
 
   public List<Map> getItems() {

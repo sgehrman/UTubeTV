@@ -73,12 +73,14 @@ public class VideoDatabase extends BaseDatabase {
   protected String createTableSQL() {
     final String TEXT_TYPE = " TEXT";
     final String INT_TYPE = " INTEGER";
+    final String PRIMARY = " PRIMARY KEY";
     final String COMMA_SEP = ",";
 
     String result = "CREATE TABLE "
         + mTableName
         + " ("
-        + VideoEntry._ID + " INTEGER PRIMARY KEY,"
+        + VideoEntry._ID + INT_TYPE + PRIMARY
+        + COMMA_SEP
         + VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
         + COMMA_SEP
         + VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
@@ -89,7 +91,7 @@ public class VideoDatabase extends BaseDatabase {
         + COMMA_SEP
         + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
         + COMMA_SEP
-        + VideoEntry.COLUMN_NAME_HIDDEN + INT_TYPE
+        + VideoEntry.COLUMN_NAME_HIDDEN + INT_TYPE + " DEFAULT 0"
         + " )";
 
     return result;
@@ -97,11 +99,16 @@ public class VideoDatabase extends BaseDatabase {
 
   @Override
   protected String getItemsWhereClause() {
+    if (mFlags == 44)
+      return "" + VideoEntry.COLUMN_NAME_HIDDEN + "=?";
     return null;
   }
 
   @Override
   protected String[] getItemsWhereArgs() {
+    if (mFlags == 44)
+      return new String[] {"0"};
+
     return null;
   }
 
