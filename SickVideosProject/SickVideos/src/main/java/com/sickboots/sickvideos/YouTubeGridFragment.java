@@ -449,8 +449,11 @@ public class YouTubeGridFragment extends Fragment
     @Override
     public void hideVideo(Map videoMap) {
 
-      videoMap.put(YouTubeAPI.HIDDEN_KEY, 1);
-      mList.hideItem(videoMap);
+      int hidden = (Integer) videoMap.get(YouTubeAPI.HIDDEN_KEY);
+
+      videoMap.put(YouTubeAPI.HIDDEN_KEY, (hidden == 0) ? 1 : 0);
+
+      mList.updateItem(videoMap);
     }
 
     class ViewHolder {
