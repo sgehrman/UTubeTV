@@ -1,18 +1,14 @@
 package com.sickboots.sickvideos;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.Map;
 
@@ -20,7 +16,9 @@ public class VideoMenuView extends ImageView {
 
   public interface VideoMenuViewListener {
     public void showVideoInfo(Map videoMap);
+
     public void showVideoOnYouTube(Map videoMap);
+
     public void hideVideo(Map videoMap);
   }
 
@@ -42,28 +40,28 @@ public class VideoMenuView extends ImageView {
     });
 
     popupMenu.setOnMenuItemClickListener(
-    new PopupMenu.OnMenuItemClickListener() {
-      @Override
-      public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-          case R.id.video_menu_info:
-            if (mListener != null)
-              mListener.showVideoInfo(mVideoMap);
+        new PopupMenu.OnMenuItemClickListener() {
+          @Override
+          public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+              case R.id.video_menu_info:
+                if (mListener != null)
+                  mListener.showVideoInfo(mVideoMap);
 
-            break;
-          case R.id.video_menu_youtube:
-            if (mListener != null)
-              mListener.showVideoOnYouTube(mVideoMap);
-            break;
-          case R.id.video_menu_hide:
-            if (mListener != null)
-              mListener.hideVideo(mVideoMap);
+                break;
+              case R.id.video_menu_youtube:
+                if (mListener != null)
+                  mListener.showVideoOnYouTube(mVideoMap);
+                break;
+              case R.id.video_menu_hide:
+                if (mListener != null)
+                  mListener.hideVideo(mVideoMap);
 
-            break;
-        }
-        return true;
-      }
-    });
+                break;
+            }
+            return true;
+          }
+        });
   }
 
   public void setListener(VideoMenuViewListener listener) {

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
 import com.sickboots.iconicdroid.IconicFontDrawable;
-import com.sickboots.iconicdroid.icon.EntypoIcon;
 import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;

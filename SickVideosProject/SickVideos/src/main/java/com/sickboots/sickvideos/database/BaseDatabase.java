@@ -18,8 +18,11 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
+
   abstract protected Map cursorToItem(Cursor cursor);
+
   abstract protected void insertItem(SQLiteDatabase db, Map item);
+
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {
@@ -70,8 +73,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public Map getItemWithID(Long id) {
-    Map result=null;
-    List<Map> results = getItems("_id=?", new String[] { id.toString() });
+    Map result = null;
+    List<Map> results = getItems("_id=?", new String[]{id.toString()});
 
     if (results.size() == 1) {
       result = results.get(0);
