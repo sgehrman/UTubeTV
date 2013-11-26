@@ -72,7 +72,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   public Map getItemWithID(Long id) {
     Map result = null;
-    List<Map> results = getItems("_id=?", new String[]{id.toString()});
+    List<Map> results = getItems(whereClauseForID(), whereArgsForID(id));
 
     if (results.size() == 1) {
       result = results.get(0);
