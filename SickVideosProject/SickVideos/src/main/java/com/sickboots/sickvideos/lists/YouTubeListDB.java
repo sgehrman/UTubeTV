@@ -99,46 +99,57 @@ public class YouTubeListDB extends YouTubeList {
       result = database.getItems();
 
       if (result.size() == 0) {
-        YouTubeAPI.BaseListResults listResults = null;
+        fillDatabaseWithData(helper);
 
-        switch (type()) {
-          case RELATED:
-            YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
-            String channelID = (String) listSpec.getData("channel");
-
-            String playlistID = helper.relatedPlaylistID(type, channelID);
-
-            listResults = helper.videoListResults(playlistID, true);
-            break;
-          case SEARCH:
-          case LIKED:
-          case VIDEOS:
-            break;
-          case PLAYLISTS:
-            String channel = (String) listSpec.getData("channel");
-
-            listResults = helper.playlistListResults(channel, true);
-            break;
-          case SUBSCRIPTIONS:
-            listResults = helper.subscriptionListResults();
-            break;
-          case CATEGORIES:
-            break;
-        }
-
-        if (listResults != null) {
-          while (listResults.getNext()) {
-            // getting all
-          }
-
-          result = listResults.getItems();
-        }
-
-        // add results to DB
-        database.insertItems(result);
+        // now get from the database so we are always using values from the db
+        // hidden flag for example is null in the raw data from youtube api which crashed
+        // this is slower, but not sure if slow enough warrant a more bug prone fix.
+        result = database.getItems();
       }
 
       return result;
+    }
+
+    private void fillDatabaseWithData(YouTubeAPI helper) {
+      List<Map> result = null;
+
+      YouTubeAPI.BaseListResults listResults = null;
+
+      switch (type()) {
+        case RELATED:
+          YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
+          String channelID = (String) listSpec.getData("channel");
+
+          String playlistID = helper.relatedPlaylistID(type, channelID);
+
+          listResults = helper.videoListResults(playlistID, true);
+          break;
+        case SEARCH:
+        case LIKED:
+        case VIDEOS:
+          break;
+        case PLAYLISTS:
+          String channel = (String) listSpec.getData("channel");
+
+          listResults = helper.playlistListResults(channel, true);
+          break;
+        case SUBSCRIPTIONS:
+          listResults = helper.subscriptionListResults();
+          break;
+        case CATEGORIES:
+          break;
+      }
+
+      if (listResults != null) {
+        while (listResults.getNext()) {
+          // getting all
+        }
+
+        result = listResults.getItems();
+      }
+
+      // add results to DB
+      database.insertItems(result);
     }
 
     protected void onPostExecute(List<Map> result) {
