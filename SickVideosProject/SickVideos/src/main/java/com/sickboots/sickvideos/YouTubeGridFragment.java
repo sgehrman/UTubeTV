@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,6 +62,7 @@ public class YouTubeGridFragment extends Fragment
   private int itemResID = 0;
   private float mImageAlpha = .6f;
   private View mEmptyView;
+  private GridView mGridView;
 
   public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -136,36 +137,35 @@ public class YouTubeGridFragment extends Fragment
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     ViewGroup rootView;
-    AbsListView gridView;
 
     rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
-    gridView = (AbsListView) rootView.findViewById(R.id.gridview);
+    mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
     mList = createList(getArguments());
 
     mEmptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
     rootView.addView(mEmptyView);
 
-    gridView.setEmptyView(mEmptyView);
+    mGridView.setEmptyView(mEmptyView);
 
     mAdapter = new YouTubeListAdapter();
 
-    gridView.setAdapter(mAdapter);
-    gridView.setOnItemClickListener(mAdapter);
+    mGridView.setAdapter(mAdapter);
+    mGridView.setOnItemClickListener(mAdapter);
 
     // .015 is the default
-    gridView.setFriction(0.01f);
+    mGridView.setFriction(0.01f);
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.addRefreshableView(gridView, this);
+    ptrl.addRefreshableView(mGridView, this);
 
     // load data if we have it already
     loadFromList();
 
     View dimmerView = rootView.findViewById(R.id.dimmer);
 
-    new ScrollTriggeredAnimator(gridView, dimmerView);
+    new ScrollTriggeredAnimator(mGridView, dimmerView);
 
     // triggers an update for the title, lame hack
     HostActivitySupport provider = (HostActivitySupport) getActivity();
@@ -225,9 +225,9 @@ public class YouTubeGridFragment extends Fragment
   public void onRefreshStarted(View view) {
     mList.refresh();
 
-    AbsListView gridView = (AbsListView) getView().findViewById(R.id.gridview);
-    if (gridView != null)
-      gridView.setEmptyView(mEmptyView);
+    mEmptyView.setVisibility(View.VISIBLE);
+
+    mGridView.setEmptyView(mEmptyView);
   }
 
   @Override
@@ -246,9 +246,8 @@ public class YouTubeGridFragment extends Fragment
 
     // get rid of the empty view.  Its not used after initial load, and this also
     // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
-    AbsListView gridView = (AbsListView) getView().findViewById(R.id.gridview);
-    if (gridView != null)
-      gridView.setEmptyView(null);
+    mGridView.setEmptyView(null);
+    mEmptyView.setVisibility(View.INVISIBLE);
   }
 
   private void loadFromList() {

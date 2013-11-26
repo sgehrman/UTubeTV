@@ -107,7 +107,7 @@ public class VideoDatabase extends BaseDatabase {
   @Override
   protected String[] getItemsWhereArgs() {
     if (mFlags == 44)
-      return new String[] {"0"};
+      return new String[]{"0"};
 
     return null;
   }
