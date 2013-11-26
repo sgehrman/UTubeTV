@@ -17,7 +17,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
   protected int mFlags = 0;  // can be used for any flags need in a subclass
 
-  protected static final int DATABASE_VERSION = 122;
+  protected static final int DATABASE_VERSION = 178;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
@@ -33,7 +33,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   abstract protected String[] getItemsWhereArgs();
 
   public BaseDatabase(Context context, String databaseName) {
-    super(context, databaseName.toLowerCase() + ".db", null, DATABASE_VERSION);
+    super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(true), DATABASE_VERSION);
 
     mTableName = "item_table";
   }
