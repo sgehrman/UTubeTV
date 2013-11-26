@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.sickboots.sickvideos.database.VideoDatabase;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
@@ -58,7 +57,7 @@ public class YouTubeGridFragment extends Fragment
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeListSpec.ListType listType;
-  private MyAdapter mAdapter;
+  private YouTubeListAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
   private float mImageAlpha = .6f;
@@ -147,7 +146,7 @@ public class YouTubeGridFragment extends Fragment
     gridView.setEmptyView(emptyView);
     rootView.addView(emptyView);
 
-    mAdapter = new MyAdapter();
+    mAdapter = new YouTubeListAdapter();
 
     gridView.setAdapter(mAdapter);
     gridView.setOnItemClickListener(mAdapter);
@@ -294,11 +293,12 @@ public class YouTubeGridFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class MyAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
+  private class YouTubeListAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
     private final LayoutInflater inflater;
     int animationID = 0;
+    boolean showHidden = false;
 
-    public MyAdapter() {
+    public YouTubeListAdapter() {
       super(getActivity(), 0);
 
       inflater = LayoutInflater.from(getActivity());
@@ -384,8 +384,9 @@ public class YouTubeGridFragment extends Fragment
 
       });
 
-
-      boolean hidden = ((Integer) itemMap.get(YouTubeAPI.HIDDEN_KEY)) == 1;
+      boolean hidden = false;
+      if (!showHidden)
+        hidden = ((Integer) itemMap.get(YouTubeAPI.HIDDEN_KEY)) == 1;
 
       if (hidden)
         holder.title.setText("(Hidden)");
