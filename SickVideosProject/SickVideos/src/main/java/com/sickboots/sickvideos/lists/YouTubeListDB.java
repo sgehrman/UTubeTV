@@ -84,7 +84,7 @@ public class YouTubeListDB extends YouTubeList {
   }
 
   @Override
-  public void hideItem(Map itemMap) {
+  public void updateItem(Map itemMap) {
     database.updateItem(itemMap);
   }
 

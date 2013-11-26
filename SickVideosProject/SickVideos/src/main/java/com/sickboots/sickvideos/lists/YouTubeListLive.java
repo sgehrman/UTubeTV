@@ -113,7 +113,7 @@ public class YouTubeListLive extends YouTubeList {
   }
 
   @Override
-  public void hideItem(Map itemMap) {
+  public void updateItem(Map itemMap) {
     // not supported for now
   }
 
