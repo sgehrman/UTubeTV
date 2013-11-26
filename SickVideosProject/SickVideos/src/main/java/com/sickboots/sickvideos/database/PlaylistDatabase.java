@@ -4,7 +4,6 @@ package com.sickboots.sickvideos.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 import com.sickboots.sickvideos.youtube.YouTubeAPI;

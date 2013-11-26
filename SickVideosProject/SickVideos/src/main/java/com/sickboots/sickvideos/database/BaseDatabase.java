@@ -19,8 +19,11 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
+
   abstract protected Map cursorToItem(Cursor cursor);
+
   abstract protected ContentValues contentValuesForItem(Map item);
+
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {
@@ -117,11 +120,11 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   private String whereClauseForID() {
-   return "_id=?";
+    return "_id=?";
   }
 
   private String[] whereArgsForID(Long id) {
-    return new String[]{ id.toString() };
+    return new String[]{id.toString()};
   }
 
   public void updateItem(Map item) {
@@ -131,8 +134,10 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
     int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
 
+    db.close();
+
     if (result != 1)
-    Util.log("updateItem didn't return 1");
+      Util.log("updateItem didn't return 1");
   }
 
 }
