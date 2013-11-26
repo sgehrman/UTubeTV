@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.database.VideoDatabase;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
@@ -383,7 +384,13 @@ public class YouTubeGridFragment extends Fragment
 
       });
 
-      holder.title.setText((String) itemMap.get(YouTubeAPI.TITLE_KEY));
+
+      boolean hidden = ((Integer) itemMap.get(YouTubeAPI.HIDDEN_KEY)) == 1;
+
+      if (hidden)
+        holder.title.setText("(Hidden)");
+      else
+        holder.title.setText((String) itemMap.get(YouTubeAPI.TITLE_KEY));
 
       String duration = (String) itemMap.get(YouTubeAPI.DURATION_KEY);
       if (duration != null) {
@@ -441,6 +448,8 @@ public class YouTubeGridFragment extends Fragment
     // VideoMenuViewListener
     @Override
     public void hideVideo(Map videoMap) {
+
+      videoMap.put(YouTubeAPI.HIDDEN_KEY, 1);
       mList.hideItem(videoMap);
     }
 

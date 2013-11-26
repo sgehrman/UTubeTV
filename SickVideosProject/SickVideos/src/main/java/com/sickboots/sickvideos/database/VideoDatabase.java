@@ -57,8 +57,7 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected void insertItem(SQLiteDatabase db, Map item) {
-    // Create a new map of values, where column names are the keys
+  protected ContentValues contentValuesForItem(Map item) {
     ContentValues values = new ContentValues();
 
     values.put(VideoEntry.COLUMN_NAME_VIDEO, (String) item.get(YouTubeAPI.VIDEO_KEY));
@@ -68,8 +67,7 @@ public class VideoDatabase extends BaseDatabase {
     values.put(VideoEntry.COLUMN_NAME_DURATION, (String) item.get(YouTubeAPI.DURATION_KEY));
     values.put(VideoEntry.COLUMN_NAME_HIDDEN, (Integer) item.get(YouTubeAPI.HIDDEN_KEY));
 
-    // Insert the new row, returning the primary key value of the new row
-    db.insert(mTableName, null, values);
+    return values;
   }
 
   @Override

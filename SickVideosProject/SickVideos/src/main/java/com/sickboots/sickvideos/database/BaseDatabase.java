@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,11 +19,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
-
   abstract protected Map cursorToItem(Cursor cursor);
-
-  abstract protected void insertItem(SQLiteDatabase db, Map item);
-
+  abstract protected ContentValues contentValuesForItem(Map item);
   abstract protected String createTableSQL();
 
   public BaseDatabase(Context context, String databaseName) {
@@ -60,7 +58,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
       db.beginTransaction();
       try {
         for (Map item : items)
-          insertItem(db, item);
+          db.insert(mTableName, null, contentValuesForItem(item));
 
         db.setTransactionSuccessful();
       } catch (Exception e) {
@@ -118,10 +116,23 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     return result;
   }
 
-  public void updateItem(Map item) {
-    Map map = getItemWithID((Long) item.get(YouTubeAPI.ID_KEY));
+  private String whereClauseForID() {
+   return "_id=?";
+  }
 
-    Util.log(map.toString());
+  private String[] whereArgsForID(Long id) {
+    return new String[]{ id.toString() };
+  }
+
+  public void updateItem(Map item) {
+    Long id = (Long) item.get(YouTubeAPI.ID_KEY);
+
+    SQLiteDatabase db = getWritableDatabase();
+
+    int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+
+    if (result != 1)
+    Util.log("updateItem didn't return 1");
   }
 
 }

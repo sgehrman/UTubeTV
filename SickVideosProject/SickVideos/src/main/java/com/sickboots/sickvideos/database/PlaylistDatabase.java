@@ -52,8 +52,7 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected void insertItem(SQLiteDatabase db, Map item) {
-    // Create a new map of values, where column names are the keys
+  protected ContentValues contentValuesForItem(Map item) {
     ContentValues values = new ContentValues();
 
     values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, (String) item.get(YouTubeAPI.PLAYLIST_KEY));
@@ -61,8 +60,7 @@ public class PlaylistDatabase extends BaseDatabase {
     values.put(PlaylistEntry.COLUMN_NAME_DESCRIPTION, (String) item.get(YouTubeAPI.DESCRIPTION_KEY));
     values.put(PlaylistEntry.COLUMN_NAME_THUMBNAIL, (String) item.get(YouTubeAPI.THUMBNAIL_KEY));
 
-    // Insert the new row, returning the primary key value of the new row
-    db.insert(mTableName, null, values);
+    return values;
   }
 
   @Override
