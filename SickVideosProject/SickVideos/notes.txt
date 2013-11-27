@@ -100,10 +100,14 @@ https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?
 channel ID: "UC07XXQh04ukEX68loZFgnVw"
 
 
+
+-----------------------
 don't try to refetch from youtube if database has data, but just returned zero results (all hidden for example)
 
 uiaccess stuff necessary?
 
-hidden where clause stuff
-
 remove credential shit
+
+HashSet of videoIDs and set hidden flag in new YouTubeData
+
+------------------------
