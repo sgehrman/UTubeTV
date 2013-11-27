@@ -56,7 +56,13 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   public void deleteAllRows() {
     SQLiteDatabase db = getWritableDatabase();
 
-    db.delete(mTableName, null, null);
+    try {
+      db.delete(mTableName, null, null);
+    } catch (Exception e) {
+      Util.log("deleteAllRows exception: " + e.getMessage());
+    } finally {
+      db.close();
+    }
   }
 
   public void insertItems(List<Map> items) {
@@ -104,27 +110,34 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     List<Map> result = new ArrayList<Map>();
 
     SQLiteDatabase db = getReadableDatabase();
+    Cursor cursor=null;
 
-    String[] projection = projection();
+    try {
+      String[] projection = projection();
 
-    Cursor cursor = db.query(
-        mTableName,                     // The table to query
-        projection,                     // The columns to return
-        selection,                      // The columns for the WHERE clause
-        selectionArgs,                  // The values for the WHERE clause
-        null,                           // don't group the rows
-        null,                           // don't filter by row groups
-        null                            // The sort order
-    );
+      cursor = db.query(
+          mTableName,                     // The table to query
+          projection,                     // The columns to return
+          selection,                      // The columns for the WHERE clause
+          selectionArgs,                  // The values for the WHERE clause
+          null,                           // don't group the rows
+          null,                           // don't filter by row groups
+          null                            // The sort order
+      );
 
-    cursor.moveToFirst();
-    while (!cursor.isAfterLast()) {
-      result.add(cursorToItem(cursor));
-      cursor.moveToNext();
+      cursor.moveToFirst();
+      while (!cursor.isAfterLast()) {
+        result.add(cursorToItem(cursor));
+        cursor.moveToNext();
+      }
+    } catch (Exception e) {
+      Util.log("getItems exception: " + e.getMessage());
+    } finally {
+      if (cursor != null)
+        cursor.close();
+
+      db.close();
     }
-
-    cursor.close();
-    db.close();
 
     return result;
   }
@@ -138,16 +151,20 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public void updateItem(Map item) {
-    Long id = (Long) item.get(YouTubeAPI.ID_KEY);
-
     SQLiteDatabase db = getWritableDatabase();
 
-    int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+    try {
+      Long id = (Long) item.get(YouTubeAPI.ID_KEY);
 
-    db.close();
+      int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
 
-    if (result != 1)
-      Util.log("updateItem didn't return 1");
+      if (result != 1)
+        Util.log("updateItem didn't return 1");
+    } catch (Exception e) {
+      Util.log("updateItem exception: " + e.getMessage());
+    } finally {
+      db.close();
+    }
   }
 
 }
