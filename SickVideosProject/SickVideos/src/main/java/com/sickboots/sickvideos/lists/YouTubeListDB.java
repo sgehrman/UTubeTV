@@ -34,7 +34,7 @@ public class YouTubeListDB extends YouTubeList {
         break;
     }
 
-    loadData(true);
+    loadData(TaskType.FIRSTLOAD, true);
   }
 
   @Override
@@ -44,21 +44,18 @@ public class YouTubeListDB extends YouTubeList {
 
   @Override
   public void refresh() {
-    // does this need to go in a task?
-    database.deleteAllRows();
-
-    loadData(false);
+    loadData(TaskType.USER_REFRESH, false);
   }
 
   @Override
-  protected void loadData(boolean askUser) {
+  protected void loadData(TaskType taskType, boolean askUser) {
     YouTubeAPI helper = youTubeHelper(askUser);
 
     if (helper != null) {
       if (runningTask == null) {
         boolean showHiddenVideos = ApplicationHub.preferences().getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
 
-        runningTask = new YouTubeListDBTask(showHiddenVideos);
+        runningTask = new YouTubeListDBTask(taskType, showHiddenVideos);
         runningTask.execute(helper);
       }
     }
@@ -69,41 +66,18 @@ public class YouTubeListDB extends YouTubeList {
     database.updateItem(itemMap);
 
     // reload the data so the UI updates
-    loadData(false);
+    loadData(TaskType.REFETCH, false);
   }
 
-   /*
-    Three tasks that are needed
-
-    1) a user refresh
-        - save hidden state
-        - delete old data
-        - fetch from internet (don't delete first incase internet is down then we would just delete what we had)
-        - add back saved hidden data
-        NET: always
-        DEL: always
-
-    2) a user hides an item, or preference to show hidden items is toggled
-        - get from db
-        - don't get list from internet even if zero results returned
-        NET: never
-        DEL: never
-
-    3) First load on launch
-        - get from database if it has data
-        - if database was never saved with data, then ask internet, otherwise don't
-        NET: if database never saved before
-        DEL: never
-   */
-
-
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
-    boolean mShowHidden = false;
+    boolean mFilterHidden = false;
+    TaskType mTaskType;
 
-    public YouTubeListDBTask(boolean showHidden) {
+    public YouTubeListDBTask(TaskType taskType, boolean showHiddenVideos) {
       super();
 
-      mShowHidden = showHidden;
+      mFilterHidden = !showHiddenVideos;
+      mTaskType = taskType;
     }
 
     protected List<YouTubeData> doInBackground(YouTubeAPI... params) {
@@ -112,29 +86,56 @@ public class YouTubeListDB extends YouTubeList {
 
       Util.log("YouTubeListDBTask: started");
 
-      // filter out hidden values
-      if (!mShowHidden)
-        database.setFlags(VideoDatabase.FILTER_HIDDEN_ITEMS);
+      database.setFlags(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
 
-      // are the results already in the DB?
-      result = database.getItems();
+      switch (mTaskType) {
+        case USER_REFRESH:
+          /*
+            - save hidden state
+            - delete old data
+            - fetch from internet (don't delete first incase internet is down then we would just delete what we had)
+            - add back saved hidden data
 
-      // needs improvement
-      // might just be all hidden items, no use to refetch from youtube
+            NET: always
+            DEL: always
+          */
 
-      if (result.size() == 0) {
-        result = getDataFromInternet(helper);
+          // does this need to go in a task?
+          Map currentListSavedData=null;
+          result = loadFreshDataToDatabase(helper, currentListSavedData);
 
-        // merges info from the existing list to the new list
-        Map currentListSavedData=null;
+          break;
+        case REFETCH:
+          //  item hidden, or hidden visible pref toggled
+          result = database.getItems();
+          break;
+        case FIRSTLOAD:
+          // are the results already in the DB?
+          result = database.getItems();
+
+          // this is lame, fix later
+          if (result.size() == 0) {
+            result = loadFreshDataToDatabase(helper, null);
+          }
+
+          break;
+      }
+
+      return result;
+    }
+
+    private List<YouTubeData> loadFreshDataToDatabase(YouTubeAPI helper, Map currentListSavedData) {
+      List<YouTubeData> result = getDataFromInternet(helper);
+
+      if (result != null) {
+
         result = prepareDataFromNet(result, currentListSavedData);
 
-        // save results to database
-        database.insertItems(result);
+        // we are only deleting if we know we got good data
+        // otherwise if we delete first a network failure would just make the app useless
+        database.deleteAllRows();
 
-        // a test we should probably implement.  Compare what we get back from the DB with our result to make sure nothing changes being written and reread from the DB.
-        // List<YouTubeData> dbResult = database.getItems();
-        // if (result != dbResult) log("data bad");
+        database.insertItems(result);
       }
 
       return result;
@@ -143,6 +144,9 @@ public class YouTubeListDB extends YouTubeList {
     private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Map currentListSavedData) {
       List<YouTubeData> result = inList;
 
+      if (currentListSavedData != null && currentListSavedData.size() > 0) {
+
+      }
 
       return result;
     }

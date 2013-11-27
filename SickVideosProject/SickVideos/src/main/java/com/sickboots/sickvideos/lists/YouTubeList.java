@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeAPI.YouTubeHelperListener {
+  protected enum TaskType {USER_REFRESH, REFETCH, FIRSTLOAD};
 
   // subclasses must implement
   abstract public void updateHighestDisplayedIndex(int position);
 
   abstract public void refresh();
 
-  abstract protected void loadData(boolean askUser);
+  abstract protected void loadData(TaskType taskType, boolean askUser);
 
   abstract public void updateItem(YouTubeData itemMap);
 
@@ -48,7 +49,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
       switch (requestCode) {
         case REQUEST_AUTHORIZATION:
           if (resultCode != Activity.RESULT_OK) {
-            loadData(true);
+            loadData(TaskType.FIRSTLOAD, true);
           }
 
           handled = true;
@@ -105,7 +106,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   @Override   // in GoogleAccountDelegate
   public void credentialIsReady() {
-    loadData(false);
+    loadData(TaskType.FIRSTLOAD, false);
   }
 
   @Override
