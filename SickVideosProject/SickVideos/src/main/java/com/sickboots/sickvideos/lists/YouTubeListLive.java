@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.YouTubeGridFragment;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -76,14 +77,14 @@ public class YouTubeListLive extends YouTubeList {
   }
 
   @Override
-  public void updateItem(Map itemMap) {
+  public void updateItem(YouTubeData itemMap) {
     // not supported for now
   }
 
-  private class YouTubeListLiveTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
-    protected List<Map> doInBackground(YouTubeAPI... params) {
+  private class YouTubeListLiveTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
+    protected List<YouTubeData> doInBackground(YouTubeAPI... params) {
       YouTubeAPI helper = params[0];
-      List<Map> result = null;
+      List<YouTubeData> result = null;
 
       Util.log("YouTubeListLiveTask: started");
 
@@ -137,9 +138,9 @@ public class YouTubeListLive extends YouTubeList {
         int diff = (listResults.getTotalItems() - result.size());
         if (diff > 0) {
           // don't mutate the original, make a new copy first
-          result = new ArrayList<Map>(result);
+          result = new ArrayList<YouTubeData>(result);
 
-          HashMap empty = new HashMap();
+          YouTubeData empty = new YouTubeData();
           while (diff-- > 0) {
             result.add(empty);
           }
@@ -149,7 +150,7 @@ public class YouTubeListLive extends YouTubeList {
       return result;
     }
 
-    protected void onPostExecute(List<Map> result) {
+    protected void onPostExecute(List<YouTubeData> result) {
       listResults.setIsReloading(false);
 
       Util.log("YouTubeListLiveTask: finished");

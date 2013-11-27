@@ -32,6 +32,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.sickboots.sickvideos.database.YouTubeData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,17 +42,6 @@ import java.util.List;
 import java.util.Map;
 
 public class YouTubeAPI {
-  // constants used in Maps for youtube data
-  public static final String ID_KEY = "id"; // id is used to find an item to update it
-  public static final String PLAYLIST_KEY = "playlist";
-  public static final String CHANNEL_KEY = "channel";
-  public static final String VIDEO_KEY = "video";
-  public static final String TITLE_KEY = "title";
-  public static final String DESCRIPTION_KEY = "description";
-  public static final String THUMBNAIL_KEY = "thumbnail";
-  public static final String DURATION_KEY = "duration";
-  public static final String HIDDEN_KEY = "hidden";
-
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
   public static final int REQ_PLAYER_CODE = 334443;
@@ -299,7 +289,7 @@ public class YouTubeAPI {
       setItems(itemsForNextToken(""));
     }
 
-    protected List<Map> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token) {
       List<PlaylistItem> playlistItemList = null;
 
       if (playlistID != null) {
@@ -328,20 +318,20 @@ public class YouTubeAPI {
       return playlistItemsToMap(playlistItemList);
     }
 
-    private List<Map> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+    private List<YouTubeData> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
       // check parameters
       if (playlistItemList == null) return null;
 
-      List<Map> result = new ArrayList<Map>();
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (PlaylistItem playlistItem : playlistItemList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(VIDEO_KEY, playlistItem.getContentDetails().getVideoId());
-        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
-        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.mVideo = playlistItem.getContentDetails().getVideoId();
+        map.mTitle = playlistItem.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
 
         result.add(map);
       }
@@ -361,7 +351,7 @@ public class YouTubeAPI {
       setItems(itemsForNextToken(""));
     }
 
-    protected List<Map> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token) {
       List<SearchResult> result = new ArrayList<SearchResult>();
       SearchListResponse searchListResponse = null;
 
@@ -370,7 +360,7 @@ public class YouTubeAPI {
 
         listRequest.setQ(query);
         listRequest.setKey(YouTubeAPI.devKey());
-        listRequest.setType(VIDEO_KEY);
+        listRequest.setType("video");
         listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
@@ -392,17 +382,17 @@ public class YouTubeAPI {
       return searchResultsToMap(result);
     }
 
-    private List<Map> searchResultsToMap(List<SearchResult> playlistItemList) {
-      List<Map> result = new ArrayList<Map>();
+    private List<YouTubeData> searchResultsToMap(List<SearchResult> playlistItemList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (SearchResult playlistItem : playlistItemList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(VIDEO_KEY, playlistItem.getId().getVideoId());
-        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
-        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
+        map.mVideo = playlistItem.getId().getVideoId();
+        map.mTitle = playlistItem.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
 
         result.add(map);
       }
@@ -419,7 +409,7 @@ public class YouTubeAPI {
       setItems(itemsForNextToken(""));
     }
 
-    protected List<Map> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token) {
       List<Video> result = new ArrayList<Video>();
       VideoListResponse searchListResponse = null;
 
@@ -449,18 +439,18 @@ public class YouTubeAPI {
       return searchResultsToMap(result);
     }
 
-    private List<Map> searchResultsToMap(List<Video> playlistItemList) {
-      List<Map> result = new ArrayList<Map>();
+    private List<YouTubeData> searchResultsToMap(List<Video> playlistItemList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (Video playlistItem : playlistItemList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(VIDEO_KEY, playlistItem.getId());
-        map.put(TITLE_KEY, playlistItem.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, removeNewLinesFromString(playlistItem.getSnippet().getDescription()));
-        map.put(THUMBNAIL_KEY, thumbnailURL(playlistItem.getSnippet().getThumbnails()));
-        map.put(DURATION_KEY, playlistItem.getContentDetails().get("duration"));
+        map.mVideo = playlistItem.getId();
+        map.mTitle = playlistItem.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
+        map.mDuration = (String) playlistItem.getContentDetails().get("duration");
 
         result.add(map);
       }
@@ -477,7 +467,7 @@ public class YouTubeAPI {
       setItems(itemsForNextToken(regionCode));
     }
 
-    protected List<Map> itemsForNextToken(String regionCode) {
+    protected List<YouTubeData> itemsForNextToken(String regionCode) {
       List<VideoCategory> result = new ArrayList<VideoCategory>();
       VideoCategoryListResponse categoryListResponse = null;
 
@@ -503,15 +493,15 @@ public class YouTubeAPI {
       return searchResultsToMap(result);
     }
 
-    private List<Map> searchResultsToMap(List<VideoCategory> itemList) {
-      List<Map> result = new ArrayList<Map>();
+    private List<YouTubeData> searchResultsToMap(List<VideoCategory> itemList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (VideoCategory category : itemList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(CHANNEL_KEY, category.getSnippet().getChannelId());
-        map.put(TITLE_KEY, category.getSnippet().getTitle());
+        map.mChannel = category.getSnippet().getChannelId();
+        map.mTitle = category.getSnippet().getTitle();
 
         result.add(map);
       }
@@ -530,7 +520,7 @@ public class YouTubeAPI {
       setItems(itemsForNextToken(""));
     }
 
-    protected List<Map> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token) {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
@@ -556,17 +546,17 @@ public class YouTubeAPI {
       return subscriptionListToMap(result);
     }
 
-    private List<Map> subscriptionListToMap(List<Subscription> subscriptionsList) {
-      List<Map> result = new ArrayList<Map>();
+    private List<YouTubeData> subscriptionListToMap(List<Subscription> subscriptionsList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (Subscription subscription : subscriptionsList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(TITLE_KEY, subscription.getSnippet().getTitle());
-        map.put(CHANNEL_KEY, subscription.getSnippet().getResourceId().getChannelId());
-        map.put(DESCRIPTION_KEY, removeNewLinesFromString(subscription.getSnippet().getDescription()));
-        map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
+        map.mTitle = subscription.getSnippet().getTitle();
+        map.mChannel = subscription.getSnippet().getResourceId().getChannelId();
+        map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
 
         result.add(map);
       }
@@ -586,7 +576,7 @@ public class YouTubeAPI {
 
       channelID = c;
 
-      List<Map> related = new ArrayList<Map>();
+      List<YouTubeData> related = new ArrayList<YouTubeData>();
       if (addRelated) {
         Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(c);
 
@@ -594,25 +584,25 @@ public class YouTubeAPI {
           String playlistID = entry.getValue();
 
           if (playlistID != null) {
-            HashMap map = new HashMap();
+            YouTubeData map = new YouTubeData();
 
-            map.put(PLAYLIST_KEY, playlistID);
+            map.mPlaylist = playlistID;
 
             switch (entry.getKey()) {
               case FAVORITES:
-                map.put(TITLE_KEY, "Favorites");
+                map.mTitle = "Favorites";
                 break;
               case LIKES:
-                map.put(TITLE_KEY, "LIKES");
+                map.mTitle = "LIKES";
                 break;
               case UPLOADS:
-                map.put(TITLE_KEY, "UPLOADS");
+                map.mTitle = "UPLOADS";
                 break;
               case WATCHED:
-                map.put(TITLE_KEY, "WATCHED");
+                map.mTitle = "WATCHED";
                 break;
               case WATCHLATER:
-                map.put(TITLE_KEY, "WATCHLATER");
+                map.mTitle = "WATCHLATER";
                 break;
             }
 
@@ -626,7 +616,7 @@ public class YouTubeAPI {
       setItems(related);
     }
 
-    protected List<Map> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token) {
       List<Playlist> result = new ArrayList<Playlist>();
 
       try {
@@ -657,17 +647,17 @@ public class YouTubeAPI {
       return playlistItemsToMap(result);
     }
 
-    private List<Map> playlistItemsToMap(List<Playlist> subscriptionsList) {
-      List<Map> result = new ArrayList<Map>();
+    private List<YouTubeData> playlistItemsToMap(List<Playlist> subscriptionsList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
       for (Playlist subscription : subscriptionsList) {
-        HashMap map = new HashMap();
+        YouTubeData map = new YouTubeData();
 
-        map.put(PLAYLIST_KEY, subscription.getId());
-        map.put(TITLE_KEY, subscription.getSnippet().getTitle());
-        map.put(DESCRIPTION_KEY, removeNewLinesFromString(subscription.getSnippet().getDescription()));
-        map.put(THUMBNAIL_KEY, thumbnailURL(subscription.getSnippet().getThumbnails()));
+        map.mPlaylist = subscription.getId();
+        map.mTitle = subscription.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
 
         result.add(map);
       }
@@ -681,7 +671,7 @@ public class YouTubeAPI {
 
   abstract public class BaseListResults {
     protected Object response;
-    private List<Map> items;
+    private List<YouTubeData> items;
     protected int totalItems;
     private int highestDisplayedIndex = 0;
     private boolean reloadingFlag = false;
@@ -689,7 +679,7 @@ public class YouTubeAPI {
     private boolean getMaxItems = false;
 
     // subclasses must implement
-    abstract protected List<Map> itemsForNextToken(String token);
+    abstract protected List<YouTubeData> itemsForNextToken(String token);
 
     public BaseListResults() {
       super();
@@ -701,11 +691,11 @@ public class YouTubeAPI {
       getMaxItems = getMaximum;
     }
 
-    public List<Map> getItems() {
+    public List<YouTubeData> getItems() {
       return items;
     }
 
-    public void setItems(List<Map> l) {
+    public void setItems(List<YouTubeData> l) {
       items = l;
     }
 
@@ -714,7 +704,7 @@ public class YouTubeAPI {
 
       String token = nextToken();
       if (token != null) {
-        List<Map> newItems = itemsForNextToken(token);
+        List<YouTubeData> newItems = itemsForNextToken(token);
 
         if (newItems != null) {
           items.addAll(newItems);

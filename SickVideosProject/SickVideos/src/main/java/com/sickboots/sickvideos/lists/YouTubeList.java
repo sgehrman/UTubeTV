@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.GoogleAccount;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -22,13 +23,13 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   abstract protected void loadData(boolean askUser);
 
-  abstract public void updateItem(Map itemMap);
+  abstract public void updateItem(YouTubeData itemMap);
 
   protected UIAccess access;
   protected GoogleAccount account;
   protected YouTubeListSpec listSpec;
   protected static final int REQUEST_AUTHORIZATION = 444;
-  protected List<Map> items = new ArrayList<Map>();
+  protected List<YouTubeData> items = new ArrayList<YouTubeData>();
 
   // use accessor in subclasses
   private YouTubeAPI youTubeHelper;
@@ -59,7 +60,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
     return handled;
   }
 
-  public List<Map> getItems() {
+  public List<YouTubeData> getItems() {
     return items;
   }
 

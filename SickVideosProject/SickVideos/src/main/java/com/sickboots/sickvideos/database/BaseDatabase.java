@@ -17,14 +17,14 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
   protected int mFlags = 0;  // can be used for any flags need in a subclass
 
-  protected static final int DATABASE_VERSION = 201;
+  protected static final int DATABASE_VERSION = 501;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
 
-  abstract protected Map cursorToItem(Cursor cursor);
+  abstract protected YouTubeData cursorToItem(Cursor cursor);
 
-  abstract protected ContentValues contentValuesForItem(Map item);
+  abstract protected ContentValues contentValuesForItem(YouTubeData item);
 
   abstract protected String createTableSQL();
 
@@ -65,14 +65,14 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     }
   }
 
-  public void insertItems(List<Map> items) {
+  public void insertItems(List<YouTubeData> items) {
     if (items != null) {
       // Gets the data repository in write mode
       SQLiteDatabase db = getWritableDatabase();
 
       db.beginTransaction();
       try {
-        for (Map item : items)
+        for (YouTubeData item : items)
           db.insert(mTableName, null, contentValuesForItem(item));
 
         db.setTransactionSuccessful();
@@ -85,9 +85,9 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     }
   }
 
-  public Map getItemWithID(Long id) {
-    Map result = null;
-    List<Map> results = getItems(whereClauseForID(), whereArgsForID(id));
+  public YouTubeData getItemWithID(Long id) {
+    YouTubeData result = null;
+    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id));
 
     if (results.size() == 1) {
       result = results.get(0);
@@ -102,12 +102,12 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     mFlags = flags;
   }
 
-  public List<Map> getItems() {
+  public List<YouTubeData> getItems() {
     return getItems(getItemsWhereClause(), getItemsWhereArgs());
   }
 
-  public List<Map> getItems(String selection, String[] selectionArgs) {
-    List<Map> result = new ArrayList<Map>();
+  public List<YouTubeData> getItems(String selection, String[] selectionArgs) {
+    List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     SQLiteDatabase db = getReadableDatabase();
     Cursor cursor=null;
@@ -150,11 +150,11 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     return new String[]{id.toString()};
   }
 
-  public void updateItem(Map item) {
+  public void updateItem(YouTubeData item) {
     SQLiteDatabase db = getWritableDatabase();
 
     try {
-      Long id = (Long) item.get(YouTubeAPI.ID_KEY);
+      Long id = item.mID;
 
       int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
 

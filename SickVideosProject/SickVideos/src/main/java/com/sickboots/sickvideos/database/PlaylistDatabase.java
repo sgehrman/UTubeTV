@@ -38,26 +38,26 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected Map cursorToItem(Cursor cursor) {
-    Map result = new HashMap();
+  protected YouTubeData cursorToItem(Cursor cursor) {
+    YouTubeData result = new YouTubeData();
 
-    result.put(YouTubeAPI.ID_KEY, cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID)));
-    result.put(YouTubeAPI.PLAYLIST_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_PLAYLIST)));
-    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_TITLE)));
-    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_DESCRIPTION)));
-    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_THUMBNAIL)));
+    result.mID = cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID));
+    result.mPlaylist = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_PLAYLIST));
+    result.mTitle = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_TITLE));
+    result.mDescription = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_DESCRIPTION));
+    result.mThumbnail = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_THUMBNAIL));
 
     return result;
   }
 
   @Override
-  protected ContentValues contentValuesForItem(Map item) {
+  protected ContentValues contentValuesForItem(YouTubeData item) {
     ContentValues values = new ContentValues();
 
-    values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, (String) item.get(YouTubeAPI.PLAYLIST_KEY));
-    values.put(PlaylistEntry.COLUMN_NAME_TITLE, (String) item.get(YouTubeAPI.TITLE_KEY));
-    values.put(PlaylistEntry.COLUMN_NAME_DESCRIPTION, (String) item.get(YouTubeAPI.DESCRIPTION_KEY));
-    values.put(PlaylistEntry.COLUMN_NAME_THUMBNAIL, (String) item.get(YouTubeAPI.THUMBNAIL_KEY));
+    values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, item.mPlaylist);
+    values.put(PlaylistEntry.COLUMN_NAME_TITLE, item.mTitle);
+    values.put(PlaylistEntry.COLUMN_NAME_DESCRIPTION, item.mDescription);
+    values.put(PlaylistEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
 
     return values;
   }

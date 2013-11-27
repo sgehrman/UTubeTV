@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 
 import java.util.Map;
@@ -15,14 +16,14 @@ import java.util.Map;
 public class VideoMenuView extends ImageView {
 
   public interface VideoMenuViewListener {
-    public void showVideoInfo(Map videoMap);
+    public void showVideoInfo(YouTubeData videoMap);
 
-    public void showVideoOnYouTube(Map videoMap);
+    public void showVideoOnYouTube(YouTubeData videoMap);
 
-    public void hideVideo(Map videoMap);
+    public void hideVideo(YouTubeData videoMap);
   }
 
-  public Map mVideoMap;
+  public YouTubeData mVideoMap;
   private VideoMenuViewListener mListener;
 
   public VideoMenuView(Context context, AttributeSet attrs) {

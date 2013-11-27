@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.sickboots.sickvideos.database.BaseDatabase;
 import com.sickboots.sickvideos.database.PlaylistDatabase;
 import com.sickboots.sickvideos.database.VideoDatabase;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -60,14 +61,14 @@ public class YouTubeListDB extends YouTubeList {
   }
 
   @Override
-  public void updateItem(Map itemMap) {
+  public void updateItem(YouTubeData itemMap) {
     database.updateItem(itemMap);
 
     // reload the data so the UI updates
     loadData(false);
   }
 
-  private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
+  private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
     boolean mFilterHidden=false;
 
     public YouTubeListDBTask(boolean filterHidden) {
@@ -76,9 +77,9 @@ public class YouTubeListDB extends YouTubeList {
       mFilterHidden = filterHidden;
     }
 
-    protected List<Map> doInBackground(YouTubeAPI... params) {
+    protected List<YouTubeData> doInBackground(YouTubeAPI... params) {
       YouTubeAPI helper = params[0];
-      List<Map> result = null;
+      List<YouTubeData> result = null;
 
       Util.log("YouTubeListDBTask: started");
 
@@ -105,7 +106,7 @@ public class YouTubeListDB extends YouTubeList {
     }
 
     private void fillDatabaseWithData(YouTubeAPI helper) {
-      List<Map> result = null;
+      List<YouTubeData> result = null;
 
       YouTubeAPI.BaseListResults listResults = null;
 
@@ -146,7 +147,7 @@ public class YouTubeListDB extends YouTubeList {
       database.insertItems(result);
     }
 
-    protected void onPostExecute(List<Map> result) {
+    protected void onPostExecute(List<YouTubeData> result) {
 
       Util.log("YouTubeListDBTask: finished");
 

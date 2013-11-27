@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
@@ -190,19 +191,19 @@ public class YouTubeGridFragment extends Fragment
     ApplicationHub.instance().deleteObserver(this);
   }
 
-  public void handleClick(Map itemMap) {
+  public void handleClick(YouTubeData itemMap) {
     switch (mList.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        String videoId = (String) itemMap.get("video");
-        String title = (String) itemMap.get("title");
+        String videoId = itemMap.mVideo;
+        String title = itemMap.mTitle;
 
         player().open(videoId, title, true);
         break;
       case PLAYLISTS: {
-        String playlistID = (String) itemMap.get("playlist");
+        String playlistID = itemMap.mPlaylist;
 
         if (playlistID != null) {
           Fragment frag = YouTubeGridFragment.videosFragment(playlistID);
@@ -303,7 +304,7 @@ public class YouTubeGridFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class YouTubeListAdapter extends ArrayAdapter<Map> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
+  private class YouTubeListAdapter extends ArrayAdapter<YouTubeData> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
     private final LayoutInflater inflater;
     int animationID = 0;
     boolean showHidden = false;
@@ -344,7 +345,7 @@ public class YouTubeGridFragment extends Fragment
       if (holder != null) {
         animateViewForClick(holder.image);
 
-        Map map = getItem(position);
+        YouTubeData map = getItem(position);
         handleClick(map);
       } else {
         Util.log("no holder on click?");
@@ -375,13 +376,13 @@ public class YouTubeGridFragment extends Fragment
         holder.image.setScaleY(1.0f);
       }
 
-      Map itemMap = getItem(position);
+      YouTubeData itemMap = getItem(position);
 
       holder.image.setAnimation(null);
 
       int defaultImageResID = 0;
 
-      UrlImageViewHelper.setUrlDrawable(holder.image, (String) itemMap.get(YouTubeAPI.THUMBNAIL_KEY), defaultImageResID, new UrlImageViewCallback() {
+      UrlImageViewHelper.setUrlDrawable(holder.image, itemMap.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
@@ -396,7 +397,7 @@ public class YouTubeGridFragment extends Fragment
 
       boolean hidden = false;
       if (!showHidden) {
-        String hiddenValue = (String) itemMap.get(YouTubeAPI.HIDDEN_KEY);
+        String hiddenValue = itemMap.mHidden;
         if (hiddenValue != null)
           hidden = true;
       }
@@ -404,9 +405,9 @@ public class YouTubeGridFragment extends Fragment
       if (hidden)
         holder.title.setText("(Hidden)");
       else
-        holder.title.setText((String) itemMap.get(YouTubeAPI.TITLE_KEY));
+        holder.title.setText( itemMap.mTitle);
 
-      String duration = (String) itemMap.get(YouTubeAPI.DURATION_KEY);
+      String duration = itemMap.mDuration;
       if (duration != null) {
         holder.duration.setVisibility(View.VISIBLE);
 
@@ -421,7 +422,7 @@ public class YouTubeGridFragment extends Fragment
 
       // hide description if empty
       if (holder.description != null) {
-        String desc = (String) itemMap.get(YouTubeAPI.DESCRIPTION_KEY);
+        String desc = (String) itemMap.mDescription;
         if (desc != null && (desc.length() > 0)) {
           holder.description.setVisibility(View.VISIBLE);
           holder.description.setText(desc);
@@ -432,7 +433,7 @@ public class YouTubeGridFragment extends Fragment
 
       // set video id on menu button so clicking can know what video to act on
       // only set if there is a videoId, playlists and others don't need this menu
-      String videoId = (String) itemMap.get(YouTubeAPI.VIDEO_KEY);
+      String videoId = (String) itemMap.mVideo;
       if (videoId != null && (videoId.length() > 0)) {
         holder.menuButton.setVisibility(View.VISIBLE);
         holder.menuButton.setListener(this);
@@ -449,23 +450,23 @@ public class YouTubeGridFragment extends Fragment
 
     // VideoMenuViewListener
     @Override
-    public void showVideoInfo(Map videoMap) {
+    public void showVideoInfo(YouTubeData videoMap) {
 
     }
 
     // VideoMenuViewListener
     @Override
-    public void showVideoOnYouTube(Map videoMap) {
-      YouTubeAPI.playMovieUsingIntent(getActivity(), (String) videoMap.get(YouTubeAPI.VIDEO_KEY));
+    public void showVideoOnYouTube(YouTubeData videoMap) {
+      YouTubeAPI.playMovieUsingIntent(getActivity(), videoMap.mVideo);
     }
 
     // VideoMenuViewListener
     @Override
-    public void hideVideo(Map videoMap) {
+    public void hideVideo(YouTubeData videoMap) {
       // hidden is either null or not null
       // toggle it
-      String hidden = (String) videoMap.get(YouTubeAPI.HIDDEN_KEY);
-      videoMap.put(YouTubeAPI.HIDDEN_KEY, (hidden == null) ? "" : null);
+      String hidden = (String) videoMap.mHidden;
+      videoMap.mHidden = (hidden == null) ? "" : null;
 
       mList.updateItem(videoMap);
     }

@@ -44,30 +44,30 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected Map cursorToItem(Cursor cursor) {
-    Map result = new HashMap();
+  protected YouTubeData cursorToItem(Cursor cursor) {
+    YouTubeData result = new YouTubeData();
 
-    result.put(YouTubeAPI.ID_KEY, cursor.getLong(cursor.getColumnIndex(VideoEntry._ID)));
-    result.put(YouTubeAPI.VIDEO_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO)));
-    result.put(YouTubeAPI.TITLE_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE)));
-    result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
-    result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL)));
-    result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION)));
-    result.put(YouTubeAPI.HIDDEN_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)));
+    result.mID = cursor.getLong(cursor.getColumnIndex(VideoEntry._ID));
+    result.mVideo = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO));
+    result.mTitle = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE));
+    result.mDescription = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION));
+    result.mThumbnail = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL));
+    result.mDuration = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION));
+    result.mHidden = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN));
 
     return result;
   }
 
   @Override
-  protected ContentValues contentValuesForItem(Map item) {
+  protected ContentValues contentValuesForItem(YouTubeData item) {
     ContentValues values = new ContentValues();
 
-    values.put(VideoEntry.COLUMN_NAME_VIDEO, (String) item.get(YouTubeAPI.VIDEO_KEY));
-    values.put(VideoEntry.COLUMN_NAME_TITLE, (String) item.get(YouTubeAPI.TITLE_KEY));
-    values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, (String) item.get(YouTubeAPI.DESCRIPTION_KEY));
-    values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, (String) item.get(YouTubeAPI.THUMBNAIL_KEY));
-    values.put(VideoEntry.COLUMN_NAME_DURATION, (String) item.get(YouTubeAPI.DURATION_KEY));
-    values.put(VideoEntry.COLUMN_NAME_HIDDEN, (String) item.get(YouTubeAPI.HIDDEN_KEY));
+    values.put(VideoEntry.COLUMN_NAME_VIDEO, item.mVideo);
+    values.put(VideoEntry.COLUMN_NAME_TITLE, item.mTitle);
+    values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, item.mDescription);
+    values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
+    values.put(VideoEntry.COLUMN_NAME_DURATION, item.mDuration);
+    values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.mHidden);
 
     return values;
   }
