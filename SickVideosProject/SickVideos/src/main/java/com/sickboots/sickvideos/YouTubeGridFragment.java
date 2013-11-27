@@ -260,7 +260,8 @@ public class YouTubeGridFragment extends Fragment
 
     // stop the pull to refresh indicator
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.setRefreshComplete();
+    if (ptrl != null) // could be null if activity was destroyed
+      ptrl.setRefreshComplete();
   }
 
   private YouTubeList createList(Bundle argsBundle) {
