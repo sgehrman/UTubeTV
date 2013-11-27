@@ -12,6 +12,7 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.List;
+import java.util.Map;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
@@ -71,6 +72,31 @@ public class YouTubeListDB extends YouTubeList {
     loadData(false);
   }
 
+   /*
+    Three tasks that are needed
+
+    1) a user refresh
+        - save hidden state
+        - delete old data
+        - fetch from internet (don't delete first incase internet is down then we would just delete what we had)
+        - add back saved hidden data
+        NET: always
+        DEL: always
+
+    2) a user hides an item, or preference to show hidden items is toggled
+        - get from db
+        - don't get list from internet even if zero results returned
+        NET: never
+        DEL: never
+
+    3) First load on launch
+        - get from database if it has data
+        - if database was never saved with data, then ask internet, otherwise don't
+        NET: if database never saved before
+        DEL: never
+   */
+
+
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
     boolean mShowHidden = false;
 
@@ -97,18 +123,31 @@ public class YouTubeListDB extends YouTubeList {
       // might just be all hidden items, no use to refetch from youtube
 
       if (result.size() == 0) {
-        fillDatabaseWithData(helper);
+        result = getDataFromInternet(helper);
 
-        // now get from the database so we are always using values from the db
-        // hidden flag for example is null in the raw data from youtube api which crashed
-        // this is slower, but not sure if slow enough warrant a more bug prone fix.
-        result = database.getItems();
+        // merges info from the existing list to the new list
+        Map currentListSavedData=null;
+        result = prepareDataFromNet(result, currentListSavedData);
+
+        // save results to database
+        database.insertItems(result);
+
+        // a test we should probably implement.  Compare what we get back from the DB with our result to make sure nothing changes being written and reread from the DB.
+        // List<YouTubeData> dbResult = database.getItems();
+        // if (result != dbResult) log("data bad");
       }
 
       return result;
     }
 
-    private void fillDatabaseWithData(YouTubeAPI helper) {
+    private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Map currentListSavedData) {
+      List<YouTubeData> result = inList;
+
+
+      return result;
+    }
+
+    private List<YouTubeData> getDataFromInternet(YouTubeAPI helper) {
       List<YouTubeData> result = null;
 
       YouTubeAPI.BaseListResults listResults = null;
@@ -146,8 +185,7 @@ public class YouTubeListDB extends YouTubeList {
         result = listResults.getItems();
       }
 
-      // add results to DB
-      database.insertItems(result);
+      return result;
     }
 
     protected void onPostExecute(List<YouTubeData> result) {
