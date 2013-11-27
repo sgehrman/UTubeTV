@@ -210,6 +210,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
         return true;
 
+      case R.id.action_rate_app:
+        intent = new Intent(Intent.ACTION_VIEW);
+
+        intent.setData(Uri.parse("market://details?id=" + getApplicationInfo().packageName));
+        startActivity(intent);
+
+        return true;
+
+
       default:
         return super.onOptionsItemSelected(item);
     }
