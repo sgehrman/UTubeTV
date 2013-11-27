@@ -22,8 +22,6 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   abstract protected void loadData(boolean askUser);
 
-  abstract public void handleClick(Map itemMap, boolean clickedIcon);
-
   abstract public void updateItem(Map itemMap);
 
   protected UIAccess access;

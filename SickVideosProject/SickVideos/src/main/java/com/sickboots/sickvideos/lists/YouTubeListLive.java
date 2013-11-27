@@ -76,55 +76,8 @@ public class YouTubeListLive extends YouTubeList {
   }
 
   @Override
-  public void handleClick(Map itemMap, boolean clickedIcon) {
-    switch (type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        String movieID = (String) itemMap.get("video");
-
-        if (movieID != null) {
-          YouTubeAPI.playMovie(getActivity(), movieID);
-        }
-        break;
-      case PLAYLISTS: {
-        String playlistID = (String) itemMap.get("playlist");
-
-        if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.videosFragment(playlistID);
-
-          replaceFragment(frag);
-        }
-      }
-      break;
-      case SUBSCRIPTIONS:
-        String channel = (String) itemMap.get("channel");
-
-        if (channel != null) {
-          Fragment frag = YouTubeGridFragment.playlistsFragment(channel);
-
-          replaceFragment(frag);
-        }
-        break;
-      case CATEGORIES:
-        break;
-    }
-  }
-
-  @Override
   public void updateItem(Map itemMap) {
     // not supported for now
-  }
-
-  private void replaceFragment(Fragment fragment) {
-    FragmentManager fragmentManager = getActivity().getFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-    fragmentTransaction.replace(R.id.fragment_container, fragment);
-    fragmentTransaction.addToBackStack(null);
-
-    fragmentTransaction.commit();
   }
 
   private class YouTubeListLiveTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {

@@ -60,30 +60,6 @@ public class YouTubeListDB extends YouTubeList {
   }
 
   @Override
-  public void handleClick(Map itemMap, boolean clickedIcon) {
-    switch (type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        String movieID = (String) itemMap.get("video");
-
-        if (movieID != null) {
-          YouTubeAPI.playMovie(getActivity(), movieID);
-        }
-        break;
-      case PLAYLISTS:
-
-        break;
-      case SUBSCRIPTIONS:
-
-        break;
-      case CATEGORIES:
-        break;
-    }
-  }
-
-  @Override
   public void updateItem(Map itemMap) {
     database.updateItem(itemMap);
   }
