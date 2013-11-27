@@ -53,7 +53,7 @@ public class YouTubeListDB extends YouTubeList {
 
     if (helper != null) {
       if (runningTask == null) {
-        runningTask = new YouTubeListDBTask();
+        runningTask = new YouTubeListDBTask(true);
         runningTask.execute(helper);
       }
     }
@@ -62,9 +62,20 @@ public class YouTubeListDB extends YouTubeList {
   @Override
   public void updateItem(Map itemMap) {
     database.updateItem(itemMap);
+
+    // reload the data so the UI updates
+    loadData(false);
   }
 
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<Map>> {
+    boolean mFilterHidden=false;
+
+    public YouTubeListDBTask(boolean filterHidden) {
+      super();
+
+      mFilterHidden = filterHidden;
+    }
+
     protected List<Map> doInBackground(YouTubeAPI... params) {
       YouTubeAPI helper = params[0];
       List<Map> result = null;
@@ -72,10 +83,14 @@ public class YouTubeListDB extends YouTubeList {
       Util.log("YouTubeListDBTask: started");
 
       // filter out hidden values
-      database.setFlags(VideoDatabase.FILTER_HIDDEN_ITEMS);
+      if (mFilterHidden)
+        database.setFlags(VideoDatabase.FILTER_HIDDEN_ITEMS);
 
       // are the results already in the DB?
       result = database.getItems();
+
+      // needs improvement
+      // might just be all hidden items, no use to refetch from youtube
 
       if (result.size() == 0) {
         fillDatabaseWithData(helper);
