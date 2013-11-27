@@ -5,11 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class VideoDatabase extends BaseDatabase {
   // filter flags
   public static int FILTER_HIDDEN_ITEMS = 44;

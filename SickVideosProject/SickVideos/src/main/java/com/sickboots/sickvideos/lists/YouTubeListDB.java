@@ -10,7 +10,6 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.List;
-import java.util.Map;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
@@ -69,7 +68,7 @@ public class YouTubeListDB extends YouTubeList {
   }
 
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
-    boolean mFilterHidden=false;
+    boolean mFilterHidden = false;
 
     public YouTubeListDBTask(boolean filterHidden) {
       super();

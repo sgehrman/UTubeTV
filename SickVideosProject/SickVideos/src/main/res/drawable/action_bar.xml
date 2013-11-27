@@ -6,8 +6,9 @@
         </shape>
     </item>
 
-    <item android:bottom="1dp"
-          android:top="1dp">
+    <item
+        android:bottom="1dp"
+        android:top="1dp">
         <shape>
             <gradient
                 android:startColor="@color/action_bar_light"

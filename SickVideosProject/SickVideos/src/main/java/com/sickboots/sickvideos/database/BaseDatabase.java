@@ -7,11 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
@@ -110,7 +108,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     SQLiteDatabase db = getReadableDatabase();
-    Cursor cursor=null;
+    Cursor cursor = null;
 
     try {
       String[] projection = projection();

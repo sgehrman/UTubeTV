@@ -9,6 +9,6 @@
     <string name="action_more_apps">More apps...</string>
 
 
-<string name="drawer_open">Open navigation drawer</string>
-<string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

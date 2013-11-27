@@ -11,8 +11,6 @@ import android.widget.PopupMenu;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 
-import java.util.Map;
-
 public class VideoMenuView extends ImageView {
 
   public interface VideoMenuViewListener {

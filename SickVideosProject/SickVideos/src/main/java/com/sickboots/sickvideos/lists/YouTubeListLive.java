@@ -1,20 +1,13 @@
 package com.sickboots.sickvideos.lists;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 
-import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class YouTubeListLive extends YouTubeList {
   private YouTubeAPI.BaseListResults listResults;

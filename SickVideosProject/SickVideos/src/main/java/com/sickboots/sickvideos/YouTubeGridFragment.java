@@ -34,7 +34,6 @@ import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -405,7 +404,7 @@ public class YouTubeGridFragment extends Fragment
       if (hidden)
         holder.title.setText("(Hidden)");
       else
-        holder.title.setText( itemMap.mTitle);
+        holder.title.setText(itemMap.mTitle);
 
       String duration = itemMap.mDuration;
       if (duration != null) {

@@ -6,11 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class PlaylistDatabase extends BaseDatabase {
   // stores information about a playlist
   public static class PlaylistEntry implements BaseColumns {

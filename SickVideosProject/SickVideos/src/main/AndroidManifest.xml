@@ -42,9 +42,9 @@
             android:label="">
 
             <intent-filter>
-                <action android:name="rs.sickboots.sickvideos.InfoActivity" />
+                <action android:name="rs.sickboots.sickvideos.InfoActivity"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
         </activity>
