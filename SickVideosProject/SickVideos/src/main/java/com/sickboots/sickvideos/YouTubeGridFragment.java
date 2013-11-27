@@ -395,8 +395,11 @@ public class YouTubeGridFragment extends Fragment
       });
 
       boolean hidden = false;
-      if (!showHidden)
-        hidden = ((Integer) itemMap.get(YouTubeAPI.HIDDEN_KEY)) == 1;
+      if (!showHidden) {
+        String hiddenValue = (String) itemMap.get(YouTubeAPI.HIDDEN_KEY);
+        if (hiddenValue != null)
+          hidden = true;
+      }
 
       if (hidden)
         holder.title.setText("(Hidden)");
@@ -459,10 +462,10 @@ public class YouTubeGridFragment extends Fragment
     // VideoMenuViewListener
     @Override
     public void hideVideo(Map videoMap) {
-
-      int hidden = (Integer) videoMap.get(YouTubeAPI.HIDDEN_KEY);
-
-      videoMap.put(YouTubeAPI.HIDDEN_KEY, (hidden == 0) ? 1 : 0);
+      // hidden is either null or not null
+      // toggle it
+      String hidden = (String) videoMap.get(YouTubeAPI.HIDDEN_KEY);
+      videoMap.put(YouTubeAPI.HIDDEN_KEY, (hidden == null) ? "" : null);
 
       mList.updateItem(videoMap);
     }

@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VideoDatabase extends BaseDatabase {
+  // filter flags
+  public static int FILTER_HIDDEN_ITEMS = 44;
+
   // stores information about a video
   public static class VideoEntry implements BaseColumns {
     public static final String COLUMN_NAME_VIDEO = "video";
@@ -50,7 +53,7 @@ public class VideoDatabase extends BaseDatabase {
     result.put(YouTubeAPI.DESCRIPTION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION)));
     result.put(YouTubeAPI.THUMBNAIL_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL)));
     result.put(YouTubeAPI.DURATION_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION)));
-    result.put(YouTubeAPI.HIDDEN_KEY, cursor.getInt(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)));
+    result.put(YouTubeAPI.HIDDEN_KEY, cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)));
 
     return result;
   }
@@ -64,7 +67,7 @@ public class VideoDatabase extends BaseDatabase {
     values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, (String) item.get(YouTubeAPI.DESCRIPTION_KEY));
     values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, (String) item.get(YouTubeAPI.THUMBNAIL_KEY));
     values.put(VideoEntry.COLUMN_NAME_DURATION, (String) item.get(YouTubeAPI.DURATION_KEY));
-    values.put(VideoEntry.COLUMN_NAME_HIDDEN, (Integer) item.get(YouTubeAPI.HIDDEN_KEY));
+    values.put(VideoEntry.COLUMN_NAME_HIDDEN, (String) item.get(YouTubeAPI.HIDDEN_KEY));
 
     return values;
   }
@@ -91,7 +94,7 @@ public class VideoDatabase extends BaseDatabase {
         + COMMA_SEP
         + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
         + COMMA_SEP
-        + VideoEntry.COLUMN_NAME_HIDDEN + INT_TYPE + " DEFAULT 0"
+        + VideoEntry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
         + " )";
 
     return result;
@@ -99,16 +102,14 @@ public class VideoDatabase extends BaseDatabase {
 
   @Override
   protected String getItemsWhereClause() {
-    if (mFlags == 44)
-      return "" + VideoEntry.COLUMN_NAME_HIDDEN + "=?";
+    if (mFlags == FILTER_HIDDEN_ITEMS)
+      return "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
+
     return null;
   }
 
   @Override
   protected String[] getItemsWhereArgs() {
-    if (mFlags == 44)
-      return new String[]{"0"};
-
     return null;
   }
 
