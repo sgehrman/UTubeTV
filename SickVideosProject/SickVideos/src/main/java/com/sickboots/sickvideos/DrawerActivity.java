@@ -22,6 +22,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
+import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -87,7 +88,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (savedInstanceState != null) {
       mCurrentSection = savedInstanceState.getInt("section");
     } else {
-      String sectionIndexString = ApplicationHub.instance().getPref(ApplicationHub.DRAWER_SECTION_INDEX, "0");
+      String sectionIndexString = ApplicationHub.preferences().getString(PreferenceCache.DRAWER_SECTION_INDEX, "0");
       mCurrentSection = Integer.parseInt(sectionIndexString);
     }
 
@@ -129,7 +130,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     super.onPause();
 
     // save current section to prefs file so we can start where the user left off on a relaunch
-    ApplicationHub.instance().setPref(ApplicationHub.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
+    ApplicationHub.preferences().setString(PreferenceCache.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
   }
 
   @Override

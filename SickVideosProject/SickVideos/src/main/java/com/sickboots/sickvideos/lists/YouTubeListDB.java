@@ -6,6 +6,8 @@ import com.sickboots.sickvideos.database.BaseDatabase;
 import com.sickboots.sickvideos.database.PlaylistDatabase;
 import com.sickboots.sickvideos.database.VideoDatabase;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -53,7 +55,9 @@ public class YouTubeListDB extends YouTubeList {
 
     if (helper != null) {
       if (runningTask == null) {
-        runningTask = new YouTubeListDBTask(true);
+        boolean showHiddenVideos = ApplicationHub.preferences().getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
+
+        runningTask = new YouTubeListDBTask(showHiddenVideos);
         runningTask.execute(helper);
       }
     }
@@ -68,12 +72,12 @@ public class YouTubeListDB extends YouTubeList {
   }
 
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {
-    boolean mFilterHidden = false;
+    boolean mShowHidden = false;
 
-    public YouTubeListDBTask(boolean filterHidden) {
+    public YouTubeListDBTask(boolean showHidden) {
       super();
 
-      mFilterHidden = filterHidden;
+      mShowHidden = showHidden;
     }
 
     protected List<YouTubeData> doInBackground(YouTubeAPI... params) {
@@ -83,7 +87,7 @@ public class YouTubeListDB extends YouTubeList {
       Util.log("YouTubeListDBTask: started");
 
       // filter out hidden values
-      if (mFilterHidden)
+      if (!mShowHidden)
         database.setFlags(VideoDatabase.FILTER_HIDDEN_ITEMS);
 
       // are the results already in the DB?

@@ -33,6 +33,8 @@ import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.PreferenceCache;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,8 +78,7 @@ public class YouTubeAPI {
   }
 
   public static void playMovie(Activity activity, String movieID) {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
-    boolean fullScreen = sp.getBoolean("play_full_screen", false);
+    boolean fullScreen = ApplicationHub.preferences().getBoolean(PreferenceCache.PLAY_FULLSCREEN, false);
 
     Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeAPI.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivityForResult(intent, REQ_PLAYER_CODE);

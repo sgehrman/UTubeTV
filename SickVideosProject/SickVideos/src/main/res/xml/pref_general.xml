@@ -1,9 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:key="play_full_screen"
-        android:title="@string/pref_play_full_screen"
-        android:summary="@string/pref_play_full_screen_summary"
+        android:key="play_fullscreen"
+        android:title="@string/pref_play_fullscreen"
+        android:summary="@string/pref_play_fullscreen_summary"
         android:defaultValue="false"/>
 
     <SwitchPreference
@@ -11,6 +11,12 @@
         android:title="@string/pref_mute_ads"
         android:summary="@string/pref_mute_ads_summary"
         android:defaultValue="true"/>
+
+    <SwitchPreference
+        android:key="show_hidden_videos"
+        android:title="@string/pref_show_hidden_videos"
+        android:summary="@string/pref_show_hidden_videos_summary"
+        android:defaultValue="false"/>
 
 </PreferenceScreen>
 

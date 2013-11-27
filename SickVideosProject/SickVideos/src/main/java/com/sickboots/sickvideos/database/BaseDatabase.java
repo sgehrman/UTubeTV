@@ -15,7 +15,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
   protected int mFlags = 0;  // can be used for any flags need in a subclass
 
-  protected static final int DATABASE_VERSION = 501;
+  protected static final int DATABASE_VERSION = 511;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();

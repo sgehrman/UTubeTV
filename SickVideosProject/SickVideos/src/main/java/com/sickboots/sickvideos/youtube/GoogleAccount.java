@@ -13,6 +13,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTubeScopes;
 import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.PreferenceCache;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +73,7 @@ public class GoogleAccount {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
 
     // ### hits main thread with read to disk, fix this later.
-    String accountName = ApplicationHub.instance().getPref(ApplicationHub.GOOGLE_ACCOUNT_PREF, null);
+    String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
 
     if (accountName != null) {
       credential.setSelectedAccountName(accountName);
@@ -80,7 +81,7 @@ public class GoogleAccount {
   }
 
   private void saveAccount(Activity activity) {
-    ApplicationHub.instance().setPref(ApplicationHub.GOOGLE_ACCOUNT_PREF, credential.getSelectedAccountName());
+    ApplicationHub.preferences().setString(PreferenceCache.GOOGLE_ACCOUNT_PREF, credential.getSelectedAccountName());
   }
 
   private void chooseAccount(Activity activity) {
