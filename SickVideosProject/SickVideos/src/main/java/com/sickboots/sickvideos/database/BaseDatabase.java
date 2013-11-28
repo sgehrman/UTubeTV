@@ -13,9 +13,8 @@ import java.util.List;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
-  protected int mFlags = 0;  // can be used for any flags need in a subclass
 
-  protected static final int DATABASE_VERSION = 511;
+  protected static final int DATABASE_VERSION = 512;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
@@ -26,9 +25,9 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   abstract protected String createTableSQL();
 
-  abstract protected String getItemsWhereClause();
+  abstract protected String getItemsWhereClause(int flags);
 
-  abstract protected String[] getItemsWhereArgs();
+  abstract protected String[] getItemsWhereArgs(int flags);
 
   public BaseDatabase(Context context, String databaseName) {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(true), DATABASE_VERSION);
@@ -96,12 +95,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     return result;
   }
 
-  public void setFlags(int flags) {
-    mFlags = flags;
-  }
-
-  public List<YouTubeData> getItems() {
-    return getItems(getItemsWhereClause(), getItemsWhereArgs());
+  public List<YouTubeData> getItems(int flags) {
+    return getItems(getItemsWhereClause(flags), getItemsWhereArgs(flags));
   }
 
   public List<YouTubeData> getItems(String selection, String[] selectionArgs) {

@@ -79,12 +79,12 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String getItemsWhereClause() {
+  protected String getItemsWhereClause(int flags) {
     return null;
   }
 
   @Override
-  protected String[] getItemsWhereArgs() {
+  protected String[] getItemsWhereArgs(int flags) {
     return null;
   }
 

@@ -89,8 +89,6 @@ public class YouTubeListDB extends YouTubeList {
 
       Util.log("YouTubeListDBTask: started");
 
-      database.setFlags(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
-
       switch (mTaskType) {
         case USER_REFRESH:
           Set currentListSavedData = saveExistingListState();
@@ -99,11 +97,10 @@ public class YouTubeListDB extends YouTubeList {
           break;
         case REFETCH:
           //  item hidden, or hidden visible pref toggled
-          result = database.getItems();
+          result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
           break;
         case FIRSTLOAD:
-          // are the results already in the DB?
-          result = database.getItems();
+          result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
 
           // this is lame, fix later
           if (result.size() == 0) {
@@ -119,10 +116,14 @@ public class YouTubeListDB extends YouTubeList {
     private Set<String> saveExistingListState() {
       Set<String> result = null;
 
-      if (items != null) {
+      // ask the database for the hidden items
+      // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
+      List<YouTubeData> hiddenItems = database.getItems(VideoDatabase.ONLY_HIDDEN_ITEMS);
+
+      if (hiddenItems != null) {
         result = new HashSet<String>();
 
-        for (YouTubeData data : items) {
+        for (YouTubeData data : hiddenItems) {
           if (data.isHidden() && data.mVideo != null) {
             result.add(data.mVideo);
           }
@@ -143,16 +144,18 @@ public class YouTubeListDB extends YouTubeList {
         database.deleteAllRows();
 
         database.insertItems(result);
+
+        // get items from the database, we could also just try to hand filter out the hidden items
+        // which would alloc less memory and be faster, but this insures correctness
+        result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
       }
 
       return result;
     }
 
     private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData) {
-      List<YouTubeData> result = inList;
-
       if (currentListSavedData != null && currentListSavedData.size() > 0) {
-        for (YouTubeData data : result) {
+        for (YouTubeData data : inList) {
           if (data.mVideo != null) {
             if (currentListSavedData.contains(data.mVideo))
               data.setHidden(true);
@@ -160,7 +163,7 @@ public class YouTubeListDB extends YouTubeList {
         }
       }
 
-      return result;
+      return inList;
     }
 
     private List<YouTubeData> getDataFromInternet(YouTubeAPI helper) {
