@@ -108,6 +108,8 @@ uiaccess stuff necessary?
 
 remove credential shit
 
-HashSet of videoIDs and set hidden flag in new YouTubeData
+backbutton support when switching playlists from the drawer
+
+better drawer switching animation
 
 ------------------------
