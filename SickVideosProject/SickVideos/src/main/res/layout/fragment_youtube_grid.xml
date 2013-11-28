@@ -28,6 +28,7 @@
         android:numColumns="auto_fit"
         android:fastScrollEnabled="true"
         android:drawSelectorOnTop="true"
+        android:requiresFadingEdge="vertical"
         android:stretchMode="columnWidth"
         android:gravity="center"
         />
