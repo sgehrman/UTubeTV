@@ -124,7 +124,7 @@ public class YouTubeListDB extends YouTubeList {
         result = new HashSet<String>();
 
         for (YouTubeData data : hiddenItems) {
-          if (data.isHidden() && data.mVideo != null) {
+          if (data.mVideo != null) {
             result.add(data.mVideo);
           }
         }
