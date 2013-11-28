@@ -13,5 +13,22 @@ public class YouTubeData {
   public String mDescription;
   public String mThumbnail;
   public String mDuration;
-  public String mHidden;
+
+  // use convenience methods
+  private String mHidden;
+
+  // is this faster?  no idea
+  private static final String mNotNull = "";
+
+  // ----------------------------------------------------
+  // public methods
+
+  // hidden string is either '' or null,
+  public boolean isHidden() {
+    return mHidden != null;
+  }
+
+  public void setHidden(boolean hidden) {
+     mHidden = hidden ? mNotNull : null;
+  }
 }

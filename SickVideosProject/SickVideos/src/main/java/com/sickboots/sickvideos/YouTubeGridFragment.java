@@ -396,11 +396,8 @@ public class YouTubeGridFragment extends Fragment
       });
 
       boolean hidden = false;
-      if (!showHidden) {
-        String hiddenValue = itemMap.mHidden;
-        if (hiddenValue != null)
-          hidden = true;
-      }
+      if (!showHidden)
+        hidden = itemMap.isHidden();
 
       if (hidden)
         holder.title.setText("(Hidden)");
@@ -465,8 +462,7 @@ public class YouTubeGridFragment extends Fragment
     public void hideVideo(YouTubeData videoMap) {
       // hidden is either null or not null
       // toggle it
-      String hidden = (String) videoMap.mHidden;
-      videoMap.mHidden = (hidden == null) ? "" : null;
+      videoMap.setHidden(!videoMap.isHidden());
 
       mList.updateItem(videoMap);
     }

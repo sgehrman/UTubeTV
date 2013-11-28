@@ -11,8 +11,11 @@ import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
@@ -90,18 +93,7 @@ public class YouTubeListDB extends YouTubeList {
 
       switch (mTaskType) {
         case USER_REFRESH:
-          /*
-            - save hidden state
-            - delete old data
-            - fetch from internet (don't delete first incase internet is down then we would just delete what we had)
-            - add back saved hidden data
-
-            NET: always
-            DEL: always
-          */
-
-          // does this need to go in a task?
-          Map currentListSavedData=null;
+          Set currentListSavedData = saveExistingListState();
           result = loadFreshDataToDatabase(helper, currentListSavedData);
 
           break;
@@ -124,7 +116,23 @@ public class YouTubeListDB extends YouTubeList {
       return result;
     }
 
-    private List<YouTubeData> loadFreshDataToDatabase(YouTubeAPI helper, Map currentListSavedData) {
+    private Set<String> saveExistingListState() {
+      Set<String> result = null;
+
+      if (items != null) {
+        result = new HashSet<String>();
+
+        for (YouTubeData data : items) {
+          if (data.isHidden() && data.mVideo != null) {
+            result.add(data.mVideo);
+          }
+        }
+      }
+
+      return result;
+    }
+
+    private List<YouTubeData> loadFreshDataToDatabase(YouTubeAPI helper, Set<String> currentListSavedData) {
       List<YouTubeData> result = getDataFromInternet(helper);
 
       if (result != null) {
@@ -141,7 +149,7 @@ public class YouTubeListDB extends YouTubeList {
       return result;
     }
 
-    private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Map currentListSavedData) {
+    private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData) {
       List<YouTubeData> result = inList;
 
       if (currentListSavedData != null && currentListSavedData.size() > 0) {

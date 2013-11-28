@@ -48,7 +48,7 @@ public class VideoDatabase extends BaseDatabase {
     result.mDescription = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION));
     result.mThumbnail = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL));
     result.mDuration = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION));
-    result.mHidden = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN));
+    result.setHidden(cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)) != null);
 
     return result;
   }
@@ -62,7 +62,7 @@ public class VideoDatabase extends BaseDatabase {
     values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, item.mDescription);
     values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
     values.put(VideoEntry.COLUMN_NAME_DURATION, item.mDuration);
-    values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.mHidden);
+    values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
     return values;
   }
