@@ -114,6 +114,9 @@ public class Util {
       case 2:
         ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
         break;
+      case 3:
+        ft.setCustomAnimations(R.animator.fraggy_enter, R.animator.fraggy_exit, R.animator.fraggy_pop_enter, R.animator.fraggy_pop_exit);
+        break;
     }
 
     ft.replace(resID, fragment);

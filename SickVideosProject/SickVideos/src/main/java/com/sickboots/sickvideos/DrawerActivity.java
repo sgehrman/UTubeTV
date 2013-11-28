@@ -261,7 +261,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     mCurrentSection = position;
 
-    Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, false);
+    Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);
 
     // update selected item and title, then close the drawer
     mDrawerList.setItemChecked(position, true);

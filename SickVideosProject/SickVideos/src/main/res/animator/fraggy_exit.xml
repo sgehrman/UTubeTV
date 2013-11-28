@@ -1,0 +1,19 @@
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:valueFrom="1"
+        android:valueTo=".4"
+        android:propertyName="scaleX"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+
+        android:valueType="floatType"
+        android:duration="1000"/>
+    <objectAnimator
+        android:valueFrom="1"
+        android:valueTo=".4"
+        android:propertyName="scaleY"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+
+        android:valueType="floatType"
+        android:duration="1000"/>
+
+</set>
