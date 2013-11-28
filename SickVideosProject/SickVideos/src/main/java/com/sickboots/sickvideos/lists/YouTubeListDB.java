@@ -136,7 +136,6 @@ public class YouTubeListDB extends YouTubeList {
       List<YouTubeData> result = getDataFromInternet(helper);
 
       if (result != null) {
-
         result = prepareDataFromNet(result, currentListSavedData);
 
         // we are only deleting if we know we got good data
@@ -153,7 +152,12 @@ public class YouTubeListDB extends YouTubeList {
       List<YouTubeData> result = inList;
 
       if (currentListSavedData != null && currentListSavedData.size() > 0) {
-
+        for (YouTubeData data : result) {
+          if (data.mVideo != null) {
+            if (currentListSavedData.contains(data.mVideo))
+              data.setHidden(true);
+          }
+        }
       }
 
       return result;
