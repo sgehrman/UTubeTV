@@ -13,7 +13,6 @@ import java.util.List;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mItemTable;
-  protected String mInfoTable;
 
   protected static final String CREATE = "CREATE TABLE ";
   protected static final String TEXT_TYPE = " TEXT";
@@ -21,7 +20,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected static final String PRIMARY = " PRIMARY KEY";
   protected static final String COMMA_SEP = ",";
   protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
-  protected static final int DATABASE_VERSION = 519;
+  protected static final int DATABASE_VERSION = 1000;
 
   // subclasses must take care of this shit
   abstract protected String[] projection(int flags);
@@ -40,7 +39,6 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(true), DATABASE_VERSION);
 
     mItemTable = "item_table";
-    mInfoTable = "info_table";
   }
 
   public void onCreate(SQLiteDatabase db) {
@@ -54,7 +52,6 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     // This database is only a cache for online data, so its upgrade policy is
     // to simply to discard the data and start over
     db.execSQL(DROP_TABLE + mItemTable);
-    db.execSQL(DROP_TABLE + mInfoTable);
     onCreate(db);
   }
 
@@ -111,7 +108,35 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     return getItems(getItemsWhereClause(flags), getItemsWhereArgs(flags), projection(flags));
   }
 
-  public List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
+  public void updateItem(YouTubeData item) {
+    SQLiteDatabase db = getWritableDatabase();
+
+    try {
+      Long id = item.mID;
+
+      int result = db.update(mItemTable, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+
+      if (result != 1)
+        Util.log("updateItem didn't return 1");
+    } catch (Exception e) {
+      Util.log("updateItem exception: " + e.getMessage());
+    } finally {
+      db.close();
+    }
+  }
+
+  // -----------------------------------------------------------------------------
+  // private
+
+  private String whereClauseForID() {
+    return "_id=?";
+  }
+
+  private String[] whereArgsForID(Long id) {
+    return new String[]{id.toString()};
+  }
+
+  private List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     SQLiteDatabase db = getReadableDatabase();
@@ -143,31 +168,6 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     }
 
     return result;
-  }
-
-  private String whereClauseForID() {
-    return "_id=?";
-  }
-
-  private String[] whereArgsForID(Long id) {
-    return new String[]{id.toString()};
-  }
-
-  public void updateItem(YouTubeData item) {
-    SQLiteDatabase db = getWritableDatabase();
-
-    try {
-      Long id = item.mID;
-
-      int result = db.update(mItemTable, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
-
-      if (result != 1)
-        Util.log("updateItem didn't return 1");
-    } catch (Exception e) {
-      Util.log("updateItem exception: " + e.getMessage());
-    } finally {
-      db.close();
-    }
   }
 
 }

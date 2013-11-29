@@ -21,11 +21,6 @@ public class VideoDatabase extends BaseDatabase {
     public static final String COLUMN_NAME_START = "start";
   }
 
-  // stores information about a video
-  private class InfoEntry implements BaseColumns {
-    public static final String SCROLL_POSITION = "scroll_position";
-  }
-
   public VideoDatabase(Context context, String databaseName) {
     super(context, databaseName);
   }
@@ -112,14 +107,7 @@ public class VideoDatabase extends BaseDatabase {
         + VideoEntry.COLUMN_NAME_START + INT_TYPE
         + " )";
 
-    String infoTable = CREATE + mInfoTable
-        + " ("
-        + InfoEntry._ID + INT_TYPE + PRIMARY
-        + COMMA_SEP
-        + InfoEntry.SCROLL_POSITION + INT_TYPE
-        + " )";
-
-    return new String[] {itemTable, infoTable};
+    return new String[] {itemTable};
   }
 
   @Override
