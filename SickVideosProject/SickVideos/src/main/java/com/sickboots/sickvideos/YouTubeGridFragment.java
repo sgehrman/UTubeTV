@@ -60,7 +60,7 @@ public class YouTubeGridFragment extends Fragment
   private YouTubeListAdapter mAdapter;
   private YouTubeList mList;
   private int itemResID = 0;
-  private float mImageAlpha = .6f;
+  private float mImageAlpha = .7f;
   private View mEmptyView;
   private GridView mGridView;
 
