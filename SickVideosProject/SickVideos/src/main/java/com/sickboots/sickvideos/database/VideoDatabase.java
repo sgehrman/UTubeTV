@@ -11,13 +11,19 @@ public class VideoDatabase extends BaseDatabase {
   public static int ONLY_HIDDEN_ITEMS = 20;
 
   // stores information about a video
-  public static class VideoEntry implements BaseColumns {
+  private class VideoEntry implements BaseColumns {
     public static final String COLUMN_NAME_VIDEO = "video";
     public static final String COLUMN_NAME_TITLE = "title";
     public static final String COLUMN_NAME_DESCRIPTION = "description";
     public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
     public static final String COLUMN_NAME_DURATION = "duration";
     public static final String COLUMN_NAME_HIDDEN = "hidden";
+    public static final String COLUMN_NAME_START = "start";
+  }
+
+  // stores information about a video
+  private class InfoEntry implements BaseColumns {
+    public static final String SCROLL_POSITION = "scroll_position";
   }
 
   public VideoDatabase(Context context, String databaseName) {
@@ -33,7 +39,8 @@ public class VideoDatabase extends BaseDatabase {
         VideoEntry.COLUMN_NAME_DESCRIPTION,
         VideoEntry.COLUMN_NAME_THUMBNAIL,
         VideoEntry.COLUMN_NAME_DURATION,
-        VideoEntry.COLUMN_NAME_HIDDEN
+        VideoEntry.COLUMN_NAME_HIDDEN,
+        VideoEntry.COLUMN_NAME_START
     };
 
     return result;
@@ -50,6 +57,7 @@ public class VideoDatabase extends BaseDatabase {
     result.mThumbnail = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL));
     result.mDuration = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION));
     result.setHidden(cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)) != null);
+    result.mStart = cursor.getInt(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_START));
 
     return result;
   }
@@ -64,13 +72,14 @@ public class VideoDatabase extends BaseDatabase {
     values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
     values.put(VideoEntry.COLUMN_NAME_DURATION, item.mDuration);
     values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
+    values.put(VideoEntry.COLUMN_NAME_START, item.mStart);
 
     return values;
   }
 
   @Override
   protected String[] tablesSQL() {
-    String result = CREATE + mTableName
+    String itemTable = CREATE + mItemTable
         + " ("
         + VideoEntry._ID + INT_TYPE + PRIMARY
         + COMMA_SEP
@@ -85,9 +94,18 @@ public class VideoDatabase extends BaseDatabase {
         + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
         + COMMA_SEP
         + VideoEntry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
+        + COMMA_SEP
+        + VideoEntry.COLUMN_NAME_START + INT_TYPE
         + " )";
 
-    return new String[] {result};
+    String infoTable = CREATE + mInfoTable
+        + " ("
+        + InfoEntry._ID + INT_TYPE + PRIMARY
+        + COMMA_SEP
+        + InfoEntry.SCROLL_POSITION + INT_TYPE
+        + " )";
+
+    return new String[] {itemTable, infoTable};
   }
 
   @Override

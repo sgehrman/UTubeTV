@@ -59,7 +59,7 @@ public class PlaylistDatabase extends BaseDatabase {
 
   @Override
   protected String[] tablesSQL() {
-    String result = CREATE + mTableName
+    String result = CREATE + mItemTable
         + " ("
         + PlaylistEntry._ID + INT_TYPE + PRIMARY
         + COMMA_SEP

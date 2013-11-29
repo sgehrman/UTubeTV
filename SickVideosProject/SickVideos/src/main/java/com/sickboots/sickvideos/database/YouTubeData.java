@@ -6,13 +6,20 @@ package com.sickboots.sickvideos.database;
 public class YouTubeData {
   // raw access for speed
   public long mID;
-  public String mPlaylist;
-  public String mChannel;
-  public String mVideo;
   public String mTitle;
   public String mDescription;
   public String mThumbnail;
+
+  // used for videos
+  public String mVideo;
   public String mDuration;
+  public int mStart;
+
+  // used only for subscriptions and categories
+  public String mChannel;
+
+  // used for playlists
+  public String mPlaylist;
 
   // use convenience methods
   private String mHidden;

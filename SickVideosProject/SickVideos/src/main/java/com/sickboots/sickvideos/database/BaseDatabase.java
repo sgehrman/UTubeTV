@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseDatabase extends SQLiteOpenHelper {
-  protected String mTableName;
+  protected String mItemTable;
+  protected String mInfoTable;
 
   protected static final String CREATE = "CREATE TABLE ";
   protected static final String TEXT_TYPE = " TEXT";
   protected static final String INT_TYPE = " INTEGER";
   protected static final String PRIMARY = " PRIMARY KEY";
   protected static final String COMMA_SEP = ",";
-  protected static final int DATABASE_VERSION = 515;
+  protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
+  protected static final int DATABASE_VERSION = 517;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
@@ -37,7 +39,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   public BaseDatabase(Context context, String databaseName) {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(true), DATABASE_VERSION);
 
-    mTableName = "item_table";
+    mItemTable = "item_table";
+    mInfoTable = "info_table";
   }
 
   public void onCreate(SQLiteDatabase db) {
@@ -50,7 +53,8 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // This database is only a cache for online data, so its upgrade policy is
     // to simply to discard the data and start over
-    db.execSQL("DROP TABLE IF EXISTS " + mTableName);
+    db.execSQL(DROP_TABLE + mItemTable);
+    db.execSQL(DROP_TABLE + mInfoTable);
     onCreate(db);
   }
 
@@ -62,7 +66,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     SQLiteDatabase db = getWritableDatabase();
 
     try {
-      db.delete(mTableName, null, null);
+      db.delete(mItemTable, null, null);
     } catch (Exception e) {
       Util.log("deleteAllRows exception: " + e.getMessage());
     } finally {
@@ -78,7 +82,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
       db.beginTransaction();
       try {
         for (YouTubeData item : items)
-          db.insert(mTableName, null, contentValuesForItem(item));
+          db.insert(mItemTable, null, contentValuesForItem(item));
 
         db.setTransactionSuccessful();
       } catch (Exception e) {
@@ -117,7 +121,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
       String[] projection = projection();
 
       cursor = db.query(
-          mTableName,                     // The table to query
+          mItemTable,                     // The table to query
           projection,                     // The columns to return
           selection,                      // The columns for the WHERE clause
           selectionArgs,                  // The values for the WHERE clause
@@ -157,7 +161,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     try {
       Long id = item.mID;
 
-      int result = db.update(mTableName, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+      int result = db.update(mItemTable, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
 
       if (result != 1)
         Util.log("updateItem didn't return 1");
