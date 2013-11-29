@@ -69,14 +69,8 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String createTableSQL() {
-    final String TEXT_TYPE = " TEXT";
-    final String INT_TYPE = " INTEGER";
-    final String PRIMARY = " PRIMARY KEY";
-    final String COMMA_SEP = ",";
-
-    String result = "CREATE TABLE "
-        + mTableName
+  protected String[] tablesSQL() {
+    String result = CREATE + mTableName
         + " ("
         + VideoEntry._ID + INT_TYPE + PRIMARY
         + COMMA_SEP
@@ -93,7 +87,7 @@ public class VideoDatabase extends BaseDatabase {
         + VideoEntry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
         + " )";
 
-    return result;
+    return new String[] {result};
   }
 
   @Override

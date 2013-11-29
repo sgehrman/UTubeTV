@@ -58,14 +58,11 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String createTableSQL() {
-    String TEXT_TYPE = " TEXT";
-    String COMMA_SEP = ",";
-
-    String result = "CREATE TABLE "
-        + mTableName
+  protected String[] tablesSQL() {
+    String result = CREATE + mTableName
         + " ("
-        + PlaylistEntry._ID + " INTEGER PRIMARY KEY,"
+        + PlaylistEntry._ID + INT_TYPE + PRIMARY
+        + COMMA_SEP
         + PlaylistEntry.COLUMN_NAME_PLAYLIST + TEXT_TYPE
         + COMMA_SEP
         + PlaylistEntry.COLUMN_NAME_TITLE + TEXT_TYPE
@@ -75,7 +72,7 @@ public class PlaylistDatabase extends BaseDatabase {
         + PlaylistEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
         + " )";
 
-    return result;
+    return new String[] {result};
   }
 
   @Override

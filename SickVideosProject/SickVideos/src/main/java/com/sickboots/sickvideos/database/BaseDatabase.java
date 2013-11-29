@@ -14,7 +14,12 @@ import java.util.List;
 public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected String mTableName;
 
-  protected static final int DATABASE_VERSION = 512;
+  protected static final String CREATE = "CREATE TABLE ";
+  protected static final String TEXT_TYPE = " TEXT";
+  protected static final String INT_TYPE = " INTEGER";
+  protected static final String PRIMARY = " PRIMARY KEY";
+  protected static final String COMMA_SEP = ",";
+  protected static final int DATABASE_VERSION = 515;
 
   // subclasses must take care of this shit
   abstract protected String[] projection();
@@ -23,7 +28,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   abstract protected ContentValues contentValuesForItem(YouTubeData item);
 
-  abstract protected String createTableSQL();
+  abstract protected String[] tablesSQL();
 
   abstract protected String getItemsWhereClause(int flags);
 
@@ -36,7 +41,10 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public void onCreate(SQLiteDatabase db) {
-    db.execSQL(createTableSQL());
+    String[] tables = tablesSQL();
+
+    for (String table : tables)
+      db.execSQL(table);
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
