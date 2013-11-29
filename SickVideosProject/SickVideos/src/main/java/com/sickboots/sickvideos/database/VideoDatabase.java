@@ -36,6 +36,12 @@ public class VideoDatabase extends BaseDatabase {
 
     switch (flags) {
       case ONLY_HIDDEN_ITEMS:
+        result = new String[] {
+            VideoEntry._ID,
+            VideoEntry.COLUMN_NAME_VIDEO,
+            VideoEntry.COLUMN_NAME_HIDDEN
+        };
+
       case FILTER_HIDDEN_ITEMS:
       default:
         result = new String[] {

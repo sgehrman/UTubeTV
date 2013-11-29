@@ -21,7 +21,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected static final String PRIMARY = " PRIMARY KEY";
   protected static final String COMMA_SEP = ",";
   protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
-  protected static final int DATABASE_VERSION = 518;
+  protected static final int DATABASE_VERSION = 519;
 
   // subclasses must take care of this shit
   abstract protected String[] projection(int flags);
