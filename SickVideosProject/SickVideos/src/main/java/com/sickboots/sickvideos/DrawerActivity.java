@@ -34,7 +34,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   VideoPlayer mPlayer;
-  private int mCurrentSection = 0;
+  private int mCurrentSection = -1;
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -85,14 +85,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     };
     mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+    int section = 0;
     if (savedInstanceState != null) {
-      mCurrentSection = savedInstanceState.getInt("section");
+      section = savedInstanceState.getInt("section");
     } else {
       String sectionIndexString = ApplicationHub.preferences().getString(PreferenceCache.DRAWER_SECTION_INDEX, "0");
-      mCurrentSection = Integer.parseInt(sectionIndexString);
+      section = Integer.parseInt(sectionIndexString);
     }
 
-    selectSection(mCurrentSection, false);
+    selectSection(section, false);
 
     // general app tweaks
 //  Util.activateStrictMode(this);
@@ -229,10 +230,16 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
       selectSection(position, true);
+
+      mDrawerLayout.closeDrawer(mDrawerList);
     }
   }
 
   private void selectSection(int position, boolean animate) {
+    // short curcuit trying to select the same position
+    if (mCurrentSection == position)
+      return;
+
     Fragment fragment = null;
 
     switch (position) {
@@ -260,12 +267,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     }
 
     mCurrentSection = position;
+    mDrawerList.setItemChecked(position, true);
 
     Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);
-
-    // update selected item and title, then close the drawer
-    mDrawerList.setItemChecked(position, true);
-    mDrawerLayout.closeDrawer(mDrawerList);
   }
 
   private YouTubeGridFragment installedFragment() {
