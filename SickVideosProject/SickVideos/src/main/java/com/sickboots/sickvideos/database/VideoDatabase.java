@@ -7,8 +7,8 @@ import android.provider.BaseColumns;
 
 public class VideoDatabase extends BaseDatabase {
   // filter flags
-  public static int FILTER_HIDDEN_ITEMS = 10;
-  public static int ONLY_HIDDEN_ITEMS = 20;
+  public static final int FILTER_HIDDEN_ITEMS = 10;
+  public static final int ONLY_HIDDEN_ITEMS = 20;
 
   // stores information about a video
   private class VideoEntry implements BaseColumns {
@@ -35,6 +35,8 @@ public class VideoDatabase extends BaseDatabase {
     String[] result=null;
 
     switch (flags) {
+      case ONLY_HIDDEN_ITEMS:
+      case FILTER_HIDDEN_ITEMS:
       default:
         result = new String[] {
             VideoEntry._ID,
@@ -116,12 +118,18 @@ public class VideoDatabase extends BaseDatabase {
 
   @Override
   protected String getItemsWhereClause(int flags) {
-    if (flags == FILTER_HIDDEN_ITEMS)
-      return "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
-    else if (flags == ONLY_HIDDEN_ITEMS)
-      return "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
+    String result = null;
 
-    return null;
+    switch (flags) {
+      case ONLY_HIDDEN_ITEMS:
+        result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
+      break;
+      case FILTER_HIDDEN_ITEMS:
+        result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
+      break;
+    }
+
+    return result;
   }
 
   @Override
