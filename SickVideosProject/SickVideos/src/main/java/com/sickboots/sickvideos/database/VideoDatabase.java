@@ -31,17 +31,23 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String[] projection() {
-    String[] result = {
-        VideoEntry._ID,
-        VideoEntry.COLUMN_NAME_VIDEO,
-        VideoEntry.COLUMN_NAME_TITLE,
-        VideoEntry.COLUMN_NAME_DESCRIPTION,
-        VideoEntry.COLUMN_NAME_THUMBNAIL,
-        VideoEntry.COLUMN_NAME_DURATION,
-        VideoEntry.COLUMN_NAME_HIDDEN,
-        VideoEntry.COLUMN_NAME_START
-    };
+  protected String[] projection(int flags) {
+    String[] result=null;
+
+    switch (flags) {
+      default:
+        result = new String[] {
+            VideoEntry._ID,
+            VideoEntry.COLUMN_NAME_VIDEO,
+            VideoEntry.COLUMN_NAME_TITLE,
+            VideoEntry.COLUMN_NAME_DESCRIPTION,
+            VideoEntry.COLUMN_NAME_THUMBNAIL,
+            VideoEntry.COLUMN_NAME_DURATION,
+            VideoEntry.COLUMN_NAME_HIDDEN,
+            VideoEntry.COLUMN_NAME_START
+        };
+        break;
+    }
 
     return result;
   }

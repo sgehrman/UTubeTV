@@ -20,14 +20,20 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String[] projection() {
-    String[] result = {
-        PlaylistEntry._ID,
-        PlaylistEntry.COLUMN_NAME_PLAYLIST,
-        PlaylistEntry.COLUMN_NAME_TITLE,
-        PlaylistEntry.COLUMN_NAME_DESCRIPTION,
-        PlaylistEntry.COLUMN_NAME_THUMBNAIL
-    };
+  protected String[] projection(int flags) {
+    String[] result=null;
+
+    switch (flags) {
+      default:
+        result = new String[] {
+            PlaylistEntry._ID,
+            PlaylistEntry.COLUMN_NAME_PLAYLIST,
+            PlaylistEntry.COLUMN_NAME_TITLE,
+            PlaylistEntry.COLUMN_NAME_DESCRIPTION,
+            PlaylistEntry.COLUMN_NAME_THUMBNAIL
+        };
+      break;
+    }
 
     return result;
   }

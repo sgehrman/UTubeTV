@@ -21,10 +21,10 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   protected static final String PRIMARY = " PRIMARY KEY";
   protected static final String COMMA_SEP = ",";
   protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
-  protected static final int DATABASE_VERSION = 517;
+  protected static final int DATABASE_VERSION = 518;
 
   // subclasses must take care of this shit
-  abstract protected String[] projection();
+  abstract protected String[] projection(int flags);
 
   abstract protected YouTubeData cursorToItem(Cursor cursor);
 
@@ -96,7 +96,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id));
+    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id),  projection(0));
 
     if (results.size() == 1) {
       result = results.get(0);
@@ -108,18 +108,16 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public List<YouTubeData> getItems(int flags) {
-    return getItems(getItemsWhereClause(flags), getItemsWhereArgs(flags));
+    return getItems(getItemsWhereClause(flags), getItemsWhereArgs(flags), projection(flags));
   }
 
-  public List<YouTubeData> getItems(String selection, String[] selectionArgs) {
+  public List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     SQLiteDatabase db = getReadableDatabase();
     Cursor cursor = null;
 
     try {
-      String[] projection = projection();
-
       cursor = db.query(
           mItemTable,                     // The table to query
           projection,                     // The columns to return
