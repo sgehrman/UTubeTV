@@ -6,7 +6,7 @@
 
 
     <FrameLayout
-        android:background="#8000"
+        android:background="@color/dimmer_color"
         android:id="@+id/dimmer"
         android:alpha="1"
         android:layout_width="match_parent"

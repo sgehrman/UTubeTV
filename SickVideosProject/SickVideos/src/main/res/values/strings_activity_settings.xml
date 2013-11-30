@@ -1,6 +1,5 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_drawer">Drawer</string>
     <string name="title_activity_playlist_chooser">Choose Playlist</string>
 
     <!-- Account Settings -->

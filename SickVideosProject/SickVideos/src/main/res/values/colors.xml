@@ -16,4 +16,6 @@
     <color name="action_bar_light">@color/light_gray</color>
 
     <color name="content_background">@color/holo_blue</color>
+
+    <color name="dimmer_color">#8000</color>
 </resources>

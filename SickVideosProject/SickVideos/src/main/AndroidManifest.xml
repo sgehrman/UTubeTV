@@ -16,7 +16,7 @@
 
         <activity
             android:name="com.sickboots.sickvideos.MainActivity"
-            android:theme="@style/ActivityTheme"
+            android:theme="@style/StartupActivityTheme"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -28,8 +28,7 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
-            android:name="com.sickboots.sickvideos.DrawerActivity"
-            android:label="@string/title_activity_drawer">
+            android:name="com.sickboots.sickvideos.DrawerActivity">
         </activity>
 
         <activity
