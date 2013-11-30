@@ -250,12 +250,19 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private void loadFromList() {
+    int savedScrollState = mGridView.getFirstVisiblePosition();
+
     mAdapter.clear();
 
     List items = mList.getItems();
 
     if (items != null)
+    {
       mAdapter.addAll(items);
+
+      // restore scroll position if we saved it
+      mGridView.setSelection(savedScrollState);
+    }
 
     // stop the pull to refresh indicator
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();

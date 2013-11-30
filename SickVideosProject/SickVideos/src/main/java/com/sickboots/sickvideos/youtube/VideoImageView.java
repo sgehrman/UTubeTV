@@ -14,6 +14,7 @@ public class VideoImageView extends ImageView {
   private GradientDrawable mBottomGradient;
   private int mCachedWidth = 0;
   private int mGradientHeight;
+  private boolean mDrawGradients = true;
 
   public VideoImageView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -30,14 +31,16 @@ public class VideoImageView extends ImageView {
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
 
-    adjustGradientRects();
+    if (mDrawGradients) {
+      adjustGradientRects();
 
-    mTopGradient.draw(canvas);
+      mTopGradient.draw(canvas);
 
-    int y = getHeight() - mGradientHeight;
-    canvas.translate(0, y);
-    mBottomGradient.draw(canvas);
-    canvas.translate(0, -y);
+      int y = getHeight() - mGradientHeight;
+      canvas.translate(0, y);
+      mBottomGradient.draw(canvas);
+      canvas.translate(0, -y);
+    }
   }
 
   private void adjustGradientRects() {
