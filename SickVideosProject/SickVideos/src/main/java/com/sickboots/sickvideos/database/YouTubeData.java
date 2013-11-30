@@ -36,6 +36,6 @@ public class YouTubeData {
   }
 
   public void setHidden(boolean hidden) {
-     mHidden = hidden ? mNotNull : null;
+    mHidden = hidden ? mNotNull : null;
   }
 }

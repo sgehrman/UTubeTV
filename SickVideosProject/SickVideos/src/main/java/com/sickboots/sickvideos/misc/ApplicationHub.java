@@ -1,24 +1,19 @@
 package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import static java.util.Arrays.asList;
 
 // Three things this hub does:
 // Notification center
 // Global data
 // Cached preferences
 
-public class ApplicationHub  {
+public class ApplicationHub {
   private static ApplicationHub instance = null;
   private HashMap data;
   private Handler mainThreadHandler;
@@ -57,11 +52,11 @@ public class ApplicationHub  {
     return instance().prefsCache();
   }
 
-    public PreferenceCache prefsCache() {
+  public PreferenceCache prefsCache() {
     if (!mApplicationReady) {
       Util.log("Application not ready you freakin moron");
-return null;
-  }
+      return null;
+    }
 
     return mPrefsCache;
   }

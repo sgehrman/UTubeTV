@@ -27,11 +27,11 @@ public class VideoDatabase extends BaseDatabase {
 
   @Override
   protected String[] projection(int flags) {
-    String[] result=null;
+    String[] result = null;
 
     switch (flags) {
       case ONLY_HIDDEN_ITEMS:
-        result = new String[] {
+        result = new String[]{
             VideoEntry._ID,
             VideoEntry.COLUMN_NAME_VIDEO,
             VideoEntry.COLUMN_NAME_HIDDEN
@@ -39,7 +39,7 @@ public class VideoDatabase extends BaseDatabase {
 
       case FILTER_HIDDEN_ITEMS:
       default:
-        result = new String[] {
+        result = new String[]{
             VideoEntry._ID,
             VideoEntry.COLUMN_NAME_VIDEO,
             VideoEntry.COLUMN_NAME_TITLE,
@@ -107,7 +107,7 @@ public class VideoDatabase extends BaseDatabase {
         + VideoEntry.COLUMN_NAME_START + INT_TYPE
         + " )";
 
-    return new String[] {itemTable};
+    return new String[]{itemTable};
   }
 
   @Override
@@ -117,10 +117,10 @@ public class VideoDatabase extends BaseDatabase {
     switch (flags) {
       case ONLY_HIDDEN_ITEMS:
         result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
-      break;
+        break;
       case FILTER_HIDDEN_ITEMS:
         result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
-      break;
+        break;
     }
 
     return result;

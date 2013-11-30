@@ -21,18 +21,18 @@ public class PlaylistDatabase extends BaseDatabase {
 
   @Override
   protected String[] projection(int flags) {
-    String[] result=null;
+    String[] result = null;
 
     switch (flags) {
       default:
-        result = new String[] {
+        result = new String[]{
             PlaylistEntry._ID,
             PlaylistEntry.COLUMN_NAME_PLAYLIST,
             PlaylistEntry.COLUMN_NAME_TITLE,
             PlaylistEntry.COLUMN_NAME_DESCRIPTION,
             PlaylistEntry.COLUMN_NAME_THUMBNAIL
         };
-      break;
+        break;
     }
 
     return result;
@@ -78,7 +78,7 @@ public class PlaylistDatabase extends BaseDatabase {
         + PlaylistEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
         + " )";
 
-    return new String[] {result};
+    return new String[]{result};
   }
 
   @Override

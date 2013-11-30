@@ -2,8 +2,6 @@ package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 
 import java.util.HashMap;

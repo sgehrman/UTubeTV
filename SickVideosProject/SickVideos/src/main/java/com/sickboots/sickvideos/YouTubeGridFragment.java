@@ -256,8 +256,7 @@ public class YouTubeGridFragment extends Fragment
 
     List items = mList.getItems();
 
-    if (items != null)
-    {
+    if (items != null) {
       mAdapter.addAll(items);
 
       // restore scroll position if we saved it

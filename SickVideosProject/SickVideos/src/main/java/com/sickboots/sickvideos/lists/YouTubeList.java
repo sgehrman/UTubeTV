@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeAPI.YouTubeHelperListener {
-  protected enum TaskType {USER_REFRESH, REFETCH, FIRSTLOAD};
+  protected enum TaskType {USER_REFRESH, REFETCH, FIRSTLOAD}
+
+  ;
 
   // subclasses must implement
   abstract public void updateHighestDisplayedIndex(int position);

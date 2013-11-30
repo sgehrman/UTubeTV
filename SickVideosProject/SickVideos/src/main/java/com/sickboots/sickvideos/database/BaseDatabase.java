@@ -93,7 +93,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id),  projection(0));
+    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id), projection(0));
 
     if (results.size() == 1) {
       result = results.get(0);
