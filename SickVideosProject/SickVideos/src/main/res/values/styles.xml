@@ -8,7 +8,7 @@
 
     <style name="ActivityTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/content_background</item>
+        <item name="android:windowBackground">@android:color/black</item>
     </style>
 
     <!-- ActionBar styles -->
