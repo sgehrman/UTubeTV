@@ -185,7 +185,7 @@ public class YouTubeListDB extends YouTubeList {
         case PLAYLISTS:
           String channel = (String) listSpec.getData("channel");
 
-          listResults = helper.playlistListResults(channel, true);
+          listResults = helper.playlistListResults(channel, false);
           break;
         case SUBSCRIPTIONS:
           listResults = helper.subscriptionListResults();

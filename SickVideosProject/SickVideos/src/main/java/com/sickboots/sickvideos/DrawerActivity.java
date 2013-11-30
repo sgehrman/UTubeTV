@@ -145,7 +145,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (getFragmentManager().getBackStackEntryCount() == 0) {
 
       // hides the video player if visible
-      ApplicationHub.instance().sendNotification(ApplicationHub.BACK_BUTTON_NOTIFICATION);
+      if (mPlayer != null)
+        mPlayer.close(true);
 
       // do nothing, we don't want the app to disappear
       return;

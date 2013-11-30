@@ -256,6 +256,7 @@ public class VideoPlayer {
     // hack_alert: must set some kind of background so that clicking outside the view will dismiss the popup (known bug in Android)
     pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     pw.setOutsideTouchable(true);
+    pw.setAnimationStyle(-1);
     pw.showAsDropDown(anchorView);
 
     float time = mVideoFragment.getCurrentTimeMillis();

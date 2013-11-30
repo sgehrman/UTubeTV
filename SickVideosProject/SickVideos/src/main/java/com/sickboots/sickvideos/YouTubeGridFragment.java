@@ -40,7 +40,7 @@ import java.util.Observer;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeGridFragment extends Fragment
-    implements Observer, PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
+    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -116,19 +116,6 @@ public class YouTubeGridFragment extends Fragment
     return title;
   }
 
-  // Observer
-  @Override
-  public void update(Observable observable, Object data) {
-    if (data instanceof String) {
-      String input = (String) data;
-
-      if (input.equals(ApplicationHub.BACK_BUTTON_NOTIFICATION)) {
-        // if the video player is visible, close it
-        player().close(true);
-      }
-    }
-  }
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -171,22 +158,6 @@ public class YouTubeGridFragment extends Fragment
     provider.fragmentInstalled();
 
     return rootView;
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
-    // for back button notification
-    ApplicationHub.instance().addObserver(this);
-  }
-
-  @Override
-  public void onStop() {
-    super.onStop();
-
-    // for back button notification
-    ApplicationHub.instance().deleteObserver(this);
   }
 
   public void handleClick(YouTubeData itemMap) {
