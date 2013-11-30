@@ -15,6 +15,7 @@
     <style name="MyActionBar"
            parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/action_bar</item>
+        <item name="android:displayOptions">showHome|showTitle</item>
     </style>
 
     <style name="VideoTextTitle">
