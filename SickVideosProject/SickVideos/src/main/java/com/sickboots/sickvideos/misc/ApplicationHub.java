@@ -23,7 +23,6 @@ public class ApplicationHub {
 
   // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
-  public static final String BACK_BUTTON_NOTIFICATION = "back_button";
 
   private ApplicationHub(Context context) {
     notificationCenter = new NotificationCenter();
