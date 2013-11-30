@@ -166,6 +166,7 @@ public class YouTubeListDB extends YouTubeList {
 
     private List<YouTubeData> getDataFromInternet(YouTubeAPI helper) {
       List<YouTubeData> result = null;
+      String playlistID;
 
       YouTubeAPI.BaseListResults listResults = null;
 
@@ -174,13 +175,17 @@ public class YouTubeListDB extends YouTubeList {
           YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
           String channelID = (String) listSpec.getData("channel");
 
-          String playlistID = helper.relatedPlaylistID(type, channelID);
+            playlistID = helper.relatedPlaylistID(type, channelID);
+
+          listResults = helper.videoListResults(playlistID, true);
+          break;
+        case VIDEOS:
+            playlistID = (String) listSpec.getData("playlist");
 
           listResults = helper.videoListResults(playlistID, true);
           break;
         case SEARCH:
         case LIKED:
-        case VIDEOS:
           break;
         case PLAYLISTS:
           String channel = (String) listSpec.getData("channel");

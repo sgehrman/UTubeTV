@@ -270,7 +270,7 @@ public class YouTubeGridFragment extends Fragment
         result = new YouTubeListLive(YouTubeListSpec.searchSpec(query), access);
         break;
       case VIDEOS:
-        result = new YouTubeListLive(YouTubeListSpec.videosSpec(playlistID), access);
+        result = new YouTubeListDB(YouTubeListSpec.videosSpec(playlistID), access);
         break;
     }
 
