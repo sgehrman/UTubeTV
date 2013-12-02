@@ -24,6 +24,7 @@ import com.sickboots.sickvideos.lists.YouTubeListSpec;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -56,9 +57,13 @@ public class YouTubeGridFragment extends Fragment
   private YouTubeListSpec.ListType listType;
   private YouTubeListAdapter mAdapter;
   private YouTubeList mList;
-  private float mImageAlpha = .7f;
   private View mEmptyView;
   private GridView mGridView;
+
+  // theme parameters
+  private float mTheme_imageAlpha;
+  private int mTheme_itemResId;
+  private boolean mTheme_drawImageShadows;
 
   public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
     return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
@@ -130,6 +135,17 @@ public class YouTubeGridFragment extends Fragment
     rootView.addView(mEmptyView);
 
     mGridView.setEmptyView(mEmptyView);
+
+    boolean cardTheme = false;
+    if (cardTheme) {
+      mTheme_itemResId = R.layout.youtube_item_card;
+      mTheme_imageAlpha = 1.0f;
+      mTheme_drawImageShadows = false;
+    } else {
+      mTheme_imageAlpha = .7f;
+      mTheme_itemResId = R.layout.youtube_item_dark;
+      mTheme_drawImageShadows = true;
+    }
 
     mAdapter = new YouTubeListAdapter();
 
@@ -281,15 +297,11 @@ public class YouTubeGridFragment extends Fragment
     private final LayoutInflater inflater;
     int animationID = 0;
     boolean showHidden = false;
-    private int mItemResId = R.layout.youtube_item_dark;
-
 
     public YouTubeListAdapter() {
       super(getActivity(), 0);
 
       inflater = LayoutInflater.from(getActivity());
-
-//      mItemResId = R.layout.youtube_item_card;
     }
 
     private void animateViewForClick(final View theView) {
@@ -304,7 +316,7 @@ public class YouTubeGridFragment extends Fragment
           StandardAnimations.rockBounce(theView);
           break;
         case 3:
-          StandardAnimations.winky(theView, mImageAlpha);
+          StandardAnimations.winky(theView, mTheme_imageAlpha);
           break;
         default:
           StandardAnimations.rubberClick(theView);
@@ -334,10 +346,10 @@ public class YouTubeGridFragment extends Fragment
       ViewHolder holder = null;
 
       if (convertView == null) {
-        convertView = inflater.inflate(mItemResId, null);
+        convertView = inflater.inflate(mTheme_itemResId, null);
 
         holder = new ViewHolder();
-        holder.image = (ImageView) convertView.findViewById(R.id.image);
+        holder.image = (VideoImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
         holder.duration = (TextView) convertView.findViewById(R.id.duration);
@@ -357,6 +369,8 @@ public class YouTubeGridFragment extends Fragment
 
       holder.image.setAnimation(null);
 
+      holder.image.setDrawShadows(mTheme_drawImageShadows);
+
       int defaultImageResID = 0;
 
       UrlImageViewHelper.setUrlDrawable(holder.image, itemMap.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
@@ -364,10 +378,10 @@ public class YouTubeGridFragment extends Fragment
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-            imageView.setAlpha(mImageAlpha / 2);
-            imageView.animate().setDuration(300).alpha(mImageAlpha);
+            imageView.setAlpha(mTheme_imageAlpha / 2);
+            imageView.animate().setDuration(300).alpha(mTheme_imageAlpha);
           } else
-            imageView.setAlpha(mImageAlpha);
+            imageView.setAlpha(mTheme_imageAlpha);
         }
 
       });
@@ -448,7 +462,7 @@ public class YouTubeGridFragment extends Fragment
       TextView title;
       TextView description;
       TextView duration;
-      ImageView image;
+      VideoImageView image;
       VideoMenuView menuButton;
     }
   }

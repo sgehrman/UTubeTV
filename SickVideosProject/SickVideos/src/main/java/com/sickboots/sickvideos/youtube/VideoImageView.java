@@ -10,35 +10,34 @@ import android.widget.ImageView;
 import com.sickboots.sickvideos.misc.Util;
 
 public class VideoImageView extends ImageView {
-  private GradientDrawable mTopGradient;
-  private GradientDrawable mBottomGradient;
+  private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
-  private int mGradientHeight;
-  private boolean mDrawGradients = true;
+
+  // gradients shared between all views to cut down on memory allocations etc.
+  private static GradientDrawable sTopGradient;
+  private static GradientDrawable sBottomGradient;
+  private static int sGradientHeight;
 
   public VideoImageView(Context context, AttributeSet attrs) {
     super(context, attrs);
+  }
 
-    mGradientHeight = (int) Util.dpToPx(40.0f, getContext());
-
-    int topColors[] = {0xaa000000, 0x00000000};
-    mTopGradient = createGradient(topColors);
-
-    int bottomColors[] = {0x00000000, 0xaa000000};
-    mBottomGradient = createGradient(bottomColors);
+  public void setDrawShadows(boolean set) {
+    mDrawShadows = set;
   }
 
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
 
-    if (mDrawGradients) {
+    if (mDrawShadows) {
+      createGradients(getContext());
       adjustGradientRects();
 
-      mTopGradient.draw(canvas);
+      sTopGradient.draw(canvas);
 
-      int y = getHeight() - mGradientHeight;
+      int y = getHeight() - sGradientHeight;
       canvas.translate(0, y);
-      mBottomGradient.draw(canvas);
+      sBottomGradient.draw(canvas);
       canvas.translate(0, -y);
     }
   }
@@ -47,10 +46,22 @@ public class VideoImageView extends ImageView {
     if (mCachedWidth != getWidth()) {
       mCachedWidth = getWidth();
 
-      Rect rect = new Rect(0, 0, mCachedWidth, mGradientHeight);
+      Rect rect = new Rect(0, 0, mCachedWidth, sGradientHeight);
 
-      mTopGradient.setBounds(rect);
-      mBottomGradient.setBounds(rect);
+      sTopGradient.setBounds(rect);
+      sBottomGradient.setBounds(rect);
+    }
+  }
+
+  private void createGradients(Context context) {
+    if (sTopGradient == null) {
+      sGradientHeight = (int) Util.dpToPx(40.0f, context);
+
+      int topColors[] = {0xaa000000, 0x00000000};
+      sTopGradient = createGradient(topColors);
+
+      int bottomColors[] = {0x00000000, 0xaa000000};
+      sBottomGradient = createGradient(bottomColors);
     }
   }
 
