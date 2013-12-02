@@ -21,7 +21,6 @@ import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.lists.YouTubeListLive;
 import com.sickboots.sickvideos.lists.YouTubeListSpec;
-import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.Util;
@@ -34,8 +33,6 @@ import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -284,11 +281,15 @@ public class YouTubeGridFragment extends Fragment
     private final LayoutInflater inflater;
     int animationID = 0;
     boolean showHidden = false;
+    private int mItemResId = R.layout.youtube_item_dark;
+
 
     public YouTubeListAdapter() {
       super(getActivity(), 0);
 
       inflater = LayoutInflater.from(getActivity());
+
+//      mItemResId = R.layout.youtube_item_card;
     }
 
     private void animateViewForClick(final View theView) {
@@ -333,7 +334,7 @@ public class YouTubeGridFragment extends Fragment
       ViewHolder holder = null;
 
       if (convertView == null) {
-        convertView = inflater.inflate(R.layout.youtube_grid_item, null);
+        convertView = inflater.inflate(mItemResId, null);
 
         holder = new ViewHolder();
         holder.image = (ImageView) convertView.findViewById(R.id.image);
