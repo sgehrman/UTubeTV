@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,11 +37,13 @@ import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeGridFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
+    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener, Observer {
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -107,6 +110,34 @@ public class YouTubeGridFragment extends Fragment
     return fragment;
   }
 
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    // for ApplicationHub.THEME_CHANGED
+    ApplicationHub.instance().deleteObserver(this);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    // for ApplicationHub.THEME_CHANGED
+    ApplicationHub.instance().addObserver(this);
+  }
+
+  @Override  // Observer
+  public void update(Observable observable, Object data) {
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(ApplicationHub.THEME_CHANGED)) {
+        updateForTheme();
+        loadFromList();
+      }
+    }
+  }
+
   public CharSequence actionBarTitle() {
     CharSequence title = null;
     if (mList != null)
@@ -118,6 +149,19 @@ public class YouTubeGridFragment extends Fragment
     }
 
     return title;
+  }
+
+  private void updateForTheme() {
+    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    if (Integer.parseInt(themeStyle) == 1) {
+      mTheme_itemResId = R.layout.youtube_item_card;
+      mTheme_imageAlpha = 1.0f;
+      mTheme_drawImageShadows = false;
+    } else {
+      mTheme_imageAlpha = .7f;
+      mTheme_itemResId = R.layout.youtube_item_dark;
+      mTheme_drawImageShadows = true;
+    }
   }
 
   @Override
@@ -138,16 +182,7 @@ public class YouTubeGridFragment extends Fragment
 
     mGridView.setEmptyView(mEmptyView);
 
-    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
-    if (Integer.parseInt(themeStyle) == 1) {
-      mTheme_itemResId = R.layout.youtube_item_card;
-      mTheme_imageAlpha = 1.0f;
-      mTheme_drawImageShadows = false;
-    } else {
-      mTheme_imageAlpha = .7f;
-      mTheme_itemResId = R.layout.youtube_item_dark;
-      mTheme_drawImageShadows = true;
-    }
+    updateForTheme();
 
     mAdapter = new YouTubeListAdapter();
 
@@ -235,7 +270,7 @@ public class YouTubeGridFragment extends Fragment
     mEmptyView.setVisibility(View.INVISIBLE);
   }
 
-  private void loadFromList() {
+  public void loadFromList() {
     int savedScrollState = mGridView.getFirstVisiblePosition();
 
     mAdapter.clear();

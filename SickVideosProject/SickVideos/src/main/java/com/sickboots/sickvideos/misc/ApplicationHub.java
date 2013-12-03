@@ -23,6 +23,7 @@ public class ApplicationHub {
 
   // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
+  public static final String THEME_CHANGED = "theme_changed";
 
   private ApplicationHub(Context context) {
     notificationCenter = new NotificationCenter();
@@ -31,6 +32,13 @@ public class ApplicationHub {
     data = new HashMap();
 
     mPrefsCache = new PreferenceCache(context, new PreferenceCache.PreferenceCacheListener() {
+      @Override
+      public void prefChanged(String prefName) {
+        if (prefName.equals(PreferenceCache.THEME_STYLE)) {
+          sendNotification(THEME_CHANGED);
+        }
+      }
+
       @Override
       public void prefsLoaded() {
         // called back on a thread

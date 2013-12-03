@@ -16,7 +16,8 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
   public interface PreferenceCacheListener {
     public void prefsLoaded();
-  }
+    public void prefChanged(String prefName);
+    }
 
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";
@@ -29,6 +30,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
   private SharedPreferences sharedPreferences;
   private HashMap prefs;
+  private PreferenceCacheListener mListener;
 
   private List<String> stringPreferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR, DRAWER_SECTION_INDEX, THEME_STYLE);
   private List<String> boolPreferenceKeys = asList(SHOW_HIDDEN_VIDEOS, PLAY_FULLSCREEN, MUTE_ADS);
@@ -37,10 +39,11 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
     prefs = new HashMap();
+    mListener = listener;
 
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
-    loadPrefsCache(listener);
+    loadPrefsCache(true);
   }
 
   // this never gets called, but putting code that might belong here anyway for now
@@ -86,7 +89,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
     savePrefsCache();
   }
 
-  private void loadPrefsCache(final PreferenceCacheListener listener) {
+  private void loadPrefsCache(final boolean firstLoad) {
     Thread thread1 = new Thread() {
       public void run() {
         for (String key : stringPreferenceKeys)
@@ -95,8 +98,8 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
         for (String key : boolPreferenceKeys)
           prefs.put(key, sharedPreferences.getBoolean(key, false));
 
-        if (listener != null)
-          listener.prefsLoaded();
+        if (firstLoad)
+          mListener.prefsLoaded();
       }
     };
     thread1.start();
@@ -125,8 +128,11 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
   // SharedPreferences.OnSharedPreferenceChangeListener
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    if (cachingPrefKey(key))
-      loadPrefsCache(null);
+    if (cachingPrefKey(key)) {
+      loadPrefsCache(false);
+
+      mListener.prefChanged(key);
+    }
   }
 
 }
