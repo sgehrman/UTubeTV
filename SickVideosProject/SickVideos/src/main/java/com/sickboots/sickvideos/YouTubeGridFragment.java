@@ -270,7 +270,7 @@ public class YouTubeGridFragment extends Fragment
     mEmptyView.setVisibility(View.INVISIBLE);
   }
 
-  public void loadFromList() {
+  private void loadFromList() {
     int savedScrollState = mGridView.getFirstVisiblePosition();
 
     mAdapter.clear();
