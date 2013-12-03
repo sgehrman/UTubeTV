@@ -44,7 +44,7 @@ public class YouTubeGridFragment extends Fragment
   public interface HostActivitySupport {
     public VideoPlayer videoPlayer();
 
-    void fragmentInstalled();
+    void fragmentWasInstalled();
 
     public void installFragment(Fragment fragment, boolean animate);
   }
@@ -168,7 +168,7 @@ public class YouTubeGridFragment extends Fragment
 
     // triggers an update for the title, lame hack
     HostActivitySupport provider = (HostActivitySupport) getActivity();
-    provider.fragmentInstalled();
+    provider.fragmentWasInstalled();
 
     return rootView;
   }
@@ -359,7 +359,7 @@ public class YouTubeGridFragment extends Fragment
       } else {
         holder = (ViewHolder) convertView.getTag();
 
-        // reset some stuff that might have been set on an animation 
+        // reset some stuff that might have been set on an animation
         holder.image.setAlpha(1.0f);
         holder.image.setScaleX(1.0f);
         holder.image.setScaleY(1.0f);

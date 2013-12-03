@@ -349,7 +349,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   }
 
   @Override
-  public void fragmentInstalled() {
+  public void fragmentWasInstalled() {
     updateActionBarTitle();
   }
 
