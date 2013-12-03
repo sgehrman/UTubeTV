@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content"
-              android:padding="12dp"
+              android:padding="16dp"
               android:background="@android:color/white"
 
               android:descendantFocusability="blocksDescendants">
@@ -21,45 +21,10 @@
         android:layout_width="match_parent"
         android:maxLines="3"
         android:ellipsize="end"
+        android:layout_marginBottom="12dp"
         style="@style/VideoTextDescription_card"
         android:layout_height="wrap_content"/>
 
+    <include layout="@layout/youtube_item_image"/>
 
-    <com.sickboots.sickvideos.youtube.VideoImageView
-        android:id="@+id/image"
-        android:layout_marginTop="12dp"
-        android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clickable="false"
-        />
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:orientation="horizontal"
-                  android:layout_height="wrap_content"
-
-        >
-
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:background="#8000"
-            android:textColor="#fff"/>
-
-        <com.sickboots.sickvideos.VideoMenuView
-            android:id="@+id/menu_button"
-            android:background="#888"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:gravity="right|center"
-            android:scaleType="centerInside"
-            />
-
-    </LinearLayout>
 </LinearLayout>
