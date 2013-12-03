@@ -359,10 +359,12 @@ public class YouTubeGridFragment extends Fragment
       } else {
         holder = (ViewHolder) convertView.getTag();
 
-        // reset some stuff that might have been set on an animation (not sure if this is needed)
+        // reset some stuff that might have been set on an animation 
         holder.image.setAlpha(1.0f);
         holder.image.setScaleX(1.0f);
         holder.image.setScaleY(1.0f);
+        holder.image.setRotationX(0.0f);
+        holder.image.setRotationY(0.0f);
       }
 
       YouTubeData itemMap = getItem(position);
