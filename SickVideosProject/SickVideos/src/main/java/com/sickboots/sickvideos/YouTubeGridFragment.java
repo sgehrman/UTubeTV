@@ -195,10 +195,10 @@ public class YouTubeGridFragment extends Fragment
   private void updateForVariablesTheme() {
     String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
     if (Integer.parseInt(themeStyle) != 0) {
-      mTheme_itemResId = R.layout.youtube_item_card;
+      mTheme_itemResId = R.layout.youtube_item_cards;
       mTheme_imageAlpha = 1.0f;
       mTheme_drawImageShadows = false;
-      mTheme_resId = R.layout.fragment_grid_light;
+      mTheme_resId = R.layout.fragment_grid_cards;
     } else {
       mTheme_imageAlpha = .7f;
       mTheme_itemResId = R.layout.youtube_item_dark;
