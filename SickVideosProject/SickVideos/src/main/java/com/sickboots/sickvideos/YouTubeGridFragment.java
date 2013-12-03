@@ -193,7 +193,7 @@ public class YouTubeGridFragment extends Fragment
     mGridView.setOnItemClickListener(mAdapter);
 
     // .015 is the default
-    mGridView.setFriction(0.01f);
+    mGridView.setFriction(0.005f);
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
