@@ -198,12 +198,12 @@ public class YouTubeGridFragment extends Fragment
       mTheme_itemResId = R.layout.youtube_item_card;
       mTheme_imageAlpha = 1.0f;
       mTheme_drawImageShadows = false;
-      mTheme_resId = R.layout.fragment_youtube_grid;
+      mTheme_resId = R.layout.fragment_grid_light;
     } else {
       mTheme_imageAlpha = .7f;
       mTheme_itemResId = R.layout.youtube_item_dark;
       mTheme_drawImageShadows = true;
-      mTheme_resId = R.layout.fragment_youtube_grid;
+      mTheme_resId = R.layout.fragment_grid_dark;
     }
   }
 
