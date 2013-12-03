@@ -65,6 +65,7 @@ public class YouTubeGridFragment extends Fragment
   // theme parameters
   private float mTheme_imageAlpha;
   private int mTheme_itemResId;
+  private int mTheme_resId;
   private boolean mTheme_drawImageShadows;
 
   public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
@@ -120,34 +121,15 @@ public class YouTubeGridFragment extends Fragment
     return title;
   }
 
-  private void updateForTheme(View rootView) {
-    View dimmerView = rootView.findViewById(R.id.dimmer);
-
-    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
-    if (Integer.parseInt(themeStyle) != 0) {
-      mTheme_itemResId = R.layout.youtube_item_card;
-      mTheme_imageAlpha = 1.0f;
-      mTheme_drawImageShadows = false;
-
-      dimmerView.setVisibility(View.GONE);
-    } else {
-      mTheme_imageAlpha = .7f;
-      mTheme_itemResId = R.layout.youtube_item_dark;
-      mTheme_drawImageShadows = true;
-
-      new ScrollTriggeredAnimator(mGridView, dimmerView);
-    }
-  }
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
 
+    updateForVariablesTheme();
+
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
-    ViewGroup rootView;
-
-    rootView = (ViewGroup) inflater.inflate(R.layout.fragment_youtube_grid, container, false);
+    ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
     mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
     mList = createList(getArguments());
@@ -156,8 +138,6 @@ public class YouTubeGridFragment extends Fragment
     rootView.addView(mEmptyView);
 
     mGridView.setEmptyView(mEmptyView);
-
-    updateForTheme(rootView);
 
     mAdapter = new YouTubeListAdapter();
 
@@ -173,6 +153,11 @@ public class YouTubeGridFragment extends Fragment
 
     // load data if we have it already
     loadFromList();
+
+    // dimmer only exists for dark mode
+    View dimmerView = rootView.findViewById(R.id.dimmer);
+    if (dimmerView != null)
+      new ScrollTriggeredAnimator(mGridView, dimmerView);
 
     // triggers an update for the title, lame hack
     HostActivitySupport provider = (HostActivitySupport) getActivity();
@@ -204,6 +189,21 @@ public class YouTubeGridFragment extends Fragment
         }
       }
       break;
+    }
+  }
+
+  private void updateForVariablesTheme() {
+    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    if (Integer.parseInt(themeStyle) != 0) {
+      mTheme_itemResId = R.layout.youtube_item_card;
+      mTheme_imageAlpha = 1.0f;
+      mTheme_drawImageShadows = false;
+      mTheme_resId = R.layout.fragment_youtube_grid;
+    } else {
+      mTheme_imageAlpha = .7f;
+      mTheme_itemResId = R.layout.youtube_item_dark;
+      mTheme_drawImageShadows = true;
+      mTheme_resId = R.layout.fragment_youtube_grid;
     }
   }
 
