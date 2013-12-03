@@ -43,7 +43,7 @@ import java.util.Observer;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeGridFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener, Observer {
+    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -109,34 +109,6 @@ public class YouTubeGridFragment extends Fragment
     fragment.setArguments(args);
 
     return fragment;
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-
-    // for ApplicationHub.THEME_CHANGED
-    ApplicationHub.instance().deleteObserver(this);
-  }
-
-  @Override
-  public void onStart() {
-    super.onStart();
-
-    // for ApplicationHub.THEME_CHANGED
-    ApplicationHub.instance().addObserver(this);
-  }
-
-  @Override  // Observer
-  public void update(Observable observable, Object data) {
-    if (data instanceof String) {
-      String input = (String) data;
-
-      if (input.equals(ApplicationHub.THEME_CHANGED)) {
-        updateForTheme();
-        loadFromList();
-      }
-    }
   }
 
   public CharSequence actionBarTitle() {

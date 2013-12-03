@@ -30,9 +30,12 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Util.PullToRefreshListener {
+public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Util.PullToRefreshListener, Observer {
   private DrawerLayout mDrawerLayout;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
@@ -43,12 +46,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   // MainActivity creates us using this
   public static void start(Activity activity) {
-    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
-    int flag = Integer.parseInt(themeStyle);
-
       // start drawer activity
     Intent intent = new Intent();
-    intent.setFlags(flag);
     intent.setClass(activity, DrawerActivity.class);
     activity.startActivity(intent);
   }
@@ -56,8 +55,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // must set the theme before we do anything else
-    int flags = getIntent().getFlags();
-    if (flags != 0)
+    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    int flag = Integer.parseInt(themeStyle);
+    if (flag != 0)
       setTheme(R.style.ActivityThemeLight);
 
     super.onCreate(savedInstanceState);
@@ -129,6 +129,33 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       // video player fragment restores itself, so just show it and let it do its thing
       if (showPlayer)
         videoPlayer().restore();
+    }
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    // for ApplicationHub.THEME_CHANGED
+    ApplicationHub.instance().deleteObserver(this);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    // for ApplicationHub.THEME_CHANGED
+    ApplicationHub.instance().addObserver(this);
+  }
+
+  @Override  // Observer
+  public void update(Observable observable, Object data) {
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(ApplicationHub.THEME_CHANGED)) {
+        recreate();
+      }
     }
   }
 
