@@ -3,6 +3,8 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content"
+              android:padding="12dp"
+              android:background="@android:color/white"
 
               android:descendantFocusability="blocksDescendants">
 
@@ -17,7 +19,7 @@
     <TextView
         android:id="@+id/description_view"
         android:layout_width="match_parent"
-        android:maxLines="4"
+        android:maxLines="3"
         android:ellipsize="end"
         style="@style/VideoTextDescription_card"
         android:layout_height="wrap_content"/>
@@ -25,6 +27,7 @@
 
     <com.sickboots.sickvideos.youtube.VideoImageView
         android:id="@+id/image"
+        android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"

@@ -16,7 +16,7 @@
 
     <GridView
         android:id="@+id/gridview"
-        style="@style/GridDefaults"
+        style="@style/GridDefaults.Dark"
         />
 
 </com.sickboots.sickvideos.AnimatedFrameLayout>
