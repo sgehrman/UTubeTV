@@ -64,7 +64,6 @@ public class YouTubeGridFragment extends Fragment
   private YouTubeList mList;
   private View mEmptyView;
   private GridView mGridView;
-  private int mThemeIndex=0;
 
   // theme parameters
   private float mTheme_imageAlpha;
@@ -124,18 +123,22 @@ public class YouTubeGridFragment extends Fragment
     return title;
   }
 
-  private void updateForTheme() {
-    mThemeIndex++;  // hack to get any existing views to signal they are not valid for reuse
+  private void updateForTheme(View rootView) {
+    View dimmerView = rootView.findViewById(R.id.dimmer);
 
     String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
-    if (Integer.parseInt(themeStyle) == 1) {
+    if (Integer.parseInt(themeStyle) != 0) {
       mTheme_itemResId = R.layout.youtube_item_card;
       mTheme_imageAlpha = 1.0f;
       mTheme_drawImageShadows = false;
+
+      dimmerView.setVisibility(View.GONE);
     } else {
       mTheme_imageAlpha = .7f;
       mTheme_itemResId = R.layout.youtube_item_dark;
       mTheme_drawImageShadows = true;
+
+      new ScrollTriggeredAnimator(mGridView, dimmerView);
     }
   }
 
@@ -157,7 +160,7 @@ public class YouTubeGridFragment extends Fragment
 
     mGridView.setEmptyView(mEmptyView);
 
-    updateForTheme();
+    updateForTheme(rootView);
 
     mAdapter = new YouTubeListAdapter();
 
@@ -173,10 +176,6 @@ public class YouTubeGridFragment extends Fragment
 
     // load data if we have it already
     loadFromList();
-
-    View dimmerView = rootView.findViewById(R.id.dimmer);
-
-    new ScrollTriggeredAnimator(mGridView, dimmerView);
 
     // triggers an update for the title, lame hack
     HostActivitySupport provider = (HostActivitySupport) getActivity();
@@ -357,27 +356,10 @@ public class YouTubeGridFragment extends Fragment
     public View getView(int position, View convertView, ViewGroup parent) {
       ViewHolder holder = null;
 
-      if (convertView != null) {
-        holder = (ViewHolder) convertView.getTag();
-        if (holder.themeIndex != mThemeIndex) {
-          convertView = null;
-          holder = null;
-        }
-        else {
-          // reset some stuff that might have been set on an animation
-          holder.image.setAlpha(1.0f);
-          holder.image.setScaleX(1.0f);
-          holder.image.setScaleY(1.0f);
-          holder.image.setRotationX(0.0f);
-          holder.image.setRotationY(0.0f);
-        }
-      }
-
       if (convertView == null) {
         convertView = inflater.inflate(mTheme_itemResId, null);
 
         holder = new ViewHolder();
-        holder.themeIndex = mThemeIndex;
         holder.image = (VideoImageView) convertView.findViewById(R.id.image);
         holder.title = (TextView) convertView.findViewById(R.id.text_view);
         holder.description = (TextView) convertView.findViewById(R.id.description_view);
@@ -385,6 +367,15 @@ public class YouTubeGridFragment extends Fragment
         holder.menuButton = (VideoMenuView) convertView.findViewById(R.id.menu_button);
 
         convertView.setTag(holder);
+      } else {
+        holder = (ViewHolder) convertView.getTag();
+
+        // reset some stuff that might have been set on an animation
+        holder.image.setAlpha(1.0f);
+        holder.image.setScaleX(1.0f);
+        holder.image.setScaleY(1.0f);
+        holder.image.setRotationX(0.0f);
+        holder.image.setRotationY(0.0f);
       }
 
       YouTubeData itemMap = getItem(position);
@@ -481,7 +472,6 @@ public class YouTubeGridFragment extends Fragment
     }
 
     class ViewHolder {
-      int themeIndex;  // used for theme switching
       TextView title;
       TextView description;
       TextView duration;
