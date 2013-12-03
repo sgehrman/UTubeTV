@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,8 +36,6 @@ import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 

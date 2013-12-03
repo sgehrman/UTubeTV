@@ -46,7 +46,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   // MainActivity creates us using this
   public static void start(Activity activity) {
-      // start drawer activity
+    // start drawer activity
     Intent intent = new Intent();
     intent.setClass(activity, DrawerActivity.class);
     activity.startActivity(intent);
@@ -240,25 +240,25 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     int selectedIndex = Integer.parseInt(themeStyle);
 
     builder.setTitle("Pick a style")
-      .setSingleChoiceItems(R.array.view_styles, selectedIndex, new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-          switch (which) {
-            case 0:
-              ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "0");
-              break;
-            case 1:
-              ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "1");
-              break;
-            case 2:
-              ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "2");
-              break;
-            default:
-              break;
-          }
+        .setSingleChoiceItems(R.array.view_styles, selectedIndex, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+              case 0:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "0");
+                break;
+              case 1:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "1");
+                break;
+              case 2:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "2");
+                break;
+              default:
+                break;
+            }
 
-          dialog.dismiss();
-        }
-      });
+            dialog.dismiss();
+          }
+        });
 
     return builder.create();
   }

@@ -16,8 +16,9 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
   public interface PreferenceCacheListener {
     public void prefsLoaded();
+
     public void prefChanged(String prefName);
-    }
+  }
 
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";

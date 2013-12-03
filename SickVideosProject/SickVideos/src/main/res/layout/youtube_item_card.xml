@@ -36,27 +36,27 @@
                   android:orientation="horizontal"
                   android:layout_height="wrap_content"
 
-                 >
+        >
 
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:background="#8000"
-        android:textColor="#fff"/>
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="#8000"
+            android:textColor="#fff"/>
 
-    <com.sickboots.sickvideos.VideoMenuView
-        android:id="@+id/menu_button"
-        android:background="#888"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        android:gravity="right|center"
-        android:scaleType="centerInside"
-        />
+        <com.sickboots.sickvideos.VideoMenuView
+            android:id="@+id/menu_button"
+            android:background="#888"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="right|center"
+            android:scaleType="centerInside"
+            />
 
     </LinearLayout>
 </LinearLayout>

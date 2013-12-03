@@ -1,5 +1,5 @@
 <com.sickboots.sickvideos.AnimatedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              android:background="?gridStyle"
+                                              android:background="@color/content_background"
 
                                               android:layout_width="match_parent"
                                               android:layout_height="match_parent">
@@ -16,22 +16,7 @@
 
     <GridView
         android:id="@+id/gridview"
-        android:cacheColorHint="#000"
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:columnWidth="220dp"
-        android:horizontalSpacing="4dp"
-        android:verticalSpacing="4dp"
-        android:numColumns="auto_fit"
-        android:fastScrollEnabled="true"
-        android:drawSelectorOnTop="true"
-        android:requiresFadingEdge="vertical"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:listSelector="@drawable/grid_list_selector"
+        style="@style/GridDefaults"
         />
 
 </com.sickboots.sickvideos.AnimatedFrameLayout>
