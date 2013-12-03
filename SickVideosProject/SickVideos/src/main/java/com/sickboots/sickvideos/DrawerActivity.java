@@ -197,10 +197,13 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
           public void onClick(DialogInterface dialog, int which) {
             switch (which) {
               case 0:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "0");
                 break;
               case 1:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "1");
                 break;
               case 2:
+                ApplicationHub.preferences().setString(PreferenceCache.THEME_STYLE, "2");
                 break;
               default:
                 break;

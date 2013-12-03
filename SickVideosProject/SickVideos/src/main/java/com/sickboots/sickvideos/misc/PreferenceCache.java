@@ -25,11 +25,12 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   public static final String SHOW_HIDDEN_VIDEOS = "show_hidden_videos";
   public static final String PLAY_FULLSCREEN = "play_fullscreen";
   public static final String MUTE_ADS = "mute_ads";
+  public static final String THEME_STYLE = "theme_style";
 
   private SharedPreferences sharedPreferences;
   private HashMap prefs;
 
-  private List<String> stringPreferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR, DRAWER_SECTION_INDEX);
+  private List<String> stringPreferenceKeys = asList(GOOGLE_ACCOUNT_PREF, ACTION_BAR_COLOR, DRAWER_SECTION_INDEX, THEME_STYLE);
   private List<String> boolPreferenceKeys = asList(SHOW_HIDDEN_VIDEOS, PLAY_FULLSCREEN, MUTE_ADS);
 
   public PreferenceCache(Context context, PreferenceCacheListener listener) {

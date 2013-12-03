@@ -21,6 +21,8 @@ import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.lists.YouTubeListLive;
 import com.sickboots.sickvideos.lists.YouTubeListSpec;
+import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.Util;
@@ -136,8 +138,8 @@ public class YouTubeGridFragment extends Fragment
 
     mGridView.setEmptyView(mEmptyView);
 
-    boolean cardTheme = false;
-    if (cardTheme) {
+    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    if (Integer.parseInt(themeStyle) == 1) {
       mTheme_itemResId = R.layout.youtube_item_card;
       mTheme_imageAlpha = 1.0f;
       mTheme_drawImageShadows = false;
