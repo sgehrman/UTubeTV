@@ -9,7 +9,15 @@
     <string name="action_more_apps">More apps</string>
     <string name="action_rate_app">Rate my app!</string>
 
+    <string name="switch_view">Switch view</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <string-array name="view_styles">
+        <item>Dark</item>
+        <item>List</item>
+        <item>Cards</item>
+    </string-array>
+
 </resources>

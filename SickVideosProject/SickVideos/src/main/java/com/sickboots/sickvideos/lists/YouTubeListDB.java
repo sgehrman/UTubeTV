@@ -175,12 +175,12 @@ public class YouTubeListDB extends YouTubeList {
           YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
           String channelID = (String) listSpec.getData("channel");
 
-            playlistID = helper.relatedPlaylistID(type, channelID);
+          playlistID = helper.relatedPlaylistID(type, channelID);
 
           listResults = helper.videoListResults(playlistID, true);
           break;
         case VIDEOS:
-            playlistID = (String) listSpec.getData("playlist");
+          playlistID = (String) listSpec.getData("playlist");
 
           listResults = helper.videoListResults(playlistID, true);
           break;

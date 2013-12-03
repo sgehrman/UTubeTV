@@ -3,7 +3,10 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -187,6 +190,28 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     }
   }
 
+  public Dialog pickViewStyleDialog() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Pick a style")
+        .setSingleChoiceItems(R.array.view_styles, 0, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+              case 0:
+                break;
+              case 1:
+                break;
+              case 2:
+                break;
+              default:
+                break;
+            }
+
+            dialog.dismiss();
+          }
+        });
+    return builder.create();
+  }
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -219,8 +244,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
 
         return true;
+      case R.id.action_switch_view:
+        Dialog theDialog = pickViewStyleDialog();
 
-
+        theDialog.show();
+        return true;
       default:
         return super.onOptionsItemSelected(item);
     }

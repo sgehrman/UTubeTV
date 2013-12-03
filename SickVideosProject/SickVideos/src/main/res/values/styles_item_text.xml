@@ -13,6 +13,7 @@
         <item name="android:shadowRadius">4</item>
         <item name="android:lineSpacingExtra">-2sp</item>
     </style>
+
     <style name="VideoTextTitle_card">
         <item name="android:padding">8dp</item>
 
@@ -28,7 +29,6 @@
     </style>
 
 
-
     <style name="VideoTextDescription">
         <item name="android:padding">8dp</item>
 
@@ -42,6 +42,7 @@
         <item name="android:shadowRadius">4</item>
         <item name="android:lineSpacingExtra">-2sp</item>
     </style>
+
     <style name="VideoTextDescription_card">
         <item name="android:padding">8dp</item>
 
