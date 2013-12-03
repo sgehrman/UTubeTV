@@ -216,7 +216,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
           dialog.dismiss();
         }
       });
-    
+
     return builder.create();
   }
 
