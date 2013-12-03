@@ -11,11 +11,13 @@
     <style name="ActivityTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/startup_background</item>
+        <item name="gridStyle">@color/content_background</item>
     </style>
 
     <style name="ActivityThemeLight" parent="android:Theme.Holo.Light">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="gridStyle">@android:color/white</item>
     </style>
 
     <style name="StartupActivityTheme" parent="ActivityTheme">
