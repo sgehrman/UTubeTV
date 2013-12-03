@@ -41,8 +41,25 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
+  // MainActivity creates us using this
+  public static void start(Activity activity) {
+    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    int flag = Integer.parseInt(themeStyle);
+
+      // start drawer activity
+    Intent intent = new Intent();
+    intent.setFlags(flag);
+    intent.setClass(activity, DrawerActivity.class);
+    activity.startActivity(intent);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // must set the theme before we do anything else
+    int flags = getIntent().getFlags();
+    if (flags != 0)
+      setTheme(R.style.ActivityThemeLight);
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
 
@@ -104,7 +121,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
     mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
-
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {

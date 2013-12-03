@@ -3,27 +3,40 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+        <item name="android:actionBarStyle">@style/ActionBarDark</item>
     </style>
+
+    <!-- Activity themes -->
 
     <style name="ActivityTheme" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/startup_background</item>
     </style>
 
-    <!-- ActionBar styles -->
-    <style name="CustomActionBar"
-           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/action_bar_dark</item>
-        <item name="android:displayOptions">showHome|showTitle</item>
+    <style name="ActivityThemeLight" parent="android:Theme.Holo.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
-    <!-- Initial activity on launch customizations -->
     <style name="StartupActivityTheme" parent="ActivityTheme">
         <item name="android:actionBarStyle">@style/StartupActionBar</item>
     </style>
 
-    <style name="StartupActionBar" parent="CustomActionBar">
+    <!-- ActionBar styles -->
+
+    <style name="ActionBarDark"
+           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/action_bar_dark</item>
+        <item name="android:displayOptions">showHome|showTitle</item>
+    </style>
+    <style name="ActionBarLight"
+           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/action_bar_light</item>
+        <item name="android:displayOptions">showHome|showTitle</item>
+    </style>
+
+
+    <style name="StartupActionBar" parent="ActionBarDark">
         <item name="android:displayOptions">showHome</item>
     </style>
 

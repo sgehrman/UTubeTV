@@ -25,10 +25,7 @@ public class MainActivity extends Activity implements Observer {
       String input = (String) data;
 
       if (input.equals(ApplicationHub.APPLICATION_READY_NOTIFICATION)) {
-        // start drawer activity
-        Intent intent = new Intent();
-        intent.setClass(MainActivity.this, DrawerActivity.class);
-        startActivity(intent);
+        DrawerActivity.start(this);
 
         // we are done, finish us
         ApplicationHub.instance().deleteObserver(MainActivity.this);
