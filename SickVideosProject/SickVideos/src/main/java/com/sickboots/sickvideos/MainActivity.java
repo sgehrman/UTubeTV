@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
-import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.GoogleAccount;
 import com.sickboots.sickvideos.youtube.GoogleAccountPicker;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -62,7 +58,7 @@ public class MainActivity extends Activity implements Observer {
   private void switchToDrawerActivity() {
     String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
 
-   ApplicationHub.instance().setGoogleAccount(new GoogleAccount(this.getApplicationContext(), accountName));
+    ApplicationHub.instance().setGoogleAccount(new GoogleAccount(this.getApplicationContext(), accountName));
 
     DrawerActivity.start(this);
 
