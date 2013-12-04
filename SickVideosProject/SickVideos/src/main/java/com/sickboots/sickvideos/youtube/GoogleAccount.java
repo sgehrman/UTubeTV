@@ -66,13 +66,10 @@ public class GoogleAccount {
     // example code had this, no idea if needed
     credential.setBackOff(new ExponentialBackOff());
 
-    loadAccount(activity);
+    loadAccount();
   }
 
-  private void loadAccount(Activity activity) {
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
-
-    // ### hits main thread with read to disk, fix this later.
+  private void loadAccount() {
     String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
 
     if (accountName != null) {
@@ -80,7 +77,7 @@ public class GoogleAccount {
     }
   }
 
-  private void saveAccount(Activity activity) {
+  private void saveAccount() {
     ApplicationHub.preferences().setString(PreferenceCache.GOOGLE_ACCOUNT_PREF, credential.getSelectedAccountName());
   }
 
@@ -97,12 +94,11 @@ public class GoogleAccount {
 
   public void chooseAccountResult(String result) {
     credential.setSelectedAccountName(result);
-
-    Activity a = delegate.getActivity();
-
-    saveAccount(a);
+    saveAccount();
 
     delegate.credentialIsReady();
+
+    Activity a = delegate.getActivity();
 
     // tell the activity that the credential is ready to rock
     FragmentManager fragmentManager = a.getFragmentManager();
@@ -112,7 +108,13 @@ public class GoogleAccount {
   }
 
   // fragment just used to get onActivityResult
-  class AccountFragment extends Fragment {
+  public class AccountFragment extends Fragment {
+
+    // do not delete this, or we crash on startup
+    public AccountFragment() {
+      super();
+    }
+
     @Override
     public void onAttach(Activity activity) {
       super.onAttach(activity);

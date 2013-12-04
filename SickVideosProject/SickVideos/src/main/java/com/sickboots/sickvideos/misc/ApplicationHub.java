@@ -68,11 +68,11 @@ public class ApplicationHub {
     return mPrefsCache;
   }
 
-  public static void init(Context applicationContext) {
+  public static void init(Context context) {
     if (instance != null)
       Util.log("Only call ApplicationHub.init once.");
     else
-      instance = new ApplicationHub(applicationContext);
+      instance = new ApplicationHub(context.getApplicationContext());
   }
 
   // -------------------------------------
