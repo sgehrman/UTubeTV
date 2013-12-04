@@ -47,7 +47,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
         VideoPlayerFragment.this.mPlayer = player;
-        player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
+        player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT | YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
 
         player.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
 
@@ -117,14 +117,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     }
   }
 
-  public boolean fullScreen() {
-    if (mPlayer != null) {
-      return false;  // SNG needs fix
-    }
-
-    return false;
-  }
-
   public void seekRelativeSeconds(int seconds) {
     if (mPlayer != null) {
       mPlayer.seekRelativeMillis(seconds * 1000);
@@ -141,6 +133,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
+        Util.log("fuck this shit");
 //    this.isFullscreen = isFullscreen;
 //
 //    layout();
