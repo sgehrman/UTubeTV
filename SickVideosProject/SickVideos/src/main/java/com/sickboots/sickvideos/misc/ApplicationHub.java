@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.sickboots.sickvideos.youtube.GoogleAccount;
+
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -20,6 +22,7 @@ public class ApplicationHub {
   private NotificationCenter notificationCenter;
   private PreferenceCache mPrefsCache;
   private boolean mApplicationReady = false;
+  private GoogleAccount mGoogleAccount;
 
   // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
@@ -57,6 +60,14 @@ public class ApplicationHub {
 
   public static PreferenceCache preferences() {
     return instance().prefsCache();
+  }
+
+  public GoogleAccount googleAccount() {
+    return mGoogleAccount;
+  }
+
+  public void setGoogleAccount(GoogleAccount account) {
+    mGoogleAccount = account;
   }
 
   public PreferenceCache prefsCache() {

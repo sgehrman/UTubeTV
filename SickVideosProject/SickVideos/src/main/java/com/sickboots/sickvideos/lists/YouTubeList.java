@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.GoogleAccount;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -41,9 +42,10 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
     listSpec = s;
     access = a;
-    account = GoogleAccount.newYouTube(a.accountName());
+    account = ApplicationHub.instance().googleAccount();
   }
 
+  // owning fragment calls this
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
     boolean handled = false;
 
@@ -76,7 +78,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
   protected YouTubeAPI youTubeHelper() {
     if (youTubeHelper == null) {
-      GoogleAccountCredential credential = account.credential(access.getActivity());
+      GoogleAccountCredential credential = account.credential();
 
       if (credential != null) {
         youTubeHelper = new YouTubeAPI(credential, this);

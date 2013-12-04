@@ -12,19 +12,14 @@ public class UIAccess {
   }
 
   private WeakReference<Fragment> fragmentRef;
-  private String mAccountName;
 
-  public UIAccess(Fragment f, String accountName) {
+  public UIAccess(Fragment f) {
+    super();
     fragmentRef = new WeakReference<Fragment>(f);
-    mAccountName = accountName;
   }
 
   public Fragment fragment() {
     return fragmentRef.get();
-  }
-
-  public String accountName() {
-    return mAccountName;
   }
 
   public Activity getActivity() {
