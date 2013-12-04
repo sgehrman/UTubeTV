@@ -15,8 +15,6 @@ import static java.util.Arrays.asList;
 public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   public interface PreferenceCacheListener {
-    public void prefsLoaded();
-
     public void prefChanged(String prefName);
   }
 
@@ -44,7 +42,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
     sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
-    loadPrefsCache(true);
+    loadPrefsCache();
   }
 
   // this never gets called, but putting code that might belong here anyway for now
@@ -90,20 +88,12 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
     savePrefsCache();
   }
 
-  private void loadPrefsCache(final boolean firstLoad) {
-    Thread thread1 = new Thread() {
-      public void run() {
-        for (String key : stringPreferenceKeys)
-          prefs.put(key, sharedPreferences.getString(key, null));
+  private void loadPrefsCache() {
+    for (String key : stringPreferenceKeys)
+      prefs.put(key, sharedPreferences.getString(key, null));
 
-        for (String key : boolPreferenceKeys)
-          prefs.put(key, sharedPreferences.getBoolean(key, false));
-
-        if (firstLoad)
-          mListener.prefsLoaded();
-      }
-    };
-    thread1.start();
+    for (String key : boolPreferenceKeys)
+      prefs.put(key, sharedPreferences.getBoolean(key, false));
   }
 
   private void preflight(String key) {
@@ -130,7 +120,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   // SharedPreferences.OnSharedPreferenceChangeListener
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     if (cachingPrefKey(key)) {
-      loadPrefsCache(false);
+      loadPrefsCache();
 
       mListener.prefChanged(key);
     }

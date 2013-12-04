@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.youtube;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.google.android.gms.common.AccountPicker;
@@ -25,7 +26,7 @@ public class GoogleAccountPicker {
     activity.startActivityForResult(intent, REQUEST_ACCOUNT_PICKER);
   }
 
-  public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
+  public boolean handleActivityResult(Context context, int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
       case REQUEST_ACCOUNT_PICKER:
         if (resultCode == Activity.RESULT_OK && data != null && data.getExtras() != null) {
@@ -34,7 +35,7 @@ public class GoogleAccountPicker {
 
         // save to preferences, listen to the pref change to get notified on change
         if (mNameResult != null)
-          ApplicationHub.preferences().setString(PreferenceCache.GOOGLE_ACCOUNT_PREF, mNameResult);
+          ApplicationHub.preferences(context).setString(PreferenceCache.GOOGLE_ACCOUNT_PREF, mNameResult);
 
         return true;
     }

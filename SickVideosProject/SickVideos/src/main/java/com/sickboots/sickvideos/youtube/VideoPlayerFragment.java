@@ -185,7 +185,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onAdStarted() {
         if (!isMute()) {
-          boolean muteAds = ApplicationHub.preferences().getBoolean(PreferenceCache.MUTE_ADS, false);
+          boolean muteAds = ApplicationHub.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(PreferenceCache.MUTE_ADS, false);
           if (muteAds) {
             mMutedForAd = true;
             mute(true);
@@ -244,7 +244,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         Util.log("seeking: " + newPositionMillis / 1000 + " seconds");
 
         final String seekString = Util.millisecondsToDuration(newPositionMillis);
-        ApplicationHub.instance().runOnMainThread(new Runnable() {
+        ApplicationHub.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
           @Override
           public void run() {
             // we're on the main thread...
@@ -286,7 +286,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
               mLastTimeString = timeString;
             }
 
-            ApplicationHub.instance().runOnMainThread(new Runnable() {
+            ApplicationHub.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
               @Override
               public void run() {
                 // we're on the main thread...

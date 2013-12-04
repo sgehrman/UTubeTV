@@ -54,7 +54,7 @@ public class YouTubeListDB extends YouTubeList {
 
     if (helper != null) {
       if (runningTask == null) {
-        boolean showHiddenVideos = ApplicationHub.preferences().getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
+        boolean showHiddenVideos = ApplicationHub.preferences(access.getActivity()).getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
 
         runningTask = new YouTubeListDBTask(taskType, showHiddenVideos);
         runningTask.execute(helper);
@@ -215,7 +215,7 @@ public class YouTubeListDB extends YouTubeList {
       Util.log("YouTubeListDBTask: finished");
 
       items = result;
-      access.onListResults();
+      access.onResults();
 
       runningTask = null;
     }

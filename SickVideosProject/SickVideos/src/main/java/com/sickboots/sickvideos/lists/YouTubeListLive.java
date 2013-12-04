@@ -149,7 +149,7 @@ public class YouTubeListLive extends YouTubeList {
       Util.log("YouTubeListLiveTask: finished");
 
       items = result;
-      access.onListResults();
+      access.onResults();
 
       loadMoreIfNeeded();
     }

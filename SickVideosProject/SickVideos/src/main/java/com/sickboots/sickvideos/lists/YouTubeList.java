@@ -42,7 +42,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
     listSpec = s;
     access = a;
-    account = ApplicationHub.instance().googleAccount();
+    account = ApplicationHub.instance(a.getActivity()).googleAccount();
   }
 
   // owning fragment calls this

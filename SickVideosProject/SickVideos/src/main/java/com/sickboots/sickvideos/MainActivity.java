@@ -19,9 +19,7 @@ public class MainActivity extends Activity implements Observer {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    ApplicationHub.init(this);
-
-    ApplicationHub.instance().addObserver(this);
+    ApplicationHub.instance(this).addObserver(this);
   }
 
   public void update(Observable observable, Object data) {
@@ -30,14 +28,14 @@ public class MainActivity extends Activity implements Observer {
 
       if (input.equals(ApplicationHub.APPLICATION_READY_NOTIFICATION)) {
         // only need this on launch
-        ApplicationHub.instance().deleteObserver(MainActivity.this);
+        ApplicationHub.instance(this).deleteObserver(MainActivity.this);
 
         boolean switchToDrawer = true;
         boolean requiresAuth = true;
 
         if (requiresAuth) {
           // do we have an account name set?
-          String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
+          String accountName = ApplicationHub.preferences(this).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
 
           if (accountName == null) {
             // this will set the account name
@@ -56,9 +54,9 @@ public class MainActivity extends Activity implements Observer {
   }
 
   private void switchToDrawerActivity() {
-    String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
+    String accountName = ApplicationHub.preferences(this).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
 
-    ApplicationHub.instance().setGoogleAccount(new GoogleAccount(this.getApplicationContext(), accountName));
+    ApplicationHub.instance(this).setGoogleAccount(new GoogleAccount(this.getApplicationContext(), accountName));
 
     DrawerActivity.start(this);
 
@@ -70,7 +68,7 @@ public class MainActivity extends Activity implements Observer {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     if (mAccountPicker != null) {
-      boolean handled = mAccountPicker.handleActivityResult(requestCode, resultCode, data);
+      boolean handled = mAccountPicker.handleActivityResult(this, requestCode, resultCode, data);
 
       if (handled) {
         // now that an account name has been chosen, we continue

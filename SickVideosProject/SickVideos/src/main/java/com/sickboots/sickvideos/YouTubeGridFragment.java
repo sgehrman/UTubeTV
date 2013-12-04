@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -40,7 +41,7 @@ import java.util.List;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeGridFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, UIAccess.UIAccessListener {
+    implements PullToRefreshAttacher.OnRefreshListener {
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -193,7 +194,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private void updateForVariablesTheme() {
-    String themeStyle = ApplicationHub.preferences().getString(PreferenceCache.THEME_STYLE, "0");
+    String themeStyle = ApplicationHub.preferences(this.getActivity()).getString(PreferenceCache.THEME_STYLE, "0");
     if (Integer.parseInt(themeStyle) != 0) {
       mTheme_itemResId = R.layout.youtube_item_cards;
       mTheme_imageAlpha = 1.0f;
@@ -231,16 +232,6 @@ public class YouTubeGridFragment extends Fragment
     }
   }
 
-  @Override
-  public void onResults() {
-    loadFromList();
-
-    // get rid of the empty view.  Its not used after initial load, and this also
-    // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
-    mGridView.setEmptyView(null);
-    mEmptyView.setVisibility(View.INVISIBLE);
-  }
-
   private void loadFromList() {
     int savedScrollState = mGridView.getFirstVisiblePosition();
 
@@ -269,7 +260,27 @@ public class YouTubeGridFragment extends Fragment
     String query = argsBundle.getString(SEARCH_QUERY);
     YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
 
-    UIAccess access = new UIAccess(this);
+    UIAccess access = new UIAccess() {
+      @Override
+      public void onResults() {
+        loadFromList();
+
+        // get rid of the empty view.  Its not used after initial load, and this also
+        // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
+        mGridView.setEmptyView(null);
+        mEmptyView.setVisibility(View.INVISIBLE);
+      }
+
+      @Override
+      public Fragment fragment() {
+        return YouTubeGridFragment.this;
+      }
+
+      @Override
+      public Activity getActivity() {
+        return YouTubeGridFragment.this.getActivity();
+      }
+    };
 
     switch (listType) {
       case SUBSCRIPTIONS:

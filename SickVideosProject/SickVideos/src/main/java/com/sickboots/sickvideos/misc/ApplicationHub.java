@@ -41,25 +41,26 @@ public class ApplicationHub {
           sendNotification(THEME_CHANGED);
         }
       }
-
-      @Override
-      public void prefsLoaded() {
-        // called back on a thread
-        mApplicationReady = true;
-        sendNotification(APPLICATION_READY_NOTIFICATION);
-      }
     });
+
+    sendNotification(APPLICATION_READY_NOTIFICATION);
   }
 
-  public static ApplicationHub instance() {
+  public static ApplicationHub instance(Context context) {
+    // make sure this is never null
+    if (context == null) {
+      Util.log("### ApplicationHub instance: context null ###.");
+      return null;
+    }
+
     if (instance == null)
-      Util.log("Must call ApplicationHub.init() first!");
+      instance = new ApplicationHub(context.getApplicationContext());
 
     return instance;
   }
 
-  public static PreferenceCache preferences() {
-    return instance().prefsCache();
+  public static PreferenceCache preferences(Context context) {
+    return instance(context).prefsCache();
   }
 
   public GoogleAccount googleAccount() {
@@ -71,19 +72,7 @@ public class ApplicationHub {
   }
 
   public PreferenceCache prefsCache() {
-    if (!mApplicationReady) {
-      Util.log("Application not ready you freakin moron");
-      return null;
-    }
-
     return mPrefsCache;
-  }
-
-  public static void init(Context context) {
-    if (instance != null)
-      Util.log("Only call ApplicationHub.init once.");
-    else
-      instance = new ApplicationHub(context.getApplicationContext());
   }
 
   // -------------------------------------

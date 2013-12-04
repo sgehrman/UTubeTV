@@ -56,6 +56,6 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     Util.log("color: #" + Integer.toHexString(i));
 
     // save the preference
-    ApplicationHub.preferences().setString(PreferenceCache.ACTION_BAR_COLOR, Integer.toString(i));
+    ApplicationHub.preferences(getActivity()).setString(PreferenceCache.ACTION_BAR_COLOR, Integer.toString(i));
   }
 }
