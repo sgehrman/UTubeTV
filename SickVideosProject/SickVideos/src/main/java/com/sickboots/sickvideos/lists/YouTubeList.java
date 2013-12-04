@@ -13,7 +13,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate, YouTubeAPI.YouTubeHelperListener {
+public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   protected enum TaskType {USER_REFRESH, REFETCH, FIRSTLOAD}
 
   ;
@@ -23,7 +23,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   abstract public void refresh();
 
-  abstract protected void loadData(TaskType taskType, boolean askUser);
+  abstract protected void loadData(TaskType taskType);
 
   abstract public void updateItem(YouTubeData itemMap);
 
@@ -41,7 +41,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
     listSpec = s;
     access = a;
-    account = GoogleAccount.newYouTube(this);
+    account = GoogleAccount.newYouTube(a.accountName());
   }
 
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
@@ -51,7 +51,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
       switch (requestCode) {
         case REQUEST_AUTHORIZATION:
           if (resultCode != Activity.RESULT_OK) {
-            loadData(TaskType.FIRSTLOAD, true);
+            loadData(TaskType.FIRSTLOAD);
           }
 
           handled = true;
@@ -74,9 +74,9 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
     return listSpec.name();
   }
 
-  protected YouTubeAPI youTubeHelper(boolean askUser) {
+  protected YouTubeAPI youTubeHelper() {
     if (youTubeHelper == null) {
-      GoogleAccountCredential credential = account.credential(askUser);
+      GoogleAccountCredential credential = account.credential(access.getActivity());
 
       if (credential != null) {
         youTubeHelper = new YouTubeAPI(credential, this);
@@ -91,7 +91,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   @Override
   public void handleAuthIntent(Intent intent) {
-    Util.toast(getActivity(), "Need Authorization");
+    Util.toast(access.getActivity(), "Need Authorization");
 
     Fragment f = access.fragment();
 
@@ -101,19 +101,7 @@ public abstract class YouTubeList implements GoogleAccount.GoogleAccountDelegate
 
   @Override
   public void handleExceptionMessage(String message) {
-    Util.toast(getActivity(), message);
-  }
-
-  // =================================================================================
-
-  @Override   // in GoogleAccountDelegate
-  public void credentialIsReady() {
-    loadData(TaskType.FIRSTLOAD, false);
-  }
-
-  @Override
-  public Activity getActivity() {
-    return access.fragment().getActivity();
+    Util.toast(access.getActivity(), message);
   }
 
 }

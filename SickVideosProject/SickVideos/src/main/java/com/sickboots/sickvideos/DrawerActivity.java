@@ -27,6 +27,7 @@ import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.GoogleAccountPicker;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -163,11 +164,13 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
 
-    outState.putInt("section", mCurrentSection);
+    if (mCurrentSection != -1) {
+      outState.putInt("section", mCurrentSection);
 
-    if (mPlayer != null) {
-      if (mPlayer.visible()) {
-        outState.putBoolean("player_visible", true);
+      if (mPlayer != null) {
+        if (mPlayer.visible()) {
+          outState.putBoolean("player_visible", true);
+        }
       }
     }
   }

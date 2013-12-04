@@ -27,15 +27,15 @@ public class YouTubeListDB extends YouTubeList {
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        database = new VideoDatabase(getActivity(), s.databaseName());
+        database = new VideoDatabase(access.getActivity(), s.databaseName());
 
         break;
       case PLAYLISTS:
-        database = new PlaylistDatabase(getActivity(), s.databaseName());
+        database = new PlaylistDatabase(access.getActivity(), s.databaseName());
         break;
     }
 
-    loadData(TaskType.FIRSTLOAD, true);
+    loadData(TaskType.FIRSTLOAD);
   }
 
   @Override
@@ -45,12 +45,12 @@ public class YouTubeListDB extends YouTubeList {
 
   @Override
   public void refresh() {
-    loadData(TaskType.USER_REFRESH, false);
+    loadData(TaskType.USER_REFRESH);
   }
 
   @Override
-  protected void loadData(TaskType taskType, boolean askUser) {
-    YouTubeAPI helper = youTubeHelper(askUser);
+  protected void loadData(TaskType taskType) {
+    YouTubeAPI helper = youTubeHelper();
 
     if (helper != null) {
       if (runningTask == null) {
@@ -67,7 +67,7 @@ public class YouTubeListDB extends YouTubeList {
     database.updateItem(itemMap);
 
     // reload the data so the UI updates
-    loadData(TaskType.REFETCH, false);
+    loadData(TaskType.REFETCH);
   }
 
   private class YouTubeListDBTask extends AsyncTask<YouTubeAPI, Void, List<YouTubeData>> {

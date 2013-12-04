@@ -269,7 +269,9 @@ public class YouTubeGridFragment extends Fragment
     String query = argsBundle.getString(SEARCH_QUERY);
     YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
 
-    UIAccess access = new UIAccess(this);
+    String accountName = ApplicationHub.preferences().getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
+
+    UIAccess access = new UIAccess(this, accountName);
 
     switch (listType) {
       case SUBSCRIPTIONS:

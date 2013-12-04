@@ -15,7 +15,7 @@ public class YouTubeListLive extends YouTubeList {
   public YouTubeListLive(YouTubeListSpec s, UIAccess a) {
     super(s, a);
 
-    loadData(TaskType.FIRSTLOAD, true);
+    loadData(TaskType.FIRSTLOAD);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class YouTubeListLive extends YouTubeList {
       if (!listResults.isReloading()) {
 
         if (listResults.needsToLoadMoreItems()) {
-          loadData(TaskType.REFETCH, false);
+          loadData(TaskType.REFETCH);
         }
       }
     }
@@ -43,12 +43,12 @@ public class YouTubeListLive extends YouTubeList {
   public void refresh() {
     listResults = null;
 
-    loadData(TaskType.USER_REFRESH, false);
+    loadData(TaskType.USER_REFRESH);
   }
 
   @Override
-  protected void loadData(TaskType taskType, boolean askUser) {
-    YouTubeAPI helper = youTubeHelper(askUser);
+  protected void loadData(TaskType taskType) {
+    YouTubeAPI helper = youTubeHelper();
 
     if (helper != null) {
       boolean startTask = false;
