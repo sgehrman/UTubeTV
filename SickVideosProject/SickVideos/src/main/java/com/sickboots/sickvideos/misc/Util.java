@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.os.Vibrator;
@@ -44,12 +45,15 @@ public class Util {
     public void onResults(StringResultListener listener, String result);
   }
 
-  public static void toast(final Activity activity, final String message) {
+  public static void toast(final Context context, final String message) {
     // Toasts only work on the main thread
-    if (activity != null && message != null) {
-      activity.runOnUiThread(new Runnable() {
+    if (context != null && message != null) {
+      Handler handler = new Handler(Looper.getMainLooper());
+
+      handler.post(new Runnable() {
+        @Override
         public void run() {
-          Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+          Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
       });
     }
