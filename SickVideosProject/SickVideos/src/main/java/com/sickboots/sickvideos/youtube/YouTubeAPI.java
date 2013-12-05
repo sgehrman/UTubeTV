@@ -235,7 +235,7 @@ public class YouTubeAPI {
       }
     } else {
       if (listener != null) {
-        listener.handleExceptionMessage("Exception Occurred");
+        listener.handleExceptionMessage("Exception Occurred: " + e.toString());
       }
 
       e.printStackTrace();
