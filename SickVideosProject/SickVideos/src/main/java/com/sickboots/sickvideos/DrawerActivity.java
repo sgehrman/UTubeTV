@@ -334,7 +334,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       return;
 
     Util.log("selectSection");
-    
+
     Fragment fragment = null;
 
     switch (position) {
