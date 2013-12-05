@@ -93,12 +93,19 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
   @Override
   public void handleAuthIntent(Intent intent) {
-    Util.toast(access.getActivity(), "Need Authorization");
+    Activity activity = access.getActivity();
 
-    Fragment f = access.fragment();
+    if (activity != null) {
+      Util.toast(access.getActivity(), "Need Authorization");
 
-    // start intent asking the user to authorize the app for google api
-    f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
+      Fragment f = access.fragment();
+
+      Util.log("showing auth intent...");
+
+      // start intent asking the user to authorize the app for google api
+      f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
+    } else
+      Util.log("Activity is null in handleAuthIntent");
   }
 
   @Override

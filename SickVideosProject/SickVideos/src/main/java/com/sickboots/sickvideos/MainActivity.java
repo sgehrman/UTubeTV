@@ -54,10 +54,6 @@ public class MainActivity extends Activity implements Observer {
   }
 
   private void switchToDrawerActivity() {
-    String accountName = ApplicationHub.preferences(this).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
-
-    ApplicationHub.instance(this).setGoogleAccount(new GoogleAccount(this.getApplicationContext(), accountName));
-
     DrawerActivity.start(this);
 
     // we are done, finish us

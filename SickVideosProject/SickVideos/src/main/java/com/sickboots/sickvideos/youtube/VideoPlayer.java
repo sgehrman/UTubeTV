@@ -43,7 +43,7 @@ public class VideoPlayer {
     mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
     if (mVideoFragment == null) {
       // had to add this manually rather than setting the class in xml to avoid duplicate id errors
-      mVideoFragment = new VideoPlayerFragment();
+      mVideoFragment = VideoPlayerFragment.newInstance();
       FragmentManager fm = activity.getFragmentManager();
       FragmentTransaction ft = fm.beginTransaction();
       ft.replace(fragmentContainerResID, mVideoFragment);

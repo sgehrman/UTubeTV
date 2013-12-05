@@ -128,6 +128,9 @@ public class YouTubeGridFragment extends Fragment
 
     updateForVariablesTheme();
 
+    // use same instance if activity is recreated under our feet
+    setRetainInstance(true);
+
     listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
 
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);

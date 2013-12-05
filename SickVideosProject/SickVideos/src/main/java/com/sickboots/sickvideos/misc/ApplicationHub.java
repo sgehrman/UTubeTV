@@ -21,20 +21,21 @@ public class ApplicationHub {
   private Handler mainThreadHandler;
   private NotificationCenter notificationCenter;
   private PreferenceCache mPrefsCache;
-  private boolean mApplicationReady = false;
   private GoogleAccount mGoogleAccount;
+  private Context mApplicationContext;
 
   // public notifications
   public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
   public static final String THEME_CHANGED = "theme_changed";
 
   private ApplicationHub(Context context) {
+    mApplicationContext = context.getApplicationContext();
     notificationCenter = new NotificationCenter();
     mainThreadHandler = new Handler(Looper.getMainLooper());
 
     data = new HashMap();
 
-    mPrefsCache = new PreferenceCache(context, new PreferenceCache.PreferenceCacheListener() {
+    mPrefsCache = new PreferenceCache(mApplicationContext, new PreferenceCache.PreferenceCacheListener() {
       @Override
       public void prefChanged(String prefName) {
         if (prefName.equals(PreferenceCache.THEME_STYLE)) {
@@ -54,7 +55,7 @@ public class ApplicationHub {
     }
 
     if (instance == null)
-      instance = new ApplicationHub(context.getApplicationContext());
+      instance = new ApplicationHub(context);
 
     return instance;
   }
@@ -64,6 +65,12 @@ public class ApplicationHub {
   }
 
   public GoogleAccount googleAccount() {
+    if (mGoogleAccount == null) {
+      String accountName = preferences(mApplicationContext).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
+
+      mGoogleAccount = new GoogleAccount(mApplicationContext, accountName);
+    }
+
     return mGoogleAccount;
   }
 

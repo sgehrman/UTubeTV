@@ -36,7 +36,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   abstract protected String[] getItemsWhereArgs(int flags);
 
   public BaseDatabase(Context context, String databaseName) {
-    super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(true), DATABASE_VERSION);
+    super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(false), DATABASE_VERSION);
 
     mItemTable = "item_table";
   }

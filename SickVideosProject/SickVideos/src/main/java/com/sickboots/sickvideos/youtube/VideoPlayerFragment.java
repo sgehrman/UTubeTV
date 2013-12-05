@@ -133,7 +133,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
-        Util.log("fuck this shit");
+        Util.log("setOnFullscreenListener: " + (isFullscreen ? "yes":"no"));
 //    this.isFullscreen = isFullscreen;
 //
 //    layout();
