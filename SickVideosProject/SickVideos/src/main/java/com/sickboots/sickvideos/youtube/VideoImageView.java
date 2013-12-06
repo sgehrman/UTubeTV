@@ -2,21 +2,27 @@ package com.sickboots.sickvideos.youtube;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.google.android.gms.R;
+import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Util;
 
 public class VideoImageView extends ImageView {
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
+  private boolean mDrawPlayButton = false;
 
   // gradients shared between all views to cut down on memory allocations etc.
   private static GradientDrawable sTopGradient;
   private static GradientDrawable sBottomGradient;
   private static int sGradientHeight;
+  private static BitmapDrawable playBitmap = null;
 
   public VideoImageView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -39,6 +45,20 @@ public class VideoImageView extends ImageView {
       canvas.translate(0, y);
       sBottomGradient.draw(canvas);
       canvas.translate(0, -y);
+    }
+
+    if (mDrawPlayButton) {
+      int playButtonSize = 140;
+      // draw play button
+      if (playBitmap == null) {
+        playBitmap = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.VIDEO_PLAY , Color.WHITE, playButtonSize);
+        playBitmap.setAlpha(220);  // 0 - 255
+      }
+
+      int x = (getWidth() - playButtonSize) / 2;
+      int y = (getHeight() - playButtonSize) / 2;
+      playBitmap.setBounds(x, y, x+playButtonSize, y+playButtonSize);
+      playBitmap.draw(canvas);
     }
   }
 

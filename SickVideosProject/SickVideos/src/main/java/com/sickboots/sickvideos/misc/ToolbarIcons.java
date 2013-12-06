@@ -14,7 +14,7 @@ import com.sickboots.sickvideos.R;
 
 public class ToolbarIcons {
 
-  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE, OVERFLOW}
+  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE, OVERFLOW, VIDEO_PLAY}
 
   ;
 
@@ -32,10 +32,13 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.STEP_FORWARD;
         break;
       case CLOSE:
-        icon = FontAwesomeIcon.REMOVE_SIGN;
+        icon = FontAwesomeIcon.TIMES_CIRCLE;
         break;
       case FULLSCREEN:
-        icon = FontAwesomeIcon.FULLSCREEN;
+        icon = FontAwesomeIcon.ARROWS_ALT;
+        break;
+      case VIDEO_PLAY:
+        icon = FontAwesomeIcon.PLAY_CIRCLE;
         break;
       case OVERFLOW:
         // icon = null, makes icon from drawable further down
