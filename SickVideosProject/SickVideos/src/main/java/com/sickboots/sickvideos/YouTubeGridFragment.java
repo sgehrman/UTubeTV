@@ -2,10 +2,13 @@ package com.sickboots.sickvideos;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +67,10 @@ public class YouTubeGridFragment extends Fragment
   private View mEmptyView;
   private GridView mGridView;
 
+  public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
+  public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
+  private UploadBroadcastReceiver broadcastReceiver;
+
   // theme parameters
   private float mTheme_imageAlpha;
   private int mTheme_itemResId;
@@ -108,6 +115,19 @@ public class YouTubeGridFragment extends Fragment
     fragment.setArguments(args);
 
     return fragment;
+  }
+
+  private class UploadBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if (intent.getAction().equals(DATA_READY_INTENT)) {
+        Util.log("data ready received");
+        String fuckthis = intent.getStringExtra(DATA_READY_INTENT_PARAM);
+
+        Util.log(fuckthis);
+
+      }
+    }
   }
 
   public CharSequence actionBarTitle() {
@@ -162,6 +182,18 @@ public class YouTubeGridFragment extends Fragment
   @Override
   public void onResume() {
     super.onResume();
+
+
+
+
+    if (broadcastReceiver == null) {
+      broadcastReceiver = new UploadBroadcastReceiver();
+    }
+    IntentFilter intentFilter = new IntentFilter(DATA_READY_INTENT);
+    LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
+
+
+
 
     if (mList == null) {
       mList = createList(getArguments());
@@ -274,16 +306,6 @@ public class YouTubeGridFragment extends Fragment
         // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
         mGridView.setEmptyView(null);
         mEmptyView.setVisibility(View.INVISIBLE);
-      }
-
-      @Override
-      public Fragment fragment() {
-        return YouTubeGridFragment.this;
-      }
-
-      @Override
-      public Activity getActivity() {
-        return YouTubeGridFragment.this.getActivity();
       }
 
       @Override

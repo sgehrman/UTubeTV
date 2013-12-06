@@ -8,8 +8,6 @@ import java.lang.ref.WeakReference;
 
 public interface UIAccess {
   public void onResults();
-  public Fragment fragment();
-  public Activity getActivity();
   public Context getContext();
 }
 
