@@ -9,7 +9,6 @@ import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
-import com.sickboots.sickvideos.lists.YouTubeListSpec;
 import com.sickboots.sickvideos.misc.Util;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class YouTubeAPIService extends IntentService {
     try {
       UIAccess access = createUIAccess();
 
-      YouTubeListDB result = new YouTubeListDB(YouTubeListSpec.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
+      YouTubeListDB result = new YouTubeListDB(YouTubeServiceRequest.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
       List items = result.getItems();
 
     } catch (Exception e) {

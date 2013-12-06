@@ -10,6 +10,7 @@ import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +20,7 @@ public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
   BaseDatabase database;
 
-  public YouTubeListDB(YouTubeListSpec s, UIAccess a) {
+  public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
     switch (s.type) {

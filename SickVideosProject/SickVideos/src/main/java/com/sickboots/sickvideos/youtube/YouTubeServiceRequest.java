@@ -1,17 +1,15 @@
-package com.sickboots.sickvideos.lists;
-
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
+package com.sickboots.sickvideos.youtube;
 
 import java.util.HashMap;
 
-public class YouTubeListSpec {
-  public enum ListType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
+public class YouTubeServiceRequest {
+  public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
 
   private HashMap data;
-  public ListType type;
+  public RequestType type;
 
-  public static YouTubeListSpec relatedSpec(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
-    YouTubeListSpec result = emptySpec(ListType.RELATED);
+  public static YouTubeServiceRequest relatedSpec(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
+    YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
 
     result.data.put("type", relatedPlayListType);
     result.data.put("channel", channelID);
@@ -19,42 +17,42 @@ public class YouTubeListSpec {
     return result;
   }
 
-  public static YouTubeListSpec videosSpec(String playlistID) {
-    YouTubeListSpec result = emptySpec(ListType.VIDEOS);
+  public static YouTubeServiceRequest videosSpec(String playlistID) {
+    YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("playlist", playlistID);
 
     return result;
   }
 
-  public static YouTubeListSpec searchSpec(String query) {
-    YouTubeListSpec result = emptySpec(ListType.SEARCH);
+  public static YouTubeServiceRequest searchSpec(String query) {
+    YouTubeServiceRequest result = emptyRequest(RequestType.SEARCH);
 
     result.data.put("query", query);
 
     return result;
   }
 
-  public static YouTubeListSpec subscriptionsSpec() {
-    YouTubeListSpec result = emptySpec(ListType.SUBSCRIPTIONS);
+  public static YouTubeServiceRequest subscriptionsSpec() {
+    YouTubeServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
     return result;
   }
 
-  public static YouTubeListSpec categoriesSpec() {
-    YouTubeListSpec result = emptySpec(ListType.CATEGORIES);
+  public static YouTubeServiceRequest categoriesSpec() {
+    YouTubeServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
     return result;
   }
 
-  public static YouTubeListSpec likedSpec() {
-    YouTubeListSpec result = emptySpec(ListType.LIKED);
+  public static YouTubeServiceRequest likedSpec() {
+    YouTubeServiceRequest result = emptyRequest(RequestType.LIKED);
 
     return result;
   }
 
-  public static YouTubeListSpec playlistsSpec(String channelID) {
-    YouTubeListSpec result = emptySpec(ListType.PLAYLISTS);
+  public static YouTubeServiceRequest playlistsSpec(String channelID) {
+    YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
     result.data.put("channel", channelID);
 
@@ -144,8 +142,8 @@ public class YouTubeListSpec {
   // ===================================================================
   // private
 
-  private static YouTubeListSpec emptySpec(ListType type) {
-    YouTubeListSpec result = new YouTubeListSpec();
+  private static YouTubeServiceRequest emptyRequest(RequestType type) {
+    YouTubeServiceRequest result = new YouTubeServiceRequest();
 
     result.type = type;
     result.data = new HashMap();

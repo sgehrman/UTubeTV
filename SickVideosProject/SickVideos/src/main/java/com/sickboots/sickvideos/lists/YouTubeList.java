@@ -10,6 +10,7 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,14 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   abstract public void updateItem(YouTubeData itemMap);
 
   protected UIAccess access;
-  protected YouTubeListSpec listSpec;
+  protected YouTubeServiceRequest listSpec;
   protected static final int REQUEST_AUTHORIZATION = 444;
   protected List<YouTubeData> items = new ArrayList<YouTubeData>();
 
   // use accessor in subclasses
   private YouTubeAPI youTubeHelper;
 
-  public YouTubeList(YouTubeListSpec s, UIAccess a) {
+  public YouTubeList(YouTubeServiceRequest s, UIAccess a) {
     super();
 
     listSpec = s;
@@ -66,7 +67,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
     return items;
   }
 
-  public YouTubeListSpec.ListType type() {
+  public YouTubeServiceRequest.RequestType type() {
     return listSpec.type;
   }
 

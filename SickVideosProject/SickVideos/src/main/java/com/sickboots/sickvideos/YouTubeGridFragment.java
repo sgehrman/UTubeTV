@@ -21,10 +21,10 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.lists.UIAccess;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.lists.YouTubeListLive;
-import com.sickboots.sickvideos.lists.YouTubeListSpec;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
@@ -60,7 +60,7 @@ public class YouTubeGridFragment extends Fragment
   private static final String CHANNEL_ID = "channel";
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
-  private YouTubeListSpec.ListType listType;
+  private YouTubeServiceRequest.RequestType requestType;
   private YouTubeListAdapter mAdapter;
   private YouTubeList mList;
   private View mEmptyView;
@@ -77,35 +77,35 @@ public class YouTubeGridFragment extends Fragment
   private boolean mTheme_drawImageShadows;
 
   public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
-    return newInstance(YouTubeListSpec.ListType.RELATED, null, null, relatedType, null);
+    return newInstance(YouTubeServiceRequest.RequestType.RELATED, null, null, relatedType, null);
   }
 
   public static YouTubeGridFragment videosFragment(String playlistID) {
-    return newInstance(YouTubeListSpec.ListType.VIDEOS, null, playlistID, null, null);
+    return newInstance(YouTubeServiceRequest.RequestType.VIDEOS, null, playlistID, null, null);
   }
 
   public static YouTubeGridFragment playlistsFragment(String channelID) {
-    return newInstance(YouTubeListSpec.ListType.PLAYLISTS, channelID, null, null, null);
+    return newInstance(YouTubeServiceRequest.RequestType.PLAYLISTS, channelID, null, null, null);
   }
 
   public static YouTubeGridFragment likedFragment() {
-    return newInstance(YouTubeListSpec.ListType.LIKED, null, null, null, null);
+    return newInstance(YouTubeServiceRequest.RequestType.LIKED, null, null, null, null);
   }
 
   public static YouTubeGridFragment subscriptionsFragment() {
-    return newInstance(YouTubeListSpec.ListType.SUBSCRIPTIONS, null, null, null, null);
+    return newInstance(YouTubeServiceRequest.RequestType.SUBSCRIPTIONS, null, null, null, null);
   }
 
   public static YouTubeGridFragment searchFragment(String searchQuery) {
-    return newInstance(YouTubeListSpec.ListType.SEARCH, null, null, null, searchQuery);
+    return newInstance(YouTubeServiceRequest.RequestType.SEARCH, null, null, null, searchQuery);
   }
 
-  private static YouTubeGridFragment newInstance(YouTubeListSpec.ListType listType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
+  private static YouTubeGridFragment newInstance(YouTubeServiceRequest.RequestType requestType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
 
     Bundle args = new Bundle();
 
-    args.putSerializable(LIST_TYPE, listType);
+    args.putSerializable(LIST_TYPE, requestType);
     args.putSerializable(RELATED_TYPE, relatedType);
     args.putString(CHANNEL_ID, channelID);
     args.putString(PLAYLIST_ID, playlistID);
@@ -151,7 +151,7 @@ public class YouTubeGridFragment extends Fragment
     // use same instance if activity is recreated under our feet
     setRetainInstance(true);
 
-    listType = (YouTubeListSpec.ListType) getArguments().getSerializable(LIST_TYPE);
+    requestType = (YouTubeServiceRequest.RequestType) getArguments().getSerializable(LIST_TYPE);
 
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
     mGridView = (GridView) rootView.findViewById(R.id.gridview);
@@ -322,27 +322,27 @@ public class YouTubeGridFragment extends Fragment
 
     UIAccess access = createUIAccess();
 
-    switch (listType) {
+    switch (requestType) {
       case SUBSCRIPTIONS:
-        result = new YouTubeListDB(YouTubeListSpec.subscriptionsSpec(), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.subscriptionsSpec(), access);
         break;
       case PLAYLISTS:
-        result = new YouTubeListDB(YouTubeListSpec.playlistsSpec(channelID), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.playlistsSpec(channelID), access);
         break;
       case CATEGORIES:
-        result = new YouTubeListLive(YouTubeListSpec.categoriesSpec(), access);
+        result = new YouTubeListLive(YouTubeServiceRequest.categoriesSpec(), access);
         break;
       case LIKED:
-        result = new YouTubeListLive(YouTubeListSpec.likedSpec(), access);
+        result = new YouTubeListLive(YouTubeServiceRequest.likedSpec(), access);
         break;
       case RELATED:
-        result = new YouTubeListDB(YouTubeListSpec.relatedSpec(relatedType, channelID), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.relatedSpec(relatedType, channelID), access);
         break;
       case SEARCH:
-        result = new YouTubeListLive(YouTubeListSpec.searchSpec(query), access);
+        result = new YouTubeListLive(YouTubeServiceRequest.searchSpec(query), access);
         break;
       case VIDEOS:
-        result = new YouTubeListDB(YouTubeListSpec.videosSpec(playlistID), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.videosSpec(playlistID), access);
         break;
     }
 

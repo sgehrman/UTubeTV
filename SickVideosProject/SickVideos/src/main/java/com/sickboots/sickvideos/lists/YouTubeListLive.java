@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class YouTubeListLive extends YouTubeList {
   private YouTubeAPI.BaseListResults listResults;
 
-  public YouTubeListLive(YouTubeListSpec s, UIAccess a) {
+  public YouTubeListLive(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
     loadData(TaskType.FIRSTLOAD);
