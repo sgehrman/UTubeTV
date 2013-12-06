@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.atermenji.android.iconicdroid.icon;
+package com.sickboots.iconicdroid.icon;
 
-import com.atermenji.android.iconicdroid.util.TypefaceManager.IconicTypeface;
+import com.sickboots.iconicdroid.util.TypefaceManager;
 
 /**
  * A wrapper for Font Awesome icon font
@@ -402,8 +402,8 @@ public enum FontAwesomeIcon implements Icon {
     }
 
     @Override
-    public IconicTypeface getIconicTypeface() {
-        return IconicTypeface.FONT_AWESOME;
+    public TypefaceManager.IconicTypeface getIconicTypeface() {
+        return TypefaceManager.IconicTypeface.FONT_AWESOME;
     }
 
     @Override
