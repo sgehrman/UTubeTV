@@ -33,7 +33,7 @@ public class VideoMenuView extends ImageView {
     super(context, attrs);
 
     if (sharedDrawable == null) {
-      sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.OVERFLOW, 0xffffffff, (int) Util.dpToPx(30.0f, getContext()));
+      sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.OVERFLOW, 0xffdddddd, (int) Util.dpToPx(30.0f, getContext()));
       sharedDrawable.setAlpha(200);  // 0-255
     }
 
