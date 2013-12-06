@@ -26,13 +26,10 @@ public class YouTubeAPIService extends IntentService {
   @Override
   protected void onHandleIntent(Intent intent) {
     try {
-      Util.toast(this, intent.getStringExtra("KEY1"));
-
       UIAccess access = createUIAccess();
 
       YouTubeListDB result = new YouTubeListDB(YouTubeListSpec.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
       List items = result.getItems();
-
 
     } catch (Exception e) {
     }
