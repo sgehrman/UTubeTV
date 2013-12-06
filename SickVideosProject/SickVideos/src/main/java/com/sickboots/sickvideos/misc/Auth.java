@@ -1,12 +1,12 @@
 package com.sickboots.sickvideos.misc;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.Context;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.services.youtube.YouTubeScopes;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Auth {

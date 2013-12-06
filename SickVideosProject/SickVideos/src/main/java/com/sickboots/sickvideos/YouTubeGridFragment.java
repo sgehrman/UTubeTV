@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -184,15 +183,11 @@ public class YouTubeGridFragment extends Fragment
     super.onResume();
 
 
-
-
     if (broadcastReceiver == null) {
       broadcastReceiver = new UploadBroadcastReceiver();
     }
     IntentFilter intentFilter = new IntentFilter(DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
-
-
 
 
     if (mList == null) {

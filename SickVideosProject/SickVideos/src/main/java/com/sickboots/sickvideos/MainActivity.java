@@ -15,9 +15,6 @@ import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPIService;
 
-import java.util.Observable;
-import java.util.Observer;
-
 public class MainActivity extends Activity {
   public static final String REQUEST_AUTHORIZATION_INTENT = "com.sickboots.sickvideos.RequestAuth";
   public static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.sickboots.sickvideos.RequestAuth.param";
@@ -35,7 +32,7 @@ public class MainActivity extends Activity {
     credential = Auth.getCredentials(this);
 
 
-    Intent i= new Intent(this, YouTubeAPIService.class);
+    Intent i = new Intent(this, YouTubeAPIService.class);
     i.putExtra("KEY1", "Value to be used by the service");
     startService(i);
 
@@ -68,7 +65,7 @@ public class MainActivity extends Activity {
     this.startActivity(intent);
   }
 
-  private void  chooseAccount() {
+  private void chooseAccount() {
     startActivityForResult(credential.newChooseAccountIntent(), INTENT_REQUEST_ACCOUNT_PICKER);
   }
 
@@ -95,7 +92,7 @@ public class MainActivity extends Activity {
 
           // now that an account name has been chosen, we continue
           switchToDrawerActivity();
-      }
+        }
     }
     super.onActivityResult(requestCode, resultCode, data);
   }
@@ -114,7 +111,7 @@ public class MainActivity extends Activity {
     @Override
     public void onReceive(Context context, Intent intent) {
       if (intent.getAction().equals(REQUEST_AUTHORIZATION_INTENT)) {
-       Util.log("Request auth received - executing the intent");
+        Util.log("Request auth received - executing the intent");
         Intent toRun = intent.getParcelableExtra(REQUEST_AUTHORIZATION_INTENT_PARAM);
         startActivityForResult(toRun, INTENT_REQUEST_AUTHORIZATION);
       }

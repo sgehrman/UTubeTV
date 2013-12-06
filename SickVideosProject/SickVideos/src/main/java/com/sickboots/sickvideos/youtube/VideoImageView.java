@@ -9,7 +9,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.google.android.gms.R;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Util;
 
@@ -51,13 +50,13 @@ public class VideoImageView extends ImageView {
       int playButtonSize = 140;
       // draw play button
       if (playBitmap == null) {
-        playBitmap = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.VIDEO_PLAY , Color.WHITE, playButtonSize);
+        playBitmap = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
         playBitmap.setAlpha(220);  // 0 - 255
       }
 
       int x = (getWidth() - playButtonSize) / 2;
       int y = (getHeight() - playButtonSize) / 2;
-      playBitmap.setBounds(x, y, x+playButtonSize, y+playButtonSize);
+      playBitmap.setBounds(x, y, x + playButtonSize, y + playButtonSize);
       playBitmap.draw(canvas);
     }
   }

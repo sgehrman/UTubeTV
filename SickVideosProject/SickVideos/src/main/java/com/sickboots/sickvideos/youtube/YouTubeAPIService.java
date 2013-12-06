@@ -1,12 +1,9 @@
 package com.sickboots.sickvideos.youtube;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
 
 import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.YouTubeGridFragment;
@@ -28,20 +25,17 @@ public class YouTubeAPIService extends IntentService {
 
   @Override
   protected void onHandleIntent(Intent intent) {
-        try {
+    try {
+      Util.toast(this, intent.getStringExtra("KEY1"));
 
-          Util.toast(this, intent.getStringExtra("KEY1"));
+      UIAccess access = createUIAccess();
 
-          UIAccess access = createUIAccess();
-
-          YouTubeListDB result = new YouTubeListDB(YouTubeListSpec.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
-          List items = result.getItems();
-
-
-        } catch (Exception e) {
-        }
+      YouTubeListDB result = new YouTubeListDB(YouTubeListSpec.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
+      List items = result.getItems();
 
 
+    } catch (Exception e) {
+    }
   }
 
   private UIAccess createUIAccess() {
@@ -50,13 +44,13 @@ public class YouTubeAPIService extends IntentService {
       @Override
       public void onResults() {
 
-          Intent intent = new Intent(YouTubeGridFragment.DATA_READY_INTENT);
-          intent.putExtra(YouTubeGridFragment.DATA_READY_INTENT_PARAM, "FUCK");
+        Intent intent = new Intent(YouTubeGridFragment.DATA_READY_INTENT);
+        intent.putExtra(YouTubeGridFragment.DATA_READY_INTENT_PARAM, "FUCK");
 
-          LocalBroadcastManager manager = LocalBroadcastManager.getInstance(appContext);
-          manager.sendBroadcast(intent);
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(appContext);
+        manager.sendBroadcast(intent);
 
-          Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+        Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
 
       }
 
@@ -68,8 +62,6 @@ public class YouTubeAPIService extends IntentService {
 
     return access;
   }
-
-
 
 
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 

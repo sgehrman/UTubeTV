@@ -54,8 +54,9 @@
             android:label="@string/title_activity_playlist_chooser">
         </activity>
 
-        <service android:name=".youtube.YouTubeAPIService"
-                 android:exported="false"/>
+        <service
+            android:name=".youtube.YouTubeAPIService"
+            android:exported="false"/>
 
     </application>
 
