@@ -2,16 +2,21 @@ package com.sickboots.sickvideos;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
+import com.sickboots.sickvideos.misc.Util;
 
 public class VideoMenuView extends ImageView {
+  private static Drawable sharedDrawable;
 
   public interface VideoMenuViewListener {
     public void showVideoInfo(YouTubeData videoMap);
@@ -27,7 +32,12 @@ public class VideoMenuView extends ImageView {
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
-    setImageDrawable(ToolbarIcons.icon(getContext(), ToolbarIcons.IconID.OVERFLOW, Color.WHITE));
+    if (sharedDrawable == null) {
+      sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.OVERFLOW, 0xffffffff, (int) Util.dpToPx(30.0f, getContext()));
+      sharedDrawable.setAlpha(200);  // 0-255
+    }
+
+    setImageDrawable(sharedDrawable);
 
     final PopupMenu popupMenu = new PopupMenu(getContext(), this);
     popupMenu.inflate(R.menu.video_menu);

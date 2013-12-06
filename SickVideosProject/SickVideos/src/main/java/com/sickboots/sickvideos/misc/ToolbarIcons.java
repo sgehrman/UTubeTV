@@ -41,7 +41,7 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.PLAY_CIRCLE;
         break;
       case OVERFLOW:
-        // icon = null, makes icon from drawable further down
+        icon = FontAwesomeIcon.ELLIPSIS_V;
         break;
       default:
         break;
@@ -65,26 +65,6 @@ public class ToolbarIcons {
 
       normal = fnormal;
       pressed = fpressed;
-    } else {
-      Drawable drawable = null;
-
-      switch (iconID) {
-        case SOUND:
-        case STEP_BACK:
-        case STEP_FORWARD:
-        case CLOSE:
-        case FULLSCREEN:
-          Util.log("WTF, toolbar iconID bad?");
-          break;
-        case OVERFLOW:
-          drawable = context.getResources().getDrawable(R.drawable.ic_action_overflow);
-          normal = drawable;
-          pressed = drawable;
-
-          break;
-        default:
-          break;
-      }
     }
 
     StateListDrawable states = new StateListDrawable();

@@ -28,10 +28,11 @@
 
     <com.sickboots.sickvideos.VideoMenuView
         android:id="@+id/menu_button"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:scaleType="centerInside"
+        android:paddingBottom="8dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         />
