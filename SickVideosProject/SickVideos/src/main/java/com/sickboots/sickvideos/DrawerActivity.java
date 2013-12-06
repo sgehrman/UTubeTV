@@ -57,8 +57,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     Util.log("onCreate");
 
-
-
     // must set the theme before we do anything else
     String themeStyle = ApplicationHub.preferences(this).getString(PreferenceCache.THEME_STYLE, "0");
     int flag = Integer.parseInt(themeStyle);
@@ -83,13 +81,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
-
-    // set custom color
-//    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
-//    if (customColor != null) {
-//      int color = Integer.parseInt(customColor);
-//      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
-//    }
 
     // ActionBarDrawerToggle ties together the the proper interactions
     // between the sliding drawer and the action bar app icon

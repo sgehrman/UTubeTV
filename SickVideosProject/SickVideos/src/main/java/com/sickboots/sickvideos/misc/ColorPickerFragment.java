@@ -15,6 +15,13 @@ import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
 import com.sickboots.sickvideos.R;
 
+// set custom color
+//    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
+//    if (customColor != null) {
+//      int color = Integer.parseInt(customColor);
+//      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
+//    }
+
 public class ColorPickerFragment extends Fragment implements ColorPicker.OnColorChangedListener {
 
   @Override
