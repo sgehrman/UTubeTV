@@ -44,14 +44,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
-  // MainActivity creates us using this
-  public static void start(Activity activity) {
-    // start drawer activity
-    Intent intent = new Intent();
-    intent.setClass(activity, DrawerActivity.class);
-    activity.startActivity(intent);
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 

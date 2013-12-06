@@ -92,24 +92,21 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   // =================================================================================
   // YouTubeHelperListener
 
-  private static void requestAuth(Context context, Intent authIntent) {
-    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
-    Intent runReqAuthIntent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
-    runReqAuthIntent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
-    manager.sendBroadcast(runReqAuthIntent);
-    Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
-  }
-
-
   @Override
-  public void handleAuthIntent(Intent intent) {
+  public void handleAuthIntent(Intent authIntent) {
     Util.toast(access.getContext(), "Need Authorization");
 
     Fragment f = access.fragment();
     if (f != null) {
-      requestAuth(access.getContext(), intent);
-    } else
-      Util.log("Activity is null in handleAuthIntent");
+      Intent intent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
+      intent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+      intent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+
+      LocalBroadcastManager manager = LocalBroadcastManager.getInstance(access.getContext());
+      manager.sendBroadcast(intent);
+
+      Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+    }
   }
 
   @Override

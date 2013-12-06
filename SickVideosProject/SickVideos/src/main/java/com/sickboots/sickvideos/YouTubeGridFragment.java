@@ -137,16 +137,11 @@ public class YouTubeGridFragment extends Fragment
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
     mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
-    mList = createList(getArguments());
-
     mEmptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
     rootView.addView(mEmptyView);
 
     mGridView.setEmptyView(mEmptyView);
 
-    mAdapter = new YouTubeListAdapter();
-
-    mGridView.setAdapter(mAdapter);
     mGridView.setOnItemClickListener(mAdapter);
 
     // .015 is the default
@@ -156,19 +151,31 @@ public class YouTubeGridFragment extends Fragment
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     ptrl.addRefreshableView(mGridView, this);
 
-    // load data if we have it already
-    loadFromList();
-
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
     if (dimmerView != null)
       new ScrollTriggeredAnimator(mGridView, dimmerView);
 
-    // triggers an update for the title, lame hack
-    HostActivitySupport provider = (HostActivitySupport) getActivity();
-    provider.fragmentWasInstalled();
-
     return rootView;
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    if (mList == null) {
+      mList = createList(getArguments());
+      mAdapter = new YouTubeListAdapter();
+
+      mGridView.setAdapter(mAdapter);
+      // load data if we have it already
+
+      loadFromList();
+
+      // triggers an update for the title, lame hack
+      HostActivitySupport provider = (HostActivitySupport) getActivity();
+      provider.fragmentWasInstalled();
+    }
   }
 
   public void handleClick(YouTubeData itemMap) {

@@ -177,7 +177,8 @@ public class YouTubeListDB extends YouTubeList {
 
           playlistID = helper.relatedPlaylistID(type, channelID);
 
-          listResults = helper.videoListResults(playlistID, true);
+          if (playlistID != null) // probably needed authorization and failed
+            listResults = helper.videoListResults(playlistID, true);
           break;
         case VIDEOS:
           playlistID = (String) listSpec.getData("playlist");

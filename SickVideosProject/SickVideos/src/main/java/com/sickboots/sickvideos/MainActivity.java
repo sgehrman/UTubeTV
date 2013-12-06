@@ -18,8 +18,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class MainActivity extends Activity {
-  public static final String REQUEST_AUTHORIZATION_INTENT = "com.google.example.yt.RequestAuth";
-  public static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.google.example.yt.RequestAuth.param";
+  public static final String REQUEST_AUTHORIZATION_INTENT = "com.sickboots.sickvideos.RequestAuth";
+  public static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.sickboots.sickvideos.RequestAuth.param";
   private UploadBroadcastReceiver broadcastReceiver;
   private static final int INTENT_REQUEST_AUTHORIZATION = 3;
   private static final int INTENT_REQUEST_ACCOUNT_PICKER = 2;
@@ -33,26 +33,38 @@ public class MainActivity extends Activity {
 
     credential = Auth.getCredentials(this);
 
-    boolean switchToDrawer = true;
-    boolean requiresAuth = true;
+    if (savedInstanceState == null) {
+      boolean switchToDrawer = true;
+      boolean requiresAuth = true;
 
-    if (requiresAuth) {
-      // do we have an account name set?
-      String accountName = ApplicationHub.instance(this).getAccountName();
+      if (requiresAuth) {
+        // do we have an account name set?
+        String accountName = ApplicationHub.instance(this).getAccountName();
 
-      if (accountName == null) {
-        chooseAccount();
-        switchToDrawer = false;
-      } else
-        credential.setSelectedAccountName(accountName);
+        if (accountName == null) {
+          chooseAccount();
+          switchToDrawer = false;
+        } else
+          credential.setSelectedAccountName(accountName);
+      }
+
+      if (switchToDrawer)
+        switchToDrawerActivity();
     }
+  }
 
-    if (switchToDrawer)
-      switchToDrawerActivity();
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    outState.putInt("ranFirstTime", 1);
+
+    super.onSaveInstanceState(outState);
   }
 
   private void switchToDrawerActivity() {
-    DrawerActivity.start(this);
+    // start drawer activity
+    Intent intent = new Intent();
+    intent.setClass(this, DrawerActivity.class);
+    this.startActivity(intent);
   }
 
   private void  chooseAccount() {
