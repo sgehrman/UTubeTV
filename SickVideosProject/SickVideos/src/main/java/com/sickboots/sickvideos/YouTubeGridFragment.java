@@ -2,6 +2,7 @@ package com.sickboots.sickvideos;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -255,14 +256,8 @@ public class YouTubeGridFragment extends Fragment
       ptrl.setRefreshComplete();
   }
 
-  private YouTubeList createList(Bundle argsBundle) {
-    YouTubeList result = null;
-
-    String channelID = argsBundle.getString(CHANNEL_ID);
-    String playlistID = argsBundle.getString(PLAYLIST_ID);
-    String query = argsBundle.getString(SEARCH_QUERY);
-    YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
-
+  private UIAccess createUIAccess() {
+    final Context appContext = getActivity().getApplicationContext();
     UIAccess access = new UIAccess() {
       @Override
       public void onResults() {
@@ -283,7 +278,25 @@ public class YouTubeGridFragment extends Fragment
       public Activity getActivity() {
         return YouTubeGridFragment.this.getActivity();
       }
+
+      @Override
+      public Context getContext() {
+        return appContext;
+      }
     };
+
+    return access;
+  }
+
+  private YouTubeList createList(Bundle argsBundle) {
+    YouTubeList result = null;
+
+    String channelID = argsBundle.getString(CHANNEL_ID);
+    String playlistID = argsBundle.getString(PLAYLIST_ID);
+    String query = argsBundle.getString(SEARCH_QUERY);
+    YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
+
+    UIAccess access = createUIAccess();
 
     switch (listType) {
       case SUBSCRIPTIONS:

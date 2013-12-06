@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.lists;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -93,13 +94,10 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
   @Override
   public void handleAuthIntent(Intent intent) {
-    Activity activity = access.getActivity();
+    Util.toast(access.getContext(), "Need Authorization");
 
-    if (activity != null) {
-      Util.toast(access.getActivity(), "Need Authorization");
-
-      Fragment f = access.fragment();
-
+    Fragment f = access.fragment();
+    if (f != null) {
       Util.log("showing auth intent...");
 
       // start intent asking the user to authorize the app for google api
@@ -110,7 +108,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
   @Override
   public void handleExceptionMessage(String message) {
-    Util.toast(access.getActivity(), message);
+    Util.toast(access.getContext(), message);
   }
 
 }

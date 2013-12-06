@@ -27,11 +27,11 @@ public class YouTubeListDB extends YouTubeList {
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        database = new VideoDatabase(access.getActivity(), s.databaseName());
+        database = new VideoDatabase(access.getContext(), s.databaseName());
 
         break;
       case PLAYLISTS:
-        database = new PlaylistDatabase(access.getActivity(), s.databaseName());
+        database = new PlaylistDatabase(access.getContext(), s.databaseName());
         break;
     }
 
@@ -54,7 +54,7 @@ public class YouTubeListDB extends YouTubeList {
 
     if (helper != null) {
       if (runningTask == null) {
-        boolean showHiddenVideos = ApplicationHub.preferences(access.getActivity()).getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
+        boolean showHiddenVideos = ApplicationHub.preferences(access.getContext()).getBoolean(PreferenceCache.SHOW_HIDDEN_VIDEOS, false);
 
         runningTask = new YouTubeListDBTask(taskType, showHiddenVideos);
         runningTask.execute(helper);
