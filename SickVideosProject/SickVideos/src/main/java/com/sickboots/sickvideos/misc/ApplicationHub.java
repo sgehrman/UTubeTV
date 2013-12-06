@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.sickboots.sickvideos.youtube.GoogleAccount;
-
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,23 +15,18 @@ import java.util.Observer;
 
 public class ApplicationHub {
   private static ApplicationHub instance = null;
-  private HashMap data;
   private Handler mainThreadHandler;
   private NotificationCenter notificationCenter;
   private PreferenceCache mPrefsCache;
-  private GoogleAccount mGoogleAccount;
   private Context mApplicationContext;
 
   // public notifications
-  public static final String APPLICATION_READY_NOTIFICATION = "application_ready";
   public static final String THEME_CHANGED = "theme_changed";
 
   private ApplicationHub(Context context) {
     mApplicationContext = context.getApplicationContext();
     notificationCenter = new NotificationCenter();
     mainThreadHandler = new Handler(Looper.getMainLooper());
-
-    data = new HashMap();
 
     mPrefsCache = new PreferenceCache(mApplicationContext, new PreferenceCache.PreferenceCacheListener() {
       @Override
@@ -43,8 +36,6 @@ public class ApplicationHub {
         }
       }
     });
-
-    sendNotification(APPLICATION_READY_NOTIFICATION);
   }
 
   public static ApplicationHub instance(Context context) {
@@ -64,34 +55,16 @@ public class ApplicationHub {
     return instance(context).prefsCache();
   }
 
-  public GoogleAccount googleAccount() {
-    if (mGoogleAccount == null) {
-      String accountName = preferences(mApplicationContext).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
-
-      mGoogleAccount = new GoogleAccount(mApplicationContext, accountName);
-    }
-
-    return mGoogleAccount;
+  public String getAccountName() {
+    return preferences(mApplicationContext).getString(PreferenceCache.GOOGLE_ACCOUNT_PREF, null);
   }
 
-  public void setGoogleAccount(GoogleAccount account) {
-    mGoogleAccount = account;
+  public void setAccountName(String accountName) {
+    preferences(mApplicationContext).setString(PreferenceCache.GOOGLE_ACCOUNT_PREF, accountName);
   }
 
-  public PreferenceCache prefsCache() {
+  private PreferenceCache prefsCache() {
     return mPrefsCache;
-  }
-
-  // -------------------------------------
-  // -------------------------------------
-  // Global data
-
-  public Object getData(String key) {
-    return data.get(key);
-  }
-
-  public void setData(String key, Object value) {
-    data.put(key, value);
   }
 
   // -------------------------------------

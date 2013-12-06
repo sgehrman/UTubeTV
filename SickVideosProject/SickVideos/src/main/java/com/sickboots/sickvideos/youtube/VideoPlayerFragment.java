@@ -8,6 +8,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 
@@ -43,7 +44,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    initialize(YouTubeAPI.devKey(), new YouTubePlayer.OnInitializedListener() {
+    initialize(Auth.devKey(), new YouTubePlayer.OnInitializedListener() {
       @Override
       public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
         VideoPlayerFragment.this.mPlayer = player;

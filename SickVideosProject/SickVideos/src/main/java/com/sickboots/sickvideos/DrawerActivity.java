@@ -143,11 +143,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // for ApplicationHub.THEME_CHANGED
     ApplicationHub.instance(this).addObserver(this);
 
+    Util.log("onStart");
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
     int section = 0;  // temp hack
     selectSection(section, false);
-
-    Util.log("onStart");
-
   }
 
   @Override  // Observer

@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.sickboots.sickvideos.DrawerActivity;
+import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.GoogleAccount;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   abstract public void updateItem(YouTubeData itemMap);
 
   protected UIAccess access;
-  protected GoogleAccount account;
   protected YouTubeListSpec listSpec;
   protected static final int REQUEST_AUTHORIZATION = 444;
   protected List<YouTubeData> items = new ArrayList<YouTubeData>();
@@ -43,7 +44,6 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
     listSpec = s;
     access = a;
-    account = ApplicationHub.instance(a.getActivity()).googleAccount();
   }
 
   // owning fragment calls this
@@ -79,7 +79,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
 
   protected YouTubeAPI youTubeHelper() {
     if (youTubeHelper == null) {
-      GoogleAccountCredential credential = account.credential();
+      GoogleAccountCredential credential = Auth.getCredentials(access.getContext());
 
       if (credential != null) {
         youTubeHelper = new YouTubeAPI(credential, this);
@@ -92,16 +92,22 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   // =================================================================================
   // YouTubeHelperListener
 
+  private static void requestAuth(Context context, Intent authIntent) {
+    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context);
+    Intent runReqAuthIntent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
+    runReqAuthIntent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+    manager.sendBroadcast(runReqAuthIntent);
+    Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+  }
+
+
   @Override
   public void handleAuthIntent(Intent intent) {
     Util.toast(access.getContext(), "Need Authorization");
 
     Fragment f = access.fragment();
     if (f != null) {
-      Util.log("showing auth intent...");
-
-      // start intent asking the user to authorize the app for google api
-      f.startActivityForResult(intent, REQUEST_AUTHORIZATION);
+      requestAuth(access.getContext(), intent);
     } else
       Util.log("Activity is null in handleAuthIntent");
   }

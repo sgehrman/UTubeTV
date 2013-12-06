@@ -32,6 +32,7 @@ import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 
 import java.io.IOException;
@@ -71,14 +72,10 @@ public class YouTubeAPI {
     credential = c;
   }
 
-  public static String devKey() {
-    return "AIzaSyD0gRStgO5O0hBRp4UeAxtsLFFw9bMinOI";
-  }
-
   public static void playMovie(Activity activity, String movieID) {
     boolean fullScreen = ApplicationHub.preferences(activity).getBoolean(PreferenceCache.PLAY_FULLSCREEN, false);
 
-    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, YouTubeAPI.devKey(), movieID, 0, true, !fullScreen);
+    Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, Auth.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivityForResult(intent, REQ_PLAYER_CODE);
   }
 
@@ -357,7 +354,7 @@ public class YouTubeAPI {
         YouTube.Search.List listRequest = youTube().search().list("id, snippet");
 
         listRequest.setQ(query);
-        listRequest.setKey(YouTubeAPI.devKey());
+        listRequest.setKey(Auth.devKey());
         listRequest.setType("video");
         listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
@@ -414,7 +411,7 @@ public class YouTubeAPI {
       try {
         YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
 
-        listRequest.setKey(YouTubeAPI.devKey());
+        listRequest.setKey(Auth.devKey());
         listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken, pageInfo", thumbnailField()));
         listRequest.setMyRating("like");
         listRequest.setMaxResults(getMaxResultsNeeded());
@@ -472,7 +469,7 @@ public class YouTubeAPI {
       try {
         YouTube.VideoCategories.List listRequest = youTube().videoCategories().list("id, snippet");
 
-        listRequest.setKey(YouTubeAPI.devKey());
+        listRequest.setKey(Auth.devKey());
         listRequest.setRegionCode(regionCode);
         listRequest.setFields("items(snippet/title, snippet/channelId)");
 
