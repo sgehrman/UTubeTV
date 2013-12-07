@@ -3,8 +3,11 @@ package com.sickboots.sickvideos.misc;
 import android.content.Context;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTubeScopes;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +27,13 @@ public class Auth {
       credential = GoogleAccountCredential.usingOAuth2(ctx.getApplicationContext(), scopes);
     }
     return credential;
+  }
+
+  public HttpRequestInitializer nullCredential() {
+    return new HttpRequestInitializer() {
+      public void initialize(HttpRequest request) throws IOException {
+      }
+    };
   }
 
   public static void setCredentials(GoogleAccountCredential credential) {

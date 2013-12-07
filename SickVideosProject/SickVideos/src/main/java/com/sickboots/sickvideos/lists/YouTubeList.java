@@ -15,7 +15,7 @@ import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
+public abstract class YouTubeList {
   protected enum TaskType {USER_REFRESH, REFETCH, FIRSTLOAD}
 
   ;
@@ -66,7 +66,7 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   }
 
   public YouTubeServiceRequest.RequestType type() {
-    return listSpec.type;
+    return listSpec.type();
   }
 
   public String name() {
@@ -78,32 +78,11 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
       GoogleAccountCredential credential = Auth.getCredentials(access.getContext());
 
       if (credential != null) {
-        youTubeHelper = new YouTubeAPI(credential, this);
+        youTubeHelper = new YouTubeAPI(access.getContext());
       }
     }
 
     return youTubeHelper;
-  }
-
-  // =================================================================================
-  // YouTubeHelperListener
-
-  @Override
-  public void handleAuthIntent(Intent authIntent) {
-    Util.toast(access.getContext(), "Need Authorization");
-
-    Intent intent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
-    intent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
-
-    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(access.getContext());
-    manager.sendBroadcast(intent);
-
-    Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
-  }
-
-  @Override
-  public void handleExceptionMessage(String message) {
-    Util.toast(access.getContext(), message);
   }
 
 }

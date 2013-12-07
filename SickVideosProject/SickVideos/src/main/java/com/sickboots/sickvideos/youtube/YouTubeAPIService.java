@@ -7,6 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.YouTubeGridFragment;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.misc.Util;
@@ -31,39 +32,67 @@ public class YouTubeAPIService extends IntentService {
   @Override
   protected void onHandleIntent(Intent intent) {
     try {
-      UIAccess access = createUIAccess();
+      YouTubeServiceRequest request = intent.getParcelableExtra("request");
 
-      YouTubeListDB result = new YouTubeListDB(YouTubeServiceRequest.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null), access);
-      List items = result.getItems();
+      YouTubeAPI helper = new YouTubeAPI(this);
+      List<YouTubeData> data = getDataFromInternet( request, helper);
 
-    } catch (Exception e) {
+      Util.toast(this, "got some shit: " + data.size());
+
+      } catch (Exception e) {
     }
   }
 
-  private UIAccess createUIAccess() {
-    final Context appContext = this;
-    UIAccess access = new UIAccess() {
-      @Override
-      public void onResults() {
+  private List<YouTubeData> getDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
+    List<YouTubeData> result = null;
+    String playlistID;
 
-        Intent intent = new Intent(YouTubeGridFragment.DATA_READY_INTENT);
-        intent.putExtra(YouTubeGridFragment.DATA_READY_INTENT_PARAM, "FUCK");
+    YouTubeAPI.BaseListResults listResults = null;
 
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(appContext);
-        manager.sendBroadcast(intent);
+    switch (request.type()) {
+      case RELATED:
+        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) request.getData("type");
+        String channelID = (String) request.getData("channel");
 
-        Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+        playlistID = helper.relatedPlaylistID(type, channelID);
 
+        if (playlistID != null) // probably needed authorization and failed
+          listResults = helper.videoListResults(playlistID);
+        break;
+      case VIDEOS:
+        playlistID = (String) request.getData("playlist");
+
+        listResults = helper.videoListResults(playlistID);
+        break;
+      case SEARCH:
+        String query = (String) request.getData("query");
+        listResults = helper.searchListResults(query);
+        break;
+      case LIKED:
+        listResults = helper.likedVideosListResults();
+        break;
+      case PLAYLISTS:
+        String channel = (String) request.getData("channel");
+
+        listResults = helper.playlistListResults(channel, false);
+        break;
+      case SUBSCRIPTIONS:
+        listResults = helper.subscriptionListResults();
+        break;
+      case CATEGORIES:
+        listResults = helper.categoriesListResults("US");
+        break;
+    }
+
+    if (listResults != null) {
+      while (listResults.getNext()) {
+        // getting all
       }
 
-      @Override
-      public Context getContext() {
-        return appContext;
-      }
-    };
+      result = listResults.getItems();
+    }
 
-    return access;
+    return result;
   }
-
 
 }

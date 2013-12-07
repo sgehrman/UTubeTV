@@ -1,5 +1,7 @@
 package com.sickboots.sickvideos.lists;
 
+import android.app.IntentService;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.sickboots.sickvideos.database.BaseDatabase;
@@ -10,6 +12,7 @@ import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeAPIService;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.HashSet;
@@ -23,7 +26,7 @@ public class YouTubeListDB extends YouTubeList {
   public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
-    switch (s.type) {
+    switch (s.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
@@ -130,9 +133,13 @@ public class YouTubeListDB extends YouTubeList {
     }
 
     private List<YouTubeData> loadFreshDataToDatabase(YouTubeAPI helper, Set<String> currentListSavedData) {
-      List<YouTubeData> result = getDataFromInternet(helper);
+      List<YouTubeData> result = null; // getDataFromInternet(helper);
 
-      if (result != null) {
+
+        YouTubeAPIService.startRequest(access.getContext(), listSpec);
+
+
+          if (result != null) {
         result = prepareDataFromNet(result, currentListSavedData);
 
         // we are only deleting if we know we got good data

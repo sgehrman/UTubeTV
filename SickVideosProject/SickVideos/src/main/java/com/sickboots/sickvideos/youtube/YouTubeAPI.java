@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.youtube;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -30,10 +31,12 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.PreferenceCache;
+import com.sickboots.sickvideos.misc.Util;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,31 +48,14 @@ public class YouTubeAPI {
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
   public static final int REQ_PLAYER_CODE = 334443;
-  private YouTubeHelperListener listener;
-  private HttpRequestInitializer credential;
   private YouTube youTube;
   boolean highQualityImages = true;
+  Context mContext;
 
-  // must implement this listener
-  public interface YouTubeHelperListener {
-    public void handleAuthIntent(Intent authIntent);
-
-    public void handleExceptionMessage(String message);
-  }
-
-  public YouTubeAPI(HttpRequestInitializer c, YouTubeHelperListener l) {
+  public YouTubeAPI(Context context) {
     super();
 
-    listener = l;
-
-    if (c == null) {
-      c = new HttpRequestInitializer() {
-        public void initialize(HttpRequest request) throws IOException {
-        }
-      };
-    }
-
-    credential = c;
+    mContext = context.getApplicationContext();
   }
 
   public static void playMovie(Activity activity, String movieID) {
@@ -87,7 +73,7 @@ public class YouTubeAPI {
   public YouTube youTube() {
     if (youTube == null) {
       try {
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName("YouTubeAPI").build();
+        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), Auth.getCredentials(mContext)).setApplicationName("YouTubeAPI").build();
       } catch (Exception e) {
         e.printStackTrace();
       } catch (Throwable t) {
@@ -174,6 +160,22 @@ public class YouTubeAPI {
     return text.replace('\n', ' ');
   }
 
+  private void doHandleAuthIntent(Intent authIntent) {
+    Util.toast(mContext, "Need Authorization");
+
+    Intent intent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
+    intent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+
+    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(mContext);
+    manager.sendBroadcast(intent);
+
+    Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+  }
+
+  private void doHandleExceptionMessage(String message) {
+    Util.toast(mContext, message);
+  }
+
   // pass null for channelid to get our own channel
   private Map<RelatedPlaylistType, String> relatedPlaylistIDs(String channelID) {
     Map<RelatedPlaylistType, String> result = new EnumMap<RelatedPlaylistType, String>(RelatedPlaylistType.class);
@@ -212,7 +214,6 @@ public class YouTubeAPI {
     if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
 
-      if (listener != null) {
         Intent intent = null;
         try {
           intent = r.getIntent();
@@ -220,20 +221,15 @@ public class YouTubeAPI {
           // ignore, this happens if we kill the activity quickly before our async task finishes
         }
         if (intent != null)
-          listener.handleAuthIntent(intent);
-      }
+          doHandleAuthIntent(intent);
     } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
       GoogleJsonResponseException r = (GoogleJsonResponseException) e;
 
       e.printStackTrace();
 
-      if (listener != null) {
-        listener.handleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
-      }
+        doHandleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
     } else {
-      if (listener != null) {
-        listener.handleExceptionMessage("Exception Occurred: " + e.toString());
-      }
+        doHandleExceptionMessage("Exception Occurred: " + e.toString());
 
       e.printStackTrace();
     }
@@ -725,7 +721,7 @@ public class YouTubeAPI {
         } else if (response instanceof PlaylistListResponse) {
           result = ((PlaylistListResponse) response).getNextPageToken();
         } else {
-          listener.handleExceptionMessage("nextToken bug!");
+          doHandleExceptionMessage("nextToken bug!");
         }
       }
 

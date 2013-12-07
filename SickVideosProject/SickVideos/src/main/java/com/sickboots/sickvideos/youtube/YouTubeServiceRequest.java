@@ -9,38 +9,7 @@ import java.util.HashMap;
 public class YouTubeServiceRequest implements Parcelable {
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
   private HashMap data;
-  public RequestType type;
-
-  // ===================================================================
-  //  Parcelable - we send this to the service inside an intent
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeSerializable(type);
-    dest.writeSerializable(data);
-  }
-
-  public static final Parcelable.Creator<YouTubeServiceRequest> CREATOR = new Parcelable.Creator<YouTubeServiceRequest>() {
-    public YouTubeServiceRequest createFromParcel(Parcel in) {
-      return new YouTubeServiceRequest(in);
-    }
-
-    public YouTubeServiceRequest[] newArray(int size) {
-      return new YouTubeServiceRequest[size];
-    }
-  };
-
-  private YouTubeServiceRequest(Parcel in) {
-    type = (RequestType) in.readSerializable();
-    data = (HashMap) in.readSerializable();
-  }
-
-  // ===================================================================
+  private RequestType type;
 
   public static YouTubeServiceRequest relatedSpec(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
@@ -91,6 +60,10 @@ public class YouTubeServiceRequest implements Parcelable {
     result.data.put("channel", channelID);
 
     return result;
+  }
+
+  public RequestType type() {
+    return type;
   }
 
   public Object getData(String key) {
@@ -171,6 +144,35 @@ public class YouTubeServiceRequest implements Parcelable {
     }
 
     return result;
+  }
+
+  // ===================================================================
+  //  Parcelable - we send this to the service inside an intent
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeSerializable(type);
+    dest.writeSerializable(data);
+  }
+
+  public static final Parcelable.Creator<YouTubeServiceRequest> CREATOR = new Parcelable.Creator<YouTubeServiceRequest>() {
+    public YouTubeServiceRequest createFromParcel(Parcel in) {
+      return new YouTubeServiceRequest(in);
+    }
+
+    public YouTubeServiceRequest[] newArray(int size) {
+      return new YouTubeServiceRequest[size];
+    }
+  };
+
+  private YouTubeServiceRequest(Parcel in) {
+    type = (RequestType) in.readSerializable();
+    data = (HashMap) in.readSerializable();
   }
 
   // ===================================================================

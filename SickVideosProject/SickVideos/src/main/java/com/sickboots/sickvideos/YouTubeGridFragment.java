@@ -190,7 +190,7 @@ public class YouTubeGridFragment extends Fragment
     if (mList == null) {
       mList = createList(getArguments());
       mAdapter = new YouTubeListAdapter();
-      
+
       mGridView.setOnItemClickListener(mAdapter);
       mGridView.setAdapter(mAdapter);
       // load data if we have it already
