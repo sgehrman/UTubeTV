@@ -52,13 +52,6 @@
             android:enabled="true"
             android:exported="false" />
 
-        <provider
-            android:name="com.sickboots.sickvideos.database.YouTubeContentProvider"
-            android:authorities="com.sickboots.sickvideos.provider"
-            android:enabled="true"
-            android:exported="false" >
-        </provider>
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
