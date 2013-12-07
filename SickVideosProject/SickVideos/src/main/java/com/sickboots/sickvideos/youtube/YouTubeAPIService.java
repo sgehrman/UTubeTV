@@ -85,20 +85,23 @@ public class YouTubeAPIService extends IntentService {
   private BaseDatabase getDatabase(YouTubeServiceRequest request) {
     BaseDatabase result = null;
 
+    BaseDatabase.DatabaseTable table=null;
     switch (request.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        result = new VideoDatabase(this, request.databaseName());
-
+        table = new VideoDatabase();
         break;
       case PLAYLISTS:
-        result = new PlaylistDatabase(this, request.databaseName());
+        table = new PlaylistDatabase();
         break;
       case CATEGORIES:
         break;
     }
+
+    if (table != null)
+      result = new BaseDatabase(this, request.databaseName(), table);
 
     return result;
   }

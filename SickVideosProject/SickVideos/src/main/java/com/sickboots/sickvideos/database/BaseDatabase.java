@@ -11,38 +11,41 @@ import com.sickboots.sickvideos.misc.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseDatabase extends SQLiteOpenHelper {
-  protected String mItemTable;
-
-  protected static final String CREATE = "CREATE TABLE ";
-  protected static final String TEXT_TYPE = " TEXT";
-  protected static final String INT_TYPE = " INTEGER";
-  protected static final String PRIMARY = " PRIMARY KEY";
-  protected static final String COMMA_SEP = ",";
+public class BaseDatabase extends SQLiteOpenHelper {
   protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
   protected static final int DATABASE_VERSION = 1000;
+  protected DatabaseTable mTable;
 
-  // subclasses must take care of this shit
-  abstract protected String[] projection(int flags);
+  public interface DatabaseTable {
+    public static final String CREATE = "CREATE TABLE ";
+    public static final String TEXT_TYPE = " TEXT";
+    public static final String INT_TYPE = " INTEGER";
+    public static final String PRIMARY = " PRIMARY KEY";
+    public static final String COMMA_SEP = ",";
 
-  abstract protected YouTubeData cursorToItem(Cursor cursor);
+    public String tableName();
 
-  abstract protected ContentValues contentValuesForItem(YouTubeData item);
+    public String[] projection(int flags);
 
-  abstract protected String[] tablesSQL();
+    public YouTubeData cursorToItem(Cursor cursor);
 
-  abstract protected String getItemsWhereClause(int flags);
+    public ContentValues contentValuesForItem(YouTubeData item);
 
-  abstract protected String[] getItemsWhereArgs(int flags);
+    public String[] tablesSQL();
 
-  public BaseDatabase(Context context, String databaseName) {
+    public String getItemsWhereClause(int flags);
+
+    public String[] getItemsWhereArgs(int flags);
+  }
+
+  public BaseDatabase(Context context, String databaseName, DatabaseTable table) {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(false), DATABASE_VERSION);
 
-    mItemTable = "item_table";
+    mTable = table;
   }
 
   public void onCreate(SQLiteDatabase db) {
-    String[] tables = tablesSQL();
+    String[] tables = mTable.tablesSQL();
 
     for (String table : tables)
       db.execSQL(table);
@@ -51,7 +54,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // This database is only a cache for online data, so its upgrade policy is
     // to simply to discard the data and start over
-    db.execSQL(DROP_TABLE + mItemTable);
+    db.execSQL(DROP_TABLE + mTable.tableName());
     onCreate(db);
   }
 
@@ -63,7 +66,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     SQLiteDatabase db = getWritableDatabase();
 
     try {
-      db.delete(mItemTable, null, null);
+      db.delete(mTable.tableName(), null, null);
     } catch (Exception e) {
       Util.log("deleteAllRows exception: " + e.getMessage());
     } finally {
@@ -79,7 +82,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
       db.beginTransaction();
       try {
         for (YouTubeData item : items)
-          db.insert(mItemTable, null, contentValuesForItem(item));
+          db.insert(mTable.tableName(), null, mTable.contentValuesForItem(item));
 
         db.setTransactionSuccessful();
       } catch (Exception e) {
@@ -93,7 +96,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id), projection(0));
+    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id), mTable.projection(0));
 
     if (results.size() == 1) {
       result = results.get(0);
@@ -105,7 +108,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
   }
 
   public List<YouTubeData> getItems(int flags) {
-    return getItems(getItemsWhereClause(flags), getItemsWhereArgs(flags), projection(flags));
+    return getItems(mTable.getItemsWhereClause(flags), mTable.getItemsWhereArgs(flags), mTable.projection(flags));
   }
 
   public void updateItem(YouTubeData item) {
@@ -114,7 +117,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
     try {
       Long id = item.mID;
 
-      int result = db.update(mItemTable, contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+      int result = db.update(mTable.tableName(), mTable.contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
 
       if (result != 1)
         Util.log("updateItem didn't return 1");
@@ -144,7 +147,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
     try {
       cursor = db.query(
-          mItemTable,                     // The table to query
+          mTable.tableName(),                     // The table to query
           projection,                     // The columns to return
           selection,                      // The columns for the WHERE clause
           selectionArgs,                  // The values for the WHERE clause
@@ -155,7 +158,7 @@ public abstract class BaseDatabase extends SQLiteOpenHelper {
 
       cursor.moveToFirst();
       while (!cursor.isAfterLast()) {
-        result.add(cursorToItem(cursor));
+        result.add(mTable.cursorToItem(cursor));
         cursor.moveToNext();
       }
     } catch (Exception e) {

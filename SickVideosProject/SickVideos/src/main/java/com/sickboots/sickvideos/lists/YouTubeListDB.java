@@ -22,20 +22,22 @@ public class YouTubeListDB extends YouTubeList {
   public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
+    BaseDatabase.DatabaseTable table=null;
     switch (s.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        database = new VideoDatabase(access.getContext(), s.databaseName());
-
+        table = new VideoDatabase();
         break;
       case PLAYLISTS:
-        database = new PlaylistDatabase(access.getContext(), s.databaseName());
+        table = new PlaylistDatabase();
         break;
       case CATEGORIES:
         break;
     }
+
+    database = new BaseDatabase(access.getContext(), s.databaseName(), table);
 
     loadData(TaskType.FIRSTLOAD);
   }

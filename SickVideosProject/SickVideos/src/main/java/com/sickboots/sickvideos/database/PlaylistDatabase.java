@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class PlaylistDatabase extends BaseDatabase {
+public class PlaylistDatabase implements BaseDatabase.DatabaseTable {
   // stores information about a playlist
   public static class PlaylistEntry implements BaseColumns {
     public static final String COLUMN_NAME_PLAYLIST = "playlist";
@@ -15,12 +15,17 @@ public class PlaylistDatabase extends BaseDatabase {
     public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
   }
 
-  public PlaylistDatabase(Context context, String databaseName) {
-    super(context, databaseName);
+  public PlaylistDatabase() {
+    super();
   }
 
   @Override
-  protected String[] projection(int flags) {
+  public String tableName() {
+    return "item_table";
+  }
+
+  @Override
+  public String[] projection(int flags) {
     String[] result = null;
 
     switch (flags) {
@@ -39,7 +44,7 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected YouTubeData cursorToItem(Cursor cursor) {
+  public YouTubeData cursorToItem(Cursor cursor) {
     YouTubeData result = new YouTubeData();
 
     result.mID = cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID));
@@ -52,7 +57,7 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected ContentValues contentValuesForItem(YouTubeData item) {
+  public ContentValues contentValuesForItem(YouTubeData item) {
     ContentValues values = new ContentValues();
 
     values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, item.mPlaylist);
@@ -64,8 +69,8 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String[] tablesSQL() {
-    String result = CREATE + mItemTable
+  public String[] tablesSQL() {
+    String result = CREATE + tableName()
         + " ("
         + PlaylistEntry._ID + INT_TYPE + PRIMARY
         + COMMA_SEP
@@ -82,12 +87,12 @@ public class PlaylistDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String getItemsWhereClause(int flags) {
+  public String getItemsWhereClause(int flags) {
     return null;
   }
 
   @Override
-  protected String[] getItemsWhereArgs(int flags) {
+  public String[] getItemsWhereArgs(int flags) {
     return null;
   }
 

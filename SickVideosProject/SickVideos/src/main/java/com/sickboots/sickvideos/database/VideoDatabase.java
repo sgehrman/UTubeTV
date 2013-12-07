@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class VideoDatabase extends BaseDatabase {
+public class VideoDatabase implements BaseDatabase.DatabaseTable {
   // filter flags
   public static final int FILTER_HIDDEN_ITEMS = 10;
   public static final int ONLY_HIDDEN_ITEMS = 20;
@@ -21,12 +21,17 @@ public class VideoDatabase extends BaseDatabase {
     public static final String COLUMN_NAME_START = "start";
   }
 
-  public VideoDatabase(Context context, String databaseName) {
-    super(context, databaseName);
+  public VideoDatabase() {
+    super();
   }
 
   @Override
-  protected String[] projection(int flags) {
+  public String tableName() {
+    return "item_table";
+  }
+
+  @Override
+  public String[] projection(int flags) {
     String[] result = null;
 
     switch (flags) {
@@ -56,7 +61,7 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected YouTubeData cursorToItem(Cursor cursor) {
+  public YouTubeData cursorToItem(Cursor cursor) {
     YouTubeData result = new YouTubeData();
 
     result.mID = cursor.getLong(cursor.getColumnIndex(VideoEntry._ID));
@@ -72,7 +77,7 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected ContentValues contentValuesForItem(YouTubeData item) {
+  public ContentValues contentValuesForItem(YouTubeData item) {
     ContentValues values = new ContentValues();
 
     values.put(VideoEntry.COLUMN_NAME_VIDEO, item.mVideo);
@@ -87,8 +92,8 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String[] tablesSQL() {
-    String itemTable = CREATE + mItemTable
+  public String[] tablesSQL() {
+    String itemTable = CREATE + tableName()
         + " ("
         + VideoEntry._ID + INT_TYPE + PRIMARY
         + COMMA_SEP
@@ -111,7 +116,7 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String getItemsWhereClause(int flags) {
+  public String getItemsWhereClause(int flags) {
     String result = null;
 
     switch (flags) {
@@ -127,7 +132,7 @@ public class VideoDatabase extends BaseDatabase {
   }
 
   @Override
-  protected String[] getItemsWhereArgs(int flags) {
+  public String[] getItemsWhereArgs(int flags) {
     return null;
   }
 
