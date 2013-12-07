@@ -24,7 +24,6 @@ import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
-import com.sickboots.sickvideos.lists.YouTubeListLive;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
@@ -330,16 +329,17 @@ public class YouTubeGridFragment extends Fragment
         result = new YouTubeListDB(YouTubeServiceRequest.playlistsSpec(channelID), access);
         break;
       case CATEGORIES:
-        result = new YouTubeListLive(YouTubeServiceRequest.categoriesSpec(), access);
+        Util.log("THIS is broken... Categories, just fix db integration");
+        result = new YouTubeListDB(YouTubeServiceRequest.categoriesSpec(), access);
         break;
       case LIKED:
-        result = new YouTubeListLive(YouTubeServiceRequest.likedSpec(), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.likedSpec(), access);
         break;
       case RELATED:
         result = new YouTubeListDB(YouTubeServiceRequest.relatedSpec(relatedType, channelID), access);
         break;
       case SEARCH:
-        result = new YouTubeListLive(YouTubeServiceRequest.searchSpec(query), access);
+        result = new YouTubeListDB(YouTubeServiceRequest.searchSpec(query), access);
         break;
       case VIDEOS:
         result = new YouTubeListDB(YouTubeServiceRequest.videosSpec(playlistID), access);
@@ -490,9 +490,6 @@ public class YouTubeGridFragment extends Fragment
       } else {
         holder.menuButton.setVisibility(View.GONE);
       }
-
-      // load more data if at the end
-      mList.updateHighestDisplayedIndex(position);
 
       return convertView;
     }

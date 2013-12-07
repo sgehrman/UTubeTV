@@ -127,8 +127,8 @@ public class YouTubeAPI {
     return result;
   }
 
-  public VideoListResults videoListResults(String playlistID, boolean getMaximum) {
-    VideoListResults result = new VideoListResults(playlistID, getMaximum);
+  public VideoListResults videoListResults(String playlistID) {
+    VideoListResults result = new VideoListResults(playlistID);
 
     return result;
   }
@@ -277,8 +277,8 @@ public class YouTubeAPI {
   public class VideoListResults extends BaseListResults {
     private String playlistID;
 
-    public VideoListResults(String p, boolean getMaximum) {
-      super(getMaximum);
+    public VideoListResults(String p) {
+      super();
 
       playlistID = p;
       setItems(itemsForNextToken(""));
@@ -668,22 +668,13 @@ public class YouTubeAPI {
     protected Object response;
     private List<YouTubeData> items;
     protected int totalItems;
-    private int highestDisplayedIndex = 0;
     private boolean reloadingFlag = false;
-    private boolean reachedEndOfList = false;
-    private boolean getMaxItems = false;
 
     // subclasses must implement
     abstract protected List<YouTubeData> itemsForNextToken(String token);
 
     public BaseListResults() {
       super();
-    }
-
-    public BaseListResults(boolean getMaximum) {
-      super();
-
-      getMaxItems = getMaximum;
     }
 
     public List<YouTubeData> getItems() {
@@ -718,16 +709,6 @@ public class YouTubeAPI {
       return totalItems;
     }
 
-    public int getHighestDisplayedIndex() {
-      return highestDisplayedIndex;
-    }
-
-    public void updateHighestDisplayedIndex(int index) {
-      if (index > highestDisplayedIndex) {
-        highestDisplayedIndex = index + 4; // load a few more
-      }
-    }
-
     private String nextToken() {
       String result = null;
 
@@ -751,14 +732,6 @@ public class YouTubeAPI {
       return result;
     }
 
-    public boolean needsToLoadMoreItems() {
-      if (items != null && !reachedEndOfList) {
-        return highestDisplayedIndex >= items.size();
-      }
-
-      return false;
-    }
-
     public void setIsReloading(boolean set) {
       reloadingFlag = set;
     }
@@ -768,15 +741,7 @@ public class YouTubeAPI {
     }
 
     protected long getMaxResultsNeeded() {
-      long result = 5;
-
-      if (getMaxItems)
-        result = 50;
-      else {
-        if (needsToLoadMoreItems()) {
-          result = highestDisplayedIndex - (items.size() - 1);
-        }
-      }
+      long result = 50;
 
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
       return Math.min(50, result);
@@ -786,7 +751,6 @@ public class YouTubeAPI {
       // set a flag to stop trying to get more data.  the totalItems is not accurrate.  We don't get results for deleted videos.
       if (items != null)
         totalItems = items.size();
-      reachedEndOfList = true;
     }
 
     protected void handleResultsException(Exception e) {

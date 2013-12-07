@@ -18,6 +18,12 @@ import java.util.List;
  */
 public class YouTubeAPIService extends IntentService {
 
+  public static void startRequest(Context context, YouTubeServiceRequest request) {
+    Intent i = new Intent(context, YouTubeAPIService.class);
+    i.putExtra("request", request);
+    context.startService(i);
+  }
+
   public YouTubeAPIService() {
     super("YouTubeAPIService");
   }

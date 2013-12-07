@@ -21,8 +21,6 @@ public abstract class YouTubeList implements YouTubeAPI.YouTubeHelperListener {
   ;
 
   // subclasses must implement
-  abstract public void updateHighestDisplayedIndex(int position);
-
   abstract public void refresh();
 
   abstract protected void loadData(TaskType taskType);

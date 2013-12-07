@@ -31,12 +31,6 @@ public class MainActivity extends Activity {
 
     credential = Auth.getCredentials(this);
 
-
-    Intent i = new Intent(this, YouTubeAPIService.class);
-    i.putExtra("KEY1", "Value to be used by the service");
-    startService(i);
-
-
     // testing, this is wrong
     if (savedInstanceState == null) {
       boolean switchToDrawer = true;

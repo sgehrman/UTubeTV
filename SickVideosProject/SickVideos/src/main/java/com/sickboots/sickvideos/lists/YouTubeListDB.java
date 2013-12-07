@@ -34,14 +34,11 @@ public class YouTubeListDB extends YouTubeList {
       case PLAYLISTS:
         database = new PlaylistDatabase(access.getContext(), s.databaseName());
         break;
+      case CATEGORIES:
+        break;
     }
 
     loadData(TaskType.FIRSTLOAD);
-  }
-
-  @Override
-  public void updateHighestDisplayedIndex(int position) {
-    // doi nothing - not used in DB list
   }
 
   @Override
@@ -179,15 +176,19 @@ public class YouTubeListDB extends YouTubeList {
           playlistID = helper.relatedPlaylistID(type, channelID);
 
           if (playlistID != null) // probably needed authorization and failed
-            listResults = helper.videoListResults(playlistID, true);
+            listResults = helper.videoListResults(playlistID);
           break;
         case VIDEOS:
           playlistID = (String) listSpec.getData("playlist");
 
-          listResults = helper.videoListResults(playlistID, true);
+          listResults = helper.videoListResults(playlistID);
           break;
         case SEARCH:
+          String query = (String) listSpec.getData("query");
+          listResults = helper.searchListResults(query);
+          break;
         case LIKED:
+          listResults = helper.likedVideosListResults();
           break;
         case PLAYLISTS:
           String channel = (String) listSpec.getData("channel");
@@ -198,8 +199,9 @@ public class YouTubeListDB extends YouTubeList {
           listResults = helper.subscriptionListResults();
           break;
         case CATEGORIES:
+          listResults = helper.categoriesListResults("US");
           break;
-      }
+    }
 
       if (listResults != null) {
         while (listResults.getNext()) {
