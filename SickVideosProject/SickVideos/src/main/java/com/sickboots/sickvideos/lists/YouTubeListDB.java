@@ -22,7 +22,7 @@ public class YouTubeListDB extends YouTubeList {
   public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
-    Database.DatabaseTable table=null;
+    Database.DatabaseTable table = null;
     switch (s.type()) {
       case RELATED:
       case SEARCH:

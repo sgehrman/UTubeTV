@@ -85,7 +85,7 @@ public class YouTubeAPIService extends IntentService {
   private Database getDatabase(YouTubeServiceRequest request) {
     Database result = null;
 
-    Database.DatabaseTable table=null;
+    Database.DatabaseTable table = null;
     switch (request.type()) {
       case RELATED:
       case SEARCH:
