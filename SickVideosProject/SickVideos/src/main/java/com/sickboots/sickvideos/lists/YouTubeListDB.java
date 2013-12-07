@@ -3,7 +3,6 @@ package com.sickboots.sickvideos.lists;
 import android.os.AsyncTask;
 
 import com.sickboots.sickvideos.database.Database;
-import com.sickboots.sickvideos.database.PlaylistTable;
 import com.sickboots.sickvideos.database.VideoTable;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
@@ -19,25 +18,10 @@ public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
   Database database;
 
-  public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
-    super(s, a);
+  public YouTubeListDB(YouTubeServiceRequest request, UIAccess a) {
+    super(request, a);
 
-    Database.DatabaseTable table = null;
-    switch (s.type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        table = new VideoTable();
-        break;
-      case PLAYLISTS:
-        table = new PlaylistTable();
-        break;
-      case CATEGORIES:
-        break;
-    }
-
-    database = new Database(access.getContext(), s.databaseName(), table);
+    database = request.database(a.getContext());
 
     loadData(TaskType.FIRSTLOAD);
   }
@@ -93,7 +77,7 @@ public class YouTubeListDB extends YouTubeList {
 
       switch (mTaskType) {
         case USER_REFRESH:
-          YouTubeAPIService.startRequest(access.getContext(), listSpec);
+          YouTubeAPIService.startRequest(access.getContext(), mRequest);
 
           break;
         case REFETCH:
@@ -105,7 +89,7 @@ public class YouTubeListDB extends YouTubeList {
 
           // this is lame, fix later
           if (result.size() == 0) {
-            YouTubeAPIService.startRequest(access.getContext(), listSpec);
+            YouTubeAPIService.startRequest(access.getContext(), mRequest);
           }
 
           break;

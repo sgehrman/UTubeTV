@@ -7,7 +7,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.Database;
-import com.sickboots.sickvideos.database.PlaylistTable;
 import com.sickboots.sickvideos.database.VideoTable;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
@@ -40,11 +39,8 @@ public class YouTubeAPIService extends IntentService {
       YouTubeAPI helper = new YouTubeAPI(this);
       List<YouTubeData> result = getDataFromInternet(request, helper);
 
-      Util.toast(this, "got some shit: " + result.size());
-
-
       if (result != null) {
-        database = getDatabase(request);
+        database = request.database(this);
 
         Set currentListSavedData = saveExistingListState();
 
@@ -80,30 +76,6 @@ public class YouTubeAPIService extends IntentService {
     }
 
     return inList;
-  }
-
-  private Database getDatabase(YouTubeServiceRequest request) {
-    Database result = null;
-
-    Database.DatabaseTable table = null;
-    switch (request.type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        table = new VideoTable();
-        break;
-      case PLAYLISTS:
-        table = new PlaylistTable();
-        break;
-      case CATEGORIES:
-        break;
-    }
-
-    if (table != null)
-      result = new Database(this, request.databaseName(), table);
-
-    return result;
   }
 
   private Set<String> saveExistingListState() {

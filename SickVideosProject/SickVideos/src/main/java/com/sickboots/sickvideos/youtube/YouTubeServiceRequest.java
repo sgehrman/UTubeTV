@@ -1,7 +1,13 @@
 package com.sickboots.sickvideos.youtube;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.sickboots.sickvideos.database.Database;
+import com.sickboots.sickvideos.database.DatabaseTable;
+import com.sickboots.sickvideos.database.PlaylistTable;
+import com.sickboots.sickvideos.database.VideoTable;
 
 import java.util.HashMap;
 
@@ -118,30 +124,26 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  // a new database is created for every list, so need a unique name that can match the spec
-  public String databaseName() {
-    String result = name();
+  public Database database(Context context) {
+    Database result = null;
 
-    switch (type) {
-      case SUBSCRIPTIONS:
+    DatabaseTable table = null;
+    switch (type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        table = new VideoTable();
         break;
       case PLAYLISTS:
-        result += getData("channel");
+        table = new PlaylistTable();
         break;
       case CATEGORIES:
         break;
-      case LIKED:
-        break;
-      case RELATED:
-        result += getData("channel");
-        break;
-      case VIDEOS:
-        result += getData("playlist");
-        break;
-      case SEARCH:
-        result += getData("query");
-        break;
     }
+
+    if (table != null)
+      result = new Database(context, databaseName(), table);
 
     return result;
   }
@@ -187,6 +189,34 @@ public class YouTubeServiceRequest implements Parcelable {
 
     result.type = type;
     result.data = new HashMap();
+
+    return result;
+  }
+
+  // a new database is created for every list, so need a unique name that can match the spec
+  private String databaseName() {
+    String result = name();
+
+    switch (type) {
+      case SUBSCRIPTIONS:
+        break;
+      case PLAYLISTS:
+        result += getData("channel");
+        break;
+      case CATEGORIES:
+        break;
+      case LIKED:
+        break;
+      case RELATED:
+        result += getData("channel");
+        break;
+      case VIDEOS:
+        result += getData("playlist");
+        break;
+      case SEARCH:
+        result += getData("query");
+        break;
+    }
 
     return result;
   }

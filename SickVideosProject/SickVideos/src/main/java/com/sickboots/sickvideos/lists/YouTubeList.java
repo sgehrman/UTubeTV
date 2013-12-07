@@ -1,8 +1,5 @@
 package com.sickboots.sickvideos.lists;
 
-import android.app.Activity;
-import android.content.Intent;
-
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Auth;
@@ -27,37 +24,17 @@ public abstract class YouTubeList {
   abstract public void updateItem(YouTubeData itemMap);
 
   protected UIAccess access;
-  protected YouTubeServiceRequest listSpec;
-  protected static final int REQUEST_AUTHORIZATION = 444;
+  protected YouTubeServiceRequest mRequest;
   protected List<YouTubeData> items = new ArrayList<YouTubeData>();
 
   // use accessor in subclasses
   private YouTubeAPI youTubeHelper;
 
-  public YouTubeList(YouTubeServiceRequest s, UIAccess a) {
+  public YouTubeList(YouTubeServiceRequest request, UIAccess a) {
     super();
 
-    listSpec = s;
+    mRequest = request;
     access = a;
-  }
-
-  // owning fragment calls this
-  public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
-    boolean handled = false;
-
-    if (!handled) {
-      switch (requestCode) {
-        case REQUEST_AUTHORIZATION:
-          if (resultCode != Activity.RESULT_OK) {
-            loadData(TaskType.FIRSTLOAD);
-          }
-
-          handled = true;
-          break;
-      }
-    }
-
-    return handled;
   }
 
   public List<YouTubeData> getItems() {
@@ -65,11 +42,11 @@ public abstract class YouTubeList {
   }
 
   public YouTubeServiceRequest.RequestType type() {
-    return listSpec.type();
+    return mRequest.type();
   }
 
   public String name() {
-    return listSpec.name();
+    return mRequest.name();
   }
 
   protected YouTubeAPI youTubeHelper() {

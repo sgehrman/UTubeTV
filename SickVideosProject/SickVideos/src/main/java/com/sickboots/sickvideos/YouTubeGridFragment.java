@@ -119,13 +119,9 @@ public class YouTubeGridFragment extends Fragment
     @Override
     public void onReceive(Context context, Intent intent) {
       if (intent.getAction().equals(DATA_READY_INTENT)) {
-        Util.log("data ready received");
-        String fuckthis = intent.getStringExtra(DATA_READY_INTENT_PARAM);
-
-        Util.log(fuckthis);
+        String param = intent.getStringExtra(DATA_READY_INTENT_PARAM);
 
         mList.refetch();
-
       }
     }
   }
@@ -258,16 +254,6 @@ public class YouTubeGridFragment extends Fragment
     mEmptyView.setVisibility(View.VISIBLE);
 
     mGridView.setEmptyView(mEmptyView);
-  }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    boolean handled = mList.handleActivityResult(requestCode, requestCode, data);
-
-    if (!handled) {
-      switch (requestCode) {
-      }
-    }
   }
 
   private void loadFromList() {

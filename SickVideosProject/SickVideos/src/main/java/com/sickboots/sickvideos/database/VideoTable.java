@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class VideoTable implements Database.DatabaseTable {
+public class VideoTable implements DatabaseTable {
   // filter flags
   public static final int FILTER_HIDDEN_ITEMS = 10;
   public static final int ONLY_HIDDEN_ITEMS = 20;

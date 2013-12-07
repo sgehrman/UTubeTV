@@ -5,7 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class PlaylistTable implements Database.DatabaseTable {
+public class PlaylistTable implements DatabaseTable {
   // stores information about a playlist
   public static class PlaylistEntry implements BaseColumns {
     public static final String COLUMN_NAME_PLAYLIST = "playlist";

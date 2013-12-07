@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,31 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
-  protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
   protected static final int DATABASE_VERSION = 1000;
   protected DatabaseTable mTable;
-
-  public interface DatabaseTable {
-    public static final String CREATE = "CREATE TABLE ";
-    public static final String TEXT_TYPE = " TEXT";
-    public static final String INT_TYPE = " INTEGER";
-    public static final String PRIMARY = " PRIMARY KEY";
-    public static final String COMMA_SEP = ",";
-
-    public String tableName();
-
-    public String[] projection(int flags);
-
-    public YouTubeData cursorToItem(Cursor cursor);
-
-    public ContentValues contentValuesForItem(YouTubeData item);
-
-    public String[] tablesSQL();
-
-    public String getItemsWhereClause(int flags);
-
-    public String[] getItemsWhereArgs(int flags);
-  }
 
   public Database(Context context, String databaseName, DatabaseTable table) {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(false), DATABASE_VERSION);
@@ -52,9 +28,11 @@ public class Database extends SQLiteOpenHelper {
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    // This database is only a cache for online data, so its upgrade policy is
-    // to simply to discard the data and start over
+    // don't upgrade, just drop and start over
+    final String DROP_TABLE = "DROP TABLE IF EXISTS ";
+
     db.execSQL(DROP_TABLE + mTable.tableName());
+
     onCreate(db);
   }
 
