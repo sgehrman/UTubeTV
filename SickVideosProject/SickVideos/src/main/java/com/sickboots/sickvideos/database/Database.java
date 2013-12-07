@@ -11,7 +11,7 @@ import com.sickboots.sickvideos.misc.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseDatabase extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
   protected static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
   protected static final int DATABASE_VERSION = 1000;
   protected DatabaseTable mTable;
@@ -38,7 +38,7 @@ public class BaseDatabase extends SQLiteOpenHelper {
     public String[] getItemsWhereArgs(int flags);
   }
 
-  public BaseDatabase(Context context, String databaseName, DatabaseTable table) {
+  public Database(Context context, String databaseName, DatabaseTable table) {
     super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(false), DATABASE_VERSION);
 
     mTable = table;

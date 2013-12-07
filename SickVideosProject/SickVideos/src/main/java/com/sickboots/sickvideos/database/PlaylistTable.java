@@ -2,11 +2,10 @@
 package com.sickboots.sickvideos.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class PlaylistDatabase implements BaseDatabase.DatabaseTable {
+public class PlaylistTable implements Database.DatabaseTable {
   // stores information about a playlist
   public static class PlaylistEntry implements BaseColumns {
     public static final String COLUMN_NAME_PLAYLIST = "playlist";
@@ -15,7 +14,7 @@ public class PlaylistDatabase implements BaseDatabase.DatabaseTable {
     public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
   }
 
-  public PlaylistDatabase() {
+  public PlaylistTable() {
     super();
   }
 

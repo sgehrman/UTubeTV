@@ -2,9 +2,9 @@ package com.sickboots.sickvideos.lists;
 
 import android.os.AsyncTask;
 
-import com.sickboots.sickvideos.database.BaseDatabase;
-import com.sickboots.sickvideos.database.PlaylistDatabase;
-import com.sickboots.sickvideos.database.VideoDatabase;
+import com.sickboots.sickvideos.database.Database;
+import com.sickboots.sickvideos.database.PlaylistTable;
+import com.sickboots.sickvideos.database.VideoTable;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
@@ -17,27 +17,27 @@ import java.util.List;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
-  BaseDatabase database;
+  Database database;
 
   public YouTubeListDB(YouTubeServiceRequest s, UIAccess a) {
     super(s, a);
 
-    BaseDatabase.DatabaseTable table=null;
+    Database.DatabaseTable table=null;
     switch (s.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        table = new VideoDatabase();
+        table = new VideoTable();
         break;
       case PLAYLISTS:
-        table = new PlaylistDatabase();
+        table = new PlaylistTable();
         break;
       case CATEGORIES:
         break;
     }
 
-    database = new BaseDatabase(access.getContext(), s.databaseName(), table);
+    database = new Database(access.getContext(), s.databaseName(), table);
 
     loadData(TaskType.FIRSTLOAD);
   }
@@ -98,10 +98,10 @@ public class YouTubeListDB extends YouTubeList {
           break;
         case REFETCH:
           //  item hidden, or hidden visible pref toggled
-          result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? VideoTable.FILTER_HIDDEN_ITEMS : 0);
           break;
         case FIRSTLOAD:
-          result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? VideoTable.FILTER_HIDDEN_ITEMS : 0);
 
           // this is lame, fix later
           if (result.size() == 0) {

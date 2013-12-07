@@ -1,11 +1,10 @@
 package com.sickboots.sickvideos.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class VideoDatabase implements BaseDatabase.DatabaseTable {
+public class VideoTable implements Database.DatabaseTable {
   // filter flags
   public static final int FILTER_HIDDEN_ITEMS = 10;
   public static final int ONLY_HIDDEN_ITEMS = 20;
@@ -21,7 +20,7 @@ public class VideoDatabase implements BaseDatabase.DatabaseTable {
     public static final String COLUMN_NAME_START = "start";
   }
 
-  public VideoDatabase() {
+  public VideoTable() {
     super();
   }
 

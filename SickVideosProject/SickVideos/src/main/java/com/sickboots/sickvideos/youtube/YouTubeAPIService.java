@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.YouTubeGridFragment;
-import com.sickboots.sickvideos.database.BaseDatabase;
-import com.sickboots.sickvideos.database.PlaylistDatabase;
-import com.sickboots.sickvideos.database.VideoDatabase;
+import com.sickboots.sickvideos.database.Database;
+import com.sickboots.sickvideos.database.PlaylistTable;
+import com.sickboots.sickvideos.database.VideoTable;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 
@@ -20,7 +20,7 @@ import java.util.Set;
  * Created by sgehrman on 12/6/13.
  */
 public class YouTubeAPIService extends IntentService {
-  private BaseDatabase database;
+  private Database database;
 
   public YouTubeAPIService() {
     super("YouTubeAPIService");
@@ -82,26 +82,26 @@ public class YouTubeAPIService extends IntentService {
     return inList;
   }
 
-  private BaseDatabase getDatabase(YouTubeServiceRequest request) {
-    BaseDatabase result = null;
+  private Database getDatabase(YouTubeServiceRequest request) {
+    Database result = null;
 
-    BaseDatabase.DatabaseTable table=null;
+    Database.DatabaseTable table=null;
     switch (request.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        table = new VideoDatabase();
+        table = new VideoTable();
         break;
       case PLAYLISTS:
-        table = new PlaylistDatabase();
+        table = new PlaylistTable();
         break;
       case CATEGORIES:
         break;
     }
 
     if (table != null)
-      result = new BaseDatabase(this, request.databaseName(), table);
+      result = new Database(this, request.databaseName(), table);
 
     return result;
   }
@@ -111,7 +111,7 @@ public class YouTubeAPIService extends IntentService {
 
     // ask the database for the hidden items
     // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
-    List<YouTubeData> hiddenItems = database.getItems(VideoDatabase.ONLY_HIDDEN_ITEMS);
+    List<YouTubeData> hiddenItems = database.getItems(VideoTable.ONLY_HIDDEN_ITEMS);
 
     if (hiddenItems != null) {
       result = new HashSet<String>();
