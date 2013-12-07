@@ -13,7 +13,6 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeAPIService;
 
 public class MainActivity extends Activity {
   public static final String REQUEST_AUTHORIZATION_INTENT = "com.sickboots.sickvideos.RequestAuth";

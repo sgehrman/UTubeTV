@@ -1,7 +1,5 @@
 package com.sickboots.sickvideos.lists;
 
-import android.app.IntentService;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.sickboots.sickvideos.database.BaseDatabase;
@@ -15,9 +13,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import com.sickboots.sickvideos.youtube.YouTubeAPIService;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
@@ -47,6 +43,11 @@ public class YouTubeListDB extends YouTubeList {
   @Override
   public void refresh() {
     loadData(TaskType.USER_REFRESH);
+  }
+
+  @Override
+  public void refetch() {
+    loadData(TaskType.REFETCH);
   }
 
   @Override
@@ -90,8 +91,7 @@ public class YouTubeListDB extends YouTubeList {
 
       switch (mTaskType) {
         case USER_REFRESH:
-          Set currentListSavedData = saveExistingListState();
-          result = loadFreshDataToDatabase(helper, currentListSavedData);
+          YouTubeAPIService.startRequest(access.getContext(), listSpec);
 
           break;
         case REFETCH:
@@ -103,119 +103,10 @@ public class YouTubeListDB extends YouTubeList {
 
           // this is lame, fix later
           if (result.size() == 0) {
-            result = loadFreshDataToDatabase(helper, null);
+            YouTubeAPIService.startRequest(access.getContext(), listSpec);
           }
 
           break;
-      }
-
-      return result;
-    }
-
-    private Set<String> saveExistingListState() {
-      Set<String> result = null;
-
-      // ask the database for the hidden items
-      // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
-      List<YouTubeData> hiddenItems = database.getItems(VideoDatabase.ONLY_HIDDEN_ITEMS);
-
-      if (hiddenItems != null) {
-        result = new HashSet<String>();
-
-        for (YouTubeData data : hiddenItems) {
-          if (data.mVideo != null) {
-            result.add(data.mVideo);
-          }
-        }
-      }
-
-      return result;
-    }
-
-    private List<YouTubeData> loadFreshDataToDatabase(YouTubeAPI helper, Set<String> currentListSavedData) {
-      List<YouTubeData> result = null; // getDataFromInternet(helper);
-
-
-        YouTubeAPIService.startRequest(access.getContext(), listSpec);
-
-
-          if (result != null) {
-        result = prepareDataFromNet(result, currentListSavedData);
-
-        // we are only deleting if we know we got good data
-        // otherwise if we delete first a network failure would just make the app useless
-        database.deleteAllRows();
-
-        database.insertItems(result);
-
-        // get items from the database, we could also just try to hand filter out the hidden items
-        // which would alloc less memory and be faster, but this insures correctness
-        result = database.getItems(mFilterHidden ? VideoDatabase.FILTER_HIDDEN_ITEMS : 0);
-      }
-
-      return result;
-    }
-
-    private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData) {
-      if (currentListSavedData != null && currentListSavedData.size() > 0) {
-        for (YouTubeData data : inList) {
-          if (data.mVideo != null) {
-            if (currentListSavedData.contains(data.mVideo))
-              data.setHidden(true);
-          }
-        }
-      }
-
-      return inList;
-    }
-
-    private List<YouTubeData> getDataFromInternet(YouTubeAPI helper) {
-      List<YouTubeData> result = null;
-      String playlistID;
-
-      YouTubeAPI.BaseListResults listResults = null;
-
-      switch (type()) {
-        case RELATED:
-          YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) listSpec.getData("type");
-          String channelID = (String) listSpec.getData("channel");
-
-          playlistID = helper.relatedPlaylistID(type, channelID);
-
-          if (playlistID != null) // probably needed authorization and failed
-            listResults = helper.videoListResults(playlistID);
-          break;
-        case VIDEOS:
-          playlistID = (String) listSpec.getData("playlist");
-
-          listResults = helper.videoListResults(playlistID);
-          break;
-        case SEARCH:
-          String query = (String) listSpec.getData("query");
-          listResults = helper.searchListResults(query);
-          break;
-        case LIKED:
-          listResults = helper.likedVideosListResults();
-          break;
-        case PLAYLISTS:
-          String channel = (String) listSpec.getData("channel");
-
-          listResults = helper.playlistListResults(channel, false);
-          break;
-        case SUBSCRIPTIONS:
-          listResults = helper.subscriptionListResults();
-          break;
-        case CATEGORIES:
-          listResults = helper.categoriesListResults("US");
-          break;
-    }
-
-      if (listResults != null) {
-        while (listResults.getNext()) {
-          // getting all
-        }
-
-        result = listResults.getItems();
       }
 
       return result;

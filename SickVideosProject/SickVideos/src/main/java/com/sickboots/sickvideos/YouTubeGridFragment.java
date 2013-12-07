@@ -21,7 +21,6 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.lists.UIAccess;
-import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 import com.sickboots.sickvideos.lists.YouTubeList;
 import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.misc.ApplicationHub;
@@ -32,6 +31,7 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import org.joda.time.Period;
 import org.joda.time.Seconds;
@@ -123,6 +123,8 @@ public class YouTubeGridFragment extends Fragment
         String fuckthis = intent.getStringExtra(DATA_READY_INTENT_PARAM);
 
         Util.log(fuckthis);
+
+        mList.refetch();
 
       }
     }

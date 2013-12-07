@@ -2,13 +2,10 @@ package com.sickboots.sickvideos.lists;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Auth;
-import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
@@ -22,6 +19,8 @@ public abstract class YouTubeList {
 
   // subclasses must implement
   abstract public void refresh();
+
+  abstract public void refetch();
 
   abstract protected void loadData(TaskType taskType);
 

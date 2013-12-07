@@ -3,11 +3,11 @@ package com.sickboots.sickvideos.youtube;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.ParseException;
 import java.util.HashMap;
 
 public class YouTubeServiceRequest implements Parcelable {
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
+
   private HashMap data;
   private RequestType type;
 

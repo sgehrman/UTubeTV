@@ -9,8 +9,6 @@ import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
@@ -38,7 +36,6 @@ import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -214,22 +211,22 @@ public class YouTubeAPI {
     if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
 
-        Intent intent = null;
-        try {
-          intent = r.getIntent();
-        } catch (Exception ee) {
-          // ignore, this happens if we kill the activity quickly before our async task finishes
-        }
-        if (intent != null)
-          doHandleAuthIntent(intent);
+      Intent intent = null;
+      try {
+        intent = r.getIntent();
+      } catch (Exception ee) {
+        // ignore, this happens if we kill the activity quickly before our async task finishes
+      }
+      if (intent != null)
+        doHandleAuthIntent(intent);
     } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
       GoogleJsonResponseException r = (GoogleJsonResponseException) e;
 
       e.printStackTrace();
 
-        doHandleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
+      doHandleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
     } else {
-        doHandleExceptionMessage("Exception Occurred: " + e.toString());
+      doHandleExceptionMessage("Exception Occurred: " + e.toString());
 
       e.printStackTrace();
     }
