@@ -11,144 +11,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
-  protected static final int DATABASE_VERSION = 1000;
-  protected DatabaseTable mTable;
+  private static Database singleton = null;
 
-  public Database(Context context, String databaseName, DatabaseTable table) {
-    super(context, databaseName.toLowerCase() + ".db", new CursorFactoryDebugger(false), DATABASE_VERSION);
+  private static final int DATABASE_VERSION = 10;
+  private static final String DATABASE_NAME = "database.db";
 
-    mTable = table;
+  private final DatabaseTables mTables = new DatabaseTables();
+
+  public static Database instance(Context context) {
+    if (singleton == null) {
+      singleton = new Database(context);
+    }
+
+    return singleton;
+  }
+
+  public Database(Context context) {
+    super(context, DATABASE_NAME, new CursorFactoryDebugger(false), DATABASE_VERSION);
   }
 
   public void onCreate(SQLiteDatabase db) {
-    String[] tables = mTable.tablesSQL();
-
-    for (String table : tables)
-      db.execSQL(table);
+    for (DatabaseTables.DatabaseTable table : mTables.tables())
+      db.execSQL(table.tableSQL());
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    // don't upgrade, just drop and start over
     final String DROP_TABLE = "DROP TABLE IF EXISTS ";
 
-    db.execSQL(DROP_TABLE + mTable.tableName());
+    // don't upgrade, just drop and start over
+    for (DatabaseTables.DatabaseTable table : mTables.tables())
+      db.execSQL(DROP_TABLE + table.tableName());
 
+    // recreate
     onCreate(db);
   }
 
   public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     onUpgrade(db, oldVersion, newVersion);
   }
-
-  public void deleteAllRows() {
-    SQLiteDatabase db = getWritableDatabase();
-
-    try {
-      db.delete(mTable.tableName(), null, null);
-    } catch (Exception e) {
-      Util.log("deleteAllRows exception: " + e.getMessage());
-    } finally {
-      db.close();
-    }
-  }
-
-  public void insertItems(List<YouTubeData> items) {
-    if (items != null) {
-      // Gets the data repository in write mode
-      SQLiteDatabase db = getWritableDatabase();
-
-      db.beginTransaction();
-      try {
-        for (YouTubeData item : items)
-          db.insert(mTable.tableName(), null, mTable.contentValuesForItem(item));
-
-        db.setTransactionSuccessful();
-      } catch (Exception e) {
-        Util.log("Insert item exception: " + e.getMessage());
-      } finally {
-        db.endTransaction();
-        db.close();
-      }
-    }
-  }
-
-  public YouTubeData getItemWithID(Long id) {
-    YouTubeData result = null;
-    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id), mTable.projection(0));
-
-    if (results.size() == 1) {
-      result = results.get(0);
-    } else {
-      Util.log("getItemWithID not found or too many results?");
-    }
-
-    return result;
-  }
-
-  public List<YouTubeData> getItems(int flags) {
-    return getItems(mTable.whereClause(flags), mTable.whereArgs(flags), mTable.projection(flags));
-  }
-
-  public void updateItem(YouTubeData item) {
-    SQLiteDatabase db = getWritableDatabase();
-
-    try {
-      Long id = item.mID;
-
-      int result = db.update(mTable.tableName(), mTable.contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
-
-      if (result != 1)
-        Util.log("updateItem didn't return 1");
-    } catch (Exception e) {
-      Util.log("updateItem exception: " + e.getMessage());
-    } finally {
-      db.close();
-    }
-  }
-
-  // -----------------------------------------------------------------------------
-  // private
-
-  private String whereClauseForID() {
-    return "_id=?";
-  }
-
-  private String[] whereArgsForID(Long id) {
-    return new String[]{id.toString()};
-  }
-
-  private List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
-    List<YouTubeData> result = new ArrayList<YouTubeData>();
-
-    SQLiteDatabase db = getReadableDatabase();
-    Cursor cursor = null;
-
-    try {
-      cursor = db.query(
-          mTable.tableName(),                     // The table to query
-          projection,                     // The columns to return
-          selection,                      // The columns for the WHERE clause
-          selectionArgs,                  // The values for the WHERE clause
-          null,                           // don't group the rows
-          null,                           // don't filter by row groups
-          null                            // The sort order
-      );
-
-      cursor.moveToFirst();
-      while (!cursor.isAfterLast()) {
-        result.add(mTable.cursorToItem(cursor));
-        cursor.moveToNext();
-      }
-    } catch (Exception e) {
-      Util.log("getItems exception: " + e.getMessage());
-    } finally {
-      if (cursor != null)
-        cursor.close();
-
-      db.close();
-    }
-
-    return result;
-  }
-
 }
+
+

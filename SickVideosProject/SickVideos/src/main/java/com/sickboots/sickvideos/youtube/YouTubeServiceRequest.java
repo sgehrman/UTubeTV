@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.sickboots.sickvideos.database.Database;
-import com.sickboots.sickvideos.database.DatabaseTable;
-import com.sickboots.sickvideos.database.PlaylistTable;
-import com.sickboots.sickvideos.database.VideoTable;
+import com.sickboots.sickvideos.database.DatabaseAccess;
+import com.sickboots.sickvideos.database.DatabaseTables;
 
 import java.util.HashMap;
 
@@ -124,26 +122,26 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public Database database(Context context) {
-    Database result = null;
+  public DatabaseAccess database(Context context) {
+    DatabaseAccess result = null;
 
-    DatabaseTable table = null;
+    DatabaseTables.DatabaseTable table = null;
     switch (type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        table = new VideoTable();
+        table = new DatabaseTables.VideoTable();
         break;
       case PLAYLISTS:
-        table = new PlaylistTable();
+        table = new DatabaseTables.PlaylistTable();
         break;
       case CATEGORIES:
         break;
     }
 
     if (table != null)
-      result = new Database(context, databaseName(), table);
+      result = new DatabaseAccess(context, table);
 
     return result;
   }

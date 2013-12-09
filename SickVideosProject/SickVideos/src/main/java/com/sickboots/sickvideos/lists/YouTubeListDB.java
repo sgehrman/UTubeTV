@@ -2,8 +2,8 @@ package com.sickboots.sickvideos.lists;
 
 import android.os.AsyncTask;
 
-import com.sickboots.sickvideos.database.Database;
-import com.sickboots.sickvideos.database.VideoTable;
+import com.sickboots.sickvideos.database.DatabaseAccess;
+import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class YouTubeListDB extends YouTubeList {
   YouTubeListDBTask runningTask = null;
-  Database database;
+  DatabaseAccess database;
 
   public YouTubeListDB(YouTubeServiceRequest request, UIAccess a) {
     super(request, a);
@@ -82,10 +82,10 @@ public class YouTubeListDB extends YouTubeList {
           break;
         case REFETCH:
           //  item hidden, or hidden visible pref toggled
-          result = database.getItems(mFilterHidden ? VideoTable.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? DatabaseTables.VideoTable.FILTER_HIDDEN_ITEMS : 0);
           break;
         case FIRSTLOAD:
-          result = database.getItems(mFilterHidden ? VideoTable.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? DatabaseTables.VideoTable.FILTER_HIDDEN_ITEMS : 0);
 
           // this is lame, fix later
           if (result.size() == 0) {

@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.YouTubeGridFragment;
-import com.sickboots.sickvideos.database.Database;
-import com.sickboots.sickvideos.database.VideoTable;
+import com.sickboots.sickvideos.database.DatabaseAccess;
+import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 
@@ -19,7 +19,7 @@ import java.util.Set;
  * Created by sgehrman on 12/6/13.
  */
 public class YouTubeAPIService extends IntentService {
-  private Database database;
+  private DatabaseAccess database;
 
   public YouTubeAPIService() {
     super("YouTubeAPIService");
@@ -83,7 +83,7 @@ public class YouTubeAPIService extends IntentService {
 
     // ask the database for the hidden items
     // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
-    List<YouTubeData> hiddenItems = database.getItems(VideoTable.ONLY_HIDDEN_ITEMS);
+    List<YouTubeData> hiddenItems = database.getItems(DatabaseTables.VideoTable.ONLY_HIDDEN_ITEMS);
 
     if (hiddenItems != null) {
       result = new HashSet<String>();
