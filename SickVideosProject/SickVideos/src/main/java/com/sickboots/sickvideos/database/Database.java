@@ -86,7 +86,7 @@ public class Database extends SQLiteOpenHelper {
   }
 
   public List<YouTubeData> getItems(int flags) {
-    return getItems(mTable.getItemsWhereClause(flags), mTable.getItemsWhereArgs(flags), mTable.projection(flags));
+    return getItems(mTable.whereClause(flags), mTable.whereArgs(flags), mTable.projection(flags));
   }
 
   public void updateItem(YouTubeData item) {

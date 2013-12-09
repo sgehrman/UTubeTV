@@ -86,12 +86,12 @@ public class PlaylistTable implements DatabaseTable {
   }
 
   @Override
-  public String getItemsWhereClause(int flags) {
+  public String whereClause(int flags) {
     return null;
   }
 
   @Override
-  public String[] getItemsWhereArgs(int flags) {
+  public String[] whereArgs(int flags) {
     return null;
   }
 

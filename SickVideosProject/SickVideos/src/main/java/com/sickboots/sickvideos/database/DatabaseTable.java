@@ -20,8 +20,8 @@ public interface DatabaseTable {
 
   public String[] tablesSQL();
 
-  public String getItemsWhereClause(int flags);
+  public String whereClause(int flags);
 
-  public String[] getItemsWhereArgs(int flags);
+  public String[] whereArgs(int flags);
 }
 

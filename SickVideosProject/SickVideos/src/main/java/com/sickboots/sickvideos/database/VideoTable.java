@@ -115,7 +115,7 @@ public class VideoTable implements DatabaseTable {
   }
 
   @Override
-  public String getItemsWhereClause(int flags) {
+  public String whereClause(int flags) {
     String result = null;
 
     switch (flags) {
@@ -131,7 +131,7 @@ public class VideoTable implements DatabaseTable {
   }
 
   @Override
-  public String[] getItemsWhereArgs(int flags) {
+  public String[] whereArgs(int flags) {
     return null;
   }
 
