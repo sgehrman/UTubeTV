@@ -26,7 +26,7 @@ public class VideoTable implements DatabaseTable {
 
   @Override
   public String tableName() {
-    return "item_table";
+    return "videos";
   }
 
   @Override

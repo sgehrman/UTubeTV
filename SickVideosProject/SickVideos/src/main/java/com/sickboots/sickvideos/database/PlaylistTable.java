@@ -20,7 +20,7 @@ public class PlaylistTable implements DatabaseTable {
 
   @Override
   public String tableName() {
-    return "item_table";
+    return "playlists";
   }
 
   @Override
