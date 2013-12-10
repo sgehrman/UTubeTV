@@ -19,8 +19,6 @@ import java.util.Set;
  * Created by sgehrman on 12/6/13.
  */
 public class YouTubeAPIService extends IntentService {
-  private DatabaseAccess database;
-
   public YouTubeAPIService() {
     super("YouTubeAPIService");
   }
@@ -40,9 +38,9 @@ public class YouTubeAPIService extends IntentService {
       List<YouTubeData> result = getDataFromInternet(request, helper);
 
       if (result != null) {
-        database = new DatabaseAccess(this, request);
+        DatabaseAccess database = new DatabaseAccess(this, request);
 
-        Set currentListSavedData = saveExistingListState();
+        Set currentListSavedData = saveExistingListState(database);
 
         result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
 
@@ -81,7 +79,7 @@ public class YouTubeAPIService extends IntentService {
     return inList;
   }
 
-  private Set<String> saveExistingListState() {
+  private Set<String> saveExistingListState(DatabaseAccess database) {
     Set<String> result = null;
 
     // ask the database for the hidden items

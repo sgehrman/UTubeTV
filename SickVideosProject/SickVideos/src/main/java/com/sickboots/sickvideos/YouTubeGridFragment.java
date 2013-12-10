@@ -1,10 +1,14 @@
 package com.sickboots.sickvideos;
 
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.Loader;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,10 +19,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.plus.model.people.Person;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.database.DatabaseTables;
+import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.lists.UIAccess;
 import com.sickboots.sickvideos.lists.YouTubeList;
@@ -64,6 +72,7 @@ public class YouTubeGridFragment extends Fragment
   private YouTubeList mList;
   private View mEmptyView;
   private GridView mGridView;
+  SimpleCursorAdapter mAAdapter;
 
   public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
   public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
@@ -190,8 +199,69 @@ public class YouTubeGridFragment extends Fragment
       mAdapter = new YouTubeListAdapter();
 
       mGridView.setOnItemClickListener(mAdapter);
-      mGridView.setAdapter(mAdapter);
+//      mGridView.setAdapter(mAdapter);
       // load data if we have it already
+
+
+
+
+
+        mAAdapter = new SimpleCursorAdapter(getActivity(),
+          mTheme_itemResId, null,
+          new String[]
+              {
+                  DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE
+              },
+          new int[]
+              {
+                  R.id.text_view
+              }
+          , 0);
+
+      // Load the content
+      getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+          return new CursorLoader(getActivity(),
+              YouTubeContentProvider.URI_PERSONS, new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE}, null, null, null);
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+          mAAdapter.swapCursor(c);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> arg0) {
+          mAAdapter.swapCursor(null);
+        }
+      });
+
+
+
+      mGridView.setAdapter(mAAdapter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       loadFromList();
 

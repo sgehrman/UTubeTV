@@ -17,7 +17,7 @@ public class DatabaseTables {
   private static final String PRIMARY = " PRIMARY KEY";
   private static final String COMMA_SEP = ",";
 
-  public interface DatabaseTable {
+  public static interface DatabaseTable {
     public String tableName();
 
     public YouTubeData cursorToItem(Cursor cursor);
@@ -143,7 +143,7 @@ public class DatabaseTables {
     public static final int ONLY_HIDDEN_ITEMS = 20;
 
     // stores information about a video
-    private class VideoEntry implements BaseColumns {
+    public class VideoEntry implements BaseColumns {
       public static final String COLUMN_NAME_REQUEST = "request";
       public static final String COLUMN_NAME_VIDEO = "video";
       public static final String COLUMN_NAME_TITLE = "title";

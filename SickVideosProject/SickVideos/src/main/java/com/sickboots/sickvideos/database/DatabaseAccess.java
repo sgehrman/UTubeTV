@@ -16,11 +16,13 @@ public class DatabaseAccess {
   private Database mDB;
   private DatabaseTables.DatabaseTable mTable;
   private YouTubeServiceRequest mRequest;
+  private Context mContext;
 
   public DatabaseAccess(Context context, YouTubeServiceRequest request) {
     super();
 
     mDB = Database.instance(context);
+    mContext = context;
     mRequest = request;
 
     DatabaseTables.DatabaseTable table = null;
@@ -62,6 +64,8 @@ public class DatabaseAccess {
           db.insert(mTable.tableName(), null, mTable.contentValuesForItem(item));
 
         db.setTransactionSuccessful();
+
+        notifyProviderOfChange();
       } catch (Exception e) {
         Util.log("Insert item exception: " + e.getMessage());
       } finally {
@@ -71,9 +75,16 @@ public class DatabaseAccess {
     }
   }
 
+  private void notifyProviderOfChange() {
+    mContext.getContentResolver().notifyChange(
+        YouTubeContentProvider.URI_PERSONS, null, false);
+  }
+
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    List<YouTubeData> results = getItems(whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+    Cursor cursor = getItemsCursor(whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+
+    List<YouTubeData> results = getItems(cursor);
 
     if (results.size() == 1) {
       result = results.get(0);
@@ -84,8 +95,12 @@ public class DatabaseAccess {
     return result;
   }
 
+  public Cursor getCursor(int flags) {
+    return getItemsCursor(mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
+  }
+
   public List<YouTubeData> getItems(int flags) {
-    return getItems(mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
+    return getItems(getCursor(flags));
   }
 
   public void updateItem(YouTubeData item) {
@@ -98,6 +113,9 @@ public class DatabaseAccess {
 
       if (result != 1)
         Util.log("updateItem didn't return 1");
+      else
+        notifyProviderOfChange();
+
     } catch (Exception e) {
       Util.log("updateItem exception: " + e.getMessage());
     } finally {
@@ -105,8 +123,37 @@ public class DatabaseAccess {
     }
   }
 
-  // called publicly by ContentProvider
-  public Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
+  // -----------------------------------------------------------------------------
+  // private
+
+  private String whereClauseForID() {
+    return "_id=?";
+  }
+
+  private String[] whereArgsForID(Long id) {
+    return new String[]{id.toString()};
+  }
+
+  private List<YouTubeData> getItems(Cursor cursor) {
+    List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+    try {
+      cursor.moveToFirst();
+      while (!cursor.isAfterLast()) {
+        result.add(mTable.cursorToItem(cursor));
+        cursor.moveToNext();
+      }
+    } catch (Exception e) {
+      Util.log("getItems exception: " + e.getMessage());
+    } finally {
+      if (cursor != null)
+        cursor.close();
+    }
+
+    return result;
+  }
+
+  private Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
     SQLiteDatabase db = mDB.getReadableDatabase();
     Cursor cursor = null;
 
@@ -129,37 +176,4 @@ public class DatabaseAccess {
     return cursor;
   }
 
-
-  // -----------------------------------------------------------------------------
-  // private
-
-  private String whereClauseForID() {
-    return "_id=?";
-  }
-
-  private String[] whereArgsForID(Long id) {
-    return new String[]{id.toString()};
-  }
-
-  private List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
-    List<YouTubeData> result = new ArrayList<YouTubeData>();
-
-    Cursor cursor = null;
-    try {
-      cursor = getItemsCursor(selection, selectionArgs, projection);
-
-      cursor.moveToFirst();
-      while (!cursor.isAfterLast()) {
-        result.add(mTable.cursorToItem(cursor));
-        cursor.moveToNext();
-      }
-    } catch (Exception e) {
-      Util.log("getItems exception: " + e.getMessage());
-    } finally {
-      if (cursor != null)
-        cursor.close();
-    }
-
-    return result;
-  }
 }

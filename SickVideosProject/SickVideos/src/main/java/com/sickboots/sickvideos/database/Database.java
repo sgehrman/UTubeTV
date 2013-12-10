@@ -26,7 +26,8 @@ public class Database extends SQLiteOpenHelper {
     return singleton;
   }
 
-  public Database(Context context) {
+  // private, use instance() singleton above
+  private Database(Context context) {
     super(context, DATABASE_NAME, new CursorFactoryDebugger(false), DATABASE_VERSION);
   }
 
