@@ -15,10 +15,10 @@ public class YouTubeContentProvider extends ContentProvider {
 
   // URIs
   // Used for all persons
-  public static final String PERSONS = SCHEME + AUTHORITY + "/person";
-  public static final Uri URI_PERSONS = Uri.parse(PERSONS);
+  public static final String CONTENTS = SCHEME + AUTHORITY + "/content";
+  public static final Uri URI_CONTENTS = Uri.parse(CONTENTS);
   // Used for a single person, just add the id to the end
-  public static final String PERSON_BASE = PERSONS + "/";
+  public static final String CONTENT_BASE = CONTENTS + "/";
 
 
   public YouTubeContentProvider() {
@@ -54,13 +54,13 @@ public class YouTubeContentProvider extends ContentProvider {
 
     Cursor cursor = null;
 
-    if (URI_PERSONS.equals(uri)) {
+    if (URI_CONTENTS.equals(uri)) {
 
       String tableName = DatabaseTables.videoTable().tableName();
       cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
 
-      cursor.setNotificationUri(getContext().getContentResolver(), URI_PERSONS);
-    } else if (uri.toString().startsWith(PERSON_BASE)) {
+      cursor.setNotificationUri(getContext().getContentResolver(), URI_CONTENTS);
+    } else if (uri.toString().startsWith(CONTENT_BASE)) {
       final long id = Long.parseLong(uri.getLastPathSegment());
       Util.log("" + id);
     }

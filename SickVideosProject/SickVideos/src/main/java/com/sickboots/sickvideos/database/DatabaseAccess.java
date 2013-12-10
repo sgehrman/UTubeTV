@@ -60,8 +60,7 @@ public class DatabaseAccess {
   }
 
   private void notifyProviderOfChange() {
-    mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_PERSONS, null);
-    Util.log("Notified the URL: " + YouTubeContentProvider.URI_PERSONS);
+    mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_CONTENTS, null);
   }
 
   public YouTubeData getItemWithID(Long id) {
