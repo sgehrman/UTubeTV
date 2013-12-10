@@ -33,7 +33,6 @@ public class DatabaseAccess {
     } catch (Exception e) {
       Util.log("deleteAllRows exception: " + e.getMessage());
     } finally {
-      db.close();
     }
   }
 
@@ -54,7 +53,6 @@ public class DatabaseAccess {
         Util.log("Insert item exception: " + e.getMessage());
       } finally {
         db.endTransaction();
-        db.close();
       }
     }
   }
@@ -72,6 +70,8 @@ public class DatabaseAccess {
     } else {
       Util.log("getItemWithID not found or too many results?");
     }
+
+    cursor.close();
 
     return result;
   }
@@ -106,7 +106,6 @@ public class DatabaseAccess {
     } catch (Exception e) {
       Util.log("updateItem exception: " + e.getMessage());
     } finally {
-      db.close();
     }
   }
 
@@ -133,8 +132,6 @@ public class DatabaseAccess {
     } catch (Exception e) {
       Util.log("getItems exception: " + e.getMessage());
     } finally {
-      if (cursor != null)
-        cursor.close();
     }
 
     return result;

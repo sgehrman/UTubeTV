@@ -102,10 +102,10 @@ public class YouTubeGridFragment extends Fragment
       title = mRequest.name();
 
     // if video player is up, show the video title
-    if (player().visible()) {
-      title = player().title();
-    }
-
+//    if (player().visible()) {
+//      title = player().title();
+//    }
+//
     return title;
   }
 
