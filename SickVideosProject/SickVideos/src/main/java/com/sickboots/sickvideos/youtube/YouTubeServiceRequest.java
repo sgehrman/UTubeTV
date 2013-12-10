@@ -1,11 +1,7 @@
 package com.sickboots.sickvideos.youtube;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.sickboots.sickvideos.database.DatabaseAccess;
-import com.sickboots.sickvideos.database.DatabaseTables;
 
 import java.util.HashMap;
 

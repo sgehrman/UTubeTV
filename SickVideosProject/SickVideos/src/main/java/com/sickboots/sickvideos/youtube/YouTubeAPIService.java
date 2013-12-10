@@ -69,7 +69,7 @@ public class YouTubeAPIService extends IntentService {
       data.mRequest = requestID;
 
       if (currentListSavedData != null && currentListSavedData.size() > 0) {
-          if (data.mVideo != null) {
+        if (data.mVideo != null) {
           if (currentListSavedData.contains(data.mVideo))
             data.setHidden(true);
         }

@@ -3,9 +3,7 @@ package com.sickboots.sickvideos.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sickboots.sickvideos.DrawerActivity;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 

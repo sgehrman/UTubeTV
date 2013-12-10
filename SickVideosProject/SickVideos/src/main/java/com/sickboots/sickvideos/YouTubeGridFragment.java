@@ -16,13 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.google.android.gms.plus.model.people.Person;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.DatabaseTables;
@@ -46,8 +44,6 @@ import org.joda.time.Seconds;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
-import java.util.List;
-
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class YouTubeGridFragment extends Fragment
@@ -68,11 +64,10 @@ public class YouTubeGridFragment extends Fragment
   private static final String RELATED_TYPE = "related";
   private static final String PLAYLIST_ID = "playlist";
   private YouTubeServiceRequest.RequestType requestType;
-  private YouTubeListAdapter mAdapter;
   private YouTubeList mList;
   private View mEmptyView;
   private GridView mGridView;
-  SimpleCursorAdapter mAAdapter;
+  private YouTubeListAdapter mAdapter;
 
   public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
   public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
@@ -196,17 +191,8 @@ public class YouTubeGridFragment extends Fragment
 
     if (mList == null) {
       mList = createList(getArguments());
-      mAdapter = new YouTubeListAdapter();
 
-      mGridView.setOnItemClickListener(mAdapter);
-//      mGridView.setAdapter(mAdapter);
-      // load data if we have it already
-
-
-
-
-
-        mAAdapter = new SimpleCursorAdapter(getActivity(),
+      mAdapter = new YouTubeListAdapter(getActivity(),
           mTheme_itemResId, null,
           new String[]
               {
@@ -218,50 +204,29 @@ public class YouTubeGridFragment extends Fragment
               }
           , 0);
 
+      mGridView.setOnItemClickListener(mAdapter);
+
       // Load the content
       getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
           return new CursorLoader(getActivity(),
-              YouTubeContentProvider.URI_PERSONS, new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE}, null, null, null);
+              YouTubeContentProvider.URI_PERSONS, new String[]{DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE}, null, null, null);
         }
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-          mAAdapter.swapCursor(c);
+          mAdapter.swapCursor(c);
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> arg0) {
-          mAAdapter.swapCursor(null);
+          mAdapter.swapCursor(null);
         }
       });
 
 
-
-      mGridView.setAdapter(mAAdapter);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      mGridView.setAdapter(mAdapter);
 
       loadFromList();
 
@@ -327,19 +292,6 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private void loadFromList() {
-    int savedScrollState = mGridView.getFirstVisiblePosition();
-
-    mAdapter.clear();
-
-    List items = mList.getItems();
-
-    if (items != null) {
-      mAdapter.addAll(items);
-
-      // restore scroll position if we saved it
-      mGridView.setSelection(savedScrollState);
-    }
-
     // stop the pull to refresh indicator
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     if (ptrl != null) // could be null if activity was destroyed
@@ -409,13 +361,14 @@ public class YouTubeGridFragment extends Fragment
   // ===========================================================================
   // Adapter
 
-  private class YouTubeListAdapter extends ArrayAdapter<YouTubeData> implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
+  private class YouTubeListAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
     private final LayoutInflater inflater;
     int animationID = 0;
     boolean showHidden = false;
 
-    public YouTubeListAdapter() {
-      super(getActivity(), 0);
+    public YouTubeListAdapter(Context context, int layout, Cursor c, String[] from,
+                              int[] to, int flags) {
+      super(context, layout, c, from, to, flags);
 
       inflater = LayoutInflater.from(getActivity());
     }
@@ -450,8 +403,8 @@ public class YouTubeGridFragment extends Fragment
       if (holder != null) {
         animateViewForClick(holder.image);
 
-        YouTubeData map = getItem(position);
-        handleClick(map);
+//        YouTubeData map = getItem(position);
+//        handleClick(map);
       } else {
         Util.log("no holder on click?");
       }
@@ -483,7 +436,9 @@ public class YouTubeGridFragment extends Fragment
         holder.image.setRotationY(0.0f);
       }
 
-      YouTubeData itemMap = getItem(position);
+      Cursor cursor = (Cursor) getItem(position);
+      DatabaseTables.VideoTable vidTable = new DatabaseTables.VideoTable();
+      YouTubeData itemMap = vidTable.cursorToItem(cursor);
 
       holder.image.setAnimation(null);
 
@@ -510,8 +465,6 @@ public class YouTubeGridFragment extends Fragment
 
       if (hidden)
         holder.title.setText("(Hidden)");
-      else
-        holder.title.setText(itemMap.mTitle);
 
       String duration = itemMap.mDuration;
       if (duration != null) {

@@ -27,12 +27,14 @@ public class DatabaseTables {
     public String tableSQL();
 
     public String[] projection(int flags);
+
     public String whereClause(int flags, String requestId);
+
     public String[] whereArgs(int flags, String requestId);
   }
 
   public static DatabaseTable[] tables() {
-    return new DatabaseTable[] {new VideoTable(), new PlaylistTable()};
+    return new DatabaseTable[]{new VideoTable(), new PlaylistTable()};
   }
 
   public static class PlaylistTable implements DatabaseTable {
