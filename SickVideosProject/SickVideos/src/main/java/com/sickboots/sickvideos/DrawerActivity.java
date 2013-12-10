@@ -410,17 +410,17 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   @Override
   public VideoPlayer videoPlayer() {
-//    if (mPlayer == null) {
-//      mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
-//
-//        // called when the video player opens or closes, adjust the action bar title
-//
-//        @Override
-//        public void stateChanged() {
-//          updateActionBarTitle();
-//        }
-//      });
-//    }
+    if (mPlayer == null) {
+      mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+
+        // called when the video player opens or closes, adjust the action bar title
+
+        @Override
+        public void stateChanged() {
+          updateActionBarTitle();
+        }
+      });
+    }
 
     return mPlayer;
   }
