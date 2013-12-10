@@ -196,11 +196,11 @@ public class YouTubeGridFragment extends Fragment
           mTheme_itemResId, null,
           new String[]
               {
-                  DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE
+//                  DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE
               },
           new int[]
               {
-                  R.id.text_view
+//                  R.id.text_view
               }
           , 0);
 
@@ -465,6 +465,8 @@ public class YouTubeGridFragment extends Fragment
 
       if (hidden)
         holder.title.setText("(Hidden)");
+      else
+        holder.title.setText(itemMap.mTitle);
 
       String duration = itemMap.mDuration;
       if (duration != null) {
