@@ -105,20 +105,8 @@ public class DatabaseAccess {
     }
   }
 
-  // -----------------------------------------------------------------------------
-  // private
-
-  private String whereClauseForID() {
-    return "_id=?";
-  }
-
-  private String[] whereArgsForID(Long id) {
-    return new String[]{id.toString()};
-  }
-
-  private List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
-    List<YouTubeData> result = new ArrayList<YouTubeData>();
-
+  // called publicly by ContentProvider
+  public Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
     SQLiteDatabase db = mDB.getReadableDatabase();
     Cursor cursor = null;
 
@@ -133,6 +121,33 @@ public class DatabaseAccess {
           null                            // The sort order
       );
 
+    } catch (Exception e) {
+      Util.log("getItemsCursor exception: " + e.getMessage());
+    } finally {
+    }
+
+    return cursor;
+  }
+
+
+  // -----------------------------------------------------------------------------
+  // private
+
+  private String whereClauseForID() {
+    return "_id=?";
+  }
+
+  private String[] whereArgsForID(Long id) {
+    return new String[]{id.toString()};
+  }
+
+  private List<YouTubeData> getItems(String selection, String[] selectionArgs, String[] projection) {
+    List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+    Cursor cursor = null;
+    try {
+      cursor = getItemsCursor(selection, selectionArgs, projection);
+
       cursor.moveToFirst();
       while (!cursor.isAfterLast()) {
         result.add(mTable.cursorToItem(cursor));
@@ -143,11 +158,8 @@ public class DatabaseAccess {
     } finally {
       if (cursor != null)
         cursor.close();
-
-      db.close();
     }
 
     return result;
   }
-
 }
