@@ -133,9 +133,6 @@ public class YouTubeGridFragment extends Fragment
 
 
 
-
-
-
     mAdapter = new YouTubeListAdapter(getActivity(),
         mTheme_itemResId, null,
         new String[] {},
@@ -148,10 +145,13 @@ public class YouTubeGridFragment extends Fragment
     getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
       @Override
       public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
+
         String sortOrder = null;
-        String[] selectionArgs=null;
-        String selection=null;
-        String[] projection = new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE};
+        String[] selectionArgs=table.whereArgs(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier());
+        String selection=table.whereClause(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier());;
+        String[] projection = table.projection(DatabaseTables.ALL_ITEMS);
 
         YouTubeAPIService.startRequest(getActivity(), mRequest);
 
@@ -161,6 +161,8 @@ public class YouTubeGridFragment extends Fragment
 
       @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+        Util.log("don't vuck with me sss");
+
         mAdapter.swapCursor(c);
       }
 
@@ -171,10 +173,6 @@ public class YouTubeGridFragment extends Fragment
     });
 
     mGridView.setAdapter(mAdapter);
-
-
-
-
 
 
 
@@ -313,6 +311,21 @@ public class YouTubeGridFragment extends Fragment
     }
 
     @Override
+    public void changeCursorAndColumns(Cursor c, String[] from, int[] to) {
+      Util.log("kumlockk");
+
+      super.changeCursorAndColumns(c,from, to);
+      }
+
+    @Override
+    public Cursor swapCursor(Cursor c) {
+      Util.log("kuddddddmlockk");
+
+      return super.swapCursor(c);
+
+    }
+
+      @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
       ViewHolder holder = (ViewHolder) v.getTag();
 

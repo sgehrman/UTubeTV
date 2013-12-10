@@ -56,9 +56,11 @@ public class YouTubeContentProvider extends ContentProvider {
     YouTubeServiceRequest request = YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null);
     DatabaseAccess access = new DatabaseAccess(getContext(), request);
 
-    Cursor cursor = access.getCursor(DatabaseTables.VISIBLE_ITEMS);
+    Cursor cursor = access.getItemsCursor(  selection,   selectionArgs,   projection);
 
-    return cursor;
+
+
+      return cursor;
   }
 
   @Override

@@ -74,6 +74,7 @@ public class DatabaseAccess {
 
   private void notifyProviderOfChange() {
     mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_PERSONS, null);
+    Util.log("Notified the URL: " + YouTubeContentProvider.URI_PERSONS);
   }
 
   public YouTubeData getItemWithID(Long id) {
@@ -94,6 +95,30 @@ public class DatabaseAccess {
   public Cursor getCursor(int flags) {
     return getItemsCursor(mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
   }
+
+  public Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
+    SQLiteDatabase db = mDB.getReadableDatabase();
+    Cursor cursor = null;
+
+    try {
+      cursor = db.query(
+          mTable.tableName(),                     // The table to query
+          projection,                     // The columns to return
+          selection,                      // The columns for the WHERE clause
+          selectionArgs,                  // The values for the WHERE clause
+          null,                           // don't group the rows
+          null,                           // don't filter by row groups
+          null                            // The sort order
+      );
+
+    } catch (Exception e) {
+      Util.log("getItemsCursor exception: " + e.getMessage());
+    } finally {
+    }
+
+    return cursor;
+  }
+
 
   public List<YouTubeData> getItems(int flags) {
     return getItems(getCursor(flags));
@@ -147,29 +172,6 @@ public class DatabaseAccess {
     }
 
     return result;
-  }
-
-  private Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
-    SQLiteDatabase db = mDB.getReadableDatabase();
-    Cursor cursor = null;
-
-    try {
-      cursor = db.query(
-          mTable.tableName(),                     // The table to query
-          projection,                     // The columns to return
-          selection,                      // The columns for the WHERE clause
-          selectionArgs,                  // The values for the WHERE clause
-          null,                           // don't group the rows
-          null,                           // don't filter by row groups
-          null                            // The sort order
-      );
-
-    } catch (Exception e) {
-      Util.log("getItemsCursor exception: " + e.getMessage());
-    } finally {
-    }
-
-    return cursor;
   }
 
 }
