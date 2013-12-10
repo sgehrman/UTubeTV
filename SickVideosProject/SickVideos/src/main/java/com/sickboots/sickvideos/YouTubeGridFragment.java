@@ -23,12 +23,10 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.lists.UIAccess;
-import com.sickboots.sickvideos.lists.YouTubeList;
-import com.sickboots.sickvideos.lists.YouTubeListDB;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
@@ -60,7 +58,6 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private YouTubeServiceRequest mRequest;
-  private YouTubeList mList;
   private View mEmptyView;
   private GridView mGridView;
   private YouTubeListAdapter mAdapter;
@@ -91,8 +88,6 @@ public class YouTubeGridFragment extends Fragment
       if (intent.getAction().equals(YouTubeAPIService.DATA_READY_INTENT)) {
         String param = intent.getStringExtra(YouTubeAPIService.DATA_READY_INTENT_PARAM);
 
-        mList.refetch();
-
         // stop the pull to refresh indicator
         Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
         if (ptrl != null) // could be null if activity was destroyed
@@ -103,8 +98,8 @@ public class YouTubeGridFragment extends Fragment
 
   public CharSequence actionBarTitle() {
     CharSequence title = null;
-    if (mList != null)
-      title = mList.name();
+    if (mRequest != null)
+      title = mRequest.name();
 
     // if video player is up, show the video title
     if (player().visible()) {
@@ -136,6 +131,53 @@ public class YouTubeGridFragment extends Fragment
     // .015 is the default
     mGridView.setFriction(0.005f);
 
+
+
+
+
+
+    mAdapter = new YouTubeListAdapter(getActivity(),
+        mTheme_itemResId, null,
+        new String[] {},
+        new int[] {}
+        , 0);
+
+    mGridView.setOnItemClickListener(mAdapter);
+
+    // Load the content
+    getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
+      @Override
+      public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String sortOrder = null;
+        String[] selectionArgs=null;
+        String selection=null;
+        String[] projection = new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE};
+
+        YouTubeAPIService.startRequest(getActivity(), mRequest);
+
+        return new CursorLoader(getActivity(),
+            YouTubeContentProvider.URI_PERSONS, projection, selection, selectionArgs, sortOrder);
+      }
+
+      @Override
+      public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+        mAdapter.swapCursor(c);
+      }
+
+      @Override
+      public void onLoaderReset(Loader<Cursor> arg0) {
+        mAdapter.swapCursor(null);
+      }
+    });
+
+    mGridView.setAdapter(mAdapter);
+
+
+
+
+
+
+
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
     ptrl.addRefreshableView(mGridView, this);
@@ -158,73 +200,35 @@ public class YouTubeGridFragment extends Fragment
     IntentFilter intentFilter = new IntentFilter(YouTubeAPIService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
-    if (mList == null) {
-      mList = new YouTubeListDB(mRequest, createUIAccess());
-
-      mAdapter = new YouTubeListAdapter(getActivity(),
-          mTheme_itemResId, null,
-          new String[] {},
-          new int[] {}
-          , 0);
-
-      mGridView.setOnItemClickListener(mAdapter);
-
-      // Load the content
-      getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
-        @Override
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-          String sortOrder = null;
-          String[] selectionArgs=null;
-          String selection=null;
-          String[] projection = new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE};
-
-          return new CursorLoader(getActivity(),
-              YouTubeContentProvider.URI_PERSONS, projection, selection, selectionArgs, sortOrder);
-        }
-
-        @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-          mAdapter.swapCursor(c);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<Cursor> arg0) {
-          mAdapter.swapCursor(null);
-        }
-      });
-
-      mGridView.setAdapter(mAdapter);
-
       // triggers an update for the title, lame hack
       HostActivitySupport provider = (HostActivitySupport) getActivity();
       provider.fragmentWasInstalled();
-    }
   }
 
   public void handleClick(YouTubeData itemMap) {
-    switch (mList.type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        String videoId = itemMap.mVideo;
-        String title = itemMap.mTitle;
-
-        player().open(videoId, title, true);
-        break;
-      case PLAYLISTS: {
-        String playlistID = itemMap.mPlaylist;
-
-        if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
-
-          HostActivitySupport provider = (HostActivitySupport) getActivity();
-
-          provider.installFragment(frag, true);
-        }
-      }
-      break;
-    }
+//    switch (mList.type()) {
+//      case RELATED:
+//      case SEARCH:
+//      case LIKED:
+//      case VIDEOS:
+//        String videoId = itemMap.mVideo;
+//        String title = itemMap.mTitle;
+//
+//        player().open(videoId, title, true);
+//        break;
+//      case PLAYLISTS: {
+//        String playlistID = itemMap.mPlaylist;
+//
+//        if (playlistID != null) {
+//          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
+//
+//          HostActivitySupport provider = (HostActivitySupport) getActivity();
+//
+//          provider.installFragment(frag, true);
+//        }
+//      }
+//      break;
+//    }
   }
 
   private void updateForVariablesTheme() {
@@ -249,32 +253,26 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void onRefreshStarted(View view) {
-    mList.refresh();
+    YouTubeAPIService.startRequest(getActivity(), mRequest);
 
     mEmptyView.setVisibility(View.VISIBLE);
 
     mGridView.setEmptyView(mEmptyView);
   }
 
-  private UIAccess createUIAccess() {
-    final Context appContext = getActivity().getApplicationContext();
-    UIAccess access = new UIAccess() {
-      @Override
-      public void onResults() {
-        // get rid of the empty view.  Its not used after initial load, and this also
-        // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
-        mGridView.setEmptyView(null);
-        mEmptyView.setVisibility(View.INVISIBLE);
-      }
 
-      @Override
-      public Context getContext() {
-        return appContext;
-      }
-    };
 
-    return access;
-  }
+
+  // use this??
+
+
+  // get rid of the empty view.  Its not used after initial load, and this also
+  // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
+//  mGridView.setEmptyView(null);
+//  mEmptyView.setVisibility(View.INVISIBLE);
+
+
+
 
   // ===========================================================================
   // Adapter
@@ -444,7 +442,8 @@ public class YouTubeGridFragment extends Fragment
       // toggle it
       videoMap.setHidden(!videoMap.isHidden());
 
-      mList.updateItem(videoMap);
+      DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
+      database.updateItem(videoMap);
     }
 
     class ViewHolder {

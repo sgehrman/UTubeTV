@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.youtube;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.YouTubeGridFragment;
@@ -37,21 +38,31 @@ public class YouTubeAPIService extends IntentService {
     try {
       YouTubeServiceRequest request = intent.getParcelableExtra("request");
 
-      YouTubeAPI helper = new YouTubeAPI(this);
-      List<YouTubeData> result = getDataFromInternet(request, helper);
+      // only get data from youtube if we don't have locally cached data for this request
 
-      if (result != null) {
-        DatabaseAccess database = new DatabaseAccess(this, request);
+      DatabaseAccess access = new DatabaseAccess(this, request);
 
-        Set currentListSavedData = saveExistingListState(database);
+      Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
+      boolean hasItems = cursor.moveToFirst();
 
-        result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
+      if (!hasItems) {
 
-        // we are only deleting if we know we got good data
-        // otherwise if we delete first a network failure would just make the app useless
-        database.deleteAllRows();
+        YouTubeAPI helper = new YouTubeAPI(this);
+        List<YouTubeData> result = getDataFromInternet(request, helper);
 
-        database.insertItems(result);
+        if (result != null) {
+          DatabaseAccess database = new DatabaseAccess(this, request);
+
+          Set currentListSavedData = saveExistingListState(database);
+
+          result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
+
+          // we are only deleting if we know we got good data
+          // otherwise if we delete first a network failure would just make the app useless
+          database.deleteAllRows();
+
+          database.insertItems(result);
+        }
       }
 
       Intent messageIntent = new Intent(DATA_READY_INTENT);
