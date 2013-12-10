@@ -50,7 +50,6 @@ public class YouTubeContentProvider extends ContentProvider {
   @Override
   public Cursor query(Uri uri, String[] projection, String selection,
                       String[] selectionArgs, String sortOrder) {
-
     Cursor cursor = null;
 
     if (URI_CONTENTS.equals(uri)) {

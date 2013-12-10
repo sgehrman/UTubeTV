@@ -310,6 +310,5 @@ public class DatabaseTables {
     public String[] whereArgs(int flags, String requestId) {
       return new String[]{requestId};
     }
-
   }
 }

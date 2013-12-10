@@ -94,9 +94,7 @@ public class DatabaseAccess {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      Long id = item.mID;
-
-      int result = db.update(mTable.tableName(), mTable.contentValuesForItem(item), whereClauseForID(), whereArgsForID(id));
+      int result = db.update(mTable.tableName(), mTable.contentValuesForItem(item), whereClauseForID(), whereArgsForID(item.mID));
 
       if (result != 1)
         Util.log("updateItem didn't return 1");
@@ -136,5 +134,4 @@ public class DatabaseAccess {
 
     return result;
   }
-
 }

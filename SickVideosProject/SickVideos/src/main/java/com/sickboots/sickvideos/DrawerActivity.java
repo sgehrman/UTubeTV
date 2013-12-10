@@ -424,7 +424,4 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     return mPlayer;
   }
-
-  // ----------------------------------------------------
-
 }

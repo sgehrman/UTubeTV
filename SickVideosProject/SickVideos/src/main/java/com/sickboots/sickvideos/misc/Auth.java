@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class Auth {
   private static GoogleAccountCredential credential;
 

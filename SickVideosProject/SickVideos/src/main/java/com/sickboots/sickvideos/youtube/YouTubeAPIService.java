@@ -126,7 +126,7 @@ public class YouTubeAPIService extends IntentService {
     List<YouTubeData> result = null;
     String playlistID;
 
-    Util.log("getDataFromInternet ======================");
+    Util.log("getDataFromInternet: " + request.requestIdentifier());
 
     YouTubeAPI.BaseListResults listResults = null;
 
