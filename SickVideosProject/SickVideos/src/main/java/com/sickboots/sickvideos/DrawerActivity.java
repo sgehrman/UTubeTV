@@ -29,6 +29,7 @@ import com.sickboots.sickvideos.misc.PreferenceCache;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -326,25 +327,25 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     switch (position) {
       case 0:
-        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.FAVORITES);
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
         break;
       case 1:
-        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.LIKES);
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
         break;
       case 2:
-        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHED);
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
         break;
       case 3:
-        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.UPLOADS);
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
         break;
       case 4:
-        fragment = YouTubeGridFragment.relatedFragment(YouTubeAPI.RelatedPlaylistType.WATCHLATER);
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
         break;
       case 5:
         fragment = new ColorPickerFragment();
         break;
       case 6:
-        fragment = YouTubeGridFragment.playlistsFragment("UC07XXQh04ukEX68loZFgnVw");
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest("UC07XXQh04ukEX68loZFgnVw"));
         break;
     }
 

@@ -58,12 +58,7 @@ public class YouTubeGridFragment extends Fragment
     public void installFragment(Fragment fragment, boolean animate);
   }
 
-  private static final String SEARCH_QUERY = "query";
-  private static final String LIST_TYPE = "type";
-  private static final String CHANNEL_ID = "channel";
-  private static final String RELATED_TYPE = "related";
-  private static final String PLAYLIST_ID = "playlist";
-  private YouTubeServiceRequest.RequestType requestType;
+  private YouTubeServiceRequest mRequest;
   private YouTubeList mList;
   private View mEmptyView;
   private GridView mGridView;
@@ -79,40 +74,12 @@ public class YouTubeGridFragment extends Fragment
   private int mTheme_resId;
   private boolean mTheme_drawImageShadows;
 
-  public static YouTubeGridFragment relatedFragment(YouTubeAPI.RelatedPlaylistType relatedType) {
-    return newInstance(YouTubeServiceRequest.RequestType.RELATED, null, null, relatedType, null);
-  }
-
-  public static YouTubeGridFragment videosFragment(String playlistID) {
-    return newInstance(YouTubeServiceRequest.RequestType.VIDEOS, null, playlistID, null, null);
-  }
-
-  public static YouTubeGridFragment playlistsFragment(String channelID) {
-    return newInstance(YouTubeServiceRequest.RequestType.PLAYLISTS, channelID, null, null, null);
-  }
-
-  public static YouTubeGridFragment likedFragment() {
-    return newInstance(YouTubeServiceRequest.RequestType.LIKED, null, null, null, null);
-  }
-
-  public static YouTubeGridFragment subscriptionsFragment() {
-    return newInstance(YouTubeServiceRequest.RequestType.SUBSCRIPTIONS, null, null, null, null);
-  }
-
-  public static YouTubeGridFragment searchFragment(String searchQuery) {
-    return newInstance(YouTubeServiceRequest.RequestType.SEARCH, null, null, null, searchQuery);
-  }
-
-  private static YouTubeGridFragment newInstance(YouTubeServiceRequest.RequestType requestType, String channelID, String playlistID, YouTubeAPI.RelatedPlaylistType relatedType, String searchQuery) {
+  public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
 
     Bundle args = new Bundle();
 
-    args.putSerializable(LIST_TYPE, requestType);
-    args.putSerializable(RELATED_TYPE, relatedType);
-    args.putString(CHANNEL_ID, channelID);
-    args.putString(PLAYLIST_ID, playlistID);
-    args.putString(SEARCH_QUERY, searchQuery);
+    args.putParcelable("request", request);
 
     fragment.setArguments(args);
 
@@ -152,7 +119,7 @@ public class YouTubeGridFragment extends Fragment
     // use same instance if activity is recreated under our feet
     setRetainInstance(true);
 
-    requestType = (YouTubeServiceRequest.RequestType) getArguments().getSerializable(LIST_TYPE);
+    mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
 
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
     mGridView = (GridView) rootView.findViewById(R.id.gridview);
@@ -190,7 +157,7 @@ public class YouTubeGridFragment extends Fragment
 
 
     if (mList == null) {
-      mList = createList(getArguments());
+      mList = new YouTubeListDB(mRequest, createUIAccess());
 
       mAdapter = new YouTubeListAdapter(getActivity(),
           mTheme_itemResId, null,
@@ -251,7 +218,7 @@ public class YouTubeGridFragment extends Fragment
         String playlistID = itemMap.mPlaylist;
 
         if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.videosFragment(playlistID);
+          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
 
           HostActivitySupport provider = (HostActivitySupport) getActivity();
 
@@ -318,44 +285,6 @@ public class YouTubeGridFragment extends Fragment
     };
 
     return access;
-  }
-
-  private YouTubeList createList(Bundle argsBundle) {
-    YouTubeList result = null;
-
-    String channelID = argsBundle.getString(CHANNEL_ID);
-    String playlistID = argsBundle.getString(PLAYLIST_ID);
-    String query = argsBundle.getString(SEARCH_QUERY);
-    YouTubeAPI.RelatedPlaylistType relatedType = (YouTubeAPI.RelatedPlaylistType) argsBundle.getSerializable(RELATED_TYPE);
-
-    UIAccess access = createUIAccess();
-
-    switch (requestType) {
-      case SUBSCRIPTIONS:
-        result = new YouTubeListDB(YouTubeServiceRequest.subscriptionsSpec(), access);
-        break;
-      case PLAYLISTS:
-        result = new YouTubeListDB(YouTubeServiceRequest.playlistsSpec(channelID), access);
-        break;
-      case CATEGORIES:
-        Util.log("THIS is broken... Categories, just fix db integration");
-        result = new YouTubeListDB(YouTubeServiceRequest.categoriesSpec(), access);
-        break;
-      case LIKED:
-        result = new YouTubeListDB(YouTubeServiceRequest.likedSpec(), access);
-        break;
-      case RELATED:
-        result = new YouTubeListDB(YouTubeServiceRequest.relatedSpec(relatedType, channelID), access);
-        break;
-      case SEARCH:
-        result = new YouTubeListDB(YouTubeServiceRequest.searchSpec(query), access);
-        break;
-      case VIDEOS:
-        result = new YouTubeListDB(YouTubeServiceRequest.videosSpec(playlistID), access);
-        break;
-    }
-
-    return result;
   }
 
   // ===========================================================================

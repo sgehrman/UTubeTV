@@ -11,7 +11,7 @@ public class YouTubeServiceRequest implements Parcelable {
   private HashMap data;
   private RequestType type;
 
-  public static YouTubeServiceRequest relatedSpec(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
+  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
 
     result.data.put("type", relatedPlayListType);
@@ -20,7 +20,7 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest videosSpec(String playlistID) {
+  public static YouTubeServiceRequest videosRequest(String playlistID) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("playlist", playlistID);
@@ -28,7 +28,7 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest searchSpec(String query) {
+  public static YouTubeServiceRequest searchRequest(String query) {
     YouTubeServiceRequest result = emptyRequest(RequestType.SEARCH);
 
     result.data.put("query", query);
@@ -36,25 +36,25 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest subscriptionsSpec() {
+  public static YouTubeServiceRequest subscriptionsRequest() {
     YouTubeServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
     return result;
   }
 
-  public static YouTubeServiceRequest categoriesSpec() {
+  public static YouTubeServiceRequest categoriesRequest() {
     YouTubeServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
     return result;
   }
 
-  public static YouTubeServiceRequest likedSpec() {
+  public static YouTubeServiceRequest likedRequest() {
     YouTubeServiceRequest result = emptyRequest(RequestType.LIKED);
 
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsSpec(String channelID) {
+  public static YouTubeServiceRequest playlistsRequest(String channelID) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
     result.data.put("channel", channelID);

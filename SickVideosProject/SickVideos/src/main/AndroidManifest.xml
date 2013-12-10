@@ -41,11 +41,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.sickboots.sickvideos.unused.PlaylistChooserActivity"
-            android:label="@string/title_activity_playlist_chooser"
-            android:theme="@android:style/Theme.Holo.Dialog">
-        </activity>
 
         <service
             android:name="com.sickboots.sickvideos.youtube.YouTubeAPIService"
