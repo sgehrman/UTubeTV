@@ -28,10 +28,10 @@ public class DatabaseAccess {
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        mTable = DatabaseTables.VideoTable.instance();
+        mTable = DatabaseTables.videoTable();
         break;
       case PLAYLISTS:
-        mTable = DatabaseTables.PlaylistTable.instance();
+        mTable = DatabaseTables.playlistTable();
         break;
       case CATEGORIES:
         break;

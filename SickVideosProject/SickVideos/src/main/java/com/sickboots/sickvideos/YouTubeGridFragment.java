@@ -404,7 +404,7 @@ public class YouTubeGridFragment extends Fragment
         animateViewForClick(holder.image);
 
         Cursor cursor = (Cursor) getItem(position);
-        YouTubeData itemMap = DatabaseTables.VideoTable.instance().cursorToItem(cursor);
+        YouTubeData itemMap = DatabaseTables.videoTable().cursorToItem(cursor);
 
         handleClick(itemMap);
       } else {
@@ -439,7 +439,7 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      YouTubeData itemMap = DatabaseTables.VideoTable.instance().cursorToItem(cursor);
+      YouTubeData itemMap = DatabaseTables.videoTable().cursorToItem(cursor);
 
       holder.image.setAnimation(null);
 

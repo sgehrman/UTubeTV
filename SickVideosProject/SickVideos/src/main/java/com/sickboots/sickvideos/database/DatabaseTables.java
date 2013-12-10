@@ -17,6 +17,23 @@ public class DatabaseTables {
   private static final String PRIMARY = " PRIMARY KEY";
   private static final String COMMA_SEP = ",";
 
+  private static VideoTable mVideoTable=null;
+  private static PlaylistTable mPlaylistTable=null;
+
+  public static VideoTable videoTable(){
+    if (mVideoTable == null)
+      mVideoTable = new VideoTable();
+
+    return mVideoTable;
+  }
+
+  public static PlaylistTable playlistTable() {
+    if (mPlaylistTable == null)
+      mPlaylistTable = new PlaylistTable();
+
+    return mPlaylistTable;
+  }
+
   public static interface DatabaseTable {
     public String tableName();
 
@@ -34,7 +51,7 @@ public class DatabaseTables {
   }
 
   public static DatabaseTable[] tables() {
-    return new DatabaseTable[]{VideoTable.instance(), PlaylistTable.instance()};
+    return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable()};
   }
 
   public static class PlaylistTable implements DatabaseTable {
@@ -162,14 +179,6 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_DURATION = "duration";
       public static final String COLUMN_NAME_HIDDEN = "hidden";
       public static final String COLUMN_NAME_START = "start";
-    }
-
-    private static VideoTable singleton=null;
-    public static VideoTable instance() {
-      if (singleton == null)
-        singleton = new VideoTable();
-
-      return singleton;
     }
 
     private VideoTable() {
