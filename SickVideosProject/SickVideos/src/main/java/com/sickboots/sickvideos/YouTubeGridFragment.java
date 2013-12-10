@@ -143,7 +143,7 @@ public class YouTubeGridFragment extends Fragment
       public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         DatabaseTables.DatabaseTable table = mRequest.databaseTable();
 
-        String sortOrder = null;
+        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl";
         String[] selectionArgs = table.whereArgs(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
         String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
         String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);

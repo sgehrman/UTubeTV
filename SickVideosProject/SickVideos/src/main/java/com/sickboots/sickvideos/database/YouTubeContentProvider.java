@@ -20,7 +20,6 @@ public class YouTubeContentProvider extends ContentProvider {
   // Used for a single person, just add the id to the end
   public static final String CONTENT_BASE = CONTENTS + "/";
 
-
   public YouTubeContentProvider() {
   }
 
@@ -55,9 +54,13 @@ public class YouTubeContentProvider extends ContentProvider {
     Cursor cursor = null;
 
     if (URI_CONTENTS.equals(uri)) {
-
-      String tableName = DatabaseTables.videoTable().tableName();
-      cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+      if (sortOrder.equals("pl")) {
+        String tableName = DatabaseTables.playlistTable().tableName();
+        cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+      } else {
+        String tableName = DatabaseTables.videoTable().tableName();
+        cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+      }
 
       cursor.setNotificationUri(getContext().getContentResolver(), URI_CONTENTS);
     } else if (uri.toString().startsWith(CONTENT_BASE)) {
