@@ -56,7 +56,7 @@ public class YouTubeContentProvider extends ContentProvider {
     YouTubeServiceRequest request = YouTubeServiceRequest.relatedSpec(YouTubeAPI.RelatedPlaylistType.FAVORITES, null);
     DatabaseAccess access = new DatabaseAccess(getContext(), request);
 
-    Cursor cursor = access.getCursor(DatabaseTables.VideoTable.FILTER_HIDDEN_ITEMS);
+    Cursor cursor = access.getCursor(DatabaseTables.VISIBLE_ITEMS);
 
     return cursor;
   }

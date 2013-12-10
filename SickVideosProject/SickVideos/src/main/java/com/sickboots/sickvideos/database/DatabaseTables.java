@@ -9,7 +9,9 @@ import android.provider.BaseColumns;
  */
 public class DatabaseTables {
   // filter flags
-  public static final int DELETE_ALL_ITEMS = -10;
+  public static final int ALL_ITEMS = 0;
+  public static final int HIDDEN_ITEMS = 10;
+  public static final int VISIBLE_ITEMS = 20;
 
   private static final String CREATE = "CREATE TABLE ";
   private static final String TEXT_TYPE = " TEXT";
@@ -150,14 +152,14 @@ public class DatabaseTables {
 
     @Override
     public String whereClause(int flags, String requestId) {
-      String result = PlaylistEntry.COLUMN_NAME_REQUEST + " = '" + requestId + "'";
+      String result = PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
 
       return result;
     }
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return null;
+      return new String[] {requestId};
     }
   }
 
@@ -165,10 +167,6 @@ public class DatabaseTables {
   // =====================================================================
 
   public static class VideoTable implements DatabaseTable {
-    // filter flags
-    public static final int FILTER_HIDDEN_ITEMS = 10;
-    public static final int ONLY_HIDDEN_ITEMS = 20;
-
     // stores information about a video
     public class VideoEntry implements BaseColumns {
       public static final String COLUMN_NAME_REQUEST = "request";
@@ -254,7 +252,7 @@ public class DatabaseTables {
       String[] result = null;
 
       switch (flags) {
-        case ONLY_HIDDEN_ITEMS:
+        case HIDDEN_ITEMS:
           result = new String[]{
               VideoEntry._ID,
               VideoEntry.COLUMN_NAME_REQUEST,
@@ -262,7 +260,8 @@ public class DatabaseTables {
               VideoEntry.COLUMN_NAME_HIDDEN
           };
 
-        case FILTER_HIDDEN_ITEMS:
+        case VISIBLE_ITEMS:
+        case ALL_ITEMS:
         default:
           result = new String[]{
               VideoEntry._ID,
@@ -286,13 +285,13 @@ public class DatabaseTables {
       String result = null;
 
       switch (flags) {
-        case ONLY_HIDDEN_ITEMS:
+        case HIDDEN_ITEMS:
           result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
           break;
-        case FILTER_HIDDEN_ITEMS:
+        case VISIBLE_ITEMS:
           result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
           break;
-        case DELETE_ALL_ITEMS:
+        case ALL_ITEMS:
           break;
       }
 
@@ -301,14 +300,14 @@ public class DatabaseTables {
       else
         result += " AND ";
 
-      result += VideoEntry.COLUMN_NAME_REQUEST + " = '" + requestId + "'";
+      result += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
 
       return result;
     }
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return null;
+      return new String[] {requestId};
     }
 
   }

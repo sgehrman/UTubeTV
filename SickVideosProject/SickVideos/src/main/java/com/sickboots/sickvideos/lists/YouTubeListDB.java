@@ -82,10 +82,10 @@ public class YouTubeListDB extends YouTubeList {
           break;
         case REFETCH:
           //  item hidden, or hidden visible pref toggled
-          result = database.getItems(mFilterHidden ? DatabaseTables.VideoTable.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? DatabaseTables.VISIBLE_ITEMS : 0);
           break;
         case FIRSTLOAD:
-          result = database.getItems(mFilterHidden ? DatabaseTables.VideoTable.FILTER_HIDDEN_ITEMS : 0);
+          result = database.getItems(mFilterHidden ? DatabaseTables.VISIBLE_ITEMS : 0);
 
           // this is lame, fix later
           if (result.size() == 0) {

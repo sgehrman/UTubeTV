@@ -84,7 +84,7 @@ public class YouTubeAPIService extends IntentService {
 
     // ask the database for the hidden items
     // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
-    List<YouTubeData> hiddenItems = database.getItems(DatabaseTables.VideoTable.ONLY_HIDDEN_ITEMS);
+    List<YouTubeData> hiddenItems = database.getItems(DatabaseTables.HIDDEN_ITEMS);
 
     if (hiddenItems != null) {
       result = new HashSet<String>();
