@@ -37,7 +37,7 @@ public class YouTubeAPIService extends IntentService {
     try {
       YouTubeServiceRequest request = intent.getParcelableExtra("request");
 
-      // only get data from youtube if we don't have locally cached data for this request
+       Util.log("launching new service intent.  ");
 
       DatabaseAccess access = new DatabaseAccess(this, request);
 

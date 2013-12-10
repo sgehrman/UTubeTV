@@ -102,6 +102,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       section = Integer.parseInt(sectionIndexString);
     }
 
+    selectSection(section, false);
+
     // general app tweaks
 //  Util.activateStrictMode(this);
     Util.ignoreObsoleteCapacitiveMenuButton(this);
@@ -137,14 +139,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     ApplicationHub.instance(this).addObserver(this);
 
     Util.log("onStart");
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    int section = 0;  // temp hack
-    selectSection(section, false);
   }
 
   @Override  // Observer
@@ -321,10 +315,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (mCurrentSection == position)
       return;
 
-    Util.log("selectSection");
+    mCurrentSection = position;
+
+    Util.log("selectSection: " + position);
 
     Fragment fragment = null;
-
     switch (position) {
       case 0:
         fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
@@ -349,7 +344,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         break;
     }
 
-    mCurrentSection = position;
     mDrawerList.setItemChecked(position, true);
 
     Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);

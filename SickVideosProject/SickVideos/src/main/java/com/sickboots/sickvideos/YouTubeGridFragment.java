@@ -144,13 +144,11 @@ public class YouTubeGridFragment extends Fragment
     getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
       @Override
       public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
         DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
 
         String sortOrder = null;
         String[] selectionArgs = table.whereArgs(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
         String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
-        ;
         String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);
 
         YouTubeAPIService.startRequest(getActivity(), mRequest);
@@ -171,7 +169,6 @@ public class YouTubeGridFragment extends Fragment
     });
 
     mGridView.setAdapter(mAdapter);
-
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
@@ -201,29 +198,29 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void handleClick(YouTubeData itemMap) {
-//    switch (mList.type()) {
-//      case RELATED:
-//      case SEARCH:
-//      case LIKED:
-//      case VIDEOS:
-//        String videoId = itemMap.mVideo;
-//        String title = itemMap.mTitle;
-//
-//        player().open(videoId, title, true);
-//        break;
-//      case PLAYLISTS: {
-//        String playlistID = itemMap.mPlaylist;
-//
-//        if (playlistID != null) {
-//          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
-//
-//          HostActivitySupport provider = (HostActivitySupport) getActivity();
-//
-//          provider.installFragment(frag, true);
-//        }
-//      }
-//      break;
-//    }
+    switch (mRequest.type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        String videoId = itemMap.mVideo;
+        String title = itemMap.mTitle;
+
+        player().open(videoId, title, true);
+        break;
+      case PLAYLISTS: {
+        String playlistID = itemMap.mPlaylist;
+
+        if (playlistID != null) {
+          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
+
+          HostActivitySupport provider = (HostActivitySupport) getActivity();
+
+          provider.installFragment(frag, true);
+        }
+      }
+      break;
+    }
   }
 
   private void updateForVariablesTheme() {
