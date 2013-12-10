@@ -340,7 +340,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         fragment = new ColorPickerFragment();
         break;
       case 6:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest("UC07XXQh04ukEX68loZFgnVw"));
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
         break;
     }
 
