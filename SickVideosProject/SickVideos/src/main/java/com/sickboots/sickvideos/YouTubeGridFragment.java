@@ -93,6 +93,11 @@ public class YouTubeGridFragment extends Fragment
         String param = intent.getStringExtra(DATA_READY_INTENT_PARAM);
 
         mList.refetch();
+
+        // stop the pull to refresh indicator
+        Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
+        if (ptrl != null) // could be null if activity was destroyed
+          ptrl.setRefreshComplete();
       }
     }
   }
@@ -148,27 +153,19 @@ public class YouTubeGridFragment extends Fragment
   public void onResume() {
     super.onResume();
 
-
     if (broadcastReceiver == null) {
       broadcastReceiver = new UploadBroadcastReceiver();
     }
     IntentFilter intentFilter = new IntentFilter(DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
-
     if (mList == null) {
       mList = new YouTubeListDB(mRequest, createUIAccess());
 
       mAdapter = new YouTubeListAdapter(getActivity(),
           mTheme_itemResId, null,
-          new String[]
-              {
-//                  DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE
-              },
-          new int[]
-              {
-//                  R.id.text_view
-              }
+          new String[] {},
+          new int[] {}
           , 0);
 
       mGridView.setOnItemClickListener(mAdapter);
@@ -192,10 +189,7 @@ public class YouTubeGridFragment extends Fragment
         }
       });
 
-
       mGridView.setAdapter(mAdapter);
-
-      loadFromList();
 
       // triggers an update for the title, lame hack
       HostActivitySupport provider = (HostActivitySupport) getActivity();
@@ -258,20 +252,11 @@ public class YouTubeGridFragment extends Fragment
     mGridView.setEmptyView(mEmptyView);
   }
 
-  private void loadFromList() {
-    // stop the pull to refresh indicator
-    Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    if (ptrl != null) // could be null if activity was destroyed
-      ptrl.setRefreshComplete();
-  }
-
   private UIAccess createUIAccess() {
     final Context appContext = getActivity().getApplicationContext();
     UIAccess access = new UIAccess() {
       @Override
       public void onResults() {
-        loadFromList();
-
         // get rid of the empty view.  Its not used after initial load, and this also
         // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
         mGridView.setEmptyView(null);
