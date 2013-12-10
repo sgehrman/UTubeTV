@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
@@ -46,19 +47,23 @@ public class YouTubeContentProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    // TODO: Implement this to initialize your content provider on startup.
-    return false;
+    return true;
   }
 
   @Override
   public Cursor query(Uri uri, String[] projection, String selection,
                       String[] selectionArgs, String sortOrder) {
-    YouTubeServiceRequest request = YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null);
-    DatabaseAccess access = new DatabaseAccess(getContext(), request);
 
-    Cursor cursor = access.getItemsCursor(  selection,   selectionArgs,   projection);
+    Cursor cursor = null;
 
+    if (URI_PERSONS.equals(uri)) {
 
+      String tableName = DatabaseTables.videoTable().tableName();
+      cursor = Database.instance(getContext()).geCursor(tableName, selection,   selectionArgs,   projection);
+    } else if (uri.toString().startsWith(PERSON_BASE)) {
+      final long id = Long.parseLong(uri.getLastPathSegment());
+      Util.log("" + id);
+    }
 
       return cursor;
   }

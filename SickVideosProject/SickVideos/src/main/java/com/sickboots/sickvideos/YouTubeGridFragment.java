@@ -161,8 +161,6 @@ public class YouTubeGridFragment extends Fragment
 
       @Override
       public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-        Util.log("don't vuck with me sss");
-
         mAdapter.swapCursor(c);
       }
 
@@ -311,21 +309,6 @@ public class YouTubeGridFragment extends Fragment
     }
 
     @Override
-    public void changeCursorAndColumns(Cursor c, String[] from, int[] to) {
-      Util.log("kumlockk");
-
-      super.changeCursorAndColumns(c,from, to);
-      }
-
-    @Override
-    public Cursor swapCursor(Cursor c) {
-      Util.log("kuddddddmlockk");
-
-      return super.swapCursor(c);
-
-    }
-
-      @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
       ViewHolder holder = (ViewHolder) v.getTag();
 

@@ -79,12 +79,10 @@ public class DatabaseAccess {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    Cursor cursor = getItemsCursor(whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+    Cursor cursor = mDB.geCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
 
-    List<YouTubeData> results = getItems(cursor);
-
-    if (results.size() == 1) {
-      result = results.get(0);
+    if (cursor.moveToFirst()) {
+      result = mTable.cursorToItem(cursor);
     } else {
       Util.log("getItemWithID not found or too many results?");
     }
@@ -93,35 +91,17 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags) {
-    return getItemsCursor(mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
+    return mDB.geCursor(mTable.tableName(), mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
   }
-
-  public Cursor getItemsCursor(String selection, String[] selectionArgs, String[] projection) {
-    SQLiteDatabase db = mDB.getReadableDatabase();
-    Cursor cursor = null;
-
-    try {
-      cursor = db.query(
-          mTable.tableName(),                     // The table to query
-          projection,                     // The columns to return
-          selection,                      // The columns for the WHERE clause
-          selectionArgs,                  // The values for the WHERE clause
-          null,                           // don't group the rows
-          null,                           // don't filter by row groups
-          null                            // The sort order
-      );
-
-    } catch (Exception e) {
-      Util.log("getItemsCursor exception: " + e.getMessage());
-    } finally {
-    }
-
-    return cursor;
-  }
-
 
   public List<YouTubeData> getItems(int flags) {
-    return getItems(getCursor(flags));
+    Cursor cursor = getCursor(flags);
+
+    List<YouTubeData> result = getItems(cursor);
+
+    cursor.close();
+
+    return result;
   }
 
   public void updateItem(YouTubeData item) {

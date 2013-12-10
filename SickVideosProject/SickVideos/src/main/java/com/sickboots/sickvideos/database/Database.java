@@ -1,8 +1,11 @@
 package com.sickboots.sickvideos.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.sickboots.sickvideos.misc.Util;
 
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
@@ -44,6 +47,31 @@ public class Database extends SQLiteOpenHelper {
   public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     onUpgrade(db, oldVersion, newVersion);
   }
+
+  public Cursor geCursor(String tableName, String selection, String[] selectionArgs, String[] projection) {
+    SQLiteDatabase db = getReadableDatabase();
+    Cursor cursor = null;
+
+    try {
+      cursor = db.query(
+          tableName,                     // The table to query
+          projection,                     // The columns to return
+          selection,                      // The columns for the WHERE clause
+          selectionArgs,                  // The values for the WHERE clause
+          null,                           // don't group the rows
+          null,                           // don't filter by row groups
+          null                            // The sort order
+      );
+
+    } catch (Exception e) {
+      Util.log("getItemsCursor exception: " + e.getMessage());
+    } finally {
+    }
+
+    return cursor;
+  }
+
+
 }
 
 
