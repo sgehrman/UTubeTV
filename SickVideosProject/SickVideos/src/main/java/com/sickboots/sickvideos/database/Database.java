@@ -13,7 +13,7 @@ import java.util.List;
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
 
-  private static final int DATABASE_VERSION = 10;
+  private static final int DATABASE_VERSION = 32;
   private static final String DATABASE_NAME = "database.db";
 
   private final DatabaseTables mTables = new DatabaseTables();
@@ -27,7 +27,7 @@ public class Database extends SQLiteOpenHelper {
   }
 
   public Database(Context context) {
-    super(context, DATABASE_NAME, new CursorFactoryDebugger(false), DATABASE_VERSION);
+    super(context, DATABASE_NAME, new CursorFactoryDebugger(true), DATABASE_VERSION);
   }
 
   public void onCreate(SQLiteDatabase db) {

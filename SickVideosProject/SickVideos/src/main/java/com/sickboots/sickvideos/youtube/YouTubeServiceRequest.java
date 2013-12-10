@@ -122,26 +122,30 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public DatabaseAccess database(Context context) {
-    DatabaseAccess result = null;
+  // all items are added to db, but use group to get a specific list
+  public String requestIdentifier() {
+    String result = name();
 
-    DatabaseTables.DatabaseTable table = null;
-    switch (type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        table = new DatabaseTables.VideoTable();
+    switch (type) {
+      case SUBSCRIPTIONS:
         break;
       case PLAYLISTS:
-        table = new DatabaseTables.PlaylistTable();
+        result += getData("channel");
         break;
       case CATEGORIES:
         break;
+      case LIKED:
+        break;
+      case RELATED:
+        result += getData("channel");
+        break;
+      case VIDEOS:
+        result += getData("playlist");
+        break;
+      case SEARCH:
+        result += getData("query");
+        break;
     }
-
-    if (table != null)
-      result = new DatabaseAccess(context, table);
 
     return result;
   }
@@ -190,33 +194,4 @@ public class YouTubeServiceRequest implements Parcelable {
 
     return result;
   }
-
-  // a new database is created for every list, so need a unique name that can match the spec
-  private String databaseName() {
-    String result = name();
-
-    switch (type) {
-      case SUBSCRIPTIONS:
-        break;
-      case PLAYLISTS:
-        result += getData("channel");
-        break;
-      case CATEGORIES:
-        break;
-      case LIKED:
-        break;
-      case RELATED:
-        result += getData("channel");
-        break;
-      case VIDEOS:
-        result += getData("playlist");
-        break;
-      case SEARCH:
-        result += getData("query");
-        break;
-    }
-
-    return result;
-  }
-
 }

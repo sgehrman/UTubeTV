@@ -6,6 +6,7 @@ package com.sickboots.sickvideos.database;
 public class YouTubeData {
   // raw access for speed
   public long mID;
+  public String mRequest;
   public String mTitle;
   public String mDescription;
   public String mThumbnail;

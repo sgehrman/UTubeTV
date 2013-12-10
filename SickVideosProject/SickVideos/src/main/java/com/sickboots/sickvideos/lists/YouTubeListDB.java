@@ -21,7 +21,7 @@ public class YouTubeListDB extends YouTubeList {
   public YouTubeListDB(YouTubeServiceRequest request, UIAccess a) {
     super(request, a);
 
-    database = request.database(a.getContext());
+    database = new DatabaseAccess(a.getContext(), request);
 
     loadData(TaskType.FIRSTLOAD);
   }

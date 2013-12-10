@@ -40,11 +40,11 @@ public class YouTubeAPIService extends IntentService {
       List<YouTubeData> result = getDataFromInternet(request, helper);
 
       if (result != null) {
-        database = request.database(this);
+        database = new DatabaseAccess(this, request);
 
         Set currentListSavedData = saveExistingListState();
 
-        result = prepareDataFromNet(result, currentListSavedData);
+        result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
 
         // we are only deleting if we know we got good data
         // otherwise if we delete first a network failure would just make the app useless
@@ -65,10 +65,13 @@ public class YouTubeAPIService extends IntentService {
     }
   }
 
-  private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData) {
-    if (currentListSavedData != null && currentListSavedData.size() > 0) {
-      for (YouTubeData data : inList) {
-        if (data.mVideo != null) {
+  private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
+    for (YouTubeData data : inList) {
+      // set the request id
+      data.mRequest = requestID;
+
+      if (currentListSavedData != null && currentListSavedData.size() > 0) {
+          if (data.mVideo != null) {
           if (currentListSavedData.contains(data.mVideo))
             data.setHidden(true);
         }

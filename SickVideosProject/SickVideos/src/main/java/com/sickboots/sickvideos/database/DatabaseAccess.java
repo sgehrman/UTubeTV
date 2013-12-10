@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sickboots.sickvideos.DrawerActivity;
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +15,35 @@ import java.util.List;
 public class DatabaseAccess {
   private Database mDB;
   private DatabaseTables.DatabaseTable mTable;
+  private YouTubeServiceRequest mRequest;
 
-  public DatabaseAccess(Context context, DatabaseTables.DatabaseTable table) {
+  public DatabaseAccess(Context context, YouTubeServiceRequest request) {
     super();
 
     mDB = Database.instance(context);
+    mRequest = request;
 
-    mTable = table;
+    DatabaseTables.DatabaseTable table = null;
+    switch (request.type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        mTable = new DatabaseTables.VideoTable();
+        break;
+      case PLAYLISTS:
+        mTable = new DatabaseTables.PlaylistTable();
+        break;
+      case CATEGORIES:
+        break;
+    }
   }
 
   public void deleteAllRows() {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      db.delete(mTable.tableName(), null, null);
+      db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.DELETE_ALL_ITEMS, mRequest.requestIdentifier()), mTable.whereArgs(DatabaseTables.DELETE_ALL_ITEMS, mRequest.requestIdentifier()));
     } catch (Exception e) {
       Util.log("deleteAllRows exception: " + e.getMessage());
     } finally {
@@ -69,7 +85,7 @@ public class DatabaseAccess {
   }
 
   public List<YouTubeData> getItems(int flags) {
-    return getItems(mTable.whereClause(flags), mTable.whereArgs(flags), mTable.projection(flags));
+    return getItems(mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
   }
 
   public void updateItem(YouTubeData item) {
