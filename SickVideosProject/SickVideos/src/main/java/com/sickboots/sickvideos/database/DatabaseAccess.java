@@ -23,16 +23,15 @@ public class DatabaseAccess {
     mContext = context;
     mRequest = request;
 
-    DatabaseTables.DatabaseTable table = null;
     switch (request.type()) {
       case RELATED:
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        mTable = new DatabaseTables.VideoTable();
+        mTable = DatabaseTables.VideoTable.instance();
         break;
       case PLAYLISTS:
-        mTable = new DatabaseTables.PlaylistTable();
+        mTable = DatabaseTables.PlaylistTable.instance();
         break;
       case CATEGORIES:
         break;

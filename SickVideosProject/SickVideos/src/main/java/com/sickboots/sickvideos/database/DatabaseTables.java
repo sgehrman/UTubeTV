@@ -34,7 +34,7 @@ public class DatabaseTables {
   }
 
   public static DatabaseTable[] tables() {
-    return new DatabaseTable[]{new VideoTable(), new PlaylistTable()};
+    return new DatabaseTable[]{VideoTable.instance(), PlaylistTable.instance()};
   }
 
   public static class PlaylistTable implements DatabaseTable {
@@ -47,7 +47,15 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
     }
 
-    public PlaylistTable() {
+    private static PlaylistTable singleton=null;
+    public static PlaylistTable instance() {
+      if (singleton == null)
+        singleton = new PlaylistTable();
+
+      return singleton;
+    }
+
+    private PlaylistTable() {
       super();
     }
 
@@ -156,7 +164,15 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_START = "start";
     }
 
-    public VideoTable() {
+    private static VideoTable singleton=null;
+    public static VideoTable instance() {
+      if (singleton == null)
+        singleton = new VideoTable();
+
+      return singleton;
+    }
+
+    private VideoTable() {
       super();
     }
 

@@ -403,8 +403,10 @@ public class YouTubeGridFragment extends Fragment
       if (holder != null) {
         animateViewForClick(holder.image);
 
-//        YouTubeData map = getItem(position);
-//        handleClick(map);
+        Cursor cursor = (Cursor) getItem(position);
+        YouTubeData itemMap = DatabaseTables.VideoTable.instance().cursorToItem(cursor);
+
+        handleClick(itemMap);
       } else {
         Util.log("no holder on click?");
       }
@@ -437,8 +439,7 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      DatabaseTables.VideoTable vidTable = new DatabaseTables.VideoTable();
-      YouTubeData itemMap = vidTable.cursorToItem(cursor);
+      YouTubeData itemMap = DatabaseTables.VideoTable.instance().cursorToItem(cursor);
 
       holder.image.setAnimation(null);
 
