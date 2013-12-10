@@ -21,16 +21,16 @@ import java.util.Set;
 public class YouTubeAPIService extends IntentService {
   public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
   public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
-
   private Set mHasFetchedDataMap = new HashSet<String>();
 
   public YouTubeAPIService() {
     super("YouTubeAPIService");
   }
 
-  public static void startRequest(Context context, YouTubeServiceRequest request) {
+  public static void startRequest(Context context, YouTubeServiceRequest request, boolean refresh) {
     Intent i = new Intent(context, YouTubeAPIService.class);
     i.putExtra("request", request);
+    i.putExtra("refresh", refresh);
     context.startService(i);
   }
 
@@ -38,34 +38,37 @@ public class YouTubeAPIService extends IntentService {
   protected void onHandleIntent(Intent intent) {
     try {
       YouTubeServiceRequest request = intent.getParcelableExtra("request");
+      boolean refresh = intent.getBooleanExtra("refresh", false);
 
       Util.log("launching new service intent.  ");
 
-      boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
+      if (!refresh) {
+        boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
 
-      if (!hasFetchedData) {
-        DatabaseAccess access = new DatabaseAccess(this, request);
+        if (!hasFetchedData) {
+          DatabaseAccess access = new DatabaseAccess(this, request);
 
-        Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
-        boolean hasItems = cursor.moveToFirst();
+          Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
+          if (!cursor.moveToFirst())
+            refresh = true;
+        }
+      }
+      if (refresh) {
+        YouTubeAPI helper = new YouTubeAPI(this);
+        List<YouTubeData> result = getDataFromInternet(request, helper);
 
-        if (!hasItems) {
-          YouTubeAPI helper = new YouTubeAPI(this);
-          List<YouTubeData> result = getDataFromInternet(request, helper);
+        if (result != null) {
+          DatabaseAccess database = new DatabaseAccess(this, request);
 
-          if (result != null) {
-            DatabaseAccess database = new DatabaseAccess(this, request);
+          Set currentListSavedData = saveExistingListState(database);
 
-            Set currentListSavedData = saveExistingListState(database);
+          result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
 
-            result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
+          // we are only deleting if we know we got good data
+          // otherwise if we delete first a network failure would just make the app useless
+          database.deleteAllRows();
 
-            // we are only deleting if we know we got good data
-            // otherwise if we delete first a network failure would just make the app useless
-            database.deleteAllRows();
-
-            database.insertItems(result);
-          }
+          database.insertItems(result);
         }
 
         mHasFetchedDataMap.add(request.requestIdentifier());

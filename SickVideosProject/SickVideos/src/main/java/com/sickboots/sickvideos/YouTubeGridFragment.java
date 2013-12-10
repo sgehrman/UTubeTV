@@ -148,7 +148,7 @@ public class YouTubeGridFragment extends Fragment
         String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
         String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);
 
-        YouTubeAPIService.startRequest(getActivity(), mRequest);
+        YouTubeAPIService.startRequest(getActivity(), mRequest, false);
 
         return new CursorLoader(getActivity(),
             YouTubeContentProvider.URI_CONTENTS, projection, selection, selectionArgs, sortOrder);
@@ -240,7 +240,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void onRefreshStarted(View view) {
-    YouTubeAPIService.startRequest(getActivity(), mRequest);
+    YouTubeAPIService.startRequest(getActivity(), mRequest, true);
 
     mEmptyView.setVisibility(View.VISIBLE);
 
