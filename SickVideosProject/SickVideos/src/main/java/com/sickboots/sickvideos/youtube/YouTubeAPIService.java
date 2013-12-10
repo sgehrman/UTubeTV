@@ -22,6 +22,8 @@ public class YouTubeAPIService extends IntentService {
   public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
   public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
 
+  private Set mHasFetchedDataMap = new HashSet<String>();
+
   public YouTubeAPIService() {
     super("YouTubeAPIService");
   }
@@ -37,40 +39,45 @@ public class YouTubeAPIService extends IntentService {
     try {
       YouTubeServiceRequest request = intent.getParcelableExtra("request");
 
-       Util.log("launching new service intent.  ");
+      Util.log("launching new service intent.  ");
 
-      DatabaseAccess access = new DatabaseAccess(this, request);
+      boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
 
-      Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
-      boolean hasItems = cursor.moveToFirst();
+      if (!hasFetchedData) {
+        DatabaseAccess access = new DatabaseAccess(this, request);
 
-      if (!hasItems) {
+        Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
+        boolean hasItems = cursor.moveToFirst();
 
-        YouTubeAPI helper = new YouTubeAPI(this);
-        List<YouTubeData> result = getDataFromInternet(request, helper);
+        if (!hasItems) {
+          YouTubeAPI helper = new YouTubeAPI(this);
+          List<YouTubeData> result = getDataFromInternet(request, helper);
 
-        if (result != null) {
-          DatabaseAccess database = new DatabaseAccess(this, request);
+          if (result != null) {
+            DatabaseAccess database = new DatabaseAccess(this, request);
 
-          Set currentListSavedData = saveExistingListState(database);
+            Set currentListSavedData = saveExistingListState(database);
 
-          result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
+            result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
 
-          // we are only deleting if we know we got good data
-          // otherwise if we delete first a network failure would just make the app useless
-          database.deleteAllRows();
+            // we are only deleting if we know we got good data
+            // otherwise if we delete first a network failure would just make the app useless
+            database.deleteAllRows();
 
-          database.insertItems(result);
+            database.insertItems(result);
+          }
         }
+
+        mHasFetchedDataMap.add(request.requestIdentifier());
+
+        Intent messageIntent = new Intent(DATA_READY_INTENT);
+        messageIntent.putExtra(DATA_READY_INTENT_PARAM, "sending this over");
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        manager.sendBroadcast(messageIntent);
+
+        Util.log(String.format("Sent broadcast %s", DATA_READY_INTENT));
       }
-
-      Intent messageIntent = new Intent(DATA_READY_INTENT);
-      messageIntent.putExtra(DATA_READY_INTENT_PARAM, "sending this over");
-
-      LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
-      manager.sendBroadcast(messageIntent);
-
-      Util.log(String.format("Sent broadcast %s", DATA_READY_INTENT));
 
     } catch (Exception e) {
     }
@@ -115,6 +122,8 @@ public class YouTubeAPIService extends IntentService {
   private List<YouTubeData> getDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     List<YouTubeData> result = null;
     String playlistID;
+
+    Util.log("getDataFromInternet ======================");
 
     YouTubeAPI.BaseListResults listResults = null;
 
