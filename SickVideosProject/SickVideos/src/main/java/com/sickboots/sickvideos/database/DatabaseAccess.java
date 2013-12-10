@@ -22,20 +22,7 @@ public class DatabaseAccess {
     mDB = Database.instance(context);
     mContext = context;
     mRequest = request;
-
-    switch (request.type()) {
-      case RELATED:
-      case SEARCH:
-      case LIKED:
-      case VIDEOS:
-        mTable = DatabaseTables.videoTable();
-        break;
-      case PLAYLISTS:
-        mTable = DatabaseTables.playlistTable();
-        break;
-      case CATEGORIES:
-        break;
-    }
+    mTable = request.databaseTable();
   }
 
   public void deleteAllRows() {

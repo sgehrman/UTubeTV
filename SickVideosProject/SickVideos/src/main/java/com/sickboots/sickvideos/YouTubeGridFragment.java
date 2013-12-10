@@ -115,9 +115,6 @@ public class YouTubeGridFragment extends Fragment
 
     updateForVariablesTheme();
 
-    // use same instance if activity is recreated under our feet
-    setRetainInstance(true);
-
     mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
 
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
@@ -131,7 +128,6 @@ public class YouTubeGridFragment extends Fragment
     // .015 is the default
     mGridView.setFriction(0.005f);
 
-
     mAdapter = new YouTubeListAdapter(getActivity(),
         mTheme_itemResId, null,
         new String[]{},
@@ -139,12 +135,13 @@ public class YouTubeGridFragment extends Fragment
         , 0);
 
     mGridView.setOnItemClickListener(mAdapter);
+    mGridView.setAdapter(mAdapter);
 
     // Load the content
     getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
       @Override
       public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
+        DatabaseTables.DatabaseTable table = mRequest.databaseTable();
 
         String sortOrder = null;
         String[] selectionArgs = table.whereArgs(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
@@ -167,8 +164,6 @@ public class YouTubeGridFragment extends Fragment
         mAdapter.swapCursor(null);
       }
     });
-
-    mGridView.setAdapter(mAdapter);
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
@@ -308,7 +303,7 @@ public class YouTubeGridFragment extends Fragment
         animateViewForClick(holder.image);
 
         Cursor cursor = (Cursor) getItem(position);
-        YouTubeData itemMap = DatabaseTables.videoTable().cursorToItem(cursor);
+        YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor);
 
         handleClick(itemMap);
       } else {
@@ -343,7 +338,7 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      YouTubeData itemMap = DatabaseTables.videoTable().cursorToItem(cursor);
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor);
 
       holder.image.setAnimation(null);
 

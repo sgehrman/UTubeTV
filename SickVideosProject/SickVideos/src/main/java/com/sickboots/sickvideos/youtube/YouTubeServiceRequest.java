@@ -3,6 +3,9 @@ package com.sickboots.sickvideos.youtube;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.sickboots.sickvideos.database.DatabaseTables;
+import com.sickboots.sickvideos.misc.Util;
+
 import java.util.HashMap;
 
 public class YouTubeServiceRequest implements Parcelable {
@@ -144,6 +147,26 @@ public class YouTubeServiceRequest implements Parcelable {
     }
 
     return result;
+  }
+
+  public DatabaseTables.DatabaseTable databaseTable() {
+    switch (type()) {
+      case RELATED:
+      case SEARCH:
+      case LIKED:
+      case VIDEOS:
+        return DatabaseTables.videoTable();
+
+      case PLAYLISTS:
+        return DatabaseTables.playlistTable();
+
+      case CATEGORIES:
+        break;
+    }
+
+    Util.log("databaseTable null");
+
+    return null;
   }
 
   // ===================================================================
