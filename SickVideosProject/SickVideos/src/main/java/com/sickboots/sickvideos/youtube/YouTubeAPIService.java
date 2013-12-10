@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;

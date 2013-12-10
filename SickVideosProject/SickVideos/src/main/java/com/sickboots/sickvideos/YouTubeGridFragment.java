@@ -132,11 +132,10 @@ public class YouTubeGridFragment extends Fragment
     mGridView.setFriction(0.005f);
 
 
-
     mAdapter = new YouTubeListAdapter(getActivity(),
         mTheme_itemResId, null,
-        new String[] {},
-        new int[] {}
+        new String[]{},
+        new int[]{}
         , 0);
 
     mGridView.setOnItemClickListener(mAdapter);
@@ -149,9 +148,10 @@ public class YouTubeGridFragment extends Fragment
         DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
 
         String sortOrder = null;
-        String[] selectionArgs=table.whereArgs(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier());
-        String selection=table.whereClause(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier());;
-        String[] projection = table.projection(DatabaseTables.ALL_ITEMS);
+        String[] selectionArgs = table.whereArgs(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
+        String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
+        ;
+        String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);
 
         YouTubeAPIService.startRequest(getActivity(), mRequest);
 
@@ -171,7 +171,6 @@ public class YouTubeGridFragment extends Fragment
     });
 
     mGridView.setAdapter(mAdapter);
-
 
 
     // Add the Refreshable View and provide the refresh listener;
@@ -196,9 +195,9 @@ public class YouTubeGridFragment extends Fragment
     IntentFilter intentFilter = new IntentFilter(YouTubeAPIService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
-      // triggers an update for the title, lame hack
-      HostActivitySupport provider = (HostActivitySupport) getActivity();
-      provider.fragmentWasInstalled();
+    // triggers an update for the title, lame hack
+    HostActivitySupport provider = (HostActivitySupport) getActivity();
+    provider.fragmentWasInstalled();
   }
 
   public void handleClick(YouTubeData itemMap) {
@@ -257,8 +256,6 @@ public class YouTubeGridFragment extends Fragment
   }
 
 
-
-
   // use this??
 
 
@@ -266,8 +263,6 @@ public class YouTubeGridFragment extends Fragment
   // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
 //  mGridView.setEmptyView(null);
 //  mEmptyView.setVisibility(View.INVISIBLE);
-
-
 
 
   // ===========================================================================

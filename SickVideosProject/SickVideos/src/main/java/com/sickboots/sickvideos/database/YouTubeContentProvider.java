@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
-import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 public class YouTubeContentProvider extends ContentProvider {
 
@@ -59,13 +57,15 @@ public class YouTubeContentProvider extends ContentProvider {
     if (URI_PERSONS.equals(uri)) {
 
       String tableName = DatabaseTables.videoTable().tableName();
-      cursor = Database.instance(getContext()).geCursor(tableName, selection,   selectionArgs,   projection);
+      cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+
+      cursor.setNotificationUri(getContext().getContentResolver(), URI_PERSONS);
     } else if (uri.toString().startsWith(PERSON_BASE)) {
       final long id = Long.parseLong(uri.getLastPathSegment());
       Util.log("" + id);
     }
 
-      return cursor;
+    return cursor;
   }
 
   @Override

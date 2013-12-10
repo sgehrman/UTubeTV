@@ -19,10 +19,10 @@ public class DatabaseTables {
   private static final String PRIMARY = " PRIMARY KEY";
   private static final String COMMA_SEP = ",";
 
-  private static VideoTable mVideoTable=null;
-  private static PlaylistTable mPlaylistTable=null;
+  private static VideoTable mVideoTable = null;
+  private static PlaylistTable mPlaylistTable = null;
 
-  public static VideoTable videoTable(){
+  public static VideoTable videoTable() {
     if (mVideoTable == null)
       mVideoTable = new VideoTable();
 
@@ -66,7 +66,8 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
     }
 
-    private static PlaylistTable singleton=null;
+    private static PlaylistTable singleton = null;
+
     public static PlaylistTable instance() {
       if (singleton == null)
         singleton = new PlaylistTable();
@@ -159,7 +160,7 @@ public class DatabaseTables {
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return new String[] {requestId};
+      return new String[]{requestId};
     }
   }
 
@@ -307,7 +308,7 @@ public class DatabaseTables {
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return new String[] {requestId};
+      return new String[]{requestId};
     }
 
   }
