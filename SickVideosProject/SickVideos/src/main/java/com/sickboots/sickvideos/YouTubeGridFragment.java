@@ -37,6 +37,7 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.sickboots.sickvideos.youtube.YouTubeAPIService;
 import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
 
 import org.joda.time.Period;
@@ -64,9 +65,7 @@ public class YouTubeGridFragment extends Fragment
   private GridView mGridView;
   private YouTubeListAdapter mAdapter;
 
-  public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
-  public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
-  private UploadBroadcastReceiver broadcastReceiver;
+  private DataReadyBroadcastReceiver broadcastReceiver;
 
   // theme parameters
   private float mTheme_imageAlpha;
@@ -86,11 +85,11 @@ public class YouTubeGridFragment extends Fragment
     return fragment;
   }
 
-  private class UploadBroadcastReceiver extends BroadcastReceiver {
+  private class DataReadyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-      if (intent.getAction().equals(DATA_READY_INTENT)) {
-        String param = intent.getStringExtra(DATA_READY_INTENT_PARAM);
+      if (intent.getAction().equals(YouTubeAPIService.DATA_READY_INTENT)) {
+        String param = intent.getStringExtra(YouTubeAPIService.DATA_READY_INTENT_PARAM);
 
         mList.refetch();
 
@@ -154,9 +153,9 @@ public class YouTubeGridFragment extends Fragment
     super.onResume();
 
     if (broadcastReceiver == null) {
-      broadcastReceiver = new UploadBroadcastReceiver();
+      broadcastReceiver = new DataReadyBroadcastReceiver();
     }
-    IntentFilter intentFilter = new IntentFilter(DATA_READY_INTENT);
+    IntentFilter intentFilter = new IntentFilter(YouTubeAPIService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
     if (mList == null) {
@@ -174,8 +173,13 @@ public class YouTubeGridFragment extends Fragment
       getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+          String sortOrder = null;
+          String[] selectionArgs=null;
+          String selection=null;
+          String[] projection = new String[] {DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE};
+
           return new CursorLoader(getActivity(),
-              YouTubeContentProvider.URI_PERSONS, new String[]{DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_TITLE}, null, null, null);
+              YouTubeContentProvider.URI_PERSONS, projection, selection, selectionArgs, sortOrder);
         }
 
         @Override

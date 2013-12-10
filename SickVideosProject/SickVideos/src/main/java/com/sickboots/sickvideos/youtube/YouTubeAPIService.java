@@ -19,6 +19,9 @@ import java.util.Set;
  * Created by sgehrman on 12/6/13.
  */
 public class YouTubeAPIService extends IntentService {
+  public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
+  public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
+
   public YouTubeAPIService() {
     super("YouTubeAPIService");
   }
@@ -51,13 +54,13 @@ public class YouTubeAPIService extends IntentService {
         database.insertItems(result);
       }
 
-      Intent messageIntent = new Intent(YouTubeGridFragment.DATA_READY_INTENT);
-      messageIntent.putExtra(YouTubeGridFragment.DATA_READY_INTENT_PARAM, "sending this over");
+      Intent messageIntent = new Intent(DATA_READY_INTENT);
+      messageIntent.putExtra(DATA_READY_INTENT_PARAM, "sending this over");
 
       LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
       manager.sendBroadcast(messageIntent);
 
-      Util.log(String.format("Sent broadcast %s", YouTubeGridFragment.DATA_READY_INTENT));
+      Util.log(String.format("Sent broadcast %s", DATA_READY_INTENT));
 
     } catch (Exception e) {
     }
