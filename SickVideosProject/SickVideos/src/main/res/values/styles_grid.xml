@@ -21,10 +21,10 @@
         <item name="android:cacheColorHint">@android:color/black</item>
         <item name="android:requiresFadingEdge">vertical</item>
 
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
-        <item name="android:horizontalSpacing">4dp</item>
-        <item name="android:verticalSpacing">4dp</item>
+        <item name="android:paddingLeft">7dp</item>
+        <item name="android:paddingRight">7dp</item>
+        <item name="android:horizontalSpacing">7dp</item>
+        <item name="android:verticalSpacing">7dp</item>
 
     </style>
 
