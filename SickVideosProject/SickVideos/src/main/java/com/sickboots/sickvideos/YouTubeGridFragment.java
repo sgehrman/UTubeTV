@@ -336,8 +336,8 @@ public class YouTubeGridFragment extends Fragment
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
-            imageView.setAlpha(mTheme_imageAlpha / 2);
-            imageView.animate().setDuration(300).alpha(mTheme_imageAlpha);
+            imageView.setAlpha(0.0f); // mTheme_imageAlpha / 2);
+            imageView.animate().setDuration(200).alpha(mTheme_imageAlpha);
           } else
             imageView.setAlpha(mTheme_imageAlpha);
         }
