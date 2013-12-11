@@ -93,8 +93,6 @@ public class YouTubeAPIService extends IntentService {
 
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.sendBroadcast(messageIntent);
-
-        Util.log(String.format("Sent broadcast %s", DATA_READY_INTENT));
       }
 
     } catch (Exception e) {
