@@ -194,7 +194,7 @@ public class YouTubeAPI {
         channelRequest.setMine(true);
       }
 
-      channelRequest.setFields("items/contentDetails, nextPageToken, pageInfo");
+      channelRequest.setFields("items/contentDetails, nextPageToken");
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
@@ -297,13 +297,11 @@ public class YouTubeAPI {
           YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
           listRequest.setPlaylistId(playlistID);
 
-          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
           PlaylistItemListResponse playListResponse = listRequest.execute();
-
-          totalItems = playListResponse.getPageInfo().getTotalResults();
 
           playlistItemList = playListResponse.getItems();
           response = playListResponse;
@@ -361,13 +359,11 @@ public class YouTubeAPI {
         listRequest.setQ(query);
         listRequest.setKey(Auth.devKey());
         listRequest.setType("video");
-        listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
-
-        totalItems = searchListResponse.getPageInfo().getTotalResults();
 
         // nasty double cast?
         response = searchListResponse;
@@ -417,14 +413,12 @@ public class YouTubeAPI {
         YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField()));
         listRequest.setMyRating("like");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
-
-        totalItems = searchListResponse.getPageInfo().getTotalResults();
 
         // nasty double cast?
         response = searchListResponse;
@@ -479,7 +473,7 @@ public class YouTubeAPI {
         YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField()));
         listRequest.setId(TextUtils.join(",", mVideoIds));
 
         // token not used for ids
@@ -488,8 +482,6 @@ public class YouTubeAPI {
         // listRequest.setMaxResults(getMaxResultsNeeded());
 
         searchListResponse = listRequest.execute();
-
-        totalItems = searchListResponse.getPageInfo().getTotalResults();
 
         // nasty double cast?
         response = searchListResponse;
@@ -547,7 +539,6 @@ public class YouTubeAPI {
 
         result.addAll(categoryListResponse.getItems());
 
-        totalItems = result.size();
         response = categoryListResponse;
       } catch (UserRecoverableAuthIOException e) {
         handleResultsException(e);
@@ -592,14 +583,13 @@ public class YouTubeAPI {
         YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, snippet");
         listRequest.setMine(true);
 
-        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         SubscriptionListResponse subscriptionListResponse = listRequest.execute();
 
         response = subscriptionListResponse;
-        totalItems = subscriptionListResponse.getPageInfo().getTotalResults();
 
         result.addAll(subscriptionListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
@@ -693,14 +683,13 @@ public class YouTubeAPI {
         else
           listRequest.setChannelId(channelID);
 
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
         PlaylistListResponse subscriptionListResponse = listRequest.execute();
 
         response = subscriptionListResponse;
-        totalItems = subscriptionListResponse.getPageInfo().getTotalResults();
 
         result.addAll(subscriptionListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {
@@ -737,7 +726,6 @@ public class YouTubeAPI {
   abstract public class BaseListResults {
     protected Object response;
     private List<YouTubeData> items;
-    protected int totalItems;
     private boolean reloadingFlag = false;
 
     // subclasses must implement
@@ -773,10 +761,6 @@ public class YouTubeAPI {
       }
 
       return result;
-    }
-
-    public int getTotalItems() {
-      return totalItems;
     }
 
     private String nextToken() {
@@ -818,9 +802,6 @@ public class YouTubeAPI {
     }
 
     private void done() {
-      // set a flag to stop trying to get more data.  the totalItems is not accurrate.  We don't get results for deleted videos.
-      if (items != null)
-        totalItems = items.size();
     }
 
     protected void handleResultsException(Exception e) {
