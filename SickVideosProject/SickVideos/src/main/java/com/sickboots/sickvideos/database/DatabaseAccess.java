@@ -29,7 +29,11 @@ public class DatabaseAccess {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()), mTable.whereArgs(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()));
+      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()), mTable.whereArgs(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()));
+
+      if (result > 0)
+        notifyProviderOfChange();
+
     } catch (Exception e) {
       Util.log("deleteAllRows exception: " + e.getMessage());
     } finally {
