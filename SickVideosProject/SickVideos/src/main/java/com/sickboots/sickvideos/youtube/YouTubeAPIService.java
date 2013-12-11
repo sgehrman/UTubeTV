@@ -178,24 +178,19 @@ public class YouTubeAPIService extends IntentService {
     }
 
     if (listResults != null) {
-      while (listResults.getNext()) {
-        // getting all
-      }
+      DatabaseAccess database = new DatabaseAccess(this, request);
+
+      Set currentListSavedData = saveExistingListState(database);
+      database.deleteAllRows();
+
+      do {
+        List<YouTubeData> batch = listResults.getItems();
+        batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
+
+        database.insertItems(batch);
+      } while (listResults.getNext());
 
       result = listResults.getItems();
-
-
-//
-//      List<String> array = new ArrayList<String>();
-//
-//      for (YouTubeData data : result) {
-//        array.add(data.mVideo);
-//      }
-//
-//      helper.videoInfoListResults(array);
-//
-//
-
     }
 
     return result;
