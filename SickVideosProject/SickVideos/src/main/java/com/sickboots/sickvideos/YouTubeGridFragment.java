@@ -58,7 +58,6 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private YouTubeServiceRequest mRequest;
-  private View mEmptyView;
   private GridView mGridView;
   private YouTubeListAdapter mAdapter;
 
@@ -87,11 +86,6 @@ public class YouTubeGridFragment extends Fragment
     public void onReceive(Context context, Intent intent) {
       if (intent.getAction().equals(YouTubeAPIService.DATA_READY_INTENT)) {
         String param = intent.getStringExtra(YouTubeAPIService.DATA_READY_INTENT_PARAM);
-
-        // get rid of the empty view.  Its not used after initial load, and this also
-        // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
-        mGridView.setEmptyView(null);
-        mEmptyView.setVisibility(View.INVISIBLE);
 
         // stop the pull to refresh indicator
         Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
@@ -125,10 +119,9 @@ public class YouTubeGridFragment extends Fragment
     ViewGroup rootView = (ViewGroup) inflater.inflate(mTheme_resId, container, false);
     mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
-    mEmptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
-    rootView.addView(mEmptyView);
-
-    mGridView.setEmptyView(mEmptyView);
+    View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
+    rootView.addView(emptyView);
+    mGridView.setEmptyView(emptyView);
 
     // .015 is the default
     mGridView.setFriction(0.005f);
@@ -246,10 +239,6 @@ public class YouTubeGridFragment extends Fragment
 
   public void onRefreshStarted(View view) {
     YouTubeAPIService.startRequest(getActivity(), mRequest, true);
-
-    mEmptyView.setVisibility(View.VISIBLE);
-
-    mGridView.setEmptyView(mEmptyView);
   }
 
   // ===========================================================================
