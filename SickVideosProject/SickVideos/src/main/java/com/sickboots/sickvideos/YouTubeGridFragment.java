@@ -323,8 +323,7 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
-      // YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);  // mReusedData not compatible with the menu button below, didn't want to fix now
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
       holder.image.setAnimation(null);
 
@@ -384,7 +383,7 @@ public class YouTubeGridFragment extends Fragment
       if (videoId != null && (videoId.length() > 0)) {
         holder.menuButton.setVisibility(View.VISIBLE);
         holder.menuButton.setListener(this);
-        holder.menuButton.mVideoMap = itemMap;
+        holder.menuButton.mId = itemMap.mID;
       } else {
         holder.menuButton.setVisibility(View.GONE);
       }
@@ -394,25 +393,37 @@ public class YouTubeGridFragment extends Fragment
 
     // VideoMenuViewListener
     @Override
-    public void showVideoInfo(YouTubeData videoMap) {
-
-    }
-
-    // VideoMenuViewListener
-    @Override
-    public void showVideoOnYouTube(YouTubeData videoMap) {
-      YouTubeAPI.playMovieUsingIntent(getActivity(), videoMap.mVideo);
-    }
-
-    // VideoMenuViewListener
-    @Override
-    public void hideVideo(YouTubeData videoMap) {
-      // hidden is either null or not null
-      // toggle it
-      videoMap.setHidden(!videoMap.isHidden());
-
+    public void showVideoInfo(Long itemId) {
       DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
-      database.updateItem(videoMap);
+      YouTubeData videoMap = database.getItemWithID(itemId);
+
+      if (videoMap != null)
+      {
+        Util.log("fix me");
+      }
+    }
+
+    // VideoMenuViewListener
+    @Override
+    public void showVideoOnYouTube(Long itemId) {
+      DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
+      YouTubeData videoMap = database.getItemWithID(itemId);
+
+      if (videoMap != null)
+        YouTubeAPI.playMovieUsingIntent(getActivity(), videoMap.mVideo);
+    }
+
+    // VideoMenuViewListener
+    @Override
+    public void hideVideo(Long itemId) {
+      DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
+      YouTubeData videoMap = database.getItemWithID(itemId);
+
+      if (videoMap != null) {
+        videoMap.setHidden(!videoMap.isHidden());
+        database.updateItem(videoMap);
+
+      }
     }
 
     class ViewHolder {

@@ -16,14 +16,14 @@ public class VideoMenuView extends ImageView {
   private static Drawable sharedDrawable;
 
   public interface VideoMenuViewListener {
-    public void showVideoInfo(YouTubeData videoMap);
+    public void showVideoInfo(Long itemId);
 
-    public void showVideoOnYouTube(YouTubeData videoMap);
+    public void showVideoOnYouTube(Long itemId);
 
-    public void hideVideo(YouTubeData videoMap);
+    public void hideVideo(Long itemId);
   }
 
-  public YouTubeData mVideoMap;
+  public Long mId;
   private VideoMenuViewListener mListener;
 
   public VideoMenuView(Context context, AttributeSet attrs) {
@@ -52,16 +52,16 @@ public class VideoMenuView extends ImageView {
             switch (item.getItemId()) {
               case R.id.video_menu_info:
                 if (mListener != null)
-                  mListener.showVideoInfo(mVideoMap);
+                  mListener.showVideoInfo(mId);
 
                 break;
               case R.id.video_menu_youtube:
                 if (mListener != null)
-                  mListener.showVideoOnYouTube(mVideoMap);
+                  mListener.showVideoOnYouTube(mId);
                 break;
               case R.id.video_menu_hide:
                 if (mListener != null)
-                  mListener.hideVideo(mVideoMap);
+                  mListener.hideVideo(mId);
 
                 break;
             }

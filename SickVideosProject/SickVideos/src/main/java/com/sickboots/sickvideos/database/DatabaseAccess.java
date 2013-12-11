@@ -57,10 +57,6 @@ public class DatabaseAccess {
     }
   }
 
-  private void notifyProviderOfChange() {
-    mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_CONTENTS, null);
-  }
-
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
     Cursor cursor = mDB.getCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
@@ -109,6 +105,10 @@ public class DatabaseAccess {
 
   // -----------------------------------------------------------------------------
   // private
+
+  private void notifyProviderOfChange() {
+    mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_CONTENTS, null);
+  }
 
   private String whereClauseForID() {
     return "_id=?";
