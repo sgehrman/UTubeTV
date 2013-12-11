@@ -802,6 +802,7 @@ public class YouTubeAPI {
     }
 
     private void done() {
+      response = null; // avoid trying to get nextToken or possibly retriggering an exception
     }
 
     protected void handleResultsException(Exception e) {
