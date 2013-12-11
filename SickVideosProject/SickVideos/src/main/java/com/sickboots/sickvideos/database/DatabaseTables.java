@@ -39,7 +39,7 @@ public class DatabaseTables {
   public static interface DatabaseTable {
     public String tableName();
 
-    public YouTubeData cursorToItem(Cursor cursor);
+    public YouTubeData cursorToItem(Cursor cursor, YouTubeData reuseData);
 
     public ContentValues contentValuesForItem(YouTubeData item);
 
@@ -85,8 +85,10 @@ public class DatabaseTables {
     }
 
     @Override
-    public YouTubeData cursorToItem(Cursor cursor) {
-      YouTubeData result = new YouTubeData();
+    public YouTubeData cursorToItem(Cursor cursor, YouTubeData reuseData) {
+      YouTubeData result = reuseData;  // avoiding memory alloc during draw
+      if (result == null)
+        result = new YouTubeData();
 
       result.mID = cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID));
       result.mRequest = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_REQUEST));
@@ -190,8 +192,10 @@ public class DatabaseTables {
     }
 
     @Override
-    public YouTubeData cursorToItem(Cursor cursor) {
-      YouTubeData result = new YouTubeData();
+    public YouTubeData cursorToItem(Cursor cursor, YouTubeData reuseData) {
+      YouTubeData result = reuseData;  // avoiding memory alloc during draw
+      if (result == null)
+        result = new YouTubeData();
 
       result.mID = cursor.getLong(cursor.getColumnIndex(VideoEntry._ID));
       result.mRequest = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_REQUEST));

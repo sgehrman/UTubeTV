@@ -257,8 +257,9 @@ public class YouTubeGridFragment extends Fragment
 
   private class YouTubeListAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
     private final LayoutInflater inflater;
-    int animationID = 0;
-    boolean showHidden = false;
+    private int animationID = 0;
+    private boolean showHidden = false;
+    private final YouTubeData mReusedData = new YouTubeData(); // avoids a memory alloc when drawing
 
     public YouTubeListAdapter(Context context, int layout, Cursor c, String[] from,
                               int[] to, int flags) {
@@ -298,7 +299,7 @@ public class YouTubeGridFragment extends Fragment
         animateViewForClick(holder.image);
 
         Cursor cursor = (Cursor) getItem(position);
-        YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor);
+        YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
 
         handleClick(itemMap);
       } else {
@@ -333,7 +334,7 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor);
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
       holder.image.setAnimation(null);
 

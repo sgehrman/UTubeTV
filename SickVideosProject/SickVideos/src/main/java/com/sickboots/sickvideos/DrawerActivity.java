@@ -122,17 +122,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   }
 
   @Override
-  protected void onDestroy() {
-    super.onDestroy();
-
-    Util.log("onDestroy");
-  }
-
-  @Override
   public void onStop() {
     super.onStop();
-
-    Util.log("onStop");
 
     // for ApplicationHub.THEME_CHANGED
     ApplicationHub.instance(this).deleteObserver(this);

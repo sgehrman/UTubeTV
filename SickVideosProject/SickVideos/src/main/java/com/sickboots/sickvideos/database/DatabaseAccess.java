@@ -66,7 +66,7 @@ public class DatabaseAccess {
     Cursor cursor = mDB.geCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
 
     if (cursor.moveToFirst()) {
-      result = mTable.cursorToItem(cursor);
+      result = mTable.cursorToItem(cursor, null);
     } else {
       Util.log("getItemWithID not found or too many results?");
     }
@@ -124,7 +124,7 @@ public class DatabaseAccess {
     try {
       cursor.moveToFirst();
       while (!cursor.isAfterLast()) {
-        result.add(mTable.cursorToItem(cursor));
+        result.add(mTable.cursorToItem(cursor, null));
         cursor.moveToNext();
       }
     } catch (Exception e) {

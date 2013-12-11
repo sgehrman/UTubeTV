@@ -46,8 +46,6 @@ public class YouTubeAPIService extends IntentService {
       boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
       mHasFetchedDataMap.add(request.requestIdentifier());
 
-      Util.log("launching new service intent.  ");
-
       if (!refresh) {
         if (!hasFetchedData) {
           DatabaseAccess access = new DatabaseAccess(this, request);
