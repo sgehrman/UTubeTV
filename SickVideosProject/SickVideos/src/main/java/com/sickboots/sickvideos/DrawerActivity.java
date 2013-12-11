@@ -47,9 +47,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-
-    Util.log("onCreate");
-
     // must set the theme before we do anything else
     String themeStyle = ApplicationHub.preferences(this).getString(PreferenceCache.THEME_STYLE, "0");
     int flag = Integer.parseInt(themeStyle);
@@ -135,8 +132,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     // for ApplicationHub.THEME_CHANGED
     ApplicationHub.instance(this).addObserver(this);
-
-    Util.log("onStart");
   }
 
   @Override  // Observer
@@ -314,8 +309,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       return;
 
     mCurrentSection = position;
-
-    Util.log("selectSection: " + position);
 
     Fragment fragment = null;
     switch (position) {

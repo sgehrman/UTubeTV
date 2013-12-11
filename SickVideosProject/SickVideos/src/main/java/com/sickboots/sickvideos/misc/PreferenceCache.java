@@ -48,7 +48,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   }
 
   public void setString(String key, String value) {
-      sharedPreferences.edit().putString(key, value);
+      sharedPreferences.edit().putString(key, value).commit();
   }
 
   public boolean getBoolean(String key, boolean defaultValue) {
@@ -56,7 +56,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   }
 
   public void setBoolean(String key, boolean value) {
-    sharedPreferences.edit().putBoolean(key, value);
+    sharedPreferences.edit().putBoolean(key, value).commit();
   }
 
   // SharedPreferences.OnSharedPreferenceChangeListener

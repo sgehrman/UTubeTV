@@ -237,12 +237,12 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onBuffering(boolean b) {
-        Util.log("buffering: " + ((b) ? "yes" : "no"));
+//        Util.log("buffering: " + ((b) ? "yes" : "no"));
       }
 
       @Override
       public void onSeekTo(int newPositionMillis) {
-        Util.log("seeking: " + newPositionMillis / 1000 + " seconds");
+//        Util.log("seeking: " + newPositionMillis / 1000 + " seconds");
 
         final String seekString = Util.millisecondsToDuration(newPositionMillis);
         ApplicationHub.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
