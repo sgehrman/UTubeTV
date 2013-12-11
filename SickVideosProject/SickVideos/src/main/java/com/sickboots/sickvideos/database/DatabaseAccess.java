@@ -63,7 +63,7 @@ public class DatabaseAccess {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    Cursor cursor = mDB.geCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+    Cursor cursor = mDB.getCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
 
     if (cursor.moveToFirst()) {
       result = mTable.cursorToItem(cursor, null);
@@ -77,7 +77,7 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags) {
-    return mDB.geCursor(mTable.tableName(), mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
+    return mDB.getCursor(mTable.tableName(), mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
   }
 
   public List<YouTubeData> getItems(int flags) {

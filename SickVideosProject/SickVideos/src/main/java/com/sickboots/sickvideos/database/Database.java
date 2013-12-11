@@ -48,7 +48,7 @@ public class Database extends SQLiteOpenHelper {
     onUpgrade(db, oldVersion, newVersion);
   }
 
-  public Cursor geCursor(String tableName, String selection, String[] selectionArgs, String[] projection) {
+  public Cursor getCursor(String tableName, String selection, String[] selectionArgs, String[] projection) {
     SQLiteDatabase db = getReadableDatabase();
     Cursor cursor = null;
 

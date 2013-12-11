@@ -55,10 +55,10 @@ public class YouTubeContentProvider extends ContentProvider {
     if (URI_CONTENTS.equals(uri)) {
       if (sortOrder.equals("pl")) {
         String tableName = DatabaseTables.playlistTable().tableName();
-        cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+        cursor = Database.instance(getContext()).getCursor(tableName, selection, selectionArgs, projection);
       } else {
         String tableName = DatabaseTables.videoTable().tableName();
-        cursor = Database.instance(getContext()).geCursor(tableName, selection, selectionArgs, projection);
+        cursor = Database.instance(getContext()).getCursor(tableName, selection, selectionArgs, projection);
       }
 
       cursor.setNotificationUri(getContext().getContentResolver(), URI_CONTENTS);

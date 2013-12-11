@@ -334,7 +334,8 @@ public class YouTubeGridFragment extends Fragment
       }
 
       Cursor cursor = (Cursor) getItem(position);
-      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
+      // YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);  // mReusedData not compatible with the menu button below, didn't want to fix now
 
       holder.image.setAnimation(null);
 
