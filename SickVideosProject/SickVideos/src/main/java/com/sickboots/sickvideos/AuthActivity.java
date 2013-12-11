@@ -2,12 +2,8 @@ package com.sickboots.sickvideos;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.sickboots.sickvideos.misc.ApplicationHub;
@@ -46,8 +42,7 @@ public class AuthActivity extends Activity {
       Util.log("Request auth received - executing the intent");
 
       startActivityForResult(authIntent, INTENT_REQUEST_AUTHORIZATION);
-    }
-    else
+    } else
       doLastStep();
   }
 

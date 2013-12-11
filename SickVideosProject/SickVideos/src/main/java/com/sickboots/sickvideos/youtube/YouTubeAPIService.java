@@ -7,11 +7,9 @@ import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.AuthActivity;
-import com.sickboots.sickvideos.SettingsActivity;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Util;
 
 import java.util.HashSet;
@@ -62,14 +60,14 @@ public class YouTubeAPIService extends IntentService {
           @Override
           public void handleAuthIntent(final Intent authIntent) {
 
-                Intent intent = new Intent(YouTubeAPIService.this, AuthActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
+            Intent intent = new Intent(YouTubeAPIService.this, AuthActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
 
-                if (authIntent != null)
-                  intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
-                intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest);
+            if (authIntent != null)
+              intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+            intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest);
 
-                YouTubeAPIService.this.startActivity(intent);
+            YouTubeAPIService.this.startActivity(intent);
 
           }
         });

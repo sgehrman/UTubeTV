@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.HashMap;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-
 /**
  * Created by sgehrman on 11/26/13.
  */
@@ -48,7 +43,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   }
 
   public void setString(String key, String value) {
-      sharedPreferences.edit().putString(key, value).commit();
+    sharedPreferences.edit().putString(key, value).commit();
   }
 
   public boolean getBoolean(String key, boolean defaultValue) {
@@ -61,7 +56,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
 
   // SharedPreferences.OnSharedPreferenceChangeListener
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-      mListener.prefChanged(key);
+    mListener.prefChanged(key);
   }
 
 }

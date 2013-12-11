@@ -3,7 +3,6 @@ package com.sickboots.sickvideos.youtube;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -30,8 +29,6 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
-import com.sickboots.sickvideos.AuthActivity;
-import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Auth;
@@ -47,7 +44,9 @@ public class YouTubeAPI {
 
   interface YouTubeAPIListener {
     public void handleAuthIntent(final Intent authIntent);
-  };
+  }
+
+  ;
 
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
