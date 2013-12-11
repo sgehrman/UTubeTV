@@ -38,7 +38,7 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.ARROWS_ALT;
         break;
       case VIDEO_PLAY:
-        icon = FontAwesomeIcon.PLAY_CIRCLE;
+        icon = FontAwesomeIcon.PLAY_CIRCLE_O;
         break;
       case OVERFLOW:
         icon = FontAwesomeIcon.ELLIPSIS_V;

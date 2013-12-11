@@ -16,6 +16,7 @@ public class VideoImageView extends ImageView {
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
   private boolean mDrawPlayButton = false;
+  private boolean mDarkenBackground = false;
 
   // gradients shared between all views to cut down on memory allocations etc.
   private static GradientDrawable sTopGradient;
@@ -29,10 +30,15 @@ public class VideoImageView extends ImageView {
 
   public void setDrawShadows(boolean set) {
     mDrawShadows = set;
+    mDarkenBackground = set;
   }
 
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
+
+    if (mDarkenBackground) {
+      canvas.drawColor(0x44000000);
+    }
 
     if (mDrawShadows) {
       createGradients(getContext());
@@ -51,7 +57,7 @@ public class VideoImageView extends ImageView {
       // draw play button
       if (playBitmap == null) {
         playBitmap = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
-        playBitmap.setAlpha(220);  // 0 - 255
+        playBitmap.setAlpha(180);  // 0 - 255
       }
 
       int x = (getWidth() - playButtonSize) / 2;
