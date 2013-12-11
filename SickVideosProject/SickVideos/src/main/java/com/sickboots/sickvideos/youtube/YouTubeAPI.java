@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.youtube;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -150,6 +151,12 @@ public class YouTubeAPI {
 
   public LikedVideosListResults likedVideosListResults() {
     LikedVideosListResults result = new LikedVideosListResults();
+
+    return result;
+  }
+
+  public VideoInfoListResults videoInfoListResults(List<String> videoIds) {
+    VideoInfoListResults result = new VideoInfoListResults(videoIds);
 
     return result;
   }
@@ -415,6 +422,71 @@ public class YouTubeAPI {
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
+        searchListResponse = listRequest.execute();
+
+        totalItems = searchListResponse.getPageInfo().getTotalResults();
+
+        // nasty double cast?
+        response = searchListResponse;
+
+        result.addAll(searchListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleResultsException(e);
+      } catch (Exception e) {
+        handleResultsException(e);
+      }
+
+      return searchResultsToMap(result);
+    }
+
+    private List<YouTubeData> searchResultsToMap(List<Video> playlistItemList) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+      // convert the list into hash maps of video info
+      for (Video playlistItem : playlistItemList) {
+        YouTubeData map = new YouTubeData();
+
+        map.mVideo = playlistItem.getId();
+        map.mTitle = playlistItem.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
+        map.mDuration = (String) playlistItem.getContentDetails().get("duration");
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // VideoInfoListResults
+
+  public class VideoInfoListResults extends BaseListResults {
+    List<String> mVideoIds;
+
+    public VideoInfoListResults(List<String> videoIds) {
+      mVideoIds = videoIds.subList(0,11);
+
+      setItems(itemsForNextToken(""));
+    }
+
+    protected List<YouTubeData> itemsForNextToken(String token) {
+      List<Video> result = new ArrayList<Video>();
+      VideoListResponse searchListResponse = null;
+
+      try {
+        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
+
+        listRequest.setKey(Auth.devKey());
+        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken, pageInfo", thumbnailField()));
+        listRequest.setId(TextUtils.join(",", mVideoIds));
+
+        // token not used for ids
+        // listRequest.setPageToken(token);
+        // maxresults not used for ids
+        // listRequest.setMaxResults(getMaxResultsNeeded());
+
         searchListResponse = listRequest.execute();
 
         totalItems = searchListResponse.getPageInfo().getTotalResults();

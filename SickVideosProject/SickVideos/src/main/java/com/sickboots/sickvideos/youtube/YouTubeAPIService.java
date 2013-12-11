@@ -12,6 +12,7 @@ import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -139,8 +140,6 @@ public class YouTubeAPIService extends IntentService {
     List<YouTubeData> result = null;
     String playlistID;
 
-    Util.log("getDataFromInternet: " + request.requestIdentifier());
-
     YouTubeAPI.BaseListResults listResults = null;
 
     switch (request.type()) {
@@ -184,6 +183,19 @@ public class YouTubeAPIService extends IntentService {
       }
 
       result = listResults.getItems();
+
+
+//
+//      List<String> array = new ArrayList<String>();
+//
+//      for (YouTubeData data : result) {
+//        array.add(data.mVideo);
+//      }
+//
+//      helper.videoInfoListResults(array);
+//
+//
+
     }
 
     return result;
