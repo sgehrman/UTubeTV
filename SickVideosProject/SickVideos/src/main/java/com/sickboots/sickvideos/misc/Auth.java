@@ -24,7 +24,13 @@ public class Auth {
       List<String> scopes = Arrays.asList(YouTubeScopes.YOUTUBE);
 
       credential = GoogleAccountCredential.usingOAuth2(ctx.getApplicationContext(), scopes);
+
+      // add account name if we have it
+      String accountName = ApplicationHub.instance(ctx).getAccountName();
+      if (accountName != null)
+        credential.setSelectedAccountName(accountName);
     }
+
     return credential;
   }
 

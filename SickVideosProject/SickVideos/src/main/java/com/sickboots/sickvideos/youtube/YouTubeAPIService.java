@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.sickboots.sickvideos.AuthActivity;
+import com.sickboots.sickvideos.SettingsActivity;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Util;
 
 import java.util.HashSet;
@@ -40,11 +43,12 @@ public class YouTubeAPIService extends IntentService {
       YouTubeServiceRequest request = intent.getParcelableExtra("request");
       boolean refresh = intent.getBooleanExtra("refresh", false);
 
+      boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
+      mHasFetchedDataMap.add(request.requestIdentifier());
+
       Util.log("launching new service intent.  ");
 
       if (!refresh) {
-        boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
-
         if (!hasFetchedData) {
           DatabaseAccess access = new DatabaseAccess(this, request);
 
@@ -53,10 +57,27 @@ public class YouTubeAPIService extends IntentService {
             refresh = true;
         }
       }
+
       if (refresh) {
-        YouTubeAPI helper = new YouTubeAPI(this);
+        final YouTubeServiceRequest currentRequest = request;
+        YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+          @Override
+          public void handleAuthIntent(final Intent authIntent) {
+
+                Intent intent = new Intent(YouTubeAPIService.this, AuthActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
+
+                if (authIntent != null)
+                  intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+                intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest);
+
+                YouTubeAPIService.this.startActivity(intent);
+
+          }
+        });
         List<YouTubeData> result = getDataFromInternet(request, helper);
 
+        // null if asks to authorize. need to reload after authorization
         if (result != null) {
           DatabaseAccess database = new DatabaseAccess(this, request);
 
@@ -70,8 +91,6 @@ public class YouTubeAPIService extends IntentService {
 
           database.insertItems(result);
         }
-
-        mHasFetchedDataMap.add(request.requestIdentifier());
 
         Intent messageIntent = new Intent(DATA_READY_INTENT);
         messageIntent.putExtra(DATA_READY_INTENT_PARAM, "sending this over");

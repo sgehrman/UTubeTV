@@ -88,6 +88,11 @@ public class YouTubeGridFragment extends Fragment
       if (intent.getAction().equals(YouTubeAPIService.DATA_READY_INTENT)) {
         String param = intent.getStringExtra(YouTubeAPIService.DATA_READY_INTENT_PARAM);
 
+        // get rid of the empty view.  Its not used after initial load, and this also
+        // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
+        mGridView.setEmptyView(null);
+        mEmptyView.setVisibility(View.INVISIBLE);
+
         // stop the pull to refresh indicator
         Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
         if (ptrl != null) // could be null if activity was destroyed
@@ -246,16 +251,6 @@ public class YouTubeGridFragment extends Fragment
 
     mGridView.setEmptyView(mEmptyView);
   }
-
-
-  // use this??
-
-
-  // get rid of the empty view.  Its not used after initial load, and this also
-  // handles the case of no results.  we don't want the progress spinner to sit there and spin forever.
-//  mGridView.setEmptyView(null);
-//  mEmptyView.setVisibility(View.INVISIBLE);
-
 
   // ===========================================================================
   // Adapter

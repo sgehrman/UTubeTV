@@ -7,6 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAuthIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -29,6 +30,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.sickboots.sickvideos.AuthActivity;
 import com.sickboots.sickvideos.MainActivity;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
@@ -42,16 +44,23 @@ import java.util.List;
 import java.util.Map;
 
 public class YouTubeAPI {
+
+  interface YouTubeAPIListener {
+    public void handleAuthIntent(final Intent authIntent);
+  };
+
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
   public static final int REQ_PLAYER_CODE = 334443;
   private YouTube youTube;
   boolean highQualityImages = true;
   Context mContext;
+  YouTubeAPIListener mListener;
 
-  public YouTubeAPI(Context context) {
+  public YouTubeAPI(Context context, YouTubeAPIListener listener) {
     super();
 
+    mListener = listener;
     mContext = context.getApplicationContext();
   }
 
@@ -159,14 +168,8 @@ public class YouTubeAPI {
 
   private void doHandleAuthIntent(Intent authIntent) {
     Util.toast(mContext, "Need Authorization");
-
-    Intent intent = new Intent(MainActivity.REQUEST_AUTHORIZATION_INTENT);
-    intent.putExtra(MainActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
-
-    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(mContext);
-    manager.sendBroadcast(intent);
-
-    Util.log(String.format("Sent broadcast %s", MainActivity.REQUEST_AUTHORIZATION_INTENT));
+    if (mListener != null)
+      mListener.handleAuthIntent(authIntent);
   }
 
   private void doHandleExceptionMessage(String message) {
@@ -219,6 +222,9 @@ public class YouTubeAPI {
       }
       if (intent != null)
         doHandleAuthIntent(intent);
+    } else if (e.getClass().equals(GoogleAuthIOException.class)) {
+      // could be a bad user name, let's pass it to the listener to check
+      doHandleAuthIntent(null);
     } else if (e.getClass().equals(GoogleJsonResponseException.class)) {
       GoogleJsonResponseException r = (GoogleJsonResponseException) e;
 
