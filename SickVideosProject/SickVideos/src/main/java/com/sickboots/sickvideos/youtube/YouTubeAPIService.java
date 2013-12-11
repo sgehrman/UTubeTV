@@ -72,22 +72,8 @@ public class YouTubeAPIService extends IntentService {
 
           }
         });
-        List<YouTubeData> result = getDataFromInternet(request, helper);
 
-        // null if asks to authorize. need to reload after authorization
-        if (result != null) {
-          DatabaseAccess database = new DatabaseAccess(this, request);
-
-          Set currentListSavedData = saveExistingListState(database);
-
-          result = prepareDataFromNet(result, currentListSavedData, request.requestIdentifier());
-
-          // we are only deleting if we know we got good data
-          // otherwise if we delete first a network failure would just make the app useless
-          database.deleteAllRows();
-
-          database.insertItems(result);
-        }
+        updateDataFromInternet(request, helper);
 
         Intent messageIntent = new Intent(DATA_READY_INTENT);
         messageIntent.putExtra(DATA_READY_INTENT_PARAM, "sending this over");
@@ -136,9 +122,10 @@ public class YouTubeAPIService extends IntentService {
     return result;
   }
 
-  private List<YouTubeData> getDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
-    List<YouTubeData> result = null;
+  private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
+
+    Util.log("getting list from net...");
 
     YouTubeAPI.BaseListResults listResults = null;
 
@@ -187,13 +174,11 @@ public class YouTubeAPIService extends IntentService {
         List<YouTubeData> batch = listResults.getItems();
         batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
 
+        Util.log("batch...");
+
         database.insertItems(batch);
       } while (listResults.getNext());
-
-      result = listResults.getItems();
     }
-
-    return result;
   }
 
 }

@@ -736,7 +736,12 @@ public class YouTubeAPI {
     }
 
     public List<YouTubeData> getItems() {
-      return items;
+      List<YouTubeData> tmp = items;
+
+      // clear for every get
+      items = null;
+
+      return tmp;
     }
 
     public void setItems(List<YouTubeData> l) {
@@ -751,6 +756,9 @@ public class YouTubeAPI {
         List<YouTubeData> newItems = itemsForNextToken(token);
 
         if (newItems != null) {
+          if (items == null)
+            items = new ArrayList<YouTubeData>();
+
           items.addAll(newItems);
 
           result = true;
@@ -795,7 +803,7 @@ public class YouTubeAPI {
     }
 
     protected long getMaxResultsNeeded() {
-      long result = 50;
+      long result = 20;
 
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
       return Math.min(50, result);
