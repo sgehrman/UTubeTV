@@ -35,8 +35,8 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-import com.sickboots.sickvideos.youtube.YouTubeAPIService;
-import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
+import com.sickboots.sickvideos.services.YouTubeListService;
+import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
 import org.joda.time.Period;
 import org.joda.time.Seconds;
@@ -84,8 +84,8 @@ public class YouTubeGridFragment extends Fragment
   private class DataReadyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-      if (intent.getAction().equals(YouTubeAPIService.DATA_READY_INTENT)) {
-        String param = intent.getStringExtra(YouTubeAPIService.DATA_READY_INTENT_PARAM);
+      if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
+        String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
 
         // stop the pull to refresh indicator
         Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
@@ -146,7 +146,7 @@ public class YouTubeGridFragment extends Fragment
         String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
         String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);
 
-        YouTubeAPIService.startRequest(getActivity(), mRequest, false);
+        YouTubeListService.startRequest(getActivity(), mRequest, false);
 
         return new CursorLoader(getActivity(),
             YouTubeContentProvider.URI_CONTENTS, projection, selection, selectionArgs, sortOrder);
@@ -182,7 +182,7 @@ public class YouTubeGridFragment extends Fragment
     if (broadcastReceiver == null) {
       broadcastReceiver = new DataReadyBroadcastReceiver();
     }
-    IntentFilter intentFilter = new IntentFilter(YouTubeAPIService.DATA_READY_INTENT);
+    IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
     // triggers an update for the title, lame hack
@@ -238,7 +238,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void onRefreshStarted(View view) {
-    YouTubeAPIService.startRequest(getActivity(), mRequest, true);
+    YouTubeListService.startRequest(getActivity(), mRequest, true);
   }
 
   // ===========================================================================

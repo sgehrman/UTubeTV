@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
+import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +13,27 @@ import java.util.List;
 public class DatabaseAccess {
   private Database mDB;
   private DatabaseTables.DatabaseTable mTable;
-  private YouTubeServiceRequest mRequest;
+  private String mRequestIdentifier;
   private Context mContext;
 
   public DatabaseAccess(Context context, YouTubeServiceRequest request) {
+    this(context, request.databaseTable(), request.requestIdentifier());
+  }
+
+  public DatabaseAccess(Context context, DatabaseTables.DatabaseTable table, String requestIdentifier) {
     super();
 
     mDB = Database.instance(context);
-    mContext = context;
-    mRequest = request;
-    mTable = request.databaseTable();
+    mContext = context.getApplicationContext();
+    mRequestIdentifier = requestIdentifier;
+    mTable = table;
   }
 
   public void deleteAllRows() {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()), mTable.whereArgs(DatabaseTables.ALL_ITEMS, mRequest.requestIdentifier()));
+      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, mRequestIdentifier), mTable.whereArgs(DatabaseTables.ALL_ITEMS, mRequestIdentifier));
 
       if (result > 0)
         notifyProviderOfChange();
@@ -77,7 +81,7 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags) {
-    return mDB.getCursor(mTable.tableName(), mTable.whereClause(flags, mRequest.requestIdentifier()), mTable.whereArgs(flags, mRequest.requestIdentifier()), mTable.projection(flags));
+    return mDB.getCursor(mTable.tableName(), mTable.whereClause(flags, mRequestIdentifier), mTable.whereArgs(flags, mRequestIdentifier), mTable.projection(flags));
   }
 
   public List<YouTubeData> getItems(int flags) {
@@ -126,10 +130,11 @@ public class DatabaseAccess {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     try {
-      cursor.moveToFirst();
-      while (!cursor.isAfterLast()) {
-        result.add(mTable.cursorToItem(cursor, null));
-        cursor.moveToNext();
+      if (cursor.moveToFirst()) {
+        while (!cursor.isAfterLast()) {
+          result.add(mTable.cursorToItem(cursor, null));
+          cursor.moveToNext();
+        }
       }
     } catch (Exception e) {
       Util.log("getItems exception: " + e.getMessage());

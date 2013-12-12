@@ -14,7 +14,6 @@ public class YouTubeData {
   // used for videos
   public String mVideo;
   public String mDuration;
-  public int mStart;
 
   // used only for subscriptions and categories
   public String mChannel;

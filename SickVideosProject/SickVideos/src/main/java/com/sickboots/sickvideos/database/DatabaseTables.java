@@ -12,6 +12,7 @@ public class DatabaseTables {
   public static final int ALL_ITEMS = 0;
   public static final int HIDDEN_ITEMS = 10;
   public static final int VISIBLE_ITEMS = 20;
+  public static final int NEEDS_DATA_UPDATE = 30;
 
   private static final String CREATE = "CREATE TABLE ";
   private static final String TEXT_TYPE = " TEXT";
@@ -155,14 +156,20 @@ public class DatabaseTables {
 
     @Override
     public String whereClause(int flags, String requestId) {
-      String result = PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
+      String result=null;
+
+      if (requestId != null)
+        result = PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
 
       return result;
     }
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return new String[]{requestId};
+      if (requestId != null)
+        return new String[]{requestId};
+
+      return null;
     }
   }
 
@@ -179,7 +186,6 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
       public static final String COLUMN_NAME_DURATION = "duration";
       public static final String COLUMN_NAME_HIDDEN = "hidden";
-      public static final String COLUMN_NAME_START = "start";
     }
 
     private VideoTable() {
@@ -197,15 +203,39 @@ public class DatabaseTables {
       if (result == null)
         result = new YouTubeData();
 
-      result.mID = cursor.getLong(cursor.getColumnIndex(VideoEntry._ID));
-      result.mRequest = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_REQUEST));
-      result.mVideo = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO));
-      result.mTitle = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE));
-      result.mDescription = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION));
-      result.mThumbnail = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL));
-      result.mDuration = cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION));
-      result.setHidden(cursor.getString(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN)) != null);
-      result.mStart = cursor.getInt(cursor.getColumnIndex(VideoEntry.COLUMN_NAME_START));
+      int col;
+
+      col = cursor.getColumnIndex(VideoEntry._ID);
+      if (col != -1)
+        result.mID = cursor.getLong(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_REQUEST);
+      if (col != -1)
+        result.mRequest = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO);
+      if (col != -1)
+        result.mVideo = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE);
+      if (col != -1)
+        result.mTitle = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION);
+      if (col != -1)
+        result.mDescription = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL);
+      if (col != -1)
+        result.mThumbnail = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION);
+      if (col != -1)
+        result.mDuration = cursor.getString(col);
+
+      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN);
+      if (col != -1)
+        result.setHidden(cursor.getString(col) != null);
 
       return result;
     }
@@ -221,7 +251,6 @@ public class DatabaseTables {
       values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(VideoEntry.COLUMN_NAME_DURATION, item.mDuration);
       values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
-      values.put(VideoEntry.COLUMN_NAME_START, item.mStart);
 
       return values;
     }
@@ -245,8 +274,6 @@ public class DatabaseTables {
           + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
           + COMMA_SEP
           + VideoEntry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
-          + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_START + INT_TYPE
           + " )";
 
       return itemTable;
@@ -264,6 +291,16 @@ public class DatabaseTables {
               VideoEntry.COLUMN_NAME_VIDEO,
               VideoEntry.COLUMN_NAME_HIDDEN
           };
+          break;
+
+          // update just needs the video id so it can ask youtube for additional info like duration
+        case NEEDS_DATA_UPDATE:
+          result = new String[]{
+              VideoEntry._ID,
+              VideoEntry.COLUMN_NAME_VIDEO,
+              VideoEntry.COLUMN_NAME_DURATION
+          };
+          break;
 
         case VISIBLE_ITEMS:
         case ALL_ITEMS:
@@ -276,8 +313,7 @@ public class DatabaseTables {
               VideoEntry.COLUMN_NAME_DESCRIPTION,
               VideoEntry.COLUMN_NAME_THUMBNAIL,
               VideoEntry.COLUMN_NAME_DURATION,
-              VideoEntry.COLUMN_NAME_HIDDEN,
-              VideoEntry.COLUMN_NAME_START
+              VideoEntry.COLUMN_NAME_HIDDEN
           };
           break;
       }
@@ -296,23 +332,31 @@ public class DatabaseTables {
         case VISIBLE_ITEMS:
           result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
           break;
+        case NEEDS_DATA_UPDATE:
+          result = "" + VideoEntry.COLUMN_NAME_DURATION + " IS NULL";
+          break;
         case ALL_ITEMS:
           break;
       }
 
-      if (result == null)
-        result = "";
-      else
-        result += " AND ";
+      if (requestId != null) {
+        if (result == null)
+          result = "";
+        else
+          result += " AND ";
 
-      result += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
+        result += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
+      }
 
       return result;
     }
 
     @Override
     public String[] whereArgs(int flags, String requestId) {
-      return new String[]{requestId};
+      if (requestId != null)
+        return new String[]{requestId};
+
+      return null;
     }
   }
 }

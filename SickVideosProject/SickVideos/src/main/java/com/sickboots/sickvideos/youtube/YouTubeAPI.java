@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class YouTubeAPI {
 
-  interface YouTubeAPIListener {
+  public interface YouTubeAPIListener {
     public void handleAuthIntent(final Intent authIntent);
   }
 
@@ -803,7 +803,7 @@ public class YouTubeAPI {
     }
 
     protected long getMaxResultsNeeded() {
-      long result = 20;
+      long result = 40;
 
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
       return Math.min(50, result);

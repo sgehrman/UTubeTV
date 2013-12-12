@@ -10,7 +10,7 @@ import com.sickboots.sickvideos.misc.Util;
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
 
-  private static final int DATABASE_VERSION = 42;
+  private static final int DATABASE_VERSION = 52;
   private static final String DATABASE_NAME = "database.db";
 
   private final DatabaseTables mTables = new DatabaseTables();

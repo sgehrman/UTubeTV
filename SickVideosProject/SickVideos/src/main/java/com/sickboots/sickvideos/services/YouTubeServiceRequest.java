@@ -1,10 +1,11 @@
-package com.sickboots.sickvideos.youtube;
+package com.sickboots.sickvideos.services;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 

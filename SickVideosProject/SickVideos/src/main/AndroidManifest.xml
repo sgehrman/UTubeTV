@@ -48,7 +48,11 @@
         </activity>
 
         <service
-            android:name="com.sickboots.sickvideos.youtube.YouTubeAPIService"
+            android:name=".services.YouTubeListService"
+            android:enabled="true"
+            android:exported="false"/>
+        <service
+            android:name=".services.YouTubeUpdateService"
             android:enabled="true"
             android:exported="false"/>
 

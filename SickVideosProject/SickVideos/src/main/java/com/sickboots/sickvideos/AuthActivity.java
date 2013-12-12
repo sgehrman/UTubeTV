@@ -9,8 +9,8 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Util;
-import com.sickboots.sickvideos.youtube.YouTubeAPIService;
-import com.sickboots.sickvideos.youtube.YouTubeServiceRequest;
+import com.sickboots.sickvideos.services.YouTubeListService;
+import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
 public class AuthActivity extends Activity {
   public static final String REQUEST_AUTHORIZATION_INTENT = "com.sickboots.sickvideos.RequestAuth";
@@ -52,7 +52,7 @@ public class AuthActivity extends Activity {
 
     if (request != null) {
       // forcing a refresh since it is flagged as received in the service to avoid double attempts at a request
-      YouTubeAPIService.startRequest(this, request, true);
+      YouTubeListService.startRequest(this, request, true);
     }
 
     finish();
