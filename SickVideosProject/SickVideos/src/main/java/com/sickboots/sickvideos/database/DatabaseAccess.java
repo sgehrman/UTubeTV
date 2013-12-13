@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseAccess {
@@ -105,21 +107,27 @@ public class DatabaseAccess {
     return result;
   }
 
-  public void updateItem(YouTubeData item) {
+  public void updateItems(List<YouTubeData> items) {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      int result = db.update(mTable.tableName(), mTable.contentValuesForItem(item), whereClauseForID(), whereArgsForID(item.mID));
+      for (YouTubeData theItem : items) {
+        int result = db.update(mTable.tableName(), mTable.contentValuesForItem(theItem), whereClauseForID(), whereArgsForID(theItem.mID));
 
-      if (result != 1)
-        Util.log("updateItem didn't return 1");
-      else
-        notifyProviderOfChange();
+        if (result != 1)
+          Util.log("updateItem didn't return 1");
+      }
 
+      notifyProviderOfChange();
     } catch (Exception e) {
       Util.log("updateItem exception: " + e.getMessage());
     } finally {
     }
+
+  }
+
+  public void updateItem(YouTubeData item) {
+    updateItems(Arrays.asList(item));
   }
 
   // -----------------------------------------------------------------------------

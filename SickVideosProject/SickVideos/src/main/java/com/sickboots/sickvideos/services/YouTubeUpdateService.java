@@ -64,19 +64,19 @@ public class YouTubeUpdateService extends IntentService {
   }
 
   private void updateDataFromInternet(List<String> videoIds, YouTubeAPI helper) {
+    DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
+    DatabaseAccess access = new DatabaseAccess(this, table);
+    List<YouTubeData> updatedItems = new ArrayList<YouTubeData>();
 
     Util.log("updating list from net...");
 
+    // get data from youtube api
     YouTubeAPI.BaseListResults listResults = helper.videoInfoListResults(videoIds);
-
     List<YouTubeData> fromYouTubeItems = listResults.getItems();
 
-    // now need to take this data and merge it into the existing item
+    // merge duration and other fields into the existing item
     for (YouTubeData itemFromYouTube : fromYouTubeItems) {
       // final item with matching videoId in the database and update it with duration and any other info we might get back
-      DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
-
-      DatabaseAccess access = new DatabaseAccess(this, table);
 
       String selection = DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_VIDEO + " = ?";
       String[] selectionArgs = new String[] {itemFromYouTube.mVideo};
@@ -89,7 +89,7 @@ public class YouTubeUpdateService extends IntentService {
 
           item.mDuration = itemFromYouTube.mDuration;
 
-          access.updateItem(item);
+          updatedItems.add(item);
 
           cursor.moveToNext();
         }
@@ -97,6 +97,9 @@ public class YouTubeUpdateService extends IntentService {
         Util.log("video not found?");
       }
     }
+
+    // update items in the database
+    access.updateItems(updatedItems);
   }
 
 }
