@@ -798,10 +798,8 @@ public class YouTubeAPI {
     }
 
     protected long getMaxResultsNeeded() {
-      long result = 40;
-
       // avoid exception with setMaxResults: Values must be within the range: [0, 50]
-      return Math.min(50, result);
+      return 50;
     }
 
     private void done() {

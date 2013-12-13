@@ -68,8 +68,6 @@ public class YouTubeUpdateService extends IntentService {
     DatabaseAccess access = new DatabaseAccess(this, table);
     List<YouTubeData> updatedItems = new ArrayList<YouTubeData>();
 
-    Util.log("updating list from net...");
-
     // get data from youtube api
     YouTubeAPI.BaseListResults listResults = helper.videoInfoListResults(videoIds);
     List<YouTubeData> fromYouTubeItems = listResults.getItems();
@@ -97,6 +95,8 @@ public class YouTubeUpdateService extends IntentService {
         Util.log("video not found?");
       }
     }
+
+    Util.log("SERVICE: updating info = " + updatedItems.size());
 
     // update items in the database
     access.updateItems(updatedItems);
