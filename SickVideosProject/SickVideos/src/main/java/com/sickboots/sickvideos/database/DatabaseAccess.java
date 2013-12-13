@@ -89,8 +89,8 @@ public class DatabaseAccess {
     return mDB.getCursor(query);
   }
 
-  public Cursor getCursor(String whereClause, String[] whereArgs, String[] projection) {
-    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClause, whereArgs, projection);
+  public Cursor getCursor(String selection, String[] selectionArgs, String[] projection) {
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), selection, selectionArgs, projection);
 
     return mDB.getCursor(query);
   }

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.sickboots.sickvideos.AuthActivity;
+import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -38,6 +39,7 @@ public class YouTubeUpdateService extends IntentService {
       List<YouTubeData> items = access.getItems(DatabaseTables.NEEDS_DATA_UPDATE, null, 50);
 
       if (items.size() > 0) {
+
         YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
           @Override
           public void handleAuthIntent(final Intent authIntent) {
@@ -45,41 +47,56 @@ public class YouTubeUpdateService extends IntentService {
           }
         });
 
-        updateDataFromInternet(items, helper);
+        List<String> videoIds = new ArrayList<String>();
+        for (YouTubeData item : items) {
+          videoIds.add(item.mVideo);
+        }
 
-        // run again to make sure we got everything, could be more than 50
-        // i did originally test if items.size() == 50, but sometimes results are less than 50 because of private videos.
-      //  YouTubeUpdateService.startRequest(this);
+        updateDataFromInternet(videoIds, helper);
 
-        // ### make sure above doesn't endless loop.  private videos etc. ###
+        // start again assuming there is more waiting
+        if (items.size() == 50)
+          YouTubeUpdateService.startRequest(this);
       }
 
     } catch (Exception e) {
     }
   }
 
-  private void updateDataFromInternet(List<YouTubeData> items, YouTubeAPI helper) {
+  private void updateDataFromInternet(List<String> videoIds, YouTubeAPI helper) {
 
     Util.log("updating list from net...");
 
-    List<String> videoIds = new ArrayList<String>();
-    for (YouTubeData item : items) {
-      videoIds.add(item.mVideo);
-    }
-
     YouTubeAPI.BaseListResults listResults = helper.videoInfoListResults(videoIds);
 
-    List<YouTubeData> infoList = listResults.getItems();
+    List<YouTubeData> fromYouTubeItems = listResults.getItems();
 
     // now need to take this data and merge it into the existing item
-    for (YouTubeData item : infoList) {
+    for (YouTubeData itemFromYouTube : fromYouTubeItems) {
       // final item with matching videoId in the database and update it with duration and any other info we might get back
-//      DatabaseAccess access = new DatabaseAccess(this, DatabaseTables.videoTable());
-//
-//      Cursor cursor = access.getCursor(whereClause, whereArgs, projection);
+      DatabaseTables.DatabaseTable table = DatabaseTables.videoTable();
 
+      DatabaseAccess access = new DatabaseAccess(this, table);
+
+      String selection = DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_VIDEO + " = ?";
+      String[] selectionArgs = new String[] {itemFromYouTube.mVideo};
+
+      Cursor cursor = access.getCursor(selection, selectionArgs , table.defaultProjection());
+
+      if (cursor.moveToFirst()) {
+        while (!cursor.isAfterLast()) {
+          YouTubeData item = table.cursorToItem(cursor, null);
+
+          item.mDuration = itemFromYouTube.mDuration;
+
+          access.updateItem(item);
+
+          cursor.moveToNext();
+        }
+      } else {
+        Util.log("video not found?");
+      }
     }
-
   }
 
 }

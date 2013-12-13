@@ -82,9 +82,6 @@ public class YouTubeListService extends IntentService {
 
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
         manager.sendBroadcast(messageIntent);
-
-        // start this up to get duration values
-        YouTubeUpdateService.startRequest(this);
       }
 
     } catch (Exception e) {
@@ -181,6 +178,10 @@ public class YouTubeListService extends IntentService {
         Util.log("batch...");
 
         database.insertItems(batch);
+
+        // make sure the duration gets updated too, not harmful to call this more than needed
+        YouTubeUpdateService.startRequest(this);
+
       } while (listResults.getNext());
     }
   }

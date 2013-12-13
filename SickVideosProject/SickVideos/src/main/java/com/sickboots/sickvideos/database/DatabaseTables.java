@@ -329,7 +329,7 @@ public class DatabaseTables {
               VideoEntry.COLUMN_NAME_VIDEO,
               VideoEntry.COLUMN_NAME_DURATION
           };
-
+          break;
         case VISIBLE_ITEMS:
           selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
           break;

@@ -70,7 +70,7 @@ public class Database extends SQLiteOpenHelper {
       );
 
     } catch (Exception e) {
-      Util.log("getItemsCursor exception: " + e.getMessage());
+      Util.log("Database.getCursor exception: " + e.getMessage());
     } finally {
     }
 
