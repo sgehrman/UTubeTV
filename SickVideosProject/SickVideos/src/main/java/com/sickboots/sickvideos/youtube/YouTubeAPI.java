@@ -476,10 +476,10 @@ public class YouTubeAPI {
       VideoListResponse searchListResponse = null;
 
       try {
-        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
+        YouTube.Videos.List listRequest = youTube().videos().list("id, contentDetails");
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields("items(id, contentDetails/duration)");
         listRequest.setId(TextUtils.join(",", mVideoIds));
 
         searchListResponse = listRequest.execute();
@@ -502,9 +502,6 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getId();
-        map.mTitle = playlistItem.getSnippet().getTitle();
-        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
-        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
         map.mDuration = (String) playlistItem.getContentDetails().get("duration");
 
         result.add(map);
