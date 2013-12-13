@@ -32,7 +32,9 @@ public class DatabaseAccess {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, requestIdentifier), mTable.whereArgs(DatabaseTables.ALL_ITEMS, requestIdentifier));
+      Database.DatabaseQuery queryParams = mTable.queryParams(DatabaseTables.ALL_ITEMS, requestIdentifier);
+
+      int result = db.delete(mTable.tableName(), queryParams.mSelection, queryParams.mSelectionArgs);
 
       if (result > 0)
         notifyProviderOfChange();
@@ -67,7 +69,7 @@ public class DatabaseAccess {
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
 
-    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.defaultProjection());
     Cursor cursor = mDB.getCursor(query);
 
     if (cursor.moveToFirst()) {
@@ -82,7 +84,9 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags, String requestIdentifier) {
-    return getCursor(mTable.whereClause(flags, requestIdentifier), mTable.whereArgs(flags, requestIdentifier), mTable.projection(flags));
+    Database.DatabaseQuery query = mTable.queryParams(flags,requestIdentifier);
+
+    return mDB.getCursor(query);
   }
 
   public Cursor getCursor(String whereClause, String[] whereArgs, String[] projection) {

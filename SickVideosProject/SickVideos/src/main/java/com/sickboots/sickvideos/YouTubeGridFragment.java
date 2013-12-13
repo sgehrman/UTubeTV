@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
@@ -141,15 +142,14 @@ public class YouTubeGridFragment extends Fragment
       public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         DatabaseTables.DatabaseTable table = mRequest.databaseTable();
 
-        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl";
-        String[] selectionArgs = table.whereArgs(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
-        String selection = table.whereClause(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
-        String[] projection = table.projection(DatabaseTables.VISIBLE_ITEMS);
+        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
+
+        Database.DatabaseQuery queryParams = table.queryParams( DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
 
         YouTubeListService.startRequest(getActivity(), mRequest, false);
 
         return new CursorLoader(getActivity(),
-            YouTubeContentProvider.URI_CONTENTS, projection, selection, selectionArgs, sortOrder);
+            YouTubeContentProvider.URI_CONTENTS, queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
       }
 
       @Override

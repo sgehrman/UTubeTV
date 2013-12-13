@@ -47,12 +47,10 @@ public class DatabaseTables {
     public String tableSQL();
     public String indexSQL();
 
-    public String[] projection(int flags);
+    public Database.DatabaseQuery queryParams( int queryID, String requestId);
+    public String[] defaultProjection();
 
-    public String whereClause(int flags, String requestId);
-
-    public String[] whereArgs(int flags, String requestId);
-  }
+    }
 
   public static DatabaseTable[] tables() {
     return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable()};
@@ -141,41 +139,37 @@ public class DatabaseTables {
     }
 
     @Override
-    public String[] projection(int flags) {
-      String[] result = null;
+    public String[] defaultProjection() {
+      String[] projection = new String[]{
+          PlaylistEntry._ID,
+          PlaylistEntry.COLUMN_NAME_REQUEST,
+          PlaylistEntry.COLUMN_NAME_PLAYLIST,
+          PlaylistEntry.COLUMN_NAME_TITLE,
+          PlaylistEntry.COLUMN_NAME_DESCRIPTION,
+          PlaylistEntry.COLUMN_NAME_THUMBNAIL
+      };
 
-      switch (flags) {
-        default:
-          result = new String[]{
-              PlaylistEntry._ID,
-              PlaylistEntry.COLUMN_NAME_REQUEST,
-              PlaylistEntry.COLUMN_NAME_PLAYLIST,
-              PlaylistEntry.COLUMN_NAME_TITLE,
-              PlaylistEntry.COLUMN_NAME_DESCRIPTION,
-              PlaylistEntry.COLUMN_NAME_THUMBNAIL
-          };
-          break;
+      return projection;
+    }
+
+    @Override
+    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+      String selection=null;
+      String[] selectionArgs=null;
+      String[] projection= defaultProjection();
+
+      if (requestId != null) {
+        selectionArgs = new String[]{requestId};
+
+        if (selection == null)
+          selection = "";
+        else
+          selection += " AND ";
+
+        selection += PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return result;
-    }
-
-    @Override
-    public String whereClause(int flags, String requestId) {
-      String result=null;
-
-      if (requestId != null)
-        result = PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
-
-      return result;
-    }
-
-    @Override
-    public String[] whereArgs(int flags, String requestId) {
-      if (requestId != null)
-        return new String[]{requestId};
-
-      return null;
+      return new Database.DatabaseQuery(  tableName(),   selection, selectionArgs, projection);
     }
   }
 
@@ -295,83 +289,66 @@ public class DatabaseTables {
     }
 
     @Override
-    public String[] projection(int flags) {
-      String[] result = null;
+    public String[] defaultProjection() {
+      String[] projection = new String[]{
+          VideoEntry._ID,
+          VideoEntry.COLUMN_NAME_REQUEST,
+          VideoEntry.COLUMN_NAME_VIDEO,
+          VideoEntry.COLUMN_NAME_TITLE,
+          VideoEntry.COLUMN_NAME_DESCRIPTION,
+          VideoEntry.COLUMN_NAME_THUMBNAIL,
+          VideoEntry.COLUMN_NAME_DURATION,
+          VideoEntry.COLUMN_NAME_HIDDEN
+      };
 
-      switch (flags) {
+          return projection;
+      }
+
+    @Override
+    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+      String selection=null;
+      String[] selectionArgs=null;
+      String[] projection=defaultProjection();
+
+      switch (queryID) {
         case HIDDEN_ITEMS:
-          result = new String[]{
+          selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
+
+          projection = new String[] {
               VideoEntry._ID,
               VideoEntry.COLUMN_NAME_REQUEST,
               VideoEntry.COLUMN_NAME_VIDEO,
               VideoEntry.COLUMN_NAME_HIDDEN
           };
           break;
-
-          // update just needs the video id so it can ask youtube for additional info like duration
         case NEEDS_DATA_UPDATE:
-          result = new String[]{
+          selection = "" + VideoEntry.COLUMN_NAME_DURATION + " IS NULL";
+
+          projection = new String[]{
               VideoEntry._ID,
               VideoEntry.COLUMN_NAME_VIDEO,
               VideoEntry.COLUMN_NAME_DURATION
           };
-          break;
 
         case VISIBLE_ITEMS:
-        case ALL_ITEMS:
-        default:
-          result = new String[]{
-              VideoEntry._ID,
-              VideoEntry.COLUMN_NAME_REQUEST,
-              VideoEntry.COLUMN_NAME_VIDEO,
-              VideoEntry.COLUMN_NAME_TITLE,
-              VideoEntry.COLUMN_NAME_DESCRIPTION,
-              VideoEntry.COLUMN_NAME_THUMBNAIL,
-              VideoEntry.COLUMN_NAME_DURATION,
-              VideoEntry.COLUMN_NAME_HIDDEN
-          };
-          break;
-      }
-
-      return result;
-    }
-
-    @Override
-    public String whereClause(int flags, String requestId) {
-      String result = null;
-
-      switch (flags) {
-        case HIDDEN_ITEMS:
-          result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
-          break;
-        case VISIBLE_ITEMS:
-          result = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
-          break;
-        case NEEDS_DATA_UPDATE:
-          result = "" + VideoEntry.COLUMN_NAME_DURATION + " IS NULL";
+          selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
           break;
         case ALL_ITEMS:
           break;
       }
 
       if (requestId != null) {
-        if (result == null)
-          result = "";
-        else
-          result += " AND ";
+        selectionArgs = new String[]{requestId};
 
-        result += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
+        if (selection == null)
+          selection = "";
+        else
+          selection += " AND ";
+
+        selection += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return result;
-    }
-
-    @Override
-    public String[] whereArgs(int flags, String requestId) {
-      if (requestId != null)
-        return new String[]{requestId};
-
-      return null;
+      return new Database.DatabaseQuery(  tableName(),   selection, selectionArgs, projection);
     }
   }
 }
