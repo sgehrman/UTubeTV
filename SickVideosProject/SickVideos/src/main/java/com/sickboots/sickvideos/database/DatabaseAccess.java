@@ -17,23 +17,22 @@ public class DatabaseAccess {
   private Context mContext;
 
   public DatabaseAccess(Context context, YouTubeServiceRequest request) {
-    this(context, request.databaseTable(), request.requestIdentifier());
+    this(context, request.databaseTable());
   }
 
-  public DatabaseAccess(Context context, DatabaseTables.DatabaseTable table, String requestIdentifier) {
+  public DatabaseAccess(Context context, DatabaseTables.DatabaseTable table) {
     super();
 
     mDB = Database.instance(context);
     mContext = context.getApplicationContext();
-    mRequestIdentifier = requestIdentifier;
     mTable = table;
   }
 
-  public void deleteAllRows() {
+  public void deleteAllRows(String requestIdentifier) {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, mRequestIdentifier), mTable.whereArgs(DatabaseTables.ALL_ITEMS, mRequestIdentifier));
+      int result = db.delete(mTable.tableName(), mTable.whereClause(DatabaseTables.ALL_ITEMS, requestIdentifier), mTable.whereArgs(DatabaseTables.ALL_ITEMS, requestIdentifier));
 
       if (result > 0)
         notifyProviderOfChange();
@@ -67,7 +66,9 @@ public class DatabaseAccess {
 
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
-    Cursor cursor = mDB.getCursor(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.projection(0));
+    Cursor cursor = mDB.getCursor(query);
 
     if (cursor.moveToFirst()) {
       result = mTable.cursorToItem(cursor, null);
@@ -80,14 +81,20 @@ public class DatabaseAccess {
     return result;
   }
 
-  public Cursor getCursor(int flags) {
-    return mDB.getCursor(mTable.tableName(), mTable.whereClause(flags, mRequestIdentifier), mTable.whereArgs(flags, mRequestIdentifier), mTable.projection(flags));
+  public Cursor getCursor(int flags, String requestIdentifier) {
+    return getCursor(mTable.whereClause(flags, requestIdentifier), mTable.whereArgs(flags, requestIdentifier), mTable.projection(flags));
   }
 
-  public List<YouTubeData> getItems(int flags) {
-    Cursor cursor = getCursor(flags);
+  public Cursor getCursor(String whereClause, String[] whereArgs, String[] projection) {
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClause, whereArgs, projection);
 
-    List<YouTubeData> result = getItems(cursor);
+    return mDB.getCursor(query);
+  }
+
+  public List<YouTubeData> getItems(int flags, String requestIdentifier, int maxResults) {
+    Cursor cursor = getCursor(flags, requestIdentifier);
+
+    List<YouTubeData> result = getItems(cursor, maxResults);
 
     cursor.close();
 
@@ -126,13 +133,23 @@ public class DatabaseAccess {
     return new String[]{id.toString()};
   }
 
-  private List<YouTubeData> getItems(Cursor cursor) {
+  // pass 0 to maxResults if you don't care
+  private List<YouTubeData> getItems(Cursor cursor, int maxResults) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
+    boolean stopOnMaxResults = maxResults > 0;
 
     try {
+      int cnt = 0;
+
       if (cursor.moveToFirst()) {
         while (!cursor.isAfterLast()) {
           result.add(mTable.cursorToItem(cursor, null));
+
+          if (stopOnMaxResults) {
+            if (++cnt == maxResults)
+              break;
+          }
+
           cursor.moveToNext();
         }
       }

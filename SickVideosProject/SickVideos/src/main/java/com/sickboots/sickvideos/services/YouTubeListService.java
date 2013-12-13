@@ -49,9 +49,9 @@ public class YouTubeListService extends IntentService {
 
       if (!refresh) {
         if (!hasFetchedData) {
-          DatabaseAccess access = new DatabaseAccess(this, request);
+          DatabaseAccess access = new DatabaseAccess(this, request.databaseTable());
 
-          Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS);
+          Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS, request.requestIdentifier());
           if (!cursor.moveToFirst())
             refresh = true;
         }
@@ -107,12 +107,11 @@ public class YouTubeListService extends IntentService {
     return inList;
   }
 
-  private Set<String> saveExistingListState(DatabaseAccess database) {
+  private Set<String> saveExistingListState(DatabaseAccess database, String requestIdentifier) {
     Set<String> result = null;
 
     // ask the database for the hidden items
-    // they won't be in "items" since that is what's in the UI, not what's in the db and it won't include hidden items
-    List<YouTubeData> hiddenItems = database.getItems(DatabaseTables.HIDDEN_ITEMS);
+    List<YouTubeData> hiddenItems = database.getItems(DatabaseTables.HIDDEN_ITEMS, requestIdentifier, 0);
 
     if (hiddenItems != null) {
       result = new HashSet<String>();
@@ -170,10 +169,10 @@ public class YouTubeListService extends IntentService {
     }
 
     if (listResults != null) {
-      DatabaseAccess database = new DatabaseAccess(this, request);
+      DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
 
-      Set currentListSavedData = saveExistingListState(database);
-      database.deleteAllRows();
+      Set currentListSavedData = saveExistingListState(database, request.requestIdentifier());
+      database.deleteAllRows(request.requestIdentifier());
 
       do {
         List<YouTubeData> batch = listResults.getItems();

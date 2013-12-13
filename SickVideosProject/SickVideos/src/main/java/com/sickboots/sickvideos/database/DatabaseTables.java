@@ -45,6 +45,7 @@ public class DatabaseTables {
     public ContentValues contentValuesForItem(YouTubeData item);
 
     public String tableSQL();
+    public String indexSQL();
 
     public String[] projection(int flags);
 
@@ -132,6 +133,11 @@ public class DatabaseTables {
           + " )";
 
       return result;
+    }
+
+    @Override
+    public String indexSQL() {
+      return null;
     }
 
     @Override
@@ -253,6 +259,15 @@ public class DatabaseTables {
       values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
+    }
+
+    @Override
+    public String indexSQL() {
+      String indexName = VideoEntry.COLUMN_NAME_VIDEO + "_idx";
+
+      String result = "CREATE INDEX " + indexName + " on " + tableName() + "(" + VideoEntry.COLUMN_NAME_VIDEO + ")";
+
+      return result;
     }
 
     @Override

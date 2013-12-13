@@ -460,12 +460,18 @@ public class YouTubeAPI {
     List<String> mVideoIds;
 
     public VideoInfoListResults(List<String> videoIds) {
-      mVideoIds = videoIds.subList(0,11);
+      mVideoIds = videoIds;
+
+      if (mVideoIds.size() > 50) {
+        Util.log("VideoInfoListResults can only handle 50 videos at a time.");
+
+        mVideoIds = videoIds.subList(0,50);
+      }
 
       setItems(itemsForNextToken(""));
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String tokenNotUsed) {
       List<Video> result = new ArrayList<Video>();
       VideoListResponse searchListResponse = null;
 
@@ -476,15 +482,7 @@ public class YouTubeAPI {
         listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField()));
         listRequest.setId(TextUtils.join(",", mVideoIds));
 
-        // token not used for ids
-        // listRequest.setPageToken(token);
-        // maxresults not used for ids
-        // listRequest.setMaxResults(getMaxResultsNeeded());
-
         searchListResponse = listRequest.execute();
-
-        // nasty double cast?
-        response = searchListResponse;
 
         result.addAll(searchListResponse.getItems());
       } catch (UserRecoverableAuthIOException e) {

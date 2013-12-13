@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.database;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -54,11 +55,13 @@ public class YouTubeContentProvider extends ContentProvider {
 
     if (URI_CONTENTS.equals(uri)) {
       if (sortOrder.equals("pl")) {
-        String tableName = DatabaseTables.playlistTable().tableName();
-        cursor = Database.instance(getContext()).getCursor(tableName, selection, selectionArgs, projection);
+         DatabaseAccess access = new DatabaseAccess(getContext(), DatabaseTables.playlistTable());
+
+        cursor = access.getCursor(selection, selectionArgs, projection);
       } else {
-        String tableName = DatabaseTables.videoTable().tableName();
-        cursor = Database.instance(getContext()).getCursor(tableName, selection, selectionArgs, projection);
+        DatabaseAccess access = new DatabaseAccess(getContext(), DatabaseTables.videoTable());
+
+        cursor = access.getCursor(selection, selectionArgs, projection);
       }
 
       cursor.setNotificationUri(getContext().getContentResolver(), URI_CONTENTS);

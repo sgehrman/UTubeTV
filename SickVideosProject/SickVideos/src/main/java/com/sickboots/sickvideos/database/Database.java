@@ -10,7 +10,7 @@ import com.sickboots.sickvideos.misc.Util;
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
 
-  private static final int DATABASE_VERSION = 52;
+  private static final int DATABASE_VERSION = 82;
   private static final String DATABASE_NAME = "database.db";
 
   private final DatabaseTables mTables = new DatabaseTables();
@@ -29,8 +29,14 @@ public class Database extends SQLiteOpenHelper {
   }
 
   public void onCreate(SQLiteDatabase db) {
-    for (DatabaseTables.DatabaseTable table : mTables.tables())
+    for (DatabaseTables.DatabaseTable table : mTables.tables()) {
       db.execSQL(table.tableSQL());
+
+      // not every table defines an index, check for null
+      String indexSQL = table.indexSQL();
+      if (indexSQL != null)
+        db.execSQL(indexSQL);
+    }
   }
 
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -48,16 +54,16 @@ public class Database extends SQLiteOpenHelper {
     onUpgrade(db, oldVersion, newVersion);
   }
 
-  public Cursor getCursor(String tableName, String selection, String[] selectionArgs, String[] projection) {
+  public Cursor getCursor(DatabaseQuery query) {
     SQLiteDatabase db = getReadableDatabase();
     Cursor cursor = null;
 
     try {
       cursor = db.query(
-          tableName,                     // The table to query
-          projection,                     // The columns to return
-          selection,                      // The columns for the WHERE clause
-          selectionArgs,                  // The values for the WHERE clause
+          query.mTable,                     // The table to query
+          query.mProjection,                     // The columns to return
+          query.mSelection,                      // The columns for the WHERE clause
+          query.mSelectionArgs,                  // The values for the WHERE clause
           null,                           // don't group the rows
           null,                           // don't filter by row groups
           null                            // The sort order
@@ -70,6 +76,23 @@ public class Database extends SQLiteOpenHelper {
 
     return cursor;
   }
+
+  public static class DatabaseQuery {
+    public String mTable;
+    public String mSelection;
+    public String[] mSelectionArgs;
+    public String[] mProjection;
+
+    public DatabaseQuery(String table, String selection, String[] selectionArgs, String[] projection) {
+      super();
+
+      mTable = table;
+      mSelection = selection;
+      mSelectionArgs = selectionArgs;
+      mProjection = projection;
+    }
+  }
+
 }
 
 
