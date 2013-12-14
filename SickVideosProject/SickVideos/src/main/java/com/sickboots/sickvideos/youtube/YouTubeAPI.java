@@ -444,7 +444,7 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
-        map.mDuration = (String) playlistItem.getContentDetails().get("duration");
+        map.mDuration = Util.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }
@@ -502,7 +502,7 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getId();
-        map.mDuration = (String) playlistItem.getContentDetails().get("duration");
+        map.mDuration = Util.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }

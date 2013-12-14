@@ -26,6 +26,11 @@ import android.widget.Toast;
 
 import com.sickboots.sickvideos.R;
 
+import org.joda.time.Period;
+import org.joda.time.Seconds;
+import org.joda.time.format.ISOPeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Random;
@@ -33,6 +38,7 @@ import java.util.Random;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class Util {
+  static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
 
   public interface PullToRefreshListener {
     void addRefreshableView(View theView, PullToRefreshAttacher.OnRefreshListener listener);
@@ -194,6 +200,13 @@ public class Util {
     drawable.draw(canvas);
 
     return bitmap;
+  }
+
+  public static String durationToDuration(String isoDuration) {
+    Period p = mFormatter.parsePeriod(isoDuration);
+    Seconds s = p.toStandardSeconds();
+
+    return millisecondsToDuration(s.getSeconds() * 1000);
   }
 
 }

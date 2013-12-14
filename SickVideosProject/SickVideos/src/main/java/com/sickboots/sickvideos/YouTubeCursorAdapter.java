@@ -168,11 +168,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     if (duration != null) {
       holder.duration.setVisibility(View.VISIBLE);
 
-      PeriodFormatter formatter = ISOPeriodFormat.standard();
-      Period p = formatter.parsePeriod(duration);
-      Seconds s = p.toStandardSeconds();
-
-      holder.duration.setText(Util.millisecondsToDuration(s.getSeconds() * 1000));
+      holder.duration.setText(duration);
     } else {
       holder.duration.setVisibility(View.GONE);
     }
@@ -232,7 +228,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     if (videoMap != null) {
       videoMap.setHidden(!videoMap.isHidden());
       database.updateItem(videoMap);
-
     }
   }
 
