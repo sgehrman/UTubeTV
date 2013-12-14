@@ -166,8 +166,8 @@ public class YouTubeListService extends IntentService {
     }
 
     if (listResults != null) {
-      boolean firstTime=true;
-      boolean needsUpdateAtEnd=false;
+      boolean firstTime = true;
+      boolean needsUpdateAtEnd = false;
 
       DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
 

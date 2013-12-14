@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +85,7 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags, String requestIdentifier) {
-    Database.DatabaseQuery query = mTable.queryParams(flags,requestIdentifier);
+    Database.DatabaseQuery query = mTable.queryParams(flags, requestIdentifier);
 
     return mDB.getCursor(query);
   }

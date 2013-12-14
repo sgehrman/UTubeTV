@@ -465,7 +465,7 @@ public class YouTubeAPI {
       if (mVideoIds.size() > 50) {
         Util.log("VideoInfoListResults can only handle 50 videos at a time.");
 
-        mVideoIds = videoIds.subList(0,50);
+        mVideoIds = videoIds.subList(0, 50);
       }
 
       setItems(itemsForNextToken(""));

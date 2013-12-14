@@ -45,12 +45,14 @@ public class DatabaseTables {
     public ContentValues contentValuesForItem(YouTubeData item);
 
     public String tableSQL();
+
     public String indexSQL();
 
-    public Database.DatabaseQuery queryParams( int queryID, String requestId);
+    public Database.DatabaseQuery queryParams(int queryID, String requestId);
+
     public String[] defaultProjection();
 
-    }
+  }
 
   public static DatabaseTable[] tables() {
     return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable()};
@@ -154,9 +156,9 @@ public class DatabaseTables {
 
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId) {
-      String selection=null;
-      String[] selectionArgs=null;
-      String[] projection= defaultProjection();
+      String selection = null;
+      String[] selectionArgs = null;
+      String[] projection = defaultProjection();
 
       if (requestId != null) {
         selectionArgs = new String[]{requestId};
@@ -169,7 +171,7 @@ public class DatabaseTables {
         selection += PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(  tableName(),   selection, selectionArgs, projection);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
     }
   }
 
@@ -301,20 +303,20 @@ public class DatabaseTables {
           VideoEntry.COLUMN_NAME_HIDDEN
       };
 
-          return projection;
-      }
+      return projection;
+    }
 
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId) {
-      String selection=null;
-      String[] selectionArgs=null;
-      String[] projection=defaultProjection();
+      String selection = null;
+      String[] selectionArgs = null;
+      String[] projection = defaultProjection();
 
       switch (queryID) {
         case HIDDEN_ITEMS:
           selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
 
-          projection = new String[] {
+          projection = new String[]{
               VideoEntry._ID,
               VideoEntry.COLUMN_NAME_REQUEST,
               VideoEntry.COLUMN_NAME_VIDEO,
@@ -348,7 +350,7 @@ public class DatabaseTables {
         selection += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(  tableName(),   selection, selectionArgs, projection);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
     }
   }
 }

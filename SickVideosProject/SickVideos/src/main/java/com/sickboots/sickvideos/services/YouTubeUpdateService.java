@@ -4,10 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.content.LocalBroadcastManager;
 
-import com.sickboots.sickvideos.AuthActivity;
-import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -15,9 +12,7 @@ import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class YouTubeUpdateService extends IntentService {
   public YouTubeUpdateService() {
@@ -77,9 +72,9 @@ public class YouTubeUpdateService extends IntentService {
       // final item with matching videoId in the database and update it with duration and any other info we might get back
 
       String selection = DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_VIDEO + " = ?";
-      String[] selectionArgs = new String[] {itemFromYouTube.mVideo};
+      String[] selectionArgs = new String[]{itemFromYouTube.mVideo};
 
-      Cursor cursor = access.getCursor(selection, selectionArgs , table.defaultProjection());
+      Cursor cursor = access.getCursor(selection, selectionArgs, table.defaultProjection());
 
       if (cursor.moveToFirst()) {
         while (!cursor.isAfterLast()) {
