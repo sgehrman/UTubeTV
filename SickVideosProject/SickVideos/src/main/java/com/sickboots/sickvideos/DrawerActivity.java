@@ -37,11 +37,9 @@ import java.util.Observer;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Util.PullToRefreshListener, Observer {
-  private DrawerLayout mDrawerLayout;
-  private ListView mDrawerList;
-  private ActionBarDrawerToggle mDrawerToggle;
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
+  private DrawerManager mDrawerMgr;
 
   private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -56,40 +54,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
 
-    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections"};
-    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-    // set a custom shadow that overlays the main content when the drawer opens
-    mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-    // set up the drawer's list view with items and click listener
-    mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-        R.layout.drawer_list_item, names));
-    mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+    setupDrawer();
 
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
     getActionBar().setHomeButtonEnabled(true);
-
-    // ActionBarDrawerToggle ties together the the proper interactions
-    // between the sliding drawer and the action bar app icon
-    mDrawerToggle = new ActionBarDrawerToggle(
-        this,                  /* host Activity */
-        mDrawerLayout,         /* DrawerLayout object */
-        R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-        R.string.drawer_open,  /* "open drawer" description for accessibility */
-        R.string.drawer_close  /* "close drawer" description for accessibility */
-    ) {
-      public void onDrawerClosed(View view) {
-        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-      }
-
-      public void onDrawerOpened(View drawerView) {
-        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-      }
-    };
-    mDrawerLayout.setDrawerListener(mDrawerToggle);
 
     int section = 0;
     if (savedInstanceState != null) {
@@ -257,7 +226,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     // The action bar home/up action should open or close the drawer.
     // ActionBarDrawerToggle will take care of this.
-    if (mDrawerToggle.onOptionsItemSelected(item)) {
+    if (mDrawerMgr.onOptionsItemSelected(item)) {
       return true;
     }
     // Handle action buttons
@@ -293,14 +262,18 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     }
   }
 
-  /* The click listner for ListView in the navigation drawer */
-  private class DrawerItemClickListener implements ListView.OnItemClickListener {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      selectSection(position, true);
+  private void setupDrawer() {
+    mDrawerMgr = new DrawerManager(this, new DrawerManager.DrawerManagerListener() {
+      @Override
+      public void onDrawerClick(int position) {
+        selectSection(position, true);
+      }
 
-      mDrawerLayout.closeDrawer(mDrawerList);
-    }
+      @Override
+      public void onDrawerOpen(boolean opened) {
+        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+      }
+    });
   }
 
   private void selectSection(int position, boolean animate) {
@@ -335,7 +308,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         break;
     }
 
-    mDrawerList.setItemChecked(position, true);
+    mDrawerMgr.setItemChecked(position, true);
 
     Util.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);
   }
@@ -358,14 +331,14 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
     // Sync the toggle state after onRestoreInstanceState has occurred.
-    mDrawerToggle.syncState();
+    mDrawerMgr.syncState();
   }
 
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     // Pass any configuration change to the drawer toggls
-    mDrawerToggle.onConfigurationChanged(newConfig);
+    mDrawerMgr.onConfigurationChanged(newConfig);
   }
 
   private void updateActionBarTitle() {
