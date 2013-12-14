@@ -29,6 +29,22 @@ import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
+
+  private static class Theme {
+    float mTheme_imageAlpha;
+    int mTheme_itemResId;
+    int mTheme_resId;
+    boolean mTheme_drawImageShadows;
+  }
+
+  private static class ViewHolder {
+    TextView title;
+    TextView description;
+    TextView duration;
+    VideoImageView image;
+    VideoMenuView menuButton;
+  }
+
   private final LayoutInflater inflater;
   private int animationID = 0;
   private boolean showHidden = false;
@@ -147,7 +163,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       @Override
       public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
         if (!loadedFromCache) {
-          imageView.setAlpha(0.0f); // mTheme_imageAlpha / 2);
+          imageView.setAlpha(mTheme.mTheme_imageAlpha / 2);
           imageView.animate().setDuration(200).alpha(mTheme.mTheme_imageAlpha);
         } else
           imageView.setAlpha(mTheme.mTheme_imageAlpha);
@@ -248,20 +264,5 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
 
     return result;
-  }
-
-  static class Theme {
-    float mTheme_imageAlpha;
-    int mTheme_itemResId;
-    int mTheme_resId;
-    boolean mTheme_drawImageShadows;
-  }
-
-  static class ViewHolder {
-    TextView title;
-    TextView description;
-    TextView duration;
-    VideoImageView image;
-    VideoMenuView menuButton;
   }
 }

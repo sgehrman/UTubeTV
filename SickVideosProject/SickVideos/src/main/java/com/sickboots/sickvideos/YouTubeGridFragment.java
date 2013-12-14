@@ -41,7 +41,6 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private YouTubeServiceRequest mRequest;
-  private GridView mGridView;
   private YouTubeCursorAdapter mAdapter;
 
   private DataReadyBroadcastReceiver broadcastReceiver;
@@ -88,57 +87,34 @@ public class YouTubeGridFragment extends Fragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    GridView gridView;
+
     mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
 
     ViewGroup rootView = mAdapter.rootView(container);
-    mGridView = (GridView) rootView.findViewById(R.id.gridview);
+    gridView = (GridView) rootView.findViewById(R.id.gridview);
 
     View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
     rootView.addView(emptyView);
-    mGridView.setEmptyView(emptyView);
+    gridView.setEmptyView(emptyView);
 
     // .015 is the default
-    mGridView.setFriction(0.005f);
+    gridView.setFriction(0.005f);
 
-    mGridView.setOnItemClickListener(mAdapter);
-    mGridView.setAdapter(mAdapter);
+    gridView.setOnItemClickListener(mAdapter);
+    gridView.setAdapter(mAdapter);
 
-    // Load the content
-    getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
-      @Override
-      public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        DatabaseTables.DatabaseTable table = mRequest.databaseTable();
-
-        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
-
-        Database.DatabaseQuery queryParams = table.queryParams(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
-
-        YouTubeListService.startRequest(getActivity(), mRequest, false);
-
-        return new CursorLoader(getActivity(),
-            YouTubeContentProvider.URI_CONTENTS, queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
-      }
-
-      @Override
-      public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-        mAdapter.swapCursor(c);
-      }
-
-      @Override
-      public void onLoaderReset(Loader<Cursor> arg0) {
-        mAdapter.swapCursor(null);
-      }
-    });
+    createLoader();
 
     // Add the Refreshable View and provide the refresh listener;
     Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.addRefreshableView(mGridView, this);
+    ptrl.addRefreshableView(gridView, this);
 
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
     if (dimmerView != null)
-      new ScrollTriggeredAnimator(mGridView, dimmerView);
+      new ScrollTriggeredAnimator(gridView, dimmerView);
 
     return rootView;
   }
@@ -193,6 +169,35 @@ public class YouTubeGridFragment extends Fragment
 
   public void onRefreshStarted(View view) {
     YouTubeListService.startRequest(getActivity(), mRequest, true);
+  }
+
+  private void createLoader() {
+    getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
+      @Override
+      public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        DatabaseTables.DatabaseTable table = mRequest.databaseTable();
+
+        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
+
+        Database.DatabaseQuery queryParams = table.queryParams(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
+
+        YouTubeListService.startRequest(getActivity(), mRequest, false);
+
+        return new CursorLoader(getActivity(),
+            YouTubeContentProvider.URI_CONTENTS, queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
+      }
+
+      @Override
+      public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+        mAdapter.swapCursor(c);
+      }
+
+      @Override
+      public void onLoaderReset(Loader<Cursor> arg0) {
+        mAdapter.swapCursor(null);
+      }
+    });
+
   }
 }
 
