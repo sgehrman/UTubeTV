@@ -25,12 +25,12 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
-        <item name="android:lineSpacingExtra">-2sp</item>
+        <item name="android:lineSpacingExtra">-1sp</item>
     </style>
 
     <style name="VideoTextTitle_card">
         <item name="android:textColor">#000</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
 
         <item name="android:lineSpacingExtra">-2sp</item>
@@ -38,10 +38,10 @@
 
     <style name="VideoTextDescription_card">
         <item name="android:textColor">#444</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textStyle">normal</item>
 
-        <item name="android:lineSpacingExtra">-2sp</item>
+        <item name="android:lineSpacingExtra">-1sp</item>
     </style>
 
 </resources>
