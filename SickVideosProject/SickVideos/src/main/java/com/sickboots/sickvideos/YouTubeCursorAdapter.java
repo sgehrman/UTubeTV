@@ -251,16 +251,27 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     Theme result = new Theme();
 
     String themeStyle = ApplicationHub.preferences(context).getString(PreferenceCache.THEME_STYLE, "0");
-    if (Integer.parseInt(themeStyle) != 0) {
-      result.mTheme_itemResId = R.layout.youtube_item_cards;
-      result.mTheme_imageAlpha = 1.0f;
-      result.mTheme_drawImageShadows = false;
-      result.mTheme_resId = R.layout.fragment_grid_cards;
-    } else {
-      result.mTheme_imageAlpha = 1.0f;
-      result.mTheme_itemResId = R.layout.youtube_item_dark;
-      result.mTheme_drawImageShadows = true;
-      result.mTheme_resId = R.layout.fragment_grid_dark;
+
+    switch (Integer.parseInt(themeStyle)) {
+      case 0:
+        result.mTheme_imageAlpha = 1.0f;
+        result.mTheme_itemResId = R.layout.youtube_item_dark;
+        result.mTheme_drawImageShadows = true;
+        result.mTheme_resId = R.layout.fragment_grid_dark;
+
+        break;
+      case 1:
+        result.mTheme_itemResId = R.layout.youtube_item_cards;
+        result.mTheme_imageAlpha = 1.0f;
+        result.mTheme_drawImageShadows = false;
+        result.mTheme_resId = R.layout.fragment_grid_cards;
+        break;
+      case 2:
+        result.mTheme_itemResId = R.layout.youtube_item_cards;
+        result.mTheme_imageAlpha = .3f;
+        result.mTheme_drawImageShadows = false;
+        result.mTheme_resId = R.layout.fragment_grid_cards;
+        break;
     }
 
     return result;

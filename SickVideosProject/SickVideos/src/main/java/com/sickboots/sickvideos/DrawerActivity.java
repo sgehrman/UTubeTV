@@ -48,8 +48,16 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // must set the theme before we do anything else
     String themeStyle = ApplicationHub.preferences(this).getString(PreferenceCache.THEME_STYLE, "0");
     int flag = Integer.parseInt(themeStyle);
-    if (flag != 0)
-      setTheme(R.style.ActivityThemeLight);
+    switch (flag) {
+      case 0:
+        break;
+      case 1:
+        setTheme(R.style.ActivityThemeLight);
+        break;
+      case 2:
+        setTheme(R.style.ActivityThemeLight);
+        break;
+    }
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
