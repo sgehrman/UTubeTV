@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="wrap_content"
+              android:padding="16dp"
+              android:background="@drawable/drop_shadow"
+
+              android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:maxLines="2"
+        android:ellipsize="end"
+        style="@style/VideoTextTitle_card"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_marginBottom="12dp"
+        style="@style/VideoTextDescription_card"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/youtube_item_image"/>
+
+</LinearLayout>

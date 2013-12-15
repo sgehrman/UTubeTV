@@ -16,7 +16,7 @@
 
     <string-array name="view_styles">
         <item>Dark</item>
-        <item>List</item>
+        <item>Light</item>
         <item>Cards</item>
     </string-array>
 
