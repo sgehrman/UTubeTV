@@ -256,16 +256,16 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
         break;
       case 1:
-        result.mTheme_itemResId = R.layout.youtube_item_cards;
+        result.mTheme_itemResId = R.layout.youtube_item_light;
         result.mTheme_imageAlpha = 1.0f;
         result.mTheme_drawImageShadows = false;
-        result.mTheme_resId = R.layout.fragment_grid_cards;
+        result.mTheme_resId = R.layout.fragment_grid_light;
         break;
       case 2:
-        result.mTheme_itemResId = R.layout.youtube_item_cards;
+        result.mTheme_itemResId = R.layout.youtube_item_light;
         result.mTheme_imageAlpha = .3f;
         result.mTheme_drawImageShadows = false;
-        result.mTheme_resId = R.layout.fragment_grid_cards;
+        result.mTheme_resId = R.layout.fragment_grid_light;
         break;
     }
 
