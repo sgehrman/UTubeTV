@@ -9,7 +9,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.Auth;
-import com.sickboots.sickvideos.misc.PreferenceCache;
+import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Util;
 
 import java.util.Timer;
@@ -186,7 +186,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onAdStarted() {
         if (!isMute()) {
-          boolean muteAds = ApplicationHub.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(PreferenceCache.MUTE_ADS, false);
+          boolean muteAds = ApplicationHub.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(Preferences.MUTE_ADS, false);
           if (muteAds) {
             mMutedForAd = true;
             mute(true);

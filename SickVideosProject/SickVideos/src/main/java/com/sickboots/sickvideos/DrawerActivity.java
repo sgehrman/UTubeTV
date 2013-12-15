@@ -11,21 +11,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.misc.ApplicationHub;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
-import com.sickboots.sickvideos.misc.PreferenceCache;
+import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
@@ -46,7 +40,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // must set the theme before we do anything else
-    String themeStyle = ApplicationHub.preferences(this).getString(PreferenceCache.THEME_STYLE, "0");
+    String themeStyle = ApplicationHub.preferences(this).getString(Preferences.THEME_STYLE, "0");
     int flag = Integer.parseInt(themeStyle);
     switch (flag) {
       case 0:
@@ -72,7 +66,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (savedInstanceState != null) {
       section = savedInstanceState.getInt("section");
     } else {
-      String sectionIndexString = ApplicationHub.preferences(this).getString(PreferenceCache.DRAWER_SECTION_INDEX, "0");
+      String sectionIndexString = ApplicationHub.preferences(this).getString(Preferences.DRAWER_SECTION_INDEX, "0");
       section = Integer.parseInt(sectionIndexString);
     }
 
@@ -152,7 +146,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     super.onPause();
 
     // save current section to prefs file so we can start where the user left off on a relaunch
-    ApplicationHub.preferences(this).setString(PreferenceCache.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
+    ApplicationHub.preferences(this).setString(Preferences.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
   }
 
   @Override
@@ -211,7 +205,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public Dialog pickViewStyleDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-    String themeStyle = ApplicationHub.preferences(DrawerActivity.this).getString(PreferenceCache.THEME_STYLE, "0");
+    String themeStyle = ApplicationHub.preferences(DrawerActivity.this).getString(Preferences.THEME_STYLE, "0");
     int selectedIndex = Integer.parseInt(themeStyle);
 
     builder.setTitle("Pick a style")
@@ -219,13 +213,13 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
           public void onClick(DialogInterface dialog, int which) {
             switch (which) {
               case 0:
-                ApplicationHub.preferences(DrawerActivity.this).setString(PreferenceCache.THEME_STYLE, "0");
+                ApplicationHub.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "0");
                 break;
               case 1:
-                ApplicationHub.preferences(DrawerActivity.this).setString(PreferenceCache.THEME_STYLE, "1");
+                ApplicationHub.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "1");
                 break;
               case 2:
-                ApplicationHub.preferences(DrawerActivity.this).setString(PreferenceCache.THEME_STYLE, "2");
+                ApplicationHub.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "2");
                 break;
               default:
                 break;

@@ -16,17 +16,12 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ApplicationHub;
-import com.sickboots.sickvideos.misc.PreferenceCache;
+import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.Util;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-
-import org.joda.time.Period;
-import org.joda.time.Seconds;
-import org.joda.time.format.ISOPeriodFormat;
-import org.joda.time.format.PeriodFormatter;
 
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
 
@@ -250,7 +245,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private static Theme newTheme(Context context) {
     Theme result = new Theme();
 
-    String themeStyle = ApplicationHub.preferences(context).getString(PreferenceCache.THEME_STYLE, "0");
+    String themeStyle = ApplicationHub.preferences(context).getString(Preferences.THEME_STYLE, "0");
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:

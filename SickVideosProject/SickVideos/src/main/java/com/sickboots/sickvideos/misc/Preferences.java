@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 /**
  * Created by sgehrman on 11/26/13.
  */
-public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Preferences implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   public interface PreferenceCacheListener {
     public void prefChanged(String prefName);
@@ -25,7 +25,7 @@ public class PreferenceCache implements SharedPreferences.OnSharedPreferenceChan
   private SharedPreferences sharedPreferences;
   private PreferenceCacheListener mListener;
 
-  public PreferenceCache(Context context, PreferenceCacheListener listener) {
+  public Preferences(Context context, PreferenceCacheListener listener) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
     mListener = listener;
