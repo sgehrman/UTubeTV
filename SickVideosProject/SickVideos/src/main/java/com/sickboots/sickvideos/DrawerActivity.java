@@ -117,7 +117,17 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       String input = (String) data;
 
       if (input.equals(ApplicationHub.THEME_CHANGED)) {
-        recreate();
+        boolean animate = true;
+
+        if (animate) {
+          startActivity(getIntent());
+          overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+          finish();
+        } else {
+          // not sure how to to get recreate to animate, so we use the above code when animating which is like a recreate
+          recreate();
+        }
+
       }
     }
   }
