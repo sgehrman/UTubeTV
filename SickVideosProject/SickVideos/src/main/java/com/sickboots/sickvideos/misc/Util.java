@@ -40,12 +40,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public class Util {
   static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
 
-  public interface PullToRefreshListener {
-    void addRefreshableView(View theView, PullToRefreshAttacher.OnRefreshListener listener);
-
-    public void setRefreshComplete();
-  }
-
   // interface for getting results
   public interface StringResultListener {
     public void onResults(StringResultListener listener, String result);

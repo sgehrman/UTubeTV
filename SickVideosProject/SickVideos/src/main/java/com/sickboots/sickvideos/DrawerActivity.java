@@ -30,12 +30,10 @@ import java.util.Observer;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Util.PullToRefreshListener, Observer {
+public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Observer {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
-
-  private PullToRefreshAttacher mPullToRefreshAttacher;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +73,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // general app tweaks
 //  Util.activateStrictMode(this);
     Util.ignoreObsoleteCapacitiveMenuButton(this);
-
-    // This shit is buggy, must be created in onCreate of the activity, can't be created in the fragment.
-    mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {
@@ -168,17 +163,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     }
 
     super.onBackPressed();
-  }
-
-  // Add the Refreshable View and provide the refresh listener;
-  @Override
-  public void addRefreshableView(View theView, PullToRefreshAttacher.OnRefreshListener listener) {
-    mPullToRefreshAttacher.addRefreshableView(theView, listener);
-  }
-
-  @Override
-  public void setRefreshComplete() {
-    mPullToRefreshAttacher.setRefreshComplete();
   }
 
   @Override

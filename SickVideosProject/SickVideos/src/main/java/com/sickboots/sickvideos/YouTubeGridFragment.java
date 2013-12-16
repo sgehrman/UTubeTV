@@ -26,10 +26,13 @@ import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class YouTubeGridFragment extends Fragment
-    implements PullToRefreshAttacher.OnRefreshListener, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
+    implements OnRefreshListener, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -42,6 +45,7 @@ public class YouTubeGridFragment extends Fragment
 
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapter mAdapter;
+  PullToRefreshLayout mPullToRefreshLayout;
 
   private DataReadyBroadcastReceiver broadcastReceiver;
 
@@ -64,9 +68,8 @@ public class YouTubeGridFragment extends Fragment
         String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
 
         // stop the pull to refresh indicator
-        Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-        if (ptrl != null) // could be null if activity was destroyed
-          ptrl.setRefreshComplete();
+        // Notify PullToRefreshLayout that the refresh has finished
+        mPullToRefreshLayout.setRefreshComplete();
       }
     }
   }
@@ -93,6 +96,19 @@ public class YouTubeGridFragment extends Fragment
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
 
     ViewGroup rootView = mAdapter.rootView(container);
+
+    // Now find the PullToRefreshLayout to setup
+    mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.grid_frame_layout);
+
+    // Now setup the PullToRefreshLayout
+    ActionBarPullToRefresh.from(this.getActivity())
+            // Mark All Children as pullable
+        .allChildrenArePullable()
+            // Set the OnRefreshListener
+        .listener(this)
+            // Finally commit the setup to our PullToRefreshLayout
+        .setup(mPullToRefreshLayout);
+
     gridView = (GridView) rootView.findViewById(R.id.gridview);
 
     View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
@@ -106,10 +122,6 @@ public class YouTubeGridFragment extends Fragment
     gridView.setAdapter(mAdapter);
 
     createLoader();
-
-    // Add the Refreshable View and provide the refresh listener;
-    Util.PullToRefreshListener ptrl = (Util.PullToRefreshListener) getActivity();
-    ptrl.addRefreshableView(gridView, this);
 
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
@@ -167,6 +179,8 @@ public class YouTubeGridFragment extends Fragment
     return provider.videoPlayer();
   }
 
+  // OnRefreshListener
+  @Override
   public void onRefreshStarted(View view) {
     YouTubeListService.startRequest(getActivity(), mRequest, true);
   }

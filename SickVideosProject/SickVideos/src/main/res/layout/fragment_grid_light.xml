@@ -1,5 +1,6 @@
-<com.sickboots.sickvideos.AnimatedFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              android:background="#eee"
+<com.sickboots.sickvideos.GridFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                          android:id="@+id/grid_frame_layout"
+                                          android:background="#eee"
                                               android:layout_width="match_parent"
                                               android:layout_height="match_parent">
 
@@ -9,4 +10,4 @@
         style="@style/GridDefaults.Light"
         />
 
-</com.sickboots.sickvideos.AnimatedFrameLayout>
+</com.sickboots.sickvideos.GridFrameLayout>
