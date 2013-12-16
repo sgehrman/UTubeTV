@@ -30,7 +30,7 @@
 
     <style name="GridDefaults.Card">
         <item name="android:horizontalSpacing">8dp</item>
-        <item name="android:verticalSpacing">8dp</item>
+        <item name="android:verticalSpacing">0dp</item>
     </style>
 
 

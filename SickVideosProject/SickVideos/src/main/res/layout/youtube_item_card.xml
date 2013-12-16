@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_height="wrap_content"
               android:padding="16dp"
-              android:background="@drawable/drop_shadow"
+              android:background="@drawable/card_background"
 
               android:descendantFocusability="blocksDescendants">
 
