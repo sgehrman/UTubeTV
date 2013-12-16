@@ -13,7 +13,6 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
-
     <GridView
         android:id="@+id/gridview"
         style="@style/GridDefaults.Dark"
