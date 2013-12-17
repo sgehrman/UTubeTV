@@ -7,8 +7,13 @@
               android:orientation="vertical">
 
     <FrameLayout
-        android:paddingTop="5dp"
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
         android:background="@drawable/toolbar_gradient"
+        />
+
+    <FrameLayout
         android:id="@+id/video_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

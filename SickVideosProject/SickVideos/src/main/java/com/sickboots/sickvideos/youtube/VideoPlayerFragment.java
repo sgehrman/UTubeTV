@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -26,6 +27,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     public void setSeekFlashText(final String seekFlash);
   }
 
+  public interface VideoFragmentListener {
+    public void onFullScreen(boolean fullscreen);
+  }
+
   private boolean mAutorepeat = false;
   private YouTubePlayer mPlayer;
   private String mVideoId;
@@ -35,12 +40,17 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private Timer mTimer;
   private TimeRemainingListener mTimeRemainingListener;
   private boolean mFullscreen=false;
+  private VideoFragmentListener mFragmentListener;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
 
   public static VideoPlayerFragment newInstance() {
     return new VideoPlayerFragment();
+  }
+
+  public void setVideoFragmentListener(VideoFragmentListener l) {
+    mFragmentListener = l;
   }
 
   @Override
@@ -135,10 +145,17 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     if (mPlayer == null)
       return;
 
+    // this handles landscape perfectly, nothing more to do
+    int controlFlags = mPlayer.getFullscreenControlFlags();
+    controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+    mPlayer.setFullscreenControlFlags(controlFlags);
+
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
         Utils.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
         VideoPlayerFragment.this.mFullscreen = isFullscreen;
+
+        mFragmentListener.onFullScreen(isFullscreen);
       }
 
     });

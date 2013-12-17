@@ -32,6 +32,7 @@ public class VideoPlayer {
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
   private final int mAnimationDuration = 200;
+  private View mTopBar;
 
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
@@ -50,6 +51,14 @@ public class VideoPlayer {
       ft.replace(fragmentContainerResID, mVideoFragment);
       ft.commit();
     }
+    mTopBar = activity.findViewById(R.id.top_bar);
+    mVideoFragment.setVideoFragmentListener(new VideoPlayerFragment.VideoFragmentListener() {
+
+      @Override
+      public void onFullScreen(boolean fullscreen) {
+        mTopBar.setVisibility(fullscreen?View.INVISIBLE:View.VISIBLE);
+      }
+    });
 
     mListener = l;
 
