@@ -139,20 +139,9 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       public void onFullscreen(boolean isFullscreen) {
         Utils.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
         VideoPlayerFragment.this.mFullscreen = isFullscreen;
-
-        layout();
       }
 
     });
-  }
-
-  private void layout() {
-    if (mFullscreen) {
-      // hide everything except video
-    } else {
-      // show everything again
-
-    }
   }
 
   public int getCurrentTimeMillis() {
