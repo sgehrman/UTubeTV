@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos.youtube;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -287,13 +288,17 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
               mLastTimeString = timeString;
             }
 
-            AppUtils.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
-              @Override
-              public void run() {
-                // we're on the main thread...
-                mTimeRemainingListener.setTimeRemainingText(timeString);
-              }
-            });
+            // activity can go null on configuration change
+            Activity activity = VideoPlayerFragment.this.getActivity();
+            if (activity != null) {
+              AppUtils.instance(activity).runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                  // we're on the main thread...
+                  mTimeRemainingListener.setTimeRemainingText(timeString);
+                }
+              });
+            }
           }
         }
       };
