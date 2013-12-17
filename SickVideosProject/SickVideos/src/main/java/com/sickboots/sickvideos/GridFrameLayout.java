@@ -2,7 +2,6 @@ package com.sickboots.sickvideos;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 

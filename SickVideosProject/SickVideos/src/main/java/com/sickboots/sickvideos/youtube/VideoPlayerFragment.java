@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -39,7 +37,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mMutedForAd = false;
   private Timer mTimer;
   private TimeRemainingListener mTimeRemainingListener;
-  private boolean mFullscreen=false;
+  private boolean mFullscreen = false;
   private VideoFragmentListener mFragmentListener;
 
   // added for debugging, remove this shit once we know it's solid
@@ -67,7 +65,9 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
         setupFullscreenListener();
         setupStateChangeListener();
-        setupPlaybackEventListener();  if (!restored && mVideoId != null) {
+        setupPlaybackEventListener();
+
+        if (!restored && mVideoId != null) {
           player.loadVideo(mVideoId);
         }
       }
@@ -90,7 +90,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
 
-// setting this flag when the player is invisible still removes action bar, so we can't just leave it on
+  // setting this flag when the player is invisible still removes action bar, so we can't just leave it on
   public void updatePlayerFlags(boolean open) {
     // this handles landscape perfectly, nothing more to do
     int controlFlags = mPlayer.getFullscreenControlFlags();
@@ -102,7 +102,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     mPlayer.setFullscreenControlFlags(controlFlags);
   }
-
 
 
   public String getTitle() {

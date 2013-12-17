@@ -11,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -56,7 +54,7 @@ public class VideoPlayer {
 
       @Override
       public void onFullScreen(boolean fullscreen) {
-        mTopBar.setVisibility(fullscreen?View.GONE:View.VISIBLE);
+        mTopBar.setVisibility(fullscreen ? View.GONE : View.VISIBLE);
       }
     });
 

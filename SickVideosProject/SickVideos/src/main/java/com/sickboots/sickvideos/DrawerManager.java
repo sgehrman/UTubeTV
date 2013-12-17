@@ -18,6 +18,7 @@ public class DrawerManager {
 
   public interface DrawerManagerListener {
     public void onDrawerClick(int position);
+
     public void onDrawerOpen(boolean openOrClose);
   }
 

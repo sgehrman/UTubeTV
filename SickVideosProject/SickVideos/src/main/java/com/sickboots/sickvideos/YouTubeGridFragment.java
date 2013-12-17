@@ -101,7 +101,7 @@ public class YouTubeGridFragment extends Fragment
 
     // Now setup the PullToRefreshLayout
     ActionBarPullToRefresh.from(this.getActivity())
-            // Mark All Children as pullable
+        // Mark All Children as pullable
         .allChildrenArePullable()
             // Set the OnRefreshListener
         .listener(this)
