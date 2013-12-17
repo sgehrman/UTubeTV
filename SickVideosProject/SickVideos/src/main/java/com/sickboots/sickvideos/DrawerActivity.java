@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -31,6 +32,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
+  private Toast backButtonToast;
+  private long lastBackPressTime = 0;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
       // video player fragment restores itself, so just show it and let it do its thing
       if (showPlayer)
-        videoPlayer().restore();
+        videoPlayer(true).restore();
     }
   }
 
@@ -150,16 +153,25 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   public void onBackPressed() {
     if (getFragmentManager().getBackStackEntryCount() == 0) {
-
       // hides the video player if visible
       if (mPlayer != null)
         mPlayer.close(true);
+      else {
+        if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
+          backButtonToast = Toast.makeText(this, "Press back again to close", 4000);
+          backButtonToast.show();
+          this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+          if (backButtonToast != null) {
+            backButtonToast.cancel();
+          }
+          super.onBackPressed();
+        }
+      }
 
-      // do nothing, we don't want the app to disappear
-      return;
+    } else {
+      super.onBackPressed();
     }
-
-    super.onBackPressed();
   }
 
   @Override
@@ -359,17 +371,19 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   }
 
   @Override
-  public VideoPlayer videoPlayer() {
-    if (mPlayer == null) {
-      mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+  public VideoPlayer videoPlayer(boolean createIfNeeded) {
+    if (createIfNeeded) {
+      if (mPlayer == null) {
+        mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
 
-        // called when the video player opens or closes, adjust the action bar title
+          // called when the video player opens or closes, adjust the action bar title
 
-        @Override
-        public void stateChanged() {
-          updateActionBarTitle();
-        }
-      });
+          @Override
+          public void stateChanged() {
+            updateActionBarTitle();
+          }
+        });
+      }
     }
 
     return mPlayer;

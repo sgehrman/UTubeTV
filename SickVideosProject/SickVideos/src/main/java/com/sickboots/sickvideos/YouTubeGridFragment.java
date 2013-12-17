@@ -35,7 +35,7 @@ public class YouTubeGridFragment extends Fragment
 
   // Activity should host a player
   public interface HostActivitySupport {
-    public VideoPlayer videoPlayer();
+    public VideoPlayer videoPlayer(boolean createIfNeeded);
 
     void fragmentWasInstalled();
 
@@ -79,8 +79,9 @@ public class YouTubeGridFragment extends Fragment
       title = mRequest.name();
 
     // if video player is up, show the video title
-    if (player().visible()) {
-      title = player().title();
+    VideoPlayer player = videoPlayer(false);
+    if (player != null && player.visible()) {
+      title = videoPlayer(false).title();
     }
 
     return title;
@@ -140,7 +141,7 @@ public class YouTubeGridFragment extends Fragment
         String videoId = itemMap.mVideo;
         String title = itemMap.mTitle;
 
-        player().open(videoId, title, true);
+        videoPlayer(true).open(videoId, title, true);
         break;
       case PLAYLISTS: {
         String playlistID = itemMap.mPlaylist;
@@ -172,10 +173,15 @@ public class YouTubeGridFragment extends Fragment
     provider.fragmentWasInstalled();
   }
 
-  private VideoPlayer player() {
+  private VideoPlayer videoPlayer(boolean createIfNeeded) {
     HostActivitySupport provider = (HostActivitySupport) getActivity();
 
-    return provider.videoPlayer();
+    if (provider != null)
+      return provider.videoPlayer(createIfNeeded);
+
+    Utils.log("Activity null, asking for videoplayer");
+
+    return null;
   }
 
   // OnRefreshListener
