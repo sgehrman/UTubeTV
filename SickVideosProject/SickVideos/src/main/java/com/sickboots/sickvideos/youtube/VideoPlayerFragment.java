@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -33,6 +34,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mMutedForAd = false;
   private Timer mTimer;
   private TimeRemainingListener mTimeRemainingListener;
+  private boolean mFullscreen=false;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
@@ -136,12 +138,21 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
         Utils.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
-//    this.isFullscreen = isFullscreen;
-//
-//    layout();
+        VideoPlayerFragment.this.mFullscreen = isFullscreen;
+
+        layout();
       }
 
     });
+  }
+
+  private void layout() {
+    if (mFullscreen) {
+      // hide everything except video
+    } else {
+      // show everything again
+
+    }
   }
 
   public int getCurrentTimeMillis() {
