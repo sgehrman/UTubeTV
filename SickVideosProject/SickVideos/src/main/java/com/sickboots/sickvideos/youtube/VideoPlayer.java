@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -27,10 +29,9 @@ public class VideoPlayer {
   private VideoPlayerFragment mVideoFragment;
   private VideoPlayerStateListener mListener;
   private View mMuteButton;
-  private final int mExtraSpaceOnTopOfPlayerView = 75;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
-  private final int mAnimationDuration = 300;
+  private final int mAnimationDuration = 200;
 
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
@@ -163,7 +164,6 @@ public class VideoPlayer {
 
   // video player fragment restores itself, so just show it and let it do its thing
   public void restore() {
-    videoBox.setTranslationY(-Utils.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext));
     videoBox.setVisibility(View.VISIBLE);
   }
 
@@ -182,8 +182,8 @@ public class VideoPlayer {
     if (videoBox.getTranslationY() < 0) {
       Utils.vibrate(mContext);
       videoBox.animate()
-          .translationY(-Utils.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext))
-          .setInterpolator(new OvershootInterpolator())
+          .translationY(0)
+          .setInterpolator(new AccelerateDecelerateInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
             @Override
@@ -204,7 +204,7 @@ public class VideoPlayer {
       Utils.vibrate(mContext);
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
-          .setInterpolator(new AnticipateInterpolator())
+          .setInterpolator(new AccelerateInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
             @Override
