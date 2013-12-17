@@ -25,6 +25,7 @@
         </activity>
         <activity
             android:name="com.sickboots.sickvideos.DrawerActivity"
+            android:configChanges="orientation|keyboard|screenSize"
             android:theme="@style/ActivityTheme">
         </activity>
         <activity
