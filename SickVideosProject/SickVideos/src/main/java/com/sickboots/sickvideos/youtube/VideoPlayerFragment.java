@@ -7,10 +7,10 @@ import android.os.Bundle;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Preferences;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -134,7 +134,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
-        Util.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
+        Utils.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
 //    this.isFullscreen = isFullscreen;
 //
 //    layout();
@@ -147,7 +147,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     if (mPlayer != null)
       return mPlayer.getCurrentTimeMillis();
     else
-      Util.log("getCurrentTimeMillis: mPlayer is null...");
+      Utils.log("getCurrentTimeMillis: mPlayer is null...");
 
     return 0;
   }
@@ -156,7 +156,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     if (mPlayer != null)
       return mPlayer.getDurationMillis();
     else
-      Util.log("getDurationMillis: mPlayer is null...");
+      Utils.log("getDurationMillis: mPlayer is null...");
 
     return 0;
   }
@@ -165,7 +165,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     if (mPlayer != null)
       mPlayer.seekToMillis(i);
     else
-      Util.log("seekToMillis: mPlayer is null...");
+      Utils.log("seekToMillis: mPlayer is null...");
   }
 
   private void setupStateChangeListener() {
@@ -186,7 +186,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onAdStarted() {
         if (!isMute()) {
-          boolean muteAds = ApplicationHub.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(Preferences.MUTE_ADS, false);
+          boolean muteAds = AppUtils.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(Preferences.MUTE_ADS, false);
           if (muteAds) {
             mMutedForAd = true;
             mute(true);
@@ -237,15 +237,15 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onBuffering(boolean b) {
-//        Util.log("buffering: " + ((b) ? "yes" : "no"));
+//        Utils.log("buffering: " + ((b) ? "yes" : "no"));
       }
 
       @Override
       public void onSeekTo(int newPositionMillis) {
-//        Util.log("seeking: " + newPositionMillis / 1000 + " seconds");
+//        Utils.log("seeking: " + newPositionMillis / 1000 + " seconds");
 
-        final String seekString = Util.millisecondsToDuration(newPositionMillis);
-        ApplicationHub.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
+        final String seekString = Utils.millisecondsToDuration(newPositionMillis);
+        AppUtils.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
           @Override
           public void run() {
             // we're on the main thread...
@@ -277,17 +277,17 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
             if (mPlayer != null)
               millis = mPlayer.getCurrentTimeMillis();
 
-            final String timeString = Util.millisecondsToDuration(millis);
+            final String timeString = Utils.millisecondsToDuration(millis);
 
             // added for debugging, remove this shit once we know it's solid
             mLastTimeString = (mLastTimeString == null) ? "" : mLastTimeString;
             if (timeString.equals(mLastTimeString))
-              Util.log("equal to last");
+              Utils.log("equal to last");
             else {
               mLastTimeString = timeString;
             }
 
-            ApplicationHub.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
+            AppUtils.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
               @Override
               public void run() {
                 // we're on the main thread...

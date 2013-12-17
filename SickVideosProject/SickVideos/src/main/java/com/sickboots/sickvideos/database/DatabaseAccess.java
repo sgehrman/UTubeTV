@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class DatabaseAccess {
         notifyProviderOfChange();
 
     } catch (Exception e) {
-      Util.log("deleteAllRows exception: " + e.getMessage());
+      Utils.log("deleteAllRows exception: " + e.getMessage());
     } finally {
     }
   }
@@ -60,7 +60,7 @@ public class DatabaseAccess {
 
         notifyProviderOfChange();
       } catch (Exception e) {
-        Util.log("Insert item exception: " + e.getMessage());
+        Utils.log("Insert item exception: " + e.getMessage());
       } finally {
         db.endTransaction();
       }
@@ -76,7 +76,7 @@ public class DatabaseAccess {
     if (cursor.moveToFirst()) {
       result = mTable.cursorToItem(cursor, null);
     } else {
-      Util.log("getItemWithID not found or too many results?");
+      Utils.log("getItemWithID not found or too many results?");
     }
 
     cursor.close();
@@ -114,12 +114,12 @@ public class DatabaseAccess {
         int result = db.update(mTable.tableName(), mTable.contentValuesForItem(theItem), whereClauseForID(), whereArgsForID(theItem.mID));
 
         if (result != 1)
-          Util.log("updateItem didn't return 1");
+          Utils.log("updateItem didn't return 1");
       }
 
       notifyProviderOfChange();
     } catch (Exception e) {
-      Util.log("updateItem exception: " + e.getMessage());
+      Utils.log("updateItem exception: " + e.getMessage());
     } finally {
     }
 
@@ -165,7 +165,7 @@ public class DatabaseAccess {
         }
       }
     } catch (Exception e) {
-      Util.log("getItems exception: " + e.getMessage());
+      Utils.log("getItems exception: " + e.getMessage());
     } finally {
     }
 

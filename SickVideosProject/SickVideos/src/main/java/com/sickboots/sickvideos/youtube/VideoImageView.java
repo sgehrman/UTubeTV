@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoImageView extends ImageView {
   private boolean mDrawShadows = false;
@@ -80,7 +80,7 @@ public class VideoImageView extends ImageView {
 
   private void createGradients(Context context) {
     if (sTopGradient == null) {
-      sGradientHeight = (int) Util.dpToPx(40.0f, context);
+      sGradientHeight = (int) Utils.dpToPx(40.0f, context);
 
       int topColors[] = {0xaa000000, 0x00000000};
       sTopGradient = createGradient(topColors);

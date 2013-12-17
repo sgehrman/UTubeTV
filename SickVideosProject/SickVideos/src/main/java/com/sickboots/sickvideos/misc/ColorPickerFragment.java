@@ -16,7 +16,7 @@ import com.larswerkman.holocolorpicker.ValueBar;
 import com.sickboots.sickvideos.R;
 
 // set custom color
-//    String customColor = ApplicationHub.instance().getPref(ApplicationHub.ACTION_BAR_COLOR, null);
+//    String customColor = AppUtils.instance().getPref(AppUtils.ACTION_BAR_COLOR, null);
 //    if (customColor != null) {
 //      int color = Integer.parseInt(customColor);
 //      getActionBar().setBackgroundDrawable(new ColorDrawable(color));
@@ -60,9 +60,9 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     bar.setTitle(bar.getTitle());
 
     // log it in a format xml can use
-    Util.log("color: #" + Integer.toHexString(i));
+    Utils.log("color: #" + Integer.toHexString(i));
 
     // save the preference
-    ApplicationHub.preferences(getActivity()).setString(Preferences.ACTION_BAR_COLOR, Integer.toString(i));
+    AppUtils.preferences(getActivity()).setString(Preferences.ACTION_BAR_COLOR, Integer.toString(i));
   }
 }

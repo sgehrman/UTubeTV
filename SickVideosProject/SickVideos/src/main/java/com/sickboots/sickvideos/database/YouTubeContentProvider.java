@@ -5,7 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class YouTubeContentProvider extends ContentProvider {
 
@@ -66,7 +66,7 @@ public class YouTubeContentProvider extends ContentProvider {
       cursor.setNotificationUri(getContext().getContentResolver(), URI_CONTENTS);
     } else if (uri.toString().startsWith(CONTENT_BASE)) {
       final long id = Long.parseLong(uri.getLastPathSegment());
-      Util.log("" + id);
+      Utils.log("" + id);
     }
 
     return cursor;

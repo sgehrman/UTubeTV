@@ -31,10 +31,10 @@ import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Preferences;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -65,7 +65,7 @@ public class YouTubeAPI {
   }
 
   public static void playMovie(Activity activity, String movieID) {
-    boolean fullScreen = ApplicationHub.preferences(activity).getBoolean(Preferences.PLAY_FULLSCREEN, false);
+    boolean fullScreen = AppUtils.preferences(activity).getBoolean(Preferences.PLAY_FULLSCREEN, false);
 
     Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, Auth.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivityForResult(intent, REQ_PLAYER_CODE);
@@ -173,13 +173,13 @@ public class YouTubeAPI {
   }
 
   private void doHandleAuthIntent(Intent authIntent) {
-    Util.toast(mContext, "Need Authorization");
+    Utils.toast(mContext, "Need Authorization");
     if (mListener != null)
       mListener.handleAuthIntent(authIntent);
   }
 
   private void doHandleExceptionMessage(String message) {
-    Util.toast(mContext, message);
+    Utils.toast(mContext, message);
   }
 
   // pass null for channelid to get our own channel
@@ -444,7 +444,7 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
-        map.mDuration = Util.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
+        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }
@@ -463,7 +463,7 @@ public class YouTubeAPI {
       mVideoIds = videoIds;
 
       if (mVideoIds.size() > 50) {
-        Util.log("VideoInfoListResults can only handle 50 videos at a time.");
+        Utils.log("VideoInfoListResults can only handle 50 videos at a time.");
 
         mVideoIds = videoIds.subList(0, 50);
       }
@@ -502,7 +502,7 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getId();
-        map.mDuration = Util.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
+        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
 
         result.add(map);
       }

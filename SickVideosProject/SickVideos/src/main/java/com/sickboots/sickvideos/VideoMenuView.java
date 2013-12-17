@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoMenuView extends ImageView {
   private static Drawable sharedDrawable;
@@ -29,7 +29,7 @@ public class VideoMenuView extends ImageView {
     super(context, attrs);
 
     if (sharedDrawable == null) {
-      sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.OVERFLOW, 0xffdddddd, (int) Util.dpToPx(30.0f, getContext()));
+      sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.OVERFLOW, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
       sharedDrawable.setAlpha(200);  // 0-255
     }
 

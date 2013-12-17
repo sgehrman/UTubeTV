@@ -21,13 +21,12 @@ import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
@@ -111,7 +110,7 @@ public class YouTubeGridFragment extends Fragment
 
     gridView = (GridView) rootView.findViewById(R.id.gridview);
 
-    View emptyView = Util.emptyListView(getActivity(), "Talking to YouTube...");
+    View emptyView = Utils.emptyListView(getActivity(), "Talking to YouTube...");
     rootView.addView(emptyView);
     gridView.setEmptyView(emptyView);
 

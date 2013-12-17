@@ -15,10 +15,10 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.ApplicationHub;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -114,7 +114,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
       mListener.handleClickFromAdapter(itemMap);
     } else {
-      Util.log("no holder on click?");
+      Utils.log("no holder on click?");
     }
   }
 
@@ -216,7 +216,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     YouTubeData videoMap = database.getItemWithID(itemId);
 
     if (videoMap != null) {
-      Util.log("fix me");
+      Utils.log("fix me");
     }
   }
 
@@ -245,7 +245,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private static Theme newTheme(Context context) {
     Theme result = new Theme();
 
-    String themeStyle = ApplicationHub.preferences(context).getString(Preferences.THEME_STYLE, "0");
+    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, "0");
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:

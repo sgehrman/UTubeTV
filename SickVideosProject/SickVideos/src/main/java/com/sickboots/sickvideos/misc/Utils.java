@@ -35,9 +35,7 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-
-public class Util {
+public class Utils {
   static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
 
   // interface for getting results
@@ -88,7 +86,7 @@ public class Util {
   }
 
   public static void activateStrictMode(Context context) {
-    if (Util.isDebugMode(context)) {
+    if (Utils.isDebugMode(context)) {
       StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
           .detectAll() // for all detectable problems
 //          .detectDiskReads()

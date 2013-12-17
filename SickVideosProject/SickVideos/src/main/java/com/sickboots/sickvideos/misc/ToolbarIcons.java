@@ -80,7 +80,7 @@ public class ToolbarIcons {
 
     Drawable iconDrawable = icon(context, iconID, iconColor);
 
-    Bitmap map = Util.drawableToBitmap(iconDrawable, size);
+    Bitmap map = Utils.drawableToBitmap(iconDrawable, size);
 
     return new BitmapDrawable(context.getResources(), map);
   }

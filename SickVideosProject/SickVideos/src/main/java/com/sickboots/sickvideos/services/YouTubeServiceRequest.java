@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.sickboots.sickvideos.database.DatabaseTables;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
@@ -165,7 +165,7 @@ public class YouTubeServiceRequest implements Parcelable {
         break;
     }
 
-    Util.log("databaseTable null");
+    Utils.log("databaseTable null");
 
     return null;
   }

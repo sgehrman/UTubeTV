@@ -7,13 +7,8 @@ import android.os.Looper;
 import java.util.Observable;
 import java.util.Observer;
 
-// Three things this hub does:
-// Notification center
-// Global data
-// Cached preferences
-
-public class ApplicationHub {
-  private static ApplicationHub instance = null;
+public class AppUtils {
+  private static AppUtils instance = null;
   private Handler mainThreadHandler;
   private NotificationCenter notificationCenter;
   private Preferences mPrefsCache;
@@ -22,7 +17,7 @@ public class ApplicationHub {
   // public notifications
   public static final String THEME_CHANGED = "theme_changed";
 
-  private ApplicationHub(Context context) {
+  private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
     notificationCenter = new NotificationCenter();
     mainThreadHandler = new Handler(Looper.getMainLooper());
@@ -37,15 +32,15 @@ public class ApplicationHub {
     });
   }
 
-  public static ApplicationHub instance(Context context) {
+  public static AppUtils instance(Context context) {
     // make sure this is never null
     if (context == null) {
-      Util.log("### ApplicationHub instance: context null ###.");
+      Utils.log("### AppUtils instance: context null ###.");
       return null;
     }
 
     if (instance == null)
-      instance = new ApplicationHub(context);
+      instance = new AppUtils(context);
 
     return instance;
   }

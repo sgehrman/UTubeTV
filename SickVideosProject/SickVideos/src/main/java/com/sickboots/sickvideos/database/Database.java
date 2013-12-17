@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
@@ -70,7 +70,7 @@ public class Database extends SQLiteOpenHelper {
       );
 
     } catch (Exception e) {
-      Util.log("Database.getCursor exception: " + e.getMessage());
+      Utils.log("Database.getCursor exception: " + e.getMessage());
     } finally {
     }
 

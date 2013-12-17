@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoPlayer {
   private View videoBox;
@@ -163,7 +163,7 @@ public class VideoPlayer {
 
   // video player fragment restores itself, so just show it and let it do its thing
   public void restore() {
-    videoBox.setTranslationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext));
+    videoBox.setTranslationY(-Utils.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext));
     videoBox.setVisibility(View.VISIBLE);
   }
 
@@ -180,9 +180,9 @@ public class VideoPlayer {
 
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
-      Util.vibrate(mContext);
+      Utils.vibrate(mContext);
       videoBox.animate()
-          .translationY(-Util.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext))
+          .translationY(-Utils.dpToPx(mExtraSpaceOnTopOfPlayerView, mContext))
           .setInterpolator(new OvershootInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
@@ -201,7 +201,7 @@ public class VideoPlayer {
       // pause immediately on click for better UX
       mVideoFragment.pause();
 
-      Util.vibrate(mContext);
+      Utils.vibrate(mContext);
       videoBox.animate()
           .translationYBy(-videoBox.getHeight())
           .setInterpolator(new AnticipateInterpolator())
@@ -274,7 +274,7 @@ public class VideoPlayer {
         float progressPercent = progress / 100.0f;
         int seekTo = (int) (progressPercent * duration);
 
-        mTimeRemainingTextView.setText(Util.millisecondsToDuration(seekTo));
+        mTimeRemainingTextView.setText(Utils.millisecondsToDuration(seekTo));
       }
 
       @Override

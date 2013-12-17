@@ -26,7 +26,7 @@ public class Auth {
       credential = GoogleAccountCredential.usingOAuth2(ctx.getApplicationContext(), scopes);
 
       // add account name if we have it
-      String accountName = ApplicationHub.instance(ctx).getAccountName();
+      String accountName = AppUtils.instance(ctx).getAccountName();
       if (accountName != null)
         credential.setSelectedAccountName(accountName);
     }

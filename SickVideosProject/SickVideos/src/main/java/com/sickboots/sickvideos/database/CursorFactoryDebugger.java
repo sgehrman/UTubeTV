@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 
-import com.sickboots.sickvideos.misc.Util;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class CursorFactoryDebugger implements SQLiteDatabase.CursorFactory {
 
@@ -22,7 +22,7 @@ public class CursorFactoryDebugger implements SQLiteDatabase.CursorFactory {
   public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery,
                           String editTable, SQLiteQuery query) {
     if (debugQueries) {
-      Util.log(query.toString());
+      Utils.log(query.toString());
     }
     return new SQLiteCursor(masterQuery, editTable, query);
   }
