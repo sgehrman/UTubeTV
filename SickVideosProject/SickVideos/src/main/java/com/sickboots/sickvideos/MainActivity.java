@@ -9,6 +9,9 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // This activity is set to no show apps name on launch
+    // better experience than flickering actionbar
+
     // start drawer activity
     Intent intent = new Intent();
     intent.setClass(this, DrawerActivity.class);
