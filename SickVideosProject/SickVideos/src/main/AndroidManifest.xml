@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.sickboots.sickvideos.MainActivity"
+            android:name=".StartupActivity"
             android:label="@string/app_name"
             android:theme="@style/StartupActivityTheme">
             <intent-filter>
