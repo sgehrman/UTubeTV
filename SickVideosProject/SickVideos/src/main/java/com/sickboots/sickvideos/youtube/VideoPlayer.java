@@ -56,7 +56,7 @@ public class VideoPlayer {
 
       @Override
       public void onFullScreen(boolean fullscreen) {
-        mTopBar.setVisibility(fullscreen?View.INVISIBLE:View.VISIBLE);
+        mTopBar.setVisibility(fullscreen?View.GONE:View.VISIBLE);
       }
     });
 
