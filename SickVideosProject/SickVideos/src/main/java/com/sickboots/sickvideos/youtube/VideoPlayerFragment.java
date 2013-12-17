@@ -67,9 +67,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
         setupFullscreenListener();
         setupStateChangeListener();
-        setupPlaybackEventListener();
-
-        if (!restored && mVideoId != null) {
+        setupPlaybackEventListener();  if (!restored && mVideoId != null) {
           player.loadVideo(mVideoId);
         }
       }
@@ -90,6 +88,22 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     super.onDestroy();
   }
+
+
+// setting this flag when the player is invisible still removes action bar, so we can't just leave it on
+  public void updatePlayerFlags(boolean open) {
+    // this handles landscape perfectly, nothing more to do
+    int controlFlags = mPlayer.getFullscreenControlFlags();
+    if (open)
+      controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+    else
+      controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+
+
+    mPlayer.setFullscreenControlFlags(controlFlags);
+  }
+
+
 
   public String getTitle() {
     return mTitle;
@@ -144,11 +158,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private void setupFullscreenListener() {
     if (mPlayer == null)
       return;
-
-    // this handles landscape perfectly, nothing more to do
-    int controlFlags = mPlayer.getFullscreenControlFlags();
-    controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-    mPlayer.setFullscreenControlFlags(controlFlags);
 
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
