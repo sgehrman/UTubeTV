@@ -18,6 +18,8 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
   public static final String ACTION_BAR_COLOR = "action_bar_color";
   public static final String DRAWER_SECTION_INDEX = "drawer_section_index";
   public static final String SHOW_HIDDEN_VIDEOS = "show_hidden_videos";
+  public static final String REPEAT_VIDEO = "repeat_video";
+
   public static final String PLAY_FULLSCREEN = "play_fullscreen";
   public static final String MUTE_ADS = "mute_ads";
   public static final String THEME_STYLE = "theme_style";
@@ -55,6 +57,7 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
   }
 
   // SharedPreferences.OnSharedPreferenceChangeListener
+  @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     mListener.prefChanged(key);
   }

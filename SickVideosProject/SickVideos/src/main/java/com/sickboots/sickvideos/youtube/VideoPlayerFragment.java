@@ -31,7 +31,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     public void onFullScreen(boolean fullscreen);
   }
 
-  private boolean mAutorepeat = false;
   private YouTubePlayer mPlayer;
   private String mVideoId;
   private String mTitle;
@@ -227,7 +226,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onVideoEnded() {
-        if (mAutorepeat) {
+        boolean autorepeat = AppUtils.preferences(getActivity()).getBoolean(Preferences.REPEAT_VIDEO, false);
+        if (autorepeat) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
           else
