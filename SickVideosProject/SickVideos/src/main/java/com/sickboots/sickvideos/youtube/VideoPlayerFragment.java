@@ -88,7 +88,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     mPlayer.setFullscreenControlFlags(controlFlags);
   }
 
-
   public String getTitle() {
     return mTitle;
   }
