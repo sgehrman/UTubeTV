@@ -141,7 +141,7 @@ public class YouTubeGridFragment extends Fragment
         String videoId = itemMap.mVideo;
         String title = itemMap.mTitle;
 
-        videoPlayer(true).open(videoId, title, true);
+        videoPlayer(true).open(videoId, title);
         break;
       case PLAYLISTS: {
         String playlistID = itemMap.mPlaylist;

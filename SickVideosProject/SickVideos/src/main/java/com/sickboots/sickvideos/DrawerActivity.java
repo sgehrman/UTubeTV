@@ -155,7 +155,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (getFragmentManager().getBackStackEntryCount() == 0) {
       // hides the video player if visible
       if (mPlayer != null)
-        mPlayer.close(true);
+        mPlayer.close();
       else {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
           backButtonToast = Toast.makeText(this, "Press back again to close", 4000);

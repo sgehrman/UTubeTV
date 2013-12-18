@@ -71,7 +71,7 @@ public class VideoPlayer {
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        close(true);
+        close();
       }
     });
 
@@ -174,38 +174,43 @@ public class VideoPlayer {
     videoBox.setVisibility(View.VISIBLE);
   }
 
-  public void open(String videoId, String title, boolean animate) {
+  private boolean isPortrait() {
+    return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+  }
+
+  public void open(String videoId, String title) {
     mVideoFragment.setVideo(videoId, title);
 
+    boolean animate = isPortrait();
+
     if (!visible()) {
-      if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+      if (animate) {
         // Initially translate off the screen so that it can be animated in from below.
         videoBox.setTranslationY(-videoBox.getHeight());
       }
       videoBox.setVisibility(View.VISIBLE);
-    }
 
-    // If the fragment is off the screen, we animate it in.
-    if (videoBox.getTranslationY() < 0) {
-      Utils.vibrate(mContext);
-      videoBox.animate()
-          .translationY(0)
-          .setInterpolator(new AccelerateDecelerateInterpolator())
-          .setDuration(animate ? mAnimationDuration : 0)
-          .withEndAction(new Runnable() {
-            @Override
-            public void run() {
-              if (mListener != null) {
-                mListener.stateChanged();
-              }
+    Utils.vibrate(mContext);
+    videoBox.animate()
+        .translationY(0)
+        .setInterpolator(new AccelerateDecelerateInterpolator())
+        .setDuration(animate ? mAnimationDuration : 0)
+        .withEndAction(new Runnable() {
+          @Override
+          public void run() {
+            if (mListener != null) {
+              mListener.stateChanged();
             }
-          });
+          }
+        });
     }
   }
 
-  public void close(boolean animate) {
+  public void close() {
     if (visible()) {
       mVideoFragment.closingPlayer();
+
+      boolean animate = isPortrait();
 
       Utils.vibrate(mContext);
       videoBox.animate()
