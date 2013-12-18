@@ -33,6 +33,7 @@ import com.google.api.services.youtube.model.VideoListResponse;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -463,7 +464,7 @@ public class YouTubeAPI {
       mVideoIds = videoIds;
 
       if (mVideoIds.size() > 50) {
-        Utils.log("VideoInfoListResults can only handle 50 videos at a time.");
+        Debug.log("VideoInfoListResults can only handle 50 videos at a time.");
 
         mVideoIds = videoIds.subList(0, 50);
       }

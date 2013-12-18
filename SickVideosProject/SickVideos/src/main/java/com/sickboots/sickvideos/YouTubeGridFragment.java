@@ -20,6 +20,7 @@ import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
@@ -179,7 +180,7 @@ public class YouTubeGridFragment extends Fragment
     if (provider != null)
       return provider.videoPlayer(createIfNeeded);
 
-    Utils.log("Activity null, asking for videoplayer");
+    Debug.log("Activity null, asking for videoplayer");
 
     return null;
   }

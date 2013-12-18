@@ -35,7 +35,7 @@ public class AppUtils {
   public static AppUtils instance(Context context) {
     // make sure this is never null
     if (context == null) {
-      Utils.log("### AppUtils instance: context null ###.");
+      Debug.log("### AppUtils instance: context null ###.");
       return null;
     }
 

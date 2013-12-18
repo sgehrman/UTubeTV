@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
-import com.sickboots.sickvideos.misc.Utils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 
@@ -39,7 +39,7 @@ public class AuthActivity extends Activity {
     Intent authIntent = getIntent().getParcelableExtra(REQUEST_AUTHORIZATION_INTENT_PARAM);
 
     if (authIntent != null) {
-      Utils.log("Request auth received - executing the intent");
+      Debug.log("Request auth received - executing the intent");
 
       startActivityForResult(authIntent, INTENT_REQUEST_AUTHORIZATION);
     } else

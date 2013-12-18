@@ -8,7 +8,7 @@ import android.database.Cursor;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.Utils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class YouTubeUpdateService extends IntentService {
         YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
           @Override
           public void handleAuthIntent(final Intent authIntent) {
-            Utils.log("handleAuthIntent inside update Service.  not handled here");
+            Debug.log("handleAuthIntent inside update Service.  not handled here");
           }
         });
 
@@ -87,11 +87,11 @@ public class YouTubeUpdateService extends IntentService {
           cursor.moveToNext();
         }
       } else {
-        Utils.log("video not found?");
+        Debug.log("video not found?");
       }
     }
 
-    Utils.log("SERVICE: updating info = " + updatedItems.size());
+    Debug.log("SERVICE: updating info = " + updatedItems.size());
 
     // update items in the database
     access.updateItems(updatedItems);

@@ -190,19 +190,19 @@ public class VideoPlayer {
       }
       videoBox.setVisibility(View.VISIBLE);
 
-    Utils.vibrate(mContext);
-    videoBox.animate()
-        .translationY(0)
-        .setInterpolator(new AccelerateDecelerateInterpolator())
-        .setDuration(animate ? mAnimationDuration : 0)
-        .withEndAction(new Runnable() {
-          @Override
-          public void run() {
-            if (mListener != null) {
-              mListener.stateChanged();
+      Utils.vibrate(mContext);
+      videoBox.animate()
+          .translationY(0)
+          .setInterpolator(new AccelerateDecelerateInterpolator())
+          .setDuration(animate ? mAnimationDuration : 0)
+          .withEndAction(new Runnable() {
+            @Override
+            public void run() {
+              if (mListener != null) {
+                mListener.stateChanged();
+              }
             }
-          }
-        });
+          });
     }
   }
 

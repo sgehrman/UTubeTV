@@ -60,7 +60,7 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     bar.setTitle(bar.getTitle());
 
     // log it in a format xml can use
-    Utils.log("color: #" + Integer.toHexString(i));
+    Debug.log("color: #" + Integer.toHexString(i));
 
     // save the preference
     AppUtils.preferences(getActivity()).setString(Preferences.ACTION_BAR_COLOR, Integer.toString(i));

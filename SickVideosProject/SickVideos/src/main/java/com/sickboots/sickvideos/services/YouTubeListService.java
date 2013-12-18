@@ -10,7 +10,7 @@ import com.sickboots.sickvideos.AuthActivity;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.Utils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashSet;
@@ -126,7 +126,7 @@ public class YouTubeListService extends IntentService {
   private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
 
-    Utils.log("getting list from net...");
+    Debug.log("getting list from net...");
 
     YouTubeAPI.BaseListResults listResults = null;
 
@@ -178,7 +178,7 @@ public class YouTubeListService extends IntentService {
         List<YouTubeData> batch = listResults.getItems();
         batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
 
-        Utils.log("batch...");
+        Debug.log("batch...");
 
         // insert new items into database
         database.insertItems(batch);

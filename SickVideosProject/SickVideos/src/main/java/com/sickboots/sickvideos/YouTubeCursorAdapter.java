@@ -16,9 +16,9 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
-import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -114,7 +114,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
       mListener.handleClickFromAdapter(itemMap);
     } else {
-      Utils.log("no holder on click?");
+      Debug.log("no holder on click?");
     }
   }
 
@@ -216,7 +216,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     YouTubeData videoMap = database.getItemWithID(itemId);
 
     if (videoMap != null) {
-      Utils.log("fix me");
+      Debug.log("fix me");
     }
   }
 
