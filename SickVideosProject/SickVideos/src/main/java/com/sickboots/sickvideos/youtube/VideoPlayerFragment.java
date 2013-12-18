@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.youtube;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 
@@ -73,6 +74,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     stopElapsedTimer();
 
     if (mPlayer != null) {
+      mPlayer.setFullscreen(false);
+
       mPlayer.release();
       mPlayer = null;
     }
@@ -334,15 +337,30 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     }
 
     // this handles landscape perfectly, nothing more to do
-    int controlFlags = mPlayer.getFullscreenControlFlags();
-    if (open) {
-      controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-    } else {
-      controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-    }
-
-    mPlayer.setFullscreenControlFlags(controlFlags);
+//    int controlFlags = mPlayer.getFullscreenControlFlags();
+//    if (open) {
+//      controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+//    } else {
+//      controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+//    }
+//
+//    mPlayer.setFullscreenControlFlags(controlFlags);
   }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+
+    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+      if (mPlayer != null)
+        mPlayer.setFullscreen(true);
+    }
+    if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+      if (mPlayer != null)
+        mPlayer.setFullscreen(false);
+    }
+  }
+
 
   private void initializePlayer() {
     if (!mInitializingPlayer) {
