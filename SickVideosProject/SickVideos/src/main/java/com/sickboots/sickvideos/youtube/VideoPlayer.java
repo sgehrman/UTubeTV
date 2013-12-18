@@ -185,8 +185,6 @@ public class VideoPlayer {
       videoBox.setVisibility(View.VISIBLE);
     }
 
-    mVideoFragment.updatePlayerFlags(true);
-
     // If the fragment is off the screen, we animate it in.
     if (videoBox.getTranslationY() < 0) {
       Utils.vibrate(mContext);
@@ -207,10 +205,7 @@ public class VideoPlayer {
 
   public void close(boolean animate) {
     if (visible()) {
-      // pause immediately on click for better UX
-      mVideoFragment.pause();
-
-      mVideoFragment.updatePlayerFlags(false);
+      mVideoFragment.closingPlayer();
 
       Utils.vibrate(mContext);
       videoBox.animate()

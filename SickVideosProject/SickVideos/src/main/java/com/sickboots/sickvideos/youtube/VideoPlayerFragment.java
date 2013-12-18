@@ -58,34 +58,30 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     initializePlayer();
   }
 
+  public void closingPlayer() {
+    // pause immediately on click for better UX
+    pause();
+
+    // turn this flag off since it hides the action bar for the whole activity in landscape mode
+    updatePlayerFlags(false);
+
+    destroyPlayer();
+  }
+
   @Override
   public void onDestroy() {
     stopElapsedTimer();
 
-    if (mPlayer != null) {
-      mPlayer.release();
-      mPlayer = null;
-    }
+    destroyPlayer();
 
     super.onDestroy();
   }
 
-  // setting this flag when the player is invisible still removes action bar, so we can't just leave it on
-  public void updatePlayerFlags(boolean open) {
-    if (mPlayer == null) {
-      Utils.log("mPlayer is null inside: " + Utils.currentMethod());
-      return;
+  private void destroyPlayer() {
+    if (mPlayer != null) {
+      mPlayer.release();
+      mPlayer = null;
     }
-
-      // this handles landscape perfectly, nothing more to do
-    int controlFlags = mPlayer.getFullscreenControlFlags();
-    if (open)
-      controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-    else
-      controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-
-
-    mPlayer.setFullscreenControlFlags(controlFlags);
   }
 
   public String getTitle() {
@@ -229,8 +225,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onVideoEnded() {
-        if (mAutorepeat)
-        {
+        if (mAutorepeat) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
           else
@@ -335,6 +330,24 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     }
   }
 
+  // setting this flag when the player is invisible still removes action bar, so we can't just leave it on
+  private void updatePlayerFlags(boolean open) {
+    if (mPlayer == null) {
+      Utils.log("mPlayer is null inside: " + Utils.currentMethod());
+      return;
+    }
+
+    // this handles landscape perfectly, nothing more to do
+    int controlFlags = mPlayer.getFullscreenControlFlags();
+    if (open)
+      controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+    else
+      controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
+
+
+    mPlayer.setFullscreenControlFlags(controlFlags);
+  }
+
   private void initializePlayer() {
     // creates a player async, not sure why
     initialize(Auth.devKey(), new YouTubePlayer.OnInitializedListener() {
@@ -344,6 +357,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
         player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
         player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+        updatePlayerFlags(true);
 
         setupFullscreenListener();
         setupStateChangeListener();
