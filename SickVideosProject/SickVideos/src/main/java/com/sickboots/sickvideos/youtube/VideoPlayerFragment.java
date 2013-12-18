@@ -39,6 +39,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private TimeRemainingListener mTimeRemainingListener;
   private boolean mFullscreen = false;
   private VideoFragmentListener mFragmentListener;
+  private boolean mInitializingPlayer = false;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
@@ -49,13 +50,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void setVideoFragmentListener(VideoFragmentListener l) {
     mFragmentListener = l;
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    initializePlayer();
   }
 
   public void closingPlayer() {
@@ -70,14 +64,14 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   @Override
   public void onDestroy() {
-    stopElapsedTimer();
-
     destroyPlayer();
 
     super.onDestroy();
   }
 
   private void destroyPlayer() {
+    stopElapsedTimer();
+
     if (mPlayer != null) {
       mPlayer.release();
       mPlayer = null;
@@ -94,9 +88,11 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       mVideoId = videoId;
       mTitle = title;
 
-      if (mPlayer != null) {
+      if (mPlayer != null)
         mPlayer.loadVideo(mVideoId);
-      }
+      else
+        initializePlayer();
+
     }
   }
 
@@ -339,40 +335,47 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
     // this handles landscape perfectly, nothing more to do
     int controlFlags = mPlayer.getFullscreenControlFlags();
-    if (open)
+    if (open) {
       controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-    else
+    } else {
       controlFlags &= ~YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE;
-
+    }
 
     mPlayer.setFullscreenControlFlags(controlFlags);
   }
 
   private void initializePlayer() {
-    // creates a player async, not sure why
-    initialize(Auth.devKey(), new YouTubePlayer.OnInitializedListener() {
-      @Override
-      public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
-        VideoPlayerFragment.this.mPlayer = player;
+    if (!mInitializingPlayer) {
+      mInitializingPlayer = true;
 
-        player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
-        player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-        updatePlayerFlags(true);
+      // creates a player async, not sure why
+      initialize(Auth.devKey(), new YouTubePlayer.OnInitializedListener() {
+        @Override
+        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
+          VideoPlayerFragment.this.mPlayer = player;
 
-        setupFullscreenListener();
-        setupStateChangeListener();
-        setupPlaybackEventListener();
+          player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
+          player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+          updatePlayerFlags(true);
 
-        if (!restored && mVideoId != null) {
-          player.loadVideo(mVideoId);
+          setupFullscreenListener();
+          setupStateChangeListener();
+          setupPlaybackEventListener();
+
+          if (!restored && mVideoId != null) {
+            player.loadVideo(mVideoId);
+          }
+
+          mInitializingPlayer = false;
         }
-      }
 
-      @Override
-      public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult result) {
-        VideoPlayerFragment.this.mPlayer = null;
-      }
-    });
+        @Override
+        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult result) {
+          VideoPlayerFragment.this.mPlayer = null;
+          mInitializingPlayer = false;
+        }
+      });
+    }
   }
 
 }
