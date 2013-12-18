@@ -201,4 +201,8 @@ public class Utils {
     return millisecondsToDuration(s.getSeconds() * 1000);
   }
 
+  public static String currentMethod() {
+    return Thread.currentThread().getStackTrace()[3].getMethodName() + "()";
+  }
+
 }
