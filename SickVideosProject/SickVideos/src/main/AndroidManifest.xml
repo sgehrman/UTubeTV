@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StartupActivity"
+            android:name=".activities.StartupActivity"
             android:label="@string/app_name"
             android:theme="@style/StartupActivityTheme">
             <intent-filter>
@@ -33,12 +33,12 @@
             android:label="@string/title_activity_settings">
         </activity>
         <activity
-            android:name="com.sickboots.sickvideos.AuthActivity"
+            android:name=".activities.AuthActivity"
             android:label="Auth"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <activity
-            android:name="com.sickboots.sickvideos.InfoActivity"
+            android:name=".activities.InfoActivity"
             android:label="">
             <intent-filter>
                 <action android:name="rs.sickboots.sickvideos.InfoActivity"/>
