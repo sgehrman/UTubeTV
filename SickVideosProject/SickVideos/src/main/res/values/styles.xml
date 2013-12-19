@@ -9,11 +9,21 @@
 
     <style name="ActivityTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/startup_background</item>
+
+        <item name="drawerBackground">@android:color/black</item>
+        <item name="drawerItemTextColor">@android:color/white</item>
+        <item name="drawerItemBackground">?android:attr/activatedBackgroundIndicator</item>
+
     </style>
 
     <style name="ActivityThemeLight" parent="android:Theme.Holo.Light">
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:actionBarStyle">@style/ActionBarLight</item>
+
+        <item name="drawerBackground">@android:color/white</item>
+        <item name="drawerItemTextColor">@android:color/black</item>
+        <item name="drawerItemBackground">?android:attr/activatedBackgroundIndicator</item>
+
     </style>
 
     <style name="StartupActivityTheme" parent="ActivityTheme">
