@@ -74,6 +74,7 @@ public class YouTubeAPI {
 
   public static void playMovieUsingIntent(Context context, String videoId) {
     Intent intent = YouTubeIntents.createPlayVideoIntent(context, videoId);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity if we just have a plain context (not an Activity)
     context.startActivity(intent);
   }
 

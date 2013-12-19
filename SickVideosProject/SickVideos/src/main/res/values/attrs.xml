@@ -3,4 +3,5 @@
     <attr name="drawerBackground" format="color|reference"/>
     <attr name="drawerItemTextColor" format="color|reference"/>
     <attr name="drawerItemBackground" format="color|reference"/>
+    <attr name="playerToolbarBackground" format="color|reference"/>
 </resources>

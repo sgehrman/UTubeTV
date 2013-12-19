@@ -10,7 +10,7 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/toolbar_gradient"
+        android:background="?playerToolbarBackground"
         />
 
     <FrameLayout
