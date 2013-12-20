@@ -77,6 +77,9 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private void destroyPlayer() {
     stopElapsedTimer();
 
+    // fixes case where you start a video, stop it, then replay the same video.  if not reset, it would think the video was already running and ignore it.
+    mVideoId = null;
+
     if (mPlayer != null) {
       mPlayer.release();
       mPlayer = null;
