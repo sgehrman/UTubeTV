@@ -26,11 +26,18 @@ android {
             storeFile file("debug.keystore")
         }
 
-        release {
-            storeFile file("release.keystore")
-            storePassword "followme"
-            keyAlias "releasekey"
-            keyPassword "followme"
+        if (project.hasProperty("SickVideos.properties") && file(project.property("SickVideos.properties")).exists()) {
+            Properties props = new Properties()
+            props.load(new FileInputStream(file(project.property("SickVideos.properties"))))
+
+            release {
+                storeFile file(props['keystore'])
+                storePassword props['keystore.password']
+                keyAlias props['keyAlias']
+                keyPassword props['keyPassword']
+            }
+
+
         }
     }
 
@@ -61,3 +68,6 @@ dependencies {
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')
 }
+
+
+
