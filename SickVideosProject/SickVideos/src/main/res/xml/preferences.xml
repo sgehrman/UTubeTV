@@ -41,6 +41,11 @@
         </intent>
     </Preference>
 
+    <Preference android:title=""
+        android:key="version">
+
+    </Preference>
+
 
 
 
