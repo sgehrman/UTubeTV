@@ -25,12 +25,21 @@ android {
         debug {
             storeFile file("debug.keystore")
         }
+
+        release {
+            storeFile file("release.keystore")
+            storePassword "followme"
+            keyAlias "releasekey"
+            keyPassword "followme"
+        }
     }
 
     buildTypes {
         release {
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
+
+            signingConfig signingConfigs.release
         }
     }
 }
