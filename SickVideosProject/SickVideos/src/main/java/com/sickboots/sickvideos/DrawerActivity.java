@@ -154,7 +154,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public void onBackPressed() {
     if (getFragmentManager().getBackStackEntryCount() == 0) {
       // hides the video player if visible
-      if (mPlayer != null)
+      if (mPlayer != null && mPlayer.visible())
         mPlayer.close();
       else {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
