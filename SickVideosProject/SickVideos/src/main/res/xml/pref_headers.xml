@@ -1,7 +1,7 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
-        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
+        android:fragment="com.sickboots.sickvideos.activities.SettingsActivity$SharedPreferenceFragment"
         android:title="@string/pref_header_general">
 
         <extra
@@ -10,7 +10,7 @@
     </header>
 
     <header
-        android:fragment="com.sickboots.sickvideos.SettingsActivity$SharedPreferenceFragment"
+        android:fragment="com.sickboots.sickvideos.activities.SettingsActivity$SharedPreferenceFragment"
         android:title="@string/pref_header_about">
 
         <extra
@@ -20,7 +20,7 @@
 
     <header
         android:title="Sick Boots"
-        android:summary="Check out our other apps.">
+        android:summary="About us">
 
         <intent
             android:action="android.intent.action.VIEW"

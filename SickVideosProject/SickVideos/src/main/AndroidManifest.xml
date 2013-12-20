@@ -29,7 +29,7 @@
             android:theme="@style/ActivityTheme">
         </activity>
         <activity
-            android:name="com.sickboots.sickvideos.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
         <activity
