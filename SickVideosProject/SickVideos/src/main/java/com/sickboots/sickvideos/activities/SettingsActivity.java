@@ -1,26 +1,24 @@
 package com.sickboots.sickvideos.activities;
 
 import android.app.Activity;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
-import java.util.List;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Utils;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     getActionBar().setDisplayHomeAsUpEnabled(true);
+
+    // Display the fragment as the main content.
+    getFragmentManager().beginTransaction()
+        .replace(android.R.id.content, new SettingsFragment())
+        .commit();
   }
 
   @Override
@@ -34,39 +32,19 @@ public class SettingsActivity extends PreferenceActivity {
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public void onBuildHeaders(List<Header> target) {
-    loadHeadersFromResource(R.xml.pref_headers, target);
+  // ----------------------------------------------------------------------
+  // ----------------------------------------------------------------------
 
-    try {
-      Activity activity = this;
-      PackageInfo pInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
-      String version = pInfo.versionName;
-    } catch (Throwable t) {
-
-    }
-  }
-
-  public static class SharedPreferenceFragment extends PreferenceFragment {
+  public static class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
 
-      String settings = getArguments().getString("fragmentID");
-      if ("general".equals(settings)) {
-        addPreferencesFromResource(R.xml.pref_general);
-      } else if ("about".equals(settings)) {
-        addPreferencesFromResource(R.xml.pref_about);
-      }
+      // Load the preferences from an XML resource
+      addPreferencesFromResource(R.xml.preferences);
     }
-  }
 
-  @Override
-  protected boolean isValidFragment(String fragmentName) {
-    if (fragmentName.equals("com.sickboots.sickvideos.activities.SettingsActivity$SharedPreferenceFragment"))
-      return true;
-
-    return false;
   }
 }
+
 
