@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,8 +19,13 @@ import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.activities.SettingsActivity;
+import com.sickboots.sickvideos.billing.IabHelper;
+import com.sickboots.sickvideos.billing.IabResult;
+import com.sickboots.sickvideos.billing.Inventory;
+import com.sickboots.sickvideos.billing.Purchase;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
@@ -35,6 +41,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   private DrawerManager mDrawerMgr;
   private Toast backButtonToast;
   private long lastBackPressTime = 0;
+  private PurchaseHelper mPurchaseHelper;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     selectSection(section, false);
 
+    mPurchaseHelper = new PurchaseHelper(this);
+
     // general app tweaks
 //  Utils.activateStrictMode(this);
     Utils.ignoreObsoleteCapacitiveMenuButton(this);
@@ -82,6 +91,18 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       // video player fragment restores itself, so just show it and let it do its thing
       if (showPlayer)
         videoPlayer(true).restore();
+    }
+  }
+
+  // We're being destroyed. It's important to dispose of the helper here!
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    // very important:
+    if (mPurchaseHelper != null) {
+      mPurchaseHelper.destroy();
+      mPurchaseHelper = null;
     }
   }
 
@@ -177,22 +198,28 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      // called when playing a movie, could fail and this dialog shows the user how to fix it
-      case YouTubeAPI.REQ_PLAYER_CODE:
-        if (resultCode != RESULT_OK) {
-          YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
-          if (errorReason.isUserRecoverableError()) {
-            errorReason.getErrorDialog(this, 0).show();
-          } else {
-            String errorMessage = String.format("PLAYER ERROR!! - %s", errorReason.toString());
-            Utils.toast(this, errorMessage);
+    // Pass on the activity result to the helper for handling
+    if (mPurchaseHelper != null && mPurchaseHelper.handleActivityResult(requestCode, resultCode, data)) {
+      // handled by helper
+    }
+    else {
+      switch (requestCode) {
+        // called when playing a movie, could fail and this dialog shows the user how to fix it
+        case YouTubeAPI.REQ_PLAYER_CODE:
+          if (resultCode != RESULT_OK) {
+            YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
+            if (errorReason.isUserRecoverableError()) {
+              errorReason.getErrorDialog(this, 0).show();
+            } else {
+              String errorMessage = String.format("PLAYER ERROR!! - %s", errorReason.toString());
+              Utils.toast(this, errorMessage);
+            }
           }
-        }
 
-        break;
-      default:
-        super.onActivityResult(requestCode, resultCode, data);
+          break;
+        default:
+          super.onActivityResult(requestCode, resultCode, data);
+      }
     }
   }
 
