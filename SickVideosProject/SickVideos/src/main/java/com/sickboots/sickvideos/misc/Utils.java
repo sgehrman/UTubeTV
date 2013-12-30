@@ -93,15 +93,6 @@ public class Utils {
     ft.commit();
   }
 
-  public static View emptyListView(Context context, String message) {
-    ViewGroup result = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.empty_view_grid, null);
-
-    TextView textView = (TextView) result.findViewById(R.id.message);
-    textView.setText(message);
-
-    return result;
-  }
-
   public static float pxToDp(float px, Context context) {
     return px / context.getResources().getDisplayMetrics().density;
   }

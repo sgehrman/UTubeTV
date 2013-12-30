@@ -21,8 +21,8 @@ import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
-import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
@@ -33,6 +33,8 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class YouTubeGridFragment extends Fragment
     implements OnRefreshListener, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
+
+  EmptyListHelper mEmptyListHelper;
 
   // Activity should host a player
   public interface HostActivitySupport {
@@ -70,6 +72,10 @@ public class YouTubeGridFragment extends Fragment
         // stop the pull to refresh indicator
         // Notify PullToRefreshLayout that the refresh has finished
         mPullToRefreshLayout.setRefreshComplete();
+
+        // in the case of no results, we need to update the emptylist view to reflect that
+        // This only shows up at launch, or the first time a list is requested
+        mEmptyListHelper.updateEmptyListView("List is Empty", true);
       }
     }
   }
@@ -112,9 +118,11 @@ public class YouTubeGridFragment extends Fragment
 
     gridView = (GridView) rootView.findViewById(R.id.gridview);
 
-    View emptyView = Utils.emptyListView(getActivity(), "Talking to YouTube...");
-    rootView.addView(emptyView);
-    gridView.setEmptyView(emptyView);
+     mEmptyListHelper = new EmptyListHelper(getActivity());
+
+    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
+    rootView.addView(mEmptyListHelper.view());
+    gridView.setEmptyView(mEmptyListHelper.view());
 
     // .015 is the default
     gridView.setFriction(0.005f);
