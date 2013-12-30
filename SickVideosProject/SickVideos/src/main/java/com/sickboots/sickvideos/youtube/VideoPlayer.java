@@ -29,7 +29,7 @@ public class VideoPlayer {
   private View mMuteButton;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
-  private final int mAnimationDuration = 200;
+  private final int mAnimationDuration = 300;
   private View mTopBar;
 
   abstract public interface VideoPlayerStateListener {

@@ -21,22 +21,6 @@
 
 -dontwarn org.joda.convert.**
 
-
-# ----------------------------------------
-# NullPointerException without this shit?  wtf?
-
--keepattributes *Annotation* # Needed by google-api-client
--keepattributes Signature # Needed by google-api-client
-
-# Needed by google-api-client to keep generic types and @Key annotations accessed via reflection
--keepclassmembers class * {
-  @com.google.api.client.util.Key <fields>;
-}
-
-
-# ----------------------------------------
-# uncomment to turn off obfucation
-
-# -dontobfuscate
-# -optimizations !code/allocation/variable
-
+# BILLING: must have the following keep line according to these docs, builds fail without it
+# http://developer.android.com/google/play/billing/billing_best_practices.html
+-keep class com.android.vending.billing.**
