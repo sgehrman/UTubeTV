@@ -24,4 +24,10 @@
         android:orderInCategory="100"
         android:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_buy_taco"
+        android:title="@string/action_buy_taco"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+
 </menu>

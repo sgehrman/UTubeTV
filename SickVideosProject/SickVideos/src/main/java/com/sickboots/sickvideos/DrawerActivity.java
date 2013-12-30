@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -283,7 +284,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
         theDialog.show();
         return true;
-      default:
+
+      case R.id.action_buy_taco:
+        mPurchaseHelper.onBuyGasButtonClicked(null, this);
+
+        default:
         return super.onOptionsItemSelected(item);
     }
   }
