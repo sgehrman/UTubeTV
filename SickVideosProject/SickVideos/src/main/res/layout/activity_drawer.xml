@@ -22,9 +22,8 @@
      the container. A solid background is used for contrast
      with the content view. -->
     <ListView
-        xmlns:custom="http://schemas.android.com/apk/res/com.sickvideos.sickboots"
 
-    android:id="@+id/left_drawer"
+        android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

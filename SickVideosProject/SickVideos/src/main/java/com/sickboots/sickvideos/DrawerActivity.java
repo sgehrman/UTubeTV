@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,13 +18,8 @@ import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.activities.SettingsActivity;
-import com.sickboots.sickvideos.billing.IabHelper;
-import com.sickboots.sickvideos.billing.IabResult;
-import com.sickboots.sickvideos.billing.Inventory;
-import com.sickboots.sickvideos.billing.Purchase;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
@@ -201,8 +195,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // Pass on the activity result to the helper for handling
     if (mPurchaseHelper != null && mPurchaseHelper.handleActivityResult(requestCode, resultCode, data)) {
       // handled by helper
-    }
-    else {
+    } else {
       switch (requestCode) {
         // called when playing a movie, could fail and this dialog shows the user how to fix it
         case YouTubeAPI.REQ_PLAYER_CODE:

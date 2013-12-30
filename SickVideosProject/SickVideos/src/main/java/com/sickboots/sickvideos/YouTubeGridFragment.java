@@ -118,7 +118,7 @@ public class YouTubeGridFragment extends Fragment
 
     gridView = (GridView) rootView.findViewById(R.id.gridview);
 
-     mEmptyListHelper = new EmptyListHelper(getActivity());
+    mEmptyListHelper = new EmptyListHelper(getActivity());
 
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
     rootView.addView(mEmptyListHelper.view());

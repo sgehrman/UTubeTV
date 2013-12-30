@@ -3,8 +3,6 @@ package com.sickboots.sickvideos;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.sickboots.sickvideos.billing.IabHelper;
 import com.sickboots.sickvideos.billing.IabResult;
@@ -128,7 +126,9 @@ public class PurchaseHelper {
   }
 
 
-  /** Verifies the developer payload of a purchase. */
+  /**
+   * Verifies the developer payload of a purchase.
+   */
   boolean verifyDeveloperPayload(Purchase p) {
     String payload = p.getDeveloperPayload();
 
@@ -176,11 +176,9 @@ public class PurchaseHelper {
 
       if (purchase.getSku().equals(SKU_GAS)) {
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
-      }
-      else if (purchase.getSku().equals(SKU_PREMIUM)) {
+      } else if (purchase.getSku().equals(SKU_PREMIUM)) {
 
-      }
-      else if (purchase.getSku().equals(SKU_INFINITE_GAS)) {
+      } else if (purchase.getSku().equals(SKU_INFINITE_GAS)) {
 
       }
     }
@@ -198,8 +196,7 @@ public class PurchaseHelper {
       if (result.isSuccess()) {
         // successfully consumed, so we apply the effects of the item in our
         // game world's logic, which in our case means filling the gas tank a bit
-      }
-      else {
+      } else {
         complain("Error while consuming: " + result);
       }
     }
