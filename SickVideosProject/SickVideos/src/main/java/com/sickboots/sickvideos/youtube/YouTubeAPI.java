@@ -78,6 +78,12 @@ public class YouTubeAPI {
     context.startActivity(intent);
   }
 
+  public static void openPlaylistUsingIntent(Activity activity, String playlistId) {
+    Intent intent = YouTubeIntents.createOpenPlaylistIntent(activity, playlistId);
+//    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity if we just have a plain context (not an Activity)
+    activity.startActivity(intent);
+  }
+
   public YouTube youTube() {
     if (youTube == null) {
       try {

@@ -155,6 +155,8 @@ public class YouTubeGridFragment extends Fragment
       case PLAYLISTS: {
         String playlistID = itemMap.mPlaylist;
 
+        Debug.log(playlistID);
+
         if (playlistID != null) {
           Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID));
 

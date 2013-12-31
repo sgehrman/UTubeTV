@@ -32,7 +32,7 @@ public class DrawerManager {
 
     mListener = listener;
 
-    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections"};
+    String[] names = new String[]{"Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
 
     ArrayAdapter adapter = new ArrayAdapter<String>(activity,
         R.layout.drawer_list_item, names);

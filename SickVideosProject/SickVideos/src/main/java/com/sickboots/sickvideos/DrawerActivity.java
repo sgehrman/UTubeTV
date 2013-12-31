@@ -336,6 +336,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       case 6:
         fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
         break;
+      case 7:
+        YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
+        break;
     }
 
     mDrawerMgr.setItemChecked(position, true);

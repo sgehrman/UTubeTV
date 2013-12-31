@@ -64,6 +64,12 @@ public class Utils {
   }
 
   public static void showFragment(Activity activity, Fragment fragment, int resID, int animationType, boolean addToBackStack) {
+    // check params and bail if necessary
+    if (fragment == null || activity == null) {
+      Debug.log("bad params: " + Debug.currentMethod());
+      return;
+    }
+
     FragmentManager fragmentManager = activity.getFragmentManager();
     FragmentTransaction ft = fragmentManager.beginTransaction();
 
