@@ -39,6 +39,7 @@ import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -174,6 +175,41 @@ public class YouTubeAPI {
     Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
 
     return playlistMap.get(type);
+  }
+
+  // pass null for channelid to get our own channel
+  public Map channelInfo(String channelID) {
+    HashMap result = new HashMap();
+
+      try {
+        YouTube.Channels.List channelRequest = youTube().channels().list("snippet");
+        if (channelID != null) {
+          channelRequest.setId(channelID);
+        } else {
+          channelRequest.setMine(true);
+        }
+
+        channelRequest.setFields(String.format("items(snippet/title, snippet/description, %s)", thumbnailField()));
+        ChannelListResponse channelResult = channelRequest.execute();
+
+        List<Channel> channelsList = channelResult.getItems();
+        if (channelsList != null) {
+
+             for (Channel channel : channelsList) {
+
+               result.put("title", channel.getSnippet().getTitle());
+               result.put("description", removeNewLinesFromString(channel.getSnippet().getDescription()));
+               result.put("thumbnail", thumbnailURL(channel.getSnippet().getThumbnails()));
+
+          }
+        }
+      } catch (UserRecoverableAuthIOException e) {
+        handleException(e);
+      } catch (Exception e) {
+        handleException(e);
+      }
+
+    return result;
   }
 
   private String removeNewLinesFromString(String text) {

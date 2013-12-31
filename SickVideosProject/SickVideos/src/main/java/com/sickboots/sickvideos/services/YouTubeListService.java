@@ -15,6 +15,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -86,6 +87,20 @@ public class YouTubeListService extends IntentService {
 
     } catch (Exception e) {
     }
+  }
+
+  private Map tempShit() {
+    YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+      @Override
+      public void handleAuthIntent(final Intent authIntent) {
+        Debug.log("handleAuthIntent inside update Service.  not handled here");
+      }
+    });
+
+    Map result = helper.channelInfo("UC07XXQh04ukEX68loZFgnVw");
+    Debug.log("result here.");
+
+    return result;
   }
 
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
