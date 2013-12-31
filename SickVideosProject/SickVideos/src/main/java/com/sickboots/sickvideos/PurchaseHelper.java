@@ -3,7 +3,6 @@ package com.sickboots.sickvideos;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 
 import com.sickboots.sickvideos.billing.IabHelper;
