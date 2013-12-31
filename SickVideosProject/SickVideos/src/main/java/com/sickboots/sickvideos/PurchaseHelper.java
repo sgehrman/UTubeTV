@@ -13,7 +13,6 @@ import com.sickboots.sickvideos.billing.Purchase;
 import com.sickboots.sickvideos.misc.Debug;
 
 public class PurchaseHelper {
-  static private final String TAG = "ProcessHelper";
   private Context mContext;
 
   // Does the user have the premium upgrade?
@@ -48,12 +47,11 @@ public class PurchaseHelper {
     mContext = context.getApplicationContext();
 
     setupInAppPurchasing();
-
   }
 
   // called from Activities onDestroy
   void destroy() {
-    Log.d(TAG, "Destroying helper.");
+    Debug.log("Destroying helper.");
 
     if (mHelper != null) {
       mHelper.dispose();
@@ -90,7 +88,7 @@ public class PurchaseHelper {
     String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRKPu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5yDqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDWzv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB";
 
     // Create the helper, passing it our context and the public key to verify signatures with
-    Log.d(TAG, "Creating IAB helper.");
+    Debug.log("Creating IAB helper.");
     mHelper = new IabHelper(mContext, base64EncodedPublicKey);
 
     // enable debug logging (for a production application, you should set this to false).
@@ -98,10 +96,10 @@ public class PurchaseHelper {
 
     // Start setup. This is asynchronous and the specified listener
     // will be called once setup completes.
-    Log.d(TAG, "Starting setup.");
+    Debug.log("Starting setup.");
     mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
       public void onIabSetupFinished(IabResult result) {
-        Log.d(TAG, "Setup finished.");
+        Debug.log("Setup finished.");
 
         if (!result.isSuccess()) {
           // Oh noes, there was a problem.
@@ -113,7 +111,7 @@ public class PurchaseHelper {
         if (mHelper == null) return;
 
         // IAB is fully set up. Now, let's get an inventory of stuff we own.
-        Log.d(TAG, "Setup successful. Querying inventory.");
+        Debug.log("Setup successful. Querying inventory.");
         mHelper.queryInventoryAsync(mGotInventoryListener);
       }
     });
@@ -123,7 +121,7 @@ public class PurchaseHelper {
   // Listener that's called when we finish querying the items and subscriptions we own
   IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-      Log.d(TAG, "Query inventory finished.");
+      Debug.log("Query inventory finished.");
 
       // Have we been disposed of in the meantime? If so, quit.
       if (mHelper == null) return;
@@ -134,7 +132,7 @@ public class PurchaseHelper {
         return;
       }
 
-      Log.d(TAG, "Query inventory was successful.");
+      Debug.log("Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -145,33 +143,33 @@ public class PurchaseHelper {
       // Do we have the premium upgrade?
       Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
       mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-      Log.d(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
+      Debug.log("User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
 
       // Do we have the infinite gas plan?
       Purchase infiniteGasPurchase = inventory.getPurchase(SKU_INFINITE_GAS);
       mSubscribedToInfiniteGas = (infiniteGasPurchase != null &&
           verifyDeveloperPayload(infiniteGasPurchase));
-      Log.d(TAG, "User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE")
+      Debug.log("User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE")
           + " infinite gas subscription.");
       if (mSubscribedToInfiniteGas) mTank = TANK_MAX;
 
       // Check for gas delivery -- if we own gas, we should fill up the tank immediately
       Purchase gasPurchase = inventory.getPurchase(SKU_GAS);
       if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-        Log.d(TAG, "We have gas. Consuming it.");
+        Debug.log("We have gas. Consuming it.");
         mHelper.consumeAsync(inventory.getPurchase(SKU_GAS), mConsumeFinishedListener);
         return;
       }
 
       updateUi();
       setWaitScreen(false);
-      Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+      Debug.log("Initial inventory query finished; enabling main UI.");
     }
   };
 
   // User clicked the "Buy Gas" button
   public void onBuyGasButtonClicked(View arg0, Activity activity) {
-    Log.d(TAG, "Buy gas button clicked.");
+    Debug.log("Buy gas button clicked.");
 
     if (mSubscribedToInfiniteGas) {
       complain("No need! You're subscribed to infinite gas. Isn't that awesome?");
@@ -186,7 +184,7 @@ public class PurchaseHelper {
     // launch the gas purchase UI flow.
     // We will be notified of completion via mPurchaseFinishedListener
     setWaitScreen(true);
-    Log.d(TAG, "Launching purchase flow for gas.");
+    Debug.log("Launching purchase flow for gas.");
 
         /* TODO: for security, generate your payload here for verification. See the comments on
          *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
@@ -199,7 +197,7 @@ public class PurchaseHelper {
 
   // User clicked the "Upgrade to Premium" button.
   public void onUpgradeAppButtonClicked(View arg0, Activity activity) {
-    Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
+    Debug.log("Upgrade button clicked; launching purchase flow for upgrade.");
     setWaitScreen(true);
 
         /* TODO: for security, generate your payload here for verification. See the comments on
@@ -225,28 +223,11 @@ public class PurchaseHelper {
     String payload = "";
 
     setWaitScreen(true);
-    Log.d(TAG, "Launching purchase flow for infinite gas subscription.");
+    Debug.log("Launching purchase flow for infinite gas subscription.");
     mHelper.launchPurchaseFlow(activity,
         SKU_INFINITE_GAS, IabHelper.ITEM_TYPE_SUBS,
         RC_REQUEST, mPurchaseFinishedListener, payload);
   }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//      Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-//      if (mHelper == null) return;
-//
-//      // Pass on the activity result to the helper for handling
-//      if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-//        // not handled, so handle it ourselves (here's where you'd
-//        // perform any handling of activity results not related to in-app
-//        // billing...
-//        super.onActivityResult(requestCode, resultCode, data);
-//      }
-//      else {
-//        Log.d(TAG, "onActivityResult handled by IABUtil.");
-//      }
-//    }
 
   /**
    * Verifies the developer payload of a purchase.
@@ -283,7 +264,7 @@ public class PurchaseHelper {
   // Callback for when a purchase is finished
   IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
     public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-      Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+      Debug.log("Purchase finished: " + result + ", purchase: " + purchase);
 
       // if we were disposed of in the meantime, quit.
       if (mHelper == null) return;
@@ -299,22 +280,22 @@ public class PurchaseHelper {
         return;
       }
 
-      Log.d(TAG, "Purchase successful.");
+      Debug.log("Purchase successful.");
 
       if (purchase.getSku().equals(SKU_GAS)) {
         // bought 1/4 tank of gas. So consume it.
-        Log.d(TAG, "Purchase is gas. Starting gas consumption.");
+        Debug.log("Purchase is gas. Starting gas consumption.");
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
       } else if (purchase.getSku().equals(SKU_PREMIUM)) {
         // bought the premium upgrade!
-        Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
+        Debug.log("Purchase is premium upgrade. Congratulating user.");
         alert("Thank you for upgrading to premium!");
         mIsPremium = true;
         updateUi();
         setWaitScreen(false);
       } else if (purchase.getSku().equals(SKU_INFINITE_GAS)) {
         // bought the infinite gas subscription
-        Log.d(TAG, "Infinite gas subscription purchased.");
+        Debug.log("Infinite gas subscription purchased.");
         alert("Thank you for subscribing to infinite gas!");
         mSubscribedToInfiniteGas = true;
         mTank = TANK_MAX;
@@ -327,7 +308,7 @@ public class PurchaseHelper {
   // Called when consumption is complete
   IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
     public void onConsumeFinished(Purchase purchase, IabResult result) {
-      Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
+      Debug.log("Consumption finished. Purchase: " + purchase + ", result: " + result);
 
       // if we were disposed of in the meantime, quit.
       if (mHelper == null) return;
@@ -338,7 +319,7 @@ public class PurchaseHelper {
       if (result.isSuccess()) {
         // successfully consumed, so we apply the effects of the item in our
         // game world's logic, which in our case means filling the gas tank a bit
-        Log.d(TAG, "Consumption successful. Provisioning.");
+        Debug.log("Consumption successful. Provisioning.");
         mTank = mTank == TANK_MAX ? TANK_MAX : mTank + 1;
         saveData();
         alert("You filled 1/4 tank. Your tank is now " + String.valueOf(mTank) + "/4 full!");
@@ -347,13 +328,13 @@ public class PurchaseHelper {
       }
       updateUi();
       setWaitScreen(false);
-      Log.d(TAG, "End consumption flow.");
+      Debug.log("End consumption flow.");
     }
   };
 
   // Drive button clicked. Burn gas!
   public void onDriveButtonClicked(View arg0) {
-    Log.d(TAG, "Drive button clicked.");
+    Debug.log("Drive button clicked.");
     if (!mSubscribedToInfiniteGas && mTank <= 0)
       alert("Oh, no! You are out of gas! Try buying some!");
     else {
@@ -361,7 +342,7 @@ public class PurchaseHelper {
       saveData();
       alert("Vroooom, you drove a few miles.");
       updateUi();
-      Log.d(TAG, "Vrooom. Tank is now " + mTank);
+      Debug.log("Vrooom. Tank is now " + mTank);
     }
   }
 
@@ -398,7 +379,6 @@ public class PurchaseHelper {
   }
 
   void complain(String message) {
-    Log.e(TAG, "**** TrivialDrive Error: " + message);
     alert("Error: " + message);
   }
 
@@ -406,7 +386,7 @@ public class PurchaseHelper {
 //      AlertDialog.Builder bld = new AlertDialog.Builder(mContext);
 //      bld.setMessage(message);
 //      bld.setNeutralButton("OK", null);
-    Log.d(TAG, "Showing alert dialog: " + message);
+    Debug.log("Showing alert dialog: " + message);
 //      bld.create().show();
   }
 
@@ -421,13 +401,13 @@ public class PurchaseHelper {
 //      SharedPreferences.Editor spe = getPreferences(MODE_PRIVATE).edit();
 //      spe.putInt("tank", mTank);
 //      spe.commit();
-    Log.d(TAG, "Saved data: tank = " + String.valueOf(mTank));
+    Debug.log("Saved data: tank = " + String.valueOf(mTank));
   }
 
   void loadData() {
 //      SharedPreferences sp = getPreferences(MODE_PRIVATE);
 //      mTank = sp.getInt("tank", 2);
-    Log.d(TAG, "Loaded data: tank = " + String.valueOf(mTank));
+    Debug.log("Loaded data: tank = " + String.valueOf(mTank));
   }
 }
 
