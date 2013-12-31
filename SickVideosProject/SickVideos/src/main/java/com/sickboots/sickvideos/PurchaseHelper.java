@@ -15,31 +15,18 @@ import com.sickboots.sickvideos.misc.Debug;
 public class PurchaseHelper {
   private Context mContext;
 
-  // Does the user have the premium upgrade?
   boolean mIsPremium = false;
-
-  // Does the user have an active subscription to the infinite gas plan?
   boolean mSubscribedToInfiniteGas = false;
 
-  // SKUs for our products: the premium upgrade (non-consumable) and gas (consumable)
   static final String SKU_PREMIUM = "premium";
   static final String SKU_GAS = "gas";
-
-  // SKU for our subscription (infinite gas)
   static final String SKU_INFINITE_GAS = "infinite_gas";
 
-  // (arbitrary) request code for the purchase flow
   static final int RC_REQUEST = 10001;
 
-  // How many units (1/4 tank is our unit) fill in the tank.
   static final int TANK_MAX = 4;
-
-  // Current amount of gas in tank, in units
   int mTank;
-
-  // The helper object
   IabHelper mHelper;
-
 
   PurchaseHelper(Context context) {
     super();
@@ -49,7 +36,7 @@ public class PurchaseHelper {
     setupInAppPurchasing();
   }
 
-  // called from Activities onDestroy
+  // called from Activities onDestroy, must be called
   void destroy() {
     Debug.log("Destroying helper.");
 
@@ -74,22 +61,9 @@ public class PurchaseHelper {
     // load game data
     loadData();
 
-        /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY
-         * (that you got from the Google Play developer console). This is not your
-         * developer public key, it's the *app-specific* public key.
-         *
-         * Instead of just storing the entire literal string here embedded in the
-         * program,  construct the key at runtime from pieces or
-         * use bit manipulation (for example, XOR with some other string) to hide
-         * the actual key.  The key itself is not secret information, but we don't
-         * want to make it easy for an attacker to replace the public key with one
-         * of their own and then fake messages from the server.
-         */
-    String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRKPu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5yDqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDWzv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB";
-
     // Create the helper, passing it our context and the public key to verify signatures with
     Debug.log("Creating IAB helper.");
-    mHelper = new IabHelper(mContext, base64EncodedPublicKey);
+    mHelper = new IabHelper(mContext, base64EncodedPublicKey());
 
     // enable debug logging (for a production application, you should set this to false).
     mHelper.enableDebugLogging(true);
@@ -409,6 +383,19 @@ public class PurchaseHelper {
 //      mTank = sp.getInt("tank", 2);
     Debug.log("Loaded data: tank = " + String.valueOf(mTank));
   }
+
+  private String base64EncodedPublicKey() {
+    // does breaking it up like this help?  whatever
+    String result = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRK";
+    result += "Pu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5y";
+    result += "DqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2";
+    result += "+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDW";
+    result += "zv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB";
+
+    return result;
+  }
+
+
 }
 
 
