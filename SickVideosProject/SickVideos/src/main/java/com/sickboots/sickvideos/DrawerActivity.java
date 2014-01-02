@@ -19,6 +19,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.ChannelAboutFragment;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -318,7 +319,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     Fragment fragment = null;
     switch (position) {
       case 0:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
+        fragment = new ChannelAboutFragment();
+
+//        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
         break;
       case 1:
         fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
