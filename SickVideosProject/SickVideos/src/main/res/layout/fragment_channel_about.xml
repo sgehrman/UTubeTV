@@ -19,12 +19,6 @@
                   android:descendantFocusability="blocksDescendants">
 
 
-
-
-
-
-
-
         <TextView
             android:layout_margin="10px"
             android:id="@+id/text_view"
@@ -44,7 +38,6 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             />
-
 
 
         <TextView

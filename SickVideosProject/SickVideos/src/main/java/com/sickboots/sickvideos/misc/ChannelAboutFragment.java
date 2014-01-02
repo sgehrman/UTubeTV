@@ -1,11 +1,8 @@
 package com.sickboots.sickvideos.misc;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,25 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.SVBar;
-import com.larswerkman.holocolorpicker.SaturationBar;
-import com.larswerkman.holocolorpicker.ValueBar;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.billing.IabException;
-import com.sickboots.sickvideos.billing.IabResult;
-import com.sickboots.sickvideos.billing.Purchase;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class ChannelAboutFragment extends Fragment {
