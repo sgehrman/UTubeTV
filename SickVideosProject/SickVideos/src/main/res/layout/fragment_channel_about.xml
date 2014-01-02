@@ -3,10 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:background="#ddd"
+              android:padding="12px"
+
+              android:layout_height="match_parent"
               android:descendantFocusability="blocksDescendants">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:padding="12px"
+                  android:background="@drawable/card_background"
 
+                  android:layout_height="wrap_content"
+                  android:descendantFocusability="blocksDescendants">
 
 
 
@@ -16,6 +26,7 @@
 
 
         <TextView
+            android:layout_margin="10px"
             android:id="@+id/text_view"
             android:layout_width="match_parent"
             android:maxLines="2"
@@ -23,23 +34,38 @@
             style="@style/VideoTextTitle_card"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/description_view"
-            android:layout_width="match_parent"
-            android:maxLines="3"
-            android:ellipsize="end"
-            style="@style/VideoTextDescription_card"
-            android:layout_height="wrap_content"/>
 
-        <include
+        <com.sickboots.sickvideos.youtube.VideoImageView
+            android:id="@+id/image"
+            android:layout_margin="10px"
+
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-
-            layout="@layout/youtube_item_image"/>
-
+            android:clickable="false"
+            />
 
 
 
+        <TextView
+            android:id="@+id/description_view"
+            android:layout_margin="10px"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_margin="12px"
+        android:layout_width="wrap_content"
+        android:padding="16px"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_light"
+        android:text="Watch Now"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
