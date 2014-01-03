@@ -15,7 +15,6 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**

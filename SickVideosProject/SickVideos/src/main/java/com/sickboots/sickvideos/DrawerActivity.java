@@ -19,11 +19,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.ChannelAboutFragment;
-import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
-import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -359,7 +356,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
             Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
 
-            if (fragment instanceof YouTubeGridFragment ) {
+            if (fragment instanceof YouTubeGridFragment) {
               YouTubeGridFragment ytgf = (YouTubeGridFragment) fragment;
 
               ytgf.playerStateChanged();

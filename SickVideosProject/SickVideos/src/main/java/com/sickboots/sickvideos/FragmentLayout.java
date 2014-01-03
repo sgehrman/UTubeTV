@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-
 /**
  * This was added so we could do a custom sliding animation for fragments.
  */

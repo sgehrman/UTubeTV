@@ -2,26 +2,26 @@
                                          android:layout_width="match_parent"
                                          android:layout_height="match_parent">
 
-    <com.sickboots.sickvideos.GridFrameLayout
-                                          android:background="@color/content_background"
-                                          android:id="@+id/grid_frame_layout"
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        android:background="@color/content_background"
+        android:id="@+id/grid_frame_layout"
 
-                                          android:layout_width="match_parent"
-                                          android:layout_height="match_parent">
-
-
-    <FrameLayout
-        android:background="@color/dimmer_color"
-        android:id="@+id/dimmer"
-        android:alpha="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </FrameLayout>
 
-    <GridView
-        android:id="@+id/gridview"
-        style="@style/GridDefaults.Dark"
-        />
 
-    </com.sickboots.sickvideos.GridFrameLayout>
+        <FrameLayout
+            android:background="@color/dimmer_color"
+            android:id="@+id/dimmer"
+            android:alpha="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <GridView
+            android:id="@+id/gridview"
+            style="@style/GridDefaults.Dark"
+            />
+
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 </com.sickboots.sickvideos.FragmentLayout>

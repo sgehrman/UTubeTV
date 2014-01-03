@@ -3,67 +3,67 @@
                                          android:layout_width="match_parent"
                                          android:layout_height="match_parent">
 
-<ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ddd"
-
-            android:descendantFocusability="blocksDescendants">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#ddd"
 
-        android:orientation="vertical"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:descendantFocusability="blocksDescendants">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_background"
+
             android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
 
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/text_view"
-                style="@style/VideoTextTitle_card"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:ellipsize="end"
-                android:maxLines="2"/>
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
 
-            <com.sickboots.sickvideos.youtube.VideoImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
+                android:padding="12dp">
 
-                android:layout_height="300dp"
-                android:layout_margin="10dp"
-                android:clickable="false"
-                android:scaleType="centerCrop"
-                />
+                <TextView
+                    android:id="@+id/text_view"
+                    style="@style/VideoTextTitle_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"/>
 
-            <TextView
-                android:id="@+id/description_view"
-                android:layout_width="match_parent"
+                <com.sickboots.sickvideos.youtube.VideoImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
 
+                    android:layout_height="300dp"
+                    android:layout_margin="10dp"
+                    android:clickable="false"
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/description_view"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"/>
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:background="@android:color/holo_red_light"
+                android:padding="16dp"
+                android:text="Watch Now"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="12dp"
-            android:background="@android:color/holo_red_light"
-            android:padding="16dp"
-            android:text="Watch Now"
-            android:textColor="@android:color/white"/>
-
-    </LinearLayout>
-</ScrollView>
-    </com.sickboots.sickvideos.FragmentLayout>
+    </ScrollView>
+</com.sickboots.sickvideos.FragmentLayout>

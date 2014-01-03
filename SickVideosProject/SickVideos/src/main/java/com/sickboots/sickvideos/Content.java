@@ -11,7 +11,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
-  private static int mProductCode=0;
+  private static int mProductCode = 0;
 
   public static String[] drawerTitles() {
     switch (mProductCode) {
@@ -37,6 +37,7 @@ public class Content {
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
             break;
         }
+        break;
       case 1:
         switch (index) {
           case 0:

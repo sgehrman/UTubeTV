@@ -1,19 +1,19 @@
 <com.sickboots.sickvideos.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                          android:layout_width="match_parent"
-                                          android:layout_height="match_parent">
+                                         android:layout_width="match_parent"
+                                         android:layout_height="match_parent">
 
-    <com.sickboots.sickvideos.GridFrameLayout
-                                              android:background="#ddd"
-                                              android:id="@+id/grid_frame_layout"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent">
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        android:background="#ddd"
+        android:id="@+id/grid_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <GridView
-        android:id="@+id/gridview"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        style="@style/GridDefaults.Card"
-        />
+        <GridView
+            android:id="@+id/gridview"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            style="@style/GridDefaults.Card"
+            />
 
-    </com.sickboots.sickvideos.GridFrameLayout>
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 </com.sickboots.sickvideos.FragmentLayout>
