@@ -160,12 +160,13 @@ public class Utils {
   }
 
   public static void setActionBarTitle(Activity activity, CharSequence title) {
-    ActionBar bar = activity.getActionBar();
+    if (activity != null) {
+      ActionBar bar = activity.getActionBar();
 
-    if (bar != null) {
-      bar.setTitle(title);
+      if (bar != null) {
+        bar.setTitle(title);
+      }
     }
-
   }
 
 }
