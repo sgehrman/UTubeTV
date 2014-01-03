@@ -11,7 +11,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
-  private static int mProductCode = 1;
+  private static int mProductCode = 2;
 
   public static String[] drawerTitles() {
     switch (mProductCode) {
@@ -19,6 +19,8 @@ public class Content {
         return new String[]{"About", "Playlists"};
       case 1:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
+      case 2:
+        return new String[]{"About", "Playlists"};
     }
 
     return null;
@@ -29,6 +31,7 @@ public class Content {
 
     switch (mProductCode) {
       case 0:
+      case 2:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -79,6 +82,9 @@ public class Content {
         return "UC07XXQh04ukEX68loZFgnVw";  // connections
       case 1:
         return "UC07XXQh04ukEX68loZFgnVw";  // connections
+      case 2:
+        return "UCf--Le-Ssa_R5ERoM7PbdcA";  // neuro soup
+
     }
 
     return null;
