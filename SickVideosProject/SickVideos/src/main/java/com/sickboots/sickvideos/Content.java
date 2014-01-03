@@ -11,16 +11,17 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
-  private static int mProductCode = 2;
+  private static ProductCode mProductCode = ProductCode.NEURO_SOUP;
+
+  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, USER}
 
   public static String[] drawerTitles() {
     switch (mProductCode) {
-      case 0:
+      case NEURO_SOUP:
+      case CONNECTIONS:
         return new String[]{"About", "Playlists"};
-      case 1:
+      case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
-      case 2:
-        return new String[]{"About", "Playlists"};
     }
 
     return null;
@@ -30,8 +31,8 @@ public class Content {
     Fragment fragment = null;
 
     switch (mProductCode) {
-      case 0:
-      case 2:
+      case NEURO_SOUP:
+      case CONNECTIONS:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -41,7 +42,7 @@ public class Content {
             break;
         }
         break;
-      case 1:
+      case USER:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -78,11 +79,11 @@ public class Content {
 
   public static String channelID() {
     switch (mProductCode) {
-      case 0:
+      case CONNECTIONS:
         return "UC07XXQh04ukEX68loZFgnVw";  // connections
-      case 1:
+      case USER:
         return "UC07XXQh04ukEX68loZFgnVw";  // connections
-      case 2:
+      case NEURO_SOUP:
         return "UCf--Le-Ssa_R5ERoM7PbdcA";  // neuro soup
 
     }
