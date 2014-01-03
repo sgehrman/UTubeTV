@@ -314,40 +314,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     mCurrentSection = position;
 
-    Fragment fragment = null;
-    switch (position) {
-      case 0:
-        fragment = new ChannelAboutFragment();
-        break;
-      case 1:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
-        break;
-      case 2:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
-        break;
-      case 3:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
-        break;
-      case 4:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
-        break;
-      case 5:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
-        break;
-      case 6:
-        fragment = new ColorPickerFragment();
-        break;
-      case 7:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
-        break;
-      case 8:
-        YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
-        break;
-    }
-
     mDrawerMgr.setItemChecked(position, true);
 
-    Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);
+    Utils.showFragment(this, Content.fragmentForIndex(position), R.id.fragment_holder, animate ? 3 : 0, false);
   }
 
   /**

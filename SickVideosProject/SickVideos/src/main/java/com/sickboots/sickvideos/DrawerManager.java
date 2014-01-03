@@ -32,10 +32,8 @@ public class DrawerManager {
 
     mListener = listener;
 
-    String[] names = new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
-
     ArrayAdapter adapter = new ArrayAdapter<String>(activity,
-        R.layout.drawer_list_item, names);
+        R.layout.drawer_list_item, Content.drawerTitles());
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
