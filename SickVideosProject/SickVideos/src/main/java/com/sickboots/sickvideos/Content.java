@@ -11,62 +11,75 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
+  private static int mProductCode=0;
 
   public static String[] drawerTitles() {
-    String[] names = new String[]{"About", "Playlists"};
+    switch (mProductCode) {
+      case 0:
+        return new String[]{"About", "Playlists"};
+      case 1:
+        return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
+    }
 
-    return names;
+    return null;
   }
 
   public static Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
-    switch (index) {
+
+    switch (mProductCode) {
       case 0:
-        fragment = new ChannelAboutFragment();
-        break;
+        switch (index) {
+          case 0:
+            fragment = new ChannelAboutFragment();
+            break;
+          case 1:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
+            break;
+        }
       case 1:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
-        break;
+        switch (index) {
+          case 0:
+            fragment = new ChannelAboutFragment();
+            break;
+          case 1:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
+            break;
+          case 2:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
+            break;
+          case 3:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
+            break;
+          case 4:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
+            break;
+          case 5:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
+            break;
+          case 6:
+            fragment = new ColorPickerFragment();
+            break;
+          case 7:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
+            break;
+          case 8:
+//            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
+            break;
+        }
     }
 
     return fragment;
   }
 
   public static String channelID() {
-    return "UC07XXQh04ukEX68loZFgnVw";  // connections
+    switch (mProductCode) {
+      case 0:
+        return "UC07XXQh04ukEX68loZFgnVw";  // connections
+      case 1:
+        return "UC07XXQh04ukEX68loZFgnVw";  // connections
+    }
+
+    return null;
   }
 }
-
-
-/*
-    old stuff
-
-    case 0:
-      fragment = new ChannelAboutFragment();
-      break;
-    case 1:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
-      break;
-    case 2:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
-      break;
-    case 3:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
-      break;
-    case 4:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
-      break;
-    case 5:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
-      break;
-    case 6:
-      fragment = new ColorPickerFragment();
-      break;
-    case 7:
-      fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
-      break;
-    case 8:
-      YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
-      break;
-
- */

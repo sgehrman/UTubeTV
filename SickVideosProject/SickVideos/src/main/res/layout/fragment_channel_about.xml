@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.sickboots.sickvideos.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="match_parent">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ddd"
@@ -63,3 +66,4 @@
 
     </LinearLayout>
 </ScrollView>
+    </com.sickboots.sickvideos.FragmentLayout>
