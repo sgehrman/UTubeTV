@@ -15,7 +15,7 @@ public class YouTubeData {
   public String mVideo;
   public String mDuration;
 
-  // used only for subscriptions and categories
+  // used only for subscriptions and categories and channel info
   public String mChannel;
 
   // used for playlists

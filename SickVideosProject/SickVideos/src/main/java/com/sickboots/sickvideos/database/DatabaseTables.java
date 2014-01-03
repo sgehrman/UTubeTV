@@ -22,6 +22,7 @@ public class DatabaseTables {
 
   private static VideoTable mVideoTable = null;
   private static PlaylistTable mPlaylistTable = null;
+  private static ChannelTable mChannelTable = null;
 
   public static VideoTable videoTable() {
     if (mVideoTable == null)
@@ -35,6 +36,13 @@ public class DatabaseTables {
       mPlaylistTable = new PlaylistTable();
 
     return mPlaylistTable;
+  }
+
+  public static ChannelTable channelTable() {
+    if (mChannelTable == null)
+      mChannelTable = new ChannelTable();
+
+    return mChannelTable;
   }
 
   public static interface DatabaseTable {
@@ -55,8 +63,126 @@ public class DatabaseTables {
   }
 
   public static DatabaseTable[] tables() {
-    return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable()};
+    return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable(), DatabaseTables.channelTable()};
   }
+
+  // =====================================================================
+  // =====================================================================
+
+  public static class ChannelTable implements DatabaseTable {
+    // stores information about a playlist
+    public class Entry implements BaseColumns {
+      public static final String COLUMN_NAME_CHANNEL = "channel";
+      public static final String COLUMN_NAME_TITLE = "title";
+      public static final String COLUMN_NAME_DESCRIPTION = "description";
+      public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+    }
+
+    private static ChannelTable singleton = null;
+
+    public static ChannelTable instance() {
+      if (singleton == null)
+        singleton = new ChannelTable();
+
+      return singleton;
+    }
+
+    private ChannelTable() {
+      super();
+    }
+
+    @Override
+    public String tableName() {
+      return "channels";
+    }
+
+    @Override
+    public YouTubeData cursorToItem(Cursor cursor, YouTubeData reuseData) {
+      YouTubeData result = reuseData;  // avoiding memory alloc during draw
+      if (result == null)
+        result = new YouTubeData();
+
+      result.mID = cursor.getLong(cursor.getColumnIndex(Entry._ID));
+      result.mTitle = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE));
+      result.mChannel = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_CHANNEL));
+      result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
+      result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
+
+      return result;
+    }
+
+    @Override
+    public ContentValues contentValuesForItem(YouTubeData item) {
+      ContentValues values = new ContentValues();
+
+      values.put(Entry.COLUMN_NAME_TITLE, item.mTitle);
+      values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
+      values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
+      values.put(Entry.COLUMN_NAME_CHANNEL, item.mChannel);
+
+      return values;
+    }
+
+    @Override
+    public String tableSQL() {
+      String result = CREATE + tableName()
+          + " ("
+          + Entry._ID + INT_TYPE + PRIMARY
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_TITLE + TEXT_TYPE
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_CHANNEL + TEXT_TYPE
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+          + " )";
+
+      return result;
+    }
+
+    @Override
+    public String indexSQL() {
+      return null;
+    }
+
+    @Override
+    public String[] defaultProjection() {
+      String[] projection = new String[]{
+          Entry._ID,
+          Entry.COLUMN_NAME_TITLE,
+          Entry.COLUMN_NAME_DESCRIPTION,
+          Entry.COLUMN_NAME_CHANNEL,
+          Entry.COLUMN_NAME_THUMBNAIL
+      };
+
+      return projection;
+    }
+
+    @Override
+    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+      String selection = null;
+      String[] selectionArgs = null;
+      String[] projection = defaultProjection();
+
+      // requestId is the channel id
+      if (requestId != null) {
+        selectionArgs = new String[]{requestId};
+
+        if (selection == null)
+          selection = "";
+        else
+          selection += " AND ";
+
+        selection += Entry.COLUMN_NAME_CHANNEL + " = ?";
+      }
+
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
+    }
+  }
+
+  // =====================================================================
+  // =====================================================================
 
   public static class PlaylistTable implements DatabaseTable {
     // stores information about a playlist
