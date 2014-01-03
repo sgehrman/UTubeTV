@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos.misc;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -156,6 +157,15 @@ public class Utils {
     Seconds s = p.toStandardSeconds();
 
     return millisecondsToDuration(s.getSeconds() * 1000);
+  }
+
+  public static void setActionBarTitle(Activity activity, CharSequence title) {
+    ActionBar bar = activity.getActionBar();
+
+    if (bar != null) {
+      bar.setTitle(title);
+    }
+
   }
 
 }

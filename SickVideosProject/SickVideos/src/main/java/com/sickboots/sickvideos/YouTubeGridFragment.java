@@ -23,6 +23,7 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
@@ -39,8 +40,6 @@ public class YouTubeGridFragment extends Fragment
   // Activity should host a player
   public interface HostActivitySupport {
     public VideoPlayer videoPlayer(boolean createIfNeeded);
-
-    void fragmentWasInstalled();
 
     public void installFragment(Fragment fragment, boolean animate);
   }
@@ -80,7 +79,11 @@ public class YouTubeGridFragment extends Fragment
     }
   }
 
-  public CharSequence actionBarTitle() {
+  public void playerStateChanged() {
+    Utils.setActionBarTitle(getActivity(), actionBarTitle());
+  }
+
+  private CharSequence actionBarTitle() {
     CharSequence title = null;
     if (mRequest != null)
       title = mRequest.name();
@@ -179,9 +182,7 @@ public class YouTubeGridFragment extends Fragment
     IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
-    // triggers an update for the title, lame hack
-    HostActivitySupport provider = (HostActivitySupport) getActivity();
-    provider.fragmentWasInstalled();
+    Utils.setActionBarTitle(getActivity(), actionBarTitle());
   }
 
   private VideoPlayer videoPlayer(boolean createIfNeeded) {

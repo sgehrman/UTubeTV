@@ -318,28 +318,29 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     switch (position) {
       case 0:
         fragment = new ChannelAboutFragment();
-
-//        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
         break;
       case 1:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
         break;
       case 2:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
         break;
       case 3:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
         break;
       case 4:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
         break;
       case 5:
-        fragment = new ColorPickerFragment();
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
         break;
       case 6:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
+        fragment = new ColorPickerFragment();
         break;
       case 7:
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest("UC07XXQh04ukEX68loZFgnVw"));
+        break;
+      case 8:
         YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
         break;
     }
@@ -347,15 +348,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     mDrawerMgr.setItemChecked(position, true);
 
     Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 3 : 0, false);
-  }
-
-  private YouTubeGridFragment installedFragment() {
-    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
-
-    if (fragment instanceof YouTubeGridFragment)
-      return (YouTubeGridFragment) fragment;
-
-    return null;
   }
 
   /**
@@ -377,28 +369,12 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     mDrawerMgr.onConfigurationChanged(newConfig);
   }
 
-  private void updateActionBarTitle() {
-    YouTubeGridFragment fragment = installedFragment();
-    CharSequence title = null;
-
-    if (fragment != null)
-      title = fragment.actionBarTitle();
-
-    if (title != null)
-      getActionBar().setTitle(title);
-  }
-
   // ----------------------------------------------------
   // HostActivitySupport
 
   @Override
   public void installFragment(Fragment fragment, boolean animate) {
     Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
-  }
-
-  @Override
-  public void fragmentWasInstalled() {
-    updateActionBarTitle();
   }
 
   @Override
@@ -411,7 +387,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
           @Override
           public void stateChanged() {
-            updateActionBarTitle();
+
+            Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
+
+            if (fragment instanceof YouTubeGridFragment ) {
+              YouTubeGridFragment ytgf = (YouTubeGridFragment) fragment;
+
+              ytgf.playerStateChanged();
+
+            }
           }
         });
       }

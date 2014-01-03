@@ -27,12 +27,9 @@ public class ChannelAboutFragment extends Fragment {
 
     askYouTubeForAboutInfo();
 
-    return rootView;
-  }
+    Utils.setActionBarTitle(getActivity(), "About");
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    return rootView;
   }
 
   private void updateUI(View rootView, Map info) {
