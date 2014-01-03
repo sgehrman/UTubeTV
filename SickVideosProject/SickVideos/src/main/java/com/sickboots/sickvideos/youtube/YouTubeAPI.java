@@ -714,7 +714,7 @@ public class YouTubeAPI {
       List<Playlist> result = new ArrayList<Playlist>();
 
       try {
-        YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet");
+        YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet, contentDetails");
 
         // if channel null, assume the users channel
         if (channelID == null)
@@ -722,7 +722,7 @@ public class YouTubeAPI {
         else
           listRequest.setChannelId(channelID);
 
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -748,7 +748,7 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mPlaylist = subscription.getId();
-        map.mTitle = subscription.getSnippet().getTitle();
+        map.mTitle = subscription.getSnippet().getTitle() + " : " + subscription.getContentDetails().getItemCount();
         map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
 
