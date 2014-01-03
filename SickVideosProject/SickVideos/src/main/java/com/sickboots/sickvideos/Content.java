@@ -11,14 +11,14 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
-  private static ProductCode mProductCode = ProductCode.NEURO_SOUP;
-
-  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, USER}
+  private static ProductCode mProductCode = ProductCode.ROGAN;
 
   public static String[] drawerTitles() {
     switch (mProductCode) {
       case NEURO_SOUP:
       case CONNECTIONS:
+      case ROGAN:
+      case VICE:
         return new String[]{"About", "Playlists"};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
@@ -33,6 +33,8 @@ public class Content {
     switch (mProductCode) {
       case NEURO_SOUP:
       case CONNECTIONS:
+      case ROGAN:
+      case VICE:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -80,14 +82,20 @@ public class Content {
   public static String channelID() {
     switch (mProductCode) {
       case CONNECTIONS:
-        return "UC07XXQh04ukEX68loZFgnVw";  // connections
+        return "UC07XXQh04ukEX68loZFgnVw";
       case USER:
-        return "UC07XXQh04ukEX68loZFgnVw";  // connections
+        return "UC07XXQh04ukEX68loZFgnVw";
       case NEURO_SOUP:
-        return "UCf--Le-Ssa_R5ERoM7PbdcA";  // neuro soup
+        return "UCf--Le-Ssa_R5ERoM7PbdcA";
+      case VICE:
+        return "UCn8zNIfYAQNdrFRrr8oibKw";
+      case ROGAN:
+        return "UCzQUP1qoWDoEbmsQxvdjxgQ";
 
     }
 
     return null;
   }
+
+  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, VICE, ROGAN, USER}
 }
