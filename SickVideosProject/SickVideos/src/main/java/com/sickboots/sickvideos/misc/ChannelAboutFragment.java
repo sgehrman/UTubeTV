@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -69,8 +70,7 @@ public class ChannelAboutFragment extends Fragment {
           }
         });
 
-        final Map result = helper.channelInfo("UC07XXQh04ukEX68loZFgnVw");
-        Debug.log("result here.");
+        final Map result = helper.channelInfo(Content.channelID());
 
         Handler handler = new Handler(Looper.getMainLooper());
 

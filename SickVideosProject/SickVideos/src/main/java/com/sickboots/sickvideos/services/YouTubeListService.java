@@ -89,20 +89,6 @@ public class YouTubeListService extends IntentService {
     }
   }
 
-  private Map tempShit() {
-    YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
-      @Override
-      public void handleAuthIntent(final Intent authIntent) {
-        Debug.log("handleAuthIntent inside update Service.  not handled here");
-      }
-    });
-
-    Map result = helper.channelInfo("UC07XXQh04ukEX68loZFgnVw");
-    Debug.log("result here.");
-
-    return result;
-  }
-
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
     for (YouTubeData data : inList) {
       // set the request id
