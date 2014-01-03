@@ -1,64 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:background="#ddd"
-              android:padding="12px"
-
-              android:layout_height="match_parent"
-              android:descendantFocusability="blocksDescendants">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:padding="12px"
-                  android:background="@drawable/card_background"
-
-                  android:layout_height="wrap_content"
-                  android:descendantFocusability="blocksDescendants">
-
-
-        <TextView
-            android:layout_margin="10px"
-            android:id="@+id/text_view"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:maxLines="2"
-            android:ellipsize="end"
-            style="@style/VideoTextTitle_card"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:background="#ddd"
 
+            android:descendantFocusability="blocksDescendants">
 
-        <com.sickboots.sickvideos.youtube.VideoImageView
-            android:id="@+id/image"
-            android:layout_margin="10px"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-            android:scaleType="centerCrop"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            />
+            android:background="@drawable/card_background"
+            android:orientation="vertical"
 
+            android:padding="12dp">
 
-        <TextView
-            android:id="@+id/description_view"
-            android:layout_margin="10px"
+            <TextView
+                android:id="@+id/text_view"
+                style="@style/VideoTextTitle_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"/>
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <com.sickboots.sickvideos.youtube.VideoImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
 
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:clickable="false"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/description_view"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="12dp"
+            android:background="@android:color/holo_red_light"
+            android:padding="16dp"
+            android:text="Watch Now"
+            android:textColor="@android:color/white"/>
 
     </LinearLayout>
-
-
-    <Button
-        android:layout_margin="12px"
-        android:layout_width="wrap_content"
-        android:padding="16px"
-        android:textColor="@android:color/white"
-        android:background="@android:color/holo_red_light"
-        android:text="Watch Now"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-</LinearLayout>
+</ScrollView>
