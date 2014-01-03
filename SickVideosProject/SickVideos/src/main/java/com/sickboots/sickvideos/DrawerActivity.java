@@ -302,6 +302,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
       }
     });
+
+    // open on first launch?
+    // mDrawerMgr.openDrawer();
   }
 
   private void selectSection(int position, boolean animate) {

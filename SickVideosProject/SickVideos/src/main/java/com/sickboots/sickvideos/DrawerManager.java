@@ -70,6 +70,10 @@ public class DrawerManager {
     return mDrawerToggle.onOptionsItemSelected(item);
   }
 
+  public void openDrawer() {
+    mDrawerLayout.openDrawer(mDrawerList);
+  }
+
   public void closeDrawer() {
     mDrawerLayout.closeDrawer(mDrawerList);
   }
