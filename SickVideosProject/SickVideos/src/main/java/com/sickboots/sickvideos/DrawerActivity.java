@@ -2,7 +2,6 @@
 
 package com.sickboots.sickvideos;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -166,11 +165,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
   @Override
   public void onBackPressed() {
-    if (getFragmentManager().getBackStackEntryCount() == 0) {
-      // hides the video player if visible
-      if (mPlayer != null && mPlayer.visible())
-        mPlayer.close();
-      else {
+    // hides the video player if visible
+    if (mPlayer != null && mPlayer.visible())
+      mPlayer.close();
+    else {
+      if (getFragmentManager().getBackStackEntryCount() == 0) {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
           backButtonToast = Toast.makeText(this, "Press back again to close", 4000);
           backButtonToast.show();
@@ -181,10 +180,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
           }
           super.onBackPressed();
         }
+      } else {
+        super.onBackPressed();
       }
-
-    } else {
-      super.onBackPressed();
     }
   }
 
