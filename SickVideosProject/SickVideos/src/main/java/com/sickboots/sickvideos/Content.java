@@ -11,7 +11,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
  * Created by sgehrman on 1/2/14.
  */
 public class Content {
-  private static ProductCode mProductCode = ProductCode.ROGAN;
+  private static ProductCode mProductCode = ProductCode.VICE;
 
   public static String[] drawerTitles() {
     switch (mProductCode) {
@@ -19,6 +19,7 @@ public class Content {
       case CONNECTIONS:
       case ROGAN:
       case VICE:
+      case BEARD_CLUB:
         return new String[]{"About", "Playlists"};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
@@ -35,6 +36,7 @@ public class Content {
       case CONNECTIONS:
       case ROGAN:
       case VICE:
+      case BEARD_CLUB:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -91,11 +93,12 @@ public class Content {
         return "UCn8zNIfYAQNdrFRrr8oibKw";
       case ROGAN:
         return "UCzQUP1qoWDoEbmsQxvdjxgQ";
-
+      case BEARD_CLUB:
+        return "UCULJH9kW-UdTBCDu27P0BoA";
     }
 
     return null;
   }
 
-  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, VICE, ROGAN, USER}
+  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, VICE, ROGAN, BEARD_CLUB, USER}
 }

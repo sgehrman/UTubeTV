@@ -62,8 +62,12 @@ public class DrawerManager {
         mListener.onDrawerOpen(true);
       }
     };
-    mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+    mDrawerLayout.setDrawerListener(mDrawerToggle);
+  }
+
+  public void setDrawerIndicatorEnabled(boolean set) {
+    mDrawerToggle.setDrawerIndicatorEnabled(set);
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
