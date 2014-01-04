@@ -153,7 +153,7 @@ public class DatabaseTables {
           Entry.COLUMN_NAME_TITLE,
           Entry.COLUMN_NAME_DESCRIPTION,
           Entry.COLUMN_NAME_CHANNEL,
-          Entry.COLUMN_NAME_THUMBNAIL
+          Entry.COLUMN_NAME_THUMBNAIL,
       };
 
       return projection;
@@ -186,12 +186,13 @@ public class DatabaseTables {
 
   public static class PlaylistTable implements DatabaseTable {
     // stores information about a playlist
-    public class PlaylistEntry implements BaseColumns {
+    public class Entry implements BaseColumns {
       public static final String COLUMN_NAME_REQUEST = "request";
       public static final String COLUMN_NAME_PLAYLIST = "playlist";
       public static final String COLUMN_NAME_TITLE = "title";
       public static final String COLUMN_NAME_DESCRIPTION = "description";
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+      public static final String COLUMN_NAME_ITEM_COUNT = "itemCount";
     }
 
     private static PlaylistTable singleton = null;
@@ -218,12 +219,13 @@ public class DatabaseTables {
       if (result == null)
         result = new YouTubeData();
 
-      result.mID = cursor.getLong(cursor.getColumnIndex(PlaylistEntry._ID));
-      result.mRequest = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_REQUEST));
-      result.mPlaylist = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_PLAYLIST));
-      result.mTitle = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_TITLE));
-      result.mDescription = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_DESCRIPTION));
-      result.mThumbnail = cursor.getString(cursor.getColumnIndex(PlaylistEntry.COLUMN_NAME_THUMBNAIL));
+      result.mID = cursor.getLong(cursor.getColumnIndex(Entry._ID));
+      result.mRequest = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_REQUEST));
+      result.mPlaylist = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_PLAYLIST));
+      result.mTitle = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE));
+      result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
+      result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
+      result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
 
       return result;
     }
@@ -232,11 +234,12 @@ public class DatabaseTables {
     public ContentValues contentValuesForItem(YouTubeData item) {
       ContentValues values = new ContentValues();
 
-      values.put(PlaylistEntry.COLUMN_NAME_REQUEST, item.mRequest);
-      values.put(PlaylistEntry.COLUMN_NAME_PLAYLIST, item.mPlaylist);
-      values.put(PlaylistEntry.COLUMN_NAME_TITLE, item.mTitle);
-      values.put(PlaylistEntry.COLUMN_NAME_DESCRIPTION, item.mDescription);
-      values.put(PlaylistEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
+      values.put(Entry.COLUMN_NAME_REQUEST, item.mRequest);
+      values.put(Entry.COLUMN_NAME_PLAYLIST, item.mPlaylist);
+      values.put(Entry.COLUMN_NAME_TITLE, item.mTitle);
+      values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
+      values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
+      values.put(Entry.COLUMN_NAME_ITEM_COUNT, item.mItemCount);
 
       return values;
     }
@@ -245,17 +248,19 @@ public class DatabaseTables {
     public String tableSQL() {
       String result = CREATE + tableName()
           + " ("
-          + PlaylistEntry._ID + INT_TYPE + PRIMARY
+          + Entry._ID + INT_TYPE + PRIMARY
           + COMMA_SEP
-          + PlaylistEntry.COLUMN_NAME_REQUEST + TEXT_TYPE
+          + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE
           + COMMA_SEP
-          + PlaylistEntry.COLUMN_NAME_PLAYLIST + TEXT_TYPE
+          + Entry.COLUMN_NAME_PLAYLIST + TEXT_TYPE
           + COMMA_SEP
-          + PlaylistEntry.COLUMN_NAME_TITLE + TEXT_TYPE
+          + Entry.COLUMN_NAME_TITLE + TEXT_TYPE
           + COMMA_SEP
-          + PlaylistEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+          + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
           + COMMA_SEP
-          + PlaylistEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+          + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_ITEM_COUNT + INT_TYPE
           + " )";
 
       return result;
@@ -269,12 +274,13 @@ public class DatabaseTables {
     @Override
     public String[] defaultProjection() {
       String[] projection = new String[]{
-          PlaylistEntry._ID,
-          PlaylistEntry.COLUMN_NAME_REQUEST,
-          PlaylistEntry.COLUMN_NAME_PLAYLIST,
-          PlaylistEntry.COLUMN_NAME_TITLE,
-          PlaylistEntry.COLUMN_NAME_DESCRIPTION,
-          PlaylistEntry.COLUMN_NAME_THUMBNAIL
+          Entry._ID,
+          Entry.COLUMN_NAME_REQUEST,
+          Entry.COLUMN_NAME_PLAYLIST,
+          Entry.COLUMN_NAME_TITLE,
+          Entry.COLUMN_NAME_DESCRIPTION,
+          Entry.COLUMN_NAME_THUMBNAIL,
+          Entry.COLUMN_NAME_ITEM_COUNT
       };
 
       return projection;
@@ -294,7 +300,7 @@ public class DatabaseTables {
         else
           selection += " AND ";
 
-        selection += PlaylistEntry.COLUMN_NAME_REQUEST + " = ?";
+        selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
       return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
@@ -306,7 +312,7 @@ public class DatabaseTables {
 
   public static class VideoTable implements DatabaseTable {
     // stores information about a video
-    public class VideoEntry implements BaseColumns {
+    public class Entry implements BaseColumns {
       public static final String COLUMN_NAME_REQUEST = "request";
       public static final String COLUMN_NAME_VIDEO = "video";
       public static final String COLUMN_NAME_TITLE = "title";
@@ -333,35 +339,35 @@ public class DatabaseTables {
 
       int col;
 
-      col = cursor.getColumnIndex(VideoEntry._ID);
+      col = cursor.getColumnIndex(Entry._ID);
       if (col != -1)
         result.mID = cursor.getLong(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_REQUEST);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_REQUEST);
       if (col != -1)
         result.mRequest = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_VIDEO);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_VIDEO);
       if (col != -1)
         result.mVideo = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_TITLE);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE);
       if (col != -1)
         result.mTitle = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DESCRIPTION);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION);
       if (col != -1)
         result.mDescription = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_THUMBNAIL);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL);
       if (col != -1)
         result.mThumbnail = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_DURATION);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_DURATION);
       if (col != -1)
         result.mDuration = cursor.getString(col);
 
-      col = cursor.getColumnIndex(VideoEntry.COLUMN_NAME_HIDDEN);
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
       if (col != -1)
         result.setHidden(cursor.getString(col) != null);
 
@@ -372,22 +378,22 @@ public class DatabaseTables {
     public ContentValues contentValuesForItem(YouTubeData item) {
       ContentValues values = new ContentValues();
 
-      values.put(VideoEntry.COLUMN_NAME_VIDEO, item.mVideo);
-      values.put(VideoEntry.COLUMN_NAME_REQUEST, item.mRequest);
-      values.put(VideoEntry.COLUMN_NAME_TITLE, item.mTitle);
-      values.put(VideoEntry.COLUMN_NAME_DESCRIPTION, item.mDescription);
-      values.put(VideoEntry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
-      values.put(VideoEntry.COLUMN_NAME_DURATION, item.mDuration);
-      values.put(VideoEntry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
+      values.put(Entry.COLUMN_NAME_VIDEO, item.mVideo);
+      values.put(Entry.COLUMN_NAME_REQUEST, item.mRequest);
+      values.put(Entry.COLUMN_NAME_TITLE, item.mTitle);
+      values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
+      values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
+      values.put(Entry.COLUMN_NAME_DURATION, item.mDuration);
+      values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
     }
 
     @Override
     public String indexSQL() {
-      String indexName = VideoEntry.COLUMN_NAME_VIDEO + "_idx";
+      String indexName = Entry.COLUMN_NAME_VIDEO + "_idx";
 
-      String result = "CREATE INDEX " + indexName + " on " + tableName() + "(" + VideoEntry.COLUMN_NAME_VIDEO + ")";
+      String result = "CREATE INDEX " + indexName + " on " + tableName() + "(" + Entry.COLUMN_NAME_VIDEO + ")";
 
       return result;
     }
@@ -396,21 +402,21 @@ public class DatabaseTables {
     public String tableSQL() {
       String itemTable = CREATE + tableName()
           + " ("
-          + VideoEntry._ID + INT_TYPE + PRIMARY
+          + Entry._ID + INT_TYPE + PRIMARY
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_REQUEST + TEXT_TYPE
+          + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_VIDEO + TEXT_TYPE
+          + Entry.COLUMN_NAME_VIDEO + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_TITLE + TEXT_TYPE
+          + Entry.COLUMN_NAME_TITLE + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
+          + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
+          + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_DURATION + TEXT_TYPE
+          + Entry.COLUMN_NAME_DURATION + TEXT_TYPE
           + COMMA_SEP
-          + VideoEntry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
+          + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
 
       return itemTable;
@@ -419,14 +425,14 @@ public class DatabaseTables {
     @Override
     public String[] defaultProjection() {
       String[] projection = new String[]{
-          VideoEntry._ID,
-          VideoEntry.COLUMN_NAME_REQUEST,
-          VideoEntry.COLUMN_NAME_VIDEO,
-          VideoEntry.COLUMN_NAME_TITLE,
-          VideoEntry.COLUMN_NAME_DESCRIPTION,
-          VideoEntry.COLUMN_NAME_THUMBNAIL,
-          VideoEntry.COLUMN_NAME_DURATION,
-          VideoEntry.COLUMN_NAME_HIDDEN
+          Entry._ID,
+          Entry.COLUMN_NAME_REQUEST,
+          Entry.COLUMN_NAME_VIDEO,
+          Entry.COLUMN_NAME_TITLE,
+          Entry.COLUMN_NAME_DESCRIPTION,
+          Entry.COLUMN_NAME_THUMBNAIL,
+          Entry.COLUMN_NAME_DURATION,
+          Entry.COLUMN_NAME_HIDDEN
       };
 
       return projection;
@@ -440,26 +446,26 @@ public class DatabaseTables {
 
       switch (queryID) {
         case HIDDEN_ITEMS:
-          selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
+          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
 
           projection = new String[]{
-              VideoEntry._ID,
-              VideoEntry.COLUMN_NAME_REQUEST,
-              VideoEntry.COLUMN_NAME_VIDEO,
-              VideoEntry.COLUMN_NAME_HIDDEN
+              Entry._ID,
+              Entry.COLUMN_NAME_REQUEST,
+              Entry.COLUMN_NAME_VIDEO,
+              Entry.COLUMN_NAME_HIDDEN
           };
           break;
         case NEEDS_DATA_UPDATE:
-          selection = "" + VideoEntry.COLUMN_NAME_DURATION + " IS NULL";
+          selection = "" + Entry.COLUMN_NAME_DURATION + " IS NULL";
 
           projection = new String[]{
-              VideoEntry._ID,
-              VideoEntry.COLUMN_NAME_VIDEO,
-              VideoEntry.COLUMN_NAME_DURATION
+              Entry._ID,
+              Entry.COLUMN_NAME_VIDEO,
+              Entry.COLUMN_NAME_DURATION
           };
           break;
         case VISIBLE_ITEMS:
-          selection = "" + VideoEntry.COLUMN_NAME_HIDDEN + " IS NULL";
+          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NULL";
           break;
         case ALL_ITEMS:
           break;
@@ -473,7 +479,7 @@ public class DatabaseTables {
         else
           selection += " AND ";
 
-        selection += VideoEntry.COLUMN_NAME_REQUEST + " = ?";
+        selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
       return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);

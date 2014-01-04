@@ -71,7 +71,7 @@ public class YouTubeUpdateService extends IntentService {
     for (YouTubeData itemFromYouTube : fromYouTubeItems) {
       // final item with matching videoId in the database and update it with duration and any other info we might get back
 
-      String selection = DatabaseTables.VideoTable.VideoEntry.COLUMN_NAME_VIDEO + " = ?";
+      String selection = DatabaseTables.VideoTable.Entry.COLUMN_NAME_VIDEO + " = ?";
       String[] selectionArgs = new String[]{itemFromYouTube.mVideo};
 
       Cursor cursor = access.getCursor(selection, selectionArgs, table.defaultProjection());

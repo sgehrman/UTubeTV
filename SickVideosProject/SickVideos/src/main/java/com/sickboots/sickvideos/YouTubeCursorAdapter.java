@@ -185,7 +185,15 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
       holder.duration.setText(duration);
     } else {
-      holder.duration.setVisibility(View.GONE);
+
+      Long count = itemMap.mItemCount;
+      if (count != null) {
+        holder.duration.setVisibility(View.VISIBLE);
+
+        holder.duration.setText(count.toString() + " videos");
+      } else {
+        holder.duration.setVisibility(View.GONE);
+      }
     }
 
     // hide description if empty

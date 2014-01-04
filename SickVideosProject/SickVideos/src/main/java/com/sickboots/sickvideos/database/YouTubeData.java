@@ -20,6 +20,7 @@ public class YouTubeData {
 
   // used for playlists
   public String mPlaylist;
+  public Long mItemCount;  // number of videos in a playlist
 
   // use convenience methods
   private String mHidden;

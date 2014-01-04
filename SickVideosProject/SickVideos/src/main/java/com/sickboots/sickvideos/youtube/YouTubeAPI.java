@@ -748,7 +748,8 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mPlaylist = subscription.getId();
-        map.mTitle = subscription.getSnippet().getTitle() + " : " + subscription.getContentDetails().getItemCount();
+        map.mTitle = subscription.getSnippet().getTitle();
+        map.mItemCount = subscription.getContentDetails().getItemCount();
         map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
 
