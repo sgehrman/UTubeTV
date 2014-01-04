@@ -9,12 +9,12 @@
 
         <activity
             android:name=".IconicActivity"
-            android:label="">
+            android:label="IconicDroid">
         </activity>
 
         <activity
             android:name=".IconicTypefaceActivity"
-            android:label="">
+            android:label="Typeface">
         </activity>
 
     </application>

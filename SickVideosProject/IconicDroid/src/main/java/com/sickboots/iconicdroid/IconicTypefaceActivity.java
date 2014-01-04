@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,6 +50,19 @@ public class IconicTypefaceActivity extends ListActivity {
 
     int iconType = getIntent().getExtras().getInt(EXTRA_ICON_TYPE);
     initIconsList(iconType);
+    
+    getActionBar().setDisplayHomeAsUpEnabled(true);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      // Respond to the action bar's Up/Home button
+      case android.R.id.home:
+        finish();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -56,7 +70,7 @@ public class IconicTypefaceActivity extends ListActivity {
     super.onListItemClick(listView, view, position, id);
     Log.d("#$$#: ", "clicked: " + id + "position: " + position);
 
-//    Icon icon = (Icon) listView.getAdapter().getItem(position);
+    Icon icon = (Icon) listView.getAdapter().getItem(position);
 //    startActivity(SimpleSampleActivity.createIntent(this, icon));
   }
 
@@ -127,11 +141,8 @@ public class IconicTypefaceActivity extends ListActivity {
       IconicFontDrawable iconicFontDrawable = new IconicFontDrawable(getContext());
       iconicFontDrawable.setIcon(icon);
       iconicFontDrawable.setIconColor(color);
-      if (SDK_INT < JELLY_BEAN) {
-        holder.icon.setBackgroundDrawable(iconicFontDrawable);
-      } else {
-        holder.icon.setBackground(iconicFontDrawable);
-      }
+      holder.icon.setBackground(iconicFontDrawable);
+
       return convertView;
     }
 
