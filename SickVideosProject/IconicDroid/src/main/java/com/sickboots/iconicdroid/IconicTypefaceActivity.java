@@ -50,7 +50,7 @@ public class IconicTypefaceActivity extends ListActivity {
 
     int iconType = getIntent().getExtras().getInt(EXTRA_ICON_TYPE);
     initIconsList(iconType);
-    
+
     getActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
@@ -68,10 +68,8 @@ public class IconicTypefaceActivity extends ListActivity {
   @Override
   protected void onListItemClick(ListView listView, View view, int position, long id) {
     super.onListItemClick(listView, view, position, id);
-    Log.d("#$$#: ", "clicked: " + id + "position: " + position);
-
-    Icon icon = (Icon) listView.getAdapter().getItem(position);
-//    startActivity(SimpleSampleActivity.createIntent(this, icon));
+//   Icon icon = (Icon) listView.getAdapter().getItem(position);
+//   startActivity(SimpleSampleActivity.createIntent(this, icon));
   }
 
   private void initIconsList(int iconType) {
