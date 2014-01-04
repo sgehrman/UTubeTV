@@ -2,6 +2,7 @@
 
 package com.sickboots.sickvideos;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -58,7 +59,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
-    getActionBar().setHomeButtonEnabled(true);
 
     int section = 0;
     if (savedInstanceState != null) {
