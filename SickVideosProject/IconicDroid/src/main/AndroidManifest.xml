@@ -7,6 +7,16 @@
 
     <application android:allowBackup="true">
 
+        <activity
+            android:name=".IconicActivity"
+            android:label="">
+        </activity>
+
+        <activity
+            android:name=".IconicTypefaceActivity"
+            android:label="">
+        </activity>
+
     </application>
 
 </manifest>
