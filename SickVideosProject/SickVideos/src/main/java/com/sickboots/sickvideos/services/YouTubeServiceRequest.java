@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class YouTubeServiceRequest implements Parcelable {
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
 
-  private String mTitle;
   private HashMap data;
   private RequestType type;
 
@@ -28,7 +27,7 @@ public class YouTubeServiceRequest implements Parcelable {
   public static YouTubeServiceRequest videosRequest(String playlistID, String title) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
-    result.mTitle = title;
+    result.data.put("title", title);
     result.data.put("playlist", playlistID);
 
     return result;
@@ -63,7 +62,7 @@ public class YouTubeServiceRequest implements Parcelable {
   public static YouTubeServiceRequest playlistsRequest(String channelID, String title) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
-    result.mTitle = title;
+    result.data.put("title", title);
     result.data.put("channel", channelID);
 
     return result;
@@ -78,8 +77,10 @@ public class YouTubeServiceRequest implements Parcelable {
   }
 
   public String title() {
-    if (mTitle != null)
-      return mTitle;
+    String title = (String) getData("title");
+
+    if (title != null)
+      return title;
 
     return typeToString();
   }
