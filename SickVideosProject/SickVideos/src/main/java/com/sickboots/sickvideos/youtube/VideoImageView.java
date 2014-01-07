@@ -29,7 +29,7 @@ public class VideoImageView extends ImageView {
   }
 
   public void setDrawShadows(boolean set) {
-    mDrawShadows = set;
+    mDrawShadows = false; // disabled;
     mDarkenBackground = set;
   }
 
