@@ -14,7 +14,7 @@ import com.sickboots.sickvideos.R;
 
 public class ToolbarIcons {
 
-  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE, OVERFLOW, VIDEO_PLAY}
+  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, PLAYLISTS}
 
   ;
 
@@ -42,6 +42,12 @@ public class ToolbarIcons {
         break;
       case OVERFLOW:
         icon = FontAwesomeIcon.ELLIPSIS_V;
+        break;
+      case ABOUT:
+        icon = FontAwesomeIcon.TICKET;
+        break;
+      case PLAYLISTS:
+        icon = FontAwesomeIcon.COMPASS;
         break;
       default:
         break;

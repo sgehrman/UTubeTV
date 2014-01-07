@@ -3,6 +3,7 @@ package com.sickboots.sickvideos;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,8 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.sickboots.sickvideos.misc.ToolbarIcons;
+import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Map;
 import java.util.Observable;
@@ -151,11 +156,22 @@ public class DrawerManager {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      View result = super.getView(position, convertView, parent);
+      View result = convertView;
+
+      if (result == null)
+        result = inflater.inflate(R.layout.drawer_list_item, parent, false);
 
       TextView textView = (TextView) result.findViewById(android.R.id.text1);
 
       textView.setText(getItem(position));
+
+      ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
+
+
+        Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.ABOUT, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
+
+
+      imageView.setImageDrawable(sharedDrawable);
 
       return result;
     }
