@@ -10,7 +10,6 @@
         android:inputType="textNoSuggestions"
         android:singleLine="true"
         android:hint="Enter User Name"
-
         android:imeOptions="actionDone"
         android:id="@+id/edit_text">
     </EditText>

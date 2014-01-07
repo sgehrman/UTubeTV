@@ -24,7 +24,7 @@ import java.util.Observable;
  * Created by sgehrman on 1/2/14.
  */
 public class Content extends Observable {
-  private ProductCode mProductCode = ProductCode.KHAN_ACADEMY;
+  private ProductCode mProductCode = ProductCode.JUSTIN_BIEBER;
   private YouTubeData mChannelInfo;
   private Context mContext;
 
@@ -43,8 +43,11 @@ public class Content extends Observable {
       case NEURO_SOUP:
       case CONNECTIONS:
       case ROGAN:
+      case TOP_GEAR:
       case VICE:
       case BEARD_CLUB:
+      case COLLEGE_HUMOR:
+      case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
         return new String[]{actionBarTitle(0), actionBarTitle(1)};
       case USER:
@@ -92,7 +95,10 @@ public class Content extends Observable {
       case ROGAN:
       case VICE:
       case BEARD_CLUB:
+      case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
+      case COLLEGE_HUMOR:
+      case TOP_GEAR:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment(this);
@@ -158,12 +164,18 @@ public class Content extends Observable {
         return "UCULJH9kW-UdTBCDu27P0BoA";
       case KHAN_ACADEMY:
         return "UC4a-Gbdw7vOaccHmFo40b9g";
+      case COLLEGE_HUMOR:
+        return "UCPDXXXJj9nax0fr0Wfc048g";
+      case TOP_GEAR:
+        return "UCjOl2AUblVmg2rA_cRgZkFg";
+      case JUSTIN_BIEBER:
+        return "UCHkj014U2CQ2Nv0UZeYpE_A";
     }
 
     return null;
   }
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, VICE, ROGAN, BEARD_CLUB, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
 
 
   public YouTubeData channelInfo() {

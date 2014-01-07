@@ -33,6 +33,8 @@ public class ChannelLookupActivity extends Activity {
     mTextView = (TextView) findViewById(R.id.result_text);
     mEditText = (EditText) findViewById(R.id.edit_text);
 
+    mEditText.requestFocus();
+
     mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

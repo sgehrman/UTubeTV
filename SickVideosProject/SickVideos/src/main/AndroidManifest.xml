@@ -34,6 +34,7 @@
         </activity>
         <activity
             android:name=".activities.ChannelLookupActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:label="@string/title_activity_channel_lookup">
         </activity>
         <activity
