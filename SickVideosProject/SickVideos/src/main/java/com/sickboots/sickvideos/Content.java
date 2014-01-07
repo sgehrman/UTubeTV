@@ -24,14 +24,16 @@ import java.util.Observable;
  * Created by sgehrman on 1/2/14.
  */
 public class Content extends Observable {
-  private ProductCode mProductCode = ProductCode.JUSTIN_BIEBER;
+  private ProductCode mProductCode;
   private YouTubeData mChannelInfo;
   private Context mContext;
 
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
 
-  public Content(Context context) {
+  public Content(Context context, ProductCode code) {
     super();
+
+    mProductCode = code;
 
     mContext = context.getApplicationContext();
 

@@ -57,7 +57,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
 
-    mContent = new Content(this);
+    Content.ProductCode code = Content.ProductCode.valueOf(getResources().getString(R.string.content));
+    mContent = new Content(this, code);
 
     setupDrawer();
 
