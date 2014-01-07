@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.sickboots.sickvideos.misc.AppUtils;
+
 /**
  * Created by sgehrman on 12/13/13.
  */
@@ -27,13 +29,13 @@ public class DrawerManager {
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
 
-  public DrawerManager(Activity activity, DrawerManagerListener listener) {
+  public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 
     mListener = listener;
 
     ArrayAdapter adapter = new ArrayAdapter<String>(activity,
-        R.layout.drawer_list_item, Content.drawerTitles());
+        R.layout.drawer_list_item, content.drawerTitles());
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);

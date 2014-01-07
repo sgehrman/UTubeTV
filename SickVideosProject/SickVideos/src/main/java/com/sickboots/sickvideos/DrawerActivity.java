@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -19,6 +20,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
@@ -35,6 +37,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   private Toast backButtonToast;
   private long lastBackPressTime = 0;
   private PurchaseHelper mPurchaseHelper;
+  private Content mContent;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drawer);
+
+    mContent = new Content(this);
 
     setupDrawer();
 
@@ -298,7 +303,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   }
 
   private void setupDrawer() {
-    mDrawerMgr = new DrawerManager(this, new DrawerManager.DrawerManagerListener() {
+    mDrawerMgr = new DrawerManager(this, mContent, new DrawerManager.DrawerManagerListener() {
       @Override
       public void onDrawerClick(int position) {
         selectSection(position, true);
@@ -323,7 +328,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     mDrawerMgr.setItemChecked(position, true);
 
-    Utils.showFragment(this, Content.fragmentForIndex(position), R.id.fragment_holder, animate ? 3 : 0, false);
+    Utils.showFragment(this, mContent.fragmentForIndex(position), R.id.fragment_holder, animate ? 3 : 0, false);
   }
 
   /**

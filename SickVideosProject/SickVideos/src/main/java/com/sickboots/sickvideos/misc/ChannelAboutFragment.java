@@ -27,34 +27,43 @@ import java.util.List;
 import java.util.Map;
 
 public class ChannelAboutFragment extends Fragment {
+  TextView mTitle;
+  TextView mDescription;
+  ImageView mImage;
+  Content mContent;
+
+  public ChannelAboutFragment(Content content) {
+    super();
+
+    mContent = content;
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_channel_about, container, false);
 
+    mTitle = (TextView) rootView.findViewById(R.id.text_view);
+    mDescription = (TextView) rootView.findViewById(R.id.description_view);
+    mImage = (ImageView) rootView.findViewById(R.id.image);
+
+    Utils.setActionBarTitle(getActivity(), "About");
+
+    updateUI();
+
     return rootView;
   }
 
-  @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  private void updateUI() {
+    YouTubeData data = mContent.channelInfo();
+    if (data == null)
+      return;
 
-    askYouTubeForAboutInfo();
-
-    Utils.setActionBarTitle(activity, "About");
-  }
-
-  private void updateUI(View rootView, YouTubeData data) {
-    TextView title = (TextView) rootView.findViewById(R.id.text_view);
-    TextView description = (TextView) rootView.findViewById(R.id.description_view);
-    final ImageView image = (ImageView) rootView.findViewById(R.id.image);
-
-    title.setText(data.mTitle);
-    description.setText(data.mDescription);
-
+    mTitle.setText(data.mTitle);
+    mDescription.setText(data.mDescription);
 
     int defaultImageResID = 0;
 
+    final ImageView image = mImage;
     UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
 
       @Override
@@ -68,52 +77,6 @@ public class ChannelAboutFragment extends Fragment {
 
     });
 
-  }
-
-  private void askYouTubeForAboutInfo() {
-    (new Thread(new Runnable() {
-      public void run() {
-        YouTubeData channelInfo = null;
-
-        DatabaseAccess database = new DatabaseAccess(getActivity(), DatabaseTables.channelTable());
-
-        List<YouTubeData> items = database.getItems(0, Content.channelID(), 1);
-
-        if (items.size() > 0)
-          channelInfo = items.get(0);
-
-        if (channelInfo == null) {
-          YouTubeAPI helper = new YouTubeAPI(getActivity(), new YouTubeAPI.YouTubeAPIListener() {
-            @Override
-            public void handleAuthIntent(final Intent authIntent) {
-              Debug.log("handleAuthIntent inside update Service.  not handled here");
-            }
-          });
-
-          final Map fromYouTubeMap = helper.channelInfo(Content.channelID());
-
-          // save in the db
-          channelInfo = new YouTubeData();
-          channelInfo.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
-          channelInfo.mTitle = (String) fromYouTubeMap.get("title");
-          channelInfo.mDescription = (String) fromYouTubeMap.get("description");
-          channelInfo.mChannel = Content.channelID();
-
-          database.insertItems(Arrays.asList(channelInfo));
-        }
-
-        final YouTubeData newChannelInfo = channelInfo;
-
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        handler.post(new Runnable() {
-          @Override
-          public void run() {
-            updateUI(getView(), newChannelInfo);
-          }
-        });
-      }
-    })).start();
   }
 
 }
