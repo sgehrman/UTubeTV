@@ -108,7 +108,6 @@ public class DrawerManager {
     }
   }
 
-
   private class DrawerAdapter extends ArrayAdapter<String> implements Observer {
     private LayoutInflater inflater;
     private Content mContent;

@@ -46,17 +46,41 @@ public class Content extends Observable {
       case ROGAN:
       case VICE:
       case BEARD_CLUB:
-        if (mChannelInfo != null) {
-          String title = mChannelInfo.mTitle;
-          if (title != null)
-            return new String[]{title, "Playlists for " + title};
-        }
-        return new String[]{"About", "Playlists"};
+        return new String[]{actionBarTitle(0), actionBarTitle(1)};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
     }
 
     return null;
+  }
+
+  public String actionBarTitle(int flag) {
+    String title = null;
+
+    switch (flag) {
+      case 0:
+        if (mChannelInfo != null)
+          title = mChannelInfo.mTitle;
+
+        if (title == null)
+          title = "About";
+
+        break;
+      case 1:
+
+        if (mChannelInfo != null) {
+            title = mChannelInfo.mTitle;
+          if (title != null)
+            title = "Playlists on " + title;
+        }
+
+        if (title == null)
+          title = "Playlists";
+
+        break;
+    }
+
+    return title;
   }
 
   public Fragment fragmentForIndex(int index) {
@@ -73,7 +97,7 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment(this);
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), actionBarTitle(1)));
             break;
         }
         break;
