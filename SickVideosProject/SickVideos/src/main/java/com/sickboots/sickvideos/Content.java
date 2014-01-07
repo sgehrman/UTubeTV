@@ -9,7 +9,6 @@ import android.os.Looper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ChannelAboutFragment;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
@@ -36,7 +35,7 @@ public class Content {
     askYouTubeForChannelInfo();
   }
 
-  public   String[] drawerTitles() {
+  public String[] drawerTitles() {
     switch (mProductCode) {
       case NEURO_SOUP:
       case CONNECTIONS:
@@ -51,7 +50,7 @@ public class Content {
     return null;
   }
 
-  public   Fragment fragmentForIndex(int index) {
+  public Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
 
     switch (mProductCode) {
@@ -104,7 +103,7 @@ public class Content {
     return fragment;
   }
 
-  public   String channelID() {
+  public String channelID() {
     switch (mProductCode) {
       case CONNECTIONS:
         return "UC07XXQh04ukEX68loZFgnVw";
@@ -127,7 +126,7 @@ public class Content {
 
 
   public YouTubeData channelInfo() {
-   return mChannelInfo;
+    return mChannelInfo;
   }
 
   private void askYouTubeForChannelInfo() {
@@ -179,8 +178,6 @@ public class Content {
       }
     })).start();
   }
-
-
 
 
 }

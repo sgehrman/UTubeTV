@@ -4,9 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.sickboots.sickvideos.Content;
-import com.sickboots.sickvideos.database.YouTubeData;
-
 import java.util.Observable;
 import java.util.Observer;
 

@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.sickboots.sickvideos.misc.AppUtils;
-
 /**
  * Created by sgehrman on 12/13/13.
  */
