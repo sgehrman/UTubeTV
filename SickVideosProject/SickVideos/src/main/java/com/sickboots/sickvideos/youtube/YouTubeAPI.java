@@ -10,6 +10,7 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAuthIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
@@ -88,7 +89,15 @@ public class YouTubeAPI {
   public YouTube youTube() {
     if (youTube == null) {
       try {
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), Auth.nullCredentials(mContext)).setApplicationName("YouTubeAPI").build();
+        boolean needsAuth = false; // needs to check Content or something to get this for realz
+        HttpRequestInitializer credentials;
+
+        if (needsAuth)
+          credentials = Auth.getCredentials(mContext);
+        else
+          credentials = Auth.nullCredentials(mContext);
+
+        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credentials).setApplicationName("YouTubeAPI").build();
       } catch (Exception e) {
         e.printStackTrace();
       } catch (Throwable t) {
