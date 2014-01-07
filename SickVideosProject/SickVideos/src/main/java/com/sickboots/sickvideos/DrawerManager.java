@@ -1,23 +1,28 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * Created by sgehrman on 12/13/13.
  */
-public class DrawerManager implements Observer {
+public class DrawerManager {
 
   public interface DrawerManagerListener {
     public void onDrawerClick(int position);
@@ -29,16 +34,11 @@ public class DrawerManager implements Observer {
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
-  private Content mContent;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 
     mListener = listener;
-    mContent = content;
-
-    ArrayAdapter adapter = new ArrayAdapter<String>(activity,
-        R.layout.drawer_list_item, mContent.drawerTitles());
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
@@ -47,7 +47,7 @@ public class DrawerManager implements Observer {
     mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
     // set up the drawer's list view with items and click listener
-    mDrawerList.setAdapter(adapter);
+    mDrawerList.setAdapter(new DrawerAdapter(activity, content));
     mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
     // ActionBarDrawerToggle ties together the the proper interactions
@@ -108,21 +108,58 @@ public class DrawerManager implements Observer {
     }
   }
 
-  @Override
-  public void update(Observable observable, Object data) {
 
-    if (data instanceof String) {
-      String input = (String) data;
+  private class DrawerAdapter extends ArrayAdapter<String> implements Observer {
+    private LayoutInflater inflater;
+    private Content mContent;
 
-      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
+    public DrawerAdapter(Context context, Content content) {
+      super(context, R.layout.drawer_list_item);
 
-        // only need this called once
-        mContent.deleteObserver(this);
+      inflater = LayoutInflater.from(context);
 
+      mContent = content;
+
+      rebuild();
+    }
+
+    private void rebuild() {
+      // clear existing items
+      clear();
+
+      if (mContent.channelInfo() == null)
+        mContent.addObserver(this);
+
+      for (String title : mContent.drawerTitles()) {
+        add(title);
       }
     }
+
+    @Override
+    public void update(Observable observable, Object data) {
+      if (data instanceof String) {
+        String input = (String) data;
+
+        if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
+
+          rebuild();
+
+          // only need this called once
+          mContent.deleteObserver(this);
+        }
+      }
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+      View result = super.getView(position, convertView, parent);
+
+      TextView textView = (TextView) result.findViewById(android.R.id.text1);
+
+      textView.setText(getItem(position));
+
+      return result;
+    }
   }
-
-
 
 }

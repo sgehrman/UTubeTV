@@ -49,7 +49,7 @@ public class Content extends Observable {
         if (mChannelInfo != null) {
           String title = mChannelInfo.mTitle;
           if (title != null)
-            return new String[]{title, title + " Playlists"};
+            return new String[]{title, "Playlists for " + title};
         }
         return new String[]{"About", "Playlists"};
       case USER:
