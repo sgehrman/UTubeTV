@@ -61,7 +61,7 @@
 
         <provider
             android:name="com.sickboots.sickvideos.database.YouTubeContentProvider"
-            android:authorities="com.sickboots.sickvideos.provider"
+            android:authorities=".res-auto.provider"
             android:enabled="true"
             android:multiprocess="true"
             android:exported="false">

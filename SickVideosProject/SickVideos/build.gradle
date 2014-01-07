@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'android'
+apply from: './build_extras.gradle'
 
 repositories {
     mavenCentral()
@@ -51,6 +52,20 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+
+    productFlavors {
+        neurosoup {
+            packageName "com.sickboots.sickvideos.neurosoup"
+        }
+
+        joerogan {
+            packageName "com.sickboots.sickvideos.joerogan"
+        }
+    }
+
+
+
 }
 
 dependencies {

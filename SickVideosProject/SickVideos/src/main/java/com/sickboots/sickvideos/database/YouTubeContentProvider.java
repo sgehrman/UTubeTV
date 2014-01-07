@@ -10,15 +10,15 @@ import com.sickboots.sickvideos.misc.Debug;
 public class YouTubeContentProvider extends ContentProvider {
 
   // All URIs share these parts
-  public static final String AUTHORITY = "com.sickboots.sickvideos.provider";
-  public static final String SCHEME = "content://";
+  private static final String AUTHORITY = "com.sickboots.sickvideos.provider";
+  private static final String SCHEME = "content://";
 
   // URIs
   // Used for all persons
-  public static final String CONTENTS = SCHEME + AUTHORITY + "/content";
+  private static final String CONTENTS = SCHEME + AUTHORITY + "/content";
   public static final Uri URI_CONTENTS = Uri.parse(CONTENTS);
   // Used for a single person, just add the id to the end
-  public static final String CONTENT_BASE = CONTENTS + "/";
+  private static final String CONTENT_BASE = CONTENTS + "/";
 
   public YouTubeContentProvider() {
   }
