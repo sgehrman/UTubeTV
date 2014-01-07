@@ -9,6 +9,7 @@ import android.os.Looper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ChannelAboutFragment;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
@@ -26,6 +27,8 @@ public class Content {
   private ProductCode mProductCode = ProductCode.NEURO_SOUP;
   private YouTubeData mChannelInfo;
   private Context mContext;
+
+  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED_NOTIFICATION";
 
   public Content(Context context) {
     super();
@@ -172,6 +175,8 @@ public class Content {
             // we are on the main thread, set the new data and send out notifications
 
             mChannelInfo = newChannelInfo;
+
+            AppUtils.instance(mContext).sendNotification(CONTENT_UPDATED_NOTIFICATION);
 
           }
         });

@@ -15,7 +15,10 @@ import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
 
-public class ChannelAboutFragment extends Fragment {
+import java.util.Observable;
+import java.util.Observer;
+
+public class ChannelAboutFragment extends Fragment implements Observer {
   TextView mTitle;
   TextView mDescription;
   ImageView mImage;
@@ -42,10 +45,28 @@ public class ChannelAboutFragment extends Fragment {
     return rootView;
   }
 
+  @Override
+  public void update(Observable observable, Object data) {
+
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
+
+        updateUI();
+
+        // only need this called once
+        AppUtils.instance(getActivity()).deleteObserver(this);
+      }
+    }
+  }
+
   private void updateUI() {
     YouTubeData data = mContent.channelInfo();
-    if (data == null)
+    if (data == null) {
+      AppUtils.instance(getActivity()).addObserver(this);
       return;
+    }
 
     mTitle.setText(data.mTitle);
     mDescription.setText(data.mDescription);
