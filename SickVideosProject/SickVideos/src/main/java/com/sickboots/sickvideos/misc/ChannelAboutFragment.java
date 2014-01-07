@@ -60,7 +60,6 @@ public class ChannelAboutFragment extends Fragment implements Observer {
   }
 
   private void updateUI() {
-
     YouTubeData data = mContent.channelInfo();
     if (data == null) {
       AppUtils.instance(getActivity()).addObserver(this);
