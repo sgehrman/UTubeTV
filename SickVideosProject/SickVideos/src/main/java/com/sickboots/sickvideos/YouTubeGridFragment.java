@@ -91,7 +91,7 @@ public class YouTubeGridFragment extends Fragment
     // if video player is up, show the video title
     VideoPlayer player = videoPlayer(false);
     if (player != null && player.visible()) {
-      title = videoPlayer(false).title();
+      title = player.title();
     }
 
     return title;
