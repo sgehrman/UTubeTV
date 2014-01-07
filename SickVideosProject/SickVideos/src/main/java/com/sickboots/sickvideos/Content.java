@@ -204,14 +204,16 @@ public class Content extends Observable {
 
           final Map fromYouTubeMap = helper.channelInfo(channelID());
 
-          // save in the db
-          channelInfo = new YouTubeData();
-          channelInfo.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
-          channelInfo.mTitle = (String) fromYouTubeMap.get("title");
-          channelInfo.mDescription = (String) fromYouTubeMap.get("description");
-          channelInfo.mChannel = channelID();
+          // save in the db if we got results
+          if (fromYouTubeMap.size() > 0) {
+            channelInfo = new YouTubeData();
+            channelInfo.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
+            channelInfo.mTitle = (String) fromYouTubeMap.get("title");
+            channelInfo.mDescription = (String) fromYouTubeMap.get("description");
+            channelInfo.mChannel = channelID();
 
-          database.insertItems(Arrays.asList(channelInfo));
+            database.insertItems(Arrays.asList(channelInfo));
+          }
         }
 
         final YouTubeData newChannelInfo = channelInfo;
