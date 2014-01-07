@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class YouTubeServiceRequest implements Parcelable {
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
 
+  private String mTitle;
   private HashMap data;
   private RequestType type;
 
@@ -24,9 +25,10 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID) {
+  public static YouTubeServiceRequest videosRequest(String playlistID, String title) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
+    result.mTitle = title;
     result.data.put("playlist", playlistID);
 
     return result;
@@ -58,9 +60,10 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsRequest(String channelID) {
+  public static YouTubeServiceRequest playlistsRequest(String channelID, String title) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
+    result.mTitle = title;
     result.data.put("channel", channelID);
 
     return result;
@@ -76,47 +79,52 @@ public class YouTubeServiceRequest implements Parcelable {
 
   public String name() {
     String result = "YouTube";
-    switch (type) {
-      case SUBSCRIPTIONS:
-        result = "Subscriptions";
-        break;
-      case PLAYLISTS:
-        result = "Playlists";
-        break;
-      case CATEGORIES:
-        result = "Categories";
-        break;
-      case LIKED:
-        result = "Liked";
-        break;
-      case RELATED:
-        result = "Related Playlists";
 
-        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
-        switch (type) {
-          case FAVORITES:
-            result = "Favorites";
-            break;
-          case LIKES:
-            result = "Likes";
-            break;
-          case UPLOADS:
-            result = "Uploads";
-            break;
-          case WATCHED:
-            result = "History";
-            break;
-          case WATCHLATER:
-            result = "Watch later";
-            break;
-        }
-        break;
-      case VIDEOS:
-        result = "Videos";
-        break;
-      case SEARCH:
-        result = "Search";
-        break;
+    if (mTitle != null)
+      result = mTitle;
+    else {
+      switch (type) {
+        case SUBSCRIPTIONS:
+          result = "Subscriptions";
+          break;
+        case PLAYLISTS:
+          result = "Playlists";
+          break;
+        case CATEGORIES:
+          result = "Categories";
+          break;
+        case LIKED:
+          result = "Liked";
+          break;
+        case RELATED:
+          result = "Related Playlists";
+
+          YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
+          switch (type) {
+            case FAVORITES:
+              result = "Favorites";
+              break;
+            case LIKES:
+              result = "Likes";
+              break;
+            case UPLOADS:
+              result = "Uploads";
+              break;
+            case WATCHED:
+              result = "History";
+              break;
+            case WATCHLATER:
+              result = "Watch later";
+              break;
+          }
+          break;
+        case VIDEOS:
+          result = "Videos";
+          break;
+        case SEARCH:
+          result = "Search";
+          break;
+      }
     }
 
     return result;

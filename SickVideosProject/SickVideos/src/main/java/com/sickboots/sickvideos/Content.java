@@ -42,7 +42,7 @@ public class Content {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
             break;
         }
         break;
@@ -70,7 +70,7 @@ public class Content {
             fragment = new ColorPickerFragment();
             break;
           case 7:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID()));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
             break;
           case 8:
 //            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
