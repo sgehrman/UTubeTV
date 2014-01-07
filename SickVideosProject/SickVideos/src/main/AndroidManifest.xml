@@ -33,6 +33,10 @@
             android:label="@string/title_activity_settings">
         </activity>
         <activity
+            android:name=".activities.ChannelLookupActivity"
+            android:label="@string/title_activity_channel_lookup">
+        </activity>
+        <activity
             android:name=".activities.AuthActivity"
             android:label="Auth"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">

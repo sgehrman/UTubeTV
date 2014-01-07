@@ -25,7 +25,7 @@ import java.util.Observable;
  * Created by sgehrman on 1/2/14.
  */
 public class Content extends Observable {
-  private ProductCode mProductCode = ProductCode.NEURO_SOUP;
+  private ProductCode mProductCode = ProductCode.KHAN_ACADEMY;
   private YouTubeData mChannelInfo;
   private Context mContext;
 
@@ -46,6 +46,7 @@ public class Content extends Observable {
       case ROGAN:
       case VICE:
       case BEARD_CLUB:
+      case KHAN_ACADEMY:
         return new String[]{actionBarTitle(0), actionBarTitle(1)};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
@@ -92,6 +93,7 @@ public class Content extends Observable {
       case ROGAN:
       case VICE:
       case BEARD_CLUB:
+      case KHAN_ACADEMY:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment(this);
@@ -155,12 +157,14 @@ public class Content extends Observable {
         return "UCzQUP1qoWDoEbmsQxvdjxgQ";
       case BEARD_CLUB:
         return "UCULJH9kW-UdTBCDu27P0BoA";
+      case KHAN_ACADEMY:
+        return "UC4a-Gbdw7vOaccHmFo40b9g";
     }
 
     return null;
   }
 
-  public static enum ProductCode {NEURO_SOUP, CONNECTIONS, VICE, ROGAN, BEARD_CLUB, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, VICE, ROGAN, BEARD_CLUB, USER}
 
 
   public YouTubeData channelInfo() {

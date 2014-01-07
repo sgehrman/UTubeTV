@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.sickboots.iconicdroid.IconicActivity;
+import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -292,7 +293,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         return true;
 
       case R.id.action_buy_taco:
-        mPurchaseHelper.onBuyGasButtonClicked(null, this);
+        intent = new Intent();
+        intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
+        startActivity(intent);
+
+//        mPurchaseHelper.onBuyGasButtonClicked(null, this);
         return true;
 
       default:

@@ -212,6 +212,34 @@ public class YouTubeAPI {
     return result;
   }
 
+  public String channelIdFromUsername(String userName) {
+    String result = null;
+
+    try {
+      YouTube.Channels.List channelRequest = youTube().channels().list("id");
+        channelRequest.setForUsername(userName);
+
+      channelRequest.setFields("items/id");
+      ChannelListResponse channelResult = channelRequest.execute();
+
+      List<Channel> channelsList = channelResult.getItems();
+      if (channelsList != null) {
+
+        for (Channel channel : channelsList) {
+          result = channel.getId();
+
+          break;  // we only want the first item?
+        }
+      }
+    } catch (UserRecoverableAuthIOException e) {
+      handleException(e);
+    } catch (Exception e) {
+      handleException(e);
+    }
+
+    return result;
+  }
+
   private String removeNewLinesFromString(String text) {
     return text.replace('\n', ' ');
   }
