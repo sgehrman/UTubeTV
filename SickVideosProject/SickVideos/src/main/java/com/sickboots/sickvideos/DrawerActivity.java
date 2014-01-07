@@ -40,7 +40,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // must set the theme before we do anything else
-    String themeStyle = AppUtils.preferences(this).getString(Preferences.THEME_STYLE, "0");
+    String themeStyle = AppUtils.preferences(this).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
     int flag = Integer.parseInt(themeStyle);
     switch (flag) {
       case 0:
@@ -219,7 +219,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public Dialog pickViewStyleDialog() {
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-    String themeStyle = AppUtils.preferences(DrawerActivity.this).getString(Preferences.THEME_STYLE, "0");
+    String themeStyle = AppUtils.preferences(DrawerActivity.this).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
     int selectedIndex = Integer.parseInt(themeStyle);
 
     builder.setTitle("Pick a style")

@@ -45,6 +45,11 @@ public class Content {
       case ROGAN:
       case VICE:
       case BEARD_CLUB:
+        if (mChannelInfo != null) {
+          String title = mChannelInfo.mTitle;
+          if (title != null)
+            return new String[]{title, title + " Playlists"};
+        }
         return new String[]{"About", "Playlists"};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};

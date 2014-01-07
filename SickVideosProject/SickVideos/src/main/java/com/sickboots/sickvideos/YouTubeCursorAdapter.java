@@ -257,7 +257,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private static Theme newTheme(Context context) {
     Theme result = new Theme();
 
-    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, "0");
+    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:

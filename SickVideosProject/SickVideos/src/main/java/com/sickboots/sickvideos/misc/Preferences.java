@@ -23,6 +23,7 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
   public static final String PLAY_FULLSCREEN = "play_fullscreen";
   public static final String MUTE_ADS = "mute_ads";
   public static final String THEME_STYLE = "theme_style";
+  public static final String THEME_STYLE_DEFAULT = "2"; // cards ui
 
   private SharedPreferences sharedPreferences;
   private PreferenceCacheListener mListener;
