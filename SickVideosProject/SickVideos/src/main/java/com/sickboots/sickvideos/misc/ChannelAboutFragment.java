@@ -85,9 +85,13 @@ public class ChannelAboutFragment extends Fragment implements Observer {
     }
 
     // update the action bar title
-    String title = "About";
+    
+    String title = null;
     if (data != null)
-      title += " " + data.mTitle;
+      title = data.mTitle;
+
+    if (title == null)
+      title = "About";
 
     Utils.setActionBarTitle(getActivity(), title);
   }
