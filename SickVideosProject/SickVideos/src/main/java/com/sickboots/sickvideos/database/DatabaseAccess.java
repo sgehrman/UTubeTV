@@ -133,7 +133,7 @@ public class DatabaseAccess {
   // private
 
   private void notifyProviderOfChange() {
-    mContext.getContentResolver().notifyChange(YouTubeContentProvider.URI_CONTENTS, null);
+    mContext.getContentResolver().notifyChange(YouTubeContentProvider.contentsURI(mContext), null);
   }
 
   private String whereClauseForID() {

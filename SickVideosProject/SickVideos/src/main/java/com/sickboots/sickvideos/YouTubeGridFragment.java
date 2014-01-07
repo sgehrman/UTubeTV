@@ -213,7 +213,7 @@ public class YouTubeGridFragment extends Fragment
         YouTubeListService.startRequest(getActivity(), mRequest, false);
 
         return new CursorLoader(getActivity(),
-            YouTubeContentProvider.URI_CONTENTS, queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
+            YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
       }
 
       @Override
