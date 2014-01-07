@@ -11,10 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by sgehrman on 12/13/13.
  */
-public class DrawerManager {
+public class DrawerManager implements Observer {
 
   public interface DrawerManagerListener {
     public void onDrawerClick(int position);
@@ -26,14 +29,16 @@ public class DrawerManager {
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
+  private Content mContent;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 
     mListener = listener;
+    mContent = content;
 
     ArrayAdapter adapter = new ArrayAdapter<String>(activity,
-        R.layout.drawer_list_item, content.drawerTitles());
+        R.layout.drawer_list_item, mContent.drawerTitles());
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
@@ -102,6 +107,22 @@ public class DrawerManager {
       closeDrawer();
     }
   }
+
+  @Override
+  public void update(Observable observable, Object data) {
+
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
+
+        // only need this called once
+        mContent.deleteObserver(this);
+
+      }
+    }
+  }
+
 
 
 }

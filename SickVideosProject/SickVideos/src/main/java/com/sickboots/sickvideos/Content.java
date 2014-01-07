@@ -19,16 +19,17 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  * Created by sgehrman on 1/2/14.
  */
-public class Content {
+public class Content extends Observable {
   private ProductCode mProductCode = ProductCode.NEURO_SOUP;
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED_NOTIFICATION";
+  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
 
   public Content(Context context) {
     super();
@@ -111,6 +112,11 @@ public class Content {
     return fragment;
   }
 
+  private void notifyForDataUpdate() {
+    setChanged();
+    notifyObservers(Content.CONTENT_UPDATED_NOTIFICATION);
+  }
+
   public String channelID() {
     switch (mProductCode) {
       case CONNECTIONS:
@@ -176,13 +182,9 @@ public class Content {
         handler.post(new Runnable() {
           @Override
           public void run() {
-
             // we are on the main thread, set the new data and send out notifications
-
             mChannelInfo = newChannelInfo;
-
-            AppUtils.instance(mContext).sendNotification(CONTENT_UPDATED_NOTIFICATION);
-
+            notifyForDataUpdate();
           }
         });
       }

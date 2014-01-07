@@ -54,7 +54,7 @@ public class ChannelAboutFragment extends Fragment implements Observer {
         updateUI();
 
         // only need this called once
-        AppUtils.instance(getActivity()).deleteObserver(this);
+        mContent.deleteObserver(this);
       }
     }
   }
@@ -62,9 +62,8 @@ public class ChannelAboutFragment extends Fragment implements Observer {
   private void updateUI() {
     YouTubeData data = mContent.channelInfo();
     if (data == null) {
-      AppUtils.instance(getActivity()).addObserver(this);
+      mContent.addObserver(this);
     } else {
-
       mTitle.setText(data.mTitle);
       mDescription.setText(data.mDescription);
 
@@ -85,7 +84,7 @@ public class ChannelAboutFragment extends Fragment implements Observer {
     }
 
     // update the action bar title
-    
+
     String title = null;
     if (data != null)
       title = data.mTitle;
