@@ -38,8 +38,6 @@ public class ChannelAboutFragment extends Fragment implements Observer {
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
     mImage = (ImageView) rootView.findViewById(R.id.image);
 
-    Utils.setActionBarTitle(getActivity(), "About");
-
     updateUI();
 
     return rootView;
@@ -62,31 +60,37 @@ public class ChannelAboutFragment extends Fragment implements Observer {
   }
 
   private void updateUI() {
+
     YouTubeData data = mContent.channelInfo();
     if (data == null) {
       AppUtils.instance(getActivity()).addObserver(this);
-      return;
+    } else {
+
+      mTitle.setText(data.mTitle);
+      mDescription.setText(data.mDescription);
+
+      int defaultImageResID = 0;
+      final ImageView image = mImage;
+      UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
+
+        @Override
+        public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+          if (!loadedFromCache) {
+            image.setAlpha(.5f);
+            image.animate().setDuration(200).alpha(1);
+          } else
+            image.setAlpha(1f);
+        }
+
+      });
     }
 
-    mTitle.setText(data.mTitle);
-    mDescription.setText(data.mDescription);
+    // update the action bar title
+    String title = "About";
+    if (data != null)
+      title += " " + data.mTitle;
 
-    int defaultImageResID = 0;
-
-    final ImageView image = mImage;
-    UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
-
-      @Override
-      public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-        if (!loadedFromCache) {
-          image.setAlpha(.5f);
-          image.animate().setDuration(200).alpha(1);
-        } else
-          image.setAlpha(1f);
-      }
-
-    });
-
+    Utils.setActionBarTitle(getActivity(), title);
   }
 
 }
