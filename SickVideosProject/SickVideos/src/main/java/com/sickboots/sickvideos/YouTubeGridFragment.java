@@ -86,7 +86,7 @@ public class YouTubeGridFragment extends Fragment
   private CharSequence actionBarTitle() {
     CharSequence title = null;
     if (mRequest != null)
-      title = mRequest.name();
+      title = mRequest.title();
 
     // if video player is up, show the video title
     VideoPlayer player = videoPlayer(false);

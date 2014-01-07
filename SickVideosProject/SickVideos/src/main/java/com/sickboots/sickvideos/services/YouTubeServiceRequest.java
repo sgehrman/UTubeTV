@@ -77,54 +77,57 @@ public class YouTubeServiceRequest implements Parcelable {
     return data.get(key);
   }
 
-  public String name() {
+  public String title() {
+    if (mTitle != null)
+      return mTitle;
+
+    return typeToString();
+  }
+
+  private String typeToString() {
     String result = "YouTube";
 
-    if (mTitle != null)
-      result = mTitle;
-    else {
-      switch (type) {
-        case SUBSCRIPTIONS:
-          result = "Subscriptions";
-          break;
-        case PLAYLISTS:
-          result = "Playlists";
-          break;
-        case CATEGORIES:
-          result = "Categories";
-          break;
-        case LIKED:
-          result = "Liked";
-          break;
-        case RELATED:
-          result = "Related Playlists";
+    switch (type) {
+      case SUBSCRIPTIONS:
+        result = "Subscriptions";
+        break;
+      case PLAYLISTS:
+        result = "Playlists";
+        break;
+      case CATEGORIES:
+        result = "Categories";
+        break;
+      case LIKED:
+        result = "Liked";
+        break;
+      case RELATED:
+        result = "Related Playlists";
 
-          YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
-          switch (type) {
-            case FAVORITES:
-              result = "Favorites";
-              break;
-            case LIKES:
-              result = "Likes";
-              break;
-            case UPLOADS:
-              result = "Uploads";
-              break;
-            case WATCHED:
-              result = "History";
-              break;
-            case WATCHLATER:
-              result = "Watch later";
-              break;
-          }
-          break;
-        case VIDEOS:
-          result = "Videos";
-          break;
-        case SEARCH:
-          result = "Search";
-          break;
-      }
+        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
+        switch (type) {
+          case FAVORITES:
+            result = "Favorites";
+            break;
+          case LIKES:
+            result = "Likes";
+            break;
+          case UPLOADS:
+            result = "Uploads";
+            break;
+          case WATCHED:
+            result = "History";
+            break;
+          case WATCHLATER:
+            result = "Watch later";
+            break;
+        }
+        break;
+      case VIDEOS:
+        result = "Videos";
+        break;
+      case SEARCH:
+        result = "Search";
+        break;
     }
 
     return result;
@@ -132,7 +135,7 @@ public class YouTubeServiceRequest implements Parcelable {
 
   // all items are added to db, but use group to get a specific list
   public String requestIdentifier() {
-    String result = name();
+    String result = typeToString();
 
     switch (type) {
       case SUBSCRIPTIONS:
