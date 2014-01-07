@@ -88,7 +88,7 @@ public class YouTubeAPI {
   public YouTube youTube() {
     if (youTube == null) {
       try {
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), Auth.getCredentials(mContext)).setApplicationName("YouTubeAPI").build();
+        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), Auth.nullCredentials(mContext)).setApplicationName("YouTubeAPI").build();
       } catch (Exception e) {
         e.printStackTrace();
       } catch (Throwable t) {
@@ -114,6 +114,8 @@ public class YouTubeAPI {
       channelRequest.setMaxResults(1L);
 
       channelRequest.setFields("items/id");
+      channelRequest.setKey(Auth.devKey());
+
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
@@ -190,6 +192,7 @@ public class YouTubeAPI {
       }
 
       channelRequest.setFields(String.format("items(snippet/title, snippet/description, %s)", thumbnailField()));
+      channelRequest.setKey(Auth.devKey());
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
@@ -220,6 +223,8 @@ public class YouTubeAPI {
       channelRequest.setForUsername(userName);
 
       channelRequest.setFields("items/id");
+      channelRequest.setKey(Auth.devKey());
+
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
@@ -267,6 +272,7 @@ public class YouTubeAPI {
       }
 
       channelRequest.setFields("items/contentDetails, nextPageToken");
+      channelRequest.setKey(Auth.devKey());
       ChannelListResponse channelResult = channelRequest.execute();
 
       List<Channel> channelsList = channelResult.getItems();
@@ -373,6 +379,7 @@ public class YouTubeAPI {
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
+          listRequest.setKey(Auth.devKey());
           PlaylistItemListResponse playListResponse = listRequest.execute();
 
           playlistItemList = playListResponse.getItems();
@@ -652,6 +659,7 @@ public class YouTubeAPI {
 
         listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setKey(Auth.devKey());
 
         listRequest.setPageToken(token);
         SubscriptionListResponse subscriptionListResponse = listRequest.execute();
@@ -752,6 +760,7 @@ public class YouTubeAPI {
 
         listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setKey(Auth.devKey());
 
         listRequest.setPageToken(token);
         PlaylistListResponse subscriptionListResponse = listRequest.execute();

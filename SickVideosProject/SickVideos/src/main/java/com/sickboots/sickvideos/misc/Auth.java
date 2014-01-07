@@ -38,7 +38,7 @@ public class Auth {
     return credential;
   }
 
-  public HttpRequestInitializer nullCredential() {
+  public static HttpRequestInitializer nullCredentials(Context ctx) {
     return new HttpRequestInitializer() {
       public void initialize(HttpRequest request) throws IOException {
       }
