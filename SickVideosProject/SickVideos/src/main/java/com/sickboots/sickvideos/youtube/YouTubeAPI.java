@@ -217,7 +217,7 @@ public class YouTubeAPI {
 
     try {
       YouTube.Channels.List channelRequest = youTube().channels().list("id");
-        channelRequest.setForUsername(userName);
+      channelRequest.setForUsername(userName);
 
       channelRequest.setFields("items/id");
       ChannelListResponse channelResult = channelRequest.execute();

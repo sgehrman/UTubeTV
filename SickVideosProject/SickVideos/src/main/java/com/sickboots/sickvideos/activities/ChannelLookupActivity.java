@@ -5,24 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.database.DatabaseAccess;
-import com.sickboots.sickvideos.database.DatabaseTables;
-import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sgehrman on 1/6/14.
@@ -39,18 +30,18 @@ public class ChannelLookupActivity extends Activity {
 
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-      mTextView = (TextView) findViewById(R.id.result_text);
-      mEditText = (EditText) findViewById(R.id.edit_text);
+    mTextView = (TextView) findViewById(R.id.result_text);
+    mEditText = (EditText) findViewById(R.id.edit_text);
 
     mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-        if  (actionId  ==  EditorInfo.IME_ACTION_DONE )  {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
           // ask youtube to look up this name and output to log and screen
           askYouTubeForChannelInfo(mEditText.getText().toString());
         }
-        return  true;
+        return true;
       }
     });
   }

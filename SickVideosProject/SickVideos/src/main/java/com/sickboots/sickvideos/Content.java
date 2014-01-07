@@ -9,7 +9,6 @@ import android.os.Looper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ChannelAboutFragment;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
@@ -70,7 +69,7 @@ public class Content extends Observable {
       case 1:
 
         if (mChannelInfo != null) {
-            title = mChannelInfo.mTitle;
+          title = mChannelInfo.mTitle;
           if (title != null)
             title = "Playlists on " + title;
         }

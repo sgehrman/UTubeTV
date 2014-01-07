@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -168,7 +167,7 @@ public class DrawerManager {
       ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
 
 
-        Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.ABOUT, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
+      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.ABOUT, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
 
 
       imageView.setImageDrawable(sharedDrawable);

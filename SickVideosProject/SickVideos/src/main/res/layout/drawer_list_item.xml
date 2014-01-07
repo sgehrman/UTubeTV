@@ -1,25 +1,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-            android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
     >
 
     <ImageView
         android:id="@android:id/icon"
-android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-<TextView
-          android:id="@android:id/text1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textAppearance="?android:attr/textAppearanceListItemSmall"
-          android:gravity="center_vertical"
-          android:paddingLeft="16dp"
-          android:paddingRight="16dp"
-          android:textColor="?drawerItemTextColor"
-          android:background="?drawerItemBackground"
-          android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="?drawerItemTextColor"
+        android:background="?drawerItemBackground"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 
 </LinearLayout>
