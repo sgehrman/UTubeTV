@@ -38,6 +38,7 @@ public class YouTubeGridFragment extends Fragment
   // Activity should host a player
   public static interface HostActivitySupport {
     public VideoPlayer videoPlayer(boolean createIfNeeded);
+
     public void showPlaylistsFragment();
 
     public void installFragment(Fragment fragment, boolean animate);
