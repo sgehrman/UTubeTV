@@ -111,7 +111,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     ViewHolder holder = (ViewHolder) v.getTag();
 
     if (holder != null) {
-      animateViewForClick(holder.image);
+//      animateViewForClick(holder.image);
 
       Cursor cursor = (Cursor) getItem(position);
       YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);

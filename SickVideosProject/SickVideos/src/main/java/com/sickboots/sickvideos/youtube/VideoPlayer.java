@@ -18,6 +18,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -29,7 +31,7 @@ public class VideoPlayer {
   private View mMuteButton;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
-  private final int mAnimationDuration = 300;
+  private final int mAnimationDuration = 600;
   private View mTopBar;
 
   abstract public interface VideoPlayerStateListener {
