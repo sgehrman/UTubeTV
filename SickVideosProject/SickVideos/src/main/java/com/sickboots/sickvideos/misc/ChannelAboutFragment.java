@@ -52,7 +52,6 @@ public class ChannelAboutFragment extends Fragment implements Observer {
       }
     });
 
-
     updateUI();
 
     return rootView;
