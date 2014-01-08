@@ -18,6 +18,7 @@
 
     <TextView
         android:id="@+id/duration"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="normal"
@@ -29,6 +30,7 @@
         android:textColor="#fff"/>
 
     <com.sickboots.sickvideos.VideoMenuView
+        android:visibility="gone"
         android:id="@+id/menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
