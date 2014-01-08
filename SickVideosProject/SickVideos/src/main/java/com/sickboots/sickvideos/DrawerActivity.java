@@ -41,6 +41,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   private Content mContent;
 
   @Override
+  public void showPlaylistsFragment() {
+    selectSection(1, true);
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     // must set the theme before we do anything else
     Utils.setActivityTheme(this);

@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.Content;
+import com.sickboots.sickvideos.DrawerActivity;
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
 
 import java.util.Observable;
@@ -37,10 +40,29 @@ public class ChannelAboutFragment extends Fragment implements Observer {
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
     mImage = (ImageView) rootView.findViewById(R.id.image);
+    Button button = (Button) rootView.findViewById(R.id.watch_button);
+
+    mImage.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        showPlaylistsFragment();
+      }
+    });
+    button.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        showPlaylistsFragment();
+      }
+    });
+
 
     updateUI();
 
     return rootView;
+  }
+
+  private void showPlaylistsFragment() {
+    YouTubeGridFragment.HostActivitySupport provider = (YouTubeGridFragment.HostActivitySupport) getActivity();
+
+    provider.showPlaylistsFragment();
   }
 
   @Override

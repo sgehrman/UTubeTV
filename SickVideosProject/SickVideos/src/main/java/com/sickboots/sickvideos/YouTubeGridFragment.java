@@ -35,14 +35,15 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 public class YouTubeGridFragment extends Fragment
     implements OnRefreshListener, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
 
-  EmptyListHelper mEmptyListHelper;
-
   // Activity should host a player
-  public interface HostActivitySupport {
+  public static interface HostActivitySupport {
     public VideoPlayer videoPlayer(boolean createIfNeeded);
+    public void showPlaylistsFragment();
 
     public void installFragment(Fragment fragment, boolean animate);
   }
+
+  EmptyListHelper mEmptyListHelper;
 
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapter mAdapter;
