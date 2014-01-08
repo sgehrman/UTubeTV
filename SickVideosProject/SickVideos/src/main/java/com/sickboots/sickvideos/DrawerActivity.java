@@ -129,16 +129,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         }
 
       }
-      else if (input.equals(AppUtils.ACTION_BAR_COLOR_CHANGED))
-      {
-        // set custom color
-        String customColor = AppUtils.preferences(this).getString(Preferences.ACTION_BAR_COLOR, null);
-        if (customColor != null) {
-          int color = Integer.parseInt(customColor);
-          getActionBar().setBackgroundDrawable(new ColorDrawable(color));
-        }
-
-      }
     }
   }
 

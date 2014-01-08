@@ -23,6 +23,7 @@ import com.sickboots.sickvideos.R;
 //    }
 
 public class ColorPickerFragment extends Fragment implements ColorPicker.OnColorChangedListener {
+  private int mLastColor;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,17 +53,24 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
   }
 
   @Override
-  public void onColorChanged(int i) {
-    ActionBar bar = getActivity().getActionBar();
-    bar.setBackgroundDrawable(new ColorDrawable(i));
+  public void onColorChanged(int color) {
 
-    // this here to trigger a refresh only
-    bar.setTitle(bar.getTitle());
+      if (color != mLastColor) {
+        mLastColor = color;
+        Debug.log("setting: #" + Integer.toHexString(color));
 
-    // log it in a format xml can use
-    Debug.log("color: #" + Integer.toHexString(i));
+        boolean actionbar = false;
 
-    // save the preference
-    AppUtils.preferences(getActivity()).setString(Preferences.ACTION_BAR_COLOR, Integer.toString(i));
-  }
+        if (actionbar) {
+        ActionBar bar = getActivity().getActionBar();
+
+        bar.setBackgroundDrawable(new ColorDrawable(color));
+        bar.setTitle(bar.getTitle());
+        }
+        else {
+          getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(color));
+
+        }
+      }
+    }
 }

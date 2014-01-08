@@ -15,7 +15,6 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
 
   // public pref keys
   public static final String GOOGLE_ACCOUNT_PREF = "google_account";
-  public static final String ACTION_BAR_COLOR = "action_bar_color";
   public static final String DRAWER_SECTION_INDEX = "drawer_section_index";
   public static final String SHOW_HIDDEN_VIDEOS = "show_hidden_videos";
   public static final String REPEAT_VIDEO = "repeat_video";
