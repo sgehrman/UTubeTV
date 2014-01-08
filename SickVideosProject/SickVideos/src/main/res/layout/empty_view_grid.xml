@@ -12,6 +12,7 @@
 
         <ProgressBar
             android:id="@+id/progress"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Doing stuff..."
-            android:textColor="#fff"/>
+            android:visibility="invisible"
+            android:textColor="#000"/>
     </LinearLayout>
 </FrameLayout>

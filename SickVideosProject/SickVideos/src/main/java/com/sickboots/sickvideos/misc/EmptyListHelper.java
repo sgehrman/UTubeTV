@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,15 +42,16 @@ public class EmptyListHelper {
 
     // updating with a bit of a delay so we don't see it quickly change before the new list data loads
     if (mDelayedOperation == null) {
-      mDelayedOperation = new Handler();
+      mDelayedOperation = new Handler(Looper.getMainLooper());
 
       mDelayedOperation.postDelayed(new Runnable() {
         @Override
         public void run() {
           mTextView.setText(mMessage);
+          mTextView.setVisibility(View.VISIBLE);
 
           if (mHideProgress) {
-            mProgress.setVisibility(View.GONE);
+            mProgress.setVisibility(View.INVISIBLE);
           } else {
             mProgress.setVisibility(View.VISIBLE);
           }
