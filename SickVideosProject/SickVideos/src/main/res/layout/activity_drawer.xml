@@ -22,7 +22,6 @@
      the container. A solid background is used for contrast
      with the content view. -->
     <ListView
-
         android:id="@+id/left_drawer"
         android:layout_width="250dp"
         android:layout_height="match_parent"
@@ -31,4 +30,5 @@
         android:divider="@drawable/drawer_divider_background"
         android:dividerHeight="1dp"
         android:background="@color/drawer_background"/>
+
 </android.support.v4.widget.DrawerLayout>

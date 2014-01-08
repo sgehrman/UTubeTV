@@ -20,6 +20,7 @@ import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.sickboots.sickvideos.Content;
+import com.sickboots.sickvideos.DrawerActivity;
 import com.sickboots.sickvideos.R;
 
 import org.joda.time.Period;
@@ -167,6 +168,10 @@ public class Utils {
       ActionBar bar = activity.getActionBar();
 
       if (bar != null) {
+        // title is hidden in theme so we don't get ugly flicker on the app name
+        if ((bar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_TITLE) != ActionBar.DISPLAY_SHOW_TITLE)
+          bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE | bar.getDisplayOptions());
+
         bar.setTitle(title);
       }
     }
@@ -189,13 +194,21 @@ public class Utils {
   }
 
   public static void setActivityTheme(Activity activity) {
+    // fixes initial flicker of white issues
     // must set the theme before we do anything else
     Content.ThemeCode themeCode = Content.ThemeCode.valueOf(activity.getResources().getString(R.string.theme));
     switch (themeCode) {
       case DARK:
-        activity.setTheme(R.style.ActivityThemeDark);
+        if (activity instanceof DrawerActivity)
+          activity.setTheme(R.style.DrawerActivityThemeDark);
+        else
+          activity.setTheme(R.style.ActivityThemeDark);
         break;
       case LIGHT:
+        if (activity instanceof DrawerActivity)
+          activity.setTheme(R.style.DrawerActivityTheme);
+        else
+          activity.setTheme(R.style.ActivityTheme);
         break;
     }
   }

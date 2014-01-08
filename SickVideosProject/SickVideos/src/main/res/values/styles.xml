@@ -8,20 +8,20 @@
     <!-- Activity themes -->
 
     <style name="ActivityTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/main_window_background_color</item>
-
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
     </style>
 
     <style name="ActivityThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:windowBackground">@color/main_window_background_color</item>
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
-
-        <item name="playerToolbarBackground">@drawable/toolbar_gradient</item>
+        <item name="playerToolbarBackground">@drawable/toolbar_light</item>
     </style>
 
-    <style name="StartupActivityTheme" parent="ActivityTheme">
-        <item name="android:actionBarStyle">@style/StartupActionBar</item>
+    <style name="DrawerActivityTheme" parent="ActivityTheme">
+        <item name="android:windowBackground">@color/main_window_background_color</item>
+    </style>
+
+    <style name="DrawerActivityThemeDark" parent="ActivityThemeDark">
+        <item name="android:windowBackground">@color/main_window_background_color</item>
     </style>
 
     <!-- ActionBar styles -->
@@ -34,10 +34,6 @@
     <style name="ActionBarDark"
            parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/action_bar</item>
-    </style>
-
-    <style name="StartupActionBar" parent="ActionBar">
-        <item name="android:displayOptions">showHome</item>
     </style>
 
 </resources>
