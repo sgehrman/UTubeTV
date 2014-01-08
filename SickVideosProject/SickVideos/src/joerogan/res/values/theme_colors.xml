@@ -12,8 +12,8 @@
 
     <color name="drawer_background">#333</color>
     <color name="drawer_item_background">#ffcc3251</color>
-    <color name="drawer_divider_color">#f999</color>
+    <color name="drawer_divider_color">#f555</color>
+    <color name="drawer_icon_color">#afff</color>
     <color name="drawer_text">#fff</color>
-
 
 </resources>

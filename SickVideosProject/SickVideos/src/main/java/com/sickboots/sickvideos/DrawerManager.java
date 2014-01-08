@@ -116,11 +116,13 @@ public class DrawerManager {
   private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
     private LayoutInflater inflater;
     private Content mContent;
+    private int mIconColor;
 
     public DrawerAdapter(Context context, Content content) {
       super(context, R.layout.drawer_list_item);
 
       inflater = LayoutInflater.from(context);
+        mIconColor  = context.getResources().getColor(R.color.drawer_icon_color);
 
       mContent = content;
 
@@ -169,7 +171,7 @@ public class DrawerManager {
 
       ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
 
-      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
+      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, mIconColor, (int) Utils.dpToPx(30.0f, getContext()));
 
       imageView.setImageDrawable(sharedDrawable);
 
