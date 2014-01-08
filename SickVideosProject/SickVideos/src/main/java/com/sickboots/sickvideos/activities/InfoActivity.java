@@ -8,6 +8,24 @@ import android.webkit.WebView;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Utils;
 
+/*
+   <Preference android:title="@string/pref_title_privacy_policy">
+        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
+            <extra
+                android:name="infoID"
+                android:value="pp"/>
+        </intent>
+    </Preference>
+
+    <Preference android:title="@string/pref_title_tos">
+        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
+            <extra
+                android:name="infoID"
+                android:value="tos"/>
+        </intent>
+    </Preference>
+ */
+
 public class InfoActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {

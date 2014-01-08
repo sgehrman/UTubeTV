@@ -7,16 +7,16 @@
     <string name="pref_header_general">General Settings</string>
 
     <string name="pref_play_fullscreen">Play full screen</string>
-    <string name="pref_play_fullscreen_summary">Play movies in full screen mode.</string>
+    <string name="pref_play_fullscreen_summary">Always play movies in full screen.</string>
 
-    <string name="pref_mute_ads">Mute volume during ads</string>
-    <string name="pref_mute_ads_summary">Volume muted at start of ad.  Unmuted at end of ad.</string>
+    <string name="pref_mute_ads">Mute ads</string>
+    <string name="pref_mute_ads_summary">Volume muted at start of ad, and restored at end.</string>
 
     <string name="pref_show_hidden_videos">Show hidden videos</string>
-    <string name="pref_show_hidden_videos_summary">Show all videos even if marked hidden.</string>
+    <string name="pref_show_hidden_videos_summary">Show all videos including ones you\'ve hidden.</string>
 
     <string name="pref_repeat_video">Repeat video</string>
-    <string name="pref_repeat_video_summary">Repeats playing video when done.</string>
+    <string name="pref_repeat_video_summary">Repeats video in a loop.</string>
 
     <!-- Share Settings -->
     <string name="pref_header_sharing">Share Settings</string>

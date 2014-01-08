@@ -55,8 +55,8 @@ public class SettingsActivity extends Activity {
         if (pref != null) {
           PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
 
-          pref.setTitle("Version: " + pInfo.versionName);
-          pref.setSummary("Code: " + pInfo.versionCode);
+          pref.setTitle("Version" );
+          pref.setSummary(pInfo.versionName + " ("  + pInfo.versionCode + ")");
         }
 
       } catch (Throwable throwable) {
