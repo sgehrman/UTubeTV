@@ -19,7 +19,6 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -32,7 +31,7 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, ANDROID_DEVELOPER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
   public static enum ThemeCode {DARK, LIGHT}
 
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
@@ -58,6 +57,7 @@ public class Content extends Observable {
       case VICE:
       case BEARD_CLUB:
       case COLLEGE_HUMOR:
+      case ANDROID_DEVELOPER:
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
 
@@ -115,6 +115,7 @@ public class Content extends Observable {
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
       case COLLEGE_HUMOR:
+      case ANDROID_DEVELOPER:
       case TOP_GEAR:
         switch (index) {
           case 0:
@@ -187,6 +188,8 @@ public class Content extends Observable {
         return "UCjOl2AUblVmg2rA_cRgZkFg";
       case JUSTIN_BIEBER:
         return "UCHkj014U2CQ2Nv0UZeYpE_A";
+      case ANDROID_DEVELOPER:
+        return "UCVHFbqXqoYvEWM1Ddxl0QDg";
     }
 
     return null;

@@ -6,14 +6,6 @@ license key:
 
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRKPu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5yDqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDWzv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB
 
-
-
-  public static final String TEST_MOVIE_ID = "Il1IGKaol_M";  // XuBdf9jYj7o
-  public static final String TEST_PLAYLIST_ID = "FLCXAzufqBhwf_ib6xLv7gMw";
-  public static final String DEV_PLAYLIST_ID = "PLhBgTdAWkxeBX09BokINT1ICC5IZ4C0ju";
-
-channel id = UCtVd0c0tGXuTSbU5d8cSBUg
-
 App goals:
 
 1) Simply watch a playlist of movies.
@@ -45,15 +37,6 @@ fields: items(snippet/title, snippet/thumbnails/high/url), nextPageToken, pageIn
 https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
-
-
-  // is this the best way to do a simple delayed runnable?
-        new Handler().postDelayed(new Runnable() {
-          @Override
-          public void run() {
-          }
-        }, 2000);
-
 
 Joe Rogan,
 NeuroSoup,

@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
@@ -127,6 +129,16 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         }
 
       }
+      else if (input.equals(AppUtils.ACTION_BAR_COLOR_CHANGED))
+      {
+        // set custom color
+        String customColor = AppUtils.preferences(this).getString(Preferences.ACTION_BAR_COLOR, null);
+        if (customColor != null) {
+          int color = Integer.parseInt(customColor);
+          getActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        }
+
+      }
     }
   }
 
@@ -156,6 +168,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
+
+    if (!Debug.isDebugBuild()) {
+      menu.removeItem(R.id.action_buy_taco);
+      menu.removeItem(R.id.action_channel_lookup);
+      menu.removeItem(R.id.action_color_picker);
+      menu.removeItem(R.id.action_show_icons);
+      menu.removeItem(R.id.action_switch_view);
+    }
+
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -284,11 +305,17 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         return true;
 
       case R.id.action_buy_taco:
+        mPurchaseHelper.onBuyGasButtonClicked(null, this);
+        return true;
+      case R.id.action_channel_lookup:
         intent = new Intent();
         intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
         startActivity(intent);
+        return true;
+      case R.id.action_color_picker:
+        Fragment fragment = new ColorPickerFragment();
+        Utils.showFragment(this, fragment, R.id.fragment_holder, 0, false);
 
-//        mPurchaseHelper.onBuyGasButtonClicked(null, this);
         return true;
 
       default:

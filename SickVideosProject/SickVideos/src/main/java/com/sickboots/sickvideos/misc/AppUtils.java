@@ -16,6 +16,7 @@ public class AppUtils {
 
   // public notifications
   public static final String THEME_CHANGED = "theme_changed";
+  public static final String ACTION_BAR_COLOR_CHANGED = "action_bar_changed";
 
   private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
@@ -28,6 +29,8 @@ public class AppUtils {
       public void prefChanged(String prefName) {
         if (prefName.equals(Preferences.THEME_STYLE)) {
           sendNotification(THEME_CHANGED);
+        } else if (prefName.equals(Preferences.ACTION_BAR_COLOR)) {
+          sendNotification(ACTION_BAR_COLOR_CHANGED);
         }
       }
     });
