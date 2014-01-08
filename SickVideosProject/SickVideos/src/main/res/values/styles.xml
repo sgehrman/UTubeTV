@@ -36,13 +36,13 @@
 
     <style name="ActionBarDark"
            parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/action_bar_dark</item>
+        <item name="android:background">@drawable/action_bar</item>
         <item name="android:displayOptions">showHome|showTitle</item>
     </style>
 
     <style name="ActionBarLight"
            parent="android:style/Widget.Holo.Light.ActionBar.Solid">
-        <item name="android:background">@drawable/action_bar_light</item>
+        <item name="android:background">@drawable/action_bar</item>
     </style>
 
     <style name="StartupActionBar" parent="ActionBarDark">

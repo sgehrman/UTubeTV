@@ -29,7 +29,7 @@
     </style>
 
     <style name="VideoTextTitle_card">
-        <item name="android:textColor">#000</item>
+        <item name="android:textColor">@color/card_title_color</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
 
@@ -37,7 +37,7 @@
     </style>
 
     <style name="VideoTextDescription_card">
-        <item name="android:textColor">#444</item>
+        <item name="android:textColor">@color/card_description_color</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textStyle">normal</item>
 

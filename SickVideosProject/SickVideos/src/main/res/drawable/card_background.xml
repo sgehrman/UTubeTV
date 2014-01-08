@@ -9,7 +9,7 @@
 
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <solid android:color="#1000"/>
+            <solid android:color="@color/card_shadow_color"/>
         </shape>
     </item>
 
@@ -21,9 +21,9 @@
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
             <stroke
-                android:color="#2000"
+                android:color="@color/card_frame_color"
                 android:width="1dp"></stroke>
-            <solid android:color="#FFFFFF"/>
+            <solid android:color="@color/card_fill_color"/>
         </shape>
     </item>
 
