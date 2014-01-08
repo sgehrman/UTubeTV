@@ -16,7 +16,7 @@
 
     <color name="drawer_background">#eee</color>
     <color name="drawer_item_background">@color/holo_blue</color>
-    <color name="drawer_divider_color">#f999</color>
+    <color name="drawer_divider_color">#2000</color>
     <color name="drawer_icon_color">#111</color>
     <color name="drawer_text">#000</color>
 
