@@ -11,6 +11,7 @@ import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.HashSet;
@@ -85,6 +86,7 @@ public class YouTubeListService extends IntentService {
       }
 
     } catch (Exception e) {
+      Debug.log(String.format("%s exception: %s", Debug.currentMethod(), e.getMessage()));
     }
   }
 
@@ -125,6 +127,12 @@ public class YouTubeListService extends IntentService {
 
   private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
+
+    // do we have internet access?
+    if (!Utils.hasNetworkConnection(this)) {
+      Debug.log("No internet connection.  Method: " + Debug.currentMethod());
+      return;
+    }
 
     Debug.log("getting list from net...");
 
