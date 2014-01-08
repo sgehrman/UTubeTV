@@ -32,6 +32,7 @@ public class Content extends Observable {
   private Context mContext;
 
   public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, ANDROID_DEVELOPER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
+
   public static enum ThemeCode {DARK, LIGHT}
 
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";

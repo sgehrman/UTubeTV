@@ -32,7 +32,7 @@
     </style>
 
     <style name="ActionBarDark"
-        parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/action_bar</item>
     </style>
 

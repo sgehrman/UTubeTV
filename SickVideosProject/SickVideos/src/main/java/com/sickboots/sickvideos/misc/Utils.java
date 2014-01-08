@@ -13,7 +13,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -174,7 +173,7 @@ public class Utils {
   }
 
   public static boolean hasNetworkConnection(Context context) {
-    ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
     boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();

@@ -55,22 +55,21 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
   @Override
   public void onColorChanged(int color) {
 
-      if (color != mLastColor) {
-        mLastColor = color;
-        Debug.log("setting: #" + Integer.toHexString(color));
+    if (color != mLastColor) {
+      mLastColor = color;
+      Debug.log("setting: #" + Integer.toHexString(color));
 
-        boolean actionbar = false;
+      boolean actionbar = false;
 
-        if (actionbar) {
+      if (actionbar) {
         ActionBar bar = getActivity().getActionBar();
 
         bar.setBackgroundDrawable(new ColorDrawable(color));
         bar.setTitle(bar.getTitle());
-        }
-        else {
-          getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(color));
+      } else {
+        getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(color));
 
-        }
       }
     }
+  }
 }

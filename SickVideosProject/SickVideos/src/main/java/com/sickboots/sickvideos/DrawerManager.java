@@ -122,7 +122,7 @@ public class DrawerManager {
       super(context, R.layout.drawer_list_item);
 
       inflater = LayoutInflater.from(context);
-        mIconColor  = context.getResources().getColor(R.color.drawer_icon_color);
+      mIconColor = context.getResources().getColor(R.color.drawer_icon_color);
 
       mContent = content;
 
