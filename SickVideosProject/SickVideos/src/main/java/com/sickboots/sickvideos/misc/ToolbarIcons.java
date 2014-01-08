@@ -47,7 +47,7 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.HOME;
         break;
       case PLAYLISTS:
-        icon = FontAwesomeIcon.FILE;
+        icon = FontAwesomeIcon.FILM;
         break;
       default:
         break;

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -112,7 +113,7 @@ public class DrawerManager {
     }
   }
 
-  private class DrawerAdapter extends ArrayAdapter<String> implements Observer {
+  private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
     private LayoutInflater inflater;
     private Content mContent;
 
@@ -133,8 +134,8 @@ public class DrawerManager {
       if (mContent.channelInfo() == null)
         mContent.addObserver(this);
 
-      for (String title : mContent.drawerTitles()) {
-        add(title);
+      for (Map item : mContent.drawerTitles()) {
+        add(item);
       }
     }
 
@@ -162,13 +163,13 @@ public class DrawerManager {
 
       TextView textView = (TextView) result.findViewById(android.R.id.text1);
 
-      textView.setText(getItem(position));
+      Map item = getItem(position);
+      ToolbarIcons.IconID icon = (ToolbarIcons.IconID) item.get("icon");
+      textView.setText((String) item.get("title"));
 
       ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
 
-
-      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), ToolbarIcons.IconID.ABOUT, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
-
+      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, 0xffdddddd, (int) Utils.dpToPx(30.0f, getContext()));
 
       imageView.setImageDrawable(sharedDrawable);
 

@@ -7,24 +7,31 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 
+import com.sickboots.sickvideos.BuildConfig;
+
 public class Debug {
 
   public static void log(String message) {
     Log.d("####", message);
   }
 
-  public static boolean isDebugMode(Context context) {
+  public static boolean isDebuggable(Context context) {
     PackageManager pm = context.getPackageManager();
     try {
       ApplicationInfo info = pm.getApplicationInfo(context.getPackageName(), 0);
       return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
     } catch (PackageManager.NameNotFoundException e) {
     }
+
     return true;
   }
 
-  public static void activateStrictMode(Context context) {
-    if (isDebugMode(context)) {
+  public static boolean isDebugBuild() {
+    return BuildConfig.DEBUG;
+  }
+
+  public static void activateStrictMode() {
+    if (isDebugBuild()) {
       StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
           .detectAll() // for all detectable problems
 //          .detectDiskReads()

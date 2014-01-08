@@ -21,6 +21,7 @@ import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
@@ -78,7 +79,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     mPurchaseHelper = new PurchaseHelper(this);
 
     // general app tweaks
-//  Utils.activateStrictMode(this);
+    // Debug.activateStrictMode();
     Utils.ignoreObsoleteCapacitiveMenuButton(this);
 
     // show player if activity was destroyed and recreated

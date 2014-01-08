@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.common.collect.ImmutableMap;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ChannelAboutFragment;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +44,9 @@ public class Content extends Observable {
     askYouTubeForChannelInfo();
   }
 
-  public String[] drawerTitles() {
+  public ArrayList<Map> drawerTitles() {
+    ArrayList<Map> result = new ArrayList<Map>();
+
     switch (mProductCode) {
       case NEURO_SOUP:
       case CONNECTIONS:
@@ -53,16 +58,17 @@ public class Content extends Observable {
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
 
-        HashMap myMap = new HashMap<String, String>();
-        myMap.put("a", "b");
-        myMap.put("c", "d");
-
-        return new String[]{actionBarTitle(0), actionBarTitle(1)};
+        result.add(ImmutableMap.of("title", actionBarTitle(0), "icon", ToolbarIcons.IconID.ABOUT));
+        result.add(ImmutableMap.of("title", actionBarTitle(1), "icon", ToolbarIcons.IconID.PLAYLISTS));
+        break;
       case USER:
-        return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
+        String[] titles = new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
+        for (String title : titles)
+          result.add(ImmutableMap.of("title", title, "icon", ToolbarIcons.IconID.VIDEO_PLAY));
+        break;
     }
 
-    return null;
+    return result;
   }
 
   public String actionBarTitle(int flag) {
