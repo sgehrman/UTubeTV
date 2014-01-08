@@ -62,6 +62,10 @@ android {
         joerogan {
             packageName "com.sickboots.sickvideos.joerogan"
         }
+
+        vice {
+            packageName "com.sickboots.sickvideos.vice"
+        }
     }
 
 
