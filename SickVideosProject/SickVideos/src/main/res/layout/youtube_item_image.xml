@@ -25,7 +25,7 @@
         android:padding="8dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="#8000"
+        android:background="@drawable/text_overlay_background"
         android:textColor="#fff"/>
 
     <com.sickboots.sickvideos.VideoMenuView
