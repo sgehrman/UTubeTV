@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="action_bar_start_color">#5f5</color>
+    <color name="action_bar_end_color">#5f5</color>
+    <color name="action_bar_divider_color">#5f5</color>
+
+</resources>
