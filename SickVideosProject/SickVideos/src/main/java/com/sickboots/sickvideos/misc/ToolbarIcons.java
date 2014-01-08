@@ -44,10 +44,10 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.ELLIPSIS_V;
         break;
       case ABOUT:
-        icon = FontAwesomeIcon.TICKET;
+        icon = FontAwesomeIcon.HOME;
         break;
       case PLAYLISTS:
-        icon = FontAwesomeIcon.COMPASS;
+        icon = FontAwesomeIcon.FILE;
         break;
       default:
         break;
@@ -59,7 +59,7 @@ public class ToolbarIcons {
     if (icon != null) {
       IconicFontDrawable fpressed = new IconicFontDrawable(context);
       fpressed.setIcon(icon);
-      fpressed.setIconColor(context.getResources().getColor(R.color.content_background));
+      fpressed.setIconColor(context.getResources().getColor(R.color.holo_blue));
       fpressed.setContour(Color.GRAY, 1);
       fpressed.setIconPadding(8);
 

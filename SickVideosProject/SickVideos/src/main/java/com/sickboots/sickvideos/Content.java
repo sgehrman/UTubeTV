@@ -16,6 +16,7 @@ import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -51,6 +52,11 @@ public class Content extends Observable {
       case COLLEGE_HUMOR:
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
+
+        HashMap myMap = new HashMap<String, String>();
+        myMap.put("a", "b");
+        myMap.put("c", "d");
+
         return new String[]{actionBarTitle(0), actionBarTitle(1)};
       case USER:
         return new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
@@ -76,7 +82,7 @@ public class Content extends Observable {
         if (mChannelInfo != null) {
           title = mChannelInfo.mTitle;
           if (title != null)
-            title = "Playlists on " + title;
+            title = "Playlists: " + title;
         }
 
         if (title == null)
