@@ -5,4 +5,15 @@
     <color name="action_bar_end_color">#333</color>
     <color name="action_bar_divider_color">#333</color>
 
+
+
+    <color name="main_window_background_color">#ffcc3251</color>
+
+
+    <color name="drawer_background">#333</color>
+    <color name="drawer_item_background">#ffcc3251</color>
+    <color name="drawer_divider_color">#f999</color>
+    <color name="drawer_text">#fff</color>
+
+
 </resources>
