@@ -3,6 +3,7 @@
 
     <string name="app_name">Sick Videos</string>
     <string name="content">VICE</string>
+    <string name="theme">LIGHT</string>
 
     <string name="title_section1">Favorites</string>
     <string name="title_section2">Search</string>

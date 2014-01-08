@@ -9,11 +9,14 @@ import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class SettingsActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // must set the theme before we do anything else
+    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
 
     getActionBar().setDisplayHomeAsUpEnabled(true);

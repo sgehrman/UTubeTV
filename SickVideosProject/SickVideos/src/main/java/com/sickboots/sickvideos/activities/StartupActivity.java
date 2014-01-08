@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.sickboots.sickvideos.DrawerActivity;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class StartupActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // must set the theme before we do anything else
+    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
 
     // This activity is set to no show apps name on launch

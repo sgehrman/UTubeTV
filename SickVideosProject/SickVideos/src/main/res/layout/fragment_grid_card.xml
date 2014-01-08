@@ -3,7 +3,7 @@
                                          android:layout_height="match_parent">
 
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        android:background="@color/main_grid_background_color"
+        android:background="@color/main_window_background_color"
         android:id="@+id/grid_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

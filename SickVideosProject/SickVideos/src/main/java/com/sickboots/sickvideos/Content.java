@@ -32,6 +32,9 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
+  public static enum ThemeCode {DARK, LIGHT}
+
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
 
   public Content(Context context, ProductCode code) {
@@ -188,9 +191,6 @@ public class Content extends Observable {
 
     return null;
   }
-
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, JUSTIN_BIEBER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, BEARD_CLUB, USER}
-
 
   public YouTubeData channelInfo() {
     return mChannelInfo;

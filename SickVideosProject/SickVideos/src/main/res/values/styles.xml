@@ -1,25 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/ActionBarDark</item>
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
     </style>
 
     <!-- Activity themes -->
 
     <style name="ActivityTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/startup_background</item>
-
-        <item name="playerToolbarBackground">@drawable/toolbar_gradient</item>
-
-    </style>
-
-    <style name="ActivityThemeLight" parent="android:Theme.Holo.Light">
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:actionBarStyle">@style/ActionBarLight</item>
+        <item name="android:windowBackground">@color/main_window_background_color</item>
 
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
+    </style>
 
+    <style name="ActivityThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/main_window_background_color</item>
+        <item name="android:actionBarStyle">@style/ActionBarDark</item>
+
+        <item name="playerToolbarBackground">@drawable/toolbar_gradient</item>
     </style>
 
     <style name="StartupActivityTheme" parent="ActivityTheme">
@@ -28,18 +26,17 @@
 
     <!-- ActionBar styles -->
 
-    <style name="ActionBarDark"
-           parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/action_bar</item>
-        <item name="android:displayOptions">showHome|showTitle</item>
-    </style>
-
-    <style name="ActionBarLight"
+    <style name="ActionBar"
            parent="android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@drawable/action_bar</item>
     </style>
 
-    <style name="StartupActionBar" parent="ActionBarDark">
+    <style name="ActionBarDark"
+        parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/action_bar</item>
+    </style>
+
+    <style name="StartupActionBar" parent="ActionBar">
         <item name="android:displayOptions">showHome</item>
     </style>
 

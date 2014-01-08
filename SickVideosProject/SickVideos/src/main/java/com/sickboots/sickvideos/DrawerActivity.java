@@ -42,20 +42,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // must set the theme before we do anything else
-    String themeStyle = AppUtils.preferences(this).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
-    int flag = Integer.parseInt(themeStyle);
-    switch (flag) {
-      case 0:
-        break;
-      case 1:
-        setTheme(R.style.ActivityThemeLight);
-        break;
-      case 2:
-        setTheme(R.style.ActivityThemeLight);
-        break;
-    }
-
+    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_drawer);
 
     Content.ProductCode code = Content.ProductCode.valueOf(getResources().getString(R.string.content));

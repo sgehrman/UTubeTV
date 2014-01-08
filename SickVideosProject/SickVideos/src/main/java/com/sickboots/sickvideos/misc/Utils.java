@@ -13,12 +13,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.R;
 
 import org.joda.time.Period;
@@ -187,4 +189,15 @@ public class Utils {
     return isConnected;
   }
 
+  public static void setActivityTheme(Activity activity) {
+    // must set the theme before we do anything else
+    Content.ThemeCode themeCode = Content.ThemeCode.valueOf(activity.getResources().getString(R.string.theme));
+    switch (themeCode) {
+      case DARK:
+        activity.setTheme(R.style.ActivityThemeDark);
+        break;
+      case LIGHT:
+        break;
+    }
+  }
 }
