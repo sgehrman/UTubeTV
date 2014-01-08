@@ -30,5 +30,5 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="?drawerBackground"/>
+        android:background="@color/drawer_background"/>
 </android.support.v4.widget.DrawerLayout>
