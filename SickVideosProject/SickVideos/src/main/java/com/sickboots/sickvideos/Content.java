@@ -62,8 +62,8 @@ public class Content extends Observable {
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
 
-        result.add(ImmutableMap.of("title", actionBarTitle(0), "icon", ToolbarIcons.IconID.ABOUT));
-        result.add(ImmutableMap.of("title", actionBarTitle(1), "icon", ToolbarIcons.IconID.PLAYLISTS));
+        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
+        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
         break;
       case USER:
         String[] titles = new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
@@ -80,24 +80,11 @@ public class Content extends Observable {
 
     switch (flag) {
       case 0:
-        if (mChannelInfo != null)
-          title = mChannelInfo.mTitle;
-
-        if (title == null)
-          title = "About";
+        title = "About";
 
         break;
       case 1:
-
-        if (mChannelInfo != null) {
-          title = mChannelInfo.mTitle;
-          if (title != null)
-            title = "Playlists: " + title;
-        }
-
-        if (title == null)
           title = "Playlists";
-
         break;
     }
 

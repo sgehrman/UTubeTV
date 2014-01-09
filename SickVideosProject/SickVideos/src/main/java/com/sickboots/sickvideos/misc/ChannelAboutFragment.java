@@ -76,7 +76,6 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
         .setup(mPullToRefreshLayout);
 
     return rootView;
-
   }
 
   // OnRefreshListener
@@ -114,7 +113,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     if (data == null) {
       mContent.addObserver(this);
     } else {
-      mTitle.setText(data.mTitle);
+      mTitle.setText("YouTube player for " + data.mTitle);
       mDescription.setText(data.mDescription);
 
       int defaultImageResID = 0;
