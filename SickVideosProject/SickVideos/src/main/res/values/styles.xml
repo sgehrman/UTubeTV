@@ -1,26 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/ActionBar</item>
+    <!-- Change this to AppThemeDark in your theme file if you want dark at the default. -->
+
+    <style name="AppTheme" parent="AppThemeLight">
     </style>
 
-    <!-- Activity themes -->
+    <!-- Dark or light, override above in theme to get one or the other -->
 
-    <style name="ActivityTheme" parent="AppTheme">
+    <style name="AppThemeLight" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
     </style>
 
-    <style name="ActivityThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
     </style>
 
-    <style name="DrawerActivityTheme" parent="ActivityTheme">
-        <item name="android:windowBackground">@color/main_window_background_color</item>
-    </style>
-
-    <style name="DrawerActivityThemeDark" parent="ActivityThemeDark">
+    <!-- To avoid any white flicker when launching app, the background -->
+    <style name="DrawerActivityTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/main_window_background_color</item>
     </style>
 

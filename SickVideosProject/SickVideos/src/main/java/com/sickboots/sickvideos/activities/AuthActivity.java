@@ -23,8 +23,6 @@ public class AuthActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // must set the theme before we do anything else
-    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
 
     credential = Auth.getCredentials(this);

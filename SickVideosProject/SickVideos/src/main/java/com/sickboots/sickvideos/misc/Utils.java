@@ -193,23 +193,4 @@ public class Utils {
     return isConnected;
   }
 
-  public static void setActivityTheme(Activity activity) {
-    // fixes initial flicker of white issues
-    // must set the theme before we do anything else
-    Content.ThemeCode themeCode = Content.ThemeCode.valueOf(activity.getResources().getString(R.string.theme));
-    switch (themeCode) {
-      case DARK:
-        if (activity instanceof DrawerActivity)
-          activity.setTheme(R.style.DrawerActivityThemeDark);
-        else
-          activity.setTheme(R.style.ActivityThemeDark);
-        break;
-      case LIGHT:
-        if (activity instanceof DrawerActivity)
-          activity.setTheme(R.style.DrawerActivityTheme);
-        else
-          activity.setTheme(R.style.ActivityTheme);
-        break;
-    }
-  }
 }

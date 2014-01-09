@@ -15,8 +15,6 @@ public class SettingsActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // must set the theme before we do anything else
-    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
 
     getActionBar().setDisplayHomeAsUpEnabled(true);

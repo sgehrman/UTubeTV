@@ -25,8 +25,6 @@ public class ChannelLookupActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // must set the theme before we do anything else
-    Utils.setActivityTheme(this);
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_channel_lookup);

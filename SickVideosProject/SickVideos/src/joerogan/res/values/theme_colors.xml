@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppTheme" parent="AppThemeDark">
+    </style>
+
     <color name="action_bar_start_color">#444</color>
     <color name="action_bar_end_color">#333</color>
     <color name="action_bar_divider_color">#333</color>
