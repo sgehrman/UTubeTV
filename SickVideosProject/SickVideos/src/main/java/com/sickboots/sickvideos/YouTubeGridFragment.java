@@ -163,7 +163,7 @@ public class YouTubeGridFragment extends Fragment
           YouTubeAPI.playMovie(getActivity(), videoId, true);
         else
           videoPlayer(true).open(videoId, title);
-        
+
         break;
       case PLAYLISTS: {
         String playlistID = itemMap.mPlaylist;
