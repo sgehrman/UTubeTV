@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 /**

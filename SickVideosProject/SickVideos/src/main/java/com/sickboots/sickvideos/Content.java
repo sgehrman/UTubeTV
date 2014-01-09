@@ -84,7 +84,7 @@ public class Content extends Observable {
 
         break;
       case 1:
-          title = "Playlists";
+        title = "Playlists";
         break;
     }
 

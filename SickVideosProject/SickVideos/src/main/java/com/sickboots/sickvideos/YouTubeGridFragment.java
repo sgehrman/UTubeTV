@@ -14,8 +14,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.GridView;
 
+import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
@@ -36,7 +39,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class YouTubeGridFragment extends Fragment
-    implements OnRefreshListener, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
+    implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
 
   // Activity should host a player
   public static interface HostActivitySupport {
@@ -132,11 +135,15 @@ public class YouTubeGridFragment extends Fragment
     rootView.addView(mEmptyListHelper.view());
     gridView.setEmptyView(mEmptyListHelper.view());
 
-    // .015 is the default
-    gridView.setFriction(0.005f);
-
     gridView.setOnItemClickListener(mAdapter);
-    gridView.setAdapter(mAdapter);
+
+    // enable this for swipe to dismiss to hide (TODO)
+    // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mAdapter, this));
+    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+    swingBottomInAnimationAdapter.setInitialDelayMillis(200);
+    swingBottomInAnimationAdapter.setAbsListView(gridView);
+
+    gridView.setAdapter(swingBottomInAnimationAdapter);
 
     createLoader();
 
@@ -146,6 +153,14 @@ public class YouTubeGridFragment extends Fragment
       new ScrollTriggeredAnimator(gridView, dimmerView);
 
     return rootView;
+  }
+
+  // OnDismissCallback
+  @Override
+  public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
+//    for (int position : reverseSortedPositions) {
+//      mGoogleCardsAdapter.remove(position);
+//    }
   }
 
   @Override

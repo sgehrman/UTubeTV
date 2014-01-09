@@ -10,7 +10,9 @@
         <!--assuming stroke is less drawing than a solid fill?-->
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <stroke android:color="@color/card_shadow_color" android:width="2dp"/>
+            <stroke
+                android:color="@color/card_shadow_color"
+                android:width="2dp"/>
         </shape>
     </item>
 

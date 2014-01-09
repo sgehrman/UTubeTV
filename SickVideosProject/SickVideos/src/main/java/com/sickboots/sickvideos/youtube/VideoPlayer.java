@@ -18,8 +18,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 

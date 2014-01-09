@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.Utils;
 
 /*
    <Preference android:title="@string/pref_title_privacy_policy">

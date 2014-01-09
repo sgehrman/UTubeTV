@@ -9,7 +9,6 @@ import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Utils;
 
 public class SettingsActivity extends Activity {
 

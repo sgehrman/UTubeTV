@@ -19,8 +19,6 @@ import android.os.Vibrator;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
-import com.sickboots.sickvideos.Content;
-import com.sickboots.sickvideos.DrawerActivity;
 import com.sickboots.sickvideos.R;
 
 import org.joda.time.Period;
@@ -92,7 +90,7 @@ public class Utils {
 //        break;
       default:
         ft.setCustomAnimations(R.animator.fade_enter, R.animator.fade_exit, R.animator.fade_enter, R.animator.fade_exit);
-      break;
+        break;
     }
 
     ft.replace(resID, fragment);

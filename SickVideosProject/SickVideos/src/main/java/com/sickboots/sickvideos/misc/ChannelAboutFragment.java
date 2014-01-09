@@ -1,9 +1,6 @@
 package com.sickboots.sickvideos.misc;
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +16,6 @@ import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.services.YouTubeListService;
 
 import java.util.Observable;
 import java.util.Observer;
