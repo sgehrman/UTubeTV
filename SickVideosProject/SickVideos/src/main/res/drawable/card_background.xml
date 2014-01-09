@@ -2,14 +2,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="10dp"
+        android:top="15dp"
         android:left="2dp"
         android:right="2dp"
         >
 
+        <!--assuming stroke is less drawing than a solid fill?-->
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <solid android:color="@color/card_shadow_color"/>
+            <stroke android:color="@color/card_shadow_color" android:width="2dp"/>
         </shape>
     </item>
 
