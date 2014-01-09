@@ -66,6 +66,10 @@ android {
         vice {
             packageName "com.sickboots.sickvideos.vice"
         }
+
+        lukitsch {
+            packageName "com.sickboots.sickvideos.lukitsch"
+        }
     }
 
 }
