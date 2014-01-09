@@ -67,9 +67,7 @@ public class YouTubeAPI {
     mContext = context.getApplicationContext();
   }
 
-  public static void playMovie(Activity activity, String movieID) {
-    boolean fullScreen = AppUtils.preferences(activity).getBoolean(Preferences.PLAY_FULLSCREEN, false);
-
+  public static void playMovie(Activity activity, String movieID, boolean fullScreen) {
     Intent intent = YouTubeStandalonePlayer.createVideoIntent(activity, Auth.devKey(), movieID, 0, true, !fullScreen);
     activity.startActivityForResult(intent, REQ_PLAYER_CODE);
   }
