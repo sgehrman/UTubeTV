@@ -306,7 +306,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         return true;
       case R.id.action_color_picker:
         Fragment fragment = new ColorPickerFragment();
-        Utils.showFragment(this, fragment, R.id.fragment_holder, 0, false);
+        Utils.showFragment(this, fragment, R.id.fragment_holder, 0, true);
 
         return true;
 
@@ -341,6 +341,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     mDrawerMgr.setItemChecked(position, true);
 
+    // clear back stack when using drawer
+    getFragmentManager().popBackStack();
     Utils.showFragment(this, mContent.fragmentForIndex(position), R.id.fragment_holder, animate ? 3 : 0, false);
   }
 
