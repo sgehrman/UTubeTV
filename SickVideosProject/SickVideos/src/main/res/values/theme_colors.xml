@@ -2,8 +2,8 @@
 <resources>
 
     <color name="action_bar_start_color">#fff</color>
-    <color name="action_bar_end_color">#eee</color>
-    <color name="action_bar_divider_color">#eee</color>
+    <color name="action_bar_end_color">#ddd</color>
+    <color name="action_bar_divider_color">#ddd</color>
 
     <color name="main_window_background_color">#ddd</color>
 
