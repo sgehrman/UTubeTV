@@ -44,7 +44,7 @@ public class Content extends Observable {
 
     mContext = context.getApplicationContext();
 
-    askYouTubeForChannelInfo();
+    askYouTubeForChannelInfo(false);
   }
 
   public ArrayList<Map> drawerTitles() {
@@ -200,17 +200,23 @@ public class Content extends Observable {
     return mChannelInfo;
   }
 
-  private void askYouTubeForChannelInfo() {
+  public void refreshChannelInfo() {
+    askYouTubeForChannelInfo(true);
+  }
+
+  private void askYouTubeForChannelInfo(final boolean refresh) {
     (new Thread(new Runnable() {
       public void run() {
         YouTubeData channelInfo = null;
-
         DatabaseAccess database = new DatabaseAccess(mContext, DatabaseTables.channelTable());
 
-        List<YouTubeData> items = database.getItems(0, channelID(), 1);
+        // if refreshing, don't get from database (need to remove existing data?)
+        if (!refresh) {
+          List<YouTubeData> items = database.getItems(0, channelID(), 1);
 
-        if (items.size() > 0)
-          channelInfo = items.get(0);
+          if (items.size() > 0)
+            channelInfo = items.get(0);
+        }
 
         if (channelInfo == null) {
           YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {

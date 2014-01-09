@@ -1,6 +1,9 @@
 package com.sickboots.sickvideos.misc;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,15 +19,21 @@ import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.services.YouTubeListService;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class ChannelAboutFragment extends Fragment implements Observer {
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
+public class ChannelAboutFragment extends Fragment implements Observer, OnRefreshListener {
   TextView mTitle;
   TextView mDescription;
   ImageView mImage;
   Content mContent;
+  PullToRefreshLayout mPullToRefreshLayout;
 
   public ChannelAboutFragment(Content content) {
     super();
@@ -54,7 +63,27 @@ public class ChannelAboutFragment extends Fragment implements Observer {
 
     updateUI();
 
+    // Now find the PullToRefreshLayout to setup
+    mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.about_frame_layout);
+
+    // Now setup the PullToRefreshLayout
+    ActionBarPullToRefresh.from(this.getActivity())
+        // Mark All Children as pullable
+        .allChildrenArePullable()
+            // Set the OnRefreshListener
+        .listener(this)
+            // Finally commit the setup to our PullToRefreshLayout
+        .setup(mPullToRefreshLayout);
+
     return rootView;
+
+  }
+
+  // OnRefreshListener
+  @Override
+  public void onRefreshStarted(View view) {
+    mContent.addObserver(this);
+    mContent.refreshChannelInfo();
   }
 
   private void showPlaylistsFragment() {
@@ -72,6 +101,7 @@ public class ChannelAboutFragment extends Fragment implements Observer {
       if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
 
         updateUI();
+        mPullToRefreshLayout.setRefreshComplete();
 
         // only need this called once
         mContent.deleteObserver(this);
