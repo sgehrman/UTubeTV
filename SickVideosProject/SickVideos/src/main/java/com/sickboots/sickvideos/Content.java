@@ -211,7 +211,9 @@ public class Content extends Observable {
         DatabaseAccess database = new DatabaseAccess(mContext, DatabaseTables.channelTable());
 
         // if refreshing, don't get from database (need to remove existing data?)
-        if (!refresh) {
+        if (refresh) {
+          database.deleteAllRows(channelID());
+        } else {
           List<YouTubeData> items = database.getItems(0, channelID(), 1);
 
           if (items.size() > 0)
