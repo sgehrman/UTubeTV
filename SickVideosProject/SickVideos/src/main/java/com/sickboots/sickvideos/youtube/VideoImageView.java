@@ -82,16 +82,14 @@ public class VideoImageView extends ImageView {
     if (sTopGradient == null) {
       sGradientHeight = (int) Utils.dpToPx(40.0f, context);
 
-      int topColors[] = {0xaa000000, 0x00000000};
-      sTopGradient = createGradient(topColors);
-
-      int bottomColors[] = {0x00000000, 0xaa000000};
-      sBottomGradient = createGradient(bottomColors);
+      int colors[] = {0xaa000000, 0x00000000};
+      sTopGradient = createGradient(colors, GradientDrawable.Orientation.TOP_BOTTOM);
+      sBottomGradient = createGradient(colors, GradientDrawable.Orientation.BOTTOM_TOP);
     }
   }
 
-  private GradientDrawable createGradient(int colors[]) {
-    GradientDrawable result = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
+  private GradientDrawable createGradient(int colors[], GradientDrawable.Orientation orientation) {
+    GradientDrawable result = new GradientDrawable(orientation, colors);
     result.setShape(GradientDrawable.RECTANGLE);
 
     return result;
