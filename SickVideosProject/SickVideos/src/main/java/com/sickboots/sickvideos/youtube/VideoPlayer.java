@@ -178,9 +178,7 @@ public class VideoPlayer {
     return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
 
-  public void open(String videoId, String title) {
-    mVideoFragment.setVideo(videoId, title);
-
+  public void open(final String videoId, final String title) {
     boolean animate = isPortrait();
 
     if (!visible()) {
@@ -199,6 +197,8 @@ public class VideoPlayer {
             @Override
             public void run() {
               if (mListener != null) {
+                mVideoFragment.setVideo(videoId, title);
+
                 mListener.stateChanged();
               }
             }
