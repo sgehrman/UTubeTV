@@ -91,7 +91,7 @@ public class YouTubeServiceRequest implements Parcelable {
     }
 
     if (title == null)
-        title = typeToString();
+      title = typeToString();
 
     return title;
   }

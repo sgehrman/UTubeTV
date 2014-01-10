@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Preferences;
 
 public class SettingsActivity extends Activity {
 
@@ -50,7 +49,7 @@ public class SettingsActivity extends Activity {
 
       try {
 // listen for clicks
-       Preference pref = findPreference("credits");
+        Preference pref = findPreference("credits");
 
         if (pref != null) {
           PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
@@ -74,7 +73,6 @@ public class SettingsActivity extends Activity {
             }
           });
         }
-
 
 
       } catch (Throwable throwable) {

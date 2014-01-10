@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -78,7 +77,7 @@ public class DrawerManager {
 
     mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mFragmentManager = activity.getFragmentManager();
+    mFragmentManager = activity.getFragmentManager();
 
     mFragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
       @Override
