@@ -48,6 +48,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private Theme mTheme;
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapterListener mListener;
+  private boolean mFadeInLoadedImages = false; // turned off for speed
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
@@ -161,7 +162,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
       @Override
       public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-        if (!loadedFromCache) {
+        if (mFadeInLoadedImages && !loadedFromCache) {
           imageView.setAlpha(mTheme.mTheme_imageAlpha / 2);
           imageView.animate().setDuration(200).alpha(mTheme.mTheme_imageAlpha);
         } else
