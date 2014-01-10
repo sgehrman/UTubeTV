@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -55,6 +56,31 @@ public class SettingsActivity extends Activity {
           pref.setTitle("Version");
           pref.setSummary(pInfo.versionName + " (" + pInfo.versionCode + ")");
         }
+
+
+// listen for clicks
+        pref = findPreference("credits");
+
+        if (pref != null) {
+          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+              if (preference.getKey().equals("credits")) {
+                Intent intent = new Intent();
+                intent.putExtra("infoID", "cr");
+                intent.setClass(getActivity(), InfoActivity.class);
+                startActivity(intent);
+
+                return true;
+              }
+
+              return false;
+            }
+          });
+        }
+
+
 
       } catch (Throwable throwable) {
         Debug.log("exception: " + throwable.getMessage());
