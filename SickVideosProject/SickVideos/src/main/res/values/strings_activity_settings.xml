@@ -29,4 +29,7 @@
     <string name="pref_title_tos">Terms of Service</string>
     <string name="pref_title_credits">Credits</string>
 
+    <string name="pref_rate_app">Rate my App!</string>
+    <string name="pref_rate_app_summary">Please help by rating my app.</string>
+
 </resources>

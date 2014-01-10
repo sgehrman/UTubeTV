@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -40,6 +41,28 @@ public class SettingsActivity extends Activity {
   // ----------------------------------------------------------------------
 
   public static class SettingsFragment extends PreferenceFragment {
+
+    private boolean handlePrefClick(Preference preference) {
+      if (preference.getKey().equals("credits")) {
+        Intent intent = new Intent();
+        intent.putExtra("infoID", "cr");
+        intent.setClass(getActivity(), InfoActivity.class);
+        startActivity(intent);
+
+        return true;
+      }
+      else  if (preference.getKey().equals("rate")) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        intent.setData(Uri.parse("market://details?id=" + getActivity().getApplicationInfo().packageName));
+        startActivity(intent);
+
+        return true;
+      }
+
+      return false;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -48,7 +71,6 @@ public class SettingsActivity extends Activity {
       addPreferencesFromResource(R.xml.preferences);
 
       try {
-// listen for clicks
         Preference pref = findPreference("credits");
 
         if (pref != null) {
@@ -59,21 +81,20 @@ public class SettingsActivity extends Activity {
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
-              if (preference.getKey().equals("credits")) {
-                Intent intent = new Intent();
-                intent.putExtra("infoID", "cr");
-                intent.setClass(getActivity(), InfoActivity.class);
-                startActivity(intent);
-
-                return true;
-              }
-
-              return false;
+              return handlePrefClick(preference);
             }
           });
         }
 
+          pref = findPreference("rate");
+        if (pref != null) {
+          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+              return handlePrefClick(preference);
+            }
+          });
+        }
 
       } catch (Throwable throwable) {
         Debug.log("exception: " + throwable.getMessage());
