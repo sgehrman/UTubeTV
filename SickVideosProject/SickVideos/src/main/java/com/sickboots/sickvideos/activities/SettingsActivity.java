@@ -42,26 +42,6 @@ public class SettingsActivity extends Activity {
 
   public static class SettingsFragment extends PreferenceFragment {
 
-    private boolean handlePrefClick(Preference preference) {
-      if (preference.getKey().equals("credits")) {
-        Intent intent = new Intent();
-        intent.putExtra("infoID", "cr");
-        intent.setClass(getActivity(), InfoActivity.class);
-        startActivity(intent);
-
-        return true;
-      } else if (preference.getKey().equals("rate")) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-
-        intent.setData(Uri.parse("market://details?id=" + getActivity().getApplicationInfo().packageName));
-        startActivity(intent);
-
-        return true;
-      }
-
-      return false;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -100,7 +80,27 @@ public class SettingsActivity extends Activity {
       }
     }
 
+    private boolean handlePrefClick(Preference preference) {
+      if (preference.getKey().equals("credits")) {
+        Intent intent = new Intent();
+        intent.putExtra("infoID", "cr");
+        intent.setClass(getActivity(), InfoActivity.class);
+        startActivity(intent);
+
+        return true;
+      } else if (preference.getKey().equals("rate")) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        intent.setData(Uri.parse("market://details?id=" + getActivity().getApplicationInfo().packageName));
+        startActivity(intent);
+
+        return true;
+      }
+
+      return false;
+    }
   }
+  
 }
 
 
