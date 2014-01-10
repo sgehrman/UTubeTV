@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Preferences;
 
 public class SettingsActivity extends Activity {
 
@@ -48,20 +49,14 @@ public class SettingsActivity extends Activity {
       addPreferencesFromResource(R.xml.preferences);
 
       try {
-        Preference pref = findPreference("version");
+// listen for clicks
+       Preference pref = findPreference("credits");
 
         if (pref != null) {
           PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
 
-          pref.setTitle("Version");
-          pref.setSummary(pInfo.versionName + " (" + pInfo.versionCode + ")");
-        }
+          pref.setSummary("v" + pInfo.versionName + " (" + pInfo.versionCode + ")");
 
-
-// listen for clicks
-        pref = findPreference("credits");
-
-        if (pref != null) {
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {

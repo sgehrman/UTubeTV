@@ -26,11 +26,7 @@
 
     <Preference
         android:title="@string/pref_title_credits"
-                android:key="credits"/>
-
-    <Preference
-        android:title=""
-        android:key="version"/>
+        android:key="credits"/>
 
 </PreferenceScreen>
 
