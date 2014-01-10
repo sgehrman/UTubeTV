@@ -6,10 +6,10 @@
         android:valueFrom="1.0"
         android:valueTo="0.0"
         android:propertyName="alpha"
-        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:interpolator="@android:anim/accelerate_interpolator"
 
         android:valueType="floatType"
-        android:duration="300"/>
+        android:duration="400"/>
 
 
     <objectAnimator
@@ -19,7 +19,7 @@
         android:valueFrom="0.0"
         android:valueTo="1.0"
         android:propertyName="xFraction"
-        android:duration="300"/>
+        android:duration="400"/>
 
 
 </set>

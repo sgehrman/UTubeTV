@@ -16,5 +16,4 @@
     <color name="content_background">@color/holo_blue</color>
 
     <color name="dimmer_color">#8000</color>
-    <color name="grid_selection_color">#4000</color>
 </resources>
