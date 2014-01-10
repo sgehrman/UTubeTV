@@ -37,6 +37,9 @@
   @com.google.api.client.util.Key <fields>;
 }
 
+# Fixes: can't find referenced class sun.misc.Unsafe
+-dontwarn sun.misc.Unsafe
+
 # ----------------------------------------
 # uncomment to turn off obfucation
 
