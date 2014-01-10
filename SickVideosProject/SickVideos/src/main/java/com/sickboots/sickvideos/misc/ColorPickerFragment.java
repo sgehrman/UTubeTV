@@ -59,7 +59,7 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
       mLastColor = color;
       Debug.log("setting: #" + Integer.toHexString(color));
 
-      boolean actionbar = false;
+      boolean actionbar = true;
 
       if (actionbar) {
         ActionBar bar = getActivity().getActionBar();

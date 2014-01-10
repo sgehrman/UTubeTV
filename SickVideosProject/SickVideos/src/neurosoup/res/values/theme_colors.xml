@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="action_bar_start_color">#ff649165</color>
-    <color name="action_bar_end_color">#ff649165</color>
-    <color name="action_bar_divider_color">#ff649165</color>
+    <style name="AppTheme" parent="AppThemeDark">
+    </style>
+
+    <color name="action_bar_start_color">#ff8623a9</color>
+    <color name="action_bar_end_color">#ff761399</color>
+    <color name="action_bar_divider_color">#ff761399</color>
 
 
-    <color name="main_window_background_color">#ff3ca266</color>
+    <color name="main_window_background_color">#ffe385bd</color>
 
-
-    <color name="drawer_background">#ff649165</color>
-    <color name="drawer_item_background">#ff3ca266</color>
+    <color name="drawer_background">#dd8623a9</color>
+    <color name="drawer_item_background">#ffe385bd</color>
     <color name="drawer_divider_color">#6fff</color>
+    <color name="drawer_text">#fff</color>
+    <color name="drawer_icon_color">#afff</color>
 
 
 </resources>
