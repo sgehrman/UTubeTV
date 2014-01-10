@@ -1,30 +1,23 @@
 keys:
   releasekey : followme
 
-
 license key:
 
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRKPu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5yDqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDWzv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB
 
 App goals:
 
-1) Simply watch a playlist of movies.
 2) Mark which have been watched.
 3) Remember where paused or stopped and resume next time
 4) Display Full Title and credits below in a nice way
 5) Should feel easy to watch a bit, relaunch and it takes you exactly back
-6) Channel management (playlists)
-7) Send playlists to friends.  Email or SMS or tap etc.
-8) Educational playlists
-2) ability to repeat vids
+
 9) record favorite moments (bookmarks) in video with single click, remember list of points to be rewatched later
 10) What youtube should be, but simplified for watching only.  No comments or sharing etc, just watching experience
 11) Killer features
     1) always restores where you were last time you watched
     2) speed, cached lists
-    3) share with friends
-12) Get lists of playlists from youtube by users
-13) Auto import your own youtube playlist
+
 14) stationary header, page numbers and floating overlay showing when scrolling
 
 console play
@@ -37,6 +30,8 @@ fields: items(snippet/title, snippet/thumbnails/high/url), nextPageToken, pageIn
 https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
+
+// --------------------------------------------------------
 
 Joe Rogan,
 NeuroSoup,
@@ -68,51 +63,14 @@ woody allen
 the doors
 
 
-Advertise.  Tell people if they maintain a channel, send me icon, I'll make an app.
-
-
-todo:
-- add hidden flag to hide videos, checkbox in ui in info area
-  do we add to the database, or have a pref that holds hidden video ids?  if in the database, we can't wipe it everytime, must do some kind of transfer.
-
-- add menu button to video view
-  more info
-  show on youtube
-  share
-
-- get duration value by querying twice
-
-- given channel name, fill out a database of playlist ids
-  plug it in to ui. Playlists in drawer?  Or a button called playlists?
-
-
-channel name to id
-https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?part=id&forUsername=JamesBurkeConnection&_h=2&
-
-// --------------------------------------------------------
 // --------------------------------------------------------
 
-PROJECTS:
 
-Project one is Connections by James Burke.
-
-https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.channels.list?part=id&forUsername=JamesBurkeConnection&_h=2&
-channel ID: "UC07XXQh04ukEX68loZFgnVw"
+subtlepatterns.com
 
 
 
------------------------
-don't try to refetch from youtube if database has data, but just returned zero results (all hidden for example)
-
-uiaccess stuff necessary?
-
-remove credential shit
-
-backbutton support when switching playlists from the drawer
-
-better drawer switching animation
-
-------------------------
+// --------------------------------------------------------
 
 http://stackoverflow.com/questions/18328730/how-to-create-a-release-signed-apk-file-using-gradle
 
