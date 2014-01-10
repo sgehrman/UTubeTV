@@ -1,6 +1,8 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -39,6 +41,7 @@ public class DrawerManager {
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
+  private FragmentManager mFragmentManager;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
@@ -74,6 +77,18 @@ public class DrawerManager {
     };
 
     mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mFragmentManager = activity.getFragmentManager();
+
+    mFragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+      @Override
+      public void onBackStackChanged() {
+        int backStackEntryCount = mFragmentManager.getBackStackEntryCount();
+
+        mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
+      }
+    });
+
   }
 
   public void setDrawerIndicatorEnabled(boolean set) {
@@ -81,7 +96,13 @@ public class DrawerManager {
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
-    return mDrawerToggle.onOptionsItemSelected(item);
+    if (mDrawerToggle.isDrawerIndicatorEnabled() && mDrawerToggle.onOptionsItemSelected(item)) {
+      return true;
+    } else if (item.getItemId() == android.R.id.home && mFragmentManager.popBackStackImmediate()) {
+      return true;
+    }
+
+    return false;
   }
 
   public void openDrawer() {
