@@ -50,8 +50,7 @@ public class SettingsActivity extends Activity {
         startActivity(intent);
 
         return true;
-      }
-      else  if (preference.getKey().equals("rate")) {
+      } else if (preference.getKey().equals("rate")) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
         intent.setData(Uri.parse("market://details?id=" + getActivity().getApplicationInfo().packageName));
@@ -86,7 +85,7 @@ public class SettingsActivity extends Activity {
           });
         }
 
-          pref = findPreference("rate");
+        pref = findPreference("rate");
         if (pref != null) {
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
