@@ -88,21 +88,25 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void playerStateChanged() {
-    Utils.setActionBarTitle(getActivity(), actionBarTitle());
+    syncActionBarTitle();
   }
 
-  private CharSequence actionBarTitle() {
+  private void syncActionBarTitle() {
     CharSequence title = null;
-    if (mRequest != null)
+    CharSequence subtitle = null;
+    if (mRequest != null) {
       title = mRequest.title();
+      subtitle = mRequest.subtitle();
+    }
 
     // if video player is up, show the video title
     VideoPlayer player = videoPlayer(false);
     if (player != null && player.visible()) {
-      title = player.title();
+      title = "Now Playing";
+      subtitle = player.title();
     }
 
-    return title;
+    Utils.setActionBarTitle(getActivity(), title, subtitle);
   }
 
   @Override
@@ -205,7 +209,7 @@ public class YouTubeGridFragment extends Fragment
     IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
-    Utils.setActionBarTitle(getActivity(), actionBarTitle());
+    syncActionBarTitle();
   }
 
   private VideoPlayer videoPlayer(boolean createIfNeeded) {

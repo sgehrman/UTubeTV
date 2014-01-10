@@ -82,7 +82,6 @@ public class Content extends Observable {
     switch (flag) {
       case 0:
         title = "About";
-
         break;
       case 1:
         title = "Playlists";
@@ -112,7 +111,7 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment(this);
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), actionBarTitle(1)));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
             break;
         }
         break;

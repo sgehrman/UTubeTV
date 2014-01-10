@@ -77,12 +77,41 @@ public class YouTubeServiceRequest implements Parcelable {
   }
 
   public String title() {
-    String title = (String) getData("title");
+    String title = null;
 
-    if (title != null)
-      return title;
+    switch (type) {
+      case SUBSCRIPTIONS:
+      case PLAYLISTS:
+      case CATEGORIES:
+      case LIKED:
+      case RELATED:
+      case SEARCH:
+      case VIDEOS:
+        break;
+    }
 
-    return typeToString();
+    if (title == null)
+        title = typeToString();
+
+    return title;
+  }
+
+  public String subtitle() {
+    String result = null;
+
+    switch (type) {
+      case SUBSCRIPTIONS:
+      case PLAYLISTS:
+      case CATEGORIES:
+      case LIKED:
+      case RELATED:
+      case SEARCH:
+      case VIDEOS:
+        result = (String) getData("title");  // use title as subtitle
+        break;
+    }
+
+    return result;
   }
 
   private String typeToString() {
