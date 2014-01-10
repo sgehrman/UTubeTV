@@ -45,8 +45,10 @@ public class InfoActivity extends Activity {
         webview.loadUrl("file:///android_asset/privacy_policy.html");
       } else if (infoID.equals("tos")) {
         setTitle(R.string.pref_title_tos);
-
         webview.loadUrl("file:///android_asset/tos.html");
+      } else if (infoID.equals("cr")) {
+        setTitle(R.string.pref_title_credits);
+        webview.loadUrl("file:///android_asset/credits.html");
       }
     }
   }

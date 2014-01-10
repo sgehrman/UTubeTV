@@ -24,6 +24,14 @@
         android:summary="@string/pref_repeat_video_summary"
         android:defaultValue="false"/>
 
+    <Preference android:title="@string/pref_title_privacy_policy">
+        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
+            <extra
+                android:name="infoID"
+                android:value="cr"/>
+        </intent>
+    </Preference>
+
     <Preference
         android:title=""
         android:key="version">
