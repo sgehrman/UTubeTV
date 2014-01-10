@@ -100,7 +100,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         mPlayer.loadVideo(mVideoId);
       else
         initializePlayer();
-
     }
   }
 
