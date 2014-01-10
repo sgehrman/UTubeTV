@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -52,6 +53,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
+    public Activity accesActivity();
   }
 
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
@@ -209,9 +211,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
 
     // set video id on menu button so clicking can know what video to act on
-    // only set if there is a videoId, playlists and others don't need this menu
-    String videoId = (String) itemMap.mVideo;
-    if (videoId != null && (videoId.length() > 0)) {
+    if ( itemMap.mVideo != null || itemMap.mPlaylist != null) {
       holder.menuButton.setVisibility(View.VISIBLE);
       holder.menuButton.setListener(this);
       holder.menuButton.mId = itemMap.mID;
@@ -239,8 +239,12 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     DatabaseAccess database = new DatabaseAccess(mContext, mRequest);
     YouTubeData videoMap = database.getItemWithID(itemId);
 
-    if (videoMap != null)
-      YouTubeAPI.playMovieUsingIntent(mContext, videoMap.mVideo);
+    if (videoMap != null) {
+      if (videoMap.mVideo != null)
+        YouTubeAPI.playMovieUsingIntent(mContext, videoMap.mVideo);
+      else if (videoMap.mPlaylist != null)
+        YouTubeAPI.openPlaylistUsingIntent(mListener.accesActivity(), videoMap.mPlaylist);
+    }
   }
 
   // VideoMenuViewListener

@@ -1,5 +1,6 @@
 package com.sickboots.sickvideos;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
@@ -167,6 +168,7 @@ public class YouTubeGridFragment extends Fragment
 //    }
   }
 
+  // YouTubeCursorAdapterListener
   @Override
   public void handleClickFromAdapter(YouTubeData itemMap) {
     switch (mRequest.type()) {
@@ -197,6 +199,12 @@ public class YouTubeGridFragment extends Fragment
       }
       break;
     }
+  }
+
+  // YouTubeCursorAdapterListener
+  @Override
+  public Activity accesActivity() {
+    return getActivity();
   }
 
   @Override
