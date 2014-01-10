@@ -782,18 +782,18 @@ public class YouTubeAPI {
       return playlistItemsToMap(result);
     }
 
-    private List<YouTubeData> playlistItemsToMap(List<Playlist> subscriptionsList) {
+    private List<YouTubeData> playlistItemsToMap(List<Playlist> playlists) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
-      for (Playlist subscription : subscriptionsList) {
+      for (Playlist playlist : playlists) {
         YouTubeData map = new YouTubeData();
 
-        map.mPlaylist = subscription.getId();
-        map.mTitle = subscription.getSnippet().getTitle();
-        map.mItemCount = subscription.getContentDetails().getItemCount();
-        map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
-        map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
+        map.mPlaylist = playlist.getId();
+        map.mTitle = playlist.getSnippet().getTitle();
+        map.mItemCount = playlist.getContentDetails().getItemCount();
+        map.mDescription = removeNewLinesFromString(playlist.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlist.getSnippet().getThumbnails());
 
         result.add(map);
       }
