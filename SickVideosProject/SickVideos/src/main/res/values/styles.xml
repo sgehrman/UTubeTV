@@ -19,7 +19,7 @@
 
     <!-- To avoid any white flicker when launching app, the background -->
     <style name="DrawerActivityTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/main_window_background_color</item>
+        <item name="android:windowBackground">@color/window_background_color</item>
     </style>
 
     <!-- ActionBar styles -->

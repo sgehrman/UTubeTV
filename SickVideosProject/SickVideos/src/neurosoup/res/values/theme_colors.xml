@@ -8,8 +8,7 @@
     <color name="action_bar_end_color">#ff3d1b79</color>
     <color name="action_bar_divider_color">#ff3d1b79</color>
 
-
-    <color name="main_window_background_color">#ffce3ec8</color>
+    <color name="window_background_color">#ffce3ec8</color>
 
     <color name="drawer_background">#d333</color>
     <color name="drawer_item_background">#ffce3ec8</color>

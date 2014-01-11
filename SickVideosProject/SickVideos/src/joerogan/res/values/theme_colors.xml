@@ -9,7 +9,7 @@
     <color name="action_bar_divider_color">#333</color>
 
 
-    <color name="main_window_background_color">#ffcc3251</color>
+    <color name="window_background_color">#ffcc3251</color>
 
 
     <color name="drawer_background">#d333</color>

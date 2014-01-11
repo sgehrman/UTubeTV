@@ -5,7 +5,7 @@
     <color name="action_bar_end_color">#ddd</color>
     <color name="action_bar_divider_color">#ddd</color>
 
-    <color name="main_window_background_color">#bbb</color>
+    <color name="window_background_color">#bbb</color>
 
     <color name="card_frame_color">#2000</color>
     <color name="card_fill_color">#fff</color>
