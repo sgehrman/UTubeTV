@@ -50,6 +50,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapterListener mListener;
   private boolean mFadeInLoadedImages = false; // turned off for speed
+  private boolean mClickAnimationsEnabled = false; // off for now
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
@@ -114,8 +115,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     ViewHolder holder = (ViewHolder) v.getTag();
 
     if (holder != null) {
-      // testing, too jerky for release
-      // animateViewForClick(holder.image);
+      if (mClickAnimationsEnabled)
+        animateViewForClick(holder.image);
 
       Cursor cursor = (Cursor) getItem(position);
       YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
@@ -145,11 +146,13 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder = (ViewHolder) convertView.getTag();
 
       // reset some stuff that might have been set on an animation
-      holder.image.setAlpha(1.0f);
-      holder.image.setScaleX(1.0f);
-      holder.image.setScaleY(1.0f);
-      holder.image.setRotationX(0.0f);
-      holder.image.setRotationY(0.0f);
+      if (mClickAnimationsEnabled) {
+        holder.image.setAlpha(1.0f);
+        holder.image.setScaleX(1.0f);
+        holder.image.setScaleY(1.0f);
+        holder.image.setRotationX(0.0f);
+        holder.image.setRotationY(0.0f);
+      }
     }
 
     Cursor cursor = (Cursor) getItem(position);
