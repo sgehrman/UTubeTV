@@ -1,0 +1,46 @@
+p,h3,h2,h1 {
+  color : #222;
+  margin:0px;
+  padding:0px;
+}
+
+a {
+text-decoration: none;
+ }
+
+body {
+  background-color:#fff;
+}
+
+div.even {
+ background-color:#ddd;
+ padding-top:10px;
+ padding-left:10px;
+ padding-right:10px;
+ padding-bottom:10px;
+}
+
+div.odd {
+ background-color:#eee;
+ padding-top:10px;
+ padding-left:10px;
+ padding-right:10px;
+ padding-bottom:10px;
+}
+
+div.top {
+
+padding-left:10px;
+padding-right:10px;
+padding-bottom:28px;
+padding-top:20px;
+}
+
+h3.libs {
+text-align: center;
+color: white;
+ background-color:#888;
+ padding-top:10px;
+ padding-bottom:10px;
+
+}
