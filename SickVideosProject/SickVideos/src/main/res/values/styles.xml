@@ -17,9 +17,8 @@
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
     </style>
 
-    <!-- To avoid any white flicker when launching app, the background -->
     <style name="DrawerActivityTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/window_background_color</item>
+        <item name="android:windowBackground">@drawable/default_window_background</item>
     </style>
 
     <!-- ActionBar styles -->
