@@ -54,6 +54,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
+
     public Activity accesActivity();
   }
 
@@ -215,7 +216,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
 
     // set video id on menu button so clicking can know what video to act on
-    if ( itemMap.mVideo != null || itemMap.mPlaylist != null) {
+    if (itemMap.mVideo != null || itemMap.mPlaylist != null) {
       holder.menuButton.setVisibility(View.VISIBLE);
       holder.menuButton.setListener(this);
       holder.menuButton.mId = itemMap.mID;

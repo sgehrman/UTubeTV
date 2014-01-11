@@ -100,7 +100,7 @@ public class SettingsActivity extends Activity {
       return false;
     }
   }
-  
+
 }
 
 
