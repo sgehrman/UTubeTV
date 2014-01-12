@@ -22,7 +22,7 @@ import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoPlayer {
-  private View videoBox;
+  private View mVideoBox;
   private Context mContext;
   private VideoPlayerFragment mVideoFragment;
   private VideoPlayerStateListener mListener;
@@ -61,12 +61,12 @@ public class VideoPlayer {
     mListener = l;
 
     mContext = activity.getApplicationContext();
-    videoBox = activity.findViewById(R.id.video_player_box);
+    mVideoBox = activity.findViewById(R.id.video_player_box);
 
     View b;
 
     // close button
-    b = videoBox.findViewById(R.id.close_button);
+    b = mVideoBox.findViewById(R.id.close_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CLOSE, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -76,7 +76,7 @@ public class VideoPlayer {
     });
 
     // Mute button
-    mMuteButton = videoBox.findViewById(R.id.mute_button);
+    mMuteButton = mVideoBox.findViewById(R.id.mute_button);
     mMuteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -88,7 +88,7 @@ public class VideoPlayer {
     updateMuteButton();
 
     // Skip back button
-    b = videoBox.findViewById(R.id.skip_back_button);
+    b = mVideoBox.findViewById(R.id.skip_back_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_BACK, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -100,7 +100,7 @@ public class VideoPlayer {
     });
 
     // Skip ahead button
-    b = videoBox.findViewById(R.id.skip_ahead_button);
+    b = mVideoBox.findViewById(R.id.skip_ahead_button);
     b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_FORWARD, Color.WHITE));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -111,12 +111,12 @@ public class VideoPlayer {
       ;
     });
 
-    mTimeRemainingTextView = (TextView) videoBox.findViewById(R.id.time_remaining);
+    mTimeRemainingTextView = (TextView) mVideoBox.findViewById(R.id.time_remaining);
     mTimeRemainingTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         // put it below toolbar
-        View tb = (View) videoBox.findViewById(R.id.video_toolbar_view);
+        View tb = (View) mVideoBox.findViewById(R.id.video_toolbar_view);
 
         showSeekPopupWindow(tb);
       }
@@ -124,7 +124,7 @@ public class VideoPlayer {
       ;
     });
 
-    mSeekFlashTextView = (TextView) videoBox.findViewById(R.id.seek_flash);
+    mSeekFlashTextView = (TextView) mVideoBox.findViewById(R.id.seek_flash);
 
     // we let the video fragment update us in it's own timer
     mVideoFragment.setTimeRemainingListener(new VideoPlayerFragment.TimeRemainingListener() {
@@ -171,7 +171,7 @@ public class VideoPlayer {
 
   // video player fragment restores itself, so just show it and let it do its thing
   public void restore() {
-    videoBox.setVisibility(View.VISIBLE);
+    mVideoBox.setVisibility(View.VISIBLE);
   }
 
   private boolean isPortrait() {
@@ -184,12 +184,12 @@ public class VideoPlayer {
     if (!visible()) {
       if (animate) {
         // Initially translate off the screen so that it can be animated in from below.
-        videoBox.setTranslationY(-videoBox.getHeight());
+        mVideoBox.setTranslationY(-mVideoBox.getHeight());
       }
-      videoBox.setVisibility(View.VISIBLE);
+      mVideoBox.setVisibility(View.VISIBLE);
 
       Utils.vibrate(mContext);
-      videoBox.animate()
+      mVideoBox.animate()
           .translationY(0)
           .setInterpolator(new AccelerateDecelerateInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
@@ -213,14 +213,14 @@ public class VideoPlayer {
       boolean animate = isPortrait();
 
       Utils.vibrate(mContext);
-      videoBox.animate()
-          .translationYBy(-videoBox.getHeight())
+      mVideoBox.animate()
+          .translationYBy(-mVideoBox.getHeight())
           .setInterpolator(new AccelerateInterpolator())
           .setDuration(animate ? mAnimationDuration : 0)
           .withEndAction(new Runnable() {
             @Override
             public void run() {
-              videoBox.setVisibility(View.INVISIBLE);
+              mVideoBox.setVisibility(View.INVISIBLE);
 
               if (mListener != null) {
                 mListener.stateChanged();
@@ -235,7 +235,7 @@ public class VideoPlayer {
   }
 
   public boolean visible() {
-    return (videoBox.getVisibility() == View.VISIBLE);
+    return (mVideoBox.getVisibility() == View.VISIBLE);
   }
 
   public void toggleMute() {

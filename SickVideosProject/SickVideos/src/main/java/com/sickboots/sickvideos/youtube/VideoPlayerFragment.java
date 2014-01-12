@@ -356,7 +356,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       initialize(Auth.devKey(), new YouTubePlayer.OnInitializedListener() {
         @Override
         public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
-          VideoPlayerFragment.this.mPlayer = player;
+          mPlayer = player;
 
           player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
           player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
@@ -379,7 +379,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
         @Override
         public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult result) {
-          VideoPlayerFragment.this.mPlayer = null;
+          mPlayer = null;
           mInitializingPlayer = false;
         }
       });
