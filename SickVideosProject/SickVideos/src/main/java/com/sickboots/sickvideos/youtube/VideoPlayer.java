@@ -39,6 +39,9 @@ public class VideoPlayer {
   public VideoPlayer(Activity activity, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
 
+    mListener = l;
+
+    // install video fragment
     // will already exist if restoring Activity
     mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
     if (mVideoFragment == null) {
@@ -49,6 +52,8 @@ public class VideoPlayer {
       ft.replace(fragmentContainerResID, mVideoFragment);
       ft.commit();
     }
+
+    // hide top bar when going fullscreen
     mTopBar = activity.findViewById(R.id.top_bar);
     mVideoFragment.setVideoFragmentListener(new VideoPlayerFragment.VideoFragmentListener() {
 
@@ -58,11 +63,183 @@ public class VideoPlayer {
       }
     });
 
-    mListener = l;
-
     mContext = activity.getApplicationContext();
     mVideoBox = activity.findViewById(R.id.video_player_box);
 
+    setupToolbar();
+  }
+
+  // video player fragment restores itself, so just show it and let it do its thing
+  public void restore() {
+    mVideoBox.setVisibility(View.VISIBLE);
+  }
+
+  private boolean isPortrait() {
+    return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+  }
+
+  public void open(final String videoId, final String title) {
+
+  mVideoFragment.readyToPlay(new VideoPlayerFragment.VideoFragmentReadyListener() {
+    @Override
+    public void ready() {
+      openPlayerReady(videoId, title);
+    }
+  });
+
+  }
+
+  public void openPlayerReady(final String videoId, final String title) {
+    if (!visible()) {
+      Utils.vibrate(mContext);
+
+      boolean animate = isPortrait();
+
+      if (animate) {
+        // Initially translate off the screen so that it can be animated in from below.
+        mVideoBox.setTranslationY(-mVideoBox.getHeight());
+
+        mVideoBox.setVisibility(View.VISIBLE);
+
+        mVideoBox.animate()
+            .translationY(0)
+            .setInterpolator(new AccelerateDecelerateInterpolator())
+            .setDuration(mAnimationDuration)
+            .withEndAction(new Runnable() {
+              @Override
+              public void run() {
+                playerShown(videoId, title);
+              }
+            });
+      }
+      else {
+        mVideoBox.setVisibility(View.VISIBLE);
+
+        playerShown(videoId, title);
+      }
+    }
+  }
+
+  public void close() {
+    if (visible()) {
+      Utils.vibrate(mContext);
+
+      mVideoFragment.closingPlayer();
+
+      boolean animate = isPortrait();
+
+      if (animate) {
+        mVideoBox.animate()
+            .translationYBy(-mVideoBox.getHeight())
+            .setInterpolator(new AccelerateInterpolator())
+            .setDuration(animate ? mAnimationDuration : 0)
+            .withEndAction(new Runnable() {
+              @Override
+              public void run() {
+                playerClosed();
+              }
+            });
+      } else
+        playerClosed();
+    }
+  }
+
+  public String title() {
+    return mVideoFragment.getTitle();
+  }
+
+  public boolean visible() {
+    return (mVideoBox.getVisibility() == View.VISIBLE);
+  }
+
+  public void toggleMute() {
+    mVideoFragment.mute(!mVideoFragment.isMute());
+
+    updateMuteButton();
+  }
+
+  public void toggleFullscreen() {
+    mVideoFragment.setFullscreen(true);
+  }
+
+  public void skip(int seconds) {
+    mVideoFragment.seekRelativeSeconds(seconds);
+  }
+
+  private void updateMuteButton() {
+    if (mVideoFragment.isMute())
+      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.RED));
+    else
+      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE));
+  }
+
+  // ------------------------------------------------------------------------------------------------
+  // private
+
+  private void playerShown(final String videoId, final String title) {
+    if (mListener != null) {
+      mVideoFragment.setVideo(videoId, title);
+
+      mListener.stateChanged();
+    }
+  }
+
+  private void playerClosed() {
+    mVideoBox.setVisibility(View.INVISIBLE);
+
+    if (mListener != null) {
+      mListener.stateChanged();
+    }
+  }
+
+  private void showSeekPopupWindow(View anchorView) {
+    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    View popupContentsView = inflater.inflate(R.layout.video_seek_popup, null);
+    final PopupWindow pw = new PopupWindow(popupContentsView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
+
+    // hack_alert: must set some kind of background so that clicking outside the view will dismiss the popup (known bug in Android)
+    pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    pw.setOutsideTouchable(true);
+    pw.setAnimationStyle(-1);
+    pw.showAsDropDown(anchorView);
+
+    float time = mVideoFragment.getCurrentTimeMillis();
+    final float duration = mVideoFragment.getDurationMillis();
+    float currentPercent = time / duration;
+    int startValue = (int) (currentPercent * 100);
+
+    SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);
+    sb.setMax(100);   // using max like a percent
+    sb.setProgress(startValue);
+
+    sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      @Override
+      public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        float progressPercent = progress / 100.0f;
+        int seekTo = (int) (progressPercent * duration);
+
+        mTimeRemainingTextView.setText(Utils.millisecondsToDuration(seekTo));
+      }
+
+      @Override
+      public void onStartTrackingTouch(SeekBar seekBar) {
+      }
+
+      @Override
+      public void onStopTrackingTouch(SeekBar seekBar) {
+        // seek when released
+        float progressPercent = seekBar.getProgress() / 100.0f;
+        int seekTo = (int) (progressPercent * duration);
+
+        mVideoFragment.seekToMillis(seekTo);
+
+        pw.dismiss();
+      }
+    });
+
+  }
+
+  private void setupToolbar() {
     View b;
 
     // close button
@@ -167,142 +344,5 @@ public class VideoPlayer {
       }
 
     });
-  }
-
-  // video player fragment restores itself, so just show it and let it do its thing
-  public void restore() {
-    mVideoBox.setVisibility(View.VISIBLE);
-  }
-
-  private boolean isPortrait() {
-    return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
-  }
-
-  public void open(final String videoId, final String title) {
-    boolean animate = isPortrait();
-
-    if (!visible()) {
-      if (animate) {
-        // Initially translate off the screen so that it can be animated in from below.
-        mVideoBox.setTranslationY(-mVideoBox.getHeight());
-      }
-      mVideoBox.setVisibility(View.VISIBLE);
-
-      Utils.vibrate(mContext);
-      mVideoBox.animate()
-          .translationY(0)
-          .setInterpolator(new AccelerateDecelerateInterpolator())
-          .setDuration(animate ? mAnimationDuration : 0)
-          .withEndAction(new Runnable() {
-            @Override
-            public void run() {
-              if (mListener != null) {
-                mVideoFragment.setVideo(videoId, title);
-
-                mListener.stateChanged();
-              }
-            }
-          });
-    }
-  }
-
-  public void close() {
-    if (visible()) {
-      mVideoFragment.closingPlayer();
-
-      boolean animate = isPortrait();
-
-      Utils.vibrate(mContext);
-      mVideoBox.animate()
-          .translationYBy(-mVideoBox.getHeight())
-          .setInterpolator(new AccelerateInterpolator())
-          .setDuration(animate ? mAnimationDuration : 0)
-          .withEndAction(new Runnable() {
-            @Override
-            public void run() {
-              mVideoBox.setVisibility(View.INVISIBLE);
-
-              if (mListener != null) {
-                mListener.stateChanged();
-              }
-            }
-          });
-    }
-  }
-
-  public String title() {
-    return mVideoFragment.getTitle();
-  }
-
-  public boolean visible() {
-    return (mVideoBox.getVisibility() == View.VISIBLE);
-  }
-
-  public void toggleMute() {
-    mVideoFragment.mute(!mVideoFragment.isMute());
-
-    updateMuteButton();
-  }
-
-  public void toggleFullscreen() {
-    mVideoFragment.setFullscreen(true);
-  }
-
-  public void skip(int seconds) {
-    mVideoFragment.seekRelativeSeconds(seconds);
-  }
-
-  private void updateMuteButton() {
-    if (mVideoFragment.isMute())
-      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.RED));
-    else
-      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE));
-  }
-
-  private void showSeekPopupWindow(View anchorView) {
-    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    View popupContentsView = inflater.inflate(R.layout.video_seek_popup, null);
-    final PopupWindow pw = new PopupWindow(popupContentsView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);  // if false, clicks to dismiss window also get passed to views below (should be true)
-
-    // hack_alert: must set some kind of background so that clicking outside the view will dismiss the popup (known bug in Android)
-    pw.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-    pw.setOutsideTouchable(true);
-    pw.setAnimationStyle(-1);
-    pw.showAsDropDown(anchorView);
-
-    float time = mVideoFragment.getCurrentTimeMillis();
-    final float duration = mVideoFragment.getDurationMillis();
-    float currentPercent = time / duration;
-    int startValue = (int) (currentPercent * 100);
-
-    SeekBar sb = (SeekBar) popupContentsView.findViewById(R.id.video_seek_bar);
-    sb.setMax(100);   // using max like a percent
-    sb.setProgress(startValue);
-
-    sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-      @Override
-      public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        float progressPercent = progress / 100.0f;
-        int seekTo = (int) (progressPercent * duration);
-
-        mTimeRemainingTextView.setText(Utils.millisecondsToDuration(seekTo));
-      }
-
-      @Override
-      public void onStartTrackingTouch(SeekBar seekBar) {
-      }
-
-      @Override
-      public void onStopTrackingTouch(SeekBar seekBar) {
-        // seek when released
-        float progressPercent = seekBar.getProgress() / 100.0f;
-        int seekTo = (int) (progressPercent * duration);
-
-        mVideoFragment.seekToMillis(seekTo);
-
-        pw.dismiss();
-      }
-    });
-
   }
 }
