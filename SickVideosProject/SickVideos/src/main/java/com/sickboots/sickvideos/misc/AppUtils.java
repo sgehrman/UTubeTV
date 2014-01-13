@@ -1,8 +1,13 @@
 package com.sickboots.sickvideos.misc;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.sickboots.sickvideos.R;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -98,4 +103,40 @@ public class AppUtils {
       notifyObservers(message);
     }
   }
+
+
+  public static void pickViewStyleDialog(final Context context) {
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+    int selectedIndex = Integer.parseInt(themeStyle);
+
+    builder.setTitle("Pick a style")
+        .setSingleChoiceItems(R.array.view_styles, selectedIndex, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+              case 0:
+                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "0");
+                break;
+              case 1:
+                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "1");
+                break;
+              case 2:
+                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "2");
+                break;
+              case 3:
+                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "3");
+                break;
+              default:
+                break;
+            }
+
+            dialog.dismiss();
+          }
+        });
+
+    builder.create().show();
+  }
+
 }

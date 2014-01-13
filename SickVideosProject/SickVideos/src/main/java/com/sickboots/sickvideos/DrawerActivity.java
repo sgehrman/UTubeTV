@@ -221,36 +221,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     }
   }
 
-  public Dialog pickViewStyleDialog() {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-    String themeStyle = AppUtils.preferences(DrawerActivity.this).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
-    int selectedIndex = Integer.parseInt(themeStyle);
-
-    builder.setTitle("Pick a style")
-        .setSingleChoiceItems(R.array.view_styles, selectedIndex, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-              case 0:
-                AppUtils.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "0");
-                break;
-              case 1:
-                AppUtils.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "1");
-                break;
-              case 2:
-                AppUtils.preferences(DrawerActivity.this).setString(Preferences.THEME_STYLE, "2");
-                break;
-              default:
-                break;
-            }
-
-            dialog.dismiss();
-          }
-        });
-
-    return builder.create();
-  }
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
@@ -277,9 +247,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         return true;
 
       case R.id.action_switch_view:
-        Dialog theDialog = pickViewStyleDialog();
-
-        theDialog.show();
+        AppUtils.pickViewStyleDialog(this);
         return true;
 
       // for development only, hide for release

@@ -289,6 +289,12 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         result.mTheme_drawImageShadows = false;
         result.mTheme_resId = R.layout.fragment_grid_card;
         break;
+      case 3:
+        result.mTheme_itemResId = R.layout.youtube_item_poster;
+        result.mTheme_imageAlpha = 1.0f;
+        result.mTheme_drawImageShadows = false;
+        result.mTheme_resId = R.layout.fragment_grid_card;
+        break;
     }
 
     return result;
