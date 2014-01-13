@@ -3,6 +3,10 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingBottom="16dp"
+              android:paddingTop="20dp"
               android:background="@drawable/card_background"
 
               android:descendantFocusability="blocksDescendants">
@@ -13,13 +17,6 @@
         android:layout_marginTop="12dp"
 
         layout="@layout/youtube_item_image"/>
-
-    <LinearLayout
-                  android:layout_width="match_parent"
-                  android:orientation="vertical"
-                  android:layout_height="wrap_content"
-                  android:padding="16dp"
-                 >
 
     <TextView
         android:id="@+id/text_view"
@@ -37,6 +34,4 @@
         style="@style/VideoTextDescription_card"
         android:layout_height="wrap_content"/>
 
-
-    </LinearLayout>
 </LinearLayout>
