@@ -66,7 +66,7 @@ public class ViewDecorations {
     }
 
     if (mDrawIcon) {
-      int playButtonSize = 140;
+      int playButtonSize = 110;
       // draw play button
       if (playBitmap == null) {
         if (mIsPlaylist)
