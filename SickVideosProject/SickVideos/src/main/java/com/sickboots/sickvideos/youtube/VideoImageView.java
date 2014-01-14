@@ -29,7 +29,7 @@ public class VideoImageView extends ImageView {
   }
 
   public void setDrawShadows(boolean set) {
-    mDrawShadows = false; // disabled;
+    mDrawShadows = set;
     mDarkenBackground = set;
   }
 
@@ -80,9 +80,9 @@ public class VideoImageView extends ImageView {
 
   private void createGradients(Context context) {
     if (sTopGradient == null) {
-      sGradientHeight = (int) Utils.dpToPx(40.0f, context);
+      sGradientHeight = (int) Utils.dpToPx(30.0f, context);
 
-      int colors[] = {0xaa000000, 0x00000000};
+      int colors[] = {0x99000000, 0x00000000};
       sTopGradient = createGradient(colors, GradientDrawable.Orientation.TOP_BOTTOM);
       sBottomGradient = createGradient(colors, GradientDrawable.Orientation.BOTTOM_TOP);
     }
