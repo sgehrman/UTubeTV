@@ -1,6 +1,16 @@
 <resources>
 
-    <style name="VideoTextTitle">
+    <style name="text_common">
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="title_common" parent="text_common">
+        <item name="android:lineSpacingExtra">-2sp</item>
+    </style>
+    <style name="description_common" parent="text_common">
+        <item name="android:lineSpacingExtra">-1sp</item>
+    </style>
+
+    <style name="VideoTextTitle_dark" parent="title_common">
         <item name="android:padding">8dp</item>
 
         <item name="android:textColor">#fff</item>
@@ -11,13 +21,9 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
-        <item name="android:lineSpacingExtra">-2sp</item>
-
-        <item name="android:maxLines">@integer/title_max_lines</item>
-        <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="VideoTextDescription">
+    <style name="VideoTextDescription_dark" parent="description_common">
         <item name="android:padding">8dp</item>
 
         <item name="android:textColor">#fff</item>
@@ -28,33 +34,18 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
-        <item name="android:lineSpacingExtra">-1sp</item>
-
-        <item name="android:maxLines">@integer/description_max_lines</item>
-        <item name="android:ellipsize">end</item>
-
     </style>
 
-    <style name="VideoTextTitle_card">
-        <item name="android:maxLines">@integer/title_max_lines</item>
-        <item name="android:ellipsize">end</item>
-
+    <style name="VideoTextTitle_card" parent="title_common">
         <item name="android:textColor">@color/card_title_color</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
-
-        <item name="android:lineSpacingExtra">-2sp</item>
     </style>
 
-    <style name="VideoTextDescription_card">
-        <item name="android:maxLines">@integer/description_max_lines</item>
-        <item name="android:ellipsize">end</item>
-
+    <style name="VideoTextDescription_card" parent="description_common">
         <item name="android:textColor">@color/card_description_color</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textStyle">normal</item>
-
-        <item name="android:lineSpacingExtra">-1sp</item>
     </style>
 
 </resources>

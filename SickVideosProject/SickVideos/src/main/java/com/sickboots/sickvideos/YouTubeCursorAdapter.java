@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     int mTheme_resId;
     boolean mTheme_drawImageShadows;
     boolean mClickTextToExpand;
+    int mTitleMaxLines;
+    int mDescriptionMaxLines;
   }
 
   private static class ViewHolder {
@@ -55,7 +58,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
   private ViewDecorations mDecorations;
-  private int mTitleMaxLines, mDescriptionMaxLines;
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
@@ -83,9 +85,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mRequest = request;
     result.mContext = context.getApplicationContext();
     result.mListener = listener;
-
-    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
-    result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
 
     return result;
   }
@@ -150,14 +149,13 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     TextView textView = (TextView) v;
 
     // text bug.... mTitleMaxLines
-    int maxLines = mDescriptionMaxLines;
+    int maxLines = mTheme.mDescriptionMaxLines;
 
     textView.setMaxLines(textView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : maxLines);
     textView.invalidate();
   }
 
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  private View prepareViews(View convertView, boolean multiColumns) {
     ViewHolder holder = null;
 
     if (convertView == null) {
@@ -170,17 +168,21 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder.duration = (TextView) convertView.findViewById(R.id.duration);
       holder.menuButton = (VideoMenuView) convertView.findViewById(R.id.menu_button);
 
-      if (mTheme.mClickTextToExpand) {
-        holder.description.setOnClickListener(this);
-        holder.title.setOnClickListener(this);
-      }
+      holder.image.setDecorations(mDecorations);
 
       convertView.setTag(holder);
     } else {
       holder = (ViewHolder) convertView.getTag();
+    }
+
+    if (holder != null) {
+      boolean setClickListeners = false;
 
       // reset some stuff that might have been set on an animation
       if (mClickAnimationsEnabled) {
+        // stops running animations?
+        holder.image.setAnimation(null);
+
         holder.image.setAlpha(1.0f);
         holder.image.setScaleX(1.0f);
         holder.image.setScaleY(1.0f);
@@ -188,20 +190,49 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         holder.image.setRotationY(0.0f);
       }
 
-      if (mTheme.mClickTextToExpand) {
-        holder.description.setMaxLines(mDescriptionMaxLines);
-        holder.title.setMaxLines(mTitleMaxLines);
+      if (multiColumns) {
+        holder.description.setMaxLines(mTheme.mDescriptionMaxLines);
+        holder.title.setMaxLines(mTheme.mTitleMaxLines);
+
+        // multiple columns must be same height
+        holder.description.setMinLines(mTheme.mDescriptionMaxLines);
+        holder.title.setMinLines(mTheme.mTitleMaxLines);
+      }
+      else {
+        holder.description.setMaxLines(mTheme.mDescriptionMaxLines);
+        holder.title.setMaxLines(mTheme.mTitleMaxLines);
+
+        holder.description.setMinLines(0);
+        holder.title.setMinLines(0);
+
+        if (mTheme.mClickTextToExpand) {
+          setClickListeners = true;
+          holder.description.setOnClickListener(this);
+          holder.title.setOnClickListener(this);
+        }
+      }
+
+      if (!setClickListeners) {
+        holder.description.setOnClickListener(null);
+        holder.title.setOnClickListener(null);
       }
     }
+
+    return convertView;
+  }
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    GridView gridView = (GridView) parent;
+    boolean multiColumns = gridView.getNumColumns() > 1;
+
+   convertView = prepareViews(convertView, multiColumns);
+   ViewHolder holder = (ViewHolder) convertView.getTag();
 
     Cursor cursor = (Cursor) getItem(position);
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
-    holder.image.setAnimation(null);
-    holder.image.setDecorations(mDecorations);
-
     int defaultImageResID = 0;
-
     UrlImageViewHelper.setUrlDrawable(holder.image, itemMap.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
 
       @Override
@@ -248,7 +279,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         holder.description.setVisibility(View.VISIBLE);
         holder.description.setText(desc);
       } else {
-        holder.description.setVisibility(View.GONE);
+        if (multiColumns) {
+          holder.description.setVisibility(View.VISIBLE);
+          holder.description.setText(" "); // min lines doesn't work with "", used a space
+        } else
+          holder.description.setVisibility(View.GONE);
       }
     }
 
@@ -309,6 +344,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mClickTextToExpand = true;
     result.mTheme_imageAlpha = 1.0f;
     result.mTheme_drawImageShadows = false;
+    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
+    result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:
