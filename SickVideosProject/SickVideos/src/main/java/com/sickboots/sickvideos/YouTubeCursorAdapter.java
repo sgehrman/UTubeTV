@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
+import com.sickboots.sickvideos.youtube.ViewDecorations;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
@@ -51,6 +53,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private YouTubeCursorAdapterListener mListener;
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
+  ViewDecorations mDecorations;
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
@@ -61,11 +64,16 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
     Theme theme = newTheme(context);
 
+    ViewDecorations decorations = new ViewDecorations();
+    decorations.setDrawShadows(theme.mTheme_drawImageShadows);
+    decorations.strokeAndFill(context, 0x44000000, Color.BLACK, 0.0f, 3);
+
     String[] from = new String[]{};
     int[] to = new int[]{};
 
     YouTubeCursorAdapter result = new YouTubeCursorAdapter(context, theme.mTheme_resId, null, from, to, 0);
     result.mTheme = theme;
+    result.mDecorations = decorations;
     result.mRequest = request;
     result.mContext = context.getApplicationContext();
     result.mListener = listener;
@@ -160,8 +168,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
     holder.image.setAnimation(null);
-
-    holder.image.setDrawShadows(mTheme.mTheme_drawImageShadows);
+    holder.image.setDecorations(mDecorations);
 
     int defaultImageResID = 0;
 

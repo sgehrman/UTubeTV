@@ -2,10 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-
-                android:background="@android:color/black"
-
                 android:descendantFocusability="blocksDescendants">
 
     <com.sickboots.sickvideos.youtube.VideoImageView
