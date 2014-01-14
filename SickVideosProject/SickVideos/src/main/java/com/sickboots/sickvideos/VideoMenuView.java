@@ -49,11 +49,6 @@ public class VideoMenuView extends ImageView {
           @Override
           public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
-              case R.id.video_menu_info:
-                if (mListener != null)
-                  mListener.showVideoInfo(mId);
-
-                break;
               case R.id.video_menu_youtube:
                 if (mListener != null)
                   mListener.showVideoOnYouTube(mId);

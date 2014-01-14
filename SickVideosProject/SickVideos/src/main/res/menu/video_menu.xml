@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/video_menu_info"
-        android:title="Info"/>
-
-    <item
         android:id="@+id/video_menu_youtube"
         android:title="Open in YouTube"/>
 
