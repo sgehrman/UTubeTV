@@ -13,8 +13,9 @@
         android:background="?playerToolbarBackground"
         />
 
-    <FrameLayout
-        android:id="@+id/video_fragment_container"
+    <fragment
+        android:name="com.sickboots.sickvideos.youtube.VideoPlayerFragment"
+        android:id="@+id/youtube_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

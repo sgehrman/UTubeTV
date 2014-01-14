@@ -44,14 +44,6 @@ public class VideoPlayer {
     // install video fragment
     // will already exist if restoring Activity
     mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
-    if (mVideoFragment == null) {
-      // had to add this manually rather than setting the class in xml to avoid duplicate id errors
-      mVideoFragment = VideoPlayerFragment.newInstance();
-      FragmentManager fm = activity.getFragmentManager();
-      FragmentTransaction ft = fm.beginTransaction();
-      ft.replace(fragmentContainerResID, mVideoFragment);
-      ft.commit();
-    }
 
     // hide top bar when going fullscreen
     mTopBar = activity.findViewById(R.id.top_bar);

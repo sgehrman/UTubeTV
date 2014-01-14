@@ -335,7 +335,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public VideoPlayer videoPlayer(boolean createIfNeeded) {
     if (createIfNeeded) {
       if (mPlayer == null) {
-        mPlayer = new VideoPlayer(this, R.id.video_fragment_container, new VideoPlayer.VideoPlayerStateListener() {
+        mPlayer = new VideoPlayer(this, R.id.youtube_fragment, new VideoPlayer.VideoPlayerStateListener() {
 
           // called when the video player opens or closes, adjust the action bar title
 
