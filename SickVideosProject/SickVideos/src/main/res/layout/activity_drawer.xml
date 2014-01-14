@@ -5,15 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
-    <FrameLayout
-        android:id="@+id/fragment_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!-- wrapped this in another layout since drawerLayout will resize it's children to fill the window automatically
+         Player would get resized incorrectly -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <!-- shared video player.  Invisible until needed -->
-    <include layout="@layout/youtube_player"/>
+        <!-- As the main content view, the view below consumes the entire
+          space available using match_parent in both dimensions. -->
+        <FrameLayout
+            android:id="@+id/fragment_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!-- shared video player.  Invisible until needed -->
+        <include layout="@layout/youtube_player"/>
+
+    </RelativeLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
      this as a sliding drawer on the left side for left-to-right
