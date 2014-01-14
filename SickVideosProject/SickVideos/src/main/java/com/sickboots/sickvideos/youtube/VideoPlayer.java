@@ -80,12 +80,12 @@ public class VideoPlayer {
 
   public void open(final String videoId, final String title) {
 
-  mVideoFragment.readyToPlay(new VideoPlayerFragment.VideoFragmentReadyListener() {
-    @Override
-    public void ready() {
-      openPlayerReady(videoId, title);
-    }
-  });
+    mVideoFragment.readyToPlay(new VideoPlayerFragment.VideoFragmentReadyListener() {
+      @Override
+      public void ready() {
+        openPlayerReady(videoId, title);
+      }
+    });
 
   }
 
@@ -111,8 +111,7 @@ public class VideoPlayer {
                 playerShown(videoId, title);
               }
             });
-      }
-      else {
+      } else {
         mVideoBox.setVisibility(View.VISIBLE);
 
         playerShown(videoId, title);

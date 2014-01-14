@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -18,7 +17,7 @@ public class ViewDecorations {
   private int mCachedWidth = 0;
   private boolean mDrawPlayButton = false;
   private GradientDrawable mStrokeAndFill;
-  int mHeight=0, mWidth=0;
+  int mHeight = 0, mWidth = 0;
 
   // gradients shared between all views to cut down on memory allocations etc.
   private GradientDrawable sTopGradient;
