@@ -31,10 +31,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     public void onFullScreen(boolean fullscreen);
   }
 
-  public interface VideoFragmentReadyListener {
-    public void ready();
-  }
-
   private YouTubePlayer mPlayer;
   private String mVideoId;
   private String mTitle;
@@ -94,14 +90,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     return mTitle;
   }
 
-  void readyToPlay(VideoPlayerFragment.VideoFragmentReadyListener l) {
-    if (mPlayer != null)
-      l.ready();
-    else {
-      initializePlayer(l);
-    }
-  }
-
   public void setVideo(String videoId, String title) {
     if (videoId != null && !videoId.equals(mVideoId)) {
 
@@ -111,7 +99,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       if (mPlayer != null)
         mPlayer.loadVideo(mVideoId);
       else
-        Debug.log("mPlayer null, did you use readyToPlay?");
+        initializePlayer();
     }
   }
 
@@ -360,7 +348,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 //    }
   }
 
-  private void initializePlayer(final VideoPlayerFragment.VideoFragmentReadyListener l) {
+  private void initializePlayer() {
     if (!mInitializingPlayer) {
       mInitializingPlayer = true;
 
@@ -386,8 +374,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
             player.loadVideo(mVideoId);
           }
 
-          l.ready();
-
           mInitializingPlayer = false;
         }
 
@@ -397,8 +383,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           mInitializingPlayer = false;
 
           Debug.log("initializePlayer: failed" + result);
-
-          l.ready();
         }
       });
     }

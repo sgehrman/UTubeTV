@@ -71,18 +71,9 @@ public class VideoPlayer {
   }
 
   public void open(final String videoId, final String title) {
-
-    mVideoFragment.readyToPlay(new VideoPlayerFragment.VideoFragmentReadyListener() {
-      @Override
-      public void ready() {
-        openPlayerReady(videoId, title);
-      }
-    });
-
-  }
-
-  public void openPlayerReady(final String videoId, final String title) {
-    if (!visible()) {
+    if (visible())
+      playerShown(videoId, title);
+    else {
       Utils.vibrate(mContext);
 
       boolean animate = isPortrait();
@@ -167,12 +158,14 @@ public class VideoPlayer {
   // ------------------------------------------------------------------------------------------------
   // private
 
-  private void playerShown(final String videoId, final String title) {
-    if (mListener != null) {
-      mVideoFragment.setVideo(videoId, title);
+  private void playerShown(String videoId, String title) {
+    mVideoFragment.setVideo(videoId, title);
 
+    // actionbar subtitle needs a refresh when new video starts playing, so it's not just open/close events
+    // that need state changed messages
+
+    if (mListener != null)
       mListener.stateChanged();
-    }
   }
 
   private void playerClosed() {
