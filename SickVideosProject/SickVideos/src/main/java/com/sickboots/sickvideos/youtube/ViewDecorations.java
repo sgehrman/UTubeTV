@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -26,6 +27,7 @@ public class ViewDecorations {
   private BitmapDrawable playBitmap = null;
 
   public ViewDecorations() {
+    super();
   }
 
   public void setDrawShadows(boolean set) {
@@ -44,7 +46,8 @@ public class ViewDecorations {
 
   public void drawInView(View view, Canvas canvas) {
     if (mStrokeAndFill != null) {
-      adjustGradientRect(view);
+      adjustStrokeAndFillRect(view);
+
       mStrokeAndFill.draw(canvas);
     }
 
@@ -86,12 +89,11 @@ public class ViewDecorations {
     }
   }
 
-  private void adjustGradientRect(View view) {
+  private void adjustStrokeAndFillRect(View view) {
     int w = view.getWidth();
     int h = view.getHeight();
 
     if (mWidth != w || mHeight != h) {
-
       mWidth = w;
       mHeight = h;
 
