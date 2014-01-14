@@ -20,5 +20,7 @@
     <color name="drawer_icon_color">#111</color>
     <color name="drawer_text">#000</color>
 
+    <color name="grid_selection">#3000</color>
+
 </resources>
 

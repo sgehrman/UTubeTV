@@ -2,11 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@android:color/transparent"
+        android:drawable="@color/grid_selection"
         />
     <item
         android:state_pressed="true"
-        android:drawable="@android:color/transparent"
+        android:drawable="@color/grid_selection"
         />
     <item
         android:drawable="@android:color/transparent"
