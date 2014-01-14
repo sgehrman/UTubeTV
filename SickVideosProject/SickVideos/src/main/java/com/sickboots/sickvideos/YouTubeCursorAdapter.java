@@ -191,12 +191,14 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       }
 
       if (multiColumns) {
+        int titleHeight = 1; // making it one so it looks better.  mTheme.mTitleMaxLines;
+
         holder.description.setMaxLines(mTheme.mDescriptionMaxLines);
-        holder.title.setMaxLines(mTheme.mTitleMaxLines);
+        holder.title.setMaxLines(titleHeight);
 
         // multiple columns must be same height
         holder.description.setMinLines(mTheme.mDescriptionMaxLines);
-        holder.title.setMinLines(mTheme.mTitleMaxLines);
+        holder.title.setMinLines(titleHeight);
       }
       else {
         holder.description.setMaxLines(mTheme.mDescriptionMaxLines);
