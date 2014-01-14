@@ -26,13 +26,14 @@ import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
-public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener {
+public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener, View.OnClickListener {
 
   private static class Theme {
     float mTheme_imageAlpha;
     int mTheme_itemResId;
     int mTheme_resId;
     boolean mTheme_drawImageShadows;
+    boolean mClickTextToExpand;
   }
 
   private static class ViewHolder {
@@ -53,7 +54,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private YouTubeCursorAdapterListener mListener;
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
-  ViewDecorations mDecorations;
+  private ViewDecorations mDecorations;
+  private int mTitleMaxLines, mDescriptionMaxLines;
 
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
@@ -81,6 +83,9 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mRequest = request;
     result.mContext = context.getApplicationContext();
     result.mListener = listener;
+
+    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
+    result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
 
     return result;
   }
@@ -124,7 +129,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   @Override
-  public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+  public void onItemClick(AdapterView<?> parent, View v, int position, long row) {
     ViewHolder holder = (ViewHolder) v.getTag();
 
     if (holder != null) {
@@ -141,6 +146,17 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   @Override
+  public void onClick(View v) {
+    TextView textView = (TextView) v;
+
+    // text bug.... mTitleMaxLines
+    int maxLines = mDescriptionMaxLines;
+
+    textView.setMaxLines(textView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : maxLines);
+    textView.invalidate();
+  }
+
+  @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     ViewHolder holder = null;
 
@@ -154,6 +170,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder.duration = (TextView) convertView.findViewById(R.id.duration);
       holder.menuButton = (VideoMenuView) convertView.findViewById(R.id.menu_button);
 
+      if (mTheme.mClickTextToExpand) {
+        holder.description.setOnClickListener(this);
+        holder.title.setOnClickListener(this);
+      }
+
       convertView.setTag(holder);
     } else {
       holder = (ViewHolder) convertView.getTag();
@@ -165,6 +186,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         holder.image.setScaleY(1.0f);
         holder.image.setRotationX(0.0f);
         holder.image.setRotationY(0.0f);
+      }
+
+      if (mTheme.mClickTextToExpand) {
+        holder.description.setMaxLines(mDescriptionMaxLines);
+        holder.title.setMaxLines(mTitleMaxLines);
       }
     }
 
@@ -280,30 +306,27 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
     String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
 
+    result.mClickTextToExpand = true;
+    result.mTheme_imageAlpha = 1.0f;
+    result.mTheme_drawImageShadows = false;
+
     switch (Integer.parseInt(themeStyle)) {
       case 0:
-        result.mTheme_imageAlpha = 1.0f;
         result.mTheme_itemResId = R.layout.youtube_item_dark;
-        result.mTheme_drawImageShadows = true;
         result.mTheme_resId = R.layout.fragment_grid_dark;
-
+        result.mTheme_drawImageShadows = true;
+        result.mClickTextToExpand = false;
         break;
       case 1:
         result.mTheme_itemResId = R.layout.youtube_item_light;
-        result.mTheme_imageAlpha = 1.0f;
-        result.mTheme_drawImageShadows = false;
         result.mTheme_resId = R.layout.fragment_grid_light;
         break;
       case 2:
         result.mTheme_itemResId = R.layout.youtube_item_card;
-        result.mTheme_imageAlpha = 1.0f;
-        result.mTheme_drawImageShadows = false;
         result.mTheme_resId = R.layout.fragment_grid_card;
         break;
       case 3:
         result.mTheme_itemResId = R.layout.youtube_item_poster;
-        result.mTheme_imageAlpha = 1.0f;
-        result.mTheme_drawImageShadows = false;
         result.mTheme_resId = R.layout.fragment_grid_card;
         break;
     }

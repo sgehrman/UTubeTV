@@ -12,6 +12,9 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
         <item name="android:lineSpacingExtra">-2sp</item>
+
+        <item name="android:maxLines">@integer/title_max_lines</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="VideoTextDescription">
@@ -26,9 +29,16 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">4</item>
         <item name="android:lineSpacingExtra">-1sp</item>
+
+        <item name="android:maxLines">@integer/description_max_lines</item>
+        <item name="android:ellipsize">end</item>
+
     </style>
 
     <style name="VideoTextTitle_card">
+        <item name="android:maxLines">@integer/title_max_lines</item>
+        <item name="android:ellipsize">end</item>
+
         <item name="android:textColor">@color/card_title_color</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
@@ -37,6 +47,9 @@
     </style>
 
     <style name="VideoTextDescription_card">
+        <item name="android:maxLines">@integer/description_max_lines</item>
+        <item name="android:ellipsize">end</item>
+
         <item name="android:textColor">@color/card_description_color</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textStyle">normal</item>
