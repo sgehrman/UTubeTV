@@ -15,7 +15,8 @@ public class ViewDecorations {
 
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
-  private boolean mDrawPlayButton = false;
+  private boolean mDrawIcon = true;
+  private boolean mIsPlaylist = false;
   private GradientDrawable mStrokeAndFill;
   int mHeight = 0, mWidth = 0;
 
@@ -25,8 +26,10 @@ public class ViewDecorations {
   private int sGradientHeight;
   private BitmapDrawable playBitmap = null;
 
-  public ViewDecorations() {
+  public ViewDecorations(boolean isPlaylist) {
     super();
+
+    mIsPlaylist = isPlaylist;
   }
 
   public void setDrawShadows(boolean set) {
@@ -62,12 +65,16 @@ public class ViewDecorations {
       canvas.translate(0, -y);
     }
 
-    if (mDrawPlayButton) {
+    if (mDrawIcon) {
       int playButtonSize = 140;
       // draw play button
       if (playBitmap == null) {
-        playBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
-        playBitmap.setAlpha(180);  // 0 - 255
+        if (mIsPlaylist)
+          playBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.LIST, Color.WHITE, playButtonSize);
+        else
+          playBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
+
+        playBitmap.setAlpha(120);  // 0 - 255
       }
 
       int x = (view.getWidth() - playButtonSize) / 2;

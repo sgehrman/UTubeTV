@@ -64,7 +64,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
     Theme theme = newTheme(context);
 
-    ViewDecorations decorations = new ViewDecorations();
+    ViewDecorations decorations = new ViewDecorations(request.type() == YouTubeServiceRequest.RequestType.PLAYLISTS);
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
     int strokeColor = 0x88000000;
@@ -209,7 +209,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       if (count != null) {
         holder.duration.setVisibility(View.VISIBLE);
 
-        holder.duration.setText(count.toString() + " videos");
+        holder.duration.setText(count.toString() + (count == 1 ? " video" : " videos"));
       } else {
         holder.duration.setVisibility(View.GONE);
       }
