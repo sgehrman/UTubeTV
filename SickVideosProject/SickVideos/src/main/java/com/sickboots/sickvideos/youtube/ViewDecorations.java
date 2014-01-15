@@ -81,7 +81,7 @@ public class ViewDecorations {
         else
           mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
 
-        mPlayBitmap.setAlpha(120);  // 0 - 255
+        mPlayBitmap.setAlpha(100);  // 0 - 255
       }
 
       int x = (view.getWidth() - playButtonSize) / 2;
