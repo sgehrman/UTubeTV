@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
+import android.os.Build;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -41,6 +42,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private boolean mFullscreen = false;
   private VideoFragmentListener mFragmentListener;
   private boolean mInitializingPlayer = false;
+  private int mSavedVolume=0;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
@@ -116,7 +118,16 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     AudioManager manager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
     if (mMuteState != muteState) {
       mMuteState = muteState;
-      manager.setStreamMute(AudioManager.STREAM_MUSIC, mMuteState);
+
+      // setStreamMute is broken on my 4.1 galaxy nexus, so using volume instead
+      if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
+        int saved = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        manager.setStreamVolume(AudioManager.STREAM_MUSIC, (mMuteState ? 0 : mSavedVolume), 0);
+
+        mSavedVolume = saved;
+      } else
+        manager.setStreamMute(AudioManager.STREAM_MUSIC, mMuteState);
     }
   }
 
