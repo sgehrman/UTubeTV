@@ -3,10 +3,7 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:paddingBottom="16dp"
-              android:paddingTop="16dp"
+              android:padding="16dp"
               android:background="@drawable/card_background"
 
               android:descendantFocusability="blocksDescendants">
@@ -20,7 +17,7 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
 
         android:layout_width="match_parent"
         style="@style/VideoTextTitle_card"
@@ -28,6 +25,8 @@
 
     <TextView
         android:layout_marginTop="2dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
 
         android:id="@+id/description_view"
         android:layout_width="match_parent"

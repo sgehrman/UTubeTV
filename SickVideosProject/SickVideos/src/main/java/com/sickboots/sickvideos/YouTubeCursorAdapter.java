@@ -73,7 +73,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     int strokeColor = context.getResources().getColor(R.color.card_fill_color);
     int fillColor = 0x22000000;
 
-    decorations.strokeAndFill(context, fillColor, strokeColor, 12, 4);
+    decorations.strokeAndFill(context, fillColor, strokeColor, 8, 4);
 
     String[] from = new String[]{};
     int[] to = new int[]{};

@@ -22,10 +22,10 @@ public class ViewDecorations {
   int mHeight = 0, mWidth = 0;
 
   // gradients shared between all views to cut down on memory allocations etc.
-  private GradientDrawable sTopGradient;
-  private GradientDrawable sBottomGradient;
-  private int sGradientHeight;
-  private BitmapDrawable playBitmap = null;
+  private GradientDrawable mTopGradient;
+  private GradientDrawable mBottomGradient;
+  private int mGradientHeight;
+  private BitmapDrawable mPlayBitmap = null;
 
   public ViewDecorations(boolean isPlaylist) {
     super();
@@ -64,30 +64,30 @@ public class ViewDecorations {
       createGradients(view.getContext());
       adjustGradientRects(view);
 
-      sTopGradient.draw(canvas);
+      mTopGradient.draw(canvas);
 
-      int y = view.getHeight() - sGradientHeight;
+      int y = view.getHeight() - mGradientHeight;
       canvas.translate(0, y);
-      sBottomGradient.draw(canvas);
+      mBottomGradient.draw(canvas);
       canvas.translate(0, -y);
     }
 
     if (mDrawIcon) {
       int playButtonSize = 110;
       // draw play button
-      if (playBitmap == null) {
+      if (mPlayBitmap == null) {
         if (mIsPlaylist)
-          playBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.LIST, Color.WHITE, playButtonSize);
+          mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.LIST, Color.WHITE, playButtonSize);
         else
-          playBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
+          mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSize);
 
-        playBitmap.setAlpha(120);  // 0 - 255
+        mPlayBitmap.setAlpha(120);  // 0 - 255
       }
 
       int x = (view.getWidth() - playButtonSize) / 2;
       int y = (view.getHeight() - playButtonSize) / 2;
-      playBitmap.setBounds(x, y, x + playButtonSize, y + playButtonSize);
-      playBitmap.draw(canvas);
+      mPlayBitmap.setBounds(x, y, x + playButtonSize, y + playButtonSize);
+      mPlayBitmap.draw(canvas);
     }
   }
 
@@ -95,10 +95,10 @@ public class ViewDecorations {
     if (mCachedWidth != view.getWidth()) {
       mCachedWidth = view.getWidth();
 
-      Rect rect = new Rect(0, 0, mCachedWidth, sGradientHeight);
+      Rect rect = new Rect(0, 0, mCachedWidth, mGradientHeight);
 
-      sTopGradient.setBounds(rect);
-      sBottomGradient.setBounds(rect);
+      mTopGradient.setBounds(rect);
+      mBottomGradient.setBounds(rect);
     }
   }
 
@@ -118,12 +118,12 @@ public class ViewDecorations {
   }
 
   private void createGradients(Context context) {
-    if (sTopGradient == null) {
-      sGradientHeight = (int) Utils.dpToPx(30.0f, context);
+    if (mTopGradient == null) {
+      mGradientHeight = (int) Utils.dpToPx(30.0f, context);
 
       int colors[] = {0x99000000, 0x00000000};
-      sTopGradient = createGradient(colors, GradientDrawable.Orientation.TOP_BOTTOM);
-      sBottomGradient = createGradient(colors, GradientDrawable.Orientation.BOTTOM_TOP);
+      mTopGradient = createGradient(colors, GradientDrawable.Orientation.TOP_BOTTOM);
+      mBottomGradient = createGradient(colors, GradientDrawable.Orientation.BOTTOM_TOP);
     }
   }
 

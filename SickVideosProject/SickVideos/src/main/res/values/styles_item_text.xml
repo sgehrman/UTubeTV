@@ -41,6 +41,7 @@
     <style name="VideoTextTitle_card" parent="title_common">
         <item name="android:textColor">@color/card_title_color</item>
         <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 
