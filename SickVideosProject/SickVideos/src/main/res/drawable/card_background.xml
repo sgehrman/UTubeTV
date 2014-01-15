@@ -7,10 +7,13 @@
         android:right="2dp"
         >
 
-        <!--assuming stroke is less drawing than a solid fill?-->
+        <!--assuming stroke is less drawing than a solid fill?
+            stroke works on KitKat, but alpha is ignored on JellyBean, so reverted back to solid
+            was stroke with android:width="2dp"
+        -->
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <stroke
+            <solid
                 android:color="@color/card_shadow_color"
                 android:width="2dp"/>
         </shape>
