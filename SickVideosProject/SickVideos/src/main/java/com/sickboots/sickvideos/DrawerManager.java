@@ -191,7 +191,7 @@ public class DrawerManager {
 
       ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
 
-      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, mIconColor, (int) Utils.dpToPx(30.0f, getContext()));
+      Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, mIconColor, 30);
 
       imageView.setImageDrawable(sharedDrawable);
 

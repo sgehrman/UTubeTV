@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -24,11 +26,12 @@ public class VideoPlayer {
   private Context mContext;
   private VideoPlayerFragment mVideoFragment;
   private VideoPlayerStateListener mListener;
-  private View mMuteButton;
+  private ImageView mMuteButton;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
   private final int mAnimationDuration = 300;
   private View mTopBar;
+  private final int mIconSize = 32;
 
   abstract public interface VideoPlayerStateListener {
     abstract public void stateChanged();
@@ -151,9 +154,9 @@ public class VideoPlayer {
 
   private void updateMuteButton() {
     if (mVideoFragment.isMute())
-      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.RED));
+      mMuteButton.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.RED, mIconSize));
     else
-      mMuteButton.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE));
+      mMuteButton.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE, mIconSize));
   }
 
   // ------------------------------------------------------------------------------------------------
@@ -225,11 +228,11 @@ public class VideoPlayer {
   }
 
   private void setupToolbar() {
-    View b;
+    ImageView b;
 
     // close button
-    b = mVideoBox.findViewById(R.id.close_button);
-    b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CLOSE, Color.WHITE));
+    b = (ImageView) mVideoBox.findViewById(R.id.close_button);
+    b.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CLOSE, Color.WHITE, mIconSize));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -238,7 +241,7 @@ public class VideoPlayer {
     });
 
     // Mute button
-    mMuteButton = mVideoBox.findViewById(R.id.mute_button);
+    mMuteButton = (ImageView) mVideoBox.findViewById(R.id.mute_button);
     mMuteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -250,8 +253,8 @@ public class VideoPlayer {
     updateMuteButton();
 
     // Skip back button
-    b = mVideoBox.findViewById(R.id.skip_back_button);
-    b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_BACK, Color.WHITE));
+    b = (ImageView) mVideoBox.findViewById(R.id.skip_back_button);
+    b.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_BACK, Color.WHITE, mIconSize));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -262,8 +265,8 @@ public class VideoPlayer {
     });
 
     // Skip ahead button
-    b = mVideoBox.findViewById(R.id.skip_ahead_button);
-    b.setBackground(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_FORWARD, Color.WHITE));
+    b = (ImageView) mVideoBox.findViewById(R.id.skip_ahead_button);
+    b.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.STEP_FORWARD, Color.WHITE, mIconSize));
     b.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

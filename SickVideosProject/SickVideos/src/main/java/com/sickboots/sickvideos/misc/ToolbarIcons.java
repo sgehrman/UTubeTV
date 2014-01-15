@@ -18,7 +18,7 @@ public class ToolbarIcons {
 
   ;
 
-  public static Drawable icon(Context context, IconID iconID, int iconColor) {
+  public static Drawable icon(Context context, IconID iconID, int iconColor, int sizeInDP) {
     Icon icon = null;
 
     switch (iconID) {
@@ -72,6 +72,12 @@ public class ToolbarIcons {
       fnormal.setContour(Color.GRAY, 1);
       fnormal.setIconPadding(8);
 
+      int size = (int) Utils.dpToPx(sizeInDP, context);
+      fnormal.setIntrinsicWidth(size);
+      fnormal.setIntrinsicHeight(size);
+      fpressed.setIntrinsicWidth(size);
+      fpressed.setIntrinsicHeight(size);
+
       normal = fnormal;
       pressed = fpressed;
     }
@@ -84,10 +90,12 @@ public class ToolbarIcons {
   }
 
   // this doesn't have the states like above. used to convert an icon to a simple bitmap, assuming things like animations will be faster with a bitmap over a text based drawable
-  public static BitmapDrawable iconBitmap(Context context, IconID iconID, int iconColor, int size) {
+  public static BitmapDrawable iconBitmap(Context context, IconID iconID, int iconColor, int sizeInDP) {
     BitmapDrawable result = null;
 
-    Drawable iconDrawable = icon(context, iconID, iconColor);
+    Drawable iconDrawable = icon(context, iconID, iconColor, sizeInDP);
+
+    int size = (int) Utils.dpToPx(sizeInDP, context);
 
     Bitmap map = Utils.drawableToBitmap(iconDrawable, size);
 

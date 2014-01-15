@@ -13,20 +13,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <View
+        <ImageView
             android:id="@+id/close_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            android:layout_margin="6dp"
+            android:padding="6dp"
             />
 
-        <View
+        <ImageView
             android:id="@+id/mute_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            android:layout_margin="6dp"
+            android:padding="6dp"
             />
 
         <RelativeLayout
@@ -51,20 +51,20 @@
                 />
         </RelativeLayout>
 
-        <View
+        <ImageView
             android:id="@+id/skip_back_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            android:layout_margin="6dp"
+            android:padding="6dp"
             />
 
-        <View
+        <ImageView
             android:id="@+id/skip_ahead_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            android:layout_margin="6dp"
+            android:padding="6dp"
             />
 
     </LinearLayout>
