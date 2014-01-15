@@ -13,12 +13,6 @@
         android:defaultValue="true"/>
 
     <SwitchPreference
-        android:key="show_hidden_videos"
-        android:title="@string/pref_show_hidden_videos"
-        android:summary="@string/pref_show_hidden_videos_summary"
-        android:defaultValue="false"/>
-
-    <SwitchPreference
         android:key="repeat_video"
         android:title="@string/pref_repeat_video"
         android:summary="@string/pref_repeat_video_summary"

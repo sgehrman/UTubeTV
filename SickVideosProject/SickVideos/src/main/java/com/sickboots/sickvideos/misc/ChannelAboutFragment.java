@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
@@ -45,8 +46,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
     mImage = (ImageView) rootView.findViewById(R.id.image);
     Button button = (Button) rootView.findViewById(R.id.watch_button);
+    LinearLayout card = (LinearLayout) rootView.findViewById(R.id.card);
 
-    mImage.setOnClickListener(new View.OnClickListener() {
+    card.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         showPlaylistsFragment();
       }

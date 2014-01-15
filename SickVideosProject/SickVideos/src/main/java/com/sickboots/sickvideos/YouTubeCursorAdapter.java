@@ -36,6 +36,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     boolean mClickTextToExpand;
     int mTitleMaxLines;
     int mDescriptionMaxLines;
+    boolean mSupportsMenuButton;
   }
 
   private static class ViewHolder {
@@ -290,7 +291,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
 
     // set video id on menu button so clicking can know what video to act on
-    if (itemMap.mVideo != null || itemMap.mPlaylist != null) {
+    if (mTheme.mSupportsMenuButton && (itemMap.mVideo != null || itemMap.mPlaylist != null)) {
       holder.menuButton.setVisibility(View.VISIBLE);
       holder.menuButton.setListener(this);
       holder.menuButton.mId = itemMap.mID;
@@ -348,6 +349,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mTheme_drawImageShadows = false;
     result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
     result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
+    result.mSupportsMenuButton = false;
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:

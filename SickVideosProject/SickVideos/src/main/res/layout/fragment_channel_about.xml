@@ -25,6 +25,8 @@
                 >
 
                 <LinearLayout
+                    android:id="@+id/card"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_background"
@@ -33,12 +35,22 @@
                     android:padding="20dp">
 
 
-                    <include
-                        android:layout_width="match_parent"
+                    <FrameLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="#7000"
                         android:layout_marginTop="8dp"
 
-                        layout="@layout/youtube_item_image"/>
+                        android:padding="1dp"
+                        >
+
+                        <include
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            layout="@layout/youtube_item_image"/>
+
+                    </FrameLayout>
 
                     <TextView
                         android:layout_marginTop="10dp"

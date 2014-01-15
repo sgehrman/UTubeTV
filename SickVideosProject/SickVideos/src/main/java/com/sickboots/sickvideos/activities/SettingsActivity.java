@@ -12,6 +12,14 @@ import android.view.MenuItem;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
 
+// removed
+//<SwitchPreference
+//    android:key="show_hidden_videos"
+//    android:title="@string/pref_show_hidden_videos"
+//    android:summary="@string/pref_show_hidden_videos_summary"
+//    android:defaultValue="false"/>
+
+
 public class SettingsActivity extends Activity {
 
   @Override
