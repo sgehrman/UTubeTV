@@ -18,6 +18,7 @@ public class ViewDecorations {
   private boolean mDrawIcon = true;
   private boolean mIsPlaylist = false;
   private GradientDrawable mStrokeAndFill;
+  private GradientDrawable mStrokeAndFill2;
   int mHeight = 0, mWidth = 0;
 
   // gradients shared between all views to cut down on memory allocations etc.
@@ -36,14 +37,19 @@ public class ViewDecorations {
     mDrawShadows = set;
   }
 
-  public void strokeAndFill(Context context, int fillColor, int strokeColor, float radius, int thickness) {
-    mStrokeAndFill = new GradientDrawable();
-
+  public void strokeAndFill(Context context, int fillColor, int strokeColor, float radiusInDP, int thicknessInDP) {
     // convert thickness to px
-    thickness = (int) Utils.dpToPx(thickness, context);
+    int thickness = (int) Utils.dpToPx(thicknessInDP, context);
+    float radius = Utils.dpToPx(radiusInDP, context);
 
+    mStrokeAndFill = new GradientDrawable();
     mStrokeAndFill.setStroke(thickness, strokeColor);
     mStrokeAndFill.setColor(fillColor);
+
+    mStrokeAndFill2 = new GradientDrawable();
+    mStrokeAndFill2.setStroke(thickness, 0xff111111);
+    mStrokeAndFill2.setCornerRadius(radius);
+    mStrokeAndFill2.setColor(0);
   }
 
   public void drawInView(View view, Canvas canvas) {
@@ -51,6 +57,7 @@ public class ViewDecorations {
       adjustStrokeAndFillRect(view);
 
       mStrokeAndFill.draw(canvas);
+      mStrokeAndFill2.draw(canvas);
     }
 
     if (mDrawShadows) {
@@ -106,6 +113,7 @@ public class ViewDecorations {
       Rect rect = new Rect(0, 0, mWidth, mHeight);
 
       mStrokeAndFill.setBounds(rect);
+      mStrokeAndFill2.setBounds(rect);
     }
   }
 

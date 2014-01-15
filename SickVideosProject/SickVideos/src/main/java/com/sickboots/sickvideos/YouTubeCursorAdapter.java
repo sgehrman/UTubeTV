@@ -70,10 +70,10 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     ViewDecorations decorations = new ViewDecorations(request.type() == YouTubeServiceRequest.RequestType.PLAYLISTS);
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
-    int strokeColor = 0x88000000;
+    int strokeColor = context.getResources().getColor(R.color.card_fill_color);
     int fillColor = 0x44000000;
 
-    decorations.strokeAndFill(context, fillColor, strokeColor, 0.0f, 3);
+    decorations.strokeAndFill(context, fillColor, strokeColor, 12, 4);
 
     String[] from = new String[]{};
     int[] to = new int[]{};
