@@ -14,6 +14,7 @@ import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
+import com.sickboots.sickvideos.misc.SoundManager;
 import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Timer;
@@ -35,14 +36,13 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private YouTubePlayer mPlayer;
   private String mVideoId;
   private String mTitle;
-  private boolean mMuteState = false;
   private boolean mMutedForAd = false;
   private Timer mTimer;
   private TimeRemainingListener mTimeRemainingListener;
   private boolean mFullscreen = false;
   private VideoFragmentListener mFragmentListener;
   private boolean mInitializingPlayer = false;
-  private int mSavedVolume=0;
+  private SoundManager mSoundManager;
 
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
@@ -70,8 +70,23 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+
+    mSoundManager = new SoundManager(getActivity());
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    mSoundManager.restoreMuteIfNeeded();
+  }
+
+  @Override
   public void onDestroy() {
     destroyPlayer();
+
+    mSoundManager.restoreMuteIfNeeded();
 
     super.onDestroy();
   }
@@ -115,24 +130,11 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   public void mute(boolean muteState) {
-    AudioManager manager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-    if (mMuteState != muteState) {
-      mMuteState = muteState;
-
-      // setStreamMute is broken on my 4.1 galaxy nexus, so using volume instead
-      if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-        int saved = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
-
-        manager.setStreamVolume(AudioManager.STREAM_MUSIC, (mMuteState ? 0 : mSavedVolume), 0);
-
-        mSavedVolume = saved;
-      } else
-        manager.setStreamMute(AudioManager.STREAM_MUSIC, mMuteState);
-    }
+    mSoundManager.mute(muteState);
   }
 
   public boolean isMute() {
-    return mMuteState;
+    return mSoundManager.isMute();
   }
 
   public void setFullscreen(boolean state) {
