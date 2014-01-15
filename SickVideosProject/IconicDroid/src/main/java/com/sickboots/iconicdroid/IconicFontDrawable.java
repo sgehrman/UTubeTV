@@ -16,7 +16,13 @@
 package com.sickboots.iconicdroid;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
 import com.sickboots.iconicdroid.icon.Icon;
@@ -26,240 +32,240 @@ import com.sickboots.iconicdroid.icon.Icon;
  */
 public class IconicFontDrawable extends Drawable {
 
-    private Context mContext;
+  private Context mContext;
 
-    private Paint mIconPaint;
-    private Paint mContourPaint;
+  private Paint mIconPaint;
+  private Paint mContourPaint;
 
-    private Rect mPaddingBounds;
-    private RectF mPathBounds;
+  private Rect mPaddingBounds;
+  private RectF mPathBounds;
 
-    private Path mPath;
+  private Path mPath;
 
-    private int mIconPadding;
-    private int mContourWidth;
+  private int mIconPadding;
+  private int mContourWidth;
 
-    private int mIntrinsicWidth;
-    private int mIntrinsicHeight;
+  private int mIntrinsicWidth;
+  private int mIntrinsicHeight;
 
-    private boolean mDrawContour;
+  private boolean mDrawContour;
 
-    private Icon mIcon;
-    private char[] mIconUtfChars;
+  private Icon mIcon;
+  private char[] mIconUtfChars;
 
-    public IconicFontDrawable(Context context) {
-        mContext = context.getApplicationContext();
+  public IconicFontDrawable(Context context) {
+    mContext = context.getApplicationContext();
 
-        mIconPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mIconPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        mContourPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mContourPaint.setStyle(Paint.Style.STROKE);
+    mContourPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    mContourPaint.setStyle(Paint.Style.STROKE);
 
-        mPath = new Path();
+    mPath = new Path();
 
-        mPathBounds = new RectF();
-        mPaddingBounds = new Rect();
+    mPathBounds = new RectF();
+    mPaddingBounds = new Rect();
+  }
+
+  public IconicFontDrawable(Context context, final Icon icon) {
+    this(context);
+    updateIcon(icon);
+  }
+
+  /**
+   * Loads and draws given {@link Icon}.
+   *
+   * @param icon
+   */
+  public void setIcon(final Icon icon) {
+    updateIcon(icon);
+    invalidateSelf();
+  }
+
+  /**
+   * Set a color for the {@link Icon}.
+   *
+   * @param color
+   */
+  public void setIconColor(int color) {
+    mIconPaint.setColor(color);
+    invalidateSelf();
+  }
+
+  /**
+   * Set a padding for the {@link Icon}.
+   *
+   * @param iconPadding
+   */
+  public void setIconPadding(int iconPadding) {
+    mIconPadding = iconPadding;
+    if (mDrawContour) {
+      mIconPadding += mContourWidth;
     }
 
-    public IconicFontDrawable(Context context, final Icon icon) {
-        this(context);
-        updateIcon(icon);
+    invalidateSelf();
+  }
+
+  /**
+   * Set contour params for the {@link Icon}.
+   * You should call {@link #drawContour(boolean)} method to enable contour.
+   *
+   * @param contourColor
+   * @param contourWidth
+   */
+  public void setContour(int contourColor, int contourWidth) {
+    setContourColor(contourColor);
+    setContourWidth(contourWidth);
+    invalidateSelf();
+  }
+
+  /**
+   * Set contour color for the {@link Icon}.
+   * You should call {@link #drawContour(boolean)} method to enable contour.
+   *
+   * @param contourColor
+   */
+  public void setContourColor(int contourColor) {
+    mContourPaint.setColor(contourColor);
+    invalidateSelf();
+  }
+
+  /**
+   * Set contour width for the {@link Icon}.
+   * You should call {@link #drawContour(boolean)} method to enable contour.
+   *
+   * @param contourWidth
+   */
+  public void setContourWidth(int contourWidth) {
+    mContourWidth = contourWidth;
+    mContourPaint.setStrokeWidth(mContourWidth);
+    invalidateSelf();
+  }
+
+  /**
+   * Enable/disable contour drawing.
+   *
+   * @param drawContour
+   */
+  public void drawContour(boolean drawContour) {
+    mDrawContour = drawContour;
+
+    if (mDrawContour) {
+      mIconPadding += mContourWidth;
+    } else {
+      mIconPadding -= mContourWidth;
     }
 
-    /**
-     * Loads and draws given {@link Icon}.
-     *
-     * @param icon
-     */
-    public void setIcon(final Icon icon) {
-        updateIcon(icon);
-        invalidateSelf();
+    invalidateSelf();
+  }
+
+  /**
+   * Set intrinsic width, which is used by several controls.
+   *
+   * @param intrinsicWidth
+   */
+  public void setIntrinsicWidth(int intrinsicWidth) {
+    mIntrinsicWidth = intrinsicWidth;
+  }
+
+  /**
+   * Set intrinsic height, which is used by several controls.
+   *
+   * @param intrinsicHeight
+   */
+  public void setIntrinsicHeight(int intrinsicHeight) {
+    mIntrinsicHeight = intrinsicHeight;
+  }
+
+  @Override
+  public void draw(Canvas canvas) {
+    if (mIcon != null) {
+      final Rect viewBounds = getBounds();
+
+      updatePaddingBounds(viewBounds);
+      updateTextSize(viewBounds);
+      offsetIcon(viewBounds);
+
+      mPath.close();
+
+      if (mDrawContour) {
+        canvas.drawPath(mPath, mContourPaint);
+      }
+
+      canvas.drawPath(mPath, mIconPaint);
     }
+  }
 
-    /**
-     * Set a color for the {@link Icon}.
-     *
-     * @param color
-     */
-    public void setIconColor(int color) {
-        mIconPaint.setColor(color);
-        invalidateSelf();
+  @Override
+  public int getIntrinsicWidth() {
+    return mIntrinsicWidth;
+  }
+
+  @Override
+  public int getIntrinsicHeight() {
+    return mIntrinsicHeight;
+  }
+
+  @Override
+  public int getOpacity() {
+    return PixelFormat.OPAQUE;
+  }
+
+  @Override
+  public void setAlpha(int alpha) {
+    mIconPaint.setAlpha(alpha);
+  }
+
+  @Override
+  public void setColorFilter(ColorFilter cf) {
+    mIconPaint.setColorFilter(cf);
+  }
+
+  private void updateIcon(Icon icon) {
+    mIcon = icon;
+    mIconUtfChars = Character.toChars(icon.getIconUtfValue());
+    mIconPaint.setTypeface(mIcon.getIconicTypeface().getTypeface(mContext));
+  }
+
+  private void updatePaddingBounds(Rect viewBounds) {
+    if (mIconPadding >= 0
+        && !(mIconPadding * 2 > viewBounds.width())
+        && !(mIconPadding * 2 > viewBounds.height())) {
+      mPaddingBounds.set(
+          viewBounds.left + mIconPadding,
+          viewBounds.top + mIconPadding,
+          viewBounds.right - mIconPadding,
+          viewBounds.bottom - mIconPadding);
     }
+  }
 
-    /**
-     * Set a padding for the {@link Icon}.
-     *
-     * @param iconPadding
-     */
-    public void setIconPadding(int iconPadding) {
-        mIconPadding = iconPadding;
-        if (mDrawContour) {
-            mIconPadding += mContourWidth;
-        }
+  private void updateTextSize(Rect viewBounds) {
+    float textSize = (float) viewBounds.height() * 2;
+    mIconPaint.setTextSize(textSize);
 
-        invalidateSelf();
-    }
+    mIconPaint.getTextPath(mIconUtfChars, 0, mIconUtfChars.length,
+        0, viewBounds.height(), mPath);
+    mPath.computeBounds(mPathBounds, true);
 
-    /**
-     * Set contour params for the {@link Icon}.
-     * You should call {@link #drawContour(boolean)} method to enable contour.
-     *
-     * @param contourColor
-     * @param contourWidth
-     */
-    public void setContour(int contourColor, int contourWidth) {
-        setContourColor(contourColor);
-        setContourWidth(contourWidth);
-        invalidateSelf();
-    }
+    float deltaWidth = ((float) mPaddingBounds.width() / mPathBounds.width());
+    float deltaHeight = ((float) mPaddingBounds.height() / mPathBounds.height());
+    float delta = (deltaWidth < deltaHeight) ? deltaWidth : deltaHeight;
+    textSize *= delta;
 
-    /**
-     * Set contour color for the {@link Icon}.
-     * You should call {@link #drawContour(boolean)} method to enable contour.
-     *
-     * @param contourColor
-     */
-    public void setContourColor(int contourColor) {
-        mContourPaint.setColor(contourColor);
-        invalidateSelf();
-    }
+    mIconPaint.setTextSize(textSize);
 
-    /**
-     * Set contour width for the {@link Icon}.
-     * You should call {@link #drawContour(boolean)} method to enable contour.
-     *
-     * @param contourWidth
-     */
-    public void setContourWidth(int contourWidth) {
-        mContourWidth = contourWidth;
-        mContourPaint.setStrokeWidth(mContourWidth);
-        invalidateSelf();
-    }
+    mIconPaint.getTextPath(mIconUtfChars, 0, mIconUtfChars.length,
+        0, viewBounds.height(), mPath);
+    mPath.computeBounds(mPathBounds, true);
+  }
 
-    /**
-     * Enable/disable contour drawing.
-     *
-     * @param drawContour
-     */
-    public void drawContour(boolean drawContour) {
-        mDrawContour = drawContour;
+  private void offsetIcon(Rect viewBounds) {
+    float startX = viewBounds.centerX() - (mPathBounds.width() / 2);
+    float offsetX = startX - mPathBounds.left;
 
-        if (mDrawContour) {
-            mIconPadding += mContourWidth;
-        } else {
-            mIconPadding -= mContourWidth;
-        }
+    float startY = viewBounds.centerY() - (mPathBounds.height() / 2);
+    float offsetY = startY - (mPathBounds.top);
 
-        invalidateSelf();
-    }
-
-    /**
-     * Set intrinsic width, which is used by several controls.
-     *
-     * @param intrinsicWidth
-     */
-    public void setIntrinsicWidth(int intrinsicWidth) {
-        mIntrinsicWidth = intrinsicWidth;
-    }
-
-    /**
-     * Set intrinsic height, which is used by several controls.
-     *
-     * @param intrinsicHeight
-     */
-    public void setIntrinsicHeight(int intrinsicHeight) {
-        mIntrinsicHeight = intrinsicHeight;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        if (mIcon != null) {
-            final Rect viewBounds = getBounds();
-
-            updatePaddingBounds(viewBounds);
-            updateTextSize(viewBounds);
-            offsetIcon(viewBounds);
-
-            mPath.close();
-
-            if (mDrawContour) {
-                canvas.drawPath(mPath, mContourPaint);
-            }
-
-            canvas.drawPath(mPath, mIconPaint);
-        }
-    }
-
-    @Override
-    public int getIntrinsicWidth() {
-        return mIntrinsicWidth;
-    }
-
-    @Override
-    public int getIntrinsicHeight() {
-        return mIntrinsicHeight;
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.OPAQUE;
-    }
-
-    @Override
-    public void setAlpha(int alpha) {
-        mIconPaint.setAlpha(alpha);
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        mIconPaint.setColorFilter(cf);
-    }
-
-    private void updateIcon(Icon icon) {
-        mIcon = icon;
-        mIconUtfChars = Character.toChars(icon.getIconUtfValue());
-        mIconPaint.setTypeface(mIcon.getIconicTypeface().getTypeface(mContext));
-    }
-
-    private void updatePaddingBounds(Rect viewBounds) {
-        if (mIconPadding >= 0
-                && !(mIconPadding * 2 > viewBounds.width())
-                && !(mIconPadding * 2 > viewBounds.height())) {
-            mPaddingBounds.set(
-                    viewBounds.left + mIconPadding,
-                    viewBounds.top + mIconPadding,
-                    viewBounds.right - mIconPadding,
-                    viewBounds.bottom - mIconPadding);
-        }
-    }
-
-    private void updateTextSize(Rect viewBounds) {
-        float textSize = (float) viewBounds.height() * 2;
-        mIconPaint.setTextSize(textSize);
-
-        mIconPaint.getTextPath(mIconUtfChars, 0, mIconUtfChars.length,
-                0, viewBounds.height(), mPath);
-        mPath.computeBounds(mPathBounds, true);
-
-        float deltaWidth = ((float) mPaddingBounds.width() / mPathBounds.width());
-        float deltaHeight = ((float) mPaddingBounds.height() / mPathBounds.height());
-        float delta = (deltaWidth < deltaHeight) ? deltaWidth : deltaHeight;
-        textSize *= delta;
-
-        mIconPaint.setTextSize(textSize);
-
-        mIconPaint.getTextPath(mIconUtfChars, 0, mIconUtfChars.length,
-                0, viewBounds.height(), mPath);
-        mPath.computeBounds(mPathBounds, true);
-    }
-
-    private void offsetIcon(Rect viewBounds) {
-        float startX = viewBounds.centerX() - (mPathBounds.width() / 2);
-        float offsetX = startX - mPathBounds.left;
-
-        float startY = viewBounds.centerY() - (mPathBounds.height() / 2);
-        float offsetY = startY - (mPathBounds.top);
-
-        mPath.offset(offsetX, offsetY);
-    }
+    mPath.offset(offsetX, offsetY);
+  }
 }

@@ -1,18 +1,10 @@
 package com.sickboots.iconicdroid;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +18,11 @@ import com.sickboots.iconicdroid.icon.EntypoSocialIcon;
 import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.iconicdroid.icon.IconicIcon;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class IconicTypefaceActivity extends ListActivity {
 

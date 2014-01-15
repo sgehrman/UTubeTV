@@ -26,18 +26,18 @@ import java.io.Serializable;
  */
 public interface Icon extends Serializable {
 
-    /**
-     * Gets a {@link Typeface} for an Icon.
-     * 
-     * @return {@link IconicTypeface}
-     */
-    public TypefaceManager.IconicTypeface getIconicTypeface();
+  /**
+   * Gets a {@link Typeface} for an Icon.
+   *
+   * @return {@link IconicTypeface}
+   */
+  public TypefaceManager.IconicTypeface getIconicTypeface();
 
-    /**
-     * Returns UTF value of an Icon.
-     * 
-     * @return UTF value of an Icon
-     */
-    public int getIconUtfValue();
+  /**
+   * Returns UTF value of an Icon.
+   *
+   * @return UTF value of an Icon
+   */
+  public int getIconUtfValue();
 
 }
