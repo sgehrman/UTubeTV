@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="nerdistDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleNerdistDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileNerdistDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleNerdistDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateNerdistDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="viceDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleViceDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileViceDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleViceDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateViceDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/nerdist/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/vice/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/nerdist/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/vice/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/nerdist/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/nerdist/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/nerdist/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/nerdist/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/nerdist/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdistDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/nerdist/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/nerdist/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/nerdist/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/nerdist/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/nerdist/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/nerdist/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestNerdist/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/vice/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/vice/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/vice/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/vice/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/vice/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/vice/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/vice/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/vice/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/vice/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/vice/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/vice/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
