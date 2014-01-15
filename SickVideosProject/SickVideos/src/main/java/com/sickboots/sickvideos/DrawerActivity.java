@@ -66,7 +66,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     selectSection(section, false);
 
-    mPurchaseHelper = new PurchaseHelper(this);
+    // disabled until polished
+    // mPurchaseHelper = new PurchaseHelper(this);
 
     // general app tweaks
     // Debug.activateStrictMode();
@@ -255,7 +256,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         return true;
 
       case R.id.action_buy_taco:
-        mPurchaseHelper.onBuyGasButtonClicked(null, this);
+        if (mPurchaseHelper != null)
+          mPurchaseHelper.onBuyGasButtonClicked(null, this);
         return true;
       case R.id.action_channel_lookup:
         intent = new Intent();
