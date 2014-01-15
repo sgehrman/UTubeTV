@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoMenuView extends ImageView {
   private static Drawable sharedDrawable;

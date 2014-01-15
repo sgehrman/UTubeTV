@@ -8,7 +8,7 @@ import android.os.Build;
  * Created by sgehrman on 1/15/14.
  */
 public class SoundManager {
-  private boolean mMuteState=false;
+  private boolean mMuteState = false;
 
   private boolean mSavedMute;
   private int mSavedVolume;
@@ -38,7 +38,7 @@ public class SoundManager {
 
       AudioManager manager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
-    // setStreamMute is broken on my 4.1 (16) galaxy nexus, so using volume instead
+      // setStreamMute is broken on my 4.1 (16) galaxy nexus, so using volume instead
       if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
         int saved = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
 

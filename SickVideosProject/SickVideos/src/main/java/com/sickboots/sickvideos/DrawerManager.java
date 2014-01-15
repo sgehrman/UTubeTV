@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Map;
 import java.util.Observable;
