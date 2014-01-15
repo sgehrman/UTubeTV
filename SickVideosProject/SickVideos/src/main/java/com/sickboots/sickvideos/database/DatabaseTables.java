@@ -193,6 +193,7 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_DESCRIPTION = "description";
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
       public static final String COLUMN_NAME_ITEM_COUNT = "itemCount";
+      public static final String COLUMN_NAME_HIDDEN = "hidden";
     }
 
     private static PlaylistTable singleton = null;
@@ -227,6 +228,12 @@ public class DatabaseTables {
       result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
       result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
 
+      int col;
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
+      if (col != -1)
+        result.setHidden(cursor.getString(col) != null);
+
       return result;
     }
 
@@ -240,6 +247,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_ITEM_COUNT, item.mItemCount);
+      values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
     }
@@ -261,6 +269,8 @@ public class DatabaseTables {
           + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE
           + COMMA_SEP
           + Entry.COLUMN_NAME_ITEM_COUNT + INT_TYPE
+          + COMMA_SEP
+          + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
 
       return result;
@@ -280,7 +290,8 @@ public class DatabaseTables {
           Entry.COLUMN_NAME_TITLE,
           Entry.COLUMN_NAME_DESCRIPTION,
           Entry.COLUMN_NAME_THUMBNAIL,
-          Entry.COLUMN_NAME_ITEM_COUNT
+          Entry.COLUMN_NAME_ITEM_COUNT,
+          Entry.COLUMN_NAME_HIDDEN
       };
 
       return projection;
