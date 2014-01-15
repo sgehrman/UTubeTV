@@ -77,6 +77,9 @@ public class VideoPlayer {
     else {
       Utils.vibrate(mContext);
 
+      // update mute button since it could still be in mute mode
+      updateMuteButton();
+
       boolean animate = isPortrait();
 
       if (animate) {
