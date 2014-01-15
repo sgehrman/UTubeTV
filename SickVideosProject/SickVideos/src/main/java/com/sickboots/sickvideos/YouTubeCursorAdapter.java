@@ -71,7 +71,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
     int strokeColor = context.getResources().getColor(R.color.card_fill_color);
-    int fillColor = 0x44000000;
+    int fillColor = 0x22000000;
 
     decorations.strokeAndFill(context, fillColor, strokeColor, 12, 4);
 
