@@ -38,7 +38,7 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#7000"
+                        android:background="#3000"
                         android:layout_marginTop="8dp"
 
                         android:padding="1dp"

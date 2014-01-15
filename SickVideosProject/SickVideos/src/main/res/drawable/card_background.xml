@@ -12,7 +12,7 @@
             was stroke with android:width="2dp"
         -->
         <shape android:shape="rectangle">
-            <corners android:radius="3dp"/>
+            <corners android:radius="6dp"/>
             <solid
                 android:color="@color/card_shadow_color"
                 android:width="2dp"/>
@@ -25,7 +25,7 @@
         >
 
         <shape android:shape="rectangle">
-            <corners android:radius="3dp"/>
+            <corners android:radius="6dp"/>
             <stroke
                 android:color="@color/card_frame_color"
                 android:width="1dp"></stroke>
