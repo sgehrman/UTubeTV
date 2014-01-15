@@ -79,11 +79,13 @@ public class VideoPlayer {
       if (animate) {
         // Initially translate off the screen so that it can be animated in from below.
         mVideoBox.setTranslationY(-mVideoBox.getHeight());
+        mVideoBox.setAlpha(0f);
 
         mVideoBox.setVisibility(View.VISIBLE);
 
         mVideoBox.animate()
             .translationY(0)
+            .alpha(1f)
             .setInterpolator(new AccelerateDecelerateInterpolator())
             .setDuration(mAnimationDuration)
             .withEndAction(new Runnable() {
@@ -111,6 +113,7 @@ public class VideoPlayer {
       if (animate) {
         mVideoBox.animate()
             .translationYBy(-mVideoBox.getHeight())
+            .alpha(.3f)
             .setInterpolator(new AccelerateInterpolator())
             .setDuration(animate ? mAnimationDuration : 0)
             .withEndAction(new Runnable() {
