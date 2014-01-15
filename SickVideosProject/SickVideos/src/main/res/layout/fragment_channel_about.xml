@@ -19,8 +19,10 @@
                 android:layout_height="wrap_content"
 
                 android:orientation="vertical"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -28,30 +30,32 @@
                     android:background="@drawable/card_background"
                     android:orientation="vertical"
 
-                    android:padding="12dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:id="@+id/text_view"
-                        style="@style/VideoTextTitle_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:ellipsize="end"
-                        android:maxLines="2"/>
 
                     <include
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginTop="8dp"
 
                         layout="@layout/youtube_item_image"/>
 
                     <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/text_view"
+                        style="@style/VideoTextTitle_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+
                         android:id="@+id/description_view"
                         android:layout_width="match_parent"
 
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"/>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
