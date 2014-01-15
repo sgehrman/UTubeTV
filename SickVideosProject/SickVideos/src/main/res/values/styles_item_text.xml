@@ -3,9 +3,11 @@
     <style name="text_common">
         <item name="android:ellipsize">end</item>
     </style>
+
     <style name="title_common" parent="text_common">
         <item name="android:lineSpacingExtra">-2sp</item>
     </style>
+
     <style name="description_common" parent="text_common">
         <item name="android:lineSpacingExtra">-1sp</item>
     </style>

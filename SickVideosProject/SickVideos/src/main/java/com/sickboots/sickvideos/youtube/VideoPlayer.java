@@ -1,8 +1,6 @@
 package com.sickboots.sickvideos.youtube;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;

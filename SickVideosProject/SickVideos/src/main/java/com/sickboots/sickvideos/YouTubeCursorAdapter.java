@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -201,8 +200,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         // multiple columns must be same height
         holder.description.setMinLines(descriptionHeight);
         holder.title.setMinLines(titleHeight);
-      }
-      else {
+      } else {
         holder.description.setMaxLines(mTheme.mDescriptionMaxLines);
         holder.title.setMaxLines(mTheme.mTitleMaxLines);
 
@@ -230,8 +228,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     GridView gridView = (GridView) parent;
     boolean multiColumns = gridView.getNumColumns() > 1;
 
-   convertView = prepareViews(convertView, multiColumns);
-   ViewHolder holder = (ViewHolder) convertView.getTag();
+    convertView = prepareViews(convertView, multiColumns);
+    ViewHolder holder = (ViewHolder) convertView.getTag();
 
     Cursor cursor = (Cursor) getItem(position);
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
