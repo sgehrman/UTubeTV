@@ -31,7 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.Random;
 
 public class Utils {
-  static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
+  private static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
+  private static float sScreenDensity = 0;
 
   // interface for getting results
   public interface StringResultListener {
@@ -101,12 +102,20 @@ public class Utils {
     ft.commit();
   }
 
+  public static float screenDensity(Context context) {
+    // assuming it's faster to cache this
+    if (sScreenDensity == 0)
+      sScreenDensity = context.getResources().getDisplayMetrics().density;
+
+    return sScreenDensity;
+  }
+
   public static float pxToDp(float px, Context context) {
-    return px / context.getResources().getDisplayMetrics().density;
+    return px / screenDensity(context);
   }
 
   public static float dpToPx(float dp, Context context) {
-    return dp * context.getResources().getDisplayMetrics().density;
+    return dp * screenDensity(context);
   }
 
   public static int randomColor() {

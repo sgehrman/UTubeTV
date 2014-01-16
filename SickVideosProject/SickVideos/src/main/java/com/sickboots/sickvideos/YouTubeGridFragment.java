@@ -19,6 +19,7 @@ import android.widget.AbsListView;
 import android.widget.GridView;
 
 import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseTables;
@@ -143,8 +144,8 @@ public class YouTubeGridFragment extends Fragment
     gridView.setOnItemClickListener(mAdapter);
 
     // enable this for swipe to dismiss to hide (TODO)
-    // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mAdapter, this));
-    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mAdapter, this));
+//    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
     swingBottomInAnimationAdapter.setInitialDelayMillis(200);
     swingBottomInAnimationAdapter.setAbsListView(gridView);
 
@@ -163,6 +164,7 @@ public class YouTubeGridFragment extends Fragment
   // OnDismissCallback
   @Override
   public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
+    Utils.toast(getActivity(), "Item Hidden");
 //    for (int position : reverseSortedPositions) {
 //      mGoogleCardsAdapter.remove(position);
 //    }
