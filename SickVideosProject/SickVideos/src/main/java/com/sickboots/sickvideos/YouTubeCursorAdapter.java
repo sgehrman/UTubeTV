@@ -158,6 +158,19 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private View prepareViews(View convertView, boolean multiColumns) {
     ViewHolder holder = null;
 
+    // ## This fixes a problem with the SwipeToDismissAdapter.
+    // After dismiss, the view is left in a state with a zero height
+    // rather than fixing it, just refusing to reuse it.
+    if (convertView != null)
+    {
+      ViewGroup.LayoutParams lp = convertView.getLayoutParams();
+      if (lp != null && lp.height == 0) {
+        Debug.log("not reusing dismissed view");
+        convertView = null;
+      }
+    }
+
+
     if (convertView == null) {
       convertView = inflater.inflate(mTheme.mTheme_itemResId, null);
 
