@@ -213,7 +213,7 @@ public class Utils {
     Resources resources = gContext.getResources();
     float scale = resources.getDisplayMetrics().density;
     int fontSize = (int) (fontSizeInDP*scale);
-    boolean debugging = true;
+    boolean debugging = false;
 
     Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(bitmap);
