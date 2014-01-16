@@ -236,16 +236,15 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
 
         return true;
-      case R.id.action_show_hidden:
-
+      case R.id.action_show_hidden: {
         boolean toggle = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
         AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
         YouTubeGridFragment fragment = currentYouTubeFragment();
 
         if (fragment != null)
           fragment.reloadForPrefChange();
-
-        return true;
+      }
+      return true;
       case R.id.action_more_apps:
         intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://search?q=pub:Sick Boots"));
@@ -273,11 +272,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
         startActivity(intent);
         return true;
-      case R.id.action_color_picker:
+      case R.id.action_color_picker: {
         Fragment fragment = new ColorPickerFragment();
         Utils.showFragment(this, fragment, R.id.fragment_holder, 0, true);
-
-        return true;
+      }
+      return true;
 
       default:
         return super.onOptionsItemSelected(item);
