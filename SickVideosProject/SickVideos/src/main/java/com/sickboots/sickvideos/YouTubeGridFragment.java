@@ -22,6 +22,7 @@ import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.sickboots.sickvideos.database.Database;
+import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -165,9 +166,20 @@ public class YouTubeGridFragment extends Fragment
   @Override
   public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
     Utils.toast(getActivity(), "Item Hidden");
-//    for (int position : reverseSortedPositions) {
-//      mGoogleCardsAdapter.remove(position);
-//    }
+    for (int position : reverseSortedPositions) {
+      Cursor cursor = (Cursor) mAdapter.getItem(position);
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
+
+      DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
+
+      // could get from database, but it's the same item
+      // itemMap = database.getItemWithID(itemMap.mID);
+
+      if (itemMap != null) {
+        itemMap.setHidden(!itemMap.isHidden());
+        database.updateItem(itemMap);
+      }
+    }
   }
 
   // YouTubeCursorAdapterListener
