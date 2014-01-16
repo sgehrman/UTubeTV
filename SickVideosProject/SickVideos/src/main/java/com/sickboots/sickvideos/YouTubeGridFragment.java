@@ -45,21 +45,11 @@ public class YouTubeGridFragment extends Fragment
     implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener,
     LoaderManager.LoaderCallbacks<Cursor> {
 
-  // Activity should host a player
-  public static interface HostActivitySupport {
-    public VideoPlayer videoPlayer(boolean createIfNeeded);
-
-    public void showPlaylistsFragment();
-
-    public void installFragment(Fragment fragment, boolean animate);
-  }
-
-  EmptyListHelper mEmptyListHelper;
-
+  private EmptyListHelper mEmptyListHelper;
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapter mAdapter;
-  PullToRefreshLayout mPullToRefreshLayout;
-
+  private PullToRefreshLayout mPullToRefreshLayout;
+  private boolean mCachedHiddenPref;
   private DataReadyBroadcastReceiver broadcastReceiver;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
@@ -72,23 +62,6 @@ public class YouTubeGridFragment extends Fragment
     fragment.setArguments(args);
 
     return fragment;
-  }
-
-  private class DataReadyBroadcastReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
-        String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
-
-        // stop the pull to refresh indicator
-        // Notify PullToRefreshLayout that the refresh has finished
-        mPullToRefreshLayout.setRefreshComplete();
-
-        // in the case of no results, we need to update the emptylist view to reflect that
-        // This only shows up at launch, or the first time a list is requested
-        mEmptyListHelper.updateEmptyListView("List is Empty", true);
-      }
-    }
   }
 
   public void playerStateChanged() {
@@ -233,6 +206,9 @@ public class YouTubeGridFragment extends Fragment
     IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
     LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
 
+    // reload if the hidden pref is now how we remember it
+    reloadForPrefChange();
+
     syncActionBarTitle();
   }
 
@@ -255,7 +231,12 @@ public class YouTubeGridFragment extends Fragment
 
   // called by activity on menu item action for show hidden files toggle
   public void reloadForPrefChange() {
-    getLoaderManager().restartLoader(0, null, this);
+    boolean showHidden = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+
+    if (mCachedHiddenPref != showHidden) {
+      mCachedHiddenPref = showHidden;
+      getLoaderManager().restartLoader(0, null, this);
+    }
   }
 
   @Override
@@ -264,9 +245,9 @@ public class YouTubeGridFragment extends Fragment
 
     String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
 
-    boolean showAll = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    mCachedHiddenPref = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
     int queryID = DatabaseTables.VISIBLE_ITEMS;
-    if (showAll)
+    if (mCachedHiddenPref)
       queryID = DatabaseTables.ALL_ITEMS;
 
     Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier());
@@ -285,6 +266,32 @@ public class YouTubeGridFragment extends Fragment
   @Override
   public void onLoaderReset(Loader<Cursor> arg0) {
     mAdapter.swapCursor(null);
+  }
+
+  // Activity should host a player
+  public static interface HostActivitySupport {
+    public VideoPlayer videoPlayer(boolean createIfNeeded);
+
+    public void showPlaylistsFragment();
+
+    public void installFragment(Fragment fragment, boolean animate);
+  }
+
+  private class DataReadyBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
+        String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
+
+        // stop the pull to refresh indicator
+        // Notify PullToRefreshLayout that the refresh has finished
+        mPullToRefreshLayout.setRefreshComplete();
+
+        // in the case of no results, we need to update the emptylist view to reflect that
+        // This only shows up at launch, or the first time a list is requested
+        mEmptyListHelper.updateEmptyListView("List is Empty", true);
+      }
+    }
   }
 
 
