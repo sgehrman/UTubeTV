@@ -303,6 +303,14 @@ public class DatabaseTables {
       String[] selectionArgs = null;
       String[] projection = defaultProjection();
 
+      switch (queryID) {
+        case VISIBLE_ITEMS:
+          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NULL";
+          break;
+        case ALL_ITEMS:
+          break;
+      }
+
       if (requestId != null) {
         selectionArgs = new String[]{requestId};
 
