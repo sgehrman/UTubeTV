@@ -121,12 +121,18 @@ public class ViewDecorations {
     }
 
     if (mHiddenDrawable == null) {
-      Bitmap bitmap = Utils.drawTextToBitmap(view.getContext(), w, h/2, "Click to Unhide", 0xffffffff, 0xff000000, 26, 0xaa000000, 33, 0xaaffffff, 1f);
+      Bitmap bitmap = Utils.drawTextToBitmap(view.getContext(), (int) (w*.8f), h/3, "Click to Unhide", 0xffffffff, 0xff000000, 26, 0xaa000000, 33, 0xaaffffff, 1f);
 
       mHiddenDrawable = new BitmapDrawable(view.getContext().getResources(), bitmap);
       mHiddenDrawable.setGravity(Gravity.CENTER);
 
-      Rect rect = new Rect(0, 0, w, h/2);
+      int imageWidth = mHiddenDrawable.getIntrinsicWidth();
+      int imageHeight = mHiddenDrawable.getIntrinsicHeight();
+
+      int x = (w-imageWidth)/2;
+      int y = (h-imageHeight)/4;
+
+      Rect rect = new Rect(x,y, x+imageWidth, y+imageHeight);
 
       mHiddenDrawable.setBounds(rect);
   }
