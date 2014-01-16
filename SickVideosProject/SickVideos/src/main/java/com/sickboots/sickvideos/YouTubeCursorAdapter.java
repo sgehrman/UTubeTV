@@ -170,7 +170,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       }
     }
 
-
     if (convertView == null) {
       convertView = inflater.inflate(mTheme.mTheme_itemResId, null);
 
