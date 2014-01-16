@@ -28,29 +28,10 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener, View.OnClickListener {
 
-  private static class Theme {
-    float mTheme_imageAlpha;
-    int mTheme_itemResId;
-    int mTheme_resId;
-    boolean mTheme_drawImageShadows;
-    boolean mClickTextToExpand;
-    int mTitleMaxLines;
-    int mDescriptionMaxLines;
-    boolean mSupportsMenuButton;
-  }
-
-  private static class ViewHolder {
-    TextView title;
-    TextView description;
-    TextView duration;
-    VideoImageView image;
-    VideoMenuView menuButton;
-  }
-
   private final LayoutInflater inflater;
+  private final YouTubeData mReusedData = new YouTubeData(); // avoids a memory alloc when drawing
   private int animationID = 0;
   private Context mContext;
-  private final YouTubeData mReusedData = new YouTubeData(); // avoids a memory alloc when drawing
   private Theme mTheme;
   private YouTubeServiceRequest mRequest;
   private YouTubeCursorAdapterListener mListener;
@@ -58,10 +39,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private boolean mClickAnimationsEnabled = false; // off for now
   private ViewDecorations mDecorations;
 
-  public interface YouTubeCursorAdapterListener {
-    public void handleClickFromAdapter(YouTubeData itemMap);
+  private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from,
+                               int[] to, int flags) {
+    super(context, layout, c, from, to, flags);
 
-    public Activity accesActivity();
+    inflater = LayoutInflater.from(context);
   }
 
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
@@ -88,15 +70,44 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     return result;
   }
 
-  public ViewGroup rootView(ViewGroup container) {
-    return (ViewGroup) inflater.inflate(mTheme.mTheme_resId, container, false);
+  private static Theme newTheme(Context context) {
+    Theme result = new Theme();
+
+    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+
+    result.mClickTextToExpand = true;
+    result.mTheme_imageAlpha = 1.0f;
+    result.mTheme_drawImageShadows = false;
+    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
+    result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
+    result.mSupportsMenuButton = false;
+
+    switch (Integer.parseInt(themeStyle)) {
+      case 0:
+        result.mTheme_itemResId = R.layout.youtube_item_dark;
+        result.mTheme_resId = R.layout.fragment_grid_dark;
+        result.mTheme_drawImageShadows = true;
+        result.mClickTextToExpand = false;
+        break;
+      case 1:
+        result.mTheme_itemResId = R.layout.youtube_item_light;
+        result.mTheme_resId = R.layout.fragment_grid_light;
+        break;
+      case 2:
+        result.mTheme_itemResId = R.layout.youtube_item_card;
+        result.mTheme_resId = R.layout.fragment_grid_card;
+        break;
+      case 3:
+        result.mTheme_itemResId = R.layout.youtube_item_poster;
+        result.mTheme_resId = R.layout.fragment_grid_card;
+        break;
+    }
+
+    return result;
   }
 
-  private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from,
-                               int[] to, int flags) {
-    super(context, layout, c, from, to, flags);
-
-    inflater = LayoutInflater.from(context);
+  public ViewGroup rootView(ViewGroup container) {
+    return (ViewGroup) inflater.inflate(mTheme.mTheme_resId, container, false);
   }
 
   private void animateViewForClick(final View theView) {
@@ -137,9 +148,19 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       Cursor cursor = (Cursor) getItem(position);
       YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
 
-      mListener.handleClickFromAdapter(itemMap);
-    } else {
-      Debug.log("no holder on click?");
+      if (itemMap != null) {
+        // if hidden, a click unhides it
+        if (itemMap.isHidden()) {
+          DatabaseAccess database = new DatabaseAccess(mContext, mRequest);
+
+          itemMap.setHidden(false);
+          database.updateItem(itemMap);
+        } else {
+          mListener.handleClickFromAdapter(itemMap);
+        }
+      } else {
+        Debug.log("no holder on click?");
+      }
     }
   }
 
@@ -345,39 +366,28 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
   }
 
-  private static Theme newTheme(Context context) {
-    Theme result = new Theme();
+  public interface YouTubeCursorAdapterListener {
+    public void handleClickFromAdapter(YouTubeData itemMap);
 
-    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+    public Activity accesActivity();
+  }
 
-    result.mClickTextToExpand = true;
-    result.mTheme_imageAlpha = 1.0f;
-    result.mTheme_drawImageShadows = false;
-    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
-    result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
-    result.mSupportsMenuButton = false;
+  private static class Theme {
+    float mTheme_imageAlpha;
+    int mTheme_itemResId;
+    int mTheme_resId;
+    boolean mTheme_drawImageShadows;
+    boolean mClickTextToExpand;
+    int mTitleMaxLines;
+    int mDescriptionMaxLines;
+    boolean mSupportsMenuButton;
+  }
 
-    switch (Integer.parseInt(themeStyle)) {
-      case 0:
-        result.mTheme_itemResId = R.layout.youtube_item_dark;
-        result.mTheme_resId = R.layout.fragment_grid_dark;
-        result.mTheme_drawImageShadows = true;
-        result.mClickTextToExpand = false;
-        break;
-      case 1:
-        result.mTheme_itemResId = R.layout.youtube_item_light;
-        result.mTheme_resId = R.layout.fragment_grid_light;
-        break;
-      case 2:
-        result.mTheme_itemResId = R.layout.youtube_item_card;
-        result.mTheme_resId = R.layout.fragment_grid_card;
-        break;
-      case 3:
-        result.mTheme_itemResId = R.layout.youtube_item_poster;
-        result.mTheme_resId = R.layout.fragment_grid_card;
-        break;
-    }
-
-    return result;
+  private static class ViewHolder {
+    TextView title;
+    TextView description;
+    TextView duration;
+    VideoImageView image;
+    VideoMenuView menuButton;
   }
 }
