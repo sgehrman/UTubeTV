@@ -12,8 +12,8 @@
     <string name="pref_mute_ads">Mute ads</string>
     <string name="pref_mute_ads_summary">Volume muted at start of ad, and restored at end.</string>
 
-    <string name="pref_show_hidden_videos">Show hidden videos</string>
-    <string name="pref_show_hidden_videos_summary">Show all videos including ones you\'ve hidden.</string>
+    <string name="pref_show_hidden_items">Show hidden items</string>
+    <string name="pref_show_hidden_items_summary">Show all items including ones you\'ve hidden.</string>
 
     <string name="pref_repeat_video">Repeat video</string>
     <string name="pref_repeat_video_summary">Repeats video in a loop.</string>

@@ -42,7 +42,8 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class YouTubeGridFragment extends Fragment
-    implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener {
+    implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener,
+    LoaderManager.LoaderCallbacks<Cursor> {
 
   // Activity should host a player
   public static interface HostActivitySupport {
@@ -152,7 +153,8 @@ public class YouTubeGridFragment extends Fragment
 
     gridView.setAdapter(swingBottomInAnimationAdapter);
 
-    createLoader();
+    // create the loader
+    getLoaderManager().initLoader(0, null, this);
 
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
@@ -251,33 +253,40 @@ public class YouTubeGridFragment extends Fragment
     YouTubeListService.startRequest(getActivity(), mRequest, true);
   }
 
-  private void createLoader() {
-    getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
-      @Override
-      public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        DatabaseTables.DatabaseTable table = mRequest.databaseTable();
-
-        String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
-
-        Database.DatabaseQuery queryParams = table.queryParams(DatabaseTables.VISIBLE_ITEMS, mRequest.requestIdentifier());
-
-        YouTubeListService.startRequest(getActivity(), mRequest, false);
-
-        return new CursorLoader(getActivity(),
-            YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
-      }
-
-      @Override
-      public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
-        mAdapter.swapCursor(c);
-      }
-
-      @Override
-      public void onLoaderReset(Loader<Cursor> arg0) {
-        mAdapter.swapCursor(null);
-      }
-    });
-
+  // called by activity on menu item action for show hidden files toggle
+  public void reloadForPrefChange() {
+    getLoaderManager().restartLoader(0, null, this);
   }
+
+  @Override
+  public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    DatabaseTables.DatabaseTable table = mRequest.databaseTable();
+
+    String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
+
+    boolean showAll = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    int queryID = DatabaseTables.VISIBLE_ITEMS;
+    if (showAll)
+      queryID = DatabaseTables.ALL_ITEMS;
+
+    Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier());
+
+    YouTubeListService.startRequest(getActivity(), mRequest, false);
+
+    return new CursorLoader(getActivity(),
+        YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
+  }
+
+  @Override
+  public void onLoadFinished(Loader<Cursor> loader, Cursor c) {
+    mAdapter.swapCursor(c);
+  }
+
+  @Override
+  public void onLoaderReset(Loader<Cursor> arg0) {
+    mAdapter.swapCursor(null);
+  }
+
+
 }
 

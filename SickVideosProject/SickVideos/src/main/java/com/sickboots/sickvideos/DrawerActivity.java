@@ -236,7 +236,16 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
 
         return true;
+      case R.id.action_show_hidden:
 
+        boolean toggle = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+        AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
+        YouTubeGridFragment ytgf = currentYouTubeFragment();
+
+        if (ytgf != null)
+          ytgf.reloadForPrefChange();
+
+        return true;
       case R.id.action_more_apps:
         intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://search?q=pub:Sick Boots"));
@@ -333,6 +342,17 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
   }
 
+  private YouTubeGridFragment currentYouTubeFragment() {
+    YouTubeGridFragment result = null;
+
+    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
+
+    if (fragment instanceof YouTubeGridFragment)
+      result = (YouTubeGridFragment) fragment;
+
+    return result;
+  }
+
   @Override
   public VideoPlayer videoPlayer(boolean createIfNeeded) {
     if (createIfNeeded) {
@@ -340,19 +360,14 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         mPlayer = new VideoPlayer(this, R.id.youtube_fragment, new VideoPlayer.VideoPlayerStateListener() {
 
           // called when the video player opens or closes, adjust the action bar title
-
           @Override
           public void stateChanged() {
+            YouTubeGridFragment ytgf = currentYouTubeFragment();
 
-            Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_holder);
-
-            if (fragment instanceof YouTubeGridFragment) {
-              YouTubeGridFragment ytgf = (YouTubeGridFragment) fragment;
-
+            if (ytgf != null)
               ytgf.playerStateChanged();
-
-            }
           }
+
         });
       }
     }
@@ -360,3 +375,4 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     return mPlayer;
   }
 }
+

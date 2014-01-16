@@ -18,6 +18,12 @@
         android:summary="@string/pref_repeat_video_summary"
         android:defaultValue="false"/>
 
+    <SwitchPreference
+        android:key="show_hidden_items"
+        android:title="@string/pref_show_hidden_items"
+        android:summary="@string/pref_show_hidden_items_summary"
+        android:defaultValue="false"/>
+
     <Preference
         android:title="@string/pref_rate_app"
         android:summary="@string/pref_rate_app_summary"

@@ -13,6 +13,12 @@
         android:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_show_hidden"
+        android:title="@string/action_show_hidden"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_switch_view"
         android:title="@string/switch_view"
         android:orderInCategory="100"
