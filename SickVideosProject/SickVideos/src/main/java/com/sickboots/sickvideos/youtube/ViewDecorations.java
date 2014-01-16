@@ -1,11 +1,15 @@
 package com.sickboots.sickvideos.youtube;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.view.Gravity;
 import android.view.View;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
@@ -27,10 +31,16 @@ public class ViewDecorations {
   private int mGradientHeight;
   private BitmapDrawable mPlayBitmap = null;
 
-  public ViewDecorations(boolean isPlaylist) {
+  private BitmapDrawable mHiddenDrawable;
+
+  public ViewDecorations(Context context, boolean isPlaylist) {
     super();
 
     mIsPlaylist = isPlaylist;
+
+    Bitmap bitmap = Utils.drawTextToBitmap(context, 400, 100, "Click to Unhide");
+mHiddenDrawable = new BitmapDrawable(context.getResources(), bitmap);
+    mHiddenDrawable.setGravity(Gravity.CENTER);
   }
 
   public void setDrawShadows(boolean set) {
@@ -52,7 +62,7 @@ public class ViewDecorations {
     mStrokeAndFill2.setColor(0);
   }
 
-  public void drawInView(View view, Canvas canvas) {
+  public void drawInView(View view, boolean drawHiddenIndicator, Canvas canvas) {
     if (mStrokeAndFill != null) {
       adjustStrokeAndFillRect(view);
 
@@ -89,6 +99,23 @@ public class ViewDecorations {
       mPlayBitmap.setBounds(x, y, x + playButtonSize, y + playButtonSize);
       mPlayBitmap.draw(canvas);
     }
+
+    if (drawHiddenIndicator) {
+
+      int w = view.getWidth();
+      int h = view.getHeight();
+
+
+        Rect rect = new Rect(0, 0, w, h);
+
+      mHiddenDrawable.setBounds(rect);
+
+
+
+        mHiddenDrawable.draw(canvas);
+
+    }
+
   }
 
   private void adjustGradientRects(View view) {

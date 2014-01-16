@@ -49,7 +49,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   private final LayoutInflater inflater;
   private int animationID = 0;
-  private boolean showHidden = false;
   private Context mContext;
   private final YouTubeData mReusedData = new YouTubeData(); // avoids a memory alloc when drawing
   private Theme mTheme;
@@ -68,7 +67,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
     Theme theme = newTheme(context);
 
-    ViewDecorations decorations = new ViewDecorations(request.type() == YouTubeServiceRequest.RequestType.PLAYLISTS);
+    ViewDecorations decorations = new ViewDecorations(context, request.type() == YouTubeServiceRequest.RequestType.PLAYLISTS);
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
     int strokeColor = context.getResources().getColor(R.color.card_fill_color);
@@ -260,14 +259,10 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
     });
 
-    boolean hidden = false;
-    if (!showHidden)
-      hidden = itemMap.isHidden();
+    boolean hidden = itemMap.isHidden();
+    holder.image.setDrawHiddenIndicator(hidden);
 
-    if (hidden)
-      holder.title.setText("(Hidden)");
-    else
-      holder.title.setText(itemMap.mTitle);
+    holder.title.setText(itemMap.mTitle);
 
     String duration = itemMap.mDuration;
     if (duration != null) {
