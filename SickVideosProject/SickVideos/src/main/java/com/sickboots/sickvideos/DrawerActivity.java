@@ -220,6 +220,19 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   }
 
   @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    MenuItem item = menu.findItem(R.id.action_show_hidden);
+
+    if (item != null) {
+      boolean showHidden = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+
+      item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
+    }
+
+    return super.onPrepareOptionsMenu(menu);
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
 
