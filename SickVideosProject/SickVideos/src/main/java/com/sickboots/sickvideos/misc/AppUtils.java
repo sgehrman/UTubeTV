@@ -20,7 +20,6 @@ public class AppUtils {
 
   // public notifications
   public static final String THEME_CHANGED = "theme_changed";
-  public static final String SHOW_HIDDEN_CHANGED = "hidden_changed";
 
   private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
@@ -33,8 +32,6 @@ public class AppUtils {
       public void prefChanged(String prefName) {
         if (prefName.equals(Preferences.THEME_STYLE)) {
           sendNotification(THEME_CHANGED);
-        } else if (prefName.equals(Preferences.SHOW_HIDDEN_ITEMS)) {
-          sendNotification(SHOW_HIDDEN_CHANGED);
         }
       }
     });
