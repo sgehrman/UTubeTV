@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -208,33 +209,61 @@ public class Utils {
     return isConnected;
   }
 
-  public static Bitmap drawTextToBitmap(Context gContext, int width, int height, String gText) {
+  public static Bitmap drawTextToBitmap(Context gContext, int width, int height, String gText, int textColor, int shadowColor, int fontSizeInDP, int fillColor, int fillRadius, int strokeColor, float strokeWidth) {
     Resources resources = gContext.getResources();
     float scale = resources.getDisplayMetrics().density;
+    int fontSize = (int) (fontSizeInDP*scale);
+    boolean debugging = true;
 
-    Bitmap bitmap = Bitmap.createBitmap((int) (width*scale), (int) (height*scale), Bitmap.Config.ARGB_8888);
+    Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(bitmap);
 
-    // new antialised Paint
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    canvas.drawPaint(paint);
 
-    // text color - #3D3D3D
-    paint.setColor(Color.rgb(61, 61, 61));
-    // text size in pixels
-    paint.setTextSize((int) (25 * scale));
-    // text shadow
-    paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+    // ---------------
+    // draw fill
+
+    if (fillColor != 0) {
+      paint.setStyle(Paint.Style.FILL);
+
+      paint.setColor(fillColor);
+      canvas.drawRoundRect(new RectF(0, 0, width, height), fillRadius, fillRadius, paint);
+    }
+
+    if (strokeColor != 0) {
+      paint.setStyle(Paint.Style.STROKE);
+      paint.setColor(strokeColor);
+      paint.setStrokeWidth(strokeWidth);
+      canvas.drawRoundRect(new RectF(0, 0, width, height), fillRadius, fillRadius, paint);
+    }
+
+    // ---------------
+    // draw text
+    paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+    paint.setColor(textColor);
+    paint.setTextSize(fontSize);
+    paint.setShadowLayer(1f, 0f, 1f, shadowColor);
 
     // draw text to the Canvas center
     Rect bounds = new Rect();
     paint.setTextAlign(Paint.Align.CENTER);
 
     paint.getTextBounds(gText, 0, gText.length(), bounds);
-    int x = (bitmap.getWidth() - bounds.width())/2;
-    int y = (bitmap.getHeight() - bounds.height())/2;
+    int x = (bitmap.getWidth())/2;
+    int y = (bitmap.getHeight() + bounds.height())/2;
 
-    canvas.drawText(gText, x * scale, y * scale, paint);
+    canvas.drawText(gText, x, y, paint);
+
+    if (debugging)
+    {
+      int xx = (bitmap.getWidth())/2;
+      int yy = (bitmap.getHeight())/2;
+      paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+      paint.setColor(0xff880099);
+
+      canvas.drawRect(new Rect(xx-4, yy-4, xx+8, yy+8), paint);
+    }
 
     return bitmap;
   }

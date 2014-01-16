@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
@@ -17,14 +15,13 @@ import com.sickboots.sickvideos.misc.Utils;
 
 public class ViewDecorations {
 
+  int mHeight = 0, mWidth = 0;
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
   private boolean mDrawIcon = true;
   private boolean mIsPlaylist = false;
   private GradientDrawable mStrokeAndFill;
   private GradientDrawable mStrokeAndFill2;
-  int mHeight = 0, mWidth = 0;
-
   // gradients shared between all views to cut down on memory allocations etc.
   private GradientDrawable mTopGradient;
   private GradientDrawable mBottomGradient;
@@ -32,15 +29,12 @@ public class ViewDecorations {
   private BitmapDrawable mPlayBitmap = null;
 
   private BitmapDrawable mHiddenDrawable;
+  private int mHiddenDrawableWidth;
 
   public ViewDecorations(Context context, boolean isPlaylist) {
     super();
 
     mIsPlaylist = isPlaylist;
-
-    Bitmap bitmap = Utils.drawTextToBitmap(context, 400, 100, "Click to Unhide");
-mHiddenDrawable = new BitmapDrawable(context.getResources(), bitmap);
-    mHiddenDrawable.setGravity(Gravity.CENTER);
   }
 
   public void setDrawShadows(boolean set) {
@@ -100,22 +94,8 @@ mHiddenDrawable = new BitmapDrawable(context.getResources(), bitmap);
       mPlayBitmap.draw(canvas);
     }
 
-    if (drawHiddenIndicator) {
-
-      int w = view.getWidth();
-      int h = view.getHeight();
-
-
-        Rect rect = new Rect(0, 0, w, h);
-
-      mHiddenDrawable.setBounds(rect);
-
-
-
-        mHiddenDrawable.draw(canvas);
-
-    }
-
+    if (drawHiddenIndicator)
+      drawHiddenIndicator(view, canvas);
   }
 
   private void adjustGradientRects(View view) {
@@ -128,6 +108,30 @@ mHiddenDrawable = new BitmapDrawable(context.getResources(), bitmap);
       mBottomGradient.setBounds(rect);
     }
   }
+
+  private void drawHiddenIndicator(View view, Canvas canvas) {
+    int w = view.getWidth();
+    int h = view.getHeight();
+
+    if (mHiddenDrawableWidth != w) {
+      mHiddenDrawableWidth = w;
+
+      mHiddenDrawable = null;
+    }
+
+    if (mHiddenDrawable == null) {
+      Bitmap bitmap = Utils.drawTextToBitmap(view.getContext(), w, h/2, "Click to Unhide", 0xffffffff, 0xff000000, 26, 0xaa000000, 33, 0xaaffffff, 1f);
+
+      mHiddenDrawable = new BitmapDrawable(view.getContext().getResources(), bitmap);
+      mHiddenDrawable.setGravity(Gravity.CENTER);
+
+      Rect rect = new Rect(0, 0, w, h/2);
+
+      mHiddenDrawable.setBounds(rect);
+  }
+
+  mHiddenDrawable.draw(canvas);
+}
 
   private void adjustStrokeAndFillRect(View view) {
     int w = view.getWidth();
