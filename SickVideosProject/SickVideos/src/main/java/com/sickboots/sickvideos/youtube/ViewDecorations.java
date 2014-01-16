@@ -10,13 +10,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class ViewDecorations {
 
-  int mHeight = 0, mWidth = 0;
+  private int mHeight = 0, mWidth = 0;
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
   private boolean mDrawIcon = true;
@@ -121,7 +120,7 @@ public class ViewDecorations {
     }
 
     if (mHiddenDrawable == null) {
-      Bitmap bitmap = Utils.drawTextToBitmap(view.getContext(), (int) (w*.8f), h/3, "Click to Unhide", 0xffffffff, 0xff000000, 26, 0xaa000000, 33, 0xaaffffff, 1f);
+      Bitmap bitmap = Utils.drawTextToBitmap(view.getContext(), (int) (w * .8f), h / 3, "Click to Unhide", 0xffffffff, 0xff000000, 26, 0xaa000000, 33, 0xaaffffff, 1f);
 
       mHiddenDrawable = new BitmapDrawable(view.getContext().getResources(), bitmap);
       mHiddenDrawable.setGravity(Gravity.CENTER);
@@ -129,16 +128,16 @@ public class ViewDecorations {
       int imageWidth = mHiddenDrawable.getIntrinsicWidth();
       int imageHeight = mHiddenDrawable.getIntrinsicHeight();
 
-      int x = (w-imageWidth)/2;
-      int y = (h-imageHeight)/4;
+      int x = (w - imageWidth) / 2;
+      int y = (h - imageHeight) / 4;
 
-      Rect rect = new Rect(x,y, x+imageWidth, y+imageHeight);
+      Rect rect = new Rect(x, y, x + imageWidth, y + imageHeight);
 
       mHiddenDrawable.setBounds(rect);
-  }
+    }
 
-  mHiddenDrawable.draw(canvas);
-}
+    mHiddenDrawable.draw(canvas);
+  }
 
   private void adjustStrokeAndFillRect(View view) {
     int w = view.getWidth();

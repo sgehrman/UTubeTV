@@ -8,7 +8,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -212,7 +211,7 @@ public class Utils {
   public static Bitmap drawTextToBitmap(Context gContext, int width, int height, String gText, int textColor, int shadowColor, int fontSizeInDP, int fillColor, int fillRadius, int strokeColor, float strokeWidth) {
     Resources resources = gContext.getResources();
     float scale = resources.getDisplayMetrics().density;
-    int fontSize = (int) (fontSizeInDP*scale);
+    int fontSize = (int) (fontSizeInDP * scale);
     boolean debugging = false;
 
     Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -250,19 +249,18 @@ public class Utils {
     paint.setTextAlign(Paint.Align.CENTER);
 
     paint.getTextBounds(gText, 0, gText.length(), bounds);
-    int x = (bitmap.getWidth())/2;
-    int y = (bitmap.getHeight() + bounds.height())/2;
+    int x = (bitmap.getWidth()) / 2;
+    int y = (bitmap.getHeight() + bounds.height()) / 2;
 
     canvas.drawText(gText, x, y, paint);
 
-    if (debugging)
-    {
-      int xx = (bitmap.getWidth())/2;
-      int yy = (bitmap.getHeight())/2;
+    if (debugging) {
+      int xx = (bitmap.getWidth()) / 2;
+      int yy = (bitmap.getHeight()) / 2;
       paint = new Paint(Paint.ANTI_ALIAS_FLAG);
       paint.setColor(0xff880099);
 
-      canvas.drawRect(new Rect(xx-4, yy-4, xx+8, yy+8), paint);
+      canvas.drawRect(new Rect(xx - 4, yy - 4, xx + 8, yy + 8), paint);
     }
 
     return bitmap;

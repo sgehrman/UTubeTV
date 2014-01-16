@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 public class VideoImageView extends ImageView {
   private ViewDecorations mDecorations;
-  private boolean mDrawHiddenIndicator=false;
+  private boolean mDrawHiddenIndicator = false;
 
   public VideoImageView(Context context, AttributeSet attrs) {
     super(context, attrs);
