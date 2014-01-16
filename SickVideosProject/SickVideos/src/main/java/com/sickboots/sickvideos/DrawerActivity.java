@@ -240,10 +240,10 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
         boolean toggle = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
         AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
-        YouTubeGridFragment ytgf = currentYouTubeFragment();
+        YouTubeGridFragment fragment = currentYouTubeFragment();
 
-        if (ytgf != null)
-          ytgf.reloadForPrefChange();
+        if (fragment != null)
+          fragment.reloadForPrefChange();
 
         return true;
       case R.id.action_more_apps:
@@ -362,10 +362,10 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
           // called when the video player opens or closes, adjust the action bar title
           @Override
           public void stateChanged() {
-            YouTubeGridFragment ytgf = currentYouTubeFragment();
+            YouTubeGridFragment fragment = currentYouTubeFragment();
 
-            if (ytgf != null)
-              ytgf.playerStateChanged();
+            if (fragment != null)
+              fragment.playerStateChanged();
           }
 
         });
