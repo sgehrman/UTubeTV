@@ -20,7 +20,7 @@ public class ResizingImageView extends ImageView {
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-    // fix odd behavior on JellyBean (<=17)
+    // fix odd behavior on JellyBean (<=17) See ImageView android:adjustViewBounds for notes on this
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
       Drawable drawable = getDrawable();
       if (drawable != null) {
