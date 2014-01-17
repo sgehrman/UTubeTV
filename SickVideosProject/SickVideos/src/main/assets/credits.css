@@ -1,4 +1,5 @@
 
+
 p,h3,h2,h1 {
     color : #222;
     margin:0px;
@@ -15,26 +16,31 @@ body {
 
 div.even {
     background-color:#ddd;
-    padding-top:10px;
-    padding-left:10px;
-    padding-right:10px;
-    padding-bottom:10px;
 }
 
 div.odd {
     background-color:#eee;
+}
+
+div.library {
     padding-top:10px;
     padding-left:10px;
     padding-right:10px;
     padding-bottom:10px;
+    border-radius:18px;
+    border:1px solid;
+    border-color: #ccc;
+    margin-top: 2px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 
 div.top {
     text-align:center;
     padding-left:10px;
     padding-right:10px;
-    padding-bottom:28px;
-    padding-top:20px;
+    padding-bottom:22px;
+    margin-top:20px;
 }
 
 h3.libs {
@@ -43,14 +49,18 @@ h3.libs {
     background-color:#888;
     padding-top:10px;
     padding-bottom:10px;
+    border-radius:8px;
 }
 
 h3.contact {
-    padding-top:10px;
+    margin-top:10px;
 }
 
- p.frisco {
- color:#a66;
- font-weight:bold;
-     padding-top:-4px;
- }
+.subtitle {
+    margin-top:-4px;
+    color:#666;
+}
+
+.frisco {
+    margin-top:8px;
+}
