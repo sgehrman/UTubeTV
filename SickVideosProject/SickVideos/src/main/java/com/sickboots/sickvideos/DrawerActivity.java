@@ -255,7 +255,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       return true;
       case R.id.action_more_apps:
         intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("market://search?q=pub:Sick Boots"));
+        intent.setData(AppUtils.companyPlayStoreUri());
         startActivity(intent);
 
         return true;

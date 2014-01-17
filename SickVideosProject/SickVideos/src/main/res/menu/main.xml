@@ -7,14 +7,14 @@
         android:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_more_apps"
-        android:title="@string/action_more_apps"
+        android:id="@+id/action_show_hidden"
+        android:title="@string/action_show_hidden"
         android:orderInCategory="100"
         android:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_show_hidden"
-        android:title="@string/action_show_hidden"
+        android:id="@+id/action_more_apps"
+        android:title="@string/action_more_apps"
         android:orderInCategory="100"
         android:showAsAction="never"/>
 

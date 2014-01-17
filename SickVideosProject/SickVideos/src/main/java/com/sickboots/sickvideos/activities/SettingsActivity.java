@@ -10,6 +10,7 @@ import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 
 public class SettingsActivity extends Activity {
@@ -94,7 +95,7 @@ public class SettingsActivity extends Activity {
       } else if (preference.getKey().equals("rate")) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        intent.setData(Uri.parse("market://details?id=" + getActivity().getApplicationInfo().packageName));
+        intent.setData(AppUtils.applicationPlayStoreUri(getActivity()));
         startActivity(intent);
 
         return true;

@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.misc;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -35,6 +36,14 @@ public class AppUtils {
         }
       }
     });
+  }
+
+  public static Uri companyPlayStoreUri() {
+    return Uri.parse("market://search?q=pub:Sick Boots");
+  }
+
+  public static Uri applicationPlayStoreUri(Context context) {
+    return Uri.parse("market://details?id=" + context.getApplicationInfo().packageName);
   }
 
   public static AppUtils instance(Context context) {
