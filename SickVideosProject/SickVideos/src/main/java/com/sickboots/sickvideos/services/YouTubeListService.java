@@ -77,17 +77,22 @@ public class YouTubeListService extends IntentService {
         });
 
         updateDataFromInternet(request, helper);
-
-        Intent messageIntent = new Intent(DATA_READY_INTENT);
-        messageIntent.putExtra(DATA_READY_INTENT_PARAM, "unused");
-
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
-        manager.sendBroadcast(messageIntent);
       }
+
+      // notify that we handled an intent so pull to refresh can stop it's animation and other stuff
+      sendServiceDoneBroadcast();
 
     } catch (Exception e) {
       Debug.log(String.format("%s exception: %s", Debug.currentMethod(), e.getMessage()));
     }
+  }
+
+  private void sendServiceDoneBroadcast() {
+    Intent messageIntent = new Intent(DATA_READY_INTENT);
+    messageIntent.putExtra(DATA_READY_INTENT_PARAM, "unused");
+
+    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+    manager.sendBroadcast(messageIntent);
   }
 
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
