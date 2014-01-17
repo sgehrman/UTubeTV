@@ -166,13 +166,16 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   @Override
   public void onClick(View v) {
-    TextView textView = (TextView) v;
+    ViewGroup row = (ViewGroup) v.getParent();
+    TextView titleView = (TextView) row.findViewById(R.id.text_view);
+    TextView descriptionView = (TextView) row.findViewById(R.id.description_view);
 
-    // text bug.... mTitleMaxLines
-    int maxLines = mTheme.mDescriptionMaxLines;
-
-    textView.setMaxLines(textView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : maxLines);
-    textView.invalidate();
+    if (titleView != null) {
+      titleView.setMaxLines(titleView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : mTheme.mTitleMaxLines);
+    }
+    if (descriptionView != null) {
+      descriptionView.setMaxLines(descriptionView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : mTheme.mDescriptionMaxLines);
+    }
   }
 
   private View prepareViews(View convertView, boolean multiColumns) {
