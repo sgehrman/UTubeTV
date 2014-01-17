@@ -29,8 +29,6 @@ public class ResizingImageView extends ImageView {
         float ratio = drawable.getIntrinsicHeight() / drawable.getIntrinsicWidth();
         int newHeight = (int) (MeasureSpec.getSize(widthMeasureSpec) * ratio);
 
-        Debug.log("JB fix: ");
-
         setMeasuredDimension(width, newHeight);
       }
     }
