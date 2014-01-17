@@ -26,11 +26,13 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class ChannelAboutFragment extends Fragment implements Observer, OnRefreshListener {
-  TextView mTitle;
-  TextView mDescription;
-  ImageView mImage;
-  Content mContent;
-  PullToRefreshLayout mPullToRefreshLayout;
+  private TextView mTitle;
+  private TextView mDescription;
+  private ImageView mImage;
+  private Content mContent;
+  private PullToRefreshLayout mPullToRefreshLayout;
+  private EmptyListHelper mEmptyListHelper;
+  private View mContentView;
 
   public ChannelAboutFragment(Content content) {
     super();
@@ -45,6 +47,8 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
     mImage = (ImageView) rootView.findViewById(R.id.image);
+    mContentView = rootView.findViewById(R.id.content_view);
+
     Button button = (Button) rootView.findViewById(R.id.watch_button);
     LinearLayout card = (LinearLayout) rootView.findViewById(R.id.card);
 
@@ -59,7 +63,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       }
     });
 
-    updateUI();
+    // setup empty view
+    mEmptyListHelper = new EmptyListHelper(rootView.findViewById(R.id.empty_view));
+    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
 
     // Now find the PullToRefreshLayout to setup
     mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.about_frame_layout);
@@ -72,6 +78,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
         .listener(this)
             // Finally commit the setup to our PullToRefreshLayout
         .setup(mPullToRefreshLayout);
+
+    mContentView.setVisibility(View.GONE);
+    updateUI();
 
     return rootView;
   }
@@ -111,6 +120,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     if (data == null) {
       mContent.addObserver(this);
     } else {
+      mEmptyListHelper.view().setVisibility(View.GONE);
+      mContentView.setVisibility(View.VISIBLE);
+
       mTitle.setText("YouTube player for " + data.mTitle);
       mDescription.setText(data.mDescription);
 
@@ -122,7 +134,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (!loadedFromCache) {
             image.setAlpha(.5f);
-            image.animate().setDuration(200).alpha(1);
+            image.animate().setDuration(300).alpha(1);
           } else
             image.setAlpha(1f);
         }
