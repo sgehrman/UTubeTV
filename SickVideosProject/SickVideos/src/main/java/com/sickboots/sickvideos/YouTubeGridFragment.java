@@ -102,7 +102,7 @@ public class YouTubeGridFragment extends Fragment
     // Now setup the PullToRefreshLayout
     ActionBarPullToRefresh.from(this.getActivity())
         // Mark All Children as pullable
-        .theseChildrenArePullable(R.id.gridview, R.id.empty_poop)
+        .allChildrenArePullable()
             // Set the OnRefreshListener
         .listener(this)
             // Finally commit the setup to our PullToRefreshLayout
@@ -123,7 +123,7 @@ public class YouTubeGridFragment extends Fragment
     getLoaderManager().initLoader(0, null, this);
 
     // setup empty view
-    mEmptyListHelper = new EmptyListHelper(rootView.findViewById(R.id.empty_poop));
+    mEmptyListHelper = new EmptyListHelper(rootView.findViewById(R.id.empty_view));
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
     gridView.setEmptyView(mEmptyListHelper.view());
 
