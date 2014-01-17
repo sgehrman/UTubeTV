@@ -119,13 +119,12 @@ public class YouTubeGridFragment extends Fragment
 
     gridView.setAdapter(swingBottomInAnimationAdapter);
 
-    // create the loader
-    getLoaderManager().initLoader(0, null, this);
-
     // setup empty view
     mEmptyListHelper = new EmptyListHelper(rootView.findViewById(R.id.empty_view));
-    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
     gridView.setEmptyView(mEmptyListHelper.view());
+
+    // create the loader
+    getLoaderManager().initLoader(0, null, this);
 
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
@@ -249,6 +248,9 @@ public class YouTubeGridFragment extends Fragment
       queryID = DatabaseTables.ALL_ITEMS;
 
     Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier());
+
+    // startRequest below will notify when done and we hide the progress bar
+    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
 
     YouTubeListService.startRequest(getActivity(), mRequest, false);
 
