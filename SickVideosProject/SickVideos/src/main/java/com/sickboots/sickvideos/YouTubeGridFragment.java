@@ -102,20 +102,13 @@ public class YouTubeGridFragment extends Fragment
     // Now setup the PullToRefreshLayout
     ActionBarPullToRefresh.from(this.getActivity())
         // Mark All Children as pullable
-        .allChildrenArePullable()
+        .theseChildrenArePullable(R.id.gridview, R.id.empty_poop)
             // Set the OnRefreshListener
         .listener(this)
             // Finally commit the setup to our PullToRefreshLayout
         .setup(mPullToRefreshLayout);
 
     gridView = (GridView) rootView.findViewById(R.id.gridview);
-
-    mEmptyListHelper = new EmptyListHelper(getActivity());
-
-    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
-    rootView.addView(mEmptyListHelper.view());
-    gridView.setEmptyView(mEmptyListHelper.view());
-
     gridView.setOnItemClickListener(mAdapter);
 
     // enable this for swipe to dismiss to hide (TODO)
@@ -128,6 +121,11 @@ public class YouTubeGridFragment extends Fragment
 
     // create the loader
     getLoaderManager().initLoader(0, null, this);
+
+    // setup empty view
+    mEmptyListHelper = new EmptyListHelper(rootView.findViewById(R.id.empty_poop));
+    mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
+    gridView.setEmptyView(mEmptyListHelper.view());
 
     // dimmer only exists for dark mode
     View dimmerView = rootView.findViewById(R.id.dimmer);
