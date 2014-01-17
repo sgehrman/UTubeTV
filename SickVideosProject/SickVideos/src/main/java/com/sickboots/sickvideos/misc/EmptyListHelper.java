@@ -51,7 +51,7 @@ public class EmptyListHelper {
           mTextView.setVisibility(View.VISIBLE);
 
           if (mHideProgress) {
-            mProgress.setVisibility(View.INVISIBLE);
+            mProgress.setVisibility(View.GONE);
           } else {
             mProgress.setVisibility(View.VISIBLE);
           }
