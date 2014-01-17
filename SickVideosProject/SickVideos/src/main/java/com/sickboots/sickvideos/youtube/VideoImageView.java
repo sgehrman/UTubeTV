@@ -27,7 +27,5 @@ public class VideoImageView extends ImageView {
     if (mDecorations != null) {
       mDecorations.drawInView(this, mDrawHiddenIndicator, canvas);
     }
-
-
   }
 }
