@@ -17,7 +17,7 @@ public class EmptyListHelper {
   ProgressBar mProgress;
   Handler mDelayedOperation;
   String mMessage = "";  // set so we don't have to check for null in update
-  boolean mHideProgress = false;
+  boolean mHideProgress = true;
 
   public EmptyListHelper(Context context) {
     super();
