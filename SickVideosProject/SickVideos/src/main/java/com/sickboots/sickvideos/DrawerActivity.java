@@ -170,7 +170,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     else {
       if (getFragmentManager().getBackStackEntryCount() == 0) {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
-          backButtonToast = Toast.makeText(this, "Press back again to close", 4000);
+          backButtonToast = Toast.makeText(this, "Press back again to exit", 4000);
           backButtonToast.show();
           this.lastBackPressTime = System.currentTimeMillis();
         } else {
