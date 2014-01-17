@@ -45,7 +45,7 @@
                         >
 
 
-                    <ImageView
+                    <com.sickboots.sickvideos.misc.ResizingImageView
                         android:id="@+id/image"
                         android:scaleType="centerCrop"
                         android:adjustViewBounds="true"
