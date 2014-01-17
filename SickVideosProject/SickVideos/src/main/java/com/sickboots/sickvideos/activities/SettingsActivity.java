@@ -49,6 +49,9 @@ public class SettingsActivity extends Activity {
       // Load the preferences from an XML resource
       addPreferencesFromResource(R.xml.preferences);
 
+      if (Debug.isDebugBuild())
+        addPreferencesFromResource(R.xml.preferences_debug);
+
       try {
         Preference pref = findPreference("credits");
 

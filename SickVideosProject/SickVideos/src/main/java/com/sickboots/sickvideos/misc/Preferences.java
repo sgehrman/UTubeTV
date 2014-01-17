@@ -18,6 +18,7 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
   public static final String DRAWER_SECTION_INDEX = "drawer_section_index";
   public static final String SHOW_HIDDEN_ITEMS = "show_hidden_items";
   public static final String REPEAT_VIDEO = "repeat_video";
+  public static final String SHOW_DEV_TOOLS = "show_dev_tools";
 
   public static final String PLAY_FULLSCREEN = "play_fullscreen";
   public static final String MUTE_ADS = "mute_ads";

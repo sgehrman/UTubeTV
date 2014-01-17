@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="show_dev_tools"
+        android:title="Show Dev Tools"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>
+
+
+
+

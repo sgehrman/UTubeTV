@@ -159,14 +159,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-    if (!Debug.isDebugBuild()) {
-      menu.removeItem(R.id.action_buy_taco);
-      menu.removeItem(R.id.action_channel_lookup);
-      menu.removeItem(R.id.action_color_picker);
-      menu.removeItem(R.id.action_show_icons);
-      menu.removeItem(R.id.action_switch_view);
-    }
-
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -228,6 +220,9 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
+
+    boolean showDevTools = AppUtils.preferences(this).getBoolean(Preferences.SHOW_DEV_TOOLS, false);
+    menu.setGroupVisible(R.id.dev_tools_group, showDevTools);
 
     return super.onPrepareOptionsMenu(menu);
   }
