@@ -53,7 +53,6 @@ android {
         }
     }
 
-
     productFlavors {
         neurosoup {
             packageName "com.sickboots.sickvideos.neurosoup"
@@ -81,6 +80,10 @@ android {
 
         khan {
             packageName "com.sickboots.sickvideos.khan"
+        }
+
+        codeorg {
+            packageName "com.sickboots.sickvideos.codeorg"
         }
     }
 
