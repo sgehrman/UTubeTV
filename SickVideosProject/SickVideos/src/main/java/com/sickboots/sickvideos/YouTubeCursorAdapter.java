@@ -53,9 +53,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
     int strokeColor = context.getResources().getColor(R.color.card_fill_color);
-    int fillColor = 0x22000000;
 
-    decorations.strokeAndFill(context, fillColor, strokeColor, 8, 4);
+    decorations.strokeAndFill(context, theme.mCardImageFillColor, strokeColor, 8, 4);
 
     String[] from = new String[]{};
     int[] to = new int[]{};
@@ -81,6 +80,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
     result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
     result.mSupportsMenuButton = false;
+    result.mCardImageFillColor = context.getResources().getColor(R.color.card_image_fill); // an app can set to transparent to turn this off
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:
@@ -384,6 +384,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     int mTitleMaxLines;
     int mDescriptionMaxLines;
     boolean mSupportsMenuButton;
+    int mCardImageFillColor;
   }
 
   private static class ViewHolder {
