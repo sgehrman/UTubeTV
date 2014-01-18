@@ -123,7 +123,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       mEmptyListHelper.view().setVisibility(View.GONE);
       mContentView.setVisibility(View.VISIBLE);
 
-      mTitle.setText("YouTube player for " + data.mTitle);
+      mTitle.setText("Video player for " + data.mTitle);
       mDescription.setText(data.mDescription);
 
       int defaultImageResID = 0;
