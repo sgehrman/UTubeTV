@@ -78,6 +78,10 @@ android {
         connections {
             packageName "com.sickboots.sickvideos.connections"
         }
+
+        khan {
+            packageName "com.sickboots.sickvideos.khan"
+        }
     }
 
 }
