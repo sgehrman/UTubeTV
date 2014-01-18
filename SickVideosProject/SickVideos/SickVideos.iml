@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="khanDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleKhanDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileKhanDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleKhanDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateKhanDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="codeorgDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleCodeorgDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileCodeorgDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleCodeorgDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateCodeorgDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/khan/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/codeorg/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/khan/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/codeorg/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/khan/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/khan/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/khan/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/khan/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/khan/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khanDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/khan/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/khan/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/khan/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/khan/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/khan/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/khan/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestKhan/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/codeorg/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/codeorg/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/codeorg/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/codeorg/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/codeorg/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorgDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/codeorg/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/codeorg/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/codeorg/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/codeorg/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/codeorg/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/codeorg/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestCodeorg/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
@@ -98,7 +98,6 @@
     <orderEntry type="library" exported="" name="google-http-client-android-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.1.3" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.17.0-rc" level="project" />
-    <orderEntry type="library" exported="" name="guava-16.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="ComLarswerkmanHoloColorPicker11.aar" level="project" />
     <orderEntry type="library" exported="" name="ComGithubChrisbanesActionbarpulltorefreshLibrary093.aar" level="project" />
@@ -111,6 +110,7 @@
     <orderEntry type="library" exported="" name="google-api-client-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="ComGithubCastorflexSmoothprogressbarLibrary020.aar" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-youtube-v3-rev79-1.17.0-rc" level="project" />
+    <orderEntry type="library" exported="" name="guava-16.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
   </component>
