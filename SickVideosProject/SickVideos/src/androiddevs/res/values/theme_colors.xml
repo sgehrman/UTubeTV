@@ -3,7 +3,7 @@
 
     <color name="action_bar_start_color">#A4C639</color>
     <color name="action_bar_end_color">#A4C639</color>
-    <color name="action_bar_divider_color">#1000</color>
+    <color name="action_bar_divider_color">#0f000000</color>
 
     <color name="drawer_background">@drawable/window_pattern</color>
     <color name="drawer_item_background">#A4C639</color>
