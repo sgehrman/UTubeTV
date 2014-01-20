@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="androiddevsDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleAndroiddevsDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileAndroiddevsDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleAndroiddevsDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateAndroiddevsDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="maxkeiserDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleMaxkeiserDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileMaxkeiserDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleMaxkeiserDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateMaxkeiserDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/androiddevs/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/maxkeiser/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/androiddevs/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/maxkeiser/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/androiddevs/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/androiddevs/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/androiddevs/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/androiddevs/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/androiddevs/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevsDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/androiddevs/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/androiddevs/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/androiddevs/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/androiddevs/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/androiddevs/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androiddevs/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestAndroiddevs/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/maxkeiser/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/maxkeiser/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/maxkeiser/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/maxkeiser/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/maxkeiser/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiserDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/maxkeiser/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/maxkeiser/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/maxkeiser/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/maxkeiser/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/maxkeiser/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/maxkeiser/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestMaxkeiser/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
