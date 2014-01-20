@@ -93,6 +93,10 @@ android {
         maxkeiser {
             packageName "com.sickboots.sickvideos.maxkeiser"
         }
+
+        androiddevs {
+            packageName "com.sickboots.sickvideos.androiddevs"
+        }
     }
 
 }

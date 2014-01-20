@@ -31,7 +31,7 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, ANDROID_DEVELOPER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, MAX_KEISER, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, ANDROID_DEVELOPERS, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, MAX_KEISER, USER}
 
   public static enum ThemeCode {DARK, LIGHT}
 
@@ -57,7 +57,7 @@ public class Content extends Observable {
       case TOP_GEAR:
       case VICE:
       case COLLEGE_HUMOR:
-      case ANDROID_DEVELOPER:
+      case ANDROID_DEVELOPERS:
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
       case LUKITSCH:
@@ -104,7 +104,7 @@ public class Content extends Observable {
       case JUSTIN_BIEBER:
       case KHAN_ACADEMY:
       case COLLEGE_HUMOR:
-      case ANDROID_DEVELOPER:
+      case ANDROID_DEVELOPERS:
       case TOP_GEAR:
       case LUKITSCH:
       case CODE_ORG:
@@ -182,7 +182,7 @@ public class Content extends Observable {
         return "UCjOl2AUblVmg2rA_cRgZkFg";
       case JUSTIN_BIEBER:
         return "UCHkj014U2CQ2Nv0UZeYpE_A";
-      case ANDROID_DEVELOPER:
+      case ANDROID_DEVELOPERS:
         return "UCVHFbqXqoYvEWM1Ddxl0QDg";
       case NERDIST:
         return "UCTAgbu2l6_rBKdbTvEodEDw";
