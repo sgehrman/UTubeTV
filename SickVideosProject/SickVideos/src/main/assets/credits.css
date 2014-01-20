@@ -39,11 +39,11 @@ div.top {
     text-align:center;
     padding-left:10px;
     padding-right:10px;
-    padding-bottom:22px;
     margin-top:20px;
 }
 
 h3.libs {
+    margin-top: 20px;
     text-align: center;
     color: white;
     background-color:#888;
