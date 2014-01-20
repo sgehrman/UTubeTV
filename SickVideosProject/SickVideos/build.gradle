@@ -85,6 +85,14 @@ android {
         codeorg {
             packageName "com.sickboots.sickvideos.codeorg"
         }
+
+        rt {
+            packageName "com.sickboots.sickvideos.rt"
+        }
+
+        maxkeiser {
+            packageName "com.sickboots.sickvideos.maxkeiser"
+        }
     }
 
 }

@@ -31,7 +31,7 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, ANDROID_DEVELOPER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, ANDROID_DEVELOPER, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, MAX_KEISER, USER}
 
   public static enum ThemeCode {DARK, LIGHT}
 
@@ -62,6 +62,8 @@ public class Content extends Observable {
       case KHAN_ACADEMY:
       case LUKITSCH:
       case NERDIST:
+      case MAX_KEISER:
+      case RT:
       case CODE_ORG:
         result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
         result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
@@ -107,6 +109,8 @@ public class Content extends Observable {
       case LUKITSCH:
       case CODE_ORG:
       case NERDIST:
+      case MAX_KEISER:
+      case RT:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment(this);
@@ -184,6 +188,10 @@ public class Content extends Observable {
         return "UCTAgbu2l6_rBKdbTvEodEDw";
       case CODE_ORG:
         return "UCJyEBMU1xVP2be1-AoGS1BA";
+      case MAX_KEISER:
+        return "UCBIwq18tUFrujiPd3HLPaGw";
+      case RT:
+        return "UCpwvZwUam-URkxB7g4USKpg";
     }
 
     return null;

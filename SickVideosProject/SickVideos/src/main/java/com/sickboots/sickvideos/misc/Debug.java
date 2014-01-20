@@ -12,7 +12,7 @@ import com.sickboots.sickvideos.BuildConfig;
 public class Debug {
 
   public static void log(String message) {
-    Log.d("####", message);
+    Log.d("####", (message == null ? "null" : message));
   }
 
   public static boolean isDebuggable(Context context) {
