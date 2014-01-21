@@ -40,6 +40,10 @@
 # Fixes: can't find referenced class sun.misc.Unsafe
 -dontwarn sun.misc.Unsafe
 
+# prettytime lib crashes without this
+# java.util.MissingResourceException: Can't find resource for bundle 'org.ocpsoft.prettytime.i18n.Resources_en_US'
+-keep class org.ocpsoft.prettytime.i18n.**
+
 # ----------------------------------------
 # uncomment to turn off obfucation
 
