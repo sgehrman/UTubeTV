@@ -19,6 +19,10 @@ import java.util.Date;
 public class YouTubeData {
 //  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
   private static final PrettyTime sDateFormatter = new PrettyTime();
+  private static final Date sDate = new Date();  // avoiding an alloc every call, just set the time
+  private static final String sTitle = "Published: ";
+  private static final StyleSpan sBoldSpan = new StyleSpan(Typeface.BOLD);
+  private static final ForegroundColorSpan sColorSpan = new ForegroundColorSpan(0xffb1e2ff);
 
   // raw access for speed
   public long mID;
@@ -40,7 +44,7 @@ public class YouTubeData {
 
   // use convenience methods
   private String mHidden;
-  private Date mPublishedDate;
+  private long mPublishedDate;
 
   // is this faster?  no idea
   private static final String mNotNull = "";
@@ -61,18 +65,19 @@ public class YouTubeData {
     mHidden = hidden ? mNotNull : null;
   }
 
-  public void setPublishedDate(Date date) {
+  public void setPublishedDate(long date) {
     mPublishedDate = date;
 
-    String title = "Published: ";
-    String content = sDateFormatter.format(date);
+    // avoiding an alloc during draw, reusing Date
+    sDate.setTime(date);
+    String content = sDateFormatter.format(sDate);
 
-    mPublishedDateString = new SpannableString(title+content);
-    mPublishedDateString.setSpan( new StyleSpan(Typeface.BOLD), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    mPublishedDateString.setSpan( new ForegroundColorSpan(0xffb1e2ff), title.length(), title.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    mPublishedDateString = new SpannableString(sTitle+content);
+    mPublishedDateString.setSpan(sBoldSpan, 0, sTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    mPublishedDateString.setSpan(sColorSpan, sTitle.length(), sTitle.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
 
-  public Date getPublishedDate() {
+  public long getPublishedDate() {
     return mPublishedDate;
   }
 

@@ -414,7 +414,7 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
-        map.setPublishedDate(new Date(playlistItem.getSnippet().getPublishedAt().getValue()));
+        map.setPublishedDate(playlistItem.getSnippet().getPublishedAt().getValue());
 
         result.add(map);
       }
@@ -795,7 +795,7 @@ public class YouTubeAPI {
         map.mItemCount = playlist.getContentDetails().getItemCount();
         map.mDescription = removeNewLinesFromString(playlist.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlist.getSnippet().getThumbnails());
-        map.setPublishedDate(new Date(playlist.getSnippet().getPublishedAt().getValue()));
+        map.setPublishedDate(playlist.getSnippet().getPublishedAt().getValue());
 
         result.add(map);
       }
