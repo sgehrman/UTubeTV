@@ -33,20 +33,14 @@ items/snippet/title
 
 // --------------------------------------------------------
 
-Joe Rogan,
-NeuroSoup,
 Terrance McKenna
-Khan Academy
 Cosmos
 Neil DeGrasse
 AstroPsyics
 Derby
 newegg tv
-Vice
 Big Think
-Android Developers
 UFO Videos
-James Burke Connections
 SF Travel
 Skateboard Tricks
 Fractals
@@ -109,7 +103,7 @@ Hookah Hut
 Code-Mart
 Sustainable bits
 Harley Stevenson
-Stefan's Code Suppy
+Stefan's Code Supply
 Code Surplus
 Digital Surplus
 Above the Fog
