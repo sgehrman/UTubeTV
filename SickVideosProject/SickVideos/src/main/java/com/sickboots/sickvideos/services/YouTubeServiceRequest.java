@@ -114,6 +114,17 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
+  // just used for debugging
+  @Override
+  public String toString() {
+    String result = ((Object) this).getClass().getName();
+
+    result += "\ntype: " + type().toString();
+    result += "\ndata: " + data.toString();
+
+    return result;
+  }
+
   private String typeToString() {
     String result = "YouTube";
 
@@ -133,8 +144,8 @@ public class YouTubeServiceRequest implements Parcelable {
       case RELATED:
         result = "Related Playlists";
 
-        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) getData("type");
-        switch (type) {
+        YouTubeAPI.RelatedPlaylistType playlistType = (YouTubeAPI.RelatedPlaylistType) getData("type");
+        switch (playlistType) {
           case FAVORITES:
             result = "Favorites";
             break;

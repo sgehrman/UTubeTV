@@ -240,6 +240,8 @@ public class YouTubeGridFragment extends Fragment
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     DatabaseTables.DatabaseTable table = mRequest.databaseTable();
 
+    // Debug.log(mRequest.toString());
+
     String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
 
     mCachedHiddenPref = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);

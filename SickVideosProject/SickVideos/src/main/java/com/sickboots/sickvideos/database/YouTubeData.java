@@ -1,5 +1,7 @@
 package com.sickboots.sickvideos.database;
 
+import com.google.api.client.util.DateTime;
+
 /**
  * Created by sgehrman on 11/26/13.
  */
@@ -10,6 +12,7 @@ public class YouTubeData {
   public String mTitle;
   public String mDescription;
   public String mThumbnail;
+  public DateTime mPublishedDate;
 
   // used for videos
   public String mVideo;

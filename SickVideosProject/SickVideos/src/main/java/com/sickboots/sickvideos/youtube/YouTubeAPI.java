@@ -762,7 +762,7 @@ public class YouTubeAPI {
         else
           listRequest.setChannelId(channelID);
 
-        listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
         listRequest.setKey(Auth.devKey());
 
@@ -793,6 +793,7 @@ public class YouTubeAPI {
         map.mItemCount = playlist.getContentDetails().getItemCount();
         map.mDescription = removeNewLinesFromString(playlist.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlist.getSnippet().getThumbnails());
+        map.mPublishedDate = playlist.getSnippet().getPublishedAt();
 
         result.add(map);
       }
