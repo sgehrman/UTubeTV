@@ -379,7 +379,7 @@ public class YouTubeAPI {
           YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
           listRequest.setPlaylistId(playlistID);
 
-          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
+          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField()));
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
@@ -413,6 +413,7 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
+        map.mPublishedDate = playlistItem.getSnippet().getPublishedAt();
 
         result.add(map);
       }

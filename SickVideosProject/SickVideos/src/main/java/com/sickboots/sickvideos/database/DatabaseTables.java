@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
+import com.google.api.client.util.DateTime;
+
 /**
  * Created by sgehrman on 12/9/13.
  */
@@ -59,6 +61,8 @@ public class DatabaseTables {
     public Database.DatabaseQuery queryParams(int queryID, String requestId);
 
     public String[] defaultProjection();
+
+    public String orderBy();
 
   }
 
@@ -160,6 +164,11 @@ public class DatabaseTables {
     }
 
     @Override
+    public String orderBy() {
+      return null;
+    }
+
+    @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId) {
       String selection = null;
       String[] selectionArgs = null;
@@ -177,7 +186,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_CHANNEL + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
     }
   }
 
@@ -193,6 +202,7 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_DESCRIPTION = "description";
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
       public static final String COLUMN_NAME_ITEM_COUNT = "itemCount";
+      public static final String COLUMN_NAME_PUBLISHED_DATE = "published_date";
       public static final String COLUMN_NAME_HIDDEN = "hidden";
     }
 
@@ -227,6 +237,7 @@ public class DatabaseTables {
       result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
       result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
       result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
+      result.mPublishedDate = new DateTime(cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE)));
 
       int col;
 
@@ -247,6 +258,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_ITEM_COUNT, item.mItemCount);
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate.getValue());
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
@@ -270,6 +282,8 @@ public class DatabaseTables {
           + COMMA_SEP
           + Entry.COLUMN_NAME_ITEM_COUNT + INT_TYPE
           + COMMA_SEP
+          + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE
+          + COMMA_SEP
           + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
 
@@ -291,10 +305,16 @@ public class DatabaseTables {
           Entry.COLUMN_NAME_DESCRIPTION,
           Entry.COLUMN_NAME_THUMBNAIL,
           Entry.COLUMN_NAME_ITEM_COUNT,
+          Entry.COLUMN_NAME_PUBLISHED_DATE,
           Entry.COLUMN_NAME_HIDDEN
       };
 
       return projection;
+    }
+
+    @Override
+    public String orderBy() {
+      return Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
     }
 
     @Override
@@ -322,7 +342,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
     }
   }
 
@@ -338,6 +358,7 @@ public class DatabaseTables {
       public static final String COLUMN_NAME_DESCRIPTION = "description";
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
       public static final String COLUMN_NAME_DURATION = "duration";
+      public static final String COLUMN_NAME_PUBLISHED_DATE = "published_date";
       public static final String COLUMN_NAME_HIDDEN = "hidden";
     }
 
@@ -386,6 +407,10 @@ public class DatabaseTables {
       if (col != -1)
         result.mDuration = cursor.getString(col);
 
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE);
+      if (col != -1)
+        result.mPublishedDate = new DateTime(cursor.getLong(col));
+
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
       if (col != -1)
         result.setHidden(cursor.getString(col) != null);
@@ -403,6 +428,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_DURATION, item.mDuration);
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate.getValue());
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
@@ -435,6 +461,8 @@ public class DatabaseTables {
           + COMMA_SEP
           + Entry.COLUMN_NAME_DURATION + TEXT_TYPE
           + COMMA_SEP
+          + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE
+          + COMMA_SEP
           + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
 
@@ -451,10 +479,16 @@ public class DatabaseTables {
           Entry.COLUMN_NAME_DESCRIPTION,
           Entry.COLUMN_NAME_THUMBNAIL,
           Entry.COLUMN_NAME_DURATION,
+          Entry.COLUMN_NAME_PUBLISHED_DATE,
           Entry.COLUMN_NAME_HIDDEN
       };
 
       return projection;
+    }
+
+    @Override
+    public String orderBy() {
+      return Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
     }
 
     @Override
@@ -501,7 +535,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
     }
   }
 }
