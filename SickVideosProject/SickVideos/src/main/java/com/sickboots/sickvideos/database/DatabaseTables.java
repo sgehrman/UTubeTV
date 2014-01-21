@@ -314,7 +314,7 @@ public class DatabaseTables {
 
     @Override
     public String orderBy() {
-      return null; // Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
+      return Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
     }
 
     @Override
@@ -488,7 +488,7 @@ public class DatabaseTables {
 
     @Override
     public String orderBy() {
-      return null; // Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
+      return Entry.COLUMN_NAME_PUBLISHED_DATE + " DESC";
     }
 
     @Override

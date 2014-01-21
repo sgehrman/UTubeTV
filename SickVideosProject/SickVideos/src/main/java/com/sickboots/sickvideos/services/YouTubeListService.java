@@ -179,35 +179,19 @@ public class YouTubeListService extends IntentService {
     }
 
     if (listResults != null) {
-      boolean firstTime = true;
-      boolean needsUpdateAtEnd = false;
+      List<YouTubeData> batch = listResults.getAllItems();
 
       DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
 
       Set currentListSavedData = saveExistingListState(database, request.requestIdentifier());
+
+      batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
+
       database.deleteAllRows(request.requestIdentifier());
+      database.insertItems(batch);
 
-      do {
-        List<YouTubeData> batch = listResults.getItems();
-        batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
-
-        Debug.log("batch...");
-
-        // insert new items into database
-        database.insertItems(batch);
-
-        // we update on the first batch for responsive feel, but anything after that gets updated at the end
-        if (firstTime) {
-          YouTubeUpdateService.startRequest(this);
-          firstTime = false;
-        } else {
-          needsUpdateAtEnd = true;
-        }
-
-      } while (listResults.getNext());
-
-      if (needsUpdateAtEnd)
-        YouTubeUpdateService.startRequest(this);
+      // fetch the duration
+      YouTubeUpdateService.startRequest(this);
     }
   }
 

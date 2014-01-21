@@ -35,6 +35,7 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
+import com.sickboots.sickvideos.services.YouTubeUpdateService;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -825,6 +826,19 @@ public class YouTubeAPI {
       items = null;
 
       return tmp;
+    }
+
+    // we need all items at once if we reverse sort, otherwise the top items in the list will jump
+    // down as more data is loaded and look annoying.  YouTube API doesn't support sorting, so we must do this crap
+    public List<YouTubeData> getAllItems() {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+      do {
+        result.addAll(getItems());
+
+      } while (getNext());
+
+      return result;
     }
 
     public void setItems(List<YouTubeData> l) {
