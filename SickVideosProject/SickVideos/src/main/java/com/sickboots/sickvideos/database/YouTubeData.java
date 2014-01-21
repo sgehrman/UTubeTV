@@ -8,8 +8,6 @@ import android.text.style.StyleSpan;
 
 import com.google.api.client.util.DateTime;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -17,8 +15,8 @@ import java.util.Date;
  * Created by sgehrman on 11/26/13.
  */
 public class YouTubeData {
-//  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
-  private static final PrettyTime sDateFormatter = new PrettyTime();
+  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
+//  private static final PrettyTime sDateFormatter = new PrettyTime();
 
   // raw access for speed
   public long mID;
