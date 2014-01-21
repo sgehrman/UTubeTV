@@ -6,44 +6,63 @@
 
     <com.sickboots.sickvideos.youtube.VideoImageView
         android:id="@+id/image"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:clickable="false"
+        android:scaleType="centerCrop"
         />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+
+        android:paddingLeft="3dp"
+        android:paddingBottom="3dp"
+        android:paddingRight="3dp"
         >
 
-        <com.sickboots.sickvideos.VideoMenuView
-            android:visibility="gone"
-            android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:scaleType="centerInside"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            />
-
-        <TextView
-            android:id="@+id/duration"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="16sp"
-            android:padding="6dp"
-
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:background="@drawable/text_overlay_background"
-            android:textColor="#fff"/>
+            >
 
-    </RelativeLayout>
+            <com.sickboots.sickvideos.VideoMenuView
+                android:id="@+id/menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/pub_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="6dp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+
+                android:textSize="12sp"
+                android:textStyle="normal"/>
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="6dp"
+                android:textColor="#fff"
+
+                android:textSize="16sp"
+                android:textStyle="normal"/>
+
+        </RelativeLayout>
+    </FrameLayout>
 
 </RelativeLayout>

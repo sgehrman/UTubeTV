@@ -1,5 +1,11 @@
 package com.sickboots.sickvideos.database;
 
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+
 import com.google.api.client.util.DateTime;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -41,7 +47,7 @@ public class YouTubeData {
 
   // not saved in database, set when read from database
   // don't want to convert date when drawing, so it's set in setPublishedDate
-  public String mPublishedDateString;
+  public Spannable mPublishedDateString;
 
   // ----------------------------------------------------
   // public methods
@@ -57,14 +63,20 @@ public class YouTubeData {
 
   public void setPublishedDate(Date date) {
     mPublishedDate = date;
-    mPublishedDateString = sDateFormatter.format(date);
+
+    String title = "Published: ";
+    String content = sDateFormatter.format(date);
+
+    mPublishedDateString = new SpannableString(title+content);
+    mPublishedDateString.setSpan( new StyleSpan(Typeface.BOLD), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    mPublishedDateString.setSpan( new ForegroundColorSpan(0xffb1e2ff), title.length(), title.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
 
   public Date getPublishedDate() {
     return mPublishedDate;
   }
 
-  public String getPublishedDateString() {
+  public Spannable getPublishedDateString() {
     return mPublishedDateString;
   }
 }

@@ -24,14 +24,6 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/pub_date"
-        android:layout_marginTop="6dp"
-
-        android:layout_width="match_parent"
-        style="@style/VideoTextTitle_card"
-        android:layout_height="wrap_content"/>
-
-    <TextView
         android:layout_marginTop="2dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"

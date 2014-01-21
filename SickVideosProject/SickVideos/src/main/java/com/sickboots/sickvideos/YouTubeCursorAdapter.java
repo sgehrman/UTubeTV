@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -295,23 +296,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
     holder.title.setText(itemMap.mTitle);
 
-    String duration = itemMap.mDuration;
-    if (duration != null) {
-      holder.duration.setVisibility(View.VISIBLE);
-
-      holder.duration.setText(duration);
-    } else {
-
-      Long count = itemMap.mItemCount;
-      if (count != null) {
-        holder.duration.setVisibility(View.VISIBLE);
-
-        holder.duration.setText(count.toString() + (count == 1 ? " video" : " videos"));
-      } else {
-        holder.duration.setVisibility(View.GONE);
-      }
-    }
-
     // hide description if empty
     if (holder.description != null) {
       String desc = (String) itemMap.mDescription;
@@ -336,14 +320,24 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder.menuButton.setVisibility(View.GONE);
     }
 
-    String date = itemMap.getPublishedDateString();
-    if (date != null) {
-      holder.pubDate.setVisibility(View.VISIBLE);
-
-      holder.pubDate.setText(date);
+    String duration = itemMap.mDuration;
+    if (duration != null) {
+      holder.duration.setText(duration);
     } else {
-      holder.pubDate.setVisibility(View.GONE);
+      Long count = itemMap.mItemCount;
+      if (count != null) {
+        holder.duration.setText(count.toString() + (count == 1 ? " video" : " videos"));
+      } else {
+        holder.duration.setText("");
+      }
     }
+
+      Spannable date = itemMap.getPublishedDateString();
+      if (date != null) {
+        holder.pubDate.setText(date);
+      } else {
+        holder.pubDate.setText("");
+      }
 
       return convertView;
   }
