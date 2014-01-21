@@ -2,7 +2,6 @@ package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;

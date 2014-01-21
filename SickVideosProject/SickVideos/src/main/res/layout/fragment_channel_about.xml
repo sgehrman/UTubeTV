@@ -49,13 +49,13 @@
                         >
 
 
-                    <com.sickboots.sickvideos.misc.ResizingImageView
-                        android:id="@+id/image"
-                        android:scaleType="centerCrop"
-                        android:adjustViewBounds="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        <com.sickboots.sickvideos.misc.ResizingImageView
+                            android:id="@+id/image"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
 
                     </FrameLayout>
 

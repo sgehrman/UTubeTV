@@ -35,7 +35,6 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
-import com.sickboots.sickvideos.services.YouTubeUpdateService;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
