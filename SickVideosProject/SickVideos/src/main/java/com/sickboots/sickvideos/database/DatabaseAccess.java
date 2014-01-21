@@ -70,7 +70,7 @@ public class DatabaseAccess {
   public YouTubeData getItemWithID(Long id) {
     YouTubeData result = null;
 
-    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.defaultProjection());
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), whereClauseForID(), whereArgsForID(id), mTable.defaultProjection(), null);
     Cursor cursor = mDB.getCursor(query);
 
     if (cursor.moveToFirst()) {
@@ -91,7 +91,7 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(String selection, String[] selectionArgs, String[] projection) {
-    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), selection, selectionArgs, projection);
+    Database.DatabaseQuery query = new Database.DatabaseQuery(mTable.tableName(), selection, selectionArgs, projection, null);
 
     return mDB.getCursor(query);
   }

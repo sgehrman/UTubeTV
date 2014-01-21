@@ -177,7 +177,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_CHANNEL + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
     }
   }
 
@@ -322,7 +322,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
     }
   }
 
@@ -501,7 +501,7 @@ public class DatabaseTables {
         selection += Entry.COLUMN_NAME_REQUEST + " = ?";
       }
 
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection);
+      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, null);
     }
   }
 }

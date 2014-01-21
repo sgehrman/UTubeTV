@@ -66,7 +66,7 @@ public class Database extends SQLiteOpenHelper {
           query.mSelectionArgs,                  // The values for the WHERE clause
           null,                           // don't group the rows
           null,                           // don't filter by row groups
-          null                            // The sort order
+          query.mOrderBy                            // The sort order
       );
 
     } catch (Exception e) {
@@ -82,14 +82,16 @@ public class Database extends SQLiteOpenHelper {
     public String mSelection;
     public String[] mSelectionArgs;
     public String[] mProjection;
+    public String mOrderBy;
 
-    public DatabaseQuery(String table, String selection, String[] selectionArgs, String[] projection) {
+    public DatabaseQuery(String table, String selection, String[] selectionArgs, String[] projection, String orderBy) {
       super();
 
       mTable = table;
       mSelection = selection;
       mSelectionArgs = selectionArgs;
       mProjection = projection;
+      mOrderBy = orderBy;
     }
   }
 
