@@ -6,6 +6,8 @@ import android.provider.BaseColumns;
 
 import com.google.api.client.util.DateTime;
 
+import java.util.Date;
+
 /**
  * Created by sgehrman on 12/9/13.
  */
@@ -237,7 +239,7 @@ public class DatabaseTables {
       result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
       result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
       result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
-      result.mPublishedDate = new DateTime(cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE)));
+      result.setPublishedDate(new Date(cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE))));
 
       int col;
 
@@ -258,7 +260,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_ITEM_COUNT, item.mItemCount);
-      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate.getValue());
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.getPublishedDate().getTime());
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
@@ -409,7 +411,7 @@ public class DatabaseTables {
 
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE);
       if (col != -1)
-        result.mPublishedDate = new DateTime(cursor.getLong(col));
+        result.setPublishedDate(new Date(cursor.getLong(col)));
 
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
       if (col != -1)
@@ -428,7 +430,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_DURATION, item.mDuration);
-      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate.getValue());
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.getPublishedDate().getTime());
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;

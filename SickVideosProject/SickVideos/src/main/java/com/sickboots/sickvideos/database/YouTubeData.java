@@ -2,17 +2,21 @@ package com.sickboots.sickvideos.database;
 
 import com.google.api.client.util.DateTime;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Created by sgehrman on 11/26/13.
  */
 public class YouTubeData {
+  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
+
   // raw access for speed
   public long mID;
   public String mRequest;
   public String mTitle;
   public String mDescription;
   public String mThumbnail;
-  public DateTime mPublishedDate;
 
   // used for videos
   public String mVideo;
@@ -27,9 +31,14 @@ public class YouTubeData {
 
   // use convenience methods
   private String mHidden;
+  private Date mPublishedDate;
 
   // is this faster?  no idea
   private static final String mNotNull = "";
+
+  // not saved in database, set when read from database
+  // don't want to convert date when drawing, so it's set in setPublishedDate
+  public String mPublishedDateString;
 
   // ----------------------------------------------------
   // public methods
@@ -41,5 +50,18 @@ public class YouTubeData {
 
   public void setHidden(boolean hidden) {
     mHidden = hidden ? mNotNull : null;
+  }
+
+  public void setPublishedDate(Date date) {
+    mPublishedDate = date;
+    mPublishedDateString = sDateFormatter.format(date);
+  }
+
+  public Date getPublishedDate() {
+    return mPublishedDate;
+  }
+
+  public String getPublishedDateString() {
+    return mPublishedDateString;
   }
 }
