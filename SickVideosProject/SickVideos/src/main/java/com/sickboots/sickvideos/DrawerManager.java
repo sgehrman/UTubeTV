@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 
 import java.util.Map;
@@ -59,7 +58,7 @@ public class DrawerManager {
     mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
     // seems insane, is this the best way of having a variable drawable resource by theme?
-    int[] attrs = new int[] { R.attr.nav_drawer_menu_drawable};
+    int[] attrs = new int[]{R.attr.nav_drawer_menu_drawable};
     TypedArray ta = activity.obtainStyledAttributes(attrs);
     int resID = ta.getResourceId(0, 0);
     ta.recycle();
