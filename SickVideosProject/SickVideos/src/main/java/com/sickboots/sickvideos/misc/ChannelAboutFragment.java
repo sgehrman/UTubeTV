@@ -126,6 +126,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       mTitle.setText("Video player for " + data.mTitle);
       mDescription.setText(data.mDescription);
 
+      // uncomment to get the thumbnail image for generating icons
+      Debug.log(data.mThumbnail);
+
       int defaultImageResID = 0;
       final ImageView image = mImage;
       UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {

@@ -113,6 +113,10 @@ android {
         reasontv {
             packageName "com.sickboots.sickvideos.reasontv"
         }
+
+        jetdaisuke {
+            packageName "com.sickboots.sickvideos.jetdaisuke"
+        }
     }
 }
 
