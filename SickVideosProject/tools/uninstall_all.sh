@@ -10,4 +10,7 @@ adb uninstall com.sickboots.sickvideos.rt
 adb uninstall com.sickboots.sickvideos.vice
 adb uninstall com.sickboots.sickvideos.neurosoup
 adb uninstall com.sickboots.sickvideos.jetdaisuke
-
+adb uninstall com.sickboots.sickvideos.topgear
+adb uninstall com.sickboots.sickvideos.bigthink
+adb uninstall com.sickboots.sickvideos.pewdiepie
+adb uninstall com.sickboots.sickvideos.reasontv

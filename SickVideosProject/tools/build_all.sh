@@ -1,5 +1,5 @@
 #!/bin/sh
-cd ../SickVideosProject
+cd ..
 
 # first clean all
 ./gradlew clean
@@ -15,3 +15,9 @@ cd ../SickVideosProject
 ./gradlew assembleRtRelease
 ./gradlew assembleJoeroganRelease
 ./gradlew assembleJetdaisukeRelease
+./gradlew assembleTopgearRelease
+./gradlew assembleBigthinkRelease
+./gradlew assemblePewdiepieRelease
+./gradlew assembleReasontvRelease
+
+
