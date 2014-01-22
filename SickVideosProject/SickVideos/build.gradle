@@ -97,6 +97,22 @@ android {
         androiddevs {
             packageName "com.sickboots.sickvideos.androiddevs"
         }
+
+        topgear {
+            packageName "com.sickboots.sickvideos.topgear"
+        }
+
+        bigthink {
+            packageName "com.sickboots.sickvideos.bigthink"
+        }
+
+        pewdiepie {
+            packageName "com.sickboots.sickvideos.pewdiepie"
+        }
+
+        reasontv {
+            packageName "com.sickboots.sickvideos.reasontv"
+        }
     }
 }
 
