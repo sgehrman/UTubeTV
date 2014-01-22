@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="viceDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleViceDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileViceDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleViceDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateViceDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="jetdaisukeDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleJetdaisukeDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileJetdaisukeDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleJetdaisukeDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateJetdaisukeDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/vice/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/jetdaisuke/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/vice/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/jetdaisuke/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/vice/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/vice/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/vice/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/vice/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/vice/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/viceDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/vice/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/vice/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/vice/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/vice/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/vice/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/vice/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestVice/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/jetdaisuke/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/jetdaisuke/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/jetdaisuke/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/jetdaisuke/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/jetdaisuke/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisukeDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/jetdaisuke/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/jetdaisuke/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/jetdaisuke/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/jetdaisuke/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/jetdaisuke/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/jetdaisuke/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJetdaisuke/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
