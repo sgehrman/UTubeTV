@@ -5,17 +5,17 @@
     </style>
 
     <color name="action_bar_start_color">#ff048f37</color>
-    <color name="action_bar_end_color">#ff047932</color>
-    <color name="action_bar_divider_color">#ff047932</color>
+    <color name="action_bar_end_color">#ff048f37</color>
+    <color name="action_bar_divider_color">#1000</color>
 
 
-    <color name="window_background_color">#ffecf454</color>
+    <color name="window_background_color">#fff</color>
 
 
-    <color name="drawer_background">#ccecf454</color>
-    <color name="drawer_item_background">#cc049a3b</color>
+    <color name="drawer_background">#d000</color>
+    <color name="drawer_item_background">#ff048f37</color>
     <color name="drawer_divider_color">#2000</color>
-    <color name="drawer_icon_color">#000</color>
-    <color name="drawer_text">#000</color>
+    <color name="drawer_icon_color">#ddd</color>
+    <color name="drawer_text">#ddd</color>
 
 </resources>
