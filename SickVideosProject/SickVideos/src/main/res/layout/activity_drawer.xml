@@ -37,6 +37,6 @@
         android:choiceMode="singleChoice"
         android:divider="@drawable/drawer_divider_background"
         android:dividerHeight="1dp"
-        android:background="@color/drawer_background"/>
+        android:background="@drawable/default_drawer_background"/>
 
 </android.support.v4.widget.DrawerLayout>
