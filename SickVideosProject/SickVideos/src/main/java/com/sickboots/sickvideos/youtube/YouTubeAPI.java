@@ -205,7 +205,7 @@ public class YouTubeAPI {
         for (Channel channel : channelsList) {
 
           result.put("title", channel.getSnippet().getTitle());
-          result.put("description", removeNewLinesFromString(channel.getSnippet().getDescription()));
+          result.put("description", channel.getSnippet().getDescription());
           result.put("thumbnail", thumbnailURL(channel.getSnippet().getThumbnails()));
 
         }
