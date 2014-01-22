@@ -31,7 +31,7 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, ANDROID_DEVELOPERS, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, MAX_KEISER, GATES_FOUNDATION, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, MAX_KEISER, GATES_FOUNDATION, USER}
 
   public static enum ThemeCode {DARK, LIGHT}
 
@@ -51,28 +51,14 @@ public class Content extends Observable {
     ArrayList<Map> result = new ArrayList<Map>();
 
     switch (mProductCode) {
-      case NEURO_SOUP:
-      case CONNECTIONS:
-      case ROGAN:
-      case TOP_GEAR:
-      case VICE:
-      case COLLEGE_HUMOR:
-      case ANDROID_DEVELOPERS:
-      case JUSTIN_BIEBER:
-      case KHAN_ACADEMY:
-      case LUKITSCH:
-      case NERDIST:
-      case MAX_KEISER:
-      case RT:
-      case GATES_FOUNDATION:
-      case CODE_ORG:
-        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
-        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
-        break;
       case USER:
         String[] titles = new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
         for (String title : titles)
           result.add(ImmutableMap.of("title", title, "icon", ToolbarIcons.IconID.VIDEO_PLAY));
+        break;
+      default:
+        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
+        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
         break;
     }
 
@@ -98,30 +84,6 @@ public class Content extends Observable {
     Fragment fragment = null;
 
     switch (mProductCode) {
-      case NEURO_SOUP:
-      case CONNECTIONS:
-      case ROGAN:
-      case VICE:
-      case JUSTIN_BIEBER:
-      case KHAN_ACADEMY:
-      case COLLEGE_HUMOR:
-      case ANDROID_DEVELOPERS:
-      case TOP_GEAR:
-      case LUKITSCH:
-      case CODE_ORG:
-      case NERDIST:
-      case MAX_KEISER:
-      case GATES_FOUNDATION:
-      case RT:
-        switch (index) {
-          case 0:
-            fragment = new ChannelAboutFragment(this);
-            break;
-          case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
-            break;
-        }
-        break;
       case USER:
         switch (index) {
           case 0:
@@ -152,6 +114,16 @@ public class Content extends Observable {
 //            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
             break;
         }
+      default:
+        switch (index) {
+          case 0:
+            fragment = new ChannelAboutFragment(this);
+            break;
+          case 1:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
+            break;
+        }
+        break;
     }
 
     return fragment;
@@ -196,6 +168,14 @@ public class Content extends Observable {
         return "UCpwvZwUam-URkxB7g4USKpg";
       case GATES_FOUNDATION:
         return "UCRi8JQTnKQilJW15uzo7bRQ";
+      case PEWDIEPIE:
+         return "UC-lHJZR3Gqxm24_Vd_AJ5Yw";
+      case BIG_THINK:
+        return "UCvQECJukTDE2i6aCoMnS-Vg";
+      case REASON_TV:
+        return "UC0uVZd8N7FfIZnPu0y7o95A";
+      case YOUNG_TURKS:
+        return "UC1yBKRuGpC1tSM73A0ZjYjQ";
     }
 
     return null;
