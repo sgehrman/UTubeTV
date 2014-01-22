@@ -55,6 +55,8 @@ public class YouTubeListService extends IntentService {
           Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS, request.requestIdentifier());
           if (!cursor.moveToFirst())
             refresh = true;
+
+          cursor.close();
         }
       }
 

@@ -33,17 +33,20 @@ public class Debug {
   public static void activateStrictMode() {
     if (isDebugBuild()) {
       StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-          .detectAll() // for all detectable problems
-//          .detectDiskReads()
+//          .detectAll() // for all detectable problems
+          .detectDiskReads()
 //          .detectDiskWrites()
-//          .detectNetwork()
+          .detectNetwork()
           .penaltyLog()
+//          .penaltyDialog()
           .build());
       StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
           .detectLeakedSqlLiteObjects()
           .detectLeakedClosableObjects()
           .penaltyLog()
-          .penaltyDeath()
+          .detectActivityLeaks()
+          .detectLeakedRegistrationObjects()
+//          .penaltyDeath()
           .build());
     }
   }

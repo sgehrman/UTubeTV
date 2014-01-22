@@ -89,6 +89,8 @@ public class YouTubeUpdateService extends IntentService {
       } else {
         Debug.log("video not found?");
       }
+
+      cursor.close();
     }
 
     Debug.log("SERVICE: updating info = " + updatedItems.size());
