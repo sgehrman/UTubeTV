@@ -57,8 +57,9 @@ public class Content extends Observable {
           result.add(ImmutableMap.of("title", title, "icon", ToolbarIcons.IconID.VIDEO_PLAY));
         break;
       default:
-        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
-        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
+        result.add(ImmutableMap.of("title", actionBarTitle(0), "icon", ToolbarIcons.IconID.ABOUT));
+        result.add(ImmutableMap.of("title", actionBarTitle(1), "icon", ToolbarIcons.IconID.PLAYLISTS));
+        result.add(ImmutableMap.of("title", actionBarTitle(2), "icon", ToolbarIcons.IconID.UPLOADS));
         break;
     }
 
@@ -74,6 +75,9 @@ public class Content extends Observable {
         break;
       case 1:
         title = "Playlists";
+        break;
+      case 2:
+        title = "Uploads";
         break;
     }
 
@@ -121,6 +125,9 @@ public class Content extends Observable {
             break;
           case 1:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
+            break;
+          case 2:
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID()));
             break;
         }
         break;
