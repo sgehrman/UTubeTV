@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <attr name="playerToolbarBackground" format="color|reference"/>
+    <attr name="nav_drawer_menu_drawable" format="reference"/>
 </resources>

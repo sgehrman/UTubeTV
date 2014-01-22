@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 
 import java.util.Map;
@@ -56,12 +58,18 @@ public class DrawerManager {
     mDrawerList.setAdapter(new DrawerAdapter(activity, content));
     mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+    // seems insane, is this the best way of having a variable drawable resource by theme?
+    int[] attrs = new int[] { R.attr.nav_drawer_menu_drawable};
+    TypedArray ta = activity.obtainStyledAttributes(attrs);
+    int resID = ta.getResourceId(0, 0);
+    ta.recycle();
+
     // ActionBarDrawerToggle ties together the the proper interactions
     // between the sliding drawer and the action bar app icon
     mDrawerToggle = new ActionBarDrawerToggle(
         activity,                  /* host Activity */
         mDrawerLayout,         /* DrawerLayout object */
-        R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+        resID,  /* nav drawer image to replace 'Up' caret */
         R.string.drawer_open,  /* "open drawer" description for accessibility */
         R.string.drawer_close  /* "close drawer" description for accessibility */
     ) {

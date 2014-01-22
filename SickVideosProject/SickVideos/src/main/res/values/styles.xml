@@ -10,11 +10,13 @@
     <style name="AppThemeLight" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
+        <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hl</item>
     </style>
 
     <style name="AppThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
+        <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hd</item>
     </style>
 
     <style name="DrawerActivityTheme" parent="AppTheme">
