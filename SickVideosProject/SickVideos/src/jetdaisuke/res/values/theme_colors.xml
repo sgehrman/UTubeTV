@@ -4,9 +4,9 @@
     <style name="AppTheme" parent="AppThemeDark">
     </style>
 
-    <color name="action_bar_start_color">#ff048f37</color>
-    <color name="action_bar_end_color">#ff048f37</color>
-    <color name="action_bar_divider_color">#1000</color>
+    <color name="action_bar_start_color">#ff048c36</color>
+    <color name="action_bar_end_color">#ff048c36</color>
+    <color name="action_bar_divider_color">#2000</color>
 
 
     <color name="window_background_color">#fff</color>
