@@ -1,4 +1,5 @@
-cd SickVideosProject
+#!/bin/sh
+cd ../SickVideosProject
 
 # first clean all
 ./gradlew clean

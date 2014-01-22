@@ -1,4 +1,5 @@
-cd SickVideosProject/SickVideos/build/apk
+#!/bin/sh
+cd ../SickVideosProject/SickVideos/build/apk
 
 # now install each one
 adb install SickVideos-codeorg-release.apk
