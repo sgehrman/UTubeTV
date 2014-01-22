@@ -10,3 +10,4 @@ adb install SickVideos-androiddevs-release.apk
 adb install SickVideos-khan-release.apk
 adb install SickVideos-nerdist-release.apk
 adb install SickVideos-joerogan-release.apk
+adb install SickVideos-jetdaisuke-release.apk

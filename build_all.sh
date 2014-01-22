@@ -13,4 +13,4 @@ cd SickVideosProject
 ./gradlew assembleAndroiddevsRelease
 ./gradlew assembleRtRelease
 ./gradlew assembleJoeroganRelease
-
+./gradlew assembleJetdaisukeRelease
