@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-import com.google.api.client.util.DateTime;
-
-import java.util.Date;
-
 /**
  * Created by sgehrman on 12/9/13.
  */

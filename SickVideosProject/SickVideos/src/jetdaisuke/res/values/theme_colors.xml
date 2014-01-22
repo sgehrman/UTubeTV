@@ -8,9 +8,7 @@
     <color name="action_bar_end_color">#ff048c36</color>
     <color name="action_bar_divider_color">#2000</color>
 
-
     <color name="window_background_color">#fff</color>
-
 
     <color name="drawer_background">#d000</color>
     <color name="drawer_item_background">#ff048f37</color>

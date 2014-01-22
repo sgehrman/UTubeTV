@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.google.api.client.util.DateTime;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
@@ -27,11 +26,6 @@ import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener, View.OnClickListener {
 
@@ -332,14 +326,14 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       }
     }
 
-      Spannable date = itemMap.getPublishedDateString();
-      if (date != null) {
-        holder.pubDate.setText(date);
-      } else {
-        holder.pubDate.setText("");
-      }
+    Spannable date = itemMap.getPublishedDateString();
+    if (date != null) {
+      holder.pubDate.setText(date);
+    } else {
+      holder.pubDate.setText("");
+    }
 
-      return convertView;
+    return convertView;
   }
 
   // VideoMenuViewListener

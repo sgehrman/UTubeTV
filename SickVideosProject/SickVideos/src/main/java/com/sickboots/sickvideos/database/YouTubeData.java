@@ -6,18 +6,15 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
-import com.google.api.client.util.DateTime;
-
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 /**
  * Created by sgehrman on 11/26/13.
  */
 public class YouTubeData {
-//  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
+  //  private static final DateFormat sDateFormatter = DateFormat.getDateInstance();
   private static final PrettyTime sDateFormatter = new PrettyTime();
   private static final Date sDate = new Date();  // avoiding an alloc every call, just set the time
   private static final String sTitle = "Published: ";
@@ -72,7 +69,7 @@ public class YouTubeData {
     sDate.setTime(date);
     String content = sDateFormatter.format(sDate);
 
-    mPublishedDateString = new SpannableString(sTitle+content);
+    mPublishedDateString = new SpannableString(sTitle + content);
     mPublishedDateString.setSpan(sBoldSpan, 0, sTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     mPublishedDateString.setSpan(sColorSpan, sTitle.length(), sTitle.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
   }
