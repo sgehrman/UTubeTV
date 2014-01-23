@@ -1,15 +1,5 @@
 package com.sickboots.sickvideos.database;
 
-import android.graphics.Typeface;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-
-import org.ocpsoft.prettytime.PrettyTime;
-
-import java.util.Date;
-
 /**
  * Created by sgehrman on 11/26/13.
  */

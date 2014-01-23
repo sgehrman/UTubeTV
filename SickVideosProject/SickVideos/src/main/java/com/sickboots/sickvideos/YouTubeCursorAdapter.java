@@ -413,11 +413,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   // cached, used as an optimization, getView() 0,0,0, muliple times, so don't keep building this over and over
   private static class PublishedDateCache {
     private final LruCache cache = new LruCache(20);
-    private   final PrettyTime mDateFormatter = new PrettyTime();
-    private   final Date mDate = new Date();  // avoiding an alloc every call, just set the time
-    private   final String mTitle = "Published: ";
-    private   final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
-    private   final ForegroundColorSpan mColorSpan = new ForegroundColorSpan(0xffb1e2ff);
+    private final PrettyTime mDateFormatter = new PrettyTime();
+    private final Date mDate = new Date();  // avoiding an alloc every call, just set the time
+    private final String mTitle = "Published: ";
+    private final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
+    private final ForegroundColorSpan mColorSpan = new ForegroundColorSpan(0xffb1e2ff);
 
     public Spannable spannable(long date) {
       // is it cached?
