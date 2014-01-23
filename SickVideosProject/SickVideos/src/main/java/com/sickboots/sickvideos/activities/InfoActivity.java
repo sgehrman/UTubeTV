@@ -26,9 +26,6 @@ import com.sickboots.sickvideos.R;
  */
 
 public class InfoActivity extends Activity {
-
-
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

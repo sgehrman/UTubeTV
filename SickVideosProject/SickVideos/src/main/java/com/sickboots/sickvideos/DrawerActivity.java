@@ -163,12 +163,19 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     return super.onCreateOptionsMenu(menu);
   }
 
+  private boolean closePlayerIfOpen() {
+    if (mPlayer != null && mPlayer.visible()) {
+      mPlayer.close();
+      return true;
+    }
+
+    return false;
+  }
+
   @Override
   public void onBackPressed() {
     // hides the video player if visible
-    if (mPlayer != null && mPlayer.visible())
-      mPlayer.close();
-    else {
+    if (!closePlayerIfOpen()) {
       if (getFragmentManager().getBackStackEntryCount() == 0) {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
           backButtonToast = Toast.makeText(this, "Press back again to exit", 4000);
@@ -232,6 +239,13 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   public boolean onOptionsItemSelected(MenuItem item) {
     Intent intent;
 
+    // close player if open
+    if (item.getItemId() == android.R.id.home) {
+      // close player if back button in action bar hit
+      if (closePlayerIfOpen())
+        return true;
+    }
+
     // The action bar home/up action should open or close the drawer.
     // ActionBarDrawerToggle will take care of this.
     if (mDrawerMgr.onOptionsItemSelected(item)) {
@@ -245,6 +259,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
 
         return true;
+
       case R.id.action_show_hidden: {
         boolean toggle = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
         AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
@@ -252,13 +267,12 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
         if (fragment != null)
           fragment.reloadForPrefChange();
+        return true;
       }
-      return true;
       case R.id.action_more_apps:
         intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(AppUtils.companyPlayStoreUri());
         startActivity(intent);
-
         return true;
 
       case R.id.action_switch_view:
@@ -276,20 +290,21 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         if (mPurchaseHelper != null)
           mPurchaseHelper.onBuyGasButtonClicked(null, this);
         return true;
+
       case R.id.action_channel_lookup:
         intent = new Intent();
         intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
         startActivity(intent);
         return true;
+
       case R.id.action_color_picker: {
         Fragment fragment = new ColorPickerFragment();
         Utils.showFragment(this, fragment, R.id.fragment_holder, 0, true);
+        return true;
       }
-      return true;
-
-      default:
-        return super.onOptionsItemSelected(item);
     }
+
+    return super.onOptionsItemSelected(item);
   }
 
   private void setupDrawer() {
