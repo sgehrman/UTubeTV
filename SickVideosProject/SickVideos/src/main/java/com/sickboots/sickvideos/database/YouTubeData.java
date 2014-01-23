@@ -21,12 +21,17 @@ public class YouTubeData {
   private static final StyleSpan sBoldSpan = new StyleSpan(Typeface.BOLD);
   private static final ForegroundColorSpan sColorSpan = new ForegroundColorSpan(0xffb1e2ff);
 
+  // cached, used as an optimization, getView() 0,0,0, muliple times, so don't keep building this over and over
+  private static Spannable sCachedDateSpannable;
+  private static long sCachedDate;
+
   // raw access for speed
   public long mID;
   public String mRequest;
   public String mTitle;
   public String mDescription;
   public String mThumbnail;
+  public long mPublishedDate;
 
   // used for videos
   public String mVideo;
@@ -41,14 +46,9 @@ public class YouTubeData {
 
   // use convenience methods
   private String mHidden;
-  private long mPublishedDate;
 
   // is this faster?  no idea
   private static final String mNotNull = "";
-
-  // not saved in database, set when read from database
-  // don't want to convert date when drawing, so it's set in setPublishedDate
-  public Spannable mPublishedDateString;
 
   // ----------------------------------------------------
   // public methods
@@ -62,23 +62,25 @@ public class YouTubeData {
     mHidden = hidden ? mNotNull : null;
   }
 
-  public void setPublishedDate(long date) {
-    mPublishedDate = date;
-
-    // avoiding an alloc during draw, reusing Date
-    sDate.setTime(date);
-    String content = sDateFormatter.format(sDate);
-
-    mPublishedDateString = new SpannableString(sTitle + content);
-    mPublishedDateString.setSpan(sBoldSpan, 0, sTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-    mPublishedDateString.setSpan(sColorSpan, sTitle.length(), sTitle.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-  }
-
-  public long getPublishedDate() {
-    return mPublishedDate;
-  }
-
   public Spannable getPublishedDateString() {
-    return mPublishedDateString;
+    // cached, used as an optimization, getView() 0,0,0, muliple times, so don't keep building this over and over
+    if (sCachedDateSpannable != null) {
+      if (sCachedDate != mPublishedDate)
+        sCachedDateSpannable = null;
+    }
+
+    if (sCachedDateSpannable == null) {
+      sCachedDate = mPublishedDate;
+
+      // avoiding an alloc during draw, reusing Date
+      sDate.setTime(mPublishedDate);
+      String content = sDateFormatter.format(sDate);
+
+      sCachedDateSpannable = new SpannableString(sTitle + content);
+      sCachedDateSpannable.setSpan(sBoldSpan, 0, sTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+      sCachedDateSpannable.setSpan(sColorSpan, sTitle.length(), sTitle.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    return sCachedDateSpannable;
   }
 }

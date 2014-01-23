@@ -235,7 +235,7 @@ public class DatabaseTables {
       result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
       result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
       result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
-      result.setPublishedDate(cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE)));
+      result.mPublishedDate = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE));
 
       int col;
 
@@ -256,7 +256,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_ITEM_COUNT, item.mItemCount);
-      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.getPublishedDate());
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate);
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;
@@ -407,7 +407,7 @@ public class DatabaseTables {
 
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE);
       if (col != -1)
-        result.setPublishedDate(cursor.getLong(col));
+        result.mPublishedDate = cursor.getLong(col);
 
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
       if (col != -1)
@@ -426,7 +426,7 @@ public class DatabaseTables {
       values.put(Entry.COLUMN_NAME_DESCRIPTION, item.mDescription);
       values.put(Entry.COLUMN_NAME_THUMBNAIL, item.mThumbnail);
       values.put(Entry.COLUMN_NAME_DURATION, item.mDuration);
-      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.getPublishedDate());
+      values.put(Entry.COLUMN_NAME_PUBLISHED_DATE, item.mPublishedDate);
       values.put(Entry.COLUMN_NAME_HIDDEN, item.isHidden() ? "" : null);
 
       return values;

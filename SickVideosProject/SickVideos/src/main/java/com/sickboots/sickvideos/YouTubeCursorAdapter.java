@@ -179,7 +179,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
   }
 
-  private View prepareViews(View convertView, boolean multiColumns) {
+  private View prepareViews(View convertView, ViewGroup parent, boolean multiColumns) {
     ViewHolder holder = null;
 
     // ## This fixes a problem with the SwipeToDismissAdapter.
@@ -194,7 +194,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     }
 
     if (convertView == null) {
-      convertView = inflater.inflate(mTheme.mTheme_itemResId, null);
+      convertView = inflater.inflate(mTheme.mTheme_itemResId, parent, false);
 
       holder = new ViewHolder();
       holder.image = (VideoImageView) convertView.findViewById(R.id.image);
@@ -265,7 +265,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     GridView gridView = (GridView) parent;
     boolean multiColumns = gridView.getNumColumns() > 1;
 
-    convertView = prepareViews(convertView, multiColumns);
+    convertView = prepareViews(convertView, parent, multiColumns);
     ViewHolder holder = (ViewHolder) convertView.getTag();
 
     Cursor cursor = (Cursor) getItem(position);
