@@ -1,6 +1,8 @@
 package com.sickboots.sickvideos.activities;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -26,6 +28,26 @@ import com.sickboots.sickvideos.R;
  */
 
 public class InfoActivity extends Activity {
+
+  public static void show(Activity activity, String contentID) {
+    // add animation, see finish below for the back transition
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(
+        activity, R.anim.scale_in, R.anim.scale_out);
+
+    Intent intent = new Intent();
+    intent.putExtra("infoID", contentID);
+    intent.setClass(activity, InfoActivity.class);
+    activity.startActivity(intent, opts.toBundle());
+  }
+
+  @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -63,11 +85,4 @@ public class InfoActivity extends Activity {
     }
     return super.onOptionsItemSelected(item);
   }
-
-  @Override
-  public void finish() {
-    super.finish();
-    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
-  }
-
 }

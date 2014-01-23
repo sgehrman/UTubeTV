@@ -15,6 +15,24 @@ import com.sickboots.sickvideos.misc.Debug;
 
 public class SettingsActivity extends Activity {
 
+  public static void show(Activity activity) {
+    // add animation, see finish below for the back transition
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(
+        activity, R.anim.scale_in, R.anim.scale_out);
+
+    Intent intent = new Intent();
+    intent.setClass(activity, SettingsActivity.class);
+    activity.startActivity(intent, opts.toBundle());
+  }
+
+  @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -86,14 +104,7 @@ public class SettingsActivity extends Activity {
 
     private boolean handlePrefClick(Preference preference) {
       if (preference.getKey().equals("credits")) {
-        ActivityOptions opts = ActivityOptions.makeCustomAnimation(
-            getActivity(), R.anim.scale_in, R.anim.scale_out);
-
-        Intent intent = new Intent();
-        intent.putExtra("infoID", "cr");
-        intent.setClass(getActivity(), InfoActivity.class);
-        startActivity(intent, opts.toBundle());
-
+        InfoActivity.show(getActivity(), "cr");
         return true;
       } else if (preference.getKey().equals("rate")) {
         Intent intent = new Intent(Intent.ACTION_VIEW);

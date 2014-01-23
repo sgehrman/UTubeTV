@@ -254,10 +254,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // Handle action buttons
     switch (item.getItemId()) {
       case R.id.action_settings:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, SettingsActivity.class);
-        startActivity(intent);
-
+        SettingsActivity.show(DrawerActivity.this);
         return true;
 
       case R.id.action_show_hidden: {
