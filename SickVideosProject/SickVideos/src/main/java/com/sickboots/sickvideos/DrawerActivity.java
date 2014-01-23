@@ -69,7 +69,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     // mPurchaseHelper = new PurchaseHelper(this);
 
     // general app tweaks
-    Debug.activateStrictMode();
+//    Debug.activateStrictMode();
     Utils.ignoreObsoleteCapacitiveMenuButton(this);
 
     // show player if activity was destroyed and recreated
