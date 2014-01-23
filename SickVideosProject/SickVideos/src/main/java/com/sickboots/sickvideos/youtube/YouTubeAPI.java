@@ -103,7 +103,7 @@ public class YouTubeAPI {
     return youTube;
   }
 
-  // pass null for your personal mChannelID
+  // pass null for your personal channelID
   public String channelID(String userName) {
     String result = null;
 
