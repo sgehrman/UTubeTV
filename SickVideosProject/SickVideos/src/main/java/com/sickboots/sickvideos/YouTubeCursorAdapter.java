@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,10 @@ import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.Date;
+
 public class YouTubeCursorAdapter extends SimpleCursorAdapter implements AdapterView.OnItemClickListener, VideoMenuView.VideoMenuViewListener, View.OnClickListener {
 
   private final LayoutInflater inflater;
@@ -39,6 +48,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
   private ViewDecorations mDecorations;
+  private final PublishedDateCache mDateCache = new PublishedDateCache();
 
   private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from,
                                int[] to, int flags) {
@@ -326,7 +336,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       }
     }
 
-    Spannable date = itemMap.getPublishedDateString();
+    Spannable date = mDateCache.spannable(itemMap.mPublishedDate);
     if (date != null) {
       holder.pubDate.setText(date);
     } else {
@@ -398,5 +408,36 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     VideoImageView image;
     VideoMenuView menuButton;
     TextView pubDate;
+  }
+
+  // cached, used as an optimization, getView() 0,0,0, muliple times, so don't keep building this over and over
+  private static class PublishedDateCache {
+    private final LruCache cache = new LruCache(20);
+    private   final PrettyTime mDateFormatter = new PrettyTime();
+    private   final Date mDate = new Date();  // avoiding an alloc every call, just set the time
+    private   final String mTitle = "Published: ";
+    private   final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
+    private   final ForegroundColorSpan mColorSpan = new ForegroundColorSpan(0xffb1e2ff);
+
+    public Spannable spannable(long date) {
+      // is it cached?
+      Spannable result = (Spannable) cache.get(date);
+
+      if (result == null) {
+        // avoiding an alloc during draw, reusing Date
+        mDate.setTime(date);
+        String content = mDateFormatter.format(mDate);
+
+        result = new SpannableString(mTitle + content);
+        result.setSpan(mBoldSpan, 0, mTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        result.setSpan(mColorSpan, mTitle.length(), mTitle.length() + content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // add to cache
+        cache.put(date, result);
+      }
+
+      return result;
+    }
+
   }
 }
