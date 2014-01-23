@@ -203,11 +203,9 @@ public class YouTubeAPI {
       if (channelsList != null) {
 
         for (Channel channel : channelsList) {
-
           result.put("title", channel.getSnippet().getTitle());
           result.put("description", channel.getSnippet().getDescription());
           result.put("thumbnail", thumbnailURL(channel.getSnippet().getThumbnails()));
-
         }
       }
     } catch (UserRecoverableAuthIOException e) {
@@ -362,24 +360,29 @@ public class YouTubeAPI {
   // VideoListResults
 
   public class VideosFromPlaylistResults extends BaseListResults {
-    private String playlistID;
+    private String mPlaylistID;
+    private String mPart;
+    private String mFields;
 
     public VideosFromPlaylistResults(String p) {
       super();
 
-      playlistID = p;
+      mPlaylistID = p;
+      mPart = "id, contentDetails, snippet";
+      mFields = String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
+
       setItems(itemsForNextToken(""));
     }
 
     protected List<YouTubeData> itemsForNextToken(String token) {
       List<PlaylistItem> playlistItemList = null;
 
-      if (playlistID != null) {
+      if (mPlaylistID != null) {
         try {
-          YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list("id, contentDetails, snippet");
-          listRequest.setPlaylistId(playlistID);
+          YouTube.PlaylistItems.List listRequest = youTube().playlistItems().list(mPart);
+          listRequest.setPlaylistId(mPlaylistID);
 
-          listRequest.setFields(String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField()));
+          listRequest.setFields(mFields);
 
           listRequest.setPageToken(token);
           listRequest.setMaxResults(getMaxResultsNeeded());
