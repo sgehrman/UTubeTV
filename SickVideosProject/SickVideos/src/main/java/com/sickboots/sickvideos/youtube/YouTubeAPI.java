@@ -103,7 +103,7 @@ public class YouTubeAPI {
     return youTube;
   }
 
-  // pass null for your personal channelID
+  // pass null for your personal mChannelID
   public String channelID(String userName) {
     String result = null;
 
@@ -134,14 +134,14 @@ public class YouTubeAPI {
     return result;
   }
 
-  public VideoListResults videoListResults(String playlistID) {
-    VideoListResults result = new VideoListResults(playlistID);
+  public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID) {
+    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID);
 
     return result;
   }
 
-  public PlaylistListResults playlistListResults(String channelID, boolean addRelatedPlaylists) {
-    PlaylistListResults result = new PlaylistListResults(channelID, addRelatedPlaylists);
+  public ChannelPlaylistsResults channelPlaylistsResults(String channelID, boolean addRelatedPlaylists) {
+    ChannelPlaylistsResults result = new ChannelPlaylistsResults(channelID, addRelatedPlaylists);
 
     return result;
   }
@@ -361,10 +361,10 @@ public class YouTubeAPI {
   // ========================================================
   // VideoListResults
 
-  public class VideoListResults extends BaseListResults {
+  public class VideosFromPlaylistResults extends BaseListResults {
     private String playlistID;
 
-    public VideoListResults(String p) {
+    public VideosFromPlaylistResults(String p) {
       super();
 
       playlistID = p;
@@ -701,19 +701,19 @@ public class YouTubeAPI {
   }
 
   // ========================================================
-  // PlaylistListResults
+  // ChannelPlaylistsResults
 
-  public class PlaylistListResults extends BaseListResults {
-    private String channelID;
+  public class ChannelPlaylistsResults extends BaseListResults {
+    private String mChannelID;
 
-    public PlaylistListResults(String c, boolean addRelated) {
+    public ChannelPlaylistsResults(String channelID, boolean addRelated) {
       super();
 
-      channelID = c;
+      mChannelID = channelID;
 
       List<YouTubeData> related = new ArrayList<YouTubeData>();
       if (addRelated) {
-        Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(c);
+        Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(mChannelID);
 
         for (Map.Entry<RelatedPlaylistType, String> entry : playlistMap.entrySet()) {
           String playlistID = entry.getValue();
@@ -758,10 +758,10 @@ public class YouTubeAPI {
         YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet, contentDetails");
 
         // if channel null, assume the users channel
-        if (channelID == null)
+        if (mChannelID == null)
           listRequest.setMine(true);
         else
-          listRequest.setChannelId(channelID);
+          listRequest.setChannelId(mChannelID);
 
         listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField()));
         listRequest.setMaxResults(getMaxResultsNeeded());
