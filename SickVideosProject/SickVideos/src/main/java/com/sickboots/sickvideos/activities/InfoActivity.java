@@ -26,6 +26,9 @@ import com.sickboots.sickvideos.R;
  */
 
 public class InfoActivity extends Activity {
+
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,7 +70,7 @@ public class InfoActivity extends Activity {
   @Override
   public void finish() {
     super.finish();
-    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
   }
 
 }

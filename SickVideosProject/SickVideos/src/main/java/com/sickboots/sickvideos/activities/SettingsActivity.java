@@ -87,7 +87,7 @@ public class SettingsActivity extends Activity {
     private boolean handlePrefClick(Preference preference) {
       if (preference.getKey().equals("credits")) {
         ActivityOptions opts = ActivityOptions.makeCustomAnimation(
-            getActivity(), android.R.anim.fade_in, android.R.anim.fade_out);
+            getActivity(), R.anim.scale_in, R.anim.scale_out);
 
         Intent intent = new Intent();
         intent.putExtra("infoID", "cr");
