@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.activities;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -85,10 +86,13 @@ public class SettingsActivity extends Activity {
 
     private boolean handlePrefClick(Preference preference) {
       if (preference.getKey().equals("credits")) {
+        ActivityOptions opts = ActivityOptions.makeCustomAnimation(
+            getActivity(), android.R.anim.fade_in, android.R.anim.fade_out);
+
         Intent intent = new Intent();
         intent.putExtra("infoID", "cr");
         intent.setClass(getActivity(), InfoActivity.class);
-        startActivity(intent);
+        startActivity(intent, opts.toBundle());
 
         return true;
       } else if (preference.getKey().equals("rate")) {

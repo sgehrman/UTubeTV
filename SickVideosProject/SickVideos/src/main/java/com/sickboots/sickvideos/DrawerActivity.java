@@ -3,6 +3,7 @@
 package com.sickboots.sickvideos;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -118,14 +119,16 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         // animate doesn't work, puts new activity in the background.  use recreate instead
         boolean animate = false;
         if (animate) {
-          startActivity(getIntent());
-          overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+          ActivityOptions opts = ActivityOptions.makeCustomAnimation(
+              this, android.R.anim.fade_in, android.R.anim.fade_out);
+
+          startActivity(getIntent(), opts.toBundle());
+
           finish();
         } else {
           // not sure how to to get recreate to animate, so we use the above code when animating which is like a recreate
           recreate();
         }
-
       }
     }
   }

@@ -63,4 +63,11 @@ public class InfoActivity extends Activity {
     }
     return super.onOptionsItemSelected(item);
   }
+
+  @Override
+  public void finish() {
+    super.finish();
+    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+  }
+
 }
