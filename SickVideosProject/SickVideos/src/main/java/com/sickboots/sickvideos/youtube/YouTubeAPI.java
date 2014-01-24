@@ -368,7 +368,7 @@ public class YouTubeAPI {
       super();
 
       mPlaylistID = p;
-      mPart = "id, contentDetails, snippet";
+      mPart = "contentDetails, snippet";
       mFields = String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
 
       setItems(itemsForNextToken(""));
@@ -611,7 +611,7 @@ public class YouTubeAPI {
       VideoCategoryListResponse categoryListResponse = null;
 
       try {
-        YouTube.VideoCategories.List listRequest = youTube().videoCategories().list("id, snippet");
+        YouTube.VideoCategories.List listRequest = youTube().videoCategories().list("snippet");
 
         listRequest.setKey(Auth.devKey());
         listRequest.setRegionCode(regionCode);
@@ -662,7 +662,7 @@ public class YouTubeAPI {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
-        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("id, snippet");
+        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("snippet");
         listRequest.setMine(true);
 
         listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField()));
