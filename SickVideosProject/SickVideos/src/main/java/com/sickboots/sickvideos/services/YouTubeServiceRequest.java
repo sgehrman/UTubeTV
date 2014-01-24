@@ -15,9 +15,10 @@ public class YouTubeServiceRequest implements Parcelable {
   private HashMap data;
   private RequestType type;
 
-  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String title, String subtitle) {
+  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String title, String subtitle, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
 
+    result.data.put("maxResults", maxResults);
     result.data.put("title", title);
     result.data.put("subtitle", subtitle);
     result.data.put("type", relatedPlayListType);
