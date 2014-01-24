@@ -152,8 +152,24 @@ public class YouTubeListService extends IntentService {
 
         playlistID = helper.relatedPlaylistID(type, channelID);
 
-        if (playlistID != null) // probably needed authorization and failed
-          listResults = helper.videosFromPlaylistResults(playlistID, false);
+        if (playlistID != null) { // probably needed authorization and failed
+          if (request.maxResults() != 0) {
+            listResults = helper.videosFromPlaylistResults(playlistID, false);
+          } else {
+            listResults = helper.videosFromPlaylistResults(playlistID, true);
+
+            if (listResults != null) {
+              List<YouTubeData> videoIDs = listResults.getAllItems();
+
+              // sort by publish date
+
+              // truncate array to maxResults()
+
+              // get video info for all the videos
+            }
+          }
+
+        }
         break;
       case VIDEOS:
         playlistID = (String) request.getData("playlist");

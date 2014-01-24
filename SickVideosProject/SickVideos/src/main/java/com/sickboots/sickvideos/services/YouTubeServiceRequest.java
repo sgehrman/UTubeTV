@@ -24,11 +24,12 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID, String title) {
+  public static YouTubeServiceRequest videosRequest(String playlistID, String title, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("title", title);
     result.data.put("playlist", playlistID);
+    result.data.put("maxResults", maxResults);
 
     return result;
   }
@@ -70,6 +71,13 @@ public class YouTubeServiceRequest implements Parcelable {
 
   public RequestType type() {
     return type;
+  }
+
+  public int maxResults() {
+    if (data.containsKey("maxResults"))
+     return (Integer) data.get("maxResults");
+
+    return 0;
   }
 
   public Object getData(String key) {
