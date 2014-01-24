@@ -41,16 +41,10 @@
             android:name=".activities.InfoActivity"
             android:label="">
         </activity>
-
         <service
             android:name=".services.YouTubeListService"
             android:enabled="true"
             android:exported="false"/>
-        <service
-            android:name=".services.YouTubeUpdateService"
-            android:enabled="true"
-            android:exported="false"/>
-
         <provider
             android:name="com.sickboots.sickvideos.database.YouTubeContentProvider"
             android:authorities=".res-auto.provider"
