@@ -60,7 +60,7 @@ public class YouTubeData {
   }
 
   public static List<String> videoIdsList(List<YouTubeData> videoData) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<String>(videoData.size());
 
     for (YouTubeData data : videoData) {
       result.add(data.mVideo);
