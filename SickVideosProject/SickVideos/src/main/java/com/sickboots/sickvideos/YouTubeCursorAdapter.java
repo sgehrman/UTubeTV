@@ -10,6 +10,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.text.util.Linkify;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -195,10 +196,23 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     TextView descriptionView = (TextView) row.findViewById(R.id.description_view);
 
     if (titleView != null) {
-      titleView.setMaxLines(titleView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : mTheme.mTitleMaxLines);
+      boolean setMax = titleView.getMaxLines() < Integer.MAX_VALUE;
+
+      titleView.setMaxLines(setMax ? Integer.MAX_VALUE : mTheme.mTitleMaxLines);
     }
     if (descriptionView != null) {
-      descriptionView.setMaxLines(descriptionView.getMaxLines() < Integer.MAX_VALUE ? Integer.MAX_VALUE : mTheme.mDescriptionMaxLines);
+      boolean setMax = descriptionView.getMaxLines() < Integer.MAX_VALUE;
+
+      descriptionView.setMaxLines(setMax ? Integer.MAX_VALUE : mTheme.mDescriptionMaxLines);
+
+      if (setMax)
+        descriptionView.setAutoLinkMask(Linkify.ALL);
+      else
+        descriptionView.setAutoLinkMask(0);
+
+      // toggles links by setting text again
+      CharSequence sequence = descriptionView.getText().toString(); // could be a StringSpanner, toString() gets a raw string
+      descriptionView.setText(sequence);
     }
   }
 
@@ -248,6 +262,9 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         holder.image.setRotationX(0.0f);
         holder.image.setRotationY(0.0f);
       }
+
+      // restore this, user could have clicked on it
+      holder.description.setAutoLinkMask(0);
 
       if (multiColumns) {
         // lowering these to get less wasted space at bottom
