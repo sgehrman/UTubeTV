@@ -176,7 +176,7 @@ public class YouTubeGridFragment extends Fragment
         String playlistID = itemMap.mPlaylist;
 
         if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, itemMap.mTitle, 0));
+          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, itemMap.mTitle));
 
           HostActivitySupport provider = (HostActivitySupport) getActivity();
 

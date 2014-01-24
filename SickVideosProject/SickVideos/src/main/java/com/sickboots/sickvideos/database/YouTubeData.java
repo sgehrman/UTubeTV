@@ -1,5 +1,10 @@
 package com.sickboots.sickvideos.database;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * Created by sgehrman on 11/26/13.
  */
@@ -40,4 +45,28 @@ public class YouTubeData {
   public void setHidden(boolean hidden) {
     mHidden = hidden ? mNotNull : null;
   }
+
+  // ----------------------------------------------------
+  // static helper functions
+
+  public static List<YouTubeData> sortByDate(List<YouTubeData> videoIDs) {
+    Collections.sort(videoIDs, new Comparator<YouTubeData>() {
+      public int compare(YouTubeData lhs, YouTubeData rhs) {
+        return (int) (lhs.mPublishedDate - rhs.mPublishedDate);
+      }
+    });
+
+    return videoIDs;
+  }
+
+  public static List<String> videoIdsList(List<YouTubeData> videoData) {
+    List<String> result = new ArrayList<String>();
+
+    for (YouTubeData data : videoData) {
+      result.add(data.mVideo);
+    }
+
+    return result;
+  }
+
 }

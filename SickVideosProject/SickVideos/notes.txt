@@ -131,3 +131,29 @@ Lost and Found
 Homecooked Code
 Briggs and Stratton
 Quik Kode
+
+
+
+
+   if (request.maxResults() == 0) {
+            listResults = helper.videosFromPlaylistResults(playlistID, false);
+          } else {
+            YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID, true);
+
+            if (videoResults != null) {
+              List<YouTubeData> videoData = videoResults.getAllItems();
+
+              // sort by publish date
+              videoData = YouTubeData.sortByDate(videoData);
+
+              // truncate array to maxResults()
+              videoData = videoData.subList(0, request.maxResults());
+
+              // extract just the video ids from list
+              List<String> videoIds = YouTubeData.videoIdsList(videoData);
+
+              // get video info for all the videos
+              videoResults = helper.videoInfoListResults(videoIds);
+              resultList = videoResults.getItems();
+            }
+

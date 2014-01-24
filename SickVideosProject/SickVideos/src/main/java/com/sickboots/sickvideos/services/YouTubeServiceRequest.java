@@ -24,12 +24,11 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID, String title, int maxResults) {
+  public static YouTubeServiceRequest videosRequest(String playlistID, String title) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("title", title);
     result.data.put("playlist", playlistID);
-    result.data.put("maxResults", maxResults);
 
     return result;
   }
