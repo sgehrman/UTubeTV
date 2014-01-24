@@ -361,8 +361,6 @@ public class YouTubeAPI {
 
   public class VideosFromPlaylistResults extends BaseListResults {
     private String mPlaylistID;
-    private String mPart;
-    private String mFields;
 
     public VideosFromPlaylistResults(String p) {
       super();
@@ -433,6 +431,9 @@ public class YouTubeAPI {
 
     public SearchListResults(String q) {
       query = q;
+      mPart = "id, snippet";
+      mFields = String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField());
+
       setItems(itemsForNextToken(""));
     }
 
@@ -441,12 +442,12 @@ public class YouTubeAPI {
       SearchListResponse searchListResponse = null;
 
       try {
-        YouTube.Search.List listRequest = youTube().search().list("id, snippet");
+        YouTube.Search.List listRequest = youTube().search().list(mPart);
 
         listRequest.setQ(query);
         listRequest.setKey(Auth.devKey());
         listRequest.setType("video");
-        listRequest.setFields(String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(mFields);
         listRequest.setMaxResults(getMaxResultsNeeded());
 
         listRequest.setPageToken(token);
@@ -490,6 +491,9 @@ public class YouTubeAPI {
   public class LikedVideosListResults extends BaseListResults {
     public LikedVideosListResults() {
       setItems(itemsForNextToken(""));
+
+      mPart = "id, snippet, contentDetails";
+      mFields = String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField());
     }
 
     protected List<YouTubeData> itemsForNextToken(String token) {
@@ -497,10 +501,10 @@ public class YouTubeAPI {
       VideoListResponse searchListResponse = null;
 
       try {
-        YouTube.Videos.List listRequest = youTube().videos().list("id, snippet, contentDetails");
+        YouTube.Videos.List listRequest = youTube().videos().list(mPart);
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setFields(String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(mFields);
         listRequest.setMyRating("like");
         listRequest.setMaxResults(getMaxResultsNeeded());
 
@@ -555,6 +559,9 @@ public class YouTubeAPI {
         mVideoIds = videoIds.subList(0, 50);
       }
 
+      mPart = "id, contentDetails";
+      mFields = "items(id, contentDetails/duration)";
+
       setItems(itemsForNextToken(""));
     }
 
@@ -563,10 +570,10 @@ public class YouTubeAPI {
       VideoListResponse searchListResponse = null;
 
       try {
-        YouTube.Videos.List listRequest = youTube().videos().list("id, contentDetails");
+        YouTube.Videos.List listRequest = youTube().videos().list(mPart);
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setFields("items(id, contentDetails/duration)");
+        listRequest.setFields(mFields);
         listRequest.setId(TextUtils.join(",", mVideoIds));
 
         searchListResponse = listRequest.execute();
@@ -603,6 +610,9 @@ public class YouTubeAPI {
 
   public class CategoriesListResults extends BaseListResults {
     public CategoriesListResults(String regionCode) {
+      mPart = "snippet";
+      mFields = "items(snippet/title, snippet/channelId)";
+
       setItems(itemsForNextToken(regionCode));
     }
 
@@ -611,11 +621,11 @@ public class YouTubeAPI {
       VideoCategoryListResponse categoryListResponse = null;
 
       try {
-        YouTube.VideoCategories.List listRequest = youTube().videoCategories().list("snippet");
+        YouTube.VideoCategories.List listRequest = youTube().videoCategories().list(mPart);
 
         listRequest.setKey(Auth.devKey());
         listRequest.setRegionCode(regionCode);
-        listRequest.setFields("items(snippet/title, snippet/channelId)");
+        listRequest.setFields(mFields);
 
         categoryListResponse = listRequest.execute();
 
@@ -655,6 +665,9 @@ public class YouTubeAPI {
     public SubscriptionListResults() {
       super();
 
+      mPart = "snippet";
+      mFields = String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField());
+
       setItems(itemsForNextToken(""));
     }
 
@@ -662,10 +675,10 @@ public class YouTubeAPI {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
-        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list("snippet");
+        YouTube.Subscriptions.List listRequest = youTube().subscriptions().list(mPart);
         listRequest.setMine(true);
 
-        listRequest.setFields(String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(mFields);
         listRequest.setMaxResults(getMaxResultsNeeded());
         listRequest.setKey(Auth.devKey());
 
@@ -713,6 +726,8 @@ public class YouTubeAPI {
       super();
 
       mChannelID = channelID;
+      mPart = "id, snippet, contentDetails";
+      mFields = String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
 
       List<YouTubeData> related = new ArrayList<YouTubeData>();
       if (addRelated) {
@@ -758,7 +773,7 @@ public class YouTubeAPI {
       List<Playlist> result = new ArrayList<Playlist>();
 
       try {
-        YouTube.Playlists.List listRequest = youTube().playlists().list("id, snippet, contentDetails");
+        YouTube.Playlists.List listRequest = youTube().playlists().list(mPart);
 
         // if channel null, assume the users channel
         if (mChannelID == null)
@@ -766,7 +781,7 @@ public class YouTubeAPI {
         else
           listRequest.setChannelId(mChannelID);
 
-        listRequest.setFields(String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField()));
+        listRequest.setFields(mFields);
         listRequest.setMaxResults(getMaxResultsNeeded());
         listRequest.setKey(Auth.devKey());
 
@@ -813,6 +828,8 @@ public class YouTubeAPI {
     protected Object response;
     private List<YouTubeData> items;
     private boolean reloadingFlag = false;
+    protected String mPart;
+    protected String mFields;
 
     // subclasses must implement
     abstract protected List<YouTubeData> itemsForNextToken(String token);
