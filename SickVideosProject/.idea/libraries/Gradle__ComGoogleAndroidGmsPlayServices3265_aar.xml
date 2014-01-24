@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: ComGoogleAndroidGmsPlayServices3265.aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3265.aar/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3265.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
