@@ -41,6 +41,7 @@
             android:name=".activities.InfoActivity"
             android:label="">
         </activity>
+
         <service
             android:name=".services.YouTubeListService"
             android:enabled="true"

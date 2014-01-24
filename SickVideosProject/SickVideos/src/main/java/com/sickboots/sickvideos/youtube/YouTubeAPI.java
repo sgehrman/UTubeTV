@@ -838,27 +838,26 @@ public class YouTubeAPI {
 
       long maxToRequest = maxResults;
 
-     while (true) {
-       List<YouTubeData> items = getItems(maxToRequest);
+      while (true) {
+        List<YouTubeData> items = getItems(maxToRequest);
 
-       if (items.size() == 0)
-         break;
-       else {
-        result.addAll(items);
+        if (items.size() == 0)
+          break;
+        else {
+          result.addAll(items);
 
-        // break out if we reached the max requested
-        if (maxResults != 0) {
-          if (result.size() >= maxResults) {
-            // could truncate results, but not that concerned about exact size
-            break;
-          }
-          else {
-            maxToRequest = maxResults - result.size();
+          // break out if we reached the max requested
+          if (maxResults != 0) {
+            if (result.size() >= maxResults) {
+              // could truncate results, but not that concerned about exact size
+              break;
+            } else {
+              maxToRequest = maxResults - result.size();
+            }
           }
         }
-      }
 
-     }
+      }
 
       return result;
     }
