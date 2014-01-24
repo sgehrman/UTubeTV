@@ -853,7 +853,7 @@ public class YouTubeAPI {
             break;
           }
           else {
-            maxToRequest -= result.size();
+            maxToRequest = maxResults - result.size();
           }
         }
       }
