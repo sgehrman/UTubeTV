@@ -57,6 +57,7 @@ public class YouTubeAPI {
   boolean highQualityImages = true;
   Context mContext;
   YouTubeAPIListener mListener;
+  private final int mYouTubeMaxResultsLimit = 50;
 
   public YouTubeAPI(Context context, YouTubeAPIListener listener) {
     super();
@@ -296,6 +297,44 @@ public class YouTubeAPI {
     return result;
   }
 
+  public List<YouTubeData> relatedPlaylists(String channelID) {
+    List<YouTubeData> related = new ArrayList<YouTubeData>();
+
+    Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(channelID);
+
+    for (Map.Entry<RelatedPlaylistType, String> entry : playlistMap.entrySet()) {
+      String playlistID = entry.getValue();
+
+      if (playlistID != null) {
+        YouTubeData map = new YouTubeData();
+
+        map.mPlaylist = playlistID;
+
+        switch (entry.getKey()) {
+          case FAVORITES:
+            map.mTitle = "Favorites";
+            break;
+          case LIKES:
+            map.mTitle = "LIKES";
+            break;
+          case UPLOADS:
+            map.mTitle = "UPLOADS";
+            break;
+          case WATCHED:
+            map.mTitle = "WATCHED";
+            break;
+          case WATCHLATER:
+            map.mTitle = "WATCHLATER";
+            break;
+        }
+
+        related.add(map);
+      }
+    }
+
+    return related;
+  }
+
   private void handleException(Exception e) {
     if (e.getClass().equals(UserRecoverableAuthIOException.class)) {
       UserRecoverableAuthIOException r = (UserRecoverableAuthIOException) e;
@@ -368,11 +407,9 @@ public class YouTubeAPI {
       mPlaylistID = playlistID;
       mPart = "contentDetails";
       mFields = "items(contentDetails/videoId), nextPageToken";
-
-      setItems(itemsForNextToken(""));
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<PlaylistItem> playlistItemList = null;
 
       if (mPlaylistID != null) {
@@ -383,7 +420,7 @@ public class YouTubeAPI {
           listRequest.setFields(mFields);
 
           listRequest.setPageToken(token);
-          listRequest.setMaxResults(getMaxResultsNeeded());
+          listRequest.setMaxResults(maxResults);
           listRequest.setKey(Auth.devKey());
           PlaylistItemListResponse playListResponse = listRequest.execute();
 
@@ -429,11 +466,9 @@ public class YouTubeAPI {
       query = q;
       mPart = "id, snippet";
       mFields = String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField());
-
-      setItems(itemsForNextToken(""));
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<SearchResult> result = new ArrayList<SearchResult>();
       SearchListResponse searchListResponse = null;
 
@@ -444,7 +479,7 @@ public class YouTubeAPI {
         listRequest.setKey(Auth.devKey());
         listRequest.setType("video");
         listRequest.setFields(mFields);
-        listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setMaxResults(maxResults);
 
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
@@ -486,13 +521,11 @@ public class YouTubeAPI {
 
   public class LikedVideosListResults extends BaseListResults {
     public LikedVideosListResults() {
-      setItems(itemsForNextToken(""));
-
       mPart = "id, snippet, contentDetails";
       mFields = String.format("items(id, snippet/title, snippet/description, contentDetails/duration, %s), nextPageToken", thumbnailField());
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<Video> result = new ArrayList<Video>();
       VideoListResponse searchListResponse = null;
 
@@ -502,7 +535,7 @@ public class YouTubeAPI {
         listRequest.setKey(Auth.devKey());
         listRequest.setFields(mFields);
         listRequest.setMyRating("like");
-        listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setMaxResults(maxResults);
 
         listRequest.setPageToken(token);
         searchListResponse = listRequest.execute();
@@ -549,19 +582,17 @@ public class YouTubeAPI {
     public VideoInfoListResults(List<String> videoIds) {
       mVideoIds = videoIds;
 
-      if (mVideoIds.size() > 50) {
+      if (mVideoIds.size() > mYouTubeMaxResultsLimit) {
         Debug.log("VideoInfoListResults can only handle 50 videos at a time.");
 
-        mVideoIds = videoIds.subList(0, 50);
+        mVideoIds = videoIds.subList(0, mYouTubeMaxResultsLimit);
       }
 
       mPart = "id, contentDetails, snippet";
       mFields = String.format("items(id, contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
-
-      setItems(itemsForNextToken(""));
     }
 
-    protected List<YouTubeData> itemsForNextToken(String tokenNotUsed) {
+    protected List<YouTubeData> itemsForNextToken(String tokenNotUsed, long maxResultsNotUsed) {
       List<Video> result = new ArrayList<Video>();
       VideoListResponse searchListResponse = null;
 
@@ -609,14 +640,15 @@ public class YouTubeAPI {
   // CategoriesListResults
 
   public class CategoriesListResults extends BaseListResults {
+    String mRegionCode;
+
     public CategoriesListResults(String regionCode) {
       mPart = "snippet";
       mFields = "items(snippet/title, snippet/channelId)";
-
-      setItems(itemsForNextToken(regionCode));
+      mRegionCode = regionCode;
     }
 
-    protected List<YouTubeData> itemsForNextToken(String regionCode) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<VideoCategory> result = new ArrayList<VideoCategory>();
       VideoCategoryListResponse categoryListResponse = null;
 
@@ -624,7 +656,7 @@ public class YouTubeAPI {
         YouTube.VideoCategories.List listRequest = youTube().videoCategories().list(mPart);
 
         listRequest.setKey(Auth.devKey());
-        listRequest.setRegionCode(regionCode);
+        listRequest.setRegionCode(mRegionCode);
         listRequest.setFields(mFields);
 
         categoryListResponse = listRequest.execute();
@@ -667,11 +699,9 @@ public class YouTubeAPI {
 
       mPart = "snippet";
       mFields = String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField());
-
-      setItems(itemsForNextToken(""));
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<Subscription> result = new ArrayList<Subscription>();
 
       try {
@@ -679,7 +709,7 @@ public class YouTubeAPI {
         listRequest.setMine(true);
 
         listRequest.setFields(mFields);
-        listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setMaxResults(maxResults);
         listRequest.setKey(Auth.devKey());
 
         listRequest.setPageToken(token);
@@ -728,48 +758,9 @@ public class YouTubeAPI {
       mChannelID = channelID;
       mPart = "id, snippet, contentDetails";
       mFields = String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
-
-      List<YouTubeData> related = new ArrayList<YouTubeData>();
-      if (addRelated) {
-        Map<RelatedPlaylistType, String> playlistMap = relatedPlaylistIDs(mChannelID);
-
-        for (Map.Entry<RelatedPlaylistType, String> entry : playlistMap.entrySet()) {
-          String playlistID = entry.getValue();
-
-          if (playlistID != null) {
-            YouTubeData map = new YouTubeData();
-
-            map.mPlaylist = playlistID;
-
-            switch (entry.getKey()) {
-              case FAVORITES:
-                map.mTitle = "Favorites";
-                break;
-              case LIKES:
-                map.mTitle = "LIKES";
-                break;
-              case UPLOADS:
-                map.mTitle = "UPLOADS";
-                break;
-              case WATCHED:
-                map.mTitle = "WATCHED";
-                break;
-              case WATCHLATER:
-                map.mTitle = "WATCHLATER";
-                break;
-            }
-
-            related.add(map);
-          }
-        }
-      }
-
-      related.addAll(itemsForNextToken(""));
-
-      setItems(related);
     }
 
-    protected List<YouTubeData> itemsForNextToken(String token) {
+    protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<Playlist> result = new ArrayList<Playlist>();
 
       try {
@@ -782,7 +773,7 @@ public class YouTubeAPI {
           listRequest.setChannelId(mChannelID);
 
         listRequest.setFields(mFields);
-        listRequest.setMaxResults(getMaxResultsNeeded());
+        listRequest.setMaxResults(maxResults);
         listRequest.setKey(Auth.devKey());
 
         listRequest.setPageToken(token);
@@ -826,25 +817,18 @@ public class YouTubeAPI {
 
   abstract public class BaseListResults {
     protected Object response;
-    private List<YouTubeData> items;
-    private boolean reloadingFlag = false;
     protected String mPart;
     protected String mFields;
 
     // subclasses must implement
-    abstract protected List<YouTubeData> itemsForNextToken(String token);
+    abstract protected List<YouTubeData> itemsForNextToken(String token, long maxResults);
 
     public BaseListResults() {
       super();
     }
 
-    public List<YouTubeData> getItems() {
-      List<YouTubeData> tmp = items;
-
-      // clear for every get
-      items = null;
-
-      return tmp;
+    public List<YouTubeData> getItems(long maxResults) {
+      return getNext(maxResults);
     }
 
     // we need all items at once if we reverse sort, otherwise the top items in the list will jump
@@ -852,39 +836,46 @@ public class YouTubeAPI {
     public List<YouTubeData> getAllItems(int maxResults) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
-      do {
-        result.addAll(getItems());
+      long maxToRequest = maxResults;
+
+     while (true) {
+       List<YouTubeData> items = getItems(maxToRequest);
+
+       if (items.size() == 0)
+         break;
+       else {
+        result.addAll(items);
 
         // break out if we reached the max requested
         if (maxResults != 0) {
-          if (result.size() >= maxResults)
+          if (result.size() >= maxResults) {
             // could truncate results, but not that concerned about exact size
             break;
+          }
+          else {
+            maxToRequest -= result.size();
+          }
         }
+      }
 
-      } while (getNext());
+     }
 
       return result;
     }
 
-    public void setItems(List<YouTubeData> l) {
-      items = l;
-    }
+    private List<YouTubeData> getNext(long maxResults) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
 
-    public boolean getNext() {
-      boolean result = false;
+      if (maxResults <= 0 || maxResults > mYouTubeMaxResultsLimit)
+        maxResults = mYouTubeMaxResultsLimit;  // youTube limit
 
       String token = nextToken();
       if (token != null) {
-        List<YouTubeData> newItems = itemsForNextToken(token);
+        List<YouTubeData> newItems = itemsForNextToken(token, maxResults);
 
         if (newItems != null) {
-          if (items == null)
-            items = new ArrayList<YouTubeData>();
 
-          items.addAll(newItems);
-
-          result = true;
+          result.addAll(newItems);
         }
       } else {
         // no more tokens, we are done
@@ -897,7 +888,9 @@ public class YouTubeAPI {
     private String nextToken() {
       String result = null;
 
-      if (response != null) {
+      if (response == null)
+        result = ""; // first time
+      else {
         // is there a better way of doing this?
         if (response instanceof SearchListResponse) {
           result = ((SearchListResponse) response).getNextPageToken();
@@ -915,19 +908,6 @@ public class YouTubeAPI {
       }
 
       return result;
-    }
-
-    public void setIsReloading(boolean set) {
-      reloadingFlag = set;
-    }
-
-    public boolean isReloading() {
-      return reloadingFlag;
-    }
-
-    protected long getMaxResultsNeeded() {
-      // avoid exception with setMaxResults: Values must be within the range: [0, 50]
-      return 50;
     }
 
     private void done() {

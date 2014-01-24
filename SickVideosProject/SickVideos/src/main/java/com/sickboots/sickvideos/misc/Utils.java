@@ -32,6 +32,7 @@ import org.joda.time.format.PeriodFormatter;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class Utils {
@@ -265,5 +266,4 @@ public class Utils {
 
     return bitmap;
   }
-
 }

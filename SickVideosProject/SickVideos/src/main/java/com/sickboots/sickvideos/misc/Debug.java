@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.sickboots.sickvideos.BuildConfig;
 
+import java.util.Date;
+
 public class Debug {
 
   public static void log(String message) {
@@ -93,6 +95,11 @@ public class Debug {
     }
 
     return result;
+  }
+
+  public static void timeLog(String message, Date startTime) {
+    Date now = new Date();
+    Debug.log("message: " + (now.getTime() - startTime.getTime()) / 1000);
   }
 
 }

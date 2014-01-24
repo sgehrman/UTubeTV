@@ -15,6 +15,7 @@ import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -207,6 +208,7 @@ public class YouTubeListService extends IntentService {
 
    YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID);
     if (videoResults != null) {
+
       List<YouTubeData> videoData = videoResults.getAllItems(maxResults);
 
       // extract just the video ids from list
@@ -220,7 +222,7 @@ public class YouTubeListService extends IntentService {
         List<String> chunk = videoIds.subList(n, chunkSize);
 
         videoResults = helper.videoInfoListResults(chunk);
-        result.addAll(videoResults.getItems());
+        result.addAll(videoResults.getItems(0));
       }
     }
 
