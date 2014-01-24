@@ -69,7 +69,7 @@ public class Utils {
       handler.post(new Runnable() {
         @Override
         public void run() {
-          AppMsg.Style style = new AppMsg.Style(1000, R.color.message_background);
+          AppMsg.Style style = new AppMsg.Style(AppMsg.LENGTH_SHORT, R.color.message_background);
 
           AppMsg.makeText(activity, message, style)
            .setLayoutGravity(Gravity.BOTTOM)

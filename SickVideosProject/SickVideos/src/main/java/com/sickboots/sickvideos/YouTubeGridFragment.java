@@ -137,7 +137,8 @@ public class YouTubeGridFragment extends Fragment
   // OnDismissCallback
   @Override
   public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
-    Utils.toast(getActivity(), "Item Hidden");
+    Utils.message(getActivity(), String.format("Item Hidden"));
+
     for (int position : reverseSortedPositions) {
       Cursor cursor = (Cursor) mAdapter.getItem(position);
       YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
