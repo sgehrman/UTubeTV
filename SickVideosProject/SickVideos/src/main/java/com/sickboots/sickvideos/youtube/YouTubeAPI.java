@@ -556,7 +556,7 @@ public class YouTubeAPI {
       }
 
       mPart = "id, contentDetails, snippet";
-      mFields = String.format("items(contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
+      mFields = String.format("id, items(contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
 
       setItems(itemsForNextToken(""));
     }
@@ -596,6 +596,7 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
+        map.mPublishedDate = playlistItem.getSnippet().getPublishedAt().getValue();
 
         result.add(map);
       }

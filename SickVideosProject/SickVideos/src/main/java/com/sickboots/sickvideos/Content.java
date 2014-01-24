@@ -57,31 +57,13 @@ public class Content extends Observable {
           result.add(ImmutableMap.of("title", title, "icon", ToolbarIcons.IconID.VIDEO_PLAY));
         break;
       default:
-        result.add(ImmutableMap.of("title", actionBarTitle(0), "icon", ToolbarIcons.IconID.ABOUT));
-        result.add(ImmutableMap.of("title", actionBarTitle(1), "icon", ToolbarIcons.IconID.PLAYLISTS));
-        result.add(ImmutableMap.of("title", actionBarTitle(2), "icon", ToolbarIcons.IconID.UPLOADS));
+        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
+        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
+        result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
         break;
     }
 
     return result;
-  }
-
-  public String actionBarTitle(int flag) {
-    String title = null;
-
-    switch (flag) {
-      case 0:
-        title = "About";
-        break;
-      case 1:
-        title = "Playlists";
-        break;
-      case 2:
-        title = "Recent Uploads";
-        break;
-    }
-
-    return title;
   }
 
   public Fragment fragmentForIndex(int index) {
@@ -94,25 +76,25 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment(this);
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null, null, null));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null, null, null));
             break;
           case 3:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null, null, null));
             break;
           case 4:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null, null, null));
             break;
           case 5:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null, null, null));
             break;
           case 6:
             fragment = new ColorPickerFragment();
             break;
           case 7:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null, null));
             break;
           case 8:
 //            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
@@ -124,10 +106,10 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment(this);
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), "Playlists", null));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID()));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID(), "Videos", "Recent Uploads"));
             break;
         }
         break;

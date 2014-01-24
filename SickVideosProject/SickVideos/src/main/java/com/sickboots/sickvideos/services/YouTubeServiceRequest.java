@@ -15,54 +15,69 @@ public class YouTubeServiceRequest implements Parcelable {
   private HashMap data;
   private RequestType type;
 
-  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID) {
+  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
 
+    result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
     result.data.put("type", relatedPlayListType);
     result.data.put("channel", channelID);
 
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID, String title) {
+  public static YouTubeServiceRequest videosRequest(String playlistID, String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
     result.data.put("playlist", playlistID);
 
     return result;
   }
 
-  public static YouTubeServiceRequest searchRequest(String query) {
+  public static YouTubeServiceRequest searchRequest(String query, String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.SEARCH);
 
+    result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
     result.data.put("query", query);
 
     return result;
   }
 
-  public static YouTubeServiceRequest subscriptionsRequest() {
+  public static YouTubeServiceRequest subscriptionsRequest(String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
+    result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
+
     return result;
   }
 
-  public static YouTubeServiceRequest categoriesRequest() {
+  public static YouTubeServiceRequest categoriesRequest(String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
+    result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
+
     return result;
   }
 
-  public static YouTubeServiceRequest likedRequest() {
+  public static YouTubeServiceRequest likedRequest(String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.LIKED);
 
+    result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
+
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsRequest(String channelID, String title) {
+  public static YouTubeServiceRequest playlistsRequest(String channelID, String title, String subtitle) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
     result.data.put("title", title);
+    result.data.put("subtitle", subtitle);
     result.data.put("channel", channelID);
 
     return result;
@@ -73,52 +88,31 @@ public class YouTubeServiceRequest implements Parcelable {
   }
 
   public int maxResults() {
-    if (data.containsKey("maxResults"))
-     return (Integer) data.get("maxResults");
+    int result = 0;
 
-    return 50;
+     Integer intObject = (Integer) getData("maxResults");
+
+    if (intObject != null)
+      result = intObject.intValue();
+
+    return result;
   }
 
   public Object getData(String key) {
-    return data.get(key);
+    Object result = null;
+
+    if (data.containsKey(key))
+      result = data.get(key);
+
+    return result;
   }
 
   public String title() {
-    String title = null;
-
-    switch (type) {
-      case SUBSCRIPTIONS:
-      case PLAYLISTS:
-      case CATEGORIES:
-      case LIKED:
-      case RELATED:
-      case SEARCH:
-      case VIDEOS:
-        break;
-    }
-
-    if (title == null)
-      title = typeToString();
-
-    return title;
+    return (String) getData("title");
   }
 
   public String subtitle() {
-    String result = null;
-
-    switch (type) {
-      case SUBSCRIPTIONS:
-      case PLAYLISTS:
-      case CATEGORIES:
-      case LIKED:
-      case RELATED:
-      case SEARCH:
-      case VIDEOS:
-        result = (String) getData("title");  // use title as subtitle
-        break;
-    }
-
-    return result;
+    return (String) getData("subtitle");
   }
 
   // just used for debugging

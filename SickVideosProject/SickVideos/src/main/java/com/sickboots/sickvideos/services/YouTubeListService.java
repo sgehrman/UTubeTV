@@ -156,12 +156,13 @@ public class YouTubeListService extends IntentService {
         playlistID = helper.relatedPlaylistID(type, channelID);
 
         if (playlistID != null) // probably needed authorization and failed
-          resultList = twoStep(request, helper, playlistID);
+          resultList = twoStep(request, helper, playlistID, request.maxResults());
         break;
       case VIDEOS:
         playlistID = (String) request.getData("playlist");
 
-        resultList = twoStep(request, helper, playlistID);
+        // can't use request.maxResults() since we have to get everything and sort it
+        resultList = twoStep(request, helper, playlistID, 0);
         break;
       case SEARCH:
         String query = (String) request.getData("query");
@@ -201,12 +202,12 @@ public class YouTubeListService extends IntentService {
     }
   }
 
- private  List<YouTubeData> twoStep(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID) {
+ private  List<YouTubeData> twoStep(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, int maxResults) {
    List<YouTubeData> result = new ArrayList<YouTubeData>();
 
    YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID);
     if (videoResults != null) {
-      List<YouTubeData> videoData = videoResults.getAllItems(request.maxResults());
+      List<YouTubeData> videoData = videoResults.getAllItems(maxResults);
 
       // extract just the video ids from list
       List<String> videoIds = YouTubeData.videoIdsList(videoData);
