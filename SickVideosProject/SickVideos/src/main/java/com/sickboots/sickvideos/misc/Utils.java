@@ -20,6 +20,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
@@ -68,7 +69,11 @@ public class Utils {
       handler.post(new Runnable() {
         @Override
         public void run() {
-          AppMsg.makeText(activity, message, AppMsg.STYLE_INFO).show();
+          AppMsg.Style style = new AppMsg.Style(1000, R.color.message_background);
+
+          AppMsg.makeText(activity, message, style)
+           .setLayoutGravity(Gravity.BOTTOM)
+          .show();
         }
       });
     }

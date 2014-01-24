@@ -65,7 +65,13 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         int cnt = YouTubeCursorAdapter.this.getCount();
 
         if (cnt > 0)
-          Utils.toast(mContext, String.format("%d items", YouTubeCursorAdapter.this.getCount()));
+        {
+          Activity activity = mListener.accesActivity();
+
+          if (activity != null) {
+            Utils.message(activity, String.format("%d items", YouTubeCursorAdapter.this.getCount()));
+          }
+        }
       }
     };
     registerDataSetObserver(dataSetObserver);
