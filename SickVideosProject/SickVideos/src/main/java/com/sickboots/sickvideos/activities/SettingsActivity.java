@@ -13,6 +13,8 @@ import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 
+import org.codechimp.apprater.AppRater;
+
 public class SettingsActivity extends Activity {
 
   public static void show(Activity activity) {
@@ -107,10 +109,7 @@ public class SettingsActivity extends Activity {
         InfoActivity.show(getActivity(), "cr");
         return true;
       } else if (preference.getKey().equals("rate")) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-
-        intent.setData(AppUtils.applicationPlayStoreUri(getActivity()));
-        startActivity(intent);
+        AppRater.rateNow(getActivity());
 
         return true;
       }
