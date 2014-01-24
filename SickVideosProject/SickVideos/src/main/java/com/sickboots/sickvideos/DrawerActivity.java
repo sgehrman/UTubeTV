@@ -287,6 +287,10 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
         return true;
 
+      case R.id.action_show_rate_dialog:
+        AppRater.showRateDialog(this);
+        break;
+
       case R.id.action_buy_taco:
         if (mPurchaseHelper != null)
           mPurchaseHelper.onBuyGasButtonClicked(null, this);
