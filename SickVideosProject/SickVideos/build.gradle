@@ -137,6 +137,7 @@ dependencies {
     compile 'com.nhaarman.listviewanimations:library:2.5.+'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.+'
     compile 'com.github.codechimp-org.apprater:library:1.0.+'
+    compile 'com.github.johnkil.android-appmsg:appmsg:1.1.+'
 
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')

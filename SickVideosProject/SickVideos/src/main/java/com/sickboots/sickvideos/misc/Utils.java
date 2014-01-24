@@ -23,6 +23,7 @@ import android.os.Vibrator;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import com.devspark.appmsg.AppMsg;
 import com.sickboots.sickvideos.R;
 
 import org.joda.time.Period;
@@ -43,15 +44,31 @@ public class Utils {
     public void onResults(StringResultListener listener, String result);
   }
 
-  public static void toast(final Context context, final String message) {
+  public static void toast(  Context context, final String message) {
     // Toasts only work on the main thread
     if (context != null && message != null) {
+      final Context appContext = context.getApplicationContext();
+
       Handler handler = new Handler(Looper.getMainLooper());
 
       handler.post(new Runnable() {
         @Override
         public void run() {
-          Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+          Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+        }
+      });
+    }
+  }
+
+  public static void message(final Activity activity, final String message) {
+    // Toasts only work on the main thread
+    if (activity != null && message != null) {
+      Handler handler = new Handler(Looper.getMainLooper());
+
+      handler.post(new Runnable() {
+        @Override
+        public void run() {
+          AppMsg.makeText(activity, message, AppMsg.STYLE_INFO).show();
         }
       });
     }
