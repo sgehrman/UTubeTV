@@ -153,12 +153,12 @@ public class YouTubeListService extends IntentService {
         playlistID = helper.relatedPlaylistID(type, channelID);
 
         if (playlistID != null) // probably needed authorization and failed
-          listResults = helper.videosFromPlaylistResults(playlistID);
+          listResults = helper.videosFromPlaylistResults(playlistID, false);
         break;
       case VIDEOS:
         playlistID = (String) request.getData("playlist");
 
-        listResults = helper.videosFromPlaylistResults(playlistID);
+        listResults = helper.videosFromPlaylistResults(playlistID, false);
         break;
       case SEARCH:
         String query = (String) request.getData("query");

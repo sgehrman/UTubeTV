@@ -134,8 +134,8 @@ public class YouTubeAPI {
     return result;
   }
 
-  public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID) {
-    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID);
+  public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID, boolean minimal) {
+    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID, minimal);
 
     return result;
   }
@@ -361,13 +361,21 @@ public class YouTubeAPI {
 
   public class VideosFromPlaylistResults extends BaseListResults {
     private String mPlaylistID;
+    private boolean mMinimal;
 
-    public VideosFromPlaylistResults(String p) {
+    public VideosFromPlaylistResults(String playlistID, boolean minimal) {
       super();
 
-      mPlaylistID = p;
-      mPart = "contentDetails, snippet";
-      mFields = String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
+      mPlaylistID = playlistID;
+      mMinimal = minimal;
+
+      if (mMinimal) {
+        mPart = "contentDetails, snippet";
+        mFields = "items(contentDetails/videoId, snippet/publishedAt), nextPageToken";
+      } else {
+        mPart = "contentDetails, snippet";
+        mFields = String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
+      }
 
       setItems(itemsForNextToken(""));
     }
@@ -411,10 +419,13 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getContentDetails().getVideoId();
-        map.mTitle = playlistItem.getSnippet().getTitle();
-        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
-        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
         map.mPublishedDate = playlistItem.getSnippet().getPublishedAt().getValue();
+
+        if (!mMinimal) {
+          map.mTitle = playlistItem.getSnippet().getTitle();
+          map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+          map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
+        }
 
         result.add(map);
       }
