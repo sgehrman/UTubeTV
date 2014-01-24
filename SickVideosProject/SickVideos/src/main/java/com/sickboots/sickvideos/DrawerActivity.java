@@ -24,6 +24,8 @@ import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import org.codechimp.apprater.AppRater;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -67,6 +69,8 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
 
     // disabled until polished
     // mPurchaseHelper = new PurchaseHelper(this);
+
+    AppRater.app_launched(this);
 
     // general app tweaks
 //    Debug.activateStrictMode();
