@@ -556,7 +556,7 @@ public class YouTubeAPI {
       }
 
       mPart = "id, contentDetails, snippet";
-      mFields = String.format("id, items(contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
+      mFields = String.format("items(id, contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
 
       setItems(itemsForNextToken(""));
     }
