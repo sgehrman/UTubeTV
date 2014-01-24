@@ -76,7 +76,7 @@ public class YouTubeServiceRequest implements Parcelable {
     if (data.containsKey("maxResults"))
      return (Integer) data.get("maxResults");
 
-    return 0;
+    return 50;
   }
 
   public Object getData(String key) {

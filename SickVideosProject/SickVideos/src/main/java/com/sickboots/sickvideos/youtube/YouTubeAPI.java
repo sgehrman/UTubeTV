@@ -134,8 +134,8 @@ public class YouTubeAPI {
     return result;
   }
 
-  public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID, boolean minimal) {
-    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID, minimal);
+  public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID) {
+    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID);
 
     return result;
   }
@@ -361,21 +361,13 @@ public class YouTubeAPI {
 
   public class VideosFromPlaylistResults extends BaseListResults {
     private String mPlaylistID;
-    private boolean mMinimal;
 
-    public VideosFromPlaylistResults(String playlistID, boolean minimal) {
+    public VideosFromPlaylistResults(String playlistID) {
       super();
 
       mPlaylistID = playlistID;
-      mMinimal = minimal;
-
-      if (mMinimal) {
-        mPart = "contentDetails, snippet";
-        mFields = "items(contentDetails/videoId, snippet/publishedAt), nextPageToken";
-      } else {
-        mPart = "contentDetails, snippet";
-        mFields = String.format("items(contentDetails/videoId, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
-      }
+      mPart = "contentDetails";
+      mFields = "items(contentDetails/videoId), nextPageToken";
 
       setItems(itemsForNextToken(""));
     }
@@ -419,13 +411,6 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getContentDetails().getVideoId();
-        map.mPublishedDate = playlistItem.getSnippet().getPublishedAt().getValue();
-
-        if (!mMinimal) {
-          map.mTitle = playlistItem.getSnippet().getTitle();
-          map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
-          map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
-        }
 
         result.add(map);
       }
@@ -570,8 +555,8 @@ public class YouTubeAPI {
         mVideoIds = videoIds.subList(0, 50);
       }
 
-      mPart = "id, contentDetails";
-      mFields = "items(id, contentDetails/duration)";
+      mPart = "id, contentDetails, snippet";
+      mFields = String.format("items(contentDetails/duration, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
 
       setItems(itemsForNextToken(""));
     }
@@ -608,6 +593,9 @@ public class YouTubeAPI {
 
         map.mVideo = playlistItem.getId();
         map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
+        map.mTitle = playlistItem.getSnippet().getTitle();
+        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
 
         result.add(map);
       }

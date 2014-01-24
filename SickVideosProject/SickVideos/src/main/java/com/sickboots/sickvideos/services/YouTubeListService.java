@@ -14,6 +14,7 @@ import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,6 +86,7 @@ public class YouTubeListService extends IntentService {
       sendServiceDoneBroadcast();
 
     } catch (Exception e) {
+      e.printStackTrace();
       Debug.log(String.format("%s exception: %s", Debug.currentMethod(), e.getMessage()));
     }
   }
@@ -134,6 +136,7 @@ public class YouTubeListService extends IntentService {
 
   private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
+    List<YouTubeData> resultList = null;
 
     // do we have internet access?
     if (!Utils.hasNetworkConnection(this)) {
@@ -153,12 +156,12 @@ public class YouTubeListService extends IntentService {
         playlistID = helper.relatedPlaylistID(type, channelID);
 
         if (playlistID != null) // probably needed authorization and failed
-          listResults = helper.videosFromPlaylistResults(playlistID, false);
+          resultList = twoStep(request, helper, playlistID);
         break;
       case VIDEOS:
         playlistID = (String) request.getData("playlist");
 
-        listResults = helper.videosFromPlaylistResults(playlistID, false);
+        resultList = twoStep(request, helper, playlistID);
         break;
       case SEARCH:
         String query = (String) request.getData("query");
@@ -180,21 +183,48 @@ public class YouTubeListService extends IntentService {
         break;
     }
 
-    if (listResults != null) {
-      List<YouTubeData> batch = listResults.getAllItems(request.maxResults());
+    if (resultList == null) {
+      if (listResults != null) {
+        resultList = listResults.getAllItems(request.maxResults());
+      }
+    }
 
+    if (resultList != null) {
       DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
 
       Set currentListSavedData = saveExistingListState(database, request.requestIdentifier());
 
-      batch = prepareDataFromNet(batch, currentListSavedData, request.requestIdentifier());
+      resultList = prepareDataFromNet(resultList, currentListSavedData, request.requestIdentifier());
 
       database.deleteAllRows(request.requestIdentifier());
-      database.insertItems(batch);
-
-      // fetch the duration
-      YouTubeUpdateService.startRequest(this);
+      database.insertItems(resultList);
     }
   }
+
+ private  List<YouTubeData> twoStep(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID) {
+   List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+   YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID);
+    if (videoResults != null) {
+      List<YouTubeData> videoData = videoResults.getAllItems(request.maxResults());
+
+      // extract just the video ids from list
+      List<String> videoIds = YouTubeData.videoIdsList(videoData);
+
+      final int limit=50;
+
+      for (int n=0; n<videoIds.size(); n+=limit)
+      {
+        int chunkSize = Math.min(videoIds.size(), n + limit);
+        List<String> chunk = videoIds.subList(n, chunkSize);
+
+        videoResults = helper.videoInfoListResults(chunk);
+        result.addAll(videoResults.getItems());
+      }
+    }
+
+   return result;
+  }
+
 
 }
