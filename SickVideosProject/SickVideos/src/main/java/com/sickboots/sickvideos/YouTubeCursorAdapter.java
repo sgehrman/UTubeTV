@@ -3,6 +3,7 @@ package com.sickboots.sickvideos;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.text.Spannable;
@@ -27,6 +28,7 @@ import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
+import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
@@ -55,6 +57,17 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     super(context, layout, c, from, to, flags);
 
     inflater = LayoutInflater.from(context);
+
+    DataSetObserver dataSetObserver = new DataSetObserver() {
+      @Override
+      public void onChanged() {
+        int cnt = YouTubeCursorAdapter.this.getCount();
+
+        if (cnt > 0)
+          Utils.toast(mContext, String.format("%d items", YouTubeCursorAdapter.this.getCount()));
+      }
+    };
+    registerDataSetObserver(dataSetObserver);
   }
 
   public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
