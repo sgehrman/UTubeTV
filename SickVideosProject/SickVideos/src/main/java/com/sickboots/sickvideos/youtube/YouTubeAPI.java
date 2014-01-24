@@ -860,11 +860,18 @@ public class YouTubeAPI {
 
     // we need all items at once if we reverse sort, otherwise the top items in the list will jump
     // down as more data is loaded and look annoying.  YouTube API doesn't support sorting, so we must do this crap
-    public List<YouTubeData> getAllItems() {
+    public List<YouTubeData> getAllItems(int maxResults) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       do {
         result.addAll(getItems());
+
+        // break out if we reached the max requested
+        if (maxResults != 0) {
+          if (result.size() >= maxResults)
+            // could truncate results, but not that concerned about exact size
+            break;
+        }
 
       } while (getNext());
 

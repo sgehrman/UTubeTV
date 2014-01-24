@@ -181,7 +181,7 @@ public class YouTubeListService extends IntentService {
     }
 
     if (listResults != null) {
-      List<YouTubeData> batch = listResults.getAllItems();
+      List<YouTubeData> batch = listResults.getAllItems(request.maxResults());
 
       DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
 
