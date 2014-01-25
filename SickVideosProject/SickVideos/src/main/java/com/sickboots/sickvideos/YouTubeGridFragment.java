@@ -75,7 +75,7 @@ public class YouTubeGridFragment extends Fragment
       if (cnt > 0) {
         if (cnt == 1) {
           if (title.endsWith("s"))
-            title = title.substring(0, title.length()-1);  // remove the s
+            title = title.substring(0, title.length() - 1);  // remove the s
         }
 
         title = String.format("%d ", cnt) + title;

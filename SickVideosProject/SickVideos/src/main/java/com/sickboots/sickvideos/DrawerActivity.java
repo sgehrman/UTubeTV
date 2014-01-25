@@ -287,9 +287,13 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
         startActivity(intent);
         return true;
 
+      case R.id.rate_my_app:
+        AppRater.rateNow(this);
+        return true;
+      
       case R.id.action_show_rate_dialog:
         AppRater.showRateDialog(this);
-        break;
+        return true;
 
       case R.id.action_buy_taco:
         if (mPurchaseHelper != null)
@@ -366,7 +370,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     YouTubeGridFragment fragment = currentYouTubeFragment();
 
     if (fragment != null)
-     fragment.syncActionBarTitle();
+      fragment.syncActionBarTitle();
   }
   // ----------------------------------------------------
   // HostActivitySupport

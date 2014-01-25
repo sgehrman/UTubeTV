@@ -10,7 +10,6 @@ import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 
 import org.codechimp.apprater.AppRater;

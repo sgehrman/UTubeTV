@@ -45,7 +45,7 @@ public class Utils {
     public void onResults(StringResultListener listener, String result);
   }
 
-  public static void toast(  Context context, final String message) {
+  public static void toast(Context context, final String message) {
     // Toasts only work on the main thread
     if (context != null && message != null) {
       final Context appContext = context.getApplicationContext();
@@ -72,8 +72,8 @@ public class Utils {
           AppMsg.Style style = new AppMsg.Style(AppMsg.LENGTH_SHORT, R.drawable.app_msg_background);
 
           AppMsg.makeText(activity, message, style)
-           .setLayoutGravity(Gravity.BOTTOM)
-          .show();
+              .setLayoutGravity(Gravity.BOTTOM)
+              .show();
         }
       });
     }
