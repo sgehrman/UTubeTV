@@ -64,16 +64,16 @@ public class YouTubeGridFragment extends Fragment
     return fragment;
   }
 
-  public void playerStateChanged() {
-    syncActionBarTitle();
-  }
-
-  private void syncActionBarTitle() {
-    CharSequence title = null;
-    CharSequence subtitle = null;
+  public void syncActionBarTitle() {
+    String title = null;
+    String subtitle = null;
     if (mRequest != null) {
       title = mRequest.title();
       subtitle = mRequest.subtitle();
+
+      int cnt = mAdapter.getCount();
+      if (cnt > 0)
+        title = String.format("%d ", cnt) + title;
     }
 
     // if video player is up, show the video title
@@ -152,6 +152,21 @@ public class YouTubeGridFragment extends Fragment
         itemMap.setHidden(!itemMap.isHidden());
         database.updateItem(itemMap);
       }
+    }
+  }
+
+  // YouTubeCursorAdapterListener
+  @Override
+  public void adapterDataChanged() {
+    syncActionBarTitle();
+
+    boolean enabled = false;
+
+    if (enabled) {
+      int cnt = mAdapter.getCount();
+
+      if (cnt > 0)
+        Utils.message(getActivity(), String.format("%d items", cnt));
     }
   }
 

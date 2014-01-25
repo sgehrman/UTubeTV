@@ -62,14 +62,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     DataSetObserver dataSetObserver = new DataSetObserver() {
       @Override
       public void onChanged() {
-        boolean enabled = false;
-
-        if (enabled) {
-          int cnt = YouTubeCursorAdapter.this.getCount();
-
-          if (cnt > 0)
-            Utils.message(mListener.accesActivity(), String.format("%d items", YouTubeCursorAdapter.this.getCount()));
-        }
+        mListener.adapterDataChanged();
       }
     };
     registerDataSetObserver(dataSetObserver);
@@ -420,6 +413,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   public interface YouTubeCursorAdapterListener {
     public void handleClickFromAdapter(YouTubeData itemMap);
 
+    public void adapterDataChanged();
     public Activity accesActivity();
   }
 

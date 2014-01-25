@@ -362,6 +362,12 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     mDrawerMgr.onConfigurationChanged(newConfig);
   }
 
+  private void syncActionBarTitle() {
+    YouTubeGridFragment fragment = currentYouTubeFragment();
+
+    if (fragment != null)
+     fragment.syncActionBarTitle();
+  }
   // ----------------------------------------------------
   // HostActivitySupport
 
@@ -386,16 +392,11 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (createIfNeeded) {
       if (mPlayer == null) {
         mPlayer = new VideoPlayer(this, R.id.youtube_fragment, new VideoPlayer.VideoPlayerStateListener() {
-
           // called when the video player opens or closes, adjust the action bar title
           @Override
           public void stateChanged() {
-            YouTubeGridFragment fragment = currentYouTubeFragment();
-
-            if (fragment != null)
-              fragment.playerStateChanged();
+            syncActionBarTitle();
           }
-
         });
       }
     }
