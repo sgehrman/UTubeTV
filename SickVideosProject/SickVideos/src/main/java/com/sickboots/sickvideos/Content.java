@@ -73,7 +73,7 @@ public class Content extends Observable {
       case USER:
         switch (index) {
           case 0:
-            fragment = new ChannelAboutFragment(this);
+            fragment = new ChannelAboutFragment();
             break;
           case 1:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null, null, null, 0));
@@ -103,7 +103,7 @@ public class Content extends Observable {
       default:
         switch (index) {
           case 0:
-            fragment = new ChannelAboutFragment(this);
+            fragment = new ChannelAboutFragment();
             break;
           case 1:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), "Playlists", null));

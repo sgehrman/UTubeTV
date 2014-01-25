@@ -29,7 +29,7 @@ import org.codechimp.apprater.AppRater;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerActivity extends Activity implements YouTubeGridFragment.HostActivitySupport, Observer {
+public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
@@ -37,11 +37,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
   private long lastBackPressTime = 0;
   private PurchaseHelper mPurchaseHelper;
   private Content mContent;
-
-  @Override
-  public void showPlaylistsFragment() {
-    selectSection(1, true);
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -372,13 +367,6 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     if (fragment != null)
       fragment.syncActionBarTitle();
   }
-  // ----------------------------------------------------
-  // HostActivitySupport
-
-  @Override
-  public void installFragment(Fragment fragment, boolean animate) {
-    Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
-  }
 
   private YouTubeGridFragment currentYouTubeFragment() {
     YouTubeGridFragment result = null;
@@ -391,6 +379,26 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
     return result;
   }
 
+  // DrawerActivitySupport
+  @Override
+  public void showPlaylistsFragment() {
+    selectSection(1, true);
+  }
+
+  // DrawerActivitySupport
+  @Override
+  public void installFragment(Fragment fragment, boolean animate) {
+    Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
+  }
+
+  // about fragment can't be passed data, it must request it, fragments can get recreated
+  // DrawerActivitySupport
+  @Override
+  public Content getContent() {
+    return mContent;
+  }
+
+  // DrawerActivitySupport
   @Override
   public VideoPlayer videoPlayer(boolean createIfNeeded) {
     if (createIfNeeded) {

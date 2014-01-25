@@ -200,9 +200,9 @@ public class YouTubeGridFragment extends Fragment
         if (playlistID != null) {
           Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, "Videos", itemMap.mTitle));
 
-          HostActivitySupport provider = (HostActivitySupport) getActivity();
-
-          provider.installFragment(frag, true);
+          DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+          if (provider != null)
+            provider.installFragment(frag, true);
         }
       }
       break;
@@ -232,7 +232,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   private VideoPlayer videoPlayer(boolean createIfNeeded) {
-    HostActivitySupport provider = (HostActivitySupport) getActivity();
+    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
 
     if (provider != null)
       return provider.videoPlayer(createIfNeeded);
@@ -290,15 +290,6 @@ public class YouTubeGridFragment extends Fragment
   @Override
   public void onLoaderReset(Loader<Cursor> arg0) {
     mAdapter.swapCursor(null);
-  }
-
-  // Activity should host a player
-  public static interface HostActivitySupport {
-    public VideoPlayer videoPlayer(boolean createIfNeeded);
-
-    public void showPlaylistsFragment();
-
-    public void installFragment(Fragment fragment, boolean animate);
   }
 
   private class DataReadyBroadcastReceiver extends BroadcastReceiver {

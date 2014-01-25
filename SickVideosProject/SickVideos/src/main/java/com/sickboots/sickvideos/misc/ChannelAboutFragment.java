@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.Content;
+import com.sickboots.sickvideos.DrawerActivitySupport;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -34,15 +35,16 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
 
-  public ChannelAboutFragment(Content content) {
+  // can't add params! fragments can be recreated randomly
+  public ChannelAboutFragment() {
     super();
-
-    mContent = content;
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_channel_about, container, false);
+
+    mContent = ((DrawerActivitySupport) getActivity()).getContent();
 
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
@@ -93,7 +95,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   }
 
   private void showPlaylistsFragment() {
-    YouTubeGridFragment.HostActivitySupport provider = (YouTubeGridFragment.HostActivitySupport) getActivity();
+    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
 
     provider.showPlaylistsFragment();
   }
