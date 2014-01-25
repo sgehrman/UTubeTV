@@ -290,7 +290,7 @@ public class DrawerActivity extends Activity implements YouTubeGridFragment.Host
       case R.id.rate_my_app:
         AppRater.rateNow(this);
         return true;
-      
+
       case R.id.action_show_rate_dialog:
         AppRater.showRateDialog(this);
         return true;
