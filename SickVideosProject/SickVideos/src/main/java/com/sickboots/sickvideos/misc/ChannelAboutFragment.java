@@ -129,7 +129,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       mDescription.setText(data.mDescription);
 
       // uncomment to get the thumbnail image for generating icons
-      // Debug.log(data.mThumbnail);
+      Debug.log(data.mThumbnail);
 
       int defaultImageResID = 0;
       final ImageView image = mImage;
