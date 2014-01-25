@@ -15,9 +15,9 @@ cd ..
 ./gradlew assembleRtRelease
 ./gradlew assembleJoeroganRelease
 ./gradlew assembleJetdaisukeRelease
-./gradlew assembleTopgearRelease
-./gradlew assembleBigthinkRelease
-./gradlew assemblePewdiepieRelease
-./gradlew assembleReasontvRelease
+#./gradlew assembleTopgearRelease
+#./gradlew assembleBigthinkRelease
+#./gradlew assemblePewdiepieRelease
+#./gradlew assembleReasontvRelease
 
 
