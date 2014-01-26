@@ -117,6 +117,14 @@ android {
         jetdaisuke {
             packageName "com.sickboots.sickvideos.jetdaisuke"
         }
+
+        xda {
+            packageName "com.sickboots.sickvideos.xda"
+        }
+
+        theverge {
+            packageName "com.sickboots.sickvideos.theverge"
+        }
     }
 }
 
