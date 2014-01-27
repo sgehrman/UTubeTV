@@ -16,7 +16,6 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.Content;
 import com.sickboots.sickvideos.DrawerActivitySupport;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeGridFragment;
 import com.sickboots.sickvideos.database.YouTubeData;
 
 import java.util.Observable;
@@ -34,6 +33,8 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private PullToRefreshLayout mPullToRefreshLayout;
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
+  private final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
+  private   BitmapCache mBitmapCache;
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -91,6 +92,11 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   @Override
   public void onRefreshStarted(View view) {
     mContent.addObserver(this);
+
+    // empty cache, and cache is not closed and useless
+    mBitmapCache.clearCache();
+    mBitmapCache = null;
+
     mContent.refreshChannelInfo();
   }
 
@@ -131,24 +137,37 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       // uncomment to get the thumbnail image for generating icons
       // Debug.log(data.mThumbnail);
 
-      int defaultImageResID = 0;
-      final ImageView image = mImage;
-      UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
+      // is the bitmap in our diskcache?
+      final String bitmapName = data.mTitle;
 
-        @Override
-        public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-          if (!loadedFromCache) {
-            image.setAlpha(.5f);
-            image.animate().setDuration(300).alpha(1);
-          } else
-            image.setAlpha(1f);
-        }
+      if (mBitmapCache == null)
+        mBitmapCache = new BitmapCache(getActivity(), "AboutImageCache", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
 
-      });
+      Bitmap bm = mBitmapCache.getBitmap(bitmapName);
+      if (bm != null) {
+        mImage.setImageBitmap(bm);
+      } else {
+        int defaultImageResID = 0;
+        final ImageView image = mImage;
+        UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
+
+          @Override
+          public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+            if (!loadedFromCache) {
+              image.setAlpha(.5f);
+              image.animate().setDuration(300).alpha(1);
+            }
+
+            // save to the cache
+            mBitmapCache.put(bitmapName, loadedBitmap);
+          }
+
+        });
+      }
+
+      // update the action bar title
+      Utils.setActionBarTitle(getActivity(), "About", null);
     }
 
-    // update the action bar title
-    Utils.setActionBarTitle(getActivity(), "About", null);
   }
-
 }
