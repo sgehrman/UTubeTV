@@ -16,4 +16,6 @@
     <color name="drawer_icon_color">#afff</color>
     <color name="drawer_text">#fff</color>
 
+    <color name="empty_view_text_color">#fff</color>
+
 </resources>
