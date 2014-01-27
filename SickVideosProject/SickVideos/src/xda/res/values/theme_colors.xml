@@ -4,16 +4,16 @@
     <style name="AppTheme" parent="AppThemeDark">
     </style>
 
-    <color name="action_bar_start_color">#ff533705</color>
+    <color name="action_bar_start_color">#ff3b2505</color>
     <color name="action_bar_end_color">#ff3b2505</color>
     <color name="action_bar_divider_color">#1000</color>
 
 
-    <color name="window_background_color">#ffff8702</color>
+    <color name="window_background_color">#ff9d9282</color>
 
 
     <color name="drawer_background">#dd3b2505</color>
-    <color name="drawer_item_background">#ffff8702</color>
+    <color name="drawer_item_background">#ff9d9282</color>
     <color name="drawer_divider_color">#f555</color>
     <color name="drawer_icon_color">#afff</color>
     <color name="drawer_text">#fff</color>
