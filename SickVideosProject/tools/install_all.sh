@@ -12,7 +12,9 @@ adb install SickVideos-khan-release.apk
 adb install SickVideos-nerdist-release.apk
 adb install SickVideos-joerogan-release.apk
 adb install SickVideos-jetdaisuke-release.apk
-#adb install SickVideos-topgear-release.apk
-#adb install SickVideos-bigthink-release.apk
-#adb install SickVideos-pewdiepie-release.apk
-#adb install SickVideos-reasontv-release.apk
+adb install SickVideos-topgear-release.apk
+adb install SickVideos-bigthink-release.apk
+adb install SickVideos-pewdiepie-release.apk
+adb install SickVideos-reasontv-release.apk
+adb install SickVideos-xda-release.apk
+adb install SickVideos-theverge-release.apk
