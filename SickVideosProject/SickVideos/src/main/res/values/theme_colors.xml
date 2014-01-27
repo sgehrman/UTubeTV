@@ -22,6 +22,7 @@
     <color name="drawer_text">#000</color>
 
     <color name="grid_selection">#3000</color>
+    <color name="empty_view_text_color">#000</color>
 
     <integer name="title_max_lines">2</integer>
     <integer name="description_max_lines">3</integer>

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:visibility="gone"
-            android:textColor="#000"/>
+            android:textColor="@color/empty_view_text_color"/>
     </LinearLayout>
 
 </ScrollView>
