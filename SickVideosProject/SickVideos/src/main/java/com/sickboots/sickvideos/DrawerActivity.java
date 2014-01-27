@@ -417,20 +417,15 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   // DrawerActivitySupport
   @Override
   public boolean actionBarTitleHandled() {
-    boolean result = false;
-
     // if video player is up, show the video title
     VideoPlayer player = videoPlayer(false);
     if (player != null && player.visible()) {
-     String title = "Now Playing";
-     String subtitle = player.title();
-
-      Utils.setActionBarTitle(this, title, subtitle);
+      Utils.setActionBarTitle(this, "Now Playing", player.title());
 
       return true;
     }
 
-    return result;
+    return false;
   }
 
   // DrawerActivitySupport
