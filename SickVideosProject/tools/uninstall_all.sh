@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo ======== uninstalling phase ========
-
 adb uninstall com.sickboots.sickvideos.joerogan 
 adb uninstall com.sickboots.sickvideos.khan
 adb uninstall com.sickboots.sickvideos.nerdist

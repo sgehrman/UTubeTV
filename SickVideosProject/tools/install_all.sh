@@ -1,10 +1,7 @@
 #!/bin/sh
 
-echo ======== installing phase ========
-
 cd ../SickVideos/build/apk
 
-# now install each one
 adb install SickVideos-codeorg-release.apk
 adb install SickVideos-neurosoup-release.apk
 adb install SickVideos-rt-release.apk

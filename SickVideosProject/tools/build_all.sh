@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo ======== building phase ========
-
 cd ..
 
 # first clean all
