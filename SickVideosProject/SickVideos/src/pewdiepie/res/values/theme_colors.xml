@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
+    <color name="window_background_color">#ff4ddbf6</color>
+
+
+    <color name="drawer_background">#dd0bbde0</color>
+    <color name="drawer_item_background">#ff4ddbf6</color>
+    <color name="drawer_divider_color">#4555</color>
+    <color name="drawer_icon_color">#afff</color>
+    <color name="drawer_text">#fff</color>
+
 </resources>
