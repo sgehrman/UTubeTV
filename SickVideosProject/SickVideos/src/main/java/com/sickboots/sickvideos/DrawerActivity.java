@@ -379,6 +379,22 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     return result;
   }
 
+  private VideoPlayer videoPlayer(boolean createIfNeeded) {
+    if (createIfNeeded) {
+      if (mPlayer == null) {
+        mPlayer = new VideoPlayer(this, R.id.youtube_fragment, new VideoPlayer.VideoPlayerStateListener() {
+          // called when the video player opens or closes, adjust the action bar title
+          @Override
+          public void stateChanged() {
+            syncActionBarTitle();
+          }
+        });
+      }
+    }
+
+    return mPlayer;
+  }
+
   // DrawerActivitySupport
   @Override
   public void showPlaylistsFragment() {
@@ -400,20 +416,32 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
   // DrawerActivitySupport
   @Override
-  public VideoPlayer videoPlayer(boolean createIfNeeded) {
-    if (createIfNeeded) {
-      if (mPlayer == null) {
-        mPlayer = new VideoPlayer(this, R.id.youtube_fragment, new VideoPlayer.VideoPlayerStateListener() {
-          // called when the video player opens or closes, adjust the action bar title
-          @Override
-          public void stateChanged() {
-            syncActionBarTitle();
-          }
-        });
-      }
+  public boolean actionBarTitleHandled() {
+    boolean result = false;
+
+    // if video player is up, show the video title
+    VideoPlayer player = videoPlayer(false);
+    if (player != null && player.visible()) {
+     String title = "Now Playing";
+     String subtitle = player.title();
+
+      Utils.setActionBarTitle(this, title, subtitle);
+
+      return true;
     }
 
-    return mPlayer;
+    return result;
+  }
+
+  // DrawerActivitySupport
+  @Override
+  public void playVideo(String videoId, String title) {
+    boolean fullScreen = AppUtils.preferences(this).getBoolean(Preferences.PLAY_FULLSCREEN, false);
+
+    if (fullScreen)
+      YouTubeAPI.playMovie(this, videoId, true);
+    else
+      videoPlayer(true).open(videoId, title);
   }
 }
 

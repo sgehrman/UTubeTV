@@ -65,31 +65,31 @@ public class YouTubeGridFragment extends Fragment
   }
 
   public void syncActionBarTitle() {
-    String title = null;
-    String subtitle = null;
-    if (mRequest != null) {
-      title = mRequest.title();
-      subtitle = mRequest.subtitle();
+    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+    if (provider != null) {
+      // activity can control the actionbar title, for example the player sets the Now Playing title
+      if (!provider.actionBarTitleHandled()) {
+        String title = null;
+        String subtitle = null;
 
-      int cnt = mAdapter.getCount();
-      if (cnt > 0) {
-        if (cnt == 1) {
-          if (title.endsWith("s"))
-            title = title.substring(0, title.length() - 1);  // remove the s
+        if (mRequest != null) {
+          title = mRequest.title();
+          subtitle = mRequest.subtitle();
+
+          int cnt = mAdapter.getCount();
+          if (cnt > 0) {
+            if (cnt == 1) {
+              if (title.endsWith("s"))
+                title = title.substring(0, title.length() - 1);  // remove the s
+            }
+
+            title = String.format("%d ", cnt) + title;
+          }
         }
 
-        title = String.format("%d ", cnt) + title;
+        Utils.setActionBarTitle(getActivity(), title, subtitle);
       }
     }
-
-    // if video player is up, show the video title
-    VideoPlayer player = videoPlayer(false);
-    if (player != null && player.visible()) {
-      title = "Now Playing";
-      subtitle = player.title();
-    }
-
-    Utils.setActionBarTitle(getActivity(), title, subtitle);
   }
 
   @Override
@@ -179,6 +179,8 @@ public class YouTubeGridFragment extends Fragment
   // YouTubeCursorAdapterListener
   @Override
   public void handleClickFromAdapter(YouTubeData itemMap) {
+    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+
     switch (mRequest.type()) {
       case RELATED:
       case SEARCH:
@@ -186,12 +188,9 @@ public class YouTubeGridFragment extends Fragment
       case VIDEOS:
         String videoId = itemMap.mVideo;
         String title = itemMap.mTitle;
-        boolean fullScreen = AppUtils.preferences(getActivity()).getBoolean(Preferences.PLAY_FULLSCREEN, false);
 
-        if (fullScreen)
-          YouTubeAPI.playMovie(getActivity(), videoId, true);
-        else
-          videoPlayer(true).open(videoId, title);
+        if (provider != null)
+          provider.playVideo(videoId, title);
 
         break;
       case PLAYLISTS: {
@@ -200,7 +199,6 @@ public class YouTubeGridFragment extends Fragment
         if (playlistID != null) {
           Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, "Videos", itemMap.mTitle));
 
-          DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
           if (provider != null)
             provider.installFragment(frag, true);
         }
@@ -229,17 +227,6 @@ public class YouTubeGridFragment extends Fragment
     reloadForPrefChange();
 
     syncActionBarTitle();
-  }
-
-  private VideoPlayer videoPlayer(boolean createIfNeeded) {
-    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
-
-    if (provider != null)
-      return provider.videoPlayer(createIfNeeded);
-
-    Debug.log("Activity null, asking for videoplayer");
-
-    return null;
   }
 
   // OnRefreshListener

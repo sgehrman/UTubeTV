@@ -9,10 +9,10 @@ import com.sickboots.sickvideos.youtube.VideoPlayer;
  */
 // also used by about fragment, but had to put it somewhere
 public interface DrawerActivitySupport {
-  public VideoPlayer videoPlayer(boolean createIfNeeded);
+  public boolean actionBarTitleHandled();
 
   public void showPlaylistsFragment();
   public Content getContent();  // about fragment can't be passed data, it must request it
-
+  public void playVideo(String videoId, String title);
   public void installFragment(Fragment fragment, boolean animate);
 }
