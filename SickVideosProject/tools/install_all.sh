@@ -1,4 +1,7 @@
 #!/bin/sh
+
+echo ======== installing phase ========
+
 cd ../SickVideos/build/apk
 
 # now install each one
