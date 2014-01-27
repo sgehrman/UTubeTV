@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.misc;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class ChannelAboutFragment extends Fragment implements Observer, OnRefreshListener {
+  private final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
   private TextView mTitle;
   private TextView mDescription;
   private ImageView mImage;
@@ -33,8 +35,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private PullToRefreshLayout mPullToRefreshLayout;
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
-  private final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
-  private   BitmapCache mBitmapCache;
+  private BitmapCache mBitmapCache;
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -91,12 +92,15 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   // OnRefreshListener
   @Override
   public void onRefreshStarted(View view) {
+    // empty cache
+    if (mBitmapCache != null) {
+      mBitmapCache.clearCache();
+
+      // cache is not closed and useless, must be reopened
+      mBitmapCache = null;
+    }
+
     mContent.addObserver(this);
-
-    // empty cache, and cache is not closed and useless
-    mBitmapCache.clearCache();
-    mBitmapCache = null;
-
     mContent.refreshChannelInfo();
   }
 
@@ -104,6 +108,15 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
 
     provider.showPlaylistsFragment();
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    // make sure we are not going to be notified after we are gone.
+    // our activity will be null and we crash
+    mContent.deleteObserver(this);
   }
 
   @Override
@@ -139,11 +152,8 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
       // is the bitmap in our diskcache?
       final String bitmapName = data.mTitle;
+      Bitmap bm = cachedBitmap(bitmapName);
 
-      if (mBitmapCache == null)
-        mBitmapCache = new BitmapCache(getActivity(), "AboutImageCache", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
-
-      Bitmap bm = mBitmapCache.getBitmap(bitmapName);
       if (bm != null) {
         mImage.setImageBitmap(bm);
       } else {
@@ -159,7 +169,8 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
             }
 
             // save to the cache
-            mBitmapCache.put(bitmapName, loadedBitmap);
+            if (mBitmapCache != null)
+              mBitmapCache.put(bitmapName, loadedBitmap);
           }
 
         });
@@ -169,5 +180,18 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       Utils.setActionBarTitle(getActivity(), "About", null);
     }
 
+  }
+
+  private Bitmap cachedBitmap(String bitmapName) {
+    if (mBitmapCache == null) {
+      Context context = getActivity();
+      if (context != null)
+        mBitmapCache = new BitmapCache(context, "AboutImageCache", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
+    }
+
+    if (mBitmapCache != null)
+      return mBitmapCache.getBitmap(bitmapName);
+
+    return null;
   }
 }
