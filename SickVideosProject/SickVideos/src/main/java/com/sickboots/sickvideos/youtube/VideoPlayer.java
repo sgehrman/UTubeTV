@@ -61,11 +61,6 @@ public class VideoPlayer {
     setupToolbar();
   }
 
-  // video player fragment restores itself, so just show it and let it do its thing
-  public void restore() {
-    mVideoBox.setVisibility(View.VISIBLE);
-  }
-
   private boolean isPortrait() {
     return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
@@ -134,6 +129,10 @@ public class VideoPlayer {
 
   public String title() {
     return mVideoFragment.getTitle();
+  }
+
+  public String videoId() {
+    return mVideoFragment.getVideoId();
   }
 
   public boolean visible() {

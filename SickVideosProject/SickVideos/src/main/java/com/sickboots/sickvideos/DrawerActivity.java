@@ -73,11 +73,11 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {
-      boolean showPlayer = savedInstanceState.getBoolean("player_visible");
+      String videoId = savedInstanceState.getString("videoId");
+      String title = savedInstanceState.getString("title");
 
-      // video player fragment restores itself, so just show it and let it do its thing
-      if (showPlayer)
-        videoPlayer(true).restore();
+      if (videoId != null && title != null)
+        playVideo(videoId, title);
     }
   }
 
@@ -141,7 +141,13 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
       if (mPlayer != null) {
         if (mPlayer.visible()) {
-          outState.putBoolean("player_visible", true);
+          String title = mPlayer.title();
+          String videoId = mPlayer.videoId();
+
+          if (title != null && videoId != null) {
+            outState.putString("videoId", videoId);
+            outState.putString("title", title);
+          }
         }
       }
     }

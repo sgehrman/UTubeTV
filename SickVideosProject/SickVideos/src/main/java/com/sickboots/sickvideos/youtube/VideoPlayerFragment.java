@@ -104,6 +104,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     return mTitle;
   }
 
+  public String getVideoId() {
+    return mVideoId;
+  }
+
   public void setVideo(String videoId, String title) {
     if (videoId != null && !videoId.equals(mVideoId)) {
 
