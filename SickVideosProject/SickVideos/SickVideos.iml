@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="xdaDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleXdaDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileXdaDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleXdaDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateXdaDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="topgearDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleTopgearDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileTopgearDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleTopgearDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateTopgearDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/xda/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/topgear/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/xda/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/topgear/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/xda/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/xda/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/xda/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/xda/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/xda/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xdaDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/xda/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/xda/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/xda/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/xda/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/xda/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/xda/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestXda/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/topgear/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/topgear/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/topgear/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/topgear/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/topgear/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgearDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/topgear/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/topgear/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/topgear/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/topgear/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/topgear/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/topgear/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTopgear/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />

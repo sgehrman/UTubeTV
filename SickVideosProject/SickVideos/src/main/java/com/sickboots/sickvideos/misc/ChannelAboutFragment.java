@@ -36,6 +36,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
   private BitmapCache mBitmapCache;
+  private final String mAboutBitmapKey = "about";  // keys must match regex [a-z0-9_-]{1,64}
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -151,8 +152,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       // Debug.log(data.mThumbnail);
 
       // is the bitmap in our diskcache?
-      final String bitmapName = data.mTitle;
-      Bitmap bm = cachedBitmap(bitmapName);
+      Bitmap bm = cachedBitmap();
 
       if (bm != null) {
         mImage.setImageBitmap(bm);
@@ -170,7 +170,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
             // save to the cache
             if (mBitmapCache != null)
-              mBitmapCache.put(bitmapName, loadedBitmap);
+              mBitmapCache.put(mAboutBitmapKey, loadedBitmap);
           }
 
         });
@@ -182,7 +182,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
   }
 
-  private Bitmap cachedBitmap(String bitmapName) {
+  private Bitmap cachedBitmap() {
     if (mBitmapCache == null) {
       Context context = getActivity();
       if (context != null)
@@ -190,7 +190,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     }
 
     if (mBitmapCache != null)
-      return mBitmapCache.getBitmap(bitmapName);
+      return mBitmapCache.getBitmap(mAboutBitmapKey);
 
     return null;
   }
