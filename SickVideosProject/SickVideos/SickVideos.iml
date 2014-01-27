@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="thevergeDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleThevergeDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileThevergeDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleThevergeDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateThevergeDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="reasontvDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleReasontvDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileReasontvDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleReasontvDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateReasontvDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/theverge/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/reasontv/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/theverge/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/reasontv/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/theverge/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/theverge/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/theverge/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/theverge/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/theverge/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/thevergeDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/theverge/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/theverge/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/theverge/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/theverge/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/theverge/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/theverge/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTheverge/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/reasontv/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/reasontv/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/reasontv/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/reasontv/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/reasontv/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontvDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/reasontv/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/reasontv/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/reasontv/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/reasontv/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/reasontv/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/reasontv/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestReasontv/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
