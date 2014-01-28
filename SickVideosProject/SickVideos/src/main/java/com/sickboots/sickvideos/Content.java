@@ -31,7 +31,7 @@ public class Content extends Observable {
   private YouTubeData mChannelInfo;
   private Context mContext;
 
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION, USER}
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION, USER}
 
   public static enum ThemeCode {DARK, LIGHT}
 
@@ -171,6 +171,8 @@ public class Content extends Observable {
         return "UCHkj014U2CQ2Nv0UZeYpE_A";
       case COLLEGE_HUMOR:
         return "UCPDXXXJj9nax0fr0Wfc048g";
+      case YOUTUBE:
+        return "UCBR8-60-B28hp2BmDPdntcQ";
     }
 
     return null;

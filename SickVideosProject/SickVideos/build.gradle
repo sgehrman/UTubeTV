@@ -129,6 +129,10 @@ android {
         justinbieber {
             packageName "com.sickboots.sickvideos.justinbieber"
         }
+
+        youtube {
+            packageName "com.sickboots.sickvideos.youtube"
+        }
     }
 }
 
