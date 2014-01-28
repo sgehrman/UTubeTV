@@ -18,3 +18,4 @@ adb install SickVideos-pewdiepie-release.apk
 adb install SickVideos-reasontv-release.apk
 adb install SickVideos-xda-release.apk
 adb install SickVideos-theverge-release.apk
+adb install SickVideos-justinbieber-release.apk

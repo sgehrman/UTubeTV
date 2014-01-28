@@ -22,5 +22,6 @@ cd ..
 ./gradlew assembleReasontvRelease
 ./gradlew assembleXdaRelease
 ./gradlew assembleThevergeRelease
+./gradlew assembleJustinbieberRelease
 
 

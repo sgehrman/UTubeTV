@@ -16,3 +16,4 @@ adb uninstall com.sickboots.sickvideos.pewdiepie
 adb uninstall com.sickboots.sickvideos.reasontv
 adb uninstall com.sickboots.sickvideos.xda
 adb uninstall com.sickboots.sickvideos.theverge
+adb uninstall com.sickboots.sickvideos.justinbieber
