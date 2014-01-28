@@ -139,12 +139,8 @@ public class Content extends Observable {
         return "UCULJH9kW-UdTBCDu27P0BoA";
       case KHAN_ACADEMY:
         return "UC4a-Gbdw7vOaccHmFo40b9g";
-      case COLLEGE_HUMOR:
-        return "UCPDXXXJj9nax0fr0Wfc048g";
       case TOP_GEAR:
         return "UCjOl2AUblVmg2rA_cRgZkFg";
-      case JUSTIN_BIEBER:
-        return "UCHkj014U2CQ2Nv0UZeYpE_A";
       case ANDROID_DEVELOPERS:
         return "UCVHFbqXqoYvEWM1Ddxl0QDg";
       case NERDIST:
@@ -155,22 +151,26 @@ public class Content extends Observable {
         return "UCBIwq18tUFrujiPd3HLPaGw";
       case RT:
         return "UCpwvZwUam-URkxB7g4USKpg";
-      case GATES_FOUNDATION:
-        return "UCRi8JQTnKQilJW15uzo7bRQ";
       case PEWDIEPIE:
         return "UC-lHJZR3Gqxm24_Vd_AJ5Yw";
       case BIG_THINK:
         return "UCvQECJukTDE2i6aCoMnS-Vg";
       case REASON_TV:
         return "UC0uVZd8N7FfIZnPu0y7o95A";
-      case YOUNG_TURKS:
-        return "UC1yBKRuGpC1tSM73A0ZjYjQ";
       case JET_DAISUKE:
         return "UC6wKgAlOeFNqmXV167KERhQ";
       case THE_VERGE:
         return "UCddiUEpeqJcYeBxX1IVBKvQ";
       case XDA:
         return "UCk1SpWNzOs4MYmr0uICEntg";
+      case YOUNG_TURKS:
+        return "UC1yBKRuGpC1tSM73A0ZjYjQ";
+      case GATES_FOUNDATION:
+        return "UCRi8JQTnKQilJW15uzo7bRQ";
+      case JUSTIN_BIEBER:
+        return "UCHkj014U2CQ2Nv0UZeYpE_A";
+      case COLLEGE_HUMOR:
+        return "UCPDXXXJj9nax0fr0Wfc048g";
     }
 
     return null;
