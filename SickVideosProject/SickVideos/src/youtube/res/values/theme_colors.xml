@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="AppThemeDark">
+    </style>
 
+    <color name="action_bar_start_color">#444</color>
+    <color name="action_bar_end_color">#333</color>
+    <color name="action_bar_divider_color">#333</color>
+
+
+    <color name="window_background_color">#ffeb4641</color>
+
+
+    <color name="drawer_background">#d333</color>
+    <color name="drawer_item_background">#ffeb4641</color>
+    <color name="drawer_divider_color">#f555</color>
+    <color name="drawer_icon_color">#afff</color>
+    <color name="drawer_text">#fff</color>
 </resources>
