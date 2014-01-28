@@ -3,11 +3,11 @@
 
 
 
-    <color name="window_background_color">#ff4ddbf6</color>
+    <color name="window_background_color">#ff5dd3ea</color>
 
 
-    <color name="drawer_background">#dd0bbde0</color>
-    <color name="drawer_item_background">#ff4ddbf6</color>
+    <color name="drawer_background">#dd495a69</color>
+    <color name="drawer_item_background">#ff5dd3ea</color>
     <color name="drawer_divider_color">#4555</color>
     <color name="drawer_icon_color">#afff</color>
     <color name="drawer_text">#fff</color>
