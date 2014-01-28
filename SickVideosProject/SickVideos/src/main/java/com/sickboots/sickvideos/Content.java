@@ -94,7 +94,7 @@ public class Content extends Observable {
             fragment = new ColorPickerFragment();
             break;
           case 7:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null, null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null, null, 250));
             break;
           case 8:
 //            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
@@ -106,7 +106,7 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), "Playlists", null));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), "Playlists", null, 250));
             break;
           case 2:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID(), "Videos", "Recent Uploads", 50));

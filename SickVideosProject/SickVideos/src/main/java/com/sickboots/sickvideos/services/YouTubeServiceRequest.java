@@ -74,9 +74,10 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsRequest(String channelID, String title, String subtitle) {
+  public static YouTubeServiceRequest playlistsRequest(String channelID, String title, String subtitle, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
+    result.data.put("maxResults", maxResults);
     result.data.put("title", title);
     result.data.put("subtitle", subtitle);
     result.data.put("channel", channelID);
