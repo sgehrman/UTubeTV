@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="AppThemeDark">
+    </style>
+
+    <color name="action_bar_start_color">#ffd73dc0</color>
+    <color name="action_bar_end_color">#ffd73dc0</color>
+    <color name="action_bar_divider_color">#1000</color>
+
+    <color name="drawer_item_background">#ffd73dc0</color>
+    <color name="drawer_divider_color">#4555</color>
+    <color name="drawer_icon_color">#a000</color>
+    <color name="drawer_text">#000</color>
+
+
+</resources>

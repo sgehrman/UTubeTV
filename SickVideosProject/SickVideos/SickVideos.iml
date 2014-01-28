@@ -3,15 +3,15 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="pewdiepieDebug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assemblePewdiepieDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compilePewdiepieDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assemblePewdiepieDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generatePewdiepieDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="justinbieberDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleJustinbieberDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileJustinbieberDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleJustinbieberDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateJustinbieberDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/pewdiepie/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/src/justinbieber/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
@@ -22,40 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/classes/pewdiepie/debug" />
+    <output url="file://$MODULE_DIR$/build/classes/justinbieber/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/pewdiepie/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/pewdiepie/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/pewdiepie/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/pewdiepie/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/pewdiepie/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepieDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/pewdiepie/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/pewdiepie/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/pewdiepie/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/pewdiepie/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/pewdiepie/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/pewdiepie/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestPewdiepie/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/justinbieber/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/justinbieber/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/justinbieber/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/justinbieber/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/justinbieber/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieberDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/justinbieber/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/justinbieber/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/justinbieber/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/justinbieber/debug" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/justinbieber/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/justinbieber/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestJustinbieber/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
