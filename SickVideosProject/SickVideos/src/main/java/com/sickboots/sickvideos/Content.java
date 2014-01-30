@@ -52,7 +52,6 @@ public class Content extends Observable {
         result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
         result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
         result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
-        result.add(ImmutableMap.of("title", "Channels", "icon", ToolbarIcons.IconID.YOUTUBE));
         break;
     }
 
@@ -73,9 +72,6 @@ public class Content extends Observable {
             break;
           case 2:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID(), "Videos", "Recent Uploads", 50));
-            break;
-          case 3:
-            fragment = new ChannelAboutFragment();
             break;
         }
         break;
