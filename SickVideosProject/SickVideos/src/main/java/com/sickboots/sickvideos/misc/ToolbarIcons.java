@@ -14,14 +14,16 @@ import com.sickboots.sickvideos.R;
 
 public class ToolbarIcons {
 
-  public static enum IconID {SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS}
-
-  ;
+  public static enum IconID {NONE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE}
 
   public static Drawable icon(Context context, IconID iconID, int iconColor, int sizeInDP) {
+    StateListDrawable result = null;
+
     Icon icon = null;
 
     switch (iconID) {
+      case NONE:
+        break;
       case SOUND:
         icon = FontAwesomeIcon.VOLUME_UP;
         break;
@@ -38,7 +40,7 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.ARROWS_ALT;
         break;
       case VIDEO_PLAY:
-        icon = FontAwesomeIcon.PLAY_CIRCLE_O;
+        icon = FontAwesomeIcon.YOUTUBE_PLAY;
         break;
       case LIST:
         icon = FontAwesomeIcon.LIST_UL;
@@ -47,10 +49,13 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.ELLIPSIS_V;
         break;
       case ABOUT:
-        icon = FontAwesomeIcon.HOME;
+        icon = FontAwesomeIcon.INFO_CIRCLE;
         break;
       case PLAYLISTS:
         icon = FontAwesomeIcon.FILM;
+        break;
+      case YOUTUBE:
+        icon = FontAwesomeIcon.YOUTUBE_SQUARE;
         break;
       case UPLOADS:
         icon = FontAwesomeIcon.UPLOAD;
@@ -59,37 +64,39 @@ public class ToolbarIcons {
         break;
     }
 
+    if (icon != null) {
     Drawable pressed = null;
     Drawable normal = null;
 
-    if (icon != null) {
-      IconicFontDrawable fpressed = new IconicFontDrawable(context);
-      fpressed.setIcon(icon);
-      fpressed.setIconColor(context.getResources().getColor(R.color.holo_blue));
-      fpressed.setContour(Color.GRAY, 1);
-      fpressed.setIconPadding(8);
+      if (icon != null) {
+        IconicFontDrawable fpressed = new IconicFontDrawable(context);
+        fpressed.setIcon(icon);
+        fpressed.setIconColor(context.getResources().getColor(R.color.holo_blue));
+        fpressed.setContour(Color.GRAY, 1);
+        fpressed.setIconPadding(8);
 
-      IconicFontDrawable fnormal = new IconicFontDrawable(context);
-      fnormal.setIcon(icon);
-      fnormal.setIconColor(iconColor);
-      fnormal.setContour(Color.GRAY, 1);
-      fnormal.setIconPadding(8);
+        IconicFontDrawable fnormal = new IconicFontDrawable(context);
+        fnormal.setIcon(icon);
+        fnormal.setIconColor(iconColor);
+        fnormal.setContour(Color.GRAY, 1);
+        fnormal.setIconPadding(8);
 
-      int size = (int) Utils.dpToPx(sizeInDP, context);
-      fnormal.setIntrinsicWidth(size);
-      fnormal.setIntrinsicHeight(size);
-      fpressed.setIntrinsicWidth(size);
-      fpressed.setIntrinsicHeight(size);
+        int size = (int) Utils.dpToPx(sizeInDP, context);
+        fnormal.setIntrinsicWidth(size);
+        fnormal.setIntrinsicHeight(size);
+        fpressed.setIntrinsicWidth(size);
+        fpressed.setIntrinsicHeight(size);
 
-      normal = fnormal;
-      pressed = fpressed;
+        normal = fnormal;
+        pressed = fpressed;
+      }
+
+      result = new StateListDrawable();
+      result.addState(new int[]{android.R.attr.state_pressed}, pressed);
+      result.addState(new int[]{}, normal);
     }
 
-    StateListDrawable states = new StateListDrawable();
-    states.addState(new int[]{android.R.attr.state_pressed}, pressed);
-    states.addState(new int[]{}, normal);
-
-    return states;
+    return result;
   }
 
   // this doesn't have the states like above. used to convert an icon to a simple bitmap, assuming things like animations will be faster with a bitmap over a text based drawable
@@ -98,11 +105,15 @@ public class ToolbarIcons {
 
     Drawable iconDrawable = icon(context, iconID, iconColor, sizeInDP);
 
-    int size = (int) Utils.dpToPx(sizeInDP, context);
+    if (iconDrawable != null) {
+      int size = (int) Utils.dpToPx(sizeInDP, context);
 
-    Bitmap map = Utils.drawableToBitmap(iconDrawable, size);
+      Bitmap map = Utils.drawableToBitmap(iconDrawable, size);
 
-    return new BitmapDrawable(context.getResources(), map);
+      return new BitmapDrawable(context.getResources(), map);
+    }
+
+    return null;
   }
 
 }

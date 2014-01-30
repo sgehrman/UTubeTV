@@ -19,6 +19,7 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -27,15 +28,11 @@ import java.util.Observable;
  * Created by sgehrman on 1/2/14.
  */
 public class Content extends Observable {
+  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
   private ProductCode mProductCode;
   private YouTubeData mChannelInfo;
   private Context mContext;
-
-  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION, USER}
-
-  public static enum ThemeCode {DARK, LIGHT}
-
-  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
+  private Map<ProductCode, String> mChannelIDMap;
 
   public Content(Context context, ProductCode code) {
     super();
@@ -51,15 +48,11 @@ public class Content extends Observable {
     ArrayList<Map> result = new ArrayList<Map>();
 
     switch (mProductCode) {
-      case USER:
-        String[] titles = new String[]{"About", "Favorites", "Likes", "History", "Uploads", "Watch Later", "Color Picker", "Connections", "Connections Intent"};
-        for (String title : titles)
-          result.add(ImmutableMap.of("title", title, "icon", ToolbarIcons.IconID.VIDEO_PLAY));
-        break;
       default:
         result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
         result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
         result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
+        result.add(ImmutableMap.of("title", "Channels", "icon", ToolbarIcons.IconID.YOUTUBE));
         break;
     }
 
@@ -70,36 +63,6 @@ public class Content extends Observable {
     Fragment fragment = null;
 
     switch (mProductCode) {
-      case USER:
-        switch (index) {
-          case 0:
-            fragment = new ChannelAboutFragment();
-            break;
-          case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.FAVORITES, null, null, null, 0));
-            break;
-          case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, null, null, null, 0));
-            break;
-          case 3:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHED, null, null, null, 0));
-            break;
-          case 4:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, null, null, null, 0));
-            break;
-          case 5:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.WATCHLATER, null, null, null, 0));
-            break;
-          case 6:
-            fragment = new ColorPickerFragment();
-            break;
-          case 7:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(channelID(), null, null, 250));
-            break;
-          case 8:
-//            YouTubeAPI.openPlaylistUsingIntent(this, "PLC5CD4355724A28FC");
-            break;
-        }
       default:
         switch (index) {
           case 0:
@@ -110,6 +73,9 @@ public class Content extends Observable {
             break;
           case 2:
             fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, channelID(), "Videos", "Recent Uploads", 50));
+            break;
+          case 3:
+            fragment = new ChannelAboutFragment();
             break;
         }
         break;
@@ -124,58 +90,35 @@ public class Content extends Observable {
   }
 
   public String channelID() {
-    switch (mProductCode) {
-      case CONNECTIONS:
-        return "UC07XXQh04ukEX68loZFgnVw";
-      case USER:
-        return "UC07XXQh04ukEX68loZFgnVw";
-      case NEURO_SOUP:
-        return "UCf--Le-Ssa_R5ERoM7PbdcA";
-      case VICE:
-        return "UCn8zNIfYAQNdrFRrr8oibKw";
-      case ROGAN:
-        return "UCzQUP1qoWDoEbmsQxvdjxgQ";
-      case LUKITSCH:
-        return "UCULJH9kW-UdTBCDu27P0BoA";
-      case KHAN_ACADEMY:
-        return "UC4a-Gbdw7vOaccHmFo40b9g";
-      case TOP_GEAR:
-        return "UCjOl2AUblVmg2rA_cRgZkFg";
-      case ANDROID_DEVELOPERS:
-        return "UCVHFbqXqoYvEWM1Ddxl0QDg";
-      case NERDIST:
-        return "UCTAgbu2l6_rBKdbTvEodEDw";
-      case CODE_ORG:
-        return "UCJyEBMU1xVP2be1-AoGS1BA";
-      case MAX_KEISER:
-        return "UCBIwq18tUFrujiPd3HLPaGw";
-      case RT:
-        return "UCpwvZwUam-URkxB7g4USKpg";
-      case PEWDIEPIE:
-        return "UC-lHJZR3Gqxm24_Vd_AJ5Yw";
-      case BIG_THINK:
-        return "UCvQECJukTDE2i6aCoMnS-Vg";
-      case REASON_TV:
-        return "UC0uVZd8N7FfIZnPu0y7o95A";
-      case JET_DAISUKE:
-        return "UC6wKgAlOeFNqmXV167KERhQ";
-      case THE_VERGE:
-        return "UCddiUEpeqJcYeBxX1IVBKvQ";
-      case XDA:
-        return "UCk1SpWNzOs4MYmr0uICEntg";
-      case YOUNG_TURKS:
-        return "UC1yBKRuGpC1tSM73A0ZjYjQ";
-      case GATES_FOUNDATION:
-        return "UCRi8JQTnKQilJW15uzo7bRQ";
-      case JUSTIN_BIEBER:
-        return "UCHkj014U2CQ2Nv0UZeYpE_A";
-      case COLLEGE_HUMOR:
-        return "UCPDXXXJj9nax0fr0Wfc048g";
-      case YOUTUBE:
-        return "UCBR8-60-B28hp2BmDPdntcQ";
+    if (mChannelIDMap == null) {
+      mChannelIDMap = new HashMap<ProductCode, String>();
+
+      mChannelIDMap.put(ProductCode.CONNECTIONS, "UC07XXQh04ukEX68loZFgnVw");
+      mChannelIDMap.put(ProductCode.NEURO_SOUP, "UCf--Le-Ssa_R5ERoM7PbdcA");
+      mChannelIDMap.put(ProductCode.VICE, "UCn8zNIfYAQNdrFRrr8oibKw");
+      mChannelIDMap.put(ProductCode.ROGAN, "UCzQUP1qoWDoEbmsQxvdjxgQ");
+      mChannelIDMap.put(ProductCode.LUKITSCH, "UCULJH9kW-UdTBCDu27P0BoA");
+      mChannelIDMap.put(ProductCode.KHAN_ACADEMY, "UC4a-Gbdw7vOaccHmFo40b9g");
+      mChannelIDMap.put(ProductCode.TOP_GEAR, "UCjOl2AUblVmg2rA_cRgZkFg");
+      mChannelIDMap.put(ProductCode.ANDROID_DEVELOPERS, "UCVHFbqXqoYvEWM1Ddxl0QDg");
+      mChannelIDMap.put(ProductCode.NERDIST, "UCTAgbu2l6_rBKdbTvEodEDw");
+      mChannelIDMap.put(ProductCode.CODE_ORG, "UCJyEBMU1xVP2be1-AoGS1BA");
+      mChannelIDMap.put(ProductCode.MAX_KEISER, "UCBIwq18tUFrujiPd3HLPaGw");
+      mChannelIDMap.put(ProductCode.RT, "UCpwvZwUam-URkxB7g4USKpg");
+      mChannelIDMap.put(ProductCode.PEWDIEPIE, "UC-lHJZR3Gqxm24_Vd_AJ5Yw");
+      mChannelIDMap.put(ProductCode.BIG_THINK, "UCvQECJukTDE2i6aCoMnS-Vg");
+      mChannelIDMap.put(ProductCode.REASON_TV, "UC0uVZd8N7FfIZnPu0y7o95A");
+      mChannelIDMap.put(ProductCode.JET_DAISUKE, "UC6wKgAlOeFNqmXV167KERhQ");
+      mChannelIDMap.put(ProductCode.THE_VERGE, "UCddiUEpeqJcYeBxX1IVBKvQ");
+      mChannelIDMap.put(ProductCode.XDA, "UCk1SpWNzOs4MYmr0uICEntg");
+      mChannelIDMap.put(ProductCode.YOUNG_TURKS, "UC1yBKRuGpC1tSM73A0ZjYjQ");
+      mChannelIDMap.put(ProductCode.GATES_FOUNDATION, "UCRi8JQTnKQilJW15uzo7bRQ");
+      mChannelIDMap.put(ProductCode.JUSTIN_BIEBER, "UCHkj014U2CQ2Nv0UZeYpE_A");
+      mChannelIDMap.put(ProductCode.COLLEGE_HUMOR, "UCPDXXXJj9nax0fr0Wfc048g");
+      mChannelIDMap.put(ProductCode.YOUTUBE, "UCBR8-60-B28hp2BmDPdntcQ");
     }
 
-    return null;
+    return mChannelIDMap.get(mProductCode);
   }
 
   public YouTubeData channelInfo() {
@@ -239,5 +182,7 @@ public class Content extends Observable {
       }
     })).start();
   }
+
+  public static enum ProductCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 
 }

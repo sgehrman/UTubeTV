@@ -192,13 +192,17 @@ public class DrawerManager {
       TextView textView = (TextView) result.findViewById(android.R.id.text1);
 
       Map item = getItem(position);
-      ToolbarIcons.IconID icon = (ToolbarIcons.IconID) item.get("icon");
+      ToolbarIcons.IconID icon = ToolbarIcons.IconID.NONE;
+
+      Object iconInt = item.get("icon");
+      if (iconInt != null)
+        icon = (ToolbarIcons.IconID) iconInt; // cast Integer to Enum, better way?
+
       textView.setText((String) item.get("title"));
 
       ImageView imageView = (ImageView) result.findViewById(android.R.id.icon);
 
       Drawable sharedDrawable = ToolbarIcons.iconBitmap(getContext(), icon, mIconColor, 30);
-
       imageView.setImageDrawable(sharedDrawable);
 
       return result;
