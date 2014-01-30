@@ -43,8 +43,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinner"
             android:clickable="true"
-            android:textColor="#fff"
-            android:text="NeuroSoup"
 
             android:spinnerMode="dropdown"/>
 
