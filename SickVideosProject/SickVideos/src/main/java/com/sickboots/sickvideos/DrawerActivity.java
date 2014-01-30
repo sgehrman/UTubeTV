@@ -44,7 +44,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
     setContentView(R.layout.activity_drawer);
 
-    Content.ProductCode code = Content.ProductCode.valueOf(getResources().getString(R.string.content));
+    ChannelList.ProductCode code = ChannelList.ProductCode.valueOf(getResources().getString(R.string.content));
     mContent = new Content(this, code);
 
     setupDrawer();

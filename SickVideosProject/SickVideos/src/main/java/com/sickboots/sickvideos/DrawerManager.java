@@ -44,11 +44,13 @@ public class DrawerManager {
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
+  private Content mContent;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 
     mListener = listener;
+    mContent = content;
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerContainer = activity.findViewById(R.id.drawer_container);
@@ -151,7 +153,7 @@ public class DrawerManager {
 
     if (supportChannels) {
 
-      String[] stringArray = new String[]{"NeuroSoup", "Vice", "Tim Leary"};
+      String[] stringArray = mContent.mChannelList.titles();
 
       ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, stringArray);
 
@@ -173,10 +175,6 @@ public class DrawerManager {
 
         }
       });
-
-
-
-
     }
     else {
       spinner.setVisibility(View.GONE);
