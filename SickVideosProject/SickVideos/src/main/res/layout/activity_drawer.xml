@@ -1,7 +1,7 @@
 <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
 <android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,14 +29,28 @@
      The drawer is given a fixed width in dp and extends the full height of
      the container. A solid background is used for contrast
      with the content view. -->
-    <ListView
-        android:id="@+id/left_drawer"
+    <LinearLayout
+        android:id="@+id/drawer_container"
+        android:orientation="vertical"
         android:layout_width="250dp"
         android:layout_height="match_parent"
+        android:background="@drawable/default_drawer_background"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@drawable/drawer_divider_background"
-        android:dividerHeight="1dp"
-        android:background="@drawable/default_drawer_background"/>
+        >
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="#fff"
+    android:text="NeuroSoup"/>
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@drawable/drawer_divider_background"
+            android:dividerHeight="1dp"/>
+
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

@@ -37,6 +37,7 @@ public class DrawerManager {
   }
 
   private DrawerLayout mDrawerLayout;
+  private View mDrawerContainer;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
@@ -48,6 +49,7 @@ public class DrawerManager {
     mListener = listener;
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+    mDrawerContainer = activity.findViewById(R.id.drawer_container);
     mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
 
     // set a custom shadow that overlays the main content when the drawer opens
@@ -111,11 +113,11 @@ public class DrawerManager {
   }
 
   public void openDrawer() {
-    mDrawerLayout.openDrawer(mDrawerList);
+    mDrawerLayout.openDrawer(mDrawerContainer);
   }
 
   public void closeDrawer() {
-    mDrawerLayout.closeDrawer(mDrawerList);
+    mDrawerLayout.closeDrawer(mDrawerContainer);
   }
 
   public void setItemChecked(int position, boolean checked) {
