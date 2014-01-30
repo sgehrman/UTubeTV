@@ -32,12 +32,13 @@ public class Content extends Observable {
   private ChannelList.ProductCode mProductCode;
   private YouTubeData mChannelInfo;
   private Context mContext;
-  public ChannelList mChannelList = new ChannelList();
+  public ChannelList mChannelList;
 
   public Content(Context context, ChannelList.ProductCode code) {
     super();
 
     mProductCode = code;
+    mChannelList = new ChannelList(mProductCode);
 
     mContext = context.getApplicationContext();
 

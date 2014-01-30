@@ -12,12 +12,12 @@ public class ChannelList {
   private List<Channel> mChannels;
   private Map<ProductCode, String> mChannelIDMap;
 
-  public ChannelList() {
+  public ChannelList(ChannelList.ProductCode code) {
     super();
 
     mChannels = new ArrayList<Channel>();
 
-    mChannels.add(new Channel(ProductCode.NEURO_SOUP.toString(), channelIDForCode(ProductCode.NEURO_SOUP), ""));
+    mChannels.add(new Channel(code.toString(), channelIDForCode(code), ""));
     mChannels.add(new Channel(ProductCode.VICE.toString(), channelIDForCode(ProductCode.VICE), ""));
     mChannels.add(new Channel(ProductCode.ROGAN.toString(), channelIDForCode(ProductCode.ROGAN), ""));
 
