@@ -164,6 +164,8 @@ public class DrawerManager {
           String duh = (String) parent.getItemAtPosition(position);
 
           Debug.log(duh);
+
+          closeDrawer();
         }
 
         @Override
