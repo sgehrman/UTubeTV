@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.misc.ToolbarIcons;
@@ -58,6 +59,9 @@ public class DrawerManager {
     // set up the drawer's list view with items and click listener
     mDrawerList.setAdapter(new DrawerAdapter(activity, content));
     mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+    Spinner spinner = (Spinner) mDrawerContainer.findViewById(R.id.spinner);
+    setupDrawerSpinner(activity, spinner);
 
     // seems insane, is this the best way of having a variable drawable resource by theme?
     int[] attrs = new int[]{R.attr.nav_drawer_menu_drawable};
@@ -139,6 +143,24 @@ public class DrawerManager {
       mListener.onDrawerClick(position);
       closeDrawer();
     }
+  }
+
+  private void setupDrawerSpinner(Context context, Spinner spinner) {
+    boolean supportChannels = true;
+
+    if (supportChannels) {
+
+      String[] stringArray = new String[]{"NeuroSoup", "Vice", "Tim Leary"};
+
+      ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, stringArray);
+
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinner.setAdapter(adapter);
+    }
+    else {
+      spinner.setVisibility(View.GONE);
+    }
+
   }
 
   private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
