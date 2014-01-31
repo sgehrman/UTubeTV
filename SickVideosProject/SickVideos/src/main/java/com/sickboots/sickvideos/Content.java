@@ -11,7 +11,6 @@ import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.ChannelAboutFragment;
-import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
@@ -19,7 +18,6 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -29,16 +27,16 @@ import java.util.Observable;
  */
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
-  private ChannelList.ProductCode mProductCode;
+  private ChannelList.ChannelCode mProductCode;
   private YouTubeData mChannelInfo;
   private Context mContext;
   public ChannelList mChannelList;
 
-  public Content(Context context, ChannelList.ProductCode code) {
+  public Content(Context context, ChannelList.ChannelCode code) {
     super();
 
     mProductCode = code;
-    mChannelList = new ChannelList(mProductCode);
+    mChannelList = new ChannelList(context, mProductCode);
 
     mContext = context.getApplicationContext();
 
@@ -69,10 +67,10 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.channelID(), "Playlists", null, 250));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannel(), "Playlists", null, 250));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.channelID(), "Videos", "Recent Uploads", 50));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannel(), "Videos", "Recent Uploads", 50));
             break;
         }
         break;
@@ -102,9 +100,9 @@ public class Content extends Observable {
 
         // if refreshing, don't get from database (need to remove existing data?)
         if (refresh) {
-          database.deleteAllRows(mChannelList.channelID());
+          database.deleteAllRows(mChannelList.currentChannel());
         } else {
-          List<YouTubeData> items = database.getItems(0, mChannelList.channelID(), 1);
+          List<YouTubeData> items = database.getItems(0, mChannelList.currentChannel(), 1);
 
           if (items.size() > 0)
             channelInfo = items.get(0);
@@ -118,7 +116,7 @@ public class Content extends Observable {
             }
           });
 
-          final Map fromYouTubeMap = helper.channelInfo(mChannelList.channelID());
+          final Map fromYouTubeMap = helper.channelInfo(mChannelList.currentChannel());
 
           // save in the db if we got results
           if (fromYouTubeMap.size() > 0) {
@@ -126,7 +124,7 @@ public class Content extends Observable {
             channelInfo.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
             channelInfo.mTitle = (String) fromYouTubeMap.get("title");
             channelInfo.mDescription = (String) fromYouTubeMap.get("description");
-            channelInfo.mChannel = mChannelList.channelID();
+            channelInfo.mChannel = mChannelList.currentChannel();
 
             database.insertItems(Arrays.asList(channelInfo));
           }
