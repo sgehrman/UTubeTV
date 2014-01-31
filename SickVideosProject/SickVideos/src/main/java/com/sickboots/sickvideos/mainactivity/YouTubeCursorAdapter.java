@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos;
+package com.sickboots.sickvideos.mainactivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;

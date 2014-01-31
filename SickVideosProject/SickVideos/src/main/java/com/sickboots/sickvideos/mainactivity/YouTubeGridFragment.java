@@ -22,7 +22,6 @@ import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.YouTubeCursorAdapter;
 import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
