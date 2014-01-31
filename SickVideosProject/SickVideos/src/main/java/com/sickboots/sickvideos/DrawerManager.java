@@ -175,8 +175,7 @@ public class DrawerManager {
 
         }
       });
-    }
-    else {
+    } else {
       spinner.setVisibility(View.GONE);
     }
 

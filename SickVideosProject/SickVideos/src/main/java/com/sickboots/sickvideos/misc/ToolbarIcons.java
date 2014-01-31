@@ -65,8 +65,8 @@ public class ToolbarIcons {
     }
 
     if (icon != null) {
-    Drawable pressed = null;
-    Drawable normal = null;
+      Drawable pressed = null;
+      Drawable normal = null;
 
       if (icon != null) {
         IconicFontDrawable fpressed = new IconicFontDrawable(context);

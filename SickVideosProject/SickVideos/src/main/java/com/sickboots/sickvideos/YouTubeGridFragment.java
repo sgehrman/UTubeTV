@@ -27,15 +27,12 @@ import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
-import com.sickboots.sickvideos.youtube.VideoPlayer;
-import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
