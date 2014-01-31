@@ -9,7 +9,6 @@ import com.sickboots.sickvideos.billing.IabHelper;
 import com.sickboots.sickvideos.billing.IabResult;
 import com.sickboots.sickvideos.billing.Inventory;
 import com.sickboots.sickvideos.billing.Purchase;
-import com.sickboots.sickvideos.misc.Debug;
 
 public class PurchaseHelper {
   private Context mContext;
