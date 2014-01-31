@@ -25,6 +25,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="choose_channel">Choose a channel</string>
+
     <string-array name="view_styles">
         <item>Dark</item>
         <item>Light</item>

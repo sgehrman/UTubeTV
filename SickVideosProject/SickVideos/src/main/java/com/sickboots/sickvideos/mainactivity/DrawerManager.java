@@ -156,8 +156,7 @@ public class DrawerManager {
     boolean supportChannels = true;
 
     if (mContent.needsChannelSwitcher()) {
-
-      mChannelSpinnerAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item);
+      mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
 
       mChannelSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinner.setAdapter(mChannelSpinnerAdapter);

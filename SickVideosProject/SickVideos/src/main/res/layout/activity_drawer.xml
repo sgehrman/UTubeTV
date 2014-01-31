@@ -45,7 +45,8 @@
             android:paddingTop="12dp"
             android:paddingBottom="18dp"
             android:clickable="true"
-            android:spinnerMode="dropdown"/>
+            android:prompt="@string/choose_channel"
+            android:spinnerMode="dialog"/>
 
         <ListView
             android:id="@+id/left_drawer"
