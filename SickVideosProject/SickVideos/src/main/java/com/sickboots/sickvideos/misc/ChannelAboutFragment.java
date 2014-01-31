@@ -177,7 +177,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       }
 
       // update the action bar title
-      Utils.setActionBarTitle(getActivity(), "About", null);
+      Utils.setActionBarTitle(getActivity(), "About", data.mTitle);
     }
 
   }

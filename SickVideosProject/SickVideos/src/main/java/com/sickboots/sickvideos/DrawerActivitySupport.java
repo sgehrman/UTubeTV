@@ -11,7 +11,7 @@ public interface DrawerActivitySupport {
 
   public void showPlaylistsFragment();
 
-  public Content getContent();  // about fragment can't be passed data, it must request it
+  public Content getContent();
 
   public void playVideo(String videoId, String title);
 

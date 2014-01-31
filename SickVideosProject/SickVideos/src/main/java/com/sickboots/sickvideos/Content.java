@@ -92,6 +92,16 @@ public class Content extends Observable {
     return mChannelList.currentChannelInfo();
   }
 
+  public String channelName() {
+    String result = null;
+
+    YouTubeData data = channelInfo();
+    if (data != null)
+      result = data.mTitle;
+
+    return result;
+  }
+
   public void refreshChannelInfo() {
     mChannelList.refresh();
   }

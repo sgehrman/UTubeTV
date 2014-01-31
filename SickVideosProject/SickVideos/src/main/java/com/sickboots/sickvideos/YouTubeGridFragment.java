@@ -84,7 +84,14 @@ public class YouTubeGridFragment extends Fragment
           }
         }
 
-        Utils.setActionBarTitle(getActivity(), title, subtitle);
+        String channelName = provider.getContent().channelName();
+
+        if (channelName != null) {
+          if (subtitle == null)
+            subtitle = channelName;
+        }
+
+        Utils.setActionBarTitle(getActivity(), title, subtitle );
       }
     }
   }
