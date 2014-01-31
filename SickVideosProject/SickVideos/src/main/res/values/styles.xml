@@ -11,12 +11,20 @@
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
         <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hl</item>
+
+        <item name="android:spinnerStyle">@style/Spinner</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+
     </style>
 
     <style name="AppThemeDark" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
         <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hd</item>
+
+        <item name="android:spinnerStyle">@style/SpinnerDark</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
+
     </style>
 
     <style name="DrawerActivityTheme" parent="AppTheme">
@@ -36,8 +44,32 @@
     </style>
 
 
-    <style name="WhiteSpinner"
+    <style name="SpinnerDark"
            parent="android:style/Widget.Holo.Spinner">
     </style>
+
+    <style name="SpinnerItemDark"
+           parent="android:style/Widget.Holo.TextView.SpinnerItem">
+
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <style name="Spinner"
+           parent="android:style/Widget.Holo.Light.Spinner">
+    </style>
+
+    <style name="SpinnerItem"
+           parent="android:style/Widget.Holo.Light.TextView.SpinnerItem">
+
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
 
 </resources>
