@@ -208,7 +208,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         descriptionView.setAutoLinkMask(0);
 
       // toggles links by setting text again
-      CharSequence sequence = descriptionView.getText().toString(); // getText() could return a StringSpanner, toString() gets the raw string
+      String sequence = descriptionView.getText().toString(); // getText() could return a StringSpanner, toString() gets the raw string
       descriptionView.setText(sequence);
     }
   }
