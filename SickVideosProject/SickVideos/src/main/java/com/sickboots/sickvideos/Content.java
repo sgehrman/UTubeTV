@@ -81,6 +81,10 @@ public class Content extends Observable {
     return fragment;
   }
 
+  public boolean needsChannelSwitcher() {
+    return mChannelList.needsChannelSwitcher();
+  }
+
   private void notifyForDataUpdate() {
     setChanged();
     notifyObservers(Content.CONTENT_UPDATED_NOTIFICATION);

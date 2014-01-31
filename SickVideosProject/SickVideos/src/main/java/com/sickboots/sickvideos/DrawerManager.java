@@ -45,6 +45,7 @@ public class DrawerManager {
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
   private Content mContent;
+  private ArrayAdapter<String> mChannelSpinnerAdapter;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
@@ -151,14 +152,12 @@ public class DrawerManager {
   private void setupDrawerSpinner(Context context, Spinner spinner) {
     boolean supportChannels = true;
 
-    if (supportChannels) {
+    if (mContent.needsChannelSwitcher()) {
 
-      String[] stringArray = mContent.mChannelList.titles();
+      mChannelSpinnerAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item);
 
-      ArrayAdapter<String> adapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, stringArray);
-
-      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-      spinner.setAdapter(adapter);
+      mChannelSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinner.setAdapter(mChannelSpinnerAdapter);
 
       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
@@ -179,6 +178,14 @@ public class DrawerManager {
       spinner.setVisibility(View.GONE);
     }
 
+  }
+
+  private void updateChannelSpinner() {
+    String[] stringArray = mContent.mChannelList.titles();
+
+    mChannelSpinnerAdapter.clear();
+    for (String string : stringArray)
+      mChannelSpinnerAdapter.add(string);
   }
 
   private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
@@ -216,6 +223,7 @@ public class DrawerManager {
 
         if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
 
+          updateChannelSpinner();
           rebuild();
 
           // only need this called once

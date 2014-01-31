@@ -67,6 +67,10 @@ public class ChannelList {
     return channelIdForIndex(mCurrentChannelIndex);
   }
 
+  public boolean needsChannelSwitcher() {
+    return mChannelIds.size() > 1;
+  }
+
   public YouTubeData currentChannelInfo() {
     YouTubeData result = null;
 
