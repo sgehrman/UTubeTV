@@ -94,6 +94,10 @@ public class ChannelList {
     mListener.onUpdate();
   }
 
+  public void changeChannel(int index) {
+    mCurrentChannelIndex = index;
+  }
+
   private void requestChannelInfo(final boolean refresh) {
     (new Thread(new Runnable() {
       public void run() {

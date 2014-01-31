@@ -320,6 +320,12 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   private void setupDrawer() {
     mDrawerMgr = new DrawerManager(this, mContent, new DrawerManager.DrawerManagerListener() {
       @Override
+      public void onChannelClick(int position) {
+        mCurrentSection = -1; // force it to reload fragment if same position
+        selectSection(position, true);
+      }
+
+      @Override
       public void onDrawerClick(int position) {
         selectSection(position, true);
       }

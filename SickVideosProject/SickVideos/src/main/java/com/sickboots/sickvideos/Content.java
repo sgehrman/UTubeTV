@@ -59,6 +59,12 @@ public class Content extends Observable {
     return result;
   }
 
+  public void changeChannel(int index) {
+    mChannelList.changeChannel(index);
+
+    notifyForDataUpdate();
+  }
+
   public Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
 

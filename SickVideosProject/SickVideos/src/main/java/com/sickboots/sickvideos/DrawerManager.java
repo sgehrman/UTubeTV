@@ -33,6 +33,8 @@ import java.util.Observer;
 public class DrawerManager {
 
   public interface DrawerManagerListener {
+    public void onChannelClick(int position);
+
     public void onDrawerClick(int position);
 
     public void onDrawerOpen(boolean openOrClose);
@@ -162,9 +164,10 @@ public class DrawerManager {
       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-          String duh = (String) parent.getItemAtPosition(position);
+          // String title = (String) parent.getItemAtPosition(position);
 
-          Debug.log(duh);
+          mContent.changeChannel(position);
+          mListener.onChannelClick(1);  // need to save and restore, 1 for now
 
           closeDrawer();
         }
