@@ -292,6 +292,10 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
         AppRater.rateNow(this);
         return true;
 
+      case R.id.send_feedback:
+        Utils.sendFeedbackEmail(this);
+        return true;
+
       case R.id.action_show_rate_dialog:
         AppRater.showRateDialog(this);
         return true;

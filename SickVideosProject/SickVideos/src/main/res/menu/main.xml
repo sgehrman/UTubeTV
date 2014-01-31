@@ -19,6 +19,12 @@
         android:showAsAction="never"/>
 
     <item
+        android:id="@+id/send_feedback"
+        android:title="@string/pref_send_feedback"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_more_apps"
         android:title="@string/action_more_apps"
         android:orderInCategory="100"

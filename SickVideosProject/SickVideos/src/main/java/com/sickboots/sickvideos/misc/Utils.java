@@ -6,6 +6,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -169,6 +172,10 @@ public class Utils {
     return result;
   }
 
+  public static String feedbackEmailAddress() {
+    return "sgehrman@gmail.com";
+  }
+
   public static boolean onMainThread() {
     // can also use this
     // Looper.getMainLooper().getThread() == Thread.currentThread();
@@ -287,4 +294,33 @@ public class Utils {
 
     return bitmap;
   }
+
+  public static String getApplicationName(Context context) {
+    String appName = "Application";
+    try {
+      String packageName = context.getPackageName();
+      PackageManager pm = context.getPackageManager();
+
+      ApplicationInfo ai = pm.getApplicationInfo(packageName, 0);
+      if (ai != null)
+        appName = (String) pm.getApplicationLabel(ai);
+
+    } catch (Exception e) {
+    }
+
+    return appName;
+  }
+
+  public static void sendFeedbackEmail(Activity activity) {
+    Intent i = new Intent(Intent.ACTION_SEND);
+    i.setType("message/rfc822");
+    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{feedbackEmailAddress()});
+    i.putExtra(Intent.EXTRA_SUBJECT, "Feedback for " + getApplicationName(activity));
+    i.putExtra(Intent.EXTRA_TEXT   , "");
+    try {
+      activity.startActivity(Intent.createChooser(i, "Send mail..."));
+    } catch (android.content.ActivityNotFoundException ex) {
+      Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+    }
+    }
 }
