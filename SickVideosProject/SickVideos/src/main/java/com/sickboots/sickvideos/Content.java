@@ -27,7 +27,7 @@ import java.util.Observable;
  */
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
-  private ChannelList.ChannelCode mProductCode;
+  private ChannelList.ChannelCode mChannelCode;
   private YouTubeData mChannelInfo;
   private Context mContext;
   public ChannelList mChannelList;
@@ -35,8 +35,8 @@ public class Content extends Observable {
   public Content(Context context, ChannelList.ChannelCode code) {
     super();
 
-    mProductCode = code;
-    mChannelList = new ChannelList(context, mProductCode);
+    mChannelCode = code;
+    mChannelList = new ChannelList(context, mChannelCode);
 
     mContext = context.getApplicationContext();
 
@@ -46,7 +46,7 @@ public class Content extends Observable {
   public ArrayList<Map> drawerTitles() {
     ArrayList<Map> result = new ArrayList<Map>();
 
-    switch (mProductCode) {
+    switch (mChannelCode) {
       default:
         result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
         result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
@@ -60,7 +60,7 @@ public class Content extends Observable {
   public Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
 
-    switch (mProductCode) {
+    switch (mChannelCode) {
       default:
         switch (index) {
           case 0:
