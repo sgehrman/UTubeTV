@@ -111,10 +111,10 @@ public class YouTubeServiceRequest implements Parcelable {
 
     switch (type) {
       case SUBSCRIPTIONS:
-          result = (plural) ? "Subscriptions" : "Subscription";
+        result = (plural) ? "Subscriptions" : "Subscription";
         break;
       case CATEGORIES:
-          result = (plural) ? "Categories" : "Category";
+        result = (plural) ? "Categories" : "Category";
         break;
       case PLAYLISTS:
         result = (plural) ? "Playlists" : "Playlist";
@@ -138,7 +138,7 @@ public class YouTubeServiceRequest implements Parcelable {
       case LIKED:
       case VIDEOS:
       case SEARCH:
-          result = (plural) ? "Videos" : "Video";
+        result = (plural) ? "Videos" : "Video";
         break;
     }
 

@@ -314,13 +314,13 @@ public class Utils {
   public static void sendFeedbackEmail(Activity activity) {
     Intent i = new Intent(Intent.ACTION_SEND);
     i.setType("message/rfc822");
-    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{feedbackEmailAddress()});
+    i.putExtra(Intent.EXTRA_EMAIL, new String[]{feedbackEmailAddress()});
     i.putExtra(Intent.EXTRA_SUBJECT, "Feedback for " + getApplicationName(activity));
-    i.putExtra(Intent.EXTRA_TEXT   , "");
+    i.putExtra(Intent.EXTRA_TEXT, "");
     try {
       activity.startActivity(Intent.createChooser(i, "Send mail..."));
     } catch (android.content.ActivityNotFoundException ex) {
       Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
     }
-    }
+  }
 }
