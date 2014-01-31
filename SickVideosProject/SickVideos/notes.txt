@@ -133,3 +133,163 @@ Briggs and Stratton
 Quik Kode
 
 
+
+
+
+Channel groups:
+
+Joe Rogan
+Vice
+xda
+
+SCIENCE:
+    Cosmos
+    SpaceTV
+    Nasa?
+    Bill Nye
+    NASA Jet Propulsion Laboratory
+
+ATHEIST TV
+   the gang
+    Religion Hurts Humanity
+
+UFOS:
+
+CONSPIRACY
+    Jesse ventura
+    austin guy
+
+    zeitgiest
+    culture in decline
+
+FOX NEWS
+    guys on fox new
+    Oreily?
+
+NEWS
+    RT
+    Max Reiser
+    Young Turks
+    Aljazera
+
+
+SPORTS:
+    Espn
+    Sports Illustrated Swimsuit
+
+Comedy:
+    Comedy Central
+    Colbert report
+
+
+CARTOONS:
+    beavis
+    Archer
+    StitchOtaku626
+
+PSYCHONAUT
+    neurosoup
+    dmt
+    leary
+    mckenna
+    maps
+    mellowmushgrapetripp
+
+NERD:
+    Nerdist
+    Verge
+    Fark/Digg?
+
+
+THINK:
+    Big Think
+    Ted, Tedx, Ted_ed
+    Jason Silva
+    Penn point
+    Bullshit
+
+
+GOOGLE DEVS:
+    gOOGLE devs
+    android devs
+    youtube devs
+    Android developers
+
+EDUCATION
+    Khan
+    MIT stanford, etc?
+    Google tech talks
+    MinutePhysics
+
+LEARN CODING
+    Code.org
+    marakana
+
+POLITICS
+    jfk
+    ronald reagan
+
+
+CARS:
+    Top Gear
+
+GAMES
+    PewDiePie
+    Minecraft
+
+MAKEUP:
+
+PHOTOGRAPHY
+    DigitalRevCom
+
+JAPANESE BLOGGERS
+    JetDaisuke
+
+
+HARDWARE
+    lINustechtips
+    new egg
+
+MEDITATION
+
+SELF HELP
+
+ANDROID NEWS/TIPS
+    BLack guy
+    android central?
+
+DOCUMENTARIES:
+    BestdocumentaryTV
+
+
+TRAVEL:
+    soniastravels
+    globetrekker
+
+COOKING
+
+WEIRD SCIENCE
+    visual halucinations
+    The Slow Mo Guys
+    HIGH speed filming
+
+
+MUSIC
+   play guitar?
+
+VIRAL VIDEOS
+
+ADVERTISING:
+    retro ads
+    funny ads
+    banned ads
+
+GRATEFUL DEAD
+
+ART
+    Cyriac
+
+FASHION NEWS
+
+HOME SHIT
+    This Old House
