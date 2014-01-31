@@ -165,10 +165,13 @@ public class DrawerManager {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
           // String title = (String) parent.getItemAtPosition(position);
 
-          mContent.changeChannel(position);
-          mListener.onChannelClick(1);  // need to save and restore, 1 for now
+          // this gets called when the data is first loaded, just do something if drawer is visible only
+          if (mDrawerLayout.isDrawerVisible(mDrawerContainer)) {
+            mContent.changeChannel(position);
+            mListener.onChannelClick(1);  // need to save and restore, 1 for now
 
-          closeDrawer();
+            closeDrawer();
+          }
         }
 
         @Override
