@@ -67,10 +67,10 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannelId(), "Playlists", null, 250));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannelId(), null, 250));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannelId(), "Videos", "Recent Uploads", 50));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannelId(), null, 50));
             break;
         }
         break;

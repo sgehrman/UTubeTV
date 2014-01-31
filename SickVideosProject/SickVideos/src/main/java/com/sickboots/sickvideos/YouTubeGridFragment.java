@@ -66,32 +66,24 @@ public class YouTubeGridFragment extends Fragment
     if (provider != null) {
       // activity can control the actionbar title, for example the player sets the Now Playing title
       if (!provider.actionBarTitleHandled()) {
-        String title = null;
         String subtitle = null;
+        String title = null;
 
         if (mRequest != null) {
-          title = mRequest.title();
-          subtitle = mRequest.subtitle();
-
           int cnt = mAdapter.getCount();
-          if (cnt > 0) {
-            if (cnt == 1) {
-              if (title.endsWith("s"))
-                title = title.substring(0, title.length() - 1);  // remove the s
-            }
 
-            title = String.format("%d ", cnt) + title;
-          }
+          subtitle = String.format("%d ", cnt) + mRequest.unitName(cnt > 1 || cnt == 0);
+
+          String channelName = provider.getContent().channelName();
+          if (channelName != null)
+            title = channelName;
+
+          String containerName = mRequest.containerName();
+          if (containerName != null)
+            subtitle += ": " + containerName;
         }
 
-        String channelName = provider.getContent().channelName();
-
-        if (channelName != null) {
-          if (subtitle == null)
-            subtitle = channelName;
-        }
-
-        Utils.setActionBarTitle(getActivity(), title, subtitle );
+        Utils.setActionBarTitle(getActivity(), title, subtitle);
       }
     }
   }
@@ -201,7 +193,7 @@ public class YouTubeGridFragment extends Fragment
         String playlistID = itemMap.mPlaylist;
 
         if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, "Videos", itemMap.mTitle));
+          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, itemMap.mTitle));
 
           if (provider != null)
             provider.installFragment(frag, true);

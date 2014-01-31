@@ -15,71 +15,64 @@ public class YouTubeServiceRequest implements Parcelable {
   private HashMap data;
   private RequestType type;
 
-  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String title, String subtitle, int maxResults) {
+  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
 
     result.data.put("maxResults", maxResults);
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
     result.data.put("type", relatedPlayListType);
     result.data.put("channel", channelID);
 
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID, String title, String subtitle) {
+  public static YouTubeServiceRequest videosRequest(String playlistID, String containerName) {
     YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
     result.data.put("playlist", playlistID);
 
     return result;
   }
 
-  public static YouTubeServiceRequest searchRequest(String query, String title, String subtitle) {
+  public static YouTubeServiceRequest searchRequest(String query, String containerName) {
     YouTubeServiceRequest result = emptyRequest(RequestType.SEARCH);
 
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
     result.data.put("query", query);
 
     return result;
   }
 
-  public static YouTubeServiceRequest subscriptionsRequest(String title, String subtitle) {
+  public static YouTubeServiceRequest subscriptionsRequest(String containerName) {
     YouTubeServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest categoriesRequest(String title, String subtitle) {
+  public static YouTubeServiceRequest categoriesRequest(String containerName) {
     YouTubeServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest likedRequest(String title, String subtitle) {
+  public static YouTubeServiceRequest likedRequest(String containerName) {
     YouTubeServiceRequest result = emptyRequest(RequestType.LIKED);
 
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsRequest(String channelID, String title, String subtitle, int maxResults) {
+  public static YouTubeServiceRequest playlistsRequest(String channelID, String containerName, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
     result.data.put("maxResults", maxResults);
-    result.data.put("title", title);
-    result.data.put("subtitle", subtitle);
+    result.data.put("containerName", containerName);
     result.data.put("channel", channelID);
 
     return result;
@@ -109,12 +102,47 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public String title() {
-    return (String) getData("title");
+  public String containerName() {
+    return (String) getData("containerName");
   }
 
-  public String subtitle() {
-    return (String) getData("subtitle");
+  public String unitName(boolean plural) {
+    String result = (plural) ? "Items" : "Item";
+
+    switch (type) {
+      case SUBSCRIPTIONS:
+          result = (plural) ? "Subscriptions" : "Subscription";
+        break;
+      case CATEGORIES:
+          result = (plural) ? "Categories" : "Category";
+        break;
+      case PLAYLISTS:
+        result = (plural) ? "Playlists" : "Playlist";
+        break;
+      case RELATED:
+        result = (plural) ? "Videos" : "Video";
+        YouTubeAPI.RelatedPlaylistType playlistType = (YouTubeAPI.RelatedPlaylistType) getData("type");
+        switch (playlistType) {
+          case UPLOADS:
+            result = (plural) ? "Recent Uploads" : "Recent Upload";
+            break;
+          case FAVORITES:
+          case WATCHED:
+          case LIKES:
+          case WATCHLATER:
+          default:
+            break;
+        }
+
+        break;
+      case LIKED:
+      case VIDEOS:
+      case SEARCH:
+          result = (plural) ? "Videos" : "Video";
+        break;
+    }
+
+    return result;
   }
 
   // just used for debugging
