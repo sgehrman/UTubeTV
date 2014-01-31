@@ -29,6 +29,7 @@ import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
+import com.sickboots.sickvideos.misc.VideoMenuView;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
@@ -207,7 +208,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         descriptionView.setAutoLinkMask(0);
 
       // toggles links by setting text again
-      CharSequence sequence = descriptionView.getText().toString(); // could be a StringSpanner, toString() gets a raw string
+      CharSequence sequence = descriptionView.getText().toString(); // getText() could return a StringSpanner, toString() gets the raw string
       descriptionView.setText(sequence);
     }
   }

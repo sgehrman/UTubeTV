@@ -1,4 +1,4 @@
-<com.sickboots.sickvideos.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sickboots.sickvideos.misc.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                          android:layout_width="match_parent"
                                          android:layout_height="match_parent">
 
@@ -18,4 +18,4 @@
         <include layout="@layout/empty_view_grid"/>
 
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
-</com.sickboots.sickvideos.FragmentLayout>
+</com.sickboots.sickvideos.misc.FragmentLayout>

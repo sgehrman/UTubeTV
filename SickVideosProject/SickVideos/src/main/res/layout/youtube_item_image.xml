@@ -28,7 +28,7 @@
             android:background="@drawable/text_overlay_background"
             >
 
-            <com.sickboots.sickvideos.VideoMenuView
+            <com.sickboots.sickvideos.misc.VideoMenuView
                 android:id="@+id/menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
