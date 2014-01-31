@@ -28,7 +28,6 @@ import java.util.Observable;
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
   private ChannelList.ChannelCode mChannelCode;
-  private YouTubeData mChannelInfo;
   private Context mContext;
   public ChannelList mChannelList;
 
@@ -36,11 +35,14 @@ public class Content extends Observable {
     super();
 
     mChannelCode = code;
-    mChannelList = new ChannelList(context, mChannelCode);
+    mChannelList = new ChannelList(context, mChannelCode, new ChannelList.OnChannelListUpdateListener() {
+      @Override
+      public void onUpdate() {
+        notifyForDataUpdate();
+      }
+    });
 
     mContext = context.getApplicationContext();
-
-    askYouTubeForChannelInfo(false);
   }
 
   public ArrayList<Map> drawerTitles() {
@@ -67,10 +69,10 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannel(), "Playlists", null, 250));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannelId(), "Playlists", null, 250));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannel(), "Videos", "Recent Uploads", 50));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannelId(), "Videos", "Recent Uploads", 50));
             break;
         }
         break;
@@ -85,66 +87,11 @@ public class Content extends Observable {
   }
 
   public YouTubeData channelInfo() {
-    return mChannelInfo;
+    return mChannelList.currentChannelInfo();
   }
 
   public void refreshChannelInfo() {
-    askYouTubeForChannelInfo(true);
+    mChannelList.refresh();
   }
-
-  private void askYouTubeForChannelInfo(final boolean refresh) {
-    (new Thread(new Runnable() {
-      public void run() {
-        YouTubeData channelInfo = null;
-        DatabaseAccess database = new DatabaseAccess(mContext, DatabaseTables.channelTable());
-
-        // if refreshing, don't get from database (need to remove existing data?)
-        if (refresh) {
-          database.deleteAllRows(mChannelList.currentChannel());
-        } else {
-          List<YouTubeData> items = database.getItems(0, mChannelList.currentChannel(), 1);
-
-          if (items.size() > 0)
-            channelInfo = items.get(0);
-        }
-
-        if (channelInfo == null) {
-          YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {
-            @Override
-            public void handleAuthIntent(final Intent authIntent) {
-              Debug.log("handleAuthIntent inside update Service.  not handled here");
-            }
-          });
-
-          final Map fromYouTubeMap = helper.channelInfo(mChannelList.currentChannel());
-
-          // save in the db if we got results
-          if (fromYouTubeMap.size() > 0) {
-            channelInfo = new YouTubeData();
-            channelInfo.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
-            channelInfo.mTitle = (String) fromYouTubeMap.get("title");
-            channelInfo.mDescription = (String) fromYouTubeMap.get("description");
-            channelInfo.mChannel = mChannelList.currentChannel();
-
-            database.insertItems(Arrays.asList(channelInfo));
-          }
-        }
-
-        final YouTubeData newChannelInfo = channelInfo;
-
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        handler.post(new Runnable() {
-          @Override
-          public void run() {
-            // we are on the main thread, set the new data and send out notifications
-            mChannelInfo = newChannelInfo;
-            notifyForDataUpdate();
-          }
-        });
-      }
-    })).start();
-  }
-
 
 }

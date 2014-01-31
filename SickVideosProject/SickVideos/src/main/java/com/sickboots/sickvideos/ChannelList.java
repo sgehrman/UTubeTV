@@ -21,16 +21,23 @@ import java.util.Map;
  * Created by sgehrman on 1/30/14.
  */
 public class ChannelList {
+
+  public interface OnChannelListUpdateListener {
+    public void onUpdate();
+  }
+
   private List<YouTubeData> mChannels;
   private List<String> mChannelIds;
   private Map<ChannelCode, String> mChannelIDMap;
   private int mCurrentChannelIndex = 0;
   private Context mContext;
+  private OnChannelListUpdateListener mListener;
 
-  public ChannelList(Context context, ChannelCode code) {
+  public ChannelList(Context context, ChannelCode code, OnChannelListUpdateListener listener) {
     super();
 
     mContext = context.getApplicationContext();
+    mListener = listener;
 
     mChannelIds = new ArrayList<String>();
     mChannelIds.add(channelIDForCode(code));
@@ -38,6 +45,10 @@ public class ChannelList {
     mChannelIds.add(channelIDForCode(ChannelCode.ROGAN));
 
     requestChannelInfo(false);
+  }
+
+  public void refresh() {
+    requestChannelInfo(true);
   }
 
   String[] titles() {
@@ -52,20 +63,31 @@ public class ChannelList {
     return result.toArray(new String[0]);
   }
 
-  public String currentChannel() {
-    return channelForIndex(mCurrentChannelIndex);
+  public String currentChannelId() {
+    return channelIdForIndex(mCurrentChannelIndex);
   }
 
-  public String channelForIndex(int index) {
+  public YouTubeData currentChannelInfo() {
+    YouTubeData result = null;
+
+    if (mChannels != null)
+      result = mChannels.get(mCurrentChannelIndex);
+
+    return result;
+  }
+
+  public String channelIdForIndex(int index) {
     return mChannelIds.get(index);
+  }
+
+  public YouTubeData channelInfoForIndex(int index) {
+    return mChannels.get(index);
   }
 
   // called on main thread
   private void updateChannels(List<YouTubeData> channels) {
     mChannels = channels;
-
-//            notifyForDataUpdate();
-
+    mListener.onUpdate();
   }
 
   private void requestChannelInfo(final boolean refresh) {
