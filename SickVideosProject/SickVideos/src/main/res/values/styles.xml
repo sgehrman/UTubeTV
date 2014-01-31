@@ -35,4 +35,9 @@
         <item name="android:background">@drawable/action_bar</item>
     </style>
 
+
+    <style name="WhiteSpinner"
+           parent="android:style/Widget.Holo.Spinner">
+    </style>
+
 </resources>

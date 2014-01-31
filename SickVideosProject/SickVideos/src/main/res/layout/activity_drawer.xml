@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinner"
             android:clickable="true"
-
+            style="@style/WhiteSpinner"
             android:spinnerMode="dropdown"/>
 
 
