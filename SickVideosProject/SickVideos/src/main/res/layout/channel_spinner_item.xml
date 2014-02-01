@@ -2,23 +2,29 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
+              android:padding="8dp"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="22dp"
-        android:layout_height="match_parent"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="#2000"
+        android:padding="1dp"
         android:id="@android:id/icon1"
         android:src="@android:drawable/ic_btn_speak_now"
         />
 
     <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
                      android:id="@android:id/text1"
+                     android:layout_marginLeft="2dp"
                      style="?android:attr/spinnerDropDownItemStyle"
                      android:singleLine="true"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:ellipsize="marquee"
+                     android:textSize="22sp"
+                     android:layout_gravity="center_vertical"
                      android:textAlignment="inherit"/>
 
 </LinearLayout>
