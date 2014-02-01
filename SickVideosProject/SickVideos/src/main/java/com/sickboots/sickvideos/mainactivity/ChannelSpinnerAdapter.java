@@ -1,10 +1,14 @@
 package com.sickboots.sickvideos.mainactivity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
+import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.R;
 
 /**
@@ -25,7 +29,19 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
 
   @Override
   public View getDropDownView(int position, View convertView, ViewGroup parent) {
-    return super.getDropDownView(position, convertView, parent);
+    View result = super.getDropDownView(position, convertView, parent);
+
+ImageView imageView = (ImageView) result.findViewById(android.R.id.icon1);
+
+    int defaultImageResID = 0;
+    UrlImageViewHelper.setUrlDrawable(imageView, "xx", defaultImageResID, new UrlImageViewCallback() {
+
+      @Override
+      public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+
+      }
+
+    });
   }
 
 }

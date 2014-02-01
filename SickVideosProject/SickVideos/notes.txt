@@ -180,6 +180,9 @@ BUSINESS
 
 STARTUPS:
 
+PRANKS:
+    stuart edge
+
 
 SPORTS:
     Espn
@@ -202,6 +205,7 @@ PSYCHONAUT
     mckenna
     maps
     mellowmushgrapetripp
+    national geographic lsd
 
 NERD:
     Nerdist
