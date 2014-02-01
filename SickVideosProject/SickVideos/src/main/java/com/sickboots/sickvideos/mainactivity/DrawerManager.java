@@ -48,7 +48,7 @@ public class DrawerManager {
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
   private Content mContent;
-  private ArrayAdapter<String> mChannelSpinnerAdapter;
+  private ChannelSpinnerAdapter mChannelSpinnerAdapter;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
@@ -186,11 +186,8 @@ public class DrawerManager {
   }
 
   private void updateChannelSpinner() {
-    String[] stringArray = mContent.mChannelList.titles();
+    mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
 
-    mChannelSpinnerAdapter.clear();
-    for (String string : stringArray)
-      mChannelSpinnerAdapter.add(string);
   }
 
   private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {

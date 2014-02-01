@@ -51,6 +51,10 @@ public class ChannelList {
     requestChannelInfo(true);
   }
 
+  public List<YouTubeData> channels() {
+    return mChannels;
+  }
+
   public String[] titles() {
     List<String> result = new ArrayList<String>();
 
