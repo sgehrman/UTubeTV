@@ -139,13 +139,9 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   }
 
   private String cacheKey(YouTubeData data) {
-   String result = "about";
-
-    result += data.mChannel;
-
     // keys must match regex [a-z0-9_-]{1,64}
     // assuming the channel id is OK
-    result = result.toLowerCase();
+    String result = data.mChannel.toLowerCase();
 
     return result;
   }
