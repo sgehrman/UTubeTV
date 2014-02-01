@@ -38,7 +38,6 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
   private BitmapCache mBitmapCache;
-  private final String mAboutBitmapKey = "about";  // keys must match regex [a-z0-9_-]{1,64}
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -139,8 +138,20 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     }
   }
 
+  private String cacheKey(YouTubeData data) {
+   String result = "about";
+
+    result += data.mChannel;
+
+    // keys must match regex [a-z0-9_-]{1,64}
+    // assuming the channel id is OK
+    result = result.toLowerCase();
+
+    return result;
+  }
+
   private void updateUI() {
-    YouTubeData data = mContent.channelInfo();
+    final YouTubeData data = mContent.channelInfo();
     if (data == null) {
       mContent.addObserver(this);
     } else {
@@ -154,7 +165,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       // Debug.log(data.mThumbnail);
 
       // is the bitmap in our diskcache?
-      Bitmap bm = cachedBitmap();
+      Bitmap bm = cachedBitmap(data);
 
       if (bm != null) {
         mImage.setImageBitmap(bm);
@@ -172,7 +183,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
             // save to the cache
             if (mBitmapCache != null)
-              mBitmapCache.put(mAboutBitmapKey, loadedBitmap);
+              mBitmapCache.put(cacheKey(data), loadedBitmap);
           }
 
         });
@@ -184,7 +195,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
   }
 
-  private Bitmap cachedBitmap() {
+  private Bitmap cachedBitmap(YouTubeData data) {
     if (mBitmapCache == null) {
       Context context = getActivity();
       if (context != null)
@@ -192,7 +203,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     }
 
     if (mBitmapCache != null)
-      return mBitmapCache.getBitmap(mAboutBitmapKey);
+      return mBitmapCache.getBitmap(cacheKey(data));
 
     return null;
   }
