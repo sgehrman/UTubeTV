@@ -158,7 +158,6 @@ public class DrawerManager {
     if (mContent.needsChannelSwitcher()) {
       mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
 
-      mChannelSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       spinner.setAdapter(mChannelSpinnerAdapter);
 
       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
