@@ -55,18 +55,6 @@ public class ChannelList {
     return mChannels;
   }
 
-  public String[] titles() {
-    List<String> result = new ArrayList<String>();
-
-    if (mChannels != null) {
-      for (YouTubeData channel : mChannels) {
-        result.add(channel.mTitle);
-      }
-    }
-
-    return result.toArray(new String[0]);
-  }
-
   public String currentChannelId() {
     return channelIdForIndex(mCurrentChannelIndex);
   }

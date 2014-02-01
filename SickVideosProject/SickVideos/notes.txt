@@ -93,6 +93,11 @@ signingConfigs {
 }
 
 
+// converting a list to []
+    List<String> result = new ArrayList<String>();
+    return result.toArray(new String[0]);
+
+
 Fresh Apps and Salsa
 Sugar High Studios
 Sugar High Labs
@@ -254,6 +259,9 @@ POLITICS
 
 CARS:
     Top Gear
+    car and driver
+    automobile
+    road and track
 
 GAMES
     PewDiePie
@@ -315,3 +323,9 @@ FASHION NEWS
 
 HOME SHIT
     This Old House
+
+SAVE THE PLANET
+    Beard lady
+
+Rollerskate TV
+    D. miles

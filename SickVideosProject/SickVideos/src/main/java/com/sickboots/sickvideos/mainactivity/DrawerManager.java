@@ -34,7 +34,7 @@ import java.util.Observer;
 public class DrawerManager {
 
   public interface DrawerManagerListener {
-    public void onChannelClick(int position);
+    public void onChannelClick();
 
     public void onDrawerClick(int position);
 
@@ -168,7 +168,7 @@ public class DrawerManager {
           // this gets called when the data is first loaded, just do something if drawer is visible only
           if (mDrawerLayout.isDrawerVisible(mDrawerContainer)) {
             mContent.changeChannel(position);
-            mListener.onChannelClick(1);  // need to save and restore, 1 for now
+            mListener.onChannelClick();
 
             closeDrawer();
           }

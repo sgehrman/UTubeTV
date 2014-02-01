@@ -56,15 +56,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    int section = 0;
-    if (savedInstanceState != null) {
-      section = savedInstanceState.getInt("section");
-    } else {
-      String sectionIndexString = AppUtils.preferences(this).getString(Preferences.DRAWER_SECTION_INDEX, "0");
-      section = Integer.parseInt(sectionIndexString);
-    }
-
-    selectSection(section, false);
+    selectSection(mContent.drawerSelectionIndex(), false);
 
     // disabled until polished
     // mPurchaseHelper = new PurchaseHelper(this);
@@ -140,9 +132,6 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
 
-    if (mCurrentSection != -1) {
-      outState.putInt("section", mCurrentSection);
-
       if (mPlayer != null) {
         if (mPlayer.visible()) {
           String title = mPlayer.title();
@@ -153,16 +142,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
             outState.putString("title", title);
           }
         }
-      }
     }
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-
-    // save current section to prefs file so we can start where the user left off on a relaunch
-    AppUtils.preferences(this).setString(Preferences.DRAWER_SECTION_INDEX, Integer.toString(mCurrentSection));
   }
 
   @Override
@@ -328,9 +308,9 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   private void setupDrawer() {
     mDrawerMgr = new DrawerManager(this, mContent, new DrawerManager.DrawerManagerListener() {
       @Override
-      public void onChannelClick(int position) {
+      public void onChannelClick() {
         mCurrentSection = -1; // force it to reload fragment if same position
-        selectSection(position, true);
+        selectSection(mContent.drawerSelectionIndex(), true);
       }
 
       @Override
