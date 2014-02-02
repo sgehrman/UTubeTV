@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.jakewharton.disklrucache.DiskLruCache;
+import com.sickboots.sickvideos.database.YouTubeData;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -34,10 +35,23 @@ public class BitmapCache {
     }
   }
 
-  // convienience method for common cache setup
+  // convenience method for common cache setup
   public static BitmapCache newInstance(Context context, String name) {
       final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
     return new BitmapCache(context, name, diskCacheSize, Bitmap.CompressFormat.PNG, 0);
+  }
+
+  public static String channelImageCacheName() {
+    return "channel_images";
+  }
+
+  // convenience method so we use the same cacheKey in multiple place
+  public static String cacheKey(YouTubeData data) {
+    // keys must match regex [a-z0-9_-]{1,64}
+    // assuming the channel id is OK
+    String result = data.mChannel.toLowerCase();
+
+    return result;
   }
 
   private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor)

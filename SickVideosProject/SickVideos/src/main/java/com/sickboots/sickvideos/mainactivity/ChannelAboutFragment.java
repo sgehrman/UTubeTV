@@ -137,14 +137,6 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     }
   }
 
-  private String cacheKey(YouTubeData data) {
-    // keys must match regex [a-z0-9_-]{1,64}
-    // assuming the channel id is OK
-    String result = data.mChannel.toLowerCase();
-
-    return result;
-  }
-
   private void updateUI() {
     final YouTubeData data = mContent.channelInfo();
     if (data == null) {
@@ -178,7 +170,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
             // save to the cache
             if (mBitmapCache != null)
-              mBitmapCache.put(cacheKey(data), loadedBitmap);
+              mBitmapCache.put(BitmapCache.cacheKey(data), loadedBitmap);
           }
 
         });
@@ -194,11 +186,11 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     if (mBitmapCache == null) {
       Context context = getActivity();
       if (context != null)
-        mBitmapCache = BitmapCache.newInstance(context, "about_fragment");
+        mBitmapCache = BitmapCache.newInstance(context, BitmapCache.channelImageCacheName());
     }
 
     if (mBitmapCache != null)
-      return mBitmapCache.getBitmap(cacheKey(data));
+      return mBitmapCache.getBitmap(BitmapCache.cacheKey(data));
 
     return null;
   }
