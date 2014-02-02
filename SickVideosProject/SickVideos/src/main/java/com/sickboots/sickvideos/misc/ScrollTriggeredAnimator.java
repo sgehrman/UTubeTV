@@ -65,8 +65,7 @@ public class ScrollTriggeredAnimator {
       }
 
       @Override
-      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-                           int totalItemCount) {
+      public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
       }
     };
 

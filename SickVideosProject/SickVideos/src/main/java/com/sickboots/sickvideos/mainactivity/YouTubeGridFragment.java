@@ -39,9 +39,7 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class YouTubeGridFragment extends Fragment
-    implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener,
-    LoaderManager.LoaderCallbacks<Cursor> {
+public class YouTubeGridFragment extends Fragment implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener, LoaderManager.LoaderCallbacks<Cursor> {
 
   private EmptyListHelper mEmptyListHelper;
   private YouTubeServiceRequest mRequest;
@@ -90,8 +88,7 @@ public class YouTubeGridFragment extends Fragment
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     GridView gridView;
 
     mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
@@ -116,7 +113,7 @@ public class YouTubeGridFragment extends Fragment
 
     // enable this for swipe to dismiss to hide (TODO)
     SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mAdapter, this));
-//    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+    //    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
     swingBottomInAnimationAdapter.setInitialDelayMillis(200);
     swingBottomInAnimationAdapter.setAbsListView(gridView);
 
@@ -218,7 +215,8 @@ public class YouTubeGridFragment extends Fragment
       broadcastReceiver = new DataReadyBroadcastReceiver();
     }
     IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
-    LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(broadcastReceiver, intentFilter);
+    LocalBroadcastManager.getInstance(this.getActivity())
+        .registerReceiver(broadcastReceiver, intentFilter);
 
     // reload if the hidden pref is now how we remember it
     reloadForPrefChange();
@@ -234,7 +232,8 @@ public class YouTubeGridFragment extends Fragment
 
   // called by activity on menu item action for show hidden files toggle
   public void reloadForPrefChange() {
-    boolean showHidden = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    boolean showHidden = AppUtils.preferences(getActivity())
+        .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
 
     if (mCachedHiddenPref != showHidden) {
       mCachedHiddenPref = showHidden;
@@ -250,7 +249,8 @@ public class YouTubeGridFragment extends Fragment
 
     String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
 
-    mCachedHiddenPref = AppUtils.preferences(getActivity()).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    mCachedHiddenPref = AppUtils.preferences(getActivity())
+        .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
     int queryID = DatabaseTables.VISIBLE_ITEMS;
     if (mCachedHiddenPref)
       queryID = DatabaseTables.ALL_ITEMS;
@@ -262,8 +262,7 @@ public class YouTubeGridFragment extends Fragment
 
     YouTubeListService.startRequest(getActivity(), mRequest, false);
 
-    return new CursorLoader(getActivity(),
-        YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
+    return new CursorLoader(getActivity(), YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
   }
 
   @Override

@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos.mainactivity;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,13 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.BitmapCache;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
+import com.sickboots.sickvideos.misc.ImageLoader;
 import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Observable;
@@ -36,7 +33,6 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private PullToRefreshLayout mPullToRefreshLayout;
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
-  private BitmapCache mBitmapCache;
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -94,12 +90,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   @Override
   public void onRefreshStarted(View view) {
     // empty cache
-    if (mBitmapCache != null) {
-      mBitmapCache.clearCache();
-
-      // cache is not closed and useless, must be reopened
-      mBitmapCache = null;
-    }
+    ImageLoader.instance(getActivity()).refresh();
 
     mContent.addObserver(this);
     mContent.refreshChannelInfo();
@@ -151,47 +142,22 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       // uncomment to get the thumbnail image for generating icons
       // Debug.log(data.mThumbnail);
 
-      // is the bitmap in our diskcache?
-      Bitmap bm = cachedBitmap(data);
+      Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data);
+      if (bitmap != null)
+        mImage.setImageBitmap(bitmap);
+      else {
+        ImageLoader.instance(getActivity())
+            .requestBitmap(data, new ImageLoader.GetBitmapCallback() {
 
-      if (bm != null) {
-        mImage.setImageBitmap(bm);
-      } else {
-        int defaultImageResID = 0;
-        final ImageView image = mImage;
-        UrlImageViewHelper.setUrlDrawable(image, data.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
-
-          @Override
-          public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-            if (!loadedFromCache) {
-              image.setAlpha(.5f);
-              image.animate().setDuration(300).alpha(1);
-            }
-
-            // save to the cache
-            if (mBitmapCache != null)
-              mBitmapCache.put(BitmapCache.cacheKey(data), loadedBitmap);
-          }
-
-        });
+              @Override
+              public void onLoaded() {
+                ChannelAboutFragment.this.updateUI();
+              }
+            });
       }
 
       // update the action bar title
       Utils.setActionBarTitle(getActivity(), data.mTitle, "About");
     }
-
-  }
-
-  private Bitmap cachedBitmap(YouTubeData data) {
-    if (mBitmapCache == null) {
-      Context context = getActivity();
-      if (context != null)
-        mBitmapCache = BitmapCache.newInstance(context, BitmapCache.channelImageCacheName());
-    }
-
-    if (mBitmapCache != null)
-      return mBitmapCache.getBitmap(BitmapCache.cacheKey(data));
-
-    return null;
   }
 }

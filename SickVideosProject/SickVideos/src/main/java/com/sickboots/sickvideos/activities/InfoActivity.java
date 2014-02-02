@@ -31,8 +31,7 @@ public class InfoActivity extends Activity {
 
   public static void show(Activity activity, String contentID) {
     // add animation, see finish below for the back transition
-    ActivityOptions opts = ActivityOptions.makeCustomAnimation(
-        activity, R.anim.scale_in, R.anim.scale_out);
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.scale_in, R.anim.scale_out);
 
     Intent intent = new Intent();
     intent.putExtra("infoID", contentID);

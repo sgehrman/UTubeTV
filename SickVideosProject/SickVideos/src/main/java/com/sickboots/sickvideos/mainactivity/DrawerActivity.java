@@ -64,7 +64,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     AppRater.app_launched(this);
 
     // general app tweaks
-//    Debug.activateStrictMode();
+    //    Debug.activateStrictMode();
     Utils.ignoreObsoleteCapacitiveMenuButton(this);
 
     // show player if activity was destroyed and recreated
@@ -114,8 +114,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
         // animate doesn't work, puts new activity in the background.  use recreate instead
         boolean animate = false;
         if (animate) {
-          ActivityOptions opts = ActivityOptions.makeCustomAnimation(
-              this, android.R.anim.fade_in, android.R.anim.fade_out);
+          ActivityOptions opts = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
 
           startActivity(getIntent(), opts.toBundle());
 
@@ -132,16 +131,16 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
 
-      if (mPlayer != null) {
-        if (mPlayer.visible()) {
-          String title = mPlayer.title();
-          String videoId = mPlayer.videoId();
+    if (mPlayer != null) {
+      if (mPlayer.visible()) {
+        String title = mPlayer.title();
+        String videoId = mPlayer.videoId();
 
-          if (title != null && videoId != null) {
-            outState.putString("videoId", videoId);
-            outState.putString("title", title);
-          }
+        if (title != null && videoId != null) {
+          outState.putString("videoId", videoId);
+          outState.putString("title", title);
         }
+      }
     }
   }
 
@@ -213,7 +212,8 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     MenuItem item = menu.findItem(R.id.action_show_hidden);
 
     if (item != null) {
-      boolean showHidden = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+      boolean showHidden = AppUtils.preferences(this)
+          .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
 
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
@@ -247,7 +247,8 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
         return true;
 
       case R.id.action_show_hidden: {
-        boolean toggle = AppUtils.preferences(this).getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+        boolean toggle = AppUtils.preferences(this)
+            .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
         AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
         YouTubeGridFragment fragment = currentYouTubeFragment();
 

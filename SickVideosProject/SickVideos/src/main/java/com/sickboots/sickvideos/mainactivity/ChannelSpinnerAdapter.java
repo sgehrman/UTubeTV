@@ -7,33 +7,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.BitmapCache;
+import com.sickboots.sickvideos.misc.ImageLoader;
 
 import java.util.List;
 
 public class ChannelSpinnerAdapter extends ArrayAdapter {
   List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
-  BitmapCache mBitmapCache;
   Context mContext;
 
- public ChannelSpinnerAdapter(Context context) {
-   super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
+  public ChannelSpinnerAdapter(Context context) {
+    super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
 
-   mContext = context.getApplicationContext();
+    mContext = context.getApplicationContext();
 
-   setDropDownViewResource(R.layout.channel_spinner_item);
- }
+    setDropDownViewResource(R.layout.channel_spinner_item);
+  }
 
   public void updateChannels(List<YouTubeData> channels) {
     mChannels = channels;
 
     clear();
     for (YouTubeData data : mChannels)
-       add(data.mTitle);
+      add(data.mTitle);
   }
 
   @Override
@@ -49,35 +46,20 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     ImageView imageView = (ImageView) result.findViewById(android.R.id.icon1);
     final YouTubeData data = mChannels.get(position);
 
-    // is the bitmap in our diskcache?
-    Bitmap bm = cachedBitmap(data);
-
-    if (bm != null) {
-      imageView.setImageBitmap(bm);
-    } else {
-      String thumbnail = data.mThumbnail;
-      int defaultImageResID = 0;
-      UrlImageViewHelper.setUrlDrawable(imageView, thumbnail, defaultImageResID, new UrlImageViewCallback() {
+    Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data);
+    if (bitmap != null)
+      imageView.setImageBitmap(bitmap);
+    else {
+      ImageLoader.instance(mContext).requestBitmap(data, new ImageLoader.GetBitmapCallback() {
 
         @Override
-        public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-          if (mBitmapCache != null)
-            mBitmapCache.put(BitmapCache.cacheKey(data), loadedBitmap);
+        public void onLoaded() {
+          ChannelSpinnerAdapter.this.notifyDataSetChanged();
         }
 
       });
     }
 
     return result;
-  }
-
-  private Bitmap cachedBitmap(YouTubeData data) {
-    if (mBitmapCache == null)
-      mBitmapCache = BitmapCache.newInstance(mContext, BitmapCache.channelImageCacheName());
-
-    if (mBitmapCache != null)
-      return mBitmapCache.getBitmap(BitmapCache.cacheKey(data));
-
-    return null;
   }
 }

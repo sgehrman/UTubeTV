@@ -68,7 +68,8 @@ public class Inventory {
    * a new Inventory.
    */
   public void erasePurchase(String sku) {
-    if (mPurchaseMap.containsKey(sku)) mPurchaseMap.remove(sku);
+    if (mPurchaseMap.containsKey(sku))
+      mPurchaseMap.remove(sku);
   }
 
   /**
@@ -84,7 +85,8 @@ public class Inventory {
   List<String> getAllOwnedSkus(String itemType) {
     List<String> result = new ArrayList<String>();
     for (Purchase p : mPurchaseMap.values()) {
-      if (p.getItemType().equals(itemType)) result.add(p.getSku());
+      if (p.getItemType().equals(itemType))
+        result.add(p.getSku());
     }
     return result;
   }

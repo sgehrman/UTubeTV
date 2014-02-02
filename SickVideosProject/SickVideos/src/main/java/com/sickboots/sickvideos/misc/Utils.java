@@ -74,9 +74,7 @@ public class Utils {
         public void run() {
           AppMsg.Style style = new AppMsg.Style(AppMsg.LENGTH_SHORT, R.drawable.app_msg_background);
 
-          AppMsg.makeText(activity, message, style)
-              .setLayoutGravity(Gravity.BOTTOM)
-              .show();
+          AppMsg.makeText(activity, message, style).setLayoutGravity(Gravity.BOTTOM).show();
         }
       });
     }
@@ -85,8 +83,7 @@ public class Utils {
   public static void ignoreObsoleteCapacitiveMenuButton(Context context) {
     try {
       ViewConfiguration config = ViewConfiguration.get(context);
-      Field menuKeyField = ViewConfiguration.class
-          .getDeclaredField("sHasPermanentMenuKey");
+      Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
       if (menuKeyField != null) {
         menuKeyField.setAccessible(true);
         menuKeyField.setBoolean(config, false);
@@ -109,15 +106,15 @@ public class Utils {
     switch (animationType) {
       case 0:
         break;
-//      case 1:
-//        ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
-//        break;
-//      case 2:
-//        ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
-//        break;
-//      case 3:
-//        ft.setCustomAnimations(R.animator.fraggy_enter, R.animator.fraggy_exit, R.animator.fraggy_pop_enter, R.animator.fraggy_pop_exit);
-//        break;
+      //      case 1:
+      //        ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_left, R.animator.slide_in_right, R.animator.slide_out_right);
+      //        break;
+      //      case 2:
+      //        ft.setCustomAnimations(R.animator.slide_in_down, R.animator.slide_out_down, R.animator.slide_in_up, R.animator.slide_out_up);
+      //        break;
+      //      case 3:
+      //        ft.setCustomAnimations(R.animator.fraggy_enter, R.animator.fraggy_exit, R.animator.fraggy_pop_enter, R.animator.fraggy_pop_exit);
+      //        break;
       default:
         ft.setCustomAnimations(R.animator.fade_enter, R.animator.fade_exit, R.animator.fade_enter, R.animator.fade_exit);
         break;
@@ -212,8 +209,8 @@ public class Utils {
 
       if (bar != null) {
         // title is hidden in theme so we don't get ugly flicker on the app name
-//        if ((bar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_TITLE) != ActionBar.DISPLAY_SHOW_TITLE)
-//          bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE | bar.getDisplayOptions());
+        //        if ((bar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_TITLE) != ActionBar.DISPLAY_SHOW_TITLE)
+        //          bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE | bar.getDisplayOptions());
 
         bar.setTitle(title);
         bar.setSubtitle(subtitle);

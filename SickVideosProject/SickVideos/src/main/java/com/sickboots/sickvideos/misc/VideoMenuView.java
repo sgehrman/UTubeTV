@@ -43,24 +43,23 @@ public class VideoMenuView extends ImageView {
       }
     });
 
-    popupMenu.setOnMenuItemClickListener(
-        new PopupMenu.OnMenuItemClickListener() {
-          @Override
-          public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-              case R.id.video_menu_youtube:
-                if (mListener != null)
-                  mListener.showVideoOnYouTube(mId);
-                break;
-              case R.id.video_menu_hide:
-                if (mListener != null)
-                  mListener.hideVideo(mId);
+    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+      @Override
+      public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+          case R.id.video_menu_youtube:
+            if (mListener != null)
+              mListener.showVideoOnYouTube(mId);
+            break;
+          case R.id.video_menu_hide:
+            if (mListener != null)
+              mListener.hideVideo(mId);
 
-                break;
-            }
-            return true;
-          }
-        });
+            break;
+        }
+        return true;
+      }
+    });
   }
 
   public void setListener(VideoMenuViewListener listener) {

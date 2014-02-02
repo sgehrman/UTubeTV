@@ -35,8 +35,8 @@ public class ColorPickerFragment extends Fragment implements ColorPicker.OnColor
     SaturationBar saturationBar = (SaturationBar) rootView.findViewById(R.id.saturationbar);
     ValueBar valueBar = (ValueBar) rootView.findViewById(R.id.valuebar);
 
-//  picker.addSVBar(svBar);
-//  picker.addOpacityBar(opacityBar);
+    //  picker.addSVBar(svBar);
+    //  picker.addOpacityBar(opacityBar);
     svBar.setVisibility(View.GONE);  // hide it, not used
     opacityBar.setVisibility(View.GONE);  // hide it, not used
 

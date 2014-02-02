@@ -18,8 +18,7 @@ public class SettingsActivity extends Activity {
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
-    ActivityOptions opts = ActivityOptions.makeCustomAnimation(
-        activity, R.anim.scale_in, R.anim.scale_out);
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.scale_in, R.anim.scale_out);
 
     Intent intent = new Intent();
     intent.setClass(activity, SettingsActivity.class);
@@ -76,7 +75,8 @@ public class SettingsActivity extends Activity {
         Preference pref = findPreference("credits");
 
         if (pref != null) {
-          PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+          PackageInfo pInfo = getActivity().getPackageManager()
+              .getPackageInfo(getActivity().getPackageName(), 0);
 
           pref.setSummary("v" + pInfo.versionName + " (" + pInfo.versionCode + ")");
 

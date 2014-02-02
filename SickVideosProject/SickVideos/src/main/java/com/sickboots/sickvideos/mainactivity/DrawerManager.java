@@ -78,13 +78,11 @@ public class DrawerManager {
 
     // ActionBarDrawerToggle ties together the the proper interactions
     // between the sliding drawer and the action bar app icon
-    mDrawerToggle = new ActionBarDrawerToggle(
-        activity,                  /* host Activity */
+    mDrawerToggle = new ActionBarDrawerToggle(activity,                  /* host Activity */
         mDrawerLayout,         /* DrawerLayout object */
         resID,  /* nav drawer image to replace 'Up' caret */
         R.string.drawer_open,  /* "open drawer" description for accessibility */
-        R.string.drawer_close  /* "close drawer" description for accessibility */
-    ) {
+        R.string.drawer_close  /* "close drawer" description for accessibility */) {
       public void onDrawerClosed(View view) {
         mListener.onDrawerOpen(false);
       }

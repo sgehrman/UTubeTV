@@ -50,8 +50,7 @@ public class YouTubeContentProvider extends ContentProvider {
   }
 
   @Override
-  public Cursor query(Uri uri, String[] projection, String selection,
-                      String[] selectionArgs, String sortOrder) {
+  public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
     Cursor cursor = null;
 
     // Used for a single person, just add the id to the end
@@ -78,8 +77,7 @@ public class YouTubeContentProvider extends ContentProvider {
   }
 
   @Override
-  public int update(Uri uri, ContentValues values, String selection,
-                    String[] selectionArgs) {
+  public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
     // TODO: Implement this to handle requests to update one or more rows.
     throw new UnsupportedOperationException("Not yet implemented");
   }

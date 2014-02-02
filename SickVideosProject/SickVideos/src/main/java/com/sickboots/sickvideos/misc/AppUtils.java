@@ -117,7 +117,8 @@ public class AppUtils {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+    String themeStyle = AppUtils.preferences(context)
+        .getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
     int selectedIndex = Integer.parseInt(themeStyle);
 
     builder.setTitle("Pick a style")

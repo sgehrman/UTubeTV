@@ -19,8 +19,7 @@ public class CursorFactoryDebugger implements SQLiteDatabase.CursorFactory {
   }
 
   @Override
-  public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery,
-                          String editTable, SQLiteQuery query) {
+  public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery, String editTable, SQLiteQuery query) {
     if (debugQueries) {
       Debug.log(query.toString());
     }

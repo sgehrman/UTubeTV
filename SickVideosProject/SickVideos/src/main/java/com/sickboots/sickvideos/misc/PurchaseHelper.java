@@ -80,7 +80,8 @@ public class PurchaseHelper {
         }
 
         // Have we been disposed of in the meantime? If so, quit.
-        if (mHelper == null) return;
+        if (mHelper == null)
+          return;
 
         // IAB is fully set up. Now, let's get an inventory of stuff we own.
         Debug.log("Setup successful. Querying inventory.");
@@ -96,7 +97,8 @@ public class PurchaseHelper {
       Debug.log("Query inventory finished.");
 
       // Have we been disposed of in the meantime? If so, quit.
-      if (mHelper == null) return;
+      if (mHelper == null)
+        return;
 
       // Is it a failure?
       if (result.isFailure()) {
@@ -119,11 +121,10 @@ public class PurchaseHelper {
 
       // Do we have the infinite gas plan?
       Purchase infiniteGasPurchase = inventory.getPurchase(SKU_INFINITE_GAS);
-      mSubscribedToInfiniteGas = (infiniteGasPurchase != null &&
-          verifyDeveloperPayload(infiniteGasPurchase));
-      Debug.log("User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE")
-          + " infinite gas subscription.");
-      if (mSubscribedToInfiniteGas) mTank = TANK_MAX;
+      mSubscribedToInfiniteGas = (infiniteGasPurchase != null && verifyDeveloperPayload(infiniteGasPurchase));
+      Debug.log("User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE") + " infinite gas subscription.");
+      if (mSubscribedToInfiniteGas)
+        mTank = TANK_MAX;
 
       // Check for gas delivery -- if we own gas, we should fill up the tank immediately
       Purchase gasPurchase = inventory.getPurchase(SKU_GAS);
@@ -163,8 +164,7 @@ public class PurchaseHelper {
          *        an empty string, but on a production app you should carefully generate this. */
     String payload = "";
 
-    mHelper.launchPurchaseFlow(activity, SKU_GAS, RC_REQUEST,
-        mPurchaseFinishedListener, payload);
+    mHelper.launchPurchaseFlow(activity, SKU_GAS, RC_REQUEST, mPurchaseFinishedListener, payload);
   }
 
   // User clicked the "Upgrade to Premium" button.
@@ -177,8 +177,7 @@ public class PurchaseHelper {
          *        an empty string, but on a production app you should carefully generate this. */
     String payload = "";
 
-    mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, RC_REQUEST,
-        mPurchaseFinishedListener, payload);
+    mHelper.launchPurchaseFlow(activity, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, payload);
   }
 
   // "Subscribe to infinite gas" button clicked. Explain to user, then start purchase
@@ -196,9 +195,7 @@ public class PurchaseHelper {
 
     setWaitScreen(true);
     Debug.log("Launching purchase flow for infinite gas subscription.");
-    mHelper.launchPurchaseFlow(activity,
-        SKU_INFINITE_GAS, IabHelper.ITEM_TYPE_SUBS,
-        RC_REQUEST, mPurchaseFinishedListener, payload);
+    mHelper.launchPurchaseFlow(activity, SKU_INFINITE_GAS, IabHelper.ITEM_TYPE_SUBS, RC_REQUEST, mPurchaseFinishedListener, payload);
   }
 
   /**
@@ -239,7 +236,8 @@ public class PurchaseHelper {
       Debug.log("Purchase finished: " + result + ", purchase: " + purchase);
 
       // if we were disposed of in the meantime, quit.
-      if (mHelper == null) return;
+      if (mHelper == null)
+        return;
 
       if (result.isFailure()) {
         complain("Error purchasing: " + result);
@@ -283,7 +281,8 @@ public class PurchaseHelper {
       Debug.log("Consumption finished. Purchase: " + purchase + ", result: " + result);
 
       // if we were disposed of in the meantime, quit.
-      if (mHelper == null) return;
+      if (mHelper == null)
+        return;
 
       // We know this is the "gas" sku because it's the only one we consume,
       // so we don't check which sku was consumed. If you have more than one
@@ -310,7 +309,8 @@ public class PurchaseHelper {
     if (!mSubscribedToInfiniteGas && mTank <= 0)
       alert("Oh, no! You are out of gas! Try buying some!");
     else {
-      if (!mSubscribedToInfiniteGas) --mTank;
+      if (!mSubscribedToInfiniteGas)
+        --mTank;
       saveData();
       alert("Vroooom, you drove a few miles.");
       updateUi();
@@ -322,32 +322,32 @@ public class PurchaseHelper {
   public void updateUi() {
     Debug.log("updating UI");
 
-//      // update the car color to reflect premium status or lack thereof
-//      ((ImageView)findViewById(R.id.free_or_premium)).setImageResource(mIsPremium ? R.drawable.premium : R.drawable.free);
-//
-//      // "Upgrade" button is only visible if the user is not premium
-//      findViewById(R.id.upgrade_button).setVisibility(mIsPremium ? View.GONE : View.VISIBLE);
-//
-//      // "Get infinite gas" button is only visible if the user is not subscribed yet
-//      findViewById(R.id.infinite_gas_button).setVisibility(mSubscribedToInfiniteGas ?
-//          View.GONE : View.VISIBLE);
-//
-//      // update gas gauge to reflect tank status
-//      if (mSubscribedToInfiniteGas) {
-//        ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(R.drawable.gas_inf);
-//      }
-//      else {
-//        int index = mTank >= TANK_RES_IDS.length ? TANK_RES_IDS.length - 1 : mTank;
-//        ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(TANK_RES_IDS[index]);
-//      }
+    //      // update the car color to reflect premium status or lack thereof
+    //      ((ImageView)findViewById(R.id.free_or_premium)).setImageResource(mIsPremium ? R.drawable.premium : R.drawable.free);
+    //
+    //      // "Upgrade" button is only visible if the user is not premium
+    //      findViewById(R.id.upgrade_button).setVisibility(mIsPremium ? View.GONE : View.VISIBLE);
+    //
+    //      // "Get infinite gas" button is only visible if the user is not subscribed yet
+    //      findViewById(R.id.infinite_gas_button).setVisibility(mSubscribedToInfiniteGas ?
+    //          View.GONE : View.VISIBLE);
+    //
+    //      // update gas gauge to reflect tank status
+    //      if (mSubscribedToInfiniteGas) {
+    //        ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(R.drawable.gas_inf);
+    //      }
+    //      else {
+    //        int index = mTank >= TANK_RES_IDS.length ? TANK_RES_IDS.length - 1 : mTank;
+    //        ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(TANK_RES_IDS[index]);
+    //      }
   }
 
   // Enables or disables the "please wait" screen.
   void setWaitScreen(boolean set) {
     Debug.log("waiting: " + (set ? "yes" : "no"));
 
-//      findViewById(R.id.screen_main).setVisibility(set ? View.GONE : View.VISIBLE);
-//      findViewById(R.id.screen_wait).setVisibility(set ? View.VISIBLE : View.GONE);
+    //      findViewById(R.id.screen_main).setVisibility(set ? View.GONE : View.VISIBLE);
+    //      findViewById(R.id.screen_wait).setVisibility(set ? View.VISIBLE : View.GONE);
   }
 
   void complain(String message) {
@@ -355,11 +355,11 @@ public class PurchaseHelper {
   }
 
   void alert(String message) {
-//      AlertDialog.Builder bld = new AlertDialog.Builder(mContext);
-//      bld.setMessage(message);
-//      bld.setNeutralButton("OK", null);
+    //      AlertDialog.Builder bld = new AlertDialog.Builder(mContext);
+    //      bld.setMessage(message);
+    //      bld.setNeutralButton("OK", null);
     Debug.log("Showing alert dialog: " + message);
-//      bld.create().show();
+    //      bld.create().show();
   }
 
   void saveData() {
@@ -370,15 +370,15 @@ public class PurchaseHelper {
          * SharedPreferences.
          */
 
-//      SharedPreferences.Editor spe = getPreferences(MODE_PRIVATE).edit();
-//      spe.putInt("tank", mTank);
-//      spe.commit();
+    //      SharedPreferences.Editor spe = getPreferences(MODE_PRIVATE).edit();
+    //      spe.putInt("tank", mTank);
+    //      spe.commit();
     Debug.log("Saved data: tank = " + String.valueOf(mTank));
   }
 
   void loadData() {
-//      SharedPreferences sp = getPreferences(MODE_PRIVATE);
-//      mTank = sp.getInt("tank", 2);
+    //      SharedPreferences sp = getPreferences(MODE_PRIVATE);
+    //      mTank = sp.getInt("tank", 2);
     Debug.log("Loaded data: tank = " + String.valueOf(mTank));
   }
 

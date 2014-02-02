@@ -93,7 +93,8 @@ public class YouTubeAPI {
         else
           credentials = Auth.nullCredentials(mContext);
 
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credentials).setApplicationName("YouTubeAPI").build();
+        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credentials).setApplicationName("YouTubeAPI")
+            .build();
       } catch (Exception e) {
         e.printStackTrace();
       } catch (Throwable t) {
@@ -280,7 +281,9 @@ public class YouTubeAPI {
 
       List<Channel> channelsList = channelResult.getItems();
       if (channelsList != null) {
-        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0).getContentDetails().getRelatedPlaylists();
+        ChannelContentDetails.RelatedPlaylists relatedPlaylists = channelsList.get(0)
+            .getContentDetails()
+            .getRelatedPlaylists();
 
         result.put(RelatedPlaylistType.FAVORITES, relatedPlaylists.getFavorites());
         result.put(RelatedPlaylistType.LIKES, relatedPlaylists.getLikes());
@@ -355,7 +358,8 @@ public class YouTubeAPI {
 
       e.printStackTrace();
 
-      doHandleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails().getMessage());
+      doHandleExceptionMessage("JSON Error: " + r.getDetails().getCode() + " : " + r.getDetails()
+          .getMessage());
     } else {
       doHandleExceptionMessage("Exception Occurred: " + e.toString());
 
@@ -439,7 +443,8 @@ public class YouTubeAPI {
 
     private List<YouTubeData> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
       // check parameters
-      if (playlistItemList == null) return null;
+      if (playlistItemList == null)
+        return null;
 
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
@@ -564,7 +569,8 @@ public class YouTubeAPI {
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
-        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
+        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails()
+            .get("duration"));
 
         result.add(map);
       }
@@ -623,7 +629,8 @@ public class YouTubeAPI {
         YouTubeData map = new YouTubeData();
 
         map.mVideo = playlistItem.getId();
-        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails().get("duration"));
+        map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails()
+            .get("duration"));
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());

@@ -59,8 +59,7 @@ public class Database extends SQLiteOpenHelper {
     Cursor cursor = null;
 
     try {
-      cursor = db.query(
-          query.mTable,                     // The table to query
+      cursor = db.query(query.mTable,                     // The table to query
           query.mProjection,                     // The columns to return
           query.mSelection,                      // The columns for the WHERE clause
           query.mSelectionArgs,                  // The values for the WHERE clause

@@ -224,7 +224,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onAdStarted() {
         if (!isMute()) {
-          boolean muteAds = AppUtils.preferences(VideoPlayerFragment.this.getActivity()).getBoolean(Preferences.MUTE_ADS, false);
+          boolean muteAds = AppUtils.preferences(VideoPlayerFragment.this.getActivity())
+              .getBoolean(Preferences.MUTE_ADS, false);
           if (muteAds) {
             mMutedForAd = true;
             mute(true);
@@ -242,7 +243,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onVideoEnded() {
-        boolean autorepeat = AppUtils.preferences(getActivity()).getBoolean(Preferences.REPEAT_VIDEO, false);
+        boolean autorepeat = AppUtils.preferences(getActivity())
+            .getBoolean(Preferences.REPEAT_VIDEO, false);
         if (autorepeat) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
@@ -282,12 +284,12 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onBuffering(boolean b) {
-//        Utils.log("buffering: " + ((b) ? "yes" : "no"));
+        //        Utils.log("buffering: " + ((b) ? "yes" : "no"));
       }
 
       @Override
       public void onSeekTo(int newPositionMillis) {
-//        Utils.log("seeking: " + newPositionMillis / 1000 + " seconds");
+        //        Utils.log("seeking: " + newPositionMillis / 1000 + " seconds");
 
         final String seekString = Utils.millisecondsToDuration(newPositionMillis);
         AppUtils.instance(VideoPlayerFragment.this.getActivity()).runOnMainThread(new Runnable() {
@@ -352,14 +354,14 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
 
-//    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//      if (mPlayer != null)
-//        mPlayer.setFullscreen(true);
-//    }
-//    if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//      if (mPlayer != null)
-//        mPlayer.setFullscreen(false);
-//    }
+    //    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    //      if (mPlayer != null)
+    //        mPlayer.setFullscreen(true);
+    //    }
+    //    if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+    //      if (mPlayer != null)
+    //        mPlayer.setFullscreen(false);
+    //    }
   }
 
   private void initializePlayer() {

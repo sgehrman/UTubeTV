@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.sickboots.sickvideos.database.YouTubeData;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -23,8 +22,7 @@ public class BitmapCache {
   private Bitmap.CompressFormat mCompressFormat = Bitmap.CompressFormat.PNG;
   private int mCompressQuality = 70;
 
-  public BitmapCache(Context context, String uniqueName, long diskCacheSize,
-                     Bitmap.CompressFormat compressFormat, int quality) {
+  public BitmapCache(Context context, String uniqueName, long diskCacheSize, Bitmap.CompressFormat compressFormat, int quality) {
     try {
       final File diskCacheDir = getDiskCacheDir(context, uniqueName);
       mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, diskCacheSize);
@@ -35,27 +33,7 @@ public class BitmapCache {
     }
   }
 
-  // convenience method for common cache setup
-  public static BitmapCache newInstance(Context context, String name) {
-      final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
-    return new BitmapCache(context, name, diskCacheSize, Bitmap.CompressFormat.PNG, 0);
-  }
-
-  public static String channelImageCacheName() {
-    return "channel_images";
-  }
-
-  // convenience method so we use the same cacheKey in multiple place
-  public static String cacheKey(YouTubeData data) {
-    // keys must match regex [a-z0-9_-]{1,64}
-    // assuming the channel id is OK
-    String result = data.mChannel.toLowerCase();
-
-    return result;
-  }
-
-  private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor)
-      throws IOException, FileNotFoundException {
+  private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor) throws IOException, FileNotFoundException {
     OutputStream out = null;
     try {
       out = new BufferedOutputStream(editor.newOutputStream(0), CacheUtils.IO_BUFFER_SIZE);
@@ -70,11 +48,9 @@ public class BitmapCache {
   private File getDiskCacheDir(Context context, String uniqueName) {
     // Check if media is mounted or storage is built-in, if so, try and use external cache dir
     // otherwise use internal cache dir
-    final String cachePath =
-        Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) ||
-            !CacheUtils.isExternalStorageRemovable() ?
-            CacheUtils.getExternalCacheDir(context).getPath() :
-            context.getCacheDir().getPath();
+    final String cachePath = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !CacheUtils
+        .isExternalStorageRemovable() ? CacheUtils.getExternalCacheDir(context)
+        .getPath() : context.getCacheDir().getPath();
 
     return new File(cachePath + File.separator + uniqueName);
   }
@@ -91,7 +67,7 @@ public class BitmapCache {
         mDiskCache.flush();
         editor.commit();
         if (Debug.isDebugBuild()) {
-          Debug.log("image put on disk cache " + key + "size: " + ((float)mDiskCache.size() / 1024.0f) + "k");
+          Debug.log("image put on disk cache " + key + "size: " + ((float) mDiskCache.size() / 1024.0f) + "k");
         }
       } else {
         editor.abort();
@@ -124,8 +100,7 @@ public class BitmapCache {
       }
       final InputStream in = snapshot.getInputStream(0);
       if (in != null) {
-        final BufferedInputStream buffIn =
-            new BufferedInputStream(in, CacheUtils.IO_BUFFER_SIZE);
+        final BufferedInputStream buffIn = new BufferedInputStream(in, CacheUtils.IO_BUFFER_SIZE);
         bitmap = BitmapFactory.decodeStream(buffIn);
       }
     } catch (IOException e) {

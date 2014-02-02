@@ -54,8 +54,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private ViewDecorations mDecorations;
   private final PublishedDateCache mDateCache = new PublishedDateCache();
 
-  private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from,
-                               int[] to, int flags) {
+  private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
     super(context, layout, c, from, to, flags);
 
     inflater = LayoutInflater.from(context);
@@ -95,15 +94,18 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private static Theme newTheme(Context context) {
     Theme result = new Theme();
 
-    String themeStyle = AppUtils.preferences(context).getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+    String themeStyle = AppUtils.preferences(context)
+        .getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
 
     result.mClickTextToExpand = true;
     result.mTheme_imageAlpha = 1.0f;
     result.mTheme_drawImageShadows = false;
-    result.mDescriptionMaxLines = context.getResources().getInteger(R.integer.description_max_lines);
+    result.mDescriptionMaxLines = context.getResources()
+        .getInteger(R.integer.description_max_lines);
     result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
     result.mSupportsMenuButton = false;
-    result.mCardImageFillColor = context.getResources().getColor(R.color.card_image_fill); // an app can set to transparent to turn this off
+    result.mCardImageFillColor = context.getResources()
+        .getColor(R.color.card_image_fill); // an app can set to transparent to turn this off
 
     switch (Integer.parseInt(themeStyle)) {
       case 0:
@@ -209,7 +211,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         descriptionView.setAutoLinkMask(0);
 
       // toggles links by setting text again
-      String sequence = descriptionView.getText().toString(); // getText() could return a StringSpanner, toString() gets the raw string
+      String sequence = descriptionView.getText()
+          .toString(); // getText() could return a StringSpanner, toString() gets the raw string
       descriptionView.setText(sequence);
     }
   }

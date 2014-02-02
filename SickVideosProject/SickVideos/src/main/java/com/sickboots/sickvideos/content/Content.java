@@ -8,7 +8,6 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ToolbarIcons;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -64,7 +63,7 @@ public class Content extends Observable {
   }
 
   // we save the last requested drawerSelection as requested
-  private void saveDrawerSelectionIndex( int sectionIndex) {
+  private void saveDrawerSelectionIndex(int sectionIndex) {
     AppUtils.preferences(mContext).setString(sectionPrefsKey(), Integer.toString(sectionIndex));
   }
 
@@ -92,10 +91,12 @@ public class Content extends Observable {
             fragment = new ChannelAboutFragment();
             break;
           case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList.currentChannelId(), null, 250));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList
+                .currentChannelId(), null, 250));
             break;
           case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList.currentChannelId(), null, 50));
+            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
+                .currentChannelId(), null, 50));
             break;
         }
         break;

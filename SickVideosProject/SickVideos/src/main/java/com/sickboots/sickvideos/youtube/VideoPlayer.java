@@ -43,7 +43,8 @@ public class VideoPlayer {
 
     // install video fragment
     // will already exist if restoring Activity
-    mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager().findFragmentById(fragmentContainerResID);
+    mVideoFragment = (VideoPlayerFragment) activity.getFragmentManager()
+        .findFragmentById(fragmentContainerResID);
 
     // hide top bar when going fullscreen
     mTopBar = activity.findViewById(R.id.top_bar);
@@ -62,7 +63,8 @@ public class VideoPlayer {
   }
 
   private boolean isPortrait() {
-    return (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+    return (mContext.getResources()
+        .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
 
   public void open(final String videoId, final String title) {
@@ -308,9 +310,7 @@ public class VideoPlayer {
         int duration = 300;
 
         // fade old one out
-        mTimeRemainingTextView.animate()
-            .setDuration(duration)
-            .alpha(0.0f);
+        mTimeRemainingTextView.animate().setDuration(duration).alpha(0.0f);
 
         // start off off the screen, make visible
         mSeekFlashTextView.setTranslationY(-60.0f);
