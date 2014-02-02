@@ -29,7 +29,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class ChannelAboutFragment extends Fragment implements Observer, OnRefreshListener {
-  private final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
   private TextView mTitle;
   private TextView mDescription;
   private ImageView mImage;
@@ -195,7 +194,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     if (mBitmapCache == null) {
       Context context = getActivity();
       if (context != null)
-        mBitmapCache = new BitmapCache(context, "AboutImageCache", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
+        mBitmapCache = BitmapCache.newInstance(context, "about_fragment");
     }
 
     if (mBitmapCache != null)

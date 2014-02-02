@@ -34,6 +34,12 @@ public class BitmapCache {
     }
   }
 
+  // convienience method for common cache setup
+  public static BitmapCache newInstance(Context context, String name) {
+      final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
+    return new BitmapCache(context, name, diskCacheSize, Bitmap.CompressFormat.PNG, 0);
+  }
+
   private boolean writeBitmapToFile(Bitmap bitmap, DiskLruCache.Editor editor)
       throws IOException, FileNotFoundException {
     OutputStream out = null;
@@ -71,7 +77,7 @@ public class BitmapCache {
         mDiskCache.flush();
         editor.commit();
         if (Debug.isDebugBuild()) {
-          Debug.log("image put on disk cache " + key);
+          Debug.log("image put on disk cache " + key + "size: " + ((float)mDiskCache.size() / 1024.0f) + "k");
         }
       } else {
         editor.abort();
@@ -116,7 +122,8 @@ public class BitmapCache {
       }
     }
 
-    Debug.log("bitmap read from cache: " + ((bitmap == null) ? "null" : key));
+    if (Debug.isDebugBuild())
+      Debug.log("bitmap read from cache: " + ((bitmap == null) ? "null" : key));
 
     return bitmap;
   }
