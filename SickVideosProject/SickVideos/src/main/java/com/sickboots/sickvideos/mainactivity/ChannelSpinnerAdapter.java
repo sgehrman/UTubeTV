@@ -43,6 +43,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
 
   @Override
   public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    convertView = null;  // reusing views is buggy with images, fix later
     View result = super.getDropDownView(position, convertView, parent);
 
     ImageView imageView = (ImageView) result.findViewById(android.R.id.icon1);
