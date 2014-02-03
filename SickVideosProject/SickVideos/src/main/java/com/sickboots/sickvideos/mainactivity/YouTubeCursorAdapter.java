@@ -445,7 +445,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   // cached, used as an optimization, getView() 0,0,0, muliple times, so don't keep building this over and over
   private static class PublishedDateCache {
-    private final LruCache cache = new LruCache(20);
+    private final LruCache cache = new LruCache(50);
     private final PrettyTime mDateFormatter = new PrettyTime();
     private final Date mDate = new Date();  // avoiding an alloc every call, just set the time
     private final String mTitle = "Published: ";
