@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.content.ChannelList;
 import com.sickboots.sickvideos.content.Content;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -148,6 +150,13 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
+    MenuItem item = menu.findItem(R.id.action_search);
+    if (item != null) {
+      Drawable drawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, 0xff000000, 32);
+      drawable.setAlpha(90);
+      item.setIcon(drawable);
+    }
+
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -242,6 +251,10 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     }
     // Handle action buttons
     switch (item.getItemId()) {
+      case R.id.action_search:
+
+        return true;
+
       case R.id.action_settings:
         SettingsActivity.show(DrawerActivity.this);
         return true;

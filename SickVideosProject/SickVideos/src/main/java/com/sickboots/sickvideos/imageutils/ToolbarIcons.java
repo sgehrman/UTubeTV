@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
 import com.sickboots.iconicdroid.IconicFontDrawable;
+import com.sickboots.iconicdroid.icon.EntypoIcon;
 import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;
@@ -15,7 +16,7 @@ import com.sickboots.sickvideos.misc.Utils;
 
 public class ToolbarIcons {
 
-  public static enum IconID {NONE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE}
+  public static enum IconID {NONE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, SEARCH}
 
   public static Drawable icon(Context context, IconID iconID, int iconColor, int sizeInDP) {
     StateListDrawable result = null;
@@ -57,6 +58,9 @@ public class ToolbarIcons {
         break;
       case YOUTUBE:
         icon = FontAwesomeIcon.YOUTUBE_SQUARE;
+        break;
+      case SEARCH:
+        icon = EntypoIcon.SEARCH;
         break;
       case UPLOADS:
         icon = FontAwesomeIcon.UPLOAD;
