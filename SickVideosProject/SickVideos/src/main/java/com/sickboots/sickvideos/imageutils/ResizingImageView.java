@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.misc;
+package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

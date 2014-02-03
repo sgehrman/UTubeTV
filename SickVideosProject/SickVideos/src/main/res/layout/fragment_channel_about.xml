@@ -48,7 +48,7 @@
                         android:padding="1dp"
                         >
 
-                        <com.sickboots.sickvideos.misc.ResizingImageView
+                        <com.sickboots.sickvideos.imageutils.ResizingImageView
                             android:id="@+id/image"
                             android:background="#fff"
                             android:scaleType="centerCrop"

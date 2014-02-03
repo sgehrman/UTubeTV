@@ -10,7 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 
-import com.sickboots.sickvideos.misc.ToolbarIcons;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class ViewDecorations {

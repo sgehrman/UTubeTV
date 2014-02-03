@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.misc;
+package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import com.jakewharton.disklrucache.DiskLruCache;
+import com.sickboots.sickvideos.misc.Debug;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

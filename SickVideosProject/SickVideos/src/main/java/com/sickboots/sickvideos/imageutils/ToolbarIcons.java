@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.misc;
+package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,7 @@ import com.sickboots.iconicdroid.IconicFontDrawable;
 import com.sickboots.iconicdroid.icon.FontAwesomeIcon;
 import com.sickboots.iconicdroid.icon.Icon;
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class ToolbarIcons {
 

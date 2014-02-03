@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.misc;
+package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.Debug;
 
 /**
  * Created by sgehrman on 2/2/14.

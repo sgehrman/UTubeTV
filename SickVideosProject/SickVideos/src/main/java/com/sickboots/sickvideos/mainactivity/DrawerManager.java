@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
-import com.sickboots.sickvideos.misc.ToolbarIcons;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 
 import java.util.Map;
 import java.util.Observable;

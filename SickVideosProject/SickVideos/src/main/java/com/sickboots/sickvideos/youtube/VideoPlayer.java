@@ -17,7 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.ToolbarIcons;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoPlayer {
