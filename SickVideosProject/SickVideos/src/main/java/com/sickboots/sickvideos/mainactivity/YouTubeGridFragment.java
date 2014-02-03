@@ -291,7 +291,5 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       }
     }
   }
-
-
 }
 
