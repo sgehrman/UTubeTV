@@ -56,7 +56,7 @@ public class DatabaseTables {
 
     public String indexSQL();
 
-    public Database.DatabaseQuery queryParams(int queryID, String requestId);
+    public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter);
 
     public String[] defaultProjection();
 
@@ -151,7 +151,7 @@ public class DatabaseTables {
     }
 
     @Override
-    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+    public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String selection = null;
       String[] selectionArgs = null;
       String[] projection = defaultProjection();
@@ -272,7 +272,7 @@ public class DatabaseTables {
     }
 
     @Override
-    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+    public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String selection = null;
       String[] selectionArgs = null;
       String[] projection = defaultProjection();
@@ -418,7 +418,7 @@ public class DatabaseTables {
     }
 
     @Override
-    public Database.DatabaseQuery queryParams(int queryID, String requestId) {
+    public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String selection = null;
       String[] selectionArgs = null;
       String[] projection = defaultProjection();
@@ -439,6 +439,16 @@ public class DatabaseTables {
           break;
         case ALL_ITEMS:
           break;
+      }
+
+      if (filter != null) {
+        if (selection == null)
+          selection = "";
+        else
+          selection += " AND ";
+
+        selection += "(" + Entry.COLUMN_NAME_TITLE + " LIKE '%" + filter + "%'";
+        selection += " OR " + Entry.COLUMN_NAME_DESCRIPTION + " LIKE '%" + filter + "%'" + ")";
       }
 
       if (requestId != null) {

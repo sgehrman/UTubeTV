@@ -244,6 +244,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     DatabaseTables.DatabaseTable table = mRequest.databaseTable();
+    String filter = null;
 
     // Debug.log(mRequest.toString());
 
@@ -255,7 +256,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     if (mCachedHiddenPref)
       queryID = DatabaseTables.ALL_ITEMS;
 
-    Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier());
+    Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier(), filter);
 
     // startRequest below will notify when done and we hide the progress bar
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);

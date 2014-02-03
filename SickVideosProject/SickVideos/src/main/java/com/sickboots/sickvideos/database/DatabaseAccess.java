@@ -33,7 +33,7 @@ public class DatabaseAccess {
     SQLiteDatabase db = mDB.getWritableDatabase();
 
     try {
-      Database.DatabaseQuery queryParams = mTable.queryParams(DatabaseTables.ALL_ITEMS, requestIdentifier);
+      Database.DatabaseQuery queryParams = mTable.queryParams(DatabaseTables.ALL_ITEMS, requestIdentifier, null);
 
       int result = db.delete(mTable.tableName(), queryParams.mSelection, queryParams.mSelectionArgs);
 
@@ -86,7 +86,7 @@ public class DatabaseAccess {
   }
 
   public Cursor getCursor(int flags, String requestIdentifier) {
-    Database.DatabaseQuery query = mTable.queryParams(flags, requestIdentifier);
+    Database.DatabaseQuery query = mTable.queryParams(flags, requestIdentifier, null);
 
     return mDB.getCursor(query);
   }
