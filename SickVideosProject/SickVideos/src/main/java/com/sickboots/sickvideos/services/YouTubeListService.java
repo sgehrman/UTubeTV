@@ -105,9 +105,13 @@ public class YouTubeListService extends IntentService {
       data.mRequest = requestID;
 
       if (currentListSavedData != null && currentListSavedData.size() > 0) {
-        if (data.mVideo != null) {
-          if (currentListSavedData.contains(data.mVideo))
+        String videoOrPl = data.mVideo == null ? data.mPlaylist : data.mVideo;
+
+        if (videoOrPl != null) {
+          if (currentListSavedData.contains(videoOrPl)) {
+            currentListSavedData.remove(videoOrPl); // faster?
             data.setHidden(true);
+          }
         }
       }
     }
@@ -125,8 +129,10 @@ public class YouTubeListService extends IntentService {
       result = new HashSet<String>();
 
       for (YouTubeData data : hiddenItems) {
-        if (data.mVideo != null) {
-          result.add(data.mVideo);
+        String videoOrPl = data.mVideo == null ? data.mPlaylist : data.mVideo;
+
+        if (videoOrPl != null) {
+          result.add(videoOrPl);
         }
       }
     }

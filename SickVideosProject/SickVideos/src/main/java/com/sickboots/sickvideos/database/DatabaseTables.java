@@ -12,7 +12,6 @@ public class DatabaseTables {
   public static final int ALL_ITEMS = 0;
   public static final int HIDDEN_ITEMS = 10;
   public static final int VISIBLE_ITEMS = 20;
-  public static final int NEEDS_DATA_UPDATE = 30;
 
   private static final String CREATE = "CREATE TABLE ";
   private static final String TEXT_TYPE = " TEXT";
@@ -212,16 +211,39 @@ public class DatabaseTables {
       if (result == null)
         result = new YouTubeData();
 
-      result.mID = cursor.getLong(cursor.getColumnIndex(Entry._ID));
-      result.mRequest = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_REQUEST));
-      result.mPlaylist = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_PLAYLIST));
-      result.mTitle = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE));
-      result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
-      result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
-      result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
-      result.mPublishedDate = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE));
-
       int col;
+
+      col = cursor.getColumnIndex(Entry._ID);
+      if (col != -1)
+        result.mID = cursor.getLong(cursor.getColumnIndex(Entry._ID));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_REQUEST);
+      if (col != -1)
+        result.mRequest = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_REQUEST));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_PLAYLIST);
+      if (col != -1)
+        result.mPlaylist = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_PLAYLIST));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE);
+      if (col != -1)
+        result.mTitle = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_TITLE));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION);
+      if (col != -1)
+        result.mDescription = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_DESCRIPTION));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL);
+      if (col != -1)
+        result.mThumbnail = cursor.getString(cursor.getColumnIndex(Entry.COLUMN_NAME_THUMBNAIL));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT);
+      if (col != -1)
+        result.mItemCount = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_ITEM_COUNT));
+
+      col = cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE);
+      if (col != -1)
+        result.mPublishedDate = cursor.getLong(cursor.getColumnIndex(Entry.COLUMN_NAME_PUBLISHED_DATE));
 
       col = cursor.getColumnIndex(Entry.COLUMN_NAME_HIDDEN);
       if (col != -1)
@@ -273,30 +295,16 @@ public class DatabaseTables {
 
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
-      String selection = null;
-      String[] selectionArgs = null;
-      String[] projection = defaultProjection();
+      String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST, Entry.COLUMN_NAME_HIDDEN};
 
-      switch (queryID) {
-        case VISIBLE_ITEMS:
-          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NULL";
-          break;
-        case ALL_ITEMS:
-          break;
-      }
-
-      if (requestId != null) {
-        selectionArgs = new String[]{requestId};
-
-        if (selection == null)
-          selection = "";
-        else
-          selection += " AND ";
-
-        selection += Entry.COLUMN_NAME_REQUEST + " = ?";
-      }
-
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
+      return standardQueryParams(queryID, requestId, filter,
+          this,
+          Entry.COLUMN_NAME_HIDDEN,
+          Entry._ID,
+          Entry.COLUMN_NAME_REQUEST,
+          Entry.COLUMN_NAME_TITLE,
+          Entry.COLUMN_NAME_DESCRIPTION,
+          hiddenProjection);
     }
   }
 
@@ -419,50 +427,65 @@ public class DatabaseTables {
 
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
-      String selection = null;
-      String[] selectionArgs = null;
-      String[] projection = defaultProjection();
+        String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_HIDDEN};
 
-      switch (queryID) {
-        case HIDDEN_ITEMS:
-          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NOT NULL";
-
-          projection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_HIDDEN};
-          break;
-        case NEEDS_DATA_UPDATE:
-          selection = "" + Entry.COLUMN_NAME_DURATION + " IS NULL";
-
-          projection = new String[]{Entry._ID, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_DURATION};
-          break;
-        case VISIBLE_ITEMS:
-          selection = "" + Entry.COLUMN_NAME_HIDDEN + " IS NULL";
-          break;
-        case ALL_ITEMS:
-          break;
-      }
-
-      if (filter != null) {
-        if (selection == null)
-          selection = "";
-        else
-          selection += " AND ";
-
-        selection += "(" + Entry.COLUMN_NAME_TITLE + " LIKE '%" + filter + "%'";
-        selection += " OR " + Entry.COLUMN_NAME_DESCRIPTION + " LIKE '%" + filter + "%'" + ")";
-      }
-
-      if (requestId != null) {
-        selectionArgs = new String[]{requestId};
-
-        if (selection == null)
-          selection = "";
-        else
-          selection += " AND ";
-
-        selection += Entry.COLUMN_NAME_REQUEST + " = ?";
-      }
-
-      return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
+      return standardQueryParams(queryID, requestId, filter,
+          this,
+          Entry.COLUMN_NAME_HIDDEN,
+          Entry._ID,
+          Entry.COLUMN_NAME_REQUEST,
+          Entry.COLUMN_NAME_TITLE,
+          Entry.COLUMN_NAME_DESCRIPTION,
+          hiddenProjection);
     }
+  }
+
+  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter,
+                                                           DatabaseTable table,
+                                                           String HIDDEN_COL,
+                                                           String ID_COL,
+                                                           String REQUEST_COL,
+                                                           String TITLE_COL,
+                                                           String DESC_COL,
+                                                           String[] hiddenProjection) {
+    String selection = null;
+    String[] selectionArgs = null;
+    String[] projection = table.defaultProjection();
+
+    switch (queryID) {
+      case HIDDEN_ITEMS:
+        selection = "" + HIDDEN_COL + " IS NOT NULL";
+
+        projection = hiddenProjection;
+        break;
+      case VISIBLE_ITEMS:
+        selection = "" + HIDDEN_COL + " IS NULL";
+        break;
+      case ALL_ITEMS:
+        break;
+    }
+
+    if (filter != null) {
+      if (selection == null)
+        selection = "";
+      else
+        selection += " AND ";
+
+      selection += "(" + TITLE_COL + " LIKE '%" + filter + "%'";
+      selection += " OR " + DESC_COL + " LIKE '%" + filter + "%'" + ")";
+    }
+
+    if (requestId != null) {
+      selectionArgs = new String[]{requestId};
+
+      if (selection == null)
+        selection = "";
+      else
+        selection += " AND ";
+
+      selection += REQUEST_COL + " = ?";
+    }
+
+    return new Database.DatabaseQuery(table.tableName(), selection, selectionArgs, projection, table.orderBy());
   }
 }
