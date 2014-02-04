@@ -298,6 +298,18 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
 
+    // show and hide the search item
+    item = menu.findItem(R.id.action_search);
+    if (item != null) {
+
+    Fragment fragment = currentYouTubeFragment();
+    if (fragment == null)
+      item.setVisible(false);
+    else
+      item.setVisible(true);
+
+    }
+
     boolean showDevTools = AppUtils.preferences(this).getBoolean(Preferences.SHOW_DEV_TOOLS, false);
     menu.setGroupVisible(R.id.dev_tools_group, showDevTools);
 
