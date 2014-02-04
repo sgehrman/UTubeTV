@@ -189,6 +189,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
       mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
+          // return false and clear the filter if clicked when a filter is set
           if (!TextUtils.isEmpty(getFragmentFilter())) {
             setFragmentFilter(null);
 
