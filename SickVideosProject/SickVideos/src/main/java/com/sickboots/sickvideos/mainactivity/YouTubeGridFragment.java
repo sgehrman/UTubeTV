@@ -157,7 +157,11 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     }
   }
 
-  public void updateFilter(String filter) {
+  public String getFilter() {
+    return mFilter;
+  }
+
+  public void setFilter(String filter) {
     if (!TextUtils.equals(mFilter, filter)) {
       mFilter = filter;
       getLoaderManager().restartLoader(0, null, this);

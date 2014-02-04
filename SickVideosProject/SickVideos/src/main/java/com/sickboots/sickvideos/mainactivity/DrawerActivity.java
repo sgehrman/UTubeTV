@@ -150,6 +150,27 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     }
   }
 
+
+  private String getFragmentFilter() {
+    YouTubeGridFragment fragment = currentYouTubeFragment();
+
+    if (fragment != null)
+      return fragment.getFilter();
+
+    return null;
+  }
+
+  private boolean setFragmentFilter(String filter) {
+    YouTubeGridFragment fragment = currentYouTubeFragment();
+
+    if (fragment != null) {
+        fragment.setFilter(filter);
+    return true;
+    }
+
+    return false;
+  }
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
@@ -168,6 +189,11 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
       mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
+          if (!TextUtils.isEmpty(getFragmentFilter())) {
+            setFragmentFilter(null);
+
+            return false;
+          }
           return true;
         }
 
@@ -177,13 +203,9 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
         }
       });
 
-
-
       searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-          Debug.log("submit");
-
           if (mSearchItem != null)
             return mSearchItem.collapseActionView();
 
@@ -192,25 +214,17 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
         @Override
         public boolean onQueryTextChange(String newText) {
-          Debug.log("changed");
-
           // Called when the action bar search text has changed.  Update
           // the search filter, and restart the loader to do a new query
           // with this filter.
           String filter = !TextUtils.isEmpty(newText) ? newText : null;
-          YouTubeGridFragment fragment = currentYouTubeFragment();
 
-          if (fragment != null)
-          {
-            fragment.updateFilter(filter);
-
-            return true;
-          }
+           if (setFragmentFilter(filter))
+             return true;
 
           return false;
         }
       });
-
     }
 
     return super.onCreateOptionsMenu(menu);
