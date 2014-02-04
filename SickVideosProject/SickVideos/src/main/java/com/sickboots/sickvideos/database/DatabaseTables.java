@@ -471,6 +471,9 @@ public class DatabaseTables {
       else
         selection += " AND ";
 
+      // single quotes must be doubled up
+      filter = filter.replace("'", "''");
+
       selection += "(" + TITLE_COL + " LIKE '%" + filter + "%'";
       selection += " OR " + DESC_COL + " LIKE '%" + filter + "%'" + ")";
     }

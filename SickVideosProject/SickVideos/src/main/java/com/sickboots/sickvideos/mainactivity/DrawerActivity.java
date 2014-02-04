@@ -46,7 +46,6 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   private long lastBackPressTime = 0;
   private PurchaseHelper mPurchaseHelper;
   private Content mContent;
-  private MenuItem mSearchItem;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -150,83 +149,9 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     }
   }
 
-
-  private String getFragmentFilter() {
-    YouTubeGridFragment fragment = currentYouTubeFragment();
-
-    if (fragment != null)
-      return fragment.getFilter();
-
-    return null;
-  }
-
-  private boolean setFragmentFilter(String filter) {
-    YouTubeGridFragment fragment = currentYouTubeFragment();
-
-    if (fragment != null) {
-        fragment.setFilter(filter);
-    return true;
-    }
-
-    return false;
-  }
-
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
-
-    mSearchItem = menu.findItem(R.id.action_search);
-    if (mSearchItem != null) {
-      Drawable drawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
-      drawable.setAlpha(80);
-      mSearchItem.setIcon(drawable);
-
-      SearchView searchView = new SearchView(this);
-      searchView.setSubmitButtonEnabled(true);
-      searchView.setQueryHint("Search");
-      mSearchItem.setActionView(searchView);
-
-      mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
-        @Override
-        public boolean onMenuItemActionExpand(MenuItem item) {
-          // return false and clear the filter if clicked when a filter is set
-          if (!TextUtils.isEmpty(getFragmentFilter())) {
-            setFragmentFilter(null);
-
-            return false;
-          }
-          return true;
-        }
-
-        @Override
-        public boolean onMenuItemActionCollapse(MenuItem item) {
-          return true;
-        }
-      });
-
-      searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-          if (mSearchItem != null)
-            return mSearchItem.collapseActionView();
-
-          return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-          // Called when the action bar search text has changed.  Update
-          // the search filter, and restart the loader to do a new query
-          // with this filter.
-          String filter = !TextUtils.isEmpty(newText) ? newText : null;
-
-           if (setFragmentFilter(filter))
-             return true;
-
-          return false;
-        }
-      });
-    }
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -298,18 +223,6 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
 
-    // show and hide the search item
-    item = menu.findItem(R.id.action_search);
-    if (item != null) {
-
-    Fragment fragment = currentYouTubeFragment();
-    if (fragment == null)
-      item.setVisible(false);
-    else
-      item.setVisible(true);
-
-    }
-
     boolean showDevTools = AppUtils.preferences(this).getBoolean(Preferences.SHOW_DEV_TOOLS, false);
     menu.setGroupVisible(R.id.dev_tools_group, showDevTools);
 
@@ -334,10 +247,6 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     }
     // Handle action buttons
     switch (item.getItemId()) {
-      case R.id.action_search:
-
-        return true;
-
       case R.id.action_settings:
         SettingsActivity.show(DrawerActivity.this);
         return true;

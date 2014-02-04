@@ -10,14 +10,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
@@ -28,6 +33,7 @@ import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Preferences;
@@ -49,6 +55,8 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private boolean mCachedHiddenPref;
   private DataReadyBroadcastReceiver broadcastReceiver;
   private String mFilter;
+  private MenuItem mSearchItem;
+  private SearchView mSearchView;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
@@ -90,8 +98,68 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   }
 
   @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.fragment_menu, menu);
+
+    mSearchItem = menu.findItem(R.id.action_search);
+    if (mSearchItem != null) {
+      Drawable drawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
+      drawable.setAlpha(80);
+      mSearchItem.setIcon(drawable);
+
+        mSearchView = new SearchView(getActivity());
+      mSearchView.setSubmitButtonEnabled(true);
+      mSearchView.setQueryHint("Search");
+      mSearchItem.setActionView(mSearchView);
+
+      mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+          // return false and clear the filter if clicked when a filter is set
+          if (!TextUtils.isEmpty(getFilter())) {
+            mSearchView.setQuery(null, true);
+
+            return false;
+          }
+          return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+          return true;
+        }
+      });
+
+      mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+          if (mSearchItem != null)
+            return mSearchItem.collapseActionView();
+
+          return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+          // Called when the action bar search text has changed.  Update
+          // the search filter, and restart the loader to do a new query
+          // with this filter.
+          String filter = !TextUtils.isEmpty(newText) ? newText : null;
+
+          if (setFilter(filter))
+            return true;
+
+          return false;
+        }
+      });
+    }
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     GridView gridView;
+
+    setHasOptionsMenu(true);
 
     mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
@@ -161,11 +229,15 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     return mFilter;
   }
 
-  public void setFilter(String filter) {
+  public boolean setFilter(String filter) {
     if (!TextUtils.equals(mFilter, filter)) {
       mFilter = filter;
       getLoaderManager().restartLoader(0, null, this);
+
+      return true;
     }
+
+    return false;
   }
 
   // YouTubeCursorAdapterListener
