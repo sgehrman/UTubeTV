@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sickboots.sickvideos.misc.Debug;
 
+import java.io.File;
+
 public class Database extends SQLiteOpenHelper {
   private static Database singleton = null;
 
@@ -26,6 +28,13 @@ public class Database extends SQLiteOpenHelper {
   // private, use instance() singleton above
   private Database(Context context) {
     super(context, DATABASE_NAME, new CursorFactoryDebugger(false), DATABASE_VERSION);
+
+    boolean debugInfo = false;
+    if (debugInfo) {
+      final String path = context.getDatabasePath(DATABASE_NAME).getPath();
+      File file = new File(path);
+      Debug.log(path + " size: " + ((float)(file.length()) / 1024.f) + "k");
+    }
   }
 
   public void onCreate(SQLiteDatabase db) {
