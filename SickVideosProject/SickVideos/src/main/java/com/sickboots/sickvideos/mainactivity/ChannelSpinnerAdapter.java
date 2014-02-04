@@ -57,7 +57,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
 
       if (sCheckDrawable == null) {
         sCheckDrawable = ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CHECK, 0xff000000, 30);
-        sCheckDrawable.setAlpha(80);
+        sCheckDrawable.setAlpha(60);
       }
 
       textView.setCheckMarkDrawable(sCheckDrawable);
