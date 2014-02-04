@@ -38,7 +38,7 @@ import org.codechimp.apprater.AppRater;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer, SearchView.OnQueryTextListener {
+public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
@@ -157,12 +157,12 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
       Drawable drawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
-          drawable.setAlpha(90);
+      drawable.setAlpha(80);
       mSearchItem.setIcon(drawable);
 
       SearchView searchView = new SearchView(this);
-      searchView.setIconified(true);
-      searchView.setOnQueryTextListener(this);
+      searchView.setSubmitButtonEnabled(true);
+      searchView.setQueryHint("Search");
       mSearchItem.setActionView(searchView);
 
       mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
@@ -176,39 +176,44 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
           return true;
         }
       });
+
+
+
+      searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+          Debug.log("submit");
+
+          if (mSearchItem != null)
+            return mSearchItem.collapseActionView();
+
+          return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+          Debug.log("changed");
+
+          // Called when the action bar search text has changed.  Update
+          // the search filter, and restart the loader to do a new query
+          // with this filter.
+          String filter = !TextUtils.isEmpty(newText) ? newText : null;
+          YouTubeGridFragment fragment = currentYouTubeFragment();
+
+          if (fragment != null)
+          {
+            fragment.updateFilter(filter);
+
+            return true;
+          }
+
+          return false;
+        }
+      });
+
     }
 
     return super.onCreateOptionsMenu(menu);
-  }
-
-  @Override
-  public boolean onQueryTextSubmit(String query) {
-    Debug.log("submit");
-
-    if (mSearchItem != null)
-      return mSearchItem.collapseActionView();
-
-    return false;
-  }
-
-  @Override
-  public boolean onQueryTextChange(String newText) {
-    Debug.log("changed");
-
-    // Called when the action bar search text has changed.  Update
-    // the search filter, and restart the loader to do a new query
-    // with this filter.
-    String filter = !TextUtils.isEmpty(newText) ? newText : null;
-    YouTubeGridFragment fragment = currentYouTubeFragment();
-
-    if (fragment != null)
-    {
-      fragment.updateFilter(filter);
-
-      return true;
-    }
-
-    return false;
   }
 
   private boolean closePlayerIfOpen() {
