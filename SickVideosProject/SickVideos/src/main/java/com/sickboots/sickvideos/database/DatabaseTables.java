@@ -297,14 +297,7 @@ public class DatabaseTables {
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST, Entry.COLUMN_NAME_HIDDEN};
 
-      return standardQueryParams(queryID, requestId, filter,
-          this,
-          Entry.COLUMN_NAME_HIDDEN,
-          Entry._ID,
-          Entry.COLUMN_NAME_REQUEST,
-          Entry.COLUMN_NAME_TITLE,
-          Entry.COLUMN_NAME_DESCRIPTION,
-          hiddenProjection);
+      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection);
     }
   }
 
@@ -427,27 +420,13 @@ public class DatabaseTables {
 
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
-        String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_HIDDEN};
+      String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_HIDDEN};
 
-      return standardQueryParams(queryID, requestId, filter,
-          this,
-          Entry.COLUMN_NAME_HIDDEN,
-          Entry._ID,
-          Entry.COLUMN_NAME_REQUEST,
-          Entry.COLUMN_NAME_TITLE,
-          Entry.COLUMN_NAME_DESCRIPTION,
-          hiddenProjection);
+      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection);
     }
   }
 
-  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter,
-                                                           DatabaseTable table,
-                                                           String HIDDEN_COL,
-                                                           String ID_COL,
-                                                           String REQUEST_COL,
-                                                           String TITLE_COL,
-                                                           String DESC_COL,
-                                                           String[] hiddenProjection) {
+  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter, DatabaseTable table, String HIDDEN_COL, String ID_COL, String REQUEST_COL, String TITLE_COL, String DESC_COL, String[] hiddenProjection) {
     String selection = null;
     String[] selectionArgs = null;
     String[] projection = table.defaultProjection();
@@ -489,6 +468,7 @@ public class DatabaseTables {
       selection += REQUEST_COL + " = ?";
     }
 
-    return new Database.DatabaseQuery(table.tableName(), selection, selectionArgs, projection, table.orderBy());
+    return new Database.DatabaseQuery(table.tableName(), selection, selectionArgs, projection, table
+        .orderBy());
   }
 }

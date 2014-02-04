@@ -107,12 +107,12 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       drawable.setAlpha(80);
       mSearchItem.setIcon(drawable);
 
-        mSearchView = new SearchView(getActivity());
+      mSearchView = new SearchView(getActivity());
       mSearchView.setSubmitButtonEnabled(true);
       mSearchView.setQueryHint("Search");
       mSearchItem.setActionView(mSearchView);
 
-      mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
+      mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
           // return false and clear the filter if clicked when a filter is set

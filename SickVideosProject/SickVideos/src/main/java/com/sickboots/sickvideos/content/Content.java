@@ -5,10 +5,10 @@ import android.content.Context;
 
 import com.google.common.collect.ImmutableMap;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 

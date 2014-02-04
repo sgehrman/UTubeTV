@@ -33,7 +33,7 @@ public class Database extends SQLiteOpenHelper {
     if (debugInfo) {
       final String path = context.getDatabasePath(DATABASE_NAME).getPath();
       File file = new File(path);
-      Debug.log(path + " size: " + ((float)(file.length()) / 1024.f) + "k");
+      Debug.log(path + " size: " + ((float) (file.length()) / 1024.f) + "k");
     }
   }
 

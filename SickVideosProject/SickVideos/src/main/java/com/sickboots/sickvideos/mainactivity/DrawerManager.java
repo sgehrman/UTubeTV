@@ -180,12 +180,10 @@ public class DrawerManager {
     } else {
       spinner.setVisibility(View.GONE);
     }
-
   }
 
   private void updateChannelSpinner() {
     mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
-
   }
 
   private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
