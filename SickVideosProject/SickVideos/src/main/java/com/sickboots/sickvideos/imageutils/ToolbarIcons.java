@@ -16,7 +16,7 @@ import com.sickboots.sickvideos.misc.Utils;
 
 public class ToolbarIcons {
 
-  public static enum IconID {NONE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, SEARCH}
+  public static enum IconID {NONE, SOUND, STEP_FORWARD, STEP_BACK, FULLSCREEN, LIST, CLOSE, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH}
 
   public static Drawable icon(Context context, IconID iconID, int iconColor, int sizeInDP) {
     StateListDrawable result = null;
@@ -64,6 +64,9 @@ public class ToolbarIcons {
         break;
       case UPLOADS:
         icon = FontAwesomeIcon.UPLOAD;
+        break;
+      case CHECK:
+        icon = FontAwesomeIcon.CHECK_CIRCLE;
         break;
       default:
         break;

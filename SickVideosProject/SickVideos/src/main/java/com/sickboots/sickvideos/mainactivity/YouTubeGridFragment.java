@@ -57,6 +57,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private String mFilter;
   private MenuItem mSearchItem;
   private SearchView mSearchView;
+  private static Drawable sSearchDrawable;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
@@ -103,9 +104,11 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
-      Drawable drawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
-      drawable.setAlpha(80);
-      mSearchItem.setIcon(drawable);
+      if (sSearchDrawable == null) {
+        sSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
+        sSearchDrawable.setAlpha(80);
+      }
+      mSearchItem.setIcon(sSearchDrawable);
 
       mSearchView = new SearchView(getActivity());
       mSearchView.setSubmitButtonEnabled(true);
