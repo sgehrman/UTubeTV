@@ -66,7 +66,7 @@ public class ToolbarIcons {
         icon = FontAwesomeIcon.UPLOAD;
         break;
       case CHECK:
-        icon = FontAwesomeIcon.CHECK_CIRCLE;
+        icon = FontAwesomeIcon.CHECK_SQUARE;
         break;
       default:
         break;
