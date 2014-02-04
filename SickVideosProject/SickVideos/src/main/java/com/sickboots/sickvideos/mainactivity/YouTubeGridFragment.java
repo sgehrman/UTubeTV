@@ -12,6 +12,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private PullToRefreshLayout mPullToRefreshLayout;
   private boolean mCachedHiddenPref;
   private DataReadyBroadcastReceiver broadcastReceiver;
+  private String mFilter;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
@@ -155,6 +157,13 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     }
   }
 
+  public void updateFilter(String filter) {
+    if (!TextUtils.equals(mFilter, filter)) {
+      mFilter = filter;
+      getLoaderManager().restartLoader(0, null, this);
+    }
+  }
+
   // YouTubeCursorAdapterListener
   @Override
   public void adapterDataChanged() {
@@ -244,7 +253,6 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     DatabaseTables.DatabaseTable table = mRequest.databaseTable();
-    String filter = null;
 
     // Debug.log(mRequest.toString());
 
@@ -256,7 +264,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     if (mCachedHiddenPref)
       queryID = DatabaseTables.ALL_ITEMS;
 
-    Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier(), filter);
+    Database.DatabaseQuery queryParams = table.queryParams(queryID, mRequest.requestIdentifier(), mFilter);
 
     // startRequest below will notify when done and we hide the progress bar
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);

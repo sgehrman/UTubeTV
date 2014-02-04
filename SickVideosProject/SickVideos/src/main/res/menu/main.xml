@@ -4,7 +4,8 @@
         android:id="@+id/action_search"
         android:title="@string/action_search"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"/>
+        android:showAsAction="collapseActionView|ifRoom"
+        />
 
     <item
         android:id="@+id/action_settings"

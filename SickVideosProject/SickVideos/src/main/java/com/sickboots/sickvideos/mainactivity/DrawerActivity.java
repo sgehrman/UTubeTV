@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -24,6 +26,7 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
 import com.sickboots.sickvideos.misc.Utils;
@@ -35,7 +38,7 @@ import org.codechimp.apprater.AppRater;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer {
+public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer, SearchView.OnQueryTextListener {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
@@ -43,6 +46,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   private long lastBackPressTime = 0;
   private PurchaseHelper mPurchaseHelper;
   private Content mContent;
+  private MenuItem mSearchItem;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -150,14 +154,61 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-    MenuItem item = menu.findItem(R.id.action_search);
-    if (item != null) {
-      Drawable drawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, 0xff000000, 32);
-      drawable.setAlpha(90);
-      item.setIcon(drawable);
+    mSearchItem = menu.findItem(R.id.action_search);
+    if (mSearchItem != null) {
+      Drawable drawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, 0xff000000, 30);
+          drawable.setAlpha(90);
+      mSearchItem.setIcon(drawable);
+
+      SearchView searchView = new SearchView(this);
+      searchView.setIconified(true);
+      searchView.setOnQueryTextListener(this);
+      mSearchItem.setActionView(searchView);
+
+      mSearchItem.setOnActionExpandListener (new MenuItem.OnActionExpandListener() {
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+          return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+          return true;
+        }
+      });
     }
 
     return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onQueryTextSubmit(String query) {
+    Debug.log("submit");
+
+    if (mSearchItem != null)
+      return mSearchItem.collapseActionView();
+
+    return false;
+  }
+
+  @Override
+  public boolean onQueryTextChange(String newText) {
+    Debug.log("changed");
+
+    // Called when the action bar search text has changed.  Update
+    // the search filter, and restart the loader to do a new query
+    // with this filter.
+    String filter = !TextUtils.isEmpty(newText) ? newText : null;
+    YouTubeGridFragment fragment = currentYouTubeFragment();
+
+    if (fragment != null)
+    {
+      fragment.updateFilter(filter);
+
+      return true;
+    }
+
+    return false;
   }
 
   private boolean closePlayerIfOpen() {
