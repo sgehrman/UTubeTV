@@ -98,6 +98,7 @@
     <orderEntry type="library" exported="" name="ComGithubCodechimpOrgAppraterLibrary1011.aar" level="project" />
     <orderEntry type="library" exported="" name="ComLarswerkmanHoloColorPicker11.aar" level="project" />
     <orderEntry type="library" exported="" name="ComGithubChrisbanesActionbarpulltorefreshLibrary093.aar" level="project" />
+    <orderEntry type="library" exported="" name="guava-16.0.1" level="project" />
     <orderEntry type="module" module-name="IconicDroid" exported="" />
     <orderEntry type="library" exported="" name="YouTubeAndroidPlayerApi" level="project" />
     <orderEntry type="library" exported="" name="library-2.5.2" level="project" />
@@ -114,7 +115,6 @@
     <orderEntry type="library" exported="" name="urlimageviewhelper-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-jackson2-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.17.0-rc" level="project" />
-    <orderEntry type="library" exported="" name="guava-16.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-youtube-v3-rev92-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="ComGithubCastorflexSmoothprogressbarLibrary020.aar" level="project" />
   </component>
