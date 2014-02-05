@@ -49,17 +49,11 @@ public class ImageLoader {
     return new BitmapCache(mContext, "bitmaps", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
   }
 
-  public Bitmap get(String key) {
-    // keys must match regex [a-z0-9_-]{1,64}
-    key = key.toLowerCase();
-
+  private Bitmap get(String key) {
     return mCache.getBitmap(key);
   }
 
-  public void put(String key, Bitmap data) {
-    // keys must match regex [a-z0-9_-]{1,64}
-    key = key.toLowerCase();
-
+  private void put(String key, Bitmap data) {
     mCache.put(key, data);
   }
 
@@ -67,12 +61,20 @@ public class ImageLoader {
     public void onLoaded();
   }
 
-  public Bitmap bitmap(final YouTubeData data) {
-    return get(data.mChannel);
+  private String keyForChannel(String channelId, int thumbnailSize) {
+    // keys must match regex [a-z0-9_-]{1,64}
+    String result = channelId + thumbnailSize;
+    result = result.toLowerCase();
+
+    return result;
+  }
+
+  public Bitmap bitmap(final YouTubeData data, int thumbnailSize) {
+    return get(keyForChannel(data.mChannel, thumbnailSize));
   }
 
   public void requestBitmap(final YouTubeData data, final int thumbnailSize, final GetBitmapCallback callback) {
-    Bitmap loadedBitmap = get(data.mChannel);
+    Bitmap loadedBitmap = get(keyForChannel(data.mChannel, thumbnailSize));
 
     if (loadedBitmap != null) {
       callback.onLoaded();
@@ -91,7 +93,7 @@ public class ImageLoader {
               loadedBitmap = ThumbnailUtils.extractThumbnail(loadedBitmap, thumbnailSize, thumbnailSize);
           }
 
-          put(data.mChannel, loadedBitmap);
+          put(keyForChannel(data.mChannel, thumbnailSize), loadedBitmap);
 
           callback.onLoaded();
         }

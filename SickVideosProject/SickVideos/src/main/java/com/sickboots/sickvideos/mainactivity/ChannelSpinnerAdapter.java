@@ -63,17 +63,17 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     } else
       textView.setCheckMarkDrawable(null);
 
-
-    Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data);
+final int thumbnailSize = 64;
+    Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data, thumbnailSize);
     if (bitmap != null)
       imageView.setImageBitmap(bitmap);
     else {
-      ImageLoader.instance(mContext).requestBitmap(data, 64, new ImageLoader.GetBitmapCallback() {
+      ImageLoader.instance(mContext).requestBitmap(data, thumbnailSize, new ImageLoader.GetBitmapCallback() {
 
         @Override
         public void onLoaded() {
           // preventing an endless loop if failed to load thumbnail
-          Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data);
+          Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data, thumbnailSize);
           if (bitmap != null)
             ChannelSpinnerAdapter.this.notifyDataSetChanged();
         }
