@@ -431,6 +431,13 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
   // DrawerActivitySupport
   @Override
+  public boolean isPlayerVisible() {
+    VideoPlayer player = videoPlayer(false);
+    return (player != null && player.visible());
+  }
+
+  // DrawerActivitySupport
+  @Override
   public void playVideo(String videoId, String title) {
     boolean fullScreen = AppUtils.preferences(this).getBoolean(Preferences.PLAY_FULLSCREEN, false);
 

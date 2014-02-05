@@ -11,11 +11,14 @@ import com.sickboots.sickvideos.content.Content;
 public interface DrawerActivitySupport {
   public boolean actionBarTitleHandled();
 
+  // used in the about fragment when clicking on Watch Now or image
   public void showPlaylistsFragment();
 
   public Content getContent();
 
   public void playVideo(String videoId, String title);
+
+  public boolean isPlayerVisible();
 
   public void installFragment(Fragment fragment, boolean animate);
 }

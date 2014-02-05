@@ -14,7 +14,6 @@ import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ImageLoader;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Debug;
 
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     final YouTubeData data = mChannels.get(position);
 
     // is this right?  seems crazy
-    if (((ListView)parent).isItemChecked(position)) {
+    if (((ListView) parent).isItemChecked(position)) {
 
       if (sCheckDrawable == null) {
         sCheckDrawable = ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CHECK, 0xff000000, 30);
@@ -61,8 +60,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
       }
 
       textView.setCheckMarkDrawable(sCheckDrawable);
-    }
-    else
+    } else
       textView.setCheckMarkDrawable(null);
 
 

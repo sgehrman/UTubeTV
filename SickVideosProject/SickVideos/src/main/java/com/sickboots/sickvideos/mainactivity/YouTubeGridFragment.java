@@ -35,7 +35,6 @@ import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
@@ -100,6 +99,30 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     }
   }
 
+  private boolean endSearchActionBar() {
+    mSearchSubmitted = true;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
+    if (mSearchItem.isActionViewExpanded())
+      return mSearchItem.collapseActionView();
+
+    return false;
+  }
+
+  @Override
+  public void onPrepareOptionsMenu(Menu menu) {
+    super.onPrepareOptionsMenu(menu);
+
+    // hide the search item if player visible
+    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+    if (provider != null) {
+      if (provider.isPlayerVisible()) {
+        mSearchItem.setVisible(false);
+      } else {
+        mSearchItem.setVisible(true);
+      }
+    }
+
+  }
+
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.fragment_menu, menu);
@@ -143,8 +166,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
         @Override
         public boolean onQueryTextSubmit(String query) {
           if (mSearchItem != null) {
-            mSearchSubmitted = true;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
-            return mSearchItem.collapseActionView();
+            return endSearchActionBar();
           }
 
           return false;
@@ -156,7 +178,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
           // the search filter, and restart the loader to do a new query
           // with this filter.
           String filter = !TextUtils.isEmpty(newText) ? newText : null;
-          boolean setFilter=true;
+          boolean setFilter = true;
 
           if (mSearchSubmitted && filter == null) {
             // on KitKat collapseActionView call above on submit, sends null for newText, so preventing this from changing
@@ -279,6 +301,10 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   @Override
   public void handleClickFromAdapter(YouTubeData itemMap) {
     DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+
+    // get rid of the search if still open.  Someone could search
+    // and click a visible item rather than hitting the search button on keyboard
+    endSearchActionBar();
 
     switch (mRequest.type()) {
       case RELATED:

@@ -166,6 +166,11 @@ public class VideoPlayer {
   // private
 
   private void playerShown(String videoId, String title) {
+    // action bar menu needs to update
+    Activity host = (Activity) mVideoBox.getContext();
+    if (host != null)
+      host.invalidateOptionsMenu();
+
     mVideoFragment.setVideo(videoId, title);
 
     // actionbar subtitle needs a refresh when new video starts playing, so it's not just open/close events
@@ -176,6 +181,11 @@ public class VideoPlayer {
   }
 
   private void playerClosed() {
+    // action bar menu needs to update
+    Activity host = (Activity) mVideoBox.getContext();
+    if (host != null)
+      host.invalidateOptionsMenu();
+
     mVideoBox.setVisibility(View.INVISIBLE);
 
     if (mListener != null) {
