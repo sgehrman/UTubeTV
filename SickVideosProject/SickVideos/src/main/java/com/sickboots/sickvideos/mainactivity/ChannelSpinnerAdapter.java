@@ -65,7 +65,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     if (bitmap != null)
       imageView.setImageBitmap(bitmap);
     else {
-      ImageLoader.instance(mContext).requestBitmap(data, new ImageLoader.GetBitmapCallback() {
+      ImageLoader.instance(mContext).requestBitmap(data, 64, new ImageLoader.GetBitmapCallback() {
 
         @Override
         public void onLoaded() {

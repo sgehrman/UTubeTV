@@ -117,6 +117,7 @@
     <orderEntry type="library" exported="" name="google-api-client-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-youtube-v3-rev92-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="ComGithubCastorflexSmoothprogressbarLibrary020.aar" level="project" />
+    <orderEntry type="module" module-name="viewserver" exported="" />
   </component>
 </module>
 

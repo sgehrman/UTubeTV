@@ -162,6 +162,7 @@ dependencies {
 
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')
+    compile project(':viewserver')
 }
 
 

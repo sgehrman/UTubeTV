@@ -18,6 +18,7 @@ import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
+import com.sickboots.sickvideos.activities.ViewServerActivity;
 import com.sickboots.sickvideos.content.ChannelList;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.misc.AppUtils;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerActivity extends Activity implements DrawerActivitySupport, Observer {
+public class DrawerActivity extends ViewServerActivity implements DrawerActivitySupport, Observer {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
@@ -45,7 +46,7 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
   private Content mContent;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_drawer);

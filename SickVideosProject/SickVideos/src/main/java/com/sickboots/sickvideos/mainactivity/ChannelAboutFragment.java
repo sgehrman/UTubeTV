@@ -147,7 +147,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
         mImage.setImageBitmap(bitmap);
       else {
         ImageLoader.instance(getActivity())
-            .requestBitmap(data, new ImageLoader.GetBitmapCallback() {
+            .requestBitmap(data, 0, new ImageLoader.GetBitmapCallback() {
 
               @Override
               public void onLoaded() {

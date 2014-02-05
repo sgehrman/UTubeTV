@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.widget.ImageView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
@@ -70,7 +71,7 @@ public class ImageLoader {
     return get(data.mChannel);
   }
 
-  public void requestBitmap(final YouTubeData data, final GetBitmapCallback callback) {
+  public void requestBitmap(final YouTubeData data, final int thumbnailSize, final GetBitmapCallback callback) {
     Bitmap loadedBitmap = get(data.mChannel);
 
     if (loadedBitmap != null) {
@@ -83,6 +84,12 @@ public class ImageLoader {
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
           if (loadedBitmap == null)
             Debug.log("null thumbnail: " + data.mThumbnail + data.mTitle);
+
+          // should be on a thread, testing for now
+          if (loadedBitmap != null) {
+            if (thumbnailSize != 0)
+              loadedBitmap = ThumbnailUtils.extractThumbnail(loadedBitmap, thumbnailSize, thumbnailSize);
+          }
 
           put(data.mChannel, loadedBitmap);
 
