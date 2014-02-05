@@ -77,7 +77,7 @@ public class ImageLoader {
       callback.onLoaded();
     } else {
       int defaultImageResID = 0;
-      UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 100, new UrlImageViewCallback() {
+      UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 0, new UrlImageViewCallback() {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
