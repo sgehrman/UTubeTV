@@ -188,6 +188,9 @@ public class VideoPlayer {
 
     mVideoBox.setVisibility(View.INVISIBLE);
 
+    // reset this so it's 00:00 next time it's shown
+    mTimeRemainingTextView.setText("00:00");
+
     if (mListener != null) {
       mListener.stateChanged();
     }
