@@ -133,6 +133,10 @@ android {
         youtube {
             packageName "com.sickboots.sickvideos.youtube"
         }
+
+        technewsset {
+            packageName "com.sickboots.sickvideos.technewsset"
+        }
     }
 }
 
