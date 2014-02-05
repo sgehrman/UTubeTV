@@ -64,8 +64,21 @@ public class DrawerManager {
     mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
     // set up the drawer's list view with items and click listener
-    mDrawerList.setAdapter(new DrawerAdapter(activity, content));
-    mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+    mDrawerList.setAdapter(new DrawerAdapter(activity, content, new DrawerAdapter.DrawerAdapterListener() {
+      @Override
+      public void update() {
+        if (mChannelSpinnerAdapter != null)
+          mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
+      }
+    }));
+
+    mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mListener.onDrawerClick(position);
+        closeDrawer();
+      }
+    });
 
     Spinner spinner = (Spinner) mDrawerContainer.findViewById(R.id.spinner);
     setupDrawerSpinner(activity, spinner);
@@ -141,15 +154,6 @@ public class DrawerManager {
     mDrawerToggle.onConfigurationChanged(newConfig);
   }
 
-  /* The click listner for ListView in the navigation drawer */
-  private class DrawerItemClickListener implements ListView.OnItemClickListener {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-      mListener.onDrawerClick(position);
-      closeDrawer();
-    }
-  }
-
   private void setupDrawerSpinner(Context context, Spinner spinner) {
     boolean supportChannels = true;
 
@@ -182,18 +186,20 @@ public class DrawerManager {
     }
   }
 
-  private void updateChannelSpinner() {
-    mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
-  }
-
-  private class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
+  private static class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
     private LayoutInflater inflater;
     private Content mContent;
     private int mIconColor;
+    private DrawerAdapterListener mListener;
 
-    public DrawerAdapter(Context context, Content content) {
+    public interface DrawerAdapterListener {
+      public void update();
+    }
+
+    public DrawerAdapter(Context context, Content content, DrawerAdapterListener listener) {
       super(context, R.layout.drawer_list_item);
 
+      mListener = listener;
       inflater = LayoutInflater.from(context);
       mIconColor = context.getResources().getColor(R.color.drawer_icon_color);
 
@@ -221,7 +227,7 @@ public class DrawerManager {
 
         if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
 
-          updateChannelSpinner();
+          mListener.update();
           rebuild();
 
           // only need this called once

@@ -105,13 +105,12 @@ public class AppUtils {
   // -------------------------------------
   // Notification center class
 
-  class NotificationCenter extends Observable {
+  private class NotificationCenter extends Observable {
     protected void sendNotification(String message) {
       setChanged();
       notifyObservers(message);
     }
   }
-
 
   public static void pickViewStyleDialog(final Context context) {
 
