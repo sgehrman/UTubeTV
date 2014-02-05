@@ -77,17 +77,19 @@ public class ToolbarIcons {
       Drawable normal = null;
 
       if (icon != null) {
+        int padding = (int) Utils.dpToPx(4, context);
+
         IconicFontDrawable fpressed = new IconicFontDrawable(context);
         fpressed.setIcon(icon);
         fpressed.setIconColor(context.getResources().getColor(R.color.holo_blue));
         fpressed.setContour(Color.GRAY, 1);
-        fpressed.setIconPadding(8);
+        fpressed.setIconPadding(padding);
 
         IconicFontDrawable fnormal = new IconicFontDrawable(context);
         fnormal.setIcon(icon);
         fnormal.setIconColor(iconColor);
         fnormal.setContour(Color.GRAY, 1);
-        fnormal.setIconPadding(8);
+        fnormal.setIconPadding(padding);
 
         int size = (int) Utils.dpToPx(sizeInDP, context);
         fnormal.setIntrinsicWidth(size);
