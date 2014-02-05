@@ -41,9 +41,9 @@ public class Content extends Observable {
   public ArrayList<Map> drawerTitles() {
     ArrayList<Map> result = new ArrayList<Map>();
 
-        result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
-        result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
-        result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
+    result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
+    result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
+    result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
 
     return result;
   }
@@ -79,19 +79,19 @@ public class Content extends Observable {
   public Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
 
-        switch (index) {
-          case 0:
-            fragment = new ChannelAboutFragment();
-            break;
-          case 1:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList
-                .currentChannelId(), null, 250));
-            break;
-          case 2:
-            fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
-                .currentChannelId(), null, 50));
-            break;
-        }
+    switch (index) {
+      case 0:
+        fragment = new ChannelAboutFragment();
+        break;
+      case 1:
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList
+            .currentChannelId(), null, 250));
+        break;
+      case 2:
+        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
+            .currentChannelId(), null, 50));
+        break;
+    }
 
 
     if (fragment != null)

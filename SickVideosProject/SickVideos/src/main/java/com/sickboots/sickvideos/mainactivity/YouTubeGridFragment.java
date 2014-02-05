@@ -345,8 +345,8 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     registerBroadcastReceiver(false);
   }
 
-    @Override
-    public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
 
     registerBroadcastReceiver(true);
