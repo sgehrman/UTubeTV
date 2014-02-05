@@ -53,7 +53,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private YouTubeCursorAdapter mAdapter;
   private PullToRefreshLayout mPullToRefreshLayout;
   private boolean mCachedHiddenPref;
-  private DataReadyBroadcastReceiver broadcastReceiver;
+  private BroadcastReceiver mBroadcastReceiver;
   private String mFilter;
   private MenuItem mSearchItem;
   private SearchView mSearchView;
@@ -339,15 +339,17 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   }
 
   @Override
-  public void onResume() {
+  public void onPause() {
+    super.onPause();
+
+    registerBroadcastReceiver(false);
+  }
+
+    @Override
+    public void onResume() {
     super.onResume();
 
-    if (broadcastReceiver == null) {
-      broadcastReceiver = new DataReadyBroadcastReceiver();
-    }
-    IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
-    LocalBroadcastManager.getInstance(this.getActivity())
-        .registerReceiver(broadcastReceiver, intentFilter);
+    registerBroadcastReceiver(true);
 
     // reload if the hidden pref is now how we remember it
     reloadForPrefChange();
@@ -406,21 +408,38 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     mAdapter.swapCursor(null);
   }
 
-  private class DataReadyBroadcastReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
-        String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
+  private void registerBroadcastReceiver(boolean onResume) {
+    if (onResume) {
+      if (mBroadcastReceiver == null) {
+        mBroadcastReceiver = new BroadcastReceiver() {
+          @Override
+          public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
+              String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
 
-        // stop the pull to refresh indicator
-        // Notify PullToRefreshLayout that the refresh has finished
-        mPullToRefreshLayout.setRefreshComplete();
+              // stop the pull to refresh indicator
+              // Notify PullToRefreshLayout that the refresh has finished
+              mPullToRefreshLayout.setRefreshComplete();
 
-        // in the case of no results, we need to update the emptylist view to reflect that
-        // This only shows up at launch, or the first time a list is requested
-        mEmptyListHelper.updateEmptyListView("List is Empty", true);
+              // in the case of no results, we need to update the emptylist view to reflect that
+              // This only shows up at launch, or the first time a list is requested
+              mEmptyListHelper.updateEmptyListView("List is Empty", true);
+            }
+          }
+        };
+      }
+
+      IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
+      LocalBroadcastManager.getInstance(this.getActivity())
+          .registerReceiver(mBroadcastReceiver, intentFilter);
+    } else {
+      if (mBroadcastReceiver != null) {
+        LocalBroadcastManager.getInstance(this.getActivity())
+            .unregisterReceiver(mBroadcastReceiver);
+
       }
     }
   }
+
 }
 

@@ -64,6 +64,32 @@ Greenpeace
 
 // --------------------------------------------------------
 
+private static int cntt = 0;
+
+  public YouTubeGridFragment(){
+    super();
+    cntt++;
+  }
+
+
+
+
+ @Override
+  protected void finalize()
+  {
+    try {
+      super.finalize();
+
+    } catch(Throwable e) {
+
+    }
+    cntt--;
+    Debug.log("gridffrag ------- " + cntt);
+  }
+
+
+// --------------------------------------------------------
+
 
 subtlepatterns.com
 
@@ -354,3 +380,4 @@ SAVE THE PLANET
 
 Rollerskate TV
     D. miles
+
