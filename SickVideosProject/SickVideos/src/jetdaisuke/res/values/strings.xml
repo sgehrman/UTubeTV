@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">JETDAISUKE TV</string>
-    <string name="content">JET_DAISUKE</string>
+
+    <string-array name="content_array">
+        <item>JET_DAISUKE</item>
+    </string-array>
 
 </resources>

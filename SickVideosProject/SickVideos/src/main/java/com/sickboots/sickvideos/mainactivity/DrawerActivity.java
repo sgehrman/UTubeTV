@@ -30,6 +30,8 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import org.codechimp.apprater.AppRater;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,8 +50,14 @@ public class DrawerActivity extends Activity implements DrawerActivitySupport, O
 
     setContentView(R.layout.activity_drawer);
 
-    ChannelList.ChannelCode code = ChannelList.ChannelCode.valueOf(getResources().getString(R.string.content));
-    mContent = new Content(this, code);
+    String[] channels = getResources().getStringArray(R.array.content_array);
+
+    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
+    for (String c : channels) {
+      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
+    }
+
+    mContent = new Content(this, channelCodes);
 
     setupDrawer();
 

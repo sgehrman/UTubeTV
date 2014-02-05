@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Max Keiser TV</string>
-    <string name="content">MAX_KEISER</string>
+
+    <string-array name="content_array">
+        <item>MAX_KEISER</item>
+    </string-array>
 
 </resources>

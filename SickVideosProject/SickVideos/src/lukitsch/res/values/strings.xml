@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Lukitsch TV</string>
-    <string name="content">LUKITSCH</string>
+
+    <string-array name="content_array">
+        <item>LUKITSCH</item>
+    </string-array>
 
 </resources>

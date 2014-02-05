@@ -151,7 +151,11 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
               @Override
               public void onLoaded() {
-                ChannelAboutFragment.this.updateUI();
+
+                // put in to prevent an endless loop if the thumbnail fails to load the first time
+                Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data);
+                if (bitmap != null)
+                  ChannelAboutFragment.this.updateUI();
               }
             });
       }

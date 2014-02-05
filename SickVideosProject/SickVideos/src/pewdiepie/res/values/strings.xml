@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">PewDiePie TV</string>
-    <string name="content">PEWDIEPIE</string>
+
+    <string-array name="content_array">
+        <item>PEWDIEPIE</item>
+    </string-array>
 
 </resources>

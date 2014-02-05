@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Sick TV</string>
-    <string name="content">VICE</string>
+    <string name="app_name">Duh TV</string>
+
+    <string-array name="content_array">
+        <item>DUH</item>
+    </string-array>
 
     <string name="title_section1">Favorites</string>
     <string name="title_section2">Search</string>

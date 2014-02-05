@@ -72,7 +72,10 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
 
         @Override
         public void onLoaded() {
-          ChannelSpinnerAdapter.this.notifyDataSetChanged();
+          // preventing an endless loop if failed to load thumbnail
+          Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data);
+          if (bitmap != null)
+            ChannelSpinnerAdapter.this.notifyDataSetChanged();
         }
 
       });

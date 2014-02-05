@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Justin Bieber TV</string>
-    <string name="content">JUSTIN_BIEBER</string>
+
+    <string-array name="content_array">
+        <item>JUSTIN_BIEBER</item>
+    </string-array>
 
 </resources>

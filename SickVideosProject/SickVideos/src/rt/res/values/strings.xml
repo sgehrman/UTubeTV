@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">RT TV</string>
-    <string name="content">RT</string>
+
+    <string-array name="content_array">
+        <item>RT</item>
+    </string-array>
 
 </resources>

@@ -13,6 +13,7 @@ import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -21,15 +22,13 @@ import java.util.Observable;
  */
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
-  private ChannelList.ChannelCode mChannelCode;
   private Context mContext;
   public ChannelList mChannelList;
 
-  public Content(Context context, ChannelList.ChannelCode code) {
+  public Content(Context context, List<ChannelList.ChannelCode> channelCodes) {
     super();
 
-    mChannelCode = code;
-    mChannelList = new ChannelList(context, mChannelCode, new ChannelList.OnChannelListUpdateListener() {
+    mChannelList = new ChannelList(context, channelCodes, new ChannelList.OnChannelListUpdateListener() {
       @Override
       public void onUpdate() {
         notifyForDataUpdate();
@@ -42,13 +41,9 @@ public class Content extends Observable {
   public ArrayList<Map> drawerTitles() {
     ArrayList<Map> result = new ArrayList<Map>();
 
-    switch (mChannelCode) {
-      default:
         result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
         result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
         result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
-        break;
-    }
 
     return result;
   }
@@ -84,8 +79,6 @@ public class Content extends Observable {
   public Fragment fragmentForIndex(int index) {
     Fragment fragment = null;
 
-    switch (mChannelCode) {
-      default:
         switch (index) {
           case 0:
             fragment = new ChannelAboutFragment();
@@ -99,8 +92,7 @@ public class Content extends Observable {
                 .currentChannelId(), null, 50));
             break;
         }
-        break;
-    }
+
 
     if (fragment != null)
       saveDrawerSelectionIndex(index);

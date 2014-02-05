@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">YouTube Spotlight TV</string>
-    <string name="content">YOUTUBE</string>
+
+    <string-array name="content_array">
+        <item>YOUTUBE</item>
+    </string-array>
 
 </resources>

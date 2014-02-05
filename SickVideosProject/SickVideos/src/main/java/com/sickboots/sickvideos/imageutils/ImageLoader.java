@@ -81,6 +81,9 @@ public class ImageLoader {
 
         @Override
         public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+          if (loadedBitmap == null)
+            Debug.log("null thumbnail: " + data.mThumbnail + data.mTitle);
+
           put(data.mChannel, loadedBitmap);
 
           callback.onLoaded();

@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Big Think TV</string>
-    <string name="content">BIG_THINK</string>
+
+    <string-array name="content_array">
+        <item>BIG_THINK</item>
+    </string-array>
 
 </resources>

@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">The Verge TV</string>
-    <string name="content">THE_VERGE</string>
+
+    <string-array name="content_array">
+        <item>THE_VERGE</item>
+    </string-array>
 
 </resources>

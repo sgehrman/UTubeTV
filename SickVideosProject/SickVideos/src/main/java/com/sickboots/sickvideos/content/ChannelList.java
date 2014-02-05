@@ -33,16 +33,15 @@ public class ChannelList {
   private Context mContext;
   private OnChannelListUpdateListener mListener;
 
-  public ChannelList(Context context, ChannelCode code, OnChannelListUpdateListener listener) {
+  public ChannelList(Context context, List<ChannelList.ChannelCode> channelCodes, OnChannelListUpdateListener listener) {
     super();
 
     mContext = context.getApplicationContext();
     mListener = listener;
 
     mChannelIds = new ArrayList<String>();
-    mChannelIds.add(channelIDForCode(code));
-    mChannelIds.add(channelIDForCode(ChannelCode.VICE));
-    mChannelIds.add(channelIDForCode(ChannelCode.ROGAN));
+    for (ChannelList.ChannelCode code : channelCodes)
+      mChannelIds.add(channelIDForCode(code));
 
     requestChannelInfo(false);
   }
@@ -153,7 +152,6 @@ public class ChannelList {
     return result;
   }
 
-
   private String channelIDForCode(ChannelCode code) {
     if (mChannelIDMap == null) {
       mChannelIDMap = new HashMap<ChannelCode, String>();
@@ -181,11 +179,15 @@ public class ChannelList {
       mChannelIDMap.put(ChannelCode.JUSTIN_BIEBER, "UCHkj014U2CQ2Nv0UZeYpE_A");
       mChannelIDMap.put(ChannelCode.COLLEGE_HUMOR, "UCPDXXXJj9nax0fr0Wfc048g");
       mChannelIDMap.put(ChannelCode.YOUTUBE, "UCBR8-60-B28hp2BmDPdntcQ");
+      mChannelIDMap.put(ChannelCode.TECH_CRUNCH, "UCCjyq_K1Xwfg8Lndy7lKMpA");
+      mChannelIDMap.put(ChannelCode.TWIT, "UCwY9B5_8QDGP8niZhBtTh8w");
+      mChannelIDMap.put(ChannelCode.ENGADGET, "UC-6OW5aJYBFM33zXQlBKPNA");
+      mChannelIDMap.put(ChannelCode.VSAUCE, "UC6nSFpj9HTCZ5t-N3Rm3-HA");
     }
 
     return mChannelIDMap.get(code);
   }
 
-  public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
+  public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 
 }

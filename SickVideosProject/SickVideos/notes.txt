@@ -239,10 +239,12 @@ PSYCHONAUT
 NERD:
     Nerdist
     Verge
+    twit
     Fark/Digg?
     Kevin Rose
     TechCrunch
     revision3
+    http://twit.tv/2013/01/10/changes-twit-youtube
 
 TECH REVIEWS
     marquesbrownlee

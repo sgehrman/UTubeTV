@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">XDA TV</string>
-    <string name="content">XDA</string>
+
+    <string-array name="content_array">
+        <item>XDA</item>
+    </string-array>
 
 </resources>

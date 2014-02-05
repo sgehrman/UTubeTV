@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">NeuroSoup TV</string>
-    <string name="content">NEURO_SOUP</string>
+
+    <string-array name="content_array">
+        <item>NEURO_SOUP</item>
+    </string-array>
 
 </resources>

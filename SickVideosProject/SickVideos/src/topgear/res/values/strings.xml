@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Top Gear TV</string>
-    <string name="content">TOP_GEAR</string>
+
+    <string-array name="content_array">
+        <item>TOP_GEAR</item>
+    </string-array>
 
 </resources>

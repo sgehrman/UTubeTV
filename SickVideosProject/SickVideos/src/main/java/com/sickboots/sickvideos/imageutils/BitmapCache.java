@@ -57,6 +57,11 @@ public class BitmapCache {
   }
 
   public void put(String key, Bitmap data) {
+    if (key == null || data == null) {
+      Debug.log("bad params: " + Debug.currentMethod());
+      return;
+    }
+
     DiskLruCache.Editor editor = null;
     try {
       editor = mDiskCache.edit(key);
