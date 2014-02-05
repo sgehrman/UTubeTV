@@ -59,6 +59,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private MenuItem mSearchItem;
   private SearchView mSearchView;
   private static Drawable sSearchDrawable;
+  private boolean mSearchSubmitted = false;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
@@ -121,7 +122,11 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
         public boolean onMenuItemActionExpand(MenuItem item) {
           // return false and clear the filter if clicked when a filter is set
           if (!TextUtils.isEmpty(getFilter())) {
+            // this is needed since if the action bar refreshes, it will restore the query, kitkat seems to clear this though
             mSearchView.setQuery(null, true);
+
+            // added for KitKat, previously setQuery to null would trigger the text listener
+            setFilter(null);
 
             return false;
           }
@@ -137,8 +142,10 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-          if (mSearchItem != null)
+          if (mSearchItem != null) {
+            mSearchSubmitted = true;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
             return mSearchItem.collapseActionView();
+          }
 
           return false;
         }
@@ -149,8 +156,17 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
           // the search filter, and restart the loader to do a new query
           // with this filter.
           String filter = !TextUtils.isEmpty(newText) ? newText : null;
+          boolean setFilter=true;
 
-          if (setFilter(filter))
+          if (mSearchSubmitted && filter == null) {
+            // on KitKat collapseActionView call above on submit, sends null for newText, so preventing this from changing
+            // the filter here
+            setFilter = false;
+          }
+
+          mSearchSubmitted = false;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
+
+          if (setFilter && setFilter(filter))
             return true;
 
           return false;
