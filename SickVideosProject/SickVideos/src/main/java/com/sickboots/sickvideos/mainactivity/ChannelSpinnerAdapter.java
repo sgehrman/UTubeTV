@@ -20,6 +20,7 @@ import java.util.List;
 public class ChannelSpinnerAdapter extends ArrayAdapter {
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
+  private Drawable mCheckDrawable;
 
   public ChannelSpinnerAdapter(Context context) {
     super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
@@ -53,10 +54,12 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     // is this right?  seems crazy
     if (((ListView) parent).isItemChecked(position)) {
 
-      Drawable checkDrawable = ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CHECK, 0xff000000, 30);
-      checkDrawable.setAlpha(60);
+      if (mCheckDrawable == null) {
+        mCheckDrawable = ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CHECK, 0xff000000, 30);
+        mCheckDrawable.setAlpha(60);
+      }
 
-      textView.setCheckMarkDrawable(checkDrawable);
+      textView.setCheckMarkDrawable(mCheckDrawable);
     } else
       textView.setCheckMarkDrawable(null);
 

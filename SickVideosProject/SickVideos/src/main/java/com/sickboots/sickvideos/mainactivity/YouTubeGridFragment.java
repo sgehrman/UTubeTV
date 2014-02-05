@@ -58,7 +58,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   private String mFilter;
   private MenuItem mSearchItem;
   private SearchView mSearchView;
-  private static Drawable sSearchDrawable;
+  private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
 
   public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
@@ -130,18 +130,17 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
-      if (sSearchDrawable == null) {
-
+      if (mSearchDrawable == null) {
         // seems insane, is this the best way of having a variable drawable resource by theme?
         int[] attrs = new int[]{R.attr.action_bar_icon_color};
         TypedArray ta = getActivity().obtainStyledAttributes(attrs);
         int color = ta.getColor(0, 0);
         ta.recycle();
 
-        sSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, 32);
-        sSearchDrawable.setAlpha(150);
+        mSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, 32);
+        mSearchDrawable.setAlpha(150);
       }
-      mSearchItem.setIcon(sSearchDrawable);
+      mSearchItem.setIcon(mSearchDrawable);
 
       mSearchView = new SearchView(getActivity());
       mSearchView.setSubmitButtonEnabled(true);
