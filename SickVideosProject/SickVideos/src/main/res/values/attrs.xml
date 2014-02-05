@@ -2,4 +2,5 @@
 <resources>
     <attr name="playerToolbarBackground" format="color|reference"/>
     <attr name="nav_drawer_menu_drawable" format="reference"/>
+    <attr name="action_bar_icon_color" format="color|reference"/>
 </resources>

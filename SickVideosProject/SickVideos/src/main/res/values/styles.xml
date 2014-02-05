@@ -5,12 +5,16 @@
     <style name="AppTheme" parent="AppThemeLight">
     </style>
 
+    <color name="action_bar_icon_color_dark">#ffffffff</color>
+    <color name="action_bar_icon_color">#ff000000</color>
+
     <!-- Dark or light, override above in theme to get one or the other -->
 
     <style name="AppThemeLight" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
         <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hl</item>
+        <item name="action_bar_icon_color">@color/action_bar_icon_color</item>
 
         <item name="android:spinnerStyle">@style/Spinner</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
@@ -21,6 +25,7 @@
         <item name="android:actionBarStyle">@style/ActionBarDark</item>
         <item name="playerToolbarBackground">@drawable/toolbar_light</item>
         <item name="nav_drawer_menu_drawable">@drawable/nav_drawer_hd</item>
+        <item name="action_bar_icon_color">@color/action_bar_icon_color_dark</item>
 
         <item name="android:spinnerStyle">@style/SpinnerDark</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>

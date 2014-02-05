@@ -9,6 +9,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -130,8 +131,15 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
       if (sSearchDrawable == null) {
-        sSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, 0xff000000, 32);
-        sSearchDrawable.setAlpha(90);
+
+        // seems insane, is this the best way of having a variable drawable resource by theme?
+        int[] attrs = new int[]{R.attr.action_bar_icon_color};
+        TypedArray ta = getActivity().obtainStyledAttributes(attrs);
+        int color = ta.getColor(0, 0);
+        ta.recycle();
+
+        sSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, 32);
+        sSearchDrawable.setAlpha(150);
       }
       mSearchItem.setIcon(sSearchDrawable);
 
