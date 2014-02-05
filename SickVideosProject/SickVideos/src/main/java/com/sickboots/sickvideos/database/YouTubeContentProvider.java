@@ -9,16 +9,22 @@ import android.net.Uri;
 import com.sickboots.sickvideos.misc.Debug;
 
 public class YouTubeContentProvider extends ContentProvider {
+  private static String sAUTHORITY;
+  private static String sSCHEME;
+  private static String sCONTENTS;
 
   public YouTubeContentProvider() {
+    super();
   }
 
   public static String contents(Context context) {
-    final String AUTHORITY = context.getPackageName() + ".provider";
-    final String SCHEME = "content://";
+    if (sAUTHORITY == null) {
+      sAUTHORITY = context.getPackageName() + ".provider";
+      sSCHEME = "content://";
+      sCONTENTS = sSCHEME + sAUTHORITY + "/content";
+    }
 
-    // Used for all persons
-    return SCHEME + AUTHORITY + "/content";
+    return sCONTENTS;
   }
 
   public static Uri contentsURI(Context context) {

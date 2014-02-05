@@ -73,8 +73,7 @@ final int thumbnailSize = 64;
         @Override
         public void onLoaded() {
           // preventing an endless loop if failed to load thumbnail
-          Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data, thumbnailSize);
-          if (bitmap != null)
+          if (ImageLoader.instance(mContext).hasBitmap(data,thumbnailSize))
             ChannelSpinnerAdapter.this.notifyDataSetChanged();
         }
 

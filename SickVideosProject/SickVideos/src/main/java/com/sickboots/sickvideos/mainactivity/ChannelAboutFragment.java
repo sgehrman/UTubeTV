@@ -141,20 +141,20 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
       // uncomment to get the thumbnail image for generating icons
       // Debug.log(data.mThumbnail);
+      final int thumbnailSize = 0;
 
-      Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data, 0);
+      Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data, thumbnailSize);
       if (bitmap != null)
         mImage.setImageBitmap(bitmap);
       else {
         ImageLoader.instance(getActivity())
-            .requestBitmap(data, 0, new ImageLoader.GetBitmapCallback() {
+            .requestBitmap(data, thumbnailSize, new ImageLoader.GetBitmapCallback() {
 
               @Override
               public void onLoaded() {
 
                 // put in to prevent an endless loop if the thumbnail fails to load the first time
-                Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data,0);
-                if (bitmap != null)
+                if (ImageLoader.instance(getActivity()).hasBitmap(data,thumbnailSize))
                   ChannelAboutFragment.this.updateUI();
               }
             });

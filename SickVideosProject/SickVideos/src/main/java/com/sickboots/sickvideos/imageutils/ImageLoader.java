@@ -49,6 +49,10 @@ public class ImageLoader {
     return new BitmapCache(mContext, "bitmaps", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
   }
 
+  public boolean hasBitmap(final YouTubeData data, int thumbnailSize) {
+   return mCache.containsKey(keyForChannel(data.mChannel, thumbnailSize));
+  }
+
   private Bitmap get(String key) {
     return mCache.getBitmap(key);
   }
