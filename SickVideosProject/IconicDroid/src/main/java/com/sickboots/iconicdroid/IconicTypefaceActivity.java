@@ -33,8 +33,6 @@ public class IconicTypefaceActivity extends ListActivity {
   public static final int ICON_TYPE_FONT_AWESOME = 1003;
   public static final int ICON_TYPE_ICONIC = 1004;
 
-  private SampleIconsAdapter mAdapter;
-
   public static Intent createIntent(final Context context, final int iconType) {
     Intent intent = new Intent(context, IconicTypefaceActivity.class);
     intent.putExtra(EXTRA_ICON_TYPE, iconType);
@@ -98,8 +96,7 @@ public class IconicTypefaceActivity extends ListActivity {
 
     values.addAll(Arrays.asList(valuesArray));
 
-    mAdapter = new SampleIconsAdapter(this, values);
-    getListView().setAdapter(mAdapter);
+    getListView().setAdapter(new SampleIconsAdapter(this, values));
   }
 
   private class SampleIconsAdapter extends ArrayAdapter<Icon> {

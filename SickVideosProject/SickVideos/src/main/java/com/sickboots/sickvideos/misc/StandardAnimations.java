@@ -9,7 +9,7 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 
 public class StandardAnimations {
-  public static final void rockBounce(final View theView) {
+  public static void rockBounce(final View theView) {
     theView.animate()
         .rotationXBy(30.0f)
         .setDuration(200)
@@ -26,7 +26,7 @@ public class StandardAnimations {
         });
   }
 
-  public static final void upAndAway(final View theView) {
+  public static void upAndAway(final View theView) {
     if (theView != null) {
       theView.animate()
           .alpha(.9f)
@@ -69,7 +69,7 @@ public class StandardAnimations {
     }
   }
 
-  public static final void rubberClick(final View theView) {
+  public static  void rubberClick(final View theView) {
     ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 60f);
     ObjectAnimator rotateBack = ObjectAnimator.ofFloat(theView, "rotationY", 0f);
     ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", .4f);
@@ -118,7 +118,7 @@ public class StandardAnimations {
     animatorSet.start();
   }
 
-  public static final void dosomething(View theView) {
+  public static void dosomething(View theView) {
     ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 0f, 60f);
     ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", 1f, .5f);
     ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", 1f, .5f);

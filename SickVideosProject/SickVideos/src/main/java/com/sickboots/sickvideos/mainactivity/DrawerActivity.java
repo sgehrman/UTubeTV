@@ -174,7 +174,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     if (!closePlayerIfOpen()) {
       if (getFragmentManager().getBackStackEntryCount() == 0) {
         if (this.lastBackPressTime < System.currentTimeMillis() - 4000) {
-          backButtonToast = Toast.makeText(this, "Press back again to exit", 4000);
+          backButtonToast = Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT);
           backButtonToast.show();
           this.lastBackPressTime = System.currentTimeMillis();
         } else {

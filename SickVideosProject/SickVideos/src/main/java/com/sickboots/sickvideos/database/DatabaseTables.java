@@ -127,9 +127,7 @@ public class DatabaseTables {
 
     @Override
     public String tableSQL() {
-      String result = CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_CHANNEL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + " )";
-
-      return result;
+      return CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_CHANNEL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + " )";
     }
 
     @Override
@@ -139,9 +137,7 @@ public class DatabaseTables {
 
     @Override
     public String[] defaultProjection() {
-      String[] projection = new String[]{Entry._ID, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_CHANNEL, Entry.COLUMN_NAME_THUMBNAIL,};
-
-      return projection;
+      return new String[]{Entry._ID, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_CHANNEL, Entry.COLUMN_NAME_THUMBNAIL,};
     }
 
     @Override
@@ -270,10 +266,8 @@ public class DatabaseTables {
 
     @Override
     public String tableSQL() {
-      String result = CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PLAYLIST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_ITEM_COUNT + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
+      return CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PLAYLIST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_ITEM_COUNT + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
-
-      return result;
     }
 
     @Override
@@ -283,9 +277,7 @@ public class DatabaseTables {
 
     @Override
     public String[] defaultProjection() {
-      String[] projection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_THUMBNAIL, Entry.COLUMN_NAME_ITEM_COUNT, Entry.COLUMN_NAME_PUBLISHED_DATE, Entry.COLUMN_NAME_HIDDEN};
-
-      return projection;
+      return new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_THUMBNAIL, Entry.COLUMN_NAME_ITEM_COUNT, Entry.COLUMN_NAME_PUBLISHED_DATE, Entry.COLUMN_NAME_HIDDEN};
     }
 
     @Override
@@ -393,24 +385,18 @@ public class DatabaseTables {
     public String indexSQL() {
       String indexName = Entry.COLUMN_NAME_VIDEO + "_idx";
 
-      String result = "CREATE INDEX " + indexName + " on " + tableName() + "(" + Entry.COLUMN_NAME_VIDEO + ")";
-
-      return result;
+      return "CREATE INDEX " + indexName + " on " + tableName() + "(" + Entry.COLUMN_NAME_VIDEO + ")";
     }
 
     @Override
     public String tableSQL() {
-      String itemTable = CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_VIDEO + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DURATION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
+      return CREATE + tableName() + " (" + Entry._ID + INT_TYPE + PRIMARY + COMMA_SEP + Entry.COLUMN_NAME_REQUEST + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_VIDEO + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_THUMBNAIL + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_DURATION + TEXT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_PUBLISHED_DATE + INT_TYPE + COMMA_SEP + Entry.COLUMN_NAME_HIDDEN + TEXT_TYPE  // this is string since we use null or not null like a boolean, getInt returns 0 for null which makes it more complex to deal with null, 0, or 1.
           + " )";
-
-      return itemTable;
     }
 
     @Override
     public String[] defaultProjection() {
-      String[] projection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_THUMBNAIL, Entry.COLUMN_NAME_DURATION, Entry.COLUMN_NAME_PUBLISHED_DATE, Entry.COLUMN_NAME_HIDDEN};
-
-      return projection;
+      return new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, Entry.COLUMN_NAME_THUMBNAIL, Entry.COLUMN_NAME_DURATION, Entry.COLUMN_NAME_PUBLISHED_DATE, Entry.COLUMN_NAME_HIDDEN};
     }
 
     @Override

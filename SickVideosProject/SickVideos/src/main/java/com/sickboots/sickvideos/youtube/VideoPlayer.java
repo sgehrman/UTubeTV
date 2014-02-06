@@ -263,8 +263,6 @@ public class VideoPlayer {
       public void onClick(View v) {
         toggleMute();
       }
-
-      ;
     });
     updateMuteButton();
 
@@ -276,8 +274,6 @@ public class VideoPlayer {
       public void onClick(View v) {
         skip(-10);
       }
-
-      ;
     });
 
     // Skip ahead button
@@ -288,8 +284,6 @@ public class VideoPlayer {
       public void onClick(View v) {
         skip(10);
       }
-
-      ;
     });
 
     mTimeRemainingTextView = (TextView) mVideoBox.findViewById(R.id.time_remaining);
@@ -301,8 +295,6 @@ public class VideoPlayer {
 
         showSeekPopupWindow(tb);
       }
-
-      ;
     });
 
     mSeekFlashTextView = (TextView) mVideoBox.findViewById(R.id.seek_flash);

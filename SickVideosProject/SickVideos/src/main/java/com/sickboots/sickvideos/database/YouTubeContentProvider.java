@@ -10,7 +10,6 @@ import com.sickboots.sickvideos.misc.Debug;
 
 public class YouTubeContentProvider extends ContentProvider {
   private static String sAUTHORITY;
-  private static String sSCHEME;
   private static String sCONTENTS;
 
   public YouTubeContentProvider() {
@@ -20,8 +19,8 @@ public class YouTubeContentProvider extends ContentProvider {
   public static String contents(Context context) {
     if (sAUTHORITY == null) {
       sAUTHORITY = context.getPackageName() + ".provider";
-      sSCHEME = "content://";
-      sCONTENTS = sSCHEME + sAUTHORITY + "/content";
+      String scheme = "content://";
+      sCONTENTS = scheme + sAUTHORITY + "/content";
     }
 
     return sCONTENTS;

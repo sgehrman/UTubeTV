@@ -61,9 +61,7 @@ public class BitmapLoader {
     final String key = keyForChannel(data.mChannel, thumbnailSize);
 
     // in our memory cache?
-    Bitmap result = mLruCache.get(key);
-
-    return result;
+    return mLruCache.get(key);
   }
 
   public void requestBitmap(final YouTubeData data, final int thumbnailSize, final GetBitmapCallback callback) {

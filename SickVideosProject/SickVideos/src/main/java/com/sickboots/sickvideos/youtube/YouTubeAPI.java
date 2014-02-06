@@ -48,8 +48,6 @@ public class YouTubeAPI {
     public void handleAuthIntent(final Intent authIntent);
   }
 
-  ;
-
   public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
 
   public static final int REQ_PLAYER_CODE = 334443;
@@ -137,45 +135,31 @@ public class YouTubeAPI {
   }
 
   public VideosFromPlaylistResults videosFromPlaylistResults(String playlistID) {
-    VideosFromPlaylistResults result = new VideosFromPlaylistResults(playlistID);
-
-    return result;
+    return new VideosFromPlaylistResults(playlistID);
   }
 
   public ChannelPlaylistsResults channelPlaylistsResults(String channelID, boolean addRelatedPlaylists) {
-    ChannelPlaylistsResults result = new ChannelPlaylistsResults(channelID, addRelatedPlaylists);
-
-    return result;
+    return new ChannelPlaylistsResults(channelID, addRelatedPlaylists);
   }
 
   public SearchListResults searchListResults(String query) {
-    SearchListResults result = new SearchListResults(query);
-
-    return result;
+    return new SearchListResults(query);
   }
 
   public SubscriptionListResults subscriptionListResults() {
-    SubscriptionListResults result = new SubscriptionListResults();
-
-    return result;
+    return new SubscriptionListResults();
   }
 
   public CategoriesListResults categoriesListResults(String regionCode) {
-    CategoriesListResults result = new CategoriesListResults(regionCode);
-
-    return result;
+    return new CategoriesListResults(regionCode);
   }
 
   public LikedVideosListResults likedVideosListResults() {
-    LikedVideosListResults result = new LikedVideosListResults();
-
-    return result;
+    return new LikedVideosListResults();
   }
 
   public VideoInfoListResults videoInfoListResults(List<String> videoIds) {
-    VideoInfoListResults result = new VideoInfoListResults(videoIds);
-
-    return result;
+    return new VideoInfoListResults(videoIds);
   }
 
   // pass null for channelid to get our own channel
