@@ -88,7 +88,7 @@ public class YouTubeServiceRequest implements Parcelable {
     Integer intObject = (Integer) getData("maxResults");
 
     if (intObject != null)
-      result = intObject.intValue();
+      result = intObject;
 
     return result;
   }

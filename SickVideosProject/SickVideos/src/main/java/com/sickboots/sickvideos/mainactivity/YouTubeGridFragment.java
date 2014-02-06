@@ -210,7 +210,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
     setHasOptionsMenu(true);
 
-    mRequest = (YouTubeServiceRequest) getArguments().getParcelable("request");
+    mRequest = getArguments().getParcelable("request");
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
 
     ViewGroup rootView = mAdapter.rootView(container);

@@ -38,7 +38,7 @@ public class Database extends SQLiteOpenHelper {
   }
 
   public void onCreate(SQLiteDatabase db) {
-    for (DatabaseTables.DatabaseTable table : mTables.tables()) {
+    for (DatabaseTables.DatabaseTable table : DatabaseTables.tables()) {
       db.execSQL(table.tableSQL());
 
       // not every table defines an index, check for null
@@ -52,7 +52,7 @@ public class Database extends SQLiteOpenHelper {
     final String DROP_TABLE = "DROP TABLE IF EXISTS ";
 
     // don't upgrade, just drop and start over
-    for (DatabaseTables.DatabaseTable table : mTables.tables())
+    for (DatabaseTables.DatabaseTable table : DatabaseTables.tables())
       db.execSQL(DROP_TABLE + table.tableName());
 
     // recreate

@@ -291,7 +291,7 @@ public class VideoPlayer {
       @Override
       public void onClick(View v) {
         // put it below toolbar
-        View tb = (View) mVideoBox.findViewById(R.id.video_toolbar_view);
+        View tb = mVideoBox.findViewById(R.id.video_toolbar_view);
 
         showSeekPopupWindow(tb);
       }

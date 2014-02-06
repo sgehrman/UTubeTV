@@ -333,7 +333,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
     // hide description if empty
     if (holder.description != null) {
-      String desc = (String) itemMap.mDescription;
+      String desc = itemMap.mDescription;
       if (desc != null && (desc.length() > 0)) {
         holder.description.setVisibility(View.VISIBLE);
         holder.description.setText(desc);
