@@ -111,8 +111,6 @@ public class ToolbarIcons {
 
   // this doesn't have the states like above. used to convert an icon to a simple bitmap, assuming things like animations will be faster with a bitmap over a text based drawable
   public static BitmapDrawable iconBitmap(Context context, IconID iconID, int iconColor, int sizeInDP) {
-    BitmapDrawable result = null;
-
     Drawable iconDrawable = icon(context, iconID, iconColor, sizeInDP);
 
     if (iconDrawable != null) {

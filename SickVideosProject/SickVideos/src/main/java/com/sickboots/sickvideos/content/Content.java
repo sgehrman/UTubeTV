@@ -49,10 +49,8 @@ public class Content extends Observable {
   }
 
   public int drawerSelectionIndex() {
-    int sectionIndex = 0;
-
     String sectionIndexString = AppUtils.preferences(mContext).getString(sectionPrefsKey(), "0");
-    sectionIndex = Integer.parseInt(sectionIndexString);
+    int sectionIndex = Integer.parseInt(sectionIndexString);
 
     return sectionIndex;
   }

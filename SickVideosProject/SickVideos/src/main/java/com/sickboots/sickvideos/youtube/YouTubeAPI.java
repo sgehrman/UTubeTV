@@ -459,7 +459,7 @@ public class YouTubeAPI {
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<SearchResult> result = new ArrayList<SearchResult>();
-      SearchListResponse searchListResponse = null;
+      SearchListResponse searchListResponse;
 
       try {
         YouTube.Search.List listRequest = youTube().search().list(mPart);
@@ -516,7 +516,7 @@ public class YouTubeAPI {
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<Video> result = new ArrayList<Video>();
-      VideoListResponse searchListResponse = null;
+      VideoListResponse searchListResponse;
 
       try {
         YouTube.Videos.List listRequest = youTube().videos().list(mPart);
@@ -584,7 +584,7 @@ public class YouTubeAPI {
 
     protected List<YouTubeData> itemsForNextToken(String tokenNotUsed, long maxResultsNotUsed) {
       List<Video> result = new ArrayList<Video>();
-      VideoListResponse searchListResponse = null;
+      VideoListResponse searchListResponse;
 
       try {
         YouTube.Videos.List listRequest = youTube().videos().list(mPart);
@@ -641,7 +641,7 @@ public class YouTubeAPI {
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
       List<VideoCategory> result = new ArrayList<VideoCategory>();
-      VideoCategoryListResponse categoryListResponse = null;
+      VideoCategoryListResponse categoryListResponse;
 
       try {
         YouTube.VideoCategories.List listRequest = youTube().videoCategories().list(mPart);

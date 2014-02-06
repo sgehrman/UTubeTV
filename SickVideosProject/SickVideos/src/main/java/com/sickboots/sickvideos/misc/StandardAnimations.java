@@ -121,7 +121,6 @@ public class StandardAnimations {
   public static void dosomething(View theView) {
     ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 0f, 60f);
     ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", 1f, .5f);
-    ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", 1f, .5f);
 
     AnimatorSet bouncer = new AnimatorSet();
     bouncer.play(rotateAnim).before(scaleXDown);

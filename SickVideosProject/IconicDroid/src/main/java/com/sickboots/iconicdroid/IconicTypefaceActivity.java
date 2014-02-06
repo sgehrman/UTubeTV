@@ -113,7 +113,7 @@ public class IconicTypefaceActivity extends ListActivity {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       final Icon icon = mIcons.get(position);
-      ViewHolder holder = null;
+      ViewHolder holder;
 
       if (convertView == null) {
         convertView = mInflater.inflate(R.layout.list_item_iconic, null);

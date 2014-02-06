@@ -218,7 +218,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   private View prepareViews(View convertView, ViewGroup parent, boolean multiColumns) {
-    ViewHolder holder = null;
+    ViewHolder holder;
 
     // ## This fixes a problem with the SwipeToDismissAdapter.
     // After dismiss, the view is left in a state with a zero height
