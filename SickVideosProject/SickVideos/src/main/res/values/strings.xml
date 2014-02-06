@@ -38,4 +38,10 @@
         <item>Posters</item>
     </string-array>
 
+    <string name="video_menu_open_in_youtube">Open in YouTube</string>
+    <string name="video_menu_hide">Hide</string>
+    <string name="enter_user_name">Enter user name</string>
+    <string name="not_found">Not found</string>
+    <string name="watch_now">Watch Now</string>
+
 </resources>

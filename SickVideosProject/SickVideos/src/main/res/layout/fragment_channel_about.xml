@@ -87,7 +87,7 @@
                     android:layout_margin="12dp"
                     android:background="@android:color/holo_red_light"
                     android:padding="16dp"
-                    android:text="Watch Now"
+                    android:text="@string/watch_now"
                     android:textColor="@android:color/white"/>
 
             </LinearLayout>

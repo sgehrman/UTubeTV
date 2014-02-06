@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/video_menu_youtube"
-        android:title="Open in YouTube"/>
+        android:title="@string/video_menu_open_in_youtube"/>
 
     <item
         android:id="@+id/video_menu_hide"
-        android:title="Hide"/>
+        android:title="@string/video_menu_hide"/>
 
 </menu>
 

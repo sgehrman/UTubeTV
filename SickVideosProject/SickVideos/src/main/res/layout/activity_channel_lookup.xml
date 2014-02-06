@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
         android:singleLine="true"
-        android:hint="Enter User Name"
+        android:hint="@string/enter_user_name"
         android:imeOptions="actionDone"
         android:id="@+id/edit_text">
     </EditText>
@@ -18,7 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not found"
+        android:text="@string/not_found"
         android:textSize="16sp"
         android:id="@+id/result_text">
     </TextView>
