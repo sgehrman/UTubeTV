@@ -2,7 +2,6 @@
 
 package com.sickboots.sickvideos.mainactivity;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;

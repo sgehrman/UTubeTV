@@ -57,14 +57,14 @@ public class BitmapLoader {
     });
   }
 
-  public Bitmap bitmap(  YouTubeData data,   int thumbnailSize) {
+  public Bitmap bitmap(YouTubeData data, int thumbnailSize) {
     final String key = keyForChannel(data.mChannel, thumbnailSize);
 
     // in our memory cache?
     Bitmap result = mLruCache.get(key);
 
     return result;
-    }
+  }
 
   public void requestBitmap(final YouTubeData data, final int thumbnailSize, final GetBitmapCallback callback) {
     new Thread(new Runnable() {
@@ -72,32 +72,32 @@ public class BitmapLoader {
       public void run() {
         final String key = keyForChannel(data.mChannel, thumbnailSize);
 
-          // is it in our disk cache?
-          Bitmap result = mDiskCache.getBitmap(key);
+        // is it in our disk cache?
+        Bitmap result = mDiskCache.getBitmap(key);
 
-          if (result != null) {
-            mLruCache.put(key, result);
-            callCallbackOnMainThread(result, callback);
-          } else {
-            // load it
-            int defaultImageResID = 0;
-            UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 0, new UrlImageViewCallback() {
+        if (result != null) {
+          mLruCache.put(key, result);
+          callCallbackOnMainThread(result, callback);
+        } else {
+          // load it
+          int defaultImageResID = 0;
+          UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 0, new UrlImageViewCallback() {
 
-              @Override
-              public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-                if (loadedBitmap != null) {
-                  if (thumbnailSize != 0)
-                    loadedBitmap = ThumbnailUtils.extractThumbnail(loadedBitmap, thumbnailSize, thumbnailSize);
+            @Override
+            public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
+              if (loadedBitmap != null) {
+                if (thumbnailSize != 0)
+                  loadedBitmap = ThumbnailUtils.extractThumbnail(loadedBitmap, thumbnailSize, thumbnailSize);
 
-                  // save image to our caches
-                  mDiskCache.put(key, loadedBitmap);
-                  mLruCache.put(key, loadedBitmap);
-                }
-
-                callCallbackOnMainThread(loadedBitmap, callback);
+                // save image to our caches
+                mDiskCache.put(key, loadedBitmap);
+                mLruCache.put(key, loadedBitmap);
               }
 
-            });
+              callCallbackOnMainThread(loadedBitmap, callback);
+            }
+
+          });
         }
       }
     }).start();

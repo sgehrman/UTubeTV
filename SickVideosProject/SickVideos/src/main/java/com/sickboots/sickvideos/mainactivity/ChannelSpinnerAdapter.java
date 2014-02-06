@@ -72,12 +72,12 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
       imageView.setImageBitmap(bitmap);
     else {
       mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
-            @Override
-            public void onLoaded(Bitmap bitmap) {
-              if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
-                ChannelSpinnerAdapter.this.notifyDataSetChanged();
-            }
-          });
+        @Override
+        public void onLoaded(Bitmap bitmap) {
+          if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
+            ChannelSpinnerAdapter.this.notifyDataSetChanged();
+        }
+      });
     }
 
     return result;
