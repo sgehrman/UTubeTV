@@ -16,14 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class BitmapCache {
+public class BitmapDiskCache {
   private static final int APP_VERSION = 1;
   private static final int VALUE_COUNT = 1;
   private DiskLruCache mDiskCache;
   private Bitmap.CompressFormat mCompressFormat = Bitmap.CompressFormat.PNG;
   private int mCompressQuality = 70;
 
-  public BitmapCache(Context context, String uniqueName, long diskCacheSize, Bitmap.CompressFormat compressFormat, int quality) {
+  public BitmapDiskCache(Context context, String uniqueName, long diskCacheSize, Bitmap.CompressFormat compressFormat, int quality) {
     try {
       final File diskCacheDir = getDiskCacheDir(context, uniqueName);
       mDiskCache = DiskLruCache.open(diskCacheDir, APP_VERSION, VALUE_COUNT, diskCacheSize);

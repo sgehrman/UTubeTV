@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.imageutils.ImageLoader;
+import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -33,6 +33,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   private PullToRefreshLayout mPullToRefreshLayout;
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
+  private BitmapLoader mBitmapLoader;
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -44,6 +45,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     View rootView = inflater.inflate(R.layout.fragment_channel_about, container, false);
 
     mContent = ((DrawerActivitySupport) getActivity()).getContent();
+    mBitmapLoader = new BitmapLoader(getActivity());
 
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
@@ -90,7 +92,7 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   @Override
   public void onRefreshStarted(View view) {
     // empty cache
-    ImageLoader.instance(getActivity()).refresh();
+    mBitmapLoader.refresh();
 
     mContent.addObserver(this);
     mContent.refreshChannelInfo();
@@ -143,21 +145,18 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
       // Debug.log(data.mThumbnail);
       final int thumbnailSize = 0;
 
-      Bitmap bitmap = ImageLoader.instance(getActivity()).bitmap(data, thumbnailSize);
+      Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
       if (bitmap != null)
         mImage.setImageBitmap(bitmap);
       else {
-        ImageLoader.instance(getActivity())
-            .requestBitmap(data, thumbnailSize, new ImageLoader.GetBitmapCallback() {
-
-              @Override
-              public void onLoaded() {
-
-                // put in to prevent an endless loop if the thumbnail fails to load the first time
-                if (ImageLoader.instance(getActivity()).hasBitmap(data,thumbnailSize))
-                  ChannelAboutFragment.this.updateUI();
-              }
-            });
+        mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
+          @Override
+          public void onLoaded(Bitmap bitmap) {
+            // put in to prevent an endless loop if the thumbnail fails to load the first time
+            if (bitmap != null)
+              ChannelAboutFragment.this.updateUI();
+          }
+        });
       }
 
       // update the action bar title

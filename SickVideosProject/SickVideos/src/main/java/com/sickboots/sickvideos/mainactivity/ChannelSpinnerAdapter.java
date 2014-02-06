@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.imageutils.ImageLoader;
+import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 
 import java.util.List;
@@ -21,11 +21,13 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
   private Drawable mCheckDrawable;
+  private BitmapLoader mBitmapLoader;
 
   public ChannelSpinnerAdapter(Context context) {
     super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
 
     mContext = context.getApplicationContext();
+    mBitmapLoader = new BitmapLoader(context);
 
     setDropDownViewResource(R.layout.channel_spinner_item);
   }
@@ -63,21 +65,19 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
     } else
       textView.setCheckMarkDrawable(null);
 
-final int thumbnailSize = 64;
-    Bitmap bitmap = ImageLoader.instance(mContext).bitmap(data, thumbnailSize);
+    final int thumbnailSize = 64;
+
+    Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
     if (bitmap != null)
       imageView.setImageBitmap(bitmap);
     else {
-      ImageLoader.instance(mContext).requestBitmap(data, thumbnailSize, new ImageLoader.GetBitmapCallback() {
-
-        @Override
-        public void onLoaded() {
-          // preventing an endless loop if failed to load thumbnail
-          if (ImageLoader.instance(mContext).hasBitmap(data,thumbnailSize))
-            ChannelSpinnerAdapter.this.notifyDataSetChanged();
-        }
-
-      });
+      mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
+            @Override
+            public void onLoaded(Bitmap bitmap) {
+              if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
+                ChannelSpinnerAdapter.this.notifyDataSetChanged();
+            }
+          });
     }
 
     return result;
