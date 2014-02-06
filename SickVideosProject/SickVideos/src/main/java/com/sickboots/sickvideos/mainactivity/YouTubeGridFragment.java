@@ -195,10 +195,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
           mSearchSubmitted = false;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
 
-          if (setFilter && setFilter(filter))
-            return true;
-
-          return false;
+          return (setFilter && setFilter(filter));
         }
       });
     }

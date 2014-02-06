@@ -46,16 +46,10 @@ public class PurchaseHelper {
 
   public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
     // Pass on the activity result to the helper for handling
-    if (mHelper != null && mHelper.handleActivityResult(requestCode, resultCode, data)) {
-      return true;
-    }
-
-    return false;
+    return (mHelper != null && mHelper.handleActivityResult(requestCode, resultCode, data));
   }
 
-
   private void setupInAppPurchasing() {
-
     // load game data
     loadData();
 
