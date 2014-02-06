@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="ComGoogleAndroidGmsPlayServices4132.aar">
+  <library name="play-services-4.1.32">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGoogleAndroidGmsPlayServices4132.aar/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGoogleAndroidGmsPlayServices4132.aar/res" />
