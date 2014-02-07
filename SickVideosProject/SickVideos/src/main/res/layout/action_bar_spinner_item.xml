@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textColor="@android:color/primary_text_dark"
+        android:textColor="@android:color/secondary_text_dark"
         android:textSize="@dimen/action_bar_subtitle_text_size"/>
 
 </LinearLayout>
