@@ -72,19 +72,13 @@ public class BitmapDiskCache {
       if (writeBitmapToFile(data, editor)) {
         mDiskCache.flush();
         editor.commit();
-        if (Debug.isDebugBuild()) {
           Debug.log("image put on disk cache " + key + "size: " + ((float) mDiskCache.size() / 1024.0f) + "k");
-        }
       } else {
         editor.abort();
-        if (Debug.isDebugBuild()) {
           Debug.log("ERROR on: image put on disk cache " + key);
-        }
       }
     } catch (IOException e) {
-      if (Debug.isDebugBuild()) {
         Debug.log("ERROR on: image put on disk cache " + key);
-      }
       try {
         if (editor != null) {
           editor.abort();
@@ -117,7 +111,6 @@ public class BitmapDiskCache {
       }
     }
 
-    if (Debug.isDebugBuild())
       Debug.log("bitmap read from cache: " + ((bitmap == null) ? "null" : key));
 
     return bitmap;
@@ -142,9 +135,7 @@ public class BitmapDiskCache {
   }
 
   public void clearCache() {
-    if (Debug.isDebugBuild()) {
       Debug.log("disk cache CLEARED");
-    }
     try {
       mDiskCache.delete();
     } catch (IOException e) {

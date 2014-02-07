@@ -14,7 +14,8 @@ import java.util.Date;
 public class Debug {
 
   public static void log(String message) {
-    Log.d("####", (message == null ? "null" : message));
+    if (isDebugBuild())
+      Log.d("####", (message == null ? "null" : message));
   }
 
   public static boolean isDebuggable(Context context) {
