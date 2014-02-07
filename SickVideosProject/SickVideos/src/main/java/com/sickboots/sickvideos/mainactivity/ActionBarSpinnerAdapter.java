@@ -31,7 +31,6 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   private CharSequence mSubtitle;
 
   public ActionBarSpinnerAdapter(Context context, Content content) {
-    //    super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
     super(context, R.layout.action_bar_spinner_item, android.R.id.text1);
 
     mContext = context.getApplicationContext();
