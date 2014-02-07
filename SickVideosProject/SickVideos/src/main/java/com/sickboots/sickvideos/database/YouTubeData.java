@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by sgehrman on 11/26/13.
- */
 public class YouTubeData {
   // raw access for speed
   public long mID;

@@ -6,9 +6,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by sgehrman on 1/17/14.
- */
 public class ResizingImageView extends ImageView {
 
   public ResizingImageView(Context context, AttributeSet attrs) {

@@ -28,9 +28,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Created by sgehrman on 12/13/13.
- */
 public class DrawerManager implements Observer {
 
   public interface DrawerManagerListener {

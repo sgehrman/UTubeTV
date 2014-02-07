@@ -75,7 +75,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Loads and draws given {@link Icon}.
    *
-   * @param icon
    */
   public void setIcon(final Icon icon) {
     updateIcon(icon);
@@ -85,7 +84,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Set a color for the {@link Icon}.
    *
-   * @param color
    */
   public void setIconColor(int color) {
     mIconPaint.setColor(color);
@@ -95,7 +93,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Set a padding for the {@link Icon}.
    *
-   * @param iconPadding
    */
   public void setIconPadding(int iconPadding) {
     mIconPadding = iconPadding;
@@ -109,9 +106,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Set contour params for the {@link Icon}.
    * You should call {@link #drawContour(boolean)} method to enable contour.
-   *
-   * @param contourColor
-   * @param contourWidth
    */
   public void setContour(int contourColor, int contourWidth) {
     setContourColor(contourColor);
@@ -122,8 +116,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Set contour color for the {@link Icon}.
    * You should call {@link #drawContour(boolean)} method to enable contour.
-   *
-   * @param contourColor
    */
   public void setContourColor(int contourColor) {
     mContourPaint.setColor(contourColor);
@@ -133,8 +125,6 @@ public class IconicFontDrawable extends Drawable {
   /**
    * Set contour width for the {@link Icon}.
    * You should call {@link #drawContour(boolean)} method to enable contour.
-   *
-   * @param contourWidth
    */
   public void setContourWidth(int contourWidth) {
     mContourWidth = contourWidth;
@@ -144,8 +134,6 @@ public class IconicFontDrawable extends Drawable {
 
   /**
    * Enable/disable contour drawing.
-   *
-   * @param drawContour
    */
   public void drawContour(boolean drawContour) {
     mDrawContour = drawContour;
@@ -161,8 +149,6 @@ public class IconicFontDrawable extends Drawable {
 
   /**
    * Set intrinsic width, which is used by several controls.
-   *
-   * @param intrinsicWidth
    */
   public void setIntrinsicWidth(int intrinsicWidth) {
     mIntrinsicWidth = intrinsicWidth;
@@ -170,8 +156,6 @@ public class IconicFontDrawable extends Drawable {
 
   /**
    * Set intrinsic height, which is used by several controls.
-   *
-   * @param intrinsicHeight
    */
   public void setIntrinsicHeight(int intrinsicHeight) {
     mIntrinsicHeight = intrinsicHeight;

@@ -15,9 +15,6 @@ import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
-/**
- * Created by sgehrman on 1/6/14.
- */
 public class ChannelLookupActivity extends Activity {
   TextView mTextView;
   EditText mEditText;

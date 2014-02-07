@@ -86,7 +86,7 @@ public class TypefaceManager {
       byte[] buffer = new byte[inputStream.available()];
       outputStream = new BufferedOutputStream(new FileOutputStream(outPath));
 
-      int l = 0;
+      int l;
       while ((l = inputStream.read(buffer)) > 0) {
         outputStream.write(buffer, 0, l);
       }

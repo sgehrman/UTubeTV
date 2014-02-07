@@ -19,12 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by sgehrman on 12/6/13.
- */
 public class YouTubeListService extends IntentService {
   public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
-  public static final String DATA_READY_INTENT_PARAM = "com.sickboots.sickvideos.DataReady.param";
   private Set mHasFetchedDataMap = new HashSet<String>();
 
   public YouTubeListService() {
@@ -93,7 +89,6 @@ public class YouTubeListService extends IntentService {
 
   private void sendServiceDoneBroadcast() {
     Intent messageIntent = new Intent(DATA_READY_INTENT);
-    messageIntent.putExtra(DATA_READY_INTENT_PARAM, "unused");
 
     LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
     manager.sendBroadcast(messageIntent);

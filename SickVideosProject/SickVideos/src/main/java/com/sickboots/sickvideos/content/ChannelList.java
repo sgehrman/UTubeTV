@@ -17,9 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sgehrman on 1/30/14.
- */
 public class ChannelList {
 
   public interface OnChannelListUpdateListener {

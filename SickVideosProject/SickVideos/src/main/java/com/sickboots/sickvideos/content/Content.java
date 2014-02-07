@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-/**
- * Created by sgehrman on 1/2/14.
- */
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
   private Context mContext;

@@ -419,8 +419,6 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
           @Override
           public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
-              String param = intent.getStringExtra(YouTubeListService.DATA_READY_INTENT_PARAM);
-
               // stop the pull to refresh indicator
               // Notify PullToRefreshLayout that the refresh has finished
               mPullToRefreshLayout.setRefreshComplete();

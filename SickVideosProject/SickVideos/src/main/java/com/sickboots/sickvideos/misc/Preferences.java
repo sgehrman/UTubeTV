@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by sgehrman on 11/26/13.
- */
 public class Preferences implements SharedPreferences.OnSharedPreferenceChangeListener {
 
   public interface PreferenceCacheListener {

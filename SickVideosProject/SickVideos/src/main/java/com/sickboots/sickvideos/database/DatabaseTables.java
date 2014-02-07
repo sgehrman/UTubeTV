@@ -4,9 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-/**
- * Created by sgehrman on 12/9/13.
- */
 public class DatabaseTables {
   // filter flags
   public static final int ALL_ITEMS = 0;

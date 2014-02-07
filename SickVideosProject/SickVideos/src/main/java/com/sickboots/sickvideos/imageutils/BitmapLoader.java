@@ -12,9 +12,6 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.YouTubeData;
 
-/**
- * Created by sgehrman on 2/2/14.
- */
 public class BitmapLoader {
   private BitmapDiskCache mDiskCache;
   private Context mContext;
@@ -78,7 +75,6 @@ public class BitmapLoader {
           callCallbackOnMainThread(result, callback);
         } else {
           // load it
-          int defaultImageResID = 0;
           UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 0, new UrlImageViewCallback() {
 
             @Override

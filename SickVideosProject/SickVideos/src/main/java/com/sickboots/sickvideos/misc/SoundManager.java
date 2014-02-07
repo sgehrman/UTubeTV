@@ -4,9 +4,6 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
 
-/**
- * Created by sgehrman on 1/15/14.
- */
 public class SoundManager {
   private boolean mMuteState = false;
 
