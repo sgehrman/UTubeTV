@@ -46,6 +46,7 @@ public class DrawerManager implements Observer {
   private FragmentManager mFragmentManager;
   private Content mContent;
   private ChannelSpinnerAdapter mChannelSpinnerAdapter;
+  private boolean mSpinnerSucksBalls;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
@@ -180,12 +181,15 @@ public class DrawerManager implements Observer {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
           // String title = (String) parent.getItemAtPosition(position);
 
-          // this gets called when the data is first loaded, just do something if drawer is visible only
-          if (mDrawerLayout.isDrawerVisible(mDrawerContainer)) {
-            mContent.changeChannel(position);
-            mListener.onChannelClick();
+          // this gets called when the data is first loaded, so checking if channel changes
+          if (!mSpinnerSucksBalls)
+            mSpinnerSucksBalls = true;
+          else {
+            if (mContent.changeChannel(position)) {
+              mListener.onChannelClick();
 
-            closeDrawer();
+              closeDrawer();
+            }
           }
         }
 

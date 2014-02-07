@@ -8,7 +8,6 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
-import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -45,30 +44,13 @@ public class Content extends Observable {
     return result;
   }
 
-  public int drawerSelectionIndex() {
-    String sectionIndexString = AppUtils.preferences(mContext).getString(sectionPrefsKey(), "0");
-    int sectionIndex = Integer.parseInt(sectionIndexString);
-
-    return sectionIndex;
-  }
-
-  // we save the last requested drawerSelection as requested
-  private void saveDrawerSelectionIndex(int sectionIndex) {
-    AppUtils.preferences(mContext).setString(sectionPrefsKey(), Integer.toString(sectionIndex));
-  }
-
-  private String sectionPrefsKey() {
-    String result = "drawer_selection";
-
-    result += mChannelList.currentChannelId();
-
-    return result;
-  }
-
-  public void changeChannel(int index) {
-    mChannelList.changeChannel(index);
-
-    notifyForDataUpdate();
+  // returns false if that channel is already current
+  public boolean changeChannel(int index) {
+    if (mChannelList.changeChannel(index)) {
+      notifyForDataUpdate();
+      return true;
+    }
+    return false;
   }
 
   public Fragment fragmentForIndex(int index) {
@@ -90,7 +72,7 @@ public class Content extends Observable {
 
 
     if (fragment != null)
-      saveDrawerSelectionIndex(index);
+      mChannelList.saveSectionIndex(index);
 
     return fragment;
   }

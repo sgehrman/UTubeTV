@@ -53,6 +53,14 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
     sharedPreferences.edit().putBoolean(key, value).commit();
   }
 
+  public int getInt(String key, int defaultValue) {
+    return sharedPreferences.getInt(key, defaultValue);
+  }
+
+  public void setInt(String key, int value) {
+    sharedPreferences.edit().putInt(key, value).commit();
+  }
+
   // SharedPreferences.OnSharedPreferenceChangeListener
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -45,6 +45,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   private PurchaseHelper mPurchaseHelper;
   private Content mContent;
   private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
+  private boolean mSpinnerSucksBalls;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -70,9 +71,14 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         @Override
         public boolean onNavigationItemSelected(int position, long itemId) {
 
-          mContent.changeChannel(position);
-          changeChannel();
-
+          // be aware that this call back gets called when the spinner contents are built
+          // we need to ignore that one, so not going to do anything if channel not changing
+          if (!mSpinnerSucksBalls)
+            mSpinnerSucksBalls = true;
+          else {
+            if (mContent.changeChannel(position))
+              updateSectionForChannel();
+          }
           return true;
         }
       };
@@ -87,7 +93,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    selectSection(mContent.drawerSelectionIndex(), false);
+    selectSection(mContent.mChannelList.savedSectionIndex(), false);
 
     // disabled until polished
     // mPurchaseHelper = new PurchaseHelper(this);
@@ -337,16 +343,16 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     return super.onOptionsItemSelected(item);
   }
 
-  private void changeChannel() {
+  private void updateSectionForChannel() {
     mCurrentSection = -1; // force it to reload fragment if same position
-    selectSection(mContent.drawerSelectionIndex(), true);
+    selectSection(mContent.mChannelList.savedSectionIndex(), true);
   }
 
   private void setupDrawer() {
     mDrawerMgr = new DrawerManager(this, mContent, new DrawerManager.DrawerManagerListener() {
       @Override
       public void onChannelClick() {
-        changeChannel();
+        updateSectionForChannel();
       }
 
       @Override

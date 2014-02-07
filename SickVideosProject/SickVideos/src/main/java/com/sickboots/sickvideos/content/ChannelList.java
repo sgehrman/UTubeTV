@@ -8,6 +8,7 @@ import android.os.Looper;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -39,6 +40,8 @@ public class ChannelList {
     mChannelIds = new ArrayList<String>();
     for (ChannelList.ChannelCode code : channelCodes)
       mChannelIds.add(channelIDForCode(code));
+
+    mCurrentChannelIndex = savedChannelIndex();
 
     requestChannelInfo(false);
   }
@@ -82,8 +85,16 @@ public class ChannelList {
     mListener.onUpdate();
   }
 
-  public void changeChannel(int index) {
-    mCurrentChannelIndex = index;
+  // returns false if that channel is already current
+  public boolean changeChannel(int index) {
+    if (mCurrentChannelIndex != index) {
+      mCurrentChannelIndex = index;
+
+      saveChannelIndex(index);
+      return true;
+    }
+
+    return false;
   }
 
   private void requestChannelInfo(final boolean refresh) {
@@ -184,6 +195,36 @@ public class ChannelList {
 
     return mChannelIDMap.get(code);
   }
+
+  // --------------------------------------------------------
+  // preferences
+
+  public int savedSectionIndex() {
+    return AppUtils.preferences(mContext).getInt(sectionPrefsKey(), 0);
+  }
+
+  // we save the last requested drawerSelection as requested
+  public void saveSectionIndex(int sectionIndex) {
+    AppUtils.preferences(mContext).setInt(sectionPrefsKey(), sectionIndex);
+  }
+
+  private String sectionPrefsKey() {
+    return "section_index" + currentChannelId();
+  }
+
+  public int savedChannelIndex() {
+    return AppUtils.preferences(mContext).getInt(channelIndexPrefsKey(), 0);
+  }
+
+  // we save the last requested drawerSelection as requested
+  public void saveChannelIndex(int sectionIndex) {
+    AppUtils.preferences(mContext).setInt(channelIndexPrefsKey(), sectionIndex);
+  }
+
+  private String channelIndexPrefsKey() {
+    return "channel_index";
+  }
+
 
   public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 
