@@ -19,9 +19,12 @@
         <item name="android:spinnerStyle">@style/Spinner</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
 
-            <item name="android:popupMenuStyle">@style/PopupMenu</item>
-            <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-            <item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>
+            
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+            
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+            
+        <item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>
 
     </style>
 
@@ -34,9 +37,12 @@
         <item name="android:spinnerStyle">@style/SpinnerDark</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
 
-            <item name="android:popupMenuStyle">@style/PopupMenu</item>
-            <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-            <item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>
+            
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+            
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+            
+        <item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>
 
     </style>
 
@@ -99,8 +105,10 @@
 
 
     <style name="Theme.stylingactionbar.widget" parent="android:style/Theme.Holo">
-            <item name="android:popupMenuStyle">@style/PopupMenu</item>
-            <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+            
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+            
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
     </style>
 
 
