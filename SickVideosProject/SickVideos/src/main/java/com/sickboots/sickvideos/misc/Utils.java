@@ -203,21 +203,6 @@ public class Utils {
     return millisecondsToDuration(s.getSeconds() * 1000);
   }
 
-  public static void setActionBarTitle(Activity activity, CharSequence title, CharSequence subtitle) {
-    if (activity != null) {
-      ActionBar bar = activity.getActionBar();
-
-      if (bar != null) {
-        // title is hidden in theme so we don't get ugly flicker on the app name
-        //        if ((bar.getDisplayOptions() & ActionBar.DISPLAY_SHOW_TITLE) != ActionBar.DISPLAY_SHOW_TITLE)
-        //          bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE | bar.getDisplayOptions());
-
-        bar.setTitle(title);
-        bar.setSubtitle(subtitle);
-      }
-    }
-  }
-
   public static boolean hasNetworkConnection(Context context) {
     ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

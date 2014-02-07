@@ -95,7 +95,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
             subtitle += ": " + containerName;
         }
 
-        Utils.setActionBarTitle(getActivity(), title, subtitle);
+        provider.setActionBarTitle(title, subtitle);
       }
     }
   }

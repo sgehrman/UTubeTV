@@ -43,5 +43,6 @@
     <string name="enter_user_name">Enter user name</string>
     <string name="not_found">Not found</string>
     <string name="watch_now">Watch Now</string>
+    <string name="now_playing">Now Playing</string>
 
 </resources>

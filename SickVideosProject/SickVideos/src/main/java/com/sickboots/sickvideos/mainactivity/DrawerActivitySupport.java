@@ -21,4 +21,6 @@ public interface DrawerActivitySupport {
   public boolean isPlayerVisible();
 
   public void installFragment(Fragment fragment, boolean animate);
+
+  public void setActionBarTitle(CharSequence title, CharSequence subtitle);
 }

@@ -2,6 +2,8 @@
 
 package com.sickboots.sickvideos.mainactivity;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -43,6 +47,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   private long lastBackPressTime = 0;
   private PurchaseHelper mPurchaseHelper;
   private Content mContent;
+  private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,25 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     mContent = new Content(this, channelCodes);
+
+    boolean actionBarSpinner = true;
+    if (actionBarSpinner) {
+      getActionBar().setDisplayShowTitleEnabled(false);
+
+      mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
+      ActionBar.OnNavigationListener listener = new ActionBar.OnNavigationListener() {
+        @Override
+        public boolean onNavigationItemSelected(int position, long itemId) {
+
+          mContent.changeChannel(position);
+          changeChannel();
+
+          return true;
+        }
+      };
+      getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+      getActionBar().setListNavigationCallbacks(mActionBarSpinnerAdapter, listener);
+    }
 
     setupDrawer();
 
@@ -316,12 +340,16 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     return super.onOptionsItemSelected(item);
   }
 
+  private void changeChannel() {
+    mCurrentSection = -1; // force it to reload fragment if same position
+    selectSection(mContent.drawerSelectionIndex(), true);
+  }
+
   private void setupDrawer() {
     mDrawerMgr = new DrawerManager(this, mContent, new DrawerManager.DrawerManagerListener() {
       @Override
       public void onChannelClick() {
-        mCurrentSection = -1; // force it to reload fragment if same position
-        selectSection(mContent.drawerSelectionIndex(), true);
+        changeChannel();
       }
 
       @Override
@@ -427,11 +455,27 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   // DrawerActivitySupport
   @Override
+  public void setActionBarTitle(CharSequence title, CharSequence subtitle) {
+ if (mActionBarSpinnerAdapter != null)
+ {
+   mActionBarSpinnerAdapter.setTitleAndSubtitle(title, subtitle);
+ } else {
+    ActionBar bar = getActionBar();
+
+    if (bar != null) {
+      bar.setTitle(title);
+      bar.setSubtitle(subtitle);
+    }
+  }
+  }
+
+  // DrawerActivitySupport
+  @Override
   public boolean actionBarTitleHandled() {
     // if video player is up, show the video title
     VideoPlayer player = videoPlayer(false);
     if (player != null && player.visible()) {
-      Utils.setActionBarTitle(this, "Now Playing", player.title());
+      setActionBarTitle(getResources().getString(R.string.now_playing), player.title());
 
       return true;
     }

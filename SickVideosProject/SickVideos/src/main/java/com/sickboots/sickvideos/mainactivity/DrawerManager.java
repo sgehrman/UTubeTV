@@ -31,7 +31,7 @@ import java.util.Observer;
 /**
  * Created by sgehrman on 12/13/13.
  */
-public class DrawerManager {
+public class DrawerManager implements Observer {
 
   public interface DrawerManagerListener {
     public void onChannelClick();
@@ -64,13 +64,7 @@ public class DrawerManager {
     mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
     // set up the drawer's list view with items and click listener
-    mDrawerList.setAdapter(new DrawerAdapter(activity, content, new DrawerAdapter.DrawerAdapterListener() {
-      @Override
-      public void update() {
-        if (mChannelSpinnerAdapter != null)
-          mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
-      }
-    }));
+    mDrawerList.setAdapter(new DrawerAdapter(activity, content));
 
     mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
       @Override
@@ -120,6 +114,28 @@ public class DrawerManager {
 
   }
 
+private void updateChannelSpinner() {
+  if (mContent.channelInfo() == null)
+    mContent.addObserver(this);
+  else {
+    mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
+
+    // only need this called once
+    mContent.deleteObserver(this);
+  }
+}
+
+  @Override
+  public void update(Observable observable, Object data) {
+    if (data instanceof String) {
+      String input = (String) data;
+
+      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
+        updateChannelSpinner();
+      }
+    }
+  }
+
   public void setDrawerIndicatorEnabled(boolean set) {
     mDrawerToggle.setDrawerIndicatorEnabled(set);
   }
@@ -160,6 +176,8 @@ public class DrawerManager {
 
       spinner.setAdapter(mChannelSpinnerAdapter);
 
+      updateChannelSpinner();
+
       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -184,20 +202,14 @@ public class DrawerManager {
     }
   }
 
-  private static class DrawerAdapter extends ArrayAdapter<Map> implements Observer {
+  private static class DrawerAdapter extends ArrayAdapter<Map> {
     private LayoutInflater inflater;
     private Content mContent;
     private int mIconColor;
-    private DrawerAdapterListener mListener;
 
-    public interface DrawerAdapterListener {
-      public void update();
-    }
-
-    public DrawerAdapter(Context context, Content content, DrawerAdapterListener listener) {
+    public DrawerAdapter(Context context, Content content) {
       super(context, R.layout.drawer_list_item);
 
-      mListener = listener;
       inflater = LayoutInflater.from(context);
       mIconColor = context.getResources().getColor(R.color.drawer_icon_color);
 
@@ -210,27 +222,8 @@ public class DrawerManager {
       // clear existing items
       clear();
 
-      if (mContent.channelInfo() == null)
-        mContent.addObserver(this);
-
       for (Map item : mContent.drawerTitles()) {
         add(item);
-      }
-    }
-
-    @Override
-    public void update(Observable observable, Object data) {
-      if (data instanceof String) {
-        String input = (String) data;
-
-        if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
-
-          mListener.update();
-          rebuild();
-
-          // only need this called once
-          mContent.deleteObserver(this);
-        }
       }
     }
 
