@@ -3,7 +3,6 @@
 package com.sickboots.sickvideos.mainactivity;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -68,8 +65,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     boolean actionBarSpinner = true;
     if (actionBarSpinner) {
-      getActionBar().setDisplayShowTitleEnabled(false);
-
       mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
       ActionBar.OnNavigationListener listener = new ActionBar.OnNavigationListener() {
         @Override
@@ -81,6 +76,8 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
           return true;
         }
       };
+
+      getActionBar().setDisplayShowTitleEnabled(false);
       getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
       getActionBar().setListNavigationCallbacks(mActionBarSpinnerAdapter, listener);
     }
@@ -456,17 +453,16 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   // DrawerActivitySupport
   @Override
   public void setActionBarTitle(CharSequence title, CharSequence subtitle) {
- if (mActionBarSpinnerAdapter != null)
- {
-   mActionBarSpinnerAdapter.setTitleAndSubtitle(title, subtitle);
- } else {
-    ActionBar bar = getActionBar();
+    if (mActionBarSpinnerAdapter != null) {
+      mActionBarSpinnerAdapter.setTitleAndSubtitle(title, subtitle);
+    } else {
+      ActionBar bar = getActionBar();
 
-    if (bar != null) {
-      bar.setTitle(title);
-      bar.setSubtitle(subtitle);
+      if (bar != null) {
+        bar.setTitle(title);
+        bar.setSubtitle(subtitle);
+      }
     }
-  }
   }
 
   // DrawerActivitySupport

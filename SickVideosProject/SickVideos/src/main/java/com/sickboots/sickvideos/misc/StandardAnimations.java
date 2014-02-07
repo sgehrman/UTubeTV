@@ -69,7 +69,7 @@ public class StandardAnimations {
     }
   }
 
-  public static  void rubberClick(final View theView) {
+  public static void rubberClick(final View theView) {
     ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 60f);
     ObjectAnimator rotateBack = ObjectAnimator.ofFloat(theView, "rotationY", 0f);
     ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", .4f);

@@ -35,6 +35,7 @@
     <style name="DrawerActivityStartupTheme" parent="android:style/Theme.Holo.NoActionBar">
         <item name="android:windowBackground">@drawable/default_window_background</item>
     </style>
+
     <style name="DrawerActivityTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/default_window_background</item>
     </style>

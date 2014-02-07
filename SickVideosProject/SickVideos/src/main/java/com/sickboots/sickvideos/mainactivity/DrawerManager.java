@@ -114,16 +114,16 @@ public class DrawerManager implements Observer {
 
   }
 
-private void updateChannelSpinner() {
-  if (mContent.channelInfo() == null)
-    mContent.addObserver(this);
-  else {
-    mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
+  private void updateChannelSpinner() {
+    if (mContent.channelInfo() == null)
+      mContent.addObserver(this);
+    else {
+      mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
 
-    // only need this called once
-    mContent.deleteObserver(this);
+      // only need this called once
+      mContent.deleteObserver(this);
+    }
   }
-}
 
   @Override
   public void update(Observable observable, Object data) {

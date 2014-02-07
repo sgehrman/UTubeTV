@@ -1,8 +1,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <bitmap
-                android:src="@drawable/batthern"
-                android:tileMode="repeat"/>
+            android:src="@drawable/batthern"
+            android:tileMode="repeat"/>
     </item>
 
 

@@ -16,7 +16,6 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
-import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Observable;
 import java.util.Observer;

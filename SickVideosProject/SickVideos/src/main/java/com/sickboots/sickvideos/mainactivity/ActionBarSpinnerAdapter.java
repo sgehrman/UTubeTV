@@ -16,7 +16,6 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.List;
 import java.util.Observable;
@@ -32,7 +31,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   private CharSequence mSubtitle;
 
   public ActionBarSpinnerAdapter(Context context, Content content) {
-//    super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
+    //    super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
     super(context, R.layout.action_bar_spinner_item, android.R.id.text1);
 
     mContext = context.getApplicationContext();
