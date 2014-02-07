@@ -46,6 +46,8 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    // we set the activity to NoActionBar in the manifest to avoid the title flickering in the actionbar
+    setTheme(R.style.DrawerActivityTheme);
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_drawer);
