@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:background="@drawable/action_bar_menu_background"
+              android:padding="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="#2000"
+        android:padding="1dp"
+        android:id="@android:id/icon1"
+        />
+
+    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                     android:id="@android:id/text1"
+                     android:layout_marginLeft="2dp"
+                     style="?android:attr/spinnerDropDownItemStyle"
+                     android:singleLine="true"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:ellipsize="marquee"
+                     android:textSize="18sp"
+                     android:textColor="#fff"
+                     android:layout_gravity="center_vertical"
+                     android:textAlignment="inherit"/>
+
+</LinearLayout>

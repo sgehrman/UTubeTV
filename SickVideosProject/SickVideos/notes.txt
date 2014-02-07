@@ -87,6 +87,9 @@ private static int cntt = 0;
     Debug.log("gridffrag ------- " + cntt);
   }
 
+android:exitFadeDuration="@android:integer/config_mediumAnimTime"
+
+
 
 // --------------------------------------------------------
 

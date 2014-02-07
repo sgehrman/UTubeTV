@@ -38,7 +38,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
 
     mBitmapLoader = new BitmapLoader(context);
 
-    setDropDownViewResource(R.layout.channel_spinner_item);
+    setDropDownViewResource(R.layout.channel_spinner_ab_item);
 
     updateChannels();
   }
