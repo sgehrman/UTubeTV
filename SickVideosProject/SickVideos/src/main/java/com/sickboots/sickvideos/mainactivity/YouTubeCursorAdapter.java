@@ -99,7 +99,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         .getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
 
     result.mClickTextToExpand = true;
-    result.mTheme_imageAlpha = 1.0f;
     result.mTheme_drawImageShadows = false;
     result.mDescriptionMaxLines = context.getResources()
         .getInteger(R.integer.description_max_lines);
@@ -152,7 +151,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
         StandardAnimations.rockBounce(theView);
         break;
       case 3:
-        StandardAnimations.winky(theView, mTheme.mTheme_imageAlpha);
+        StandardAnimations.winky(theView, 1.0f);
         break;
       default:
         StandardAnimations.rubberClick(theView);
@@ -416,7 +415,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   private static class Theme {
-    float mTheme_imageAlpha;
     int mTheme_itemResId;
     int mTheme_resId;
     boolean mTheme_drawImageShadows;
