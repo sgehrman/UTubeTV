@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -17,12 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -312,11 +308,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     Cursor cursor = (Cursor) getItem(position);
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
-    Picasso.with(mContext)
-          .load(itemMap.mThumbnail)
-//          .noFade()
-//          .resize(250, 250) // put into dimens for dp values
-          .into(holder.image);
+    Picasso.with(mContext).load(itemMap.mThumbnail)
+        //          .fit()
+        //          .noFade()
+        //          .resize(250, 250) // put into dimens for dp values
+        .into(holder.image);
 
     boolean hidden = itemMap.isHidden();
     holder.image.setDrawHiddenIndicator(hidden);

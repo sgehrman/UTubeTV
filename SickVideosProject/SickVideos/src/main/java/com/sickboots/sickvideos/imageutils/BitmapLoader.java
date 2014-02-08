@@ -2,15 +2,13 @@ package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.LruCache;
-import android.widget.ImageView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 public class BitmapLoader {
   private BitmapDiskCache mDiskCache;
@@ -74,24 +72,27 @@ public class BitmapLoader {
           mLruCache.put(key, result);
           callCallbackOnMainThread(result, callback);
         } else {
-          // load it
-          UrlImageViewHelper.loadUrlDrawable(mContext, data.mThumbnail, 0, new UrlImageViewCallback() {
+          Bitmap bitmap;
+          try {
+            RequestCreator requestCreator = Picasso.with(mContext)
+                .load(data.mThumbnail)
+                .skipMemoryCache();
 
-            @Override
-            public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-              if (loadedBitmap != null) {
-                if (thumbnailSize != 0)
-                  loadedBitmap = ThumbnailUtils.extractThumbnail(loadedBitmap, thumbnailSize, thumbnailSize);
+            if (thumbnailSize != 0)
+              requestCreator = requestCreator.resize(thumbnailSize, thumbnailSize);
 
-                // save image to our caches
-                mDiskCache.put(key, loadedBitmap);
-                mLruCache.put(key, loadedBitmap);
-              }
+            bitmap = requestCreator.get();
 
-              callCallbackOnMainThread(loadedBitmap, callback);
+            if (bitmap != null) {
+              // save image to our caches
+              mDiskCache.put(key, bitmap);
+              mLruCache.put(key, bitmap);
             }
 
-          });
+            callCallbackOnMainThread(bitmap, callback);
+
+          } catch (Throwable t) {
+          }
         }
       }
     }).start();

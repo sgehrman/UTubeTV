@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.BitmapLoader;
-import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 
 import java.util.List;
 import java.util.Observable;

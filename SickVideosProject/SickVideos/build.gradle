@@ -151,7 +151,6 @@ dependencies {
     compile 'com.google.guava:guava:16.+'
 
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
-    compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
     compile 'joda-time:joda-time:2.3'
     compile 'com.larswerkman:HoloColorPicker:1.1'
     compile 'com.nhaarman.listviewanimations:library:2.5.+'
