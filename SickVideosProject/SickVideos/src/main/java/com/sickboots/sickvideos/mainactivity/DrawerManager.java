@@ -169,7 +169,7 @@ public class DrawerManager implements Observer {
   }
 
   private void setupDrawerSpinner(Context context, Spinner spinner) {
-    if (mContent.needsChannelSwitcher()) {
+    if (false) { // disabled.  mContent.needsChannelSwitcher()) {
       mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
 
       spinner.setAdapter(mChannelSpinnerAdapter);

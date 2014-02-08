@@ -398,7 +398,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    // Pass any configuration change to the drawer toggls
+    // Pass any configuration change to the drawer toggles
     mDrawerMgr.onConfigurationChanged(newConfig);
 
     // the spinners title and subtitle change on different orientations
