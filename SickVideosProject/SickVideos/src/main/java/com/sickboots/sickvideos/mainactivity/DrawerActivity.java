@@ -64,8 +64,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     mContent = new Content(this, channelCodes);
 
-    boolean actionBarSpinner = true;
-    if (actionBarSpinner) {
+    if (mContent.needsChannelSwitcher()) {
       mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
       ActionBar.OnNavigationListener listener = new ActionBar.OnNavigationListener() {
         @Override
@@ -401,6 +400,12 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     super.onConfigurationChanged(newConfig);
     // Pass any configuration change to the drawer toggls
     mDrawerMgr.onConfigurationChanged(newConfig);
+
+    // the spinners title and subtitle change on different orientations
+    // must tell the adaptor it's views need to be refreshed
+    if (mActionBarSpinnerAdapter != null) {
+      mActionBarSpinnerAdapter.notifyDataSetChanged();
+    }
   }
 
   private void syncActionBarTitle() {
