@@ -30,7 +30,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter<String> {
     mContext = context.getApplicationContext();
     mBitmapLoader = new BitmapLoader(context);
 
-    setDropDownViewResource(R.layout.channel_spinner_item);
+    setDropDownViewResource(R.layout.view_channel_spinner);
   }
 
   public void updateChannels(List<YouTubeData> channels) {
@@ -45,7 +45,7 @@ public class ChannelSpinnerAdapter extends ArrayAdapter<String> {
   public View getDropDownView(int position, View view, ViewGroup parent) {
     ViewHolder holder;
     if (view == null) {
-      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_item, parent, false);
+      view = LayoutInflater.from(mContext).inflate(R.layout.view_channel_spinner, parent, false);
       holder = new ViewHolder();
       holder.imageView = (ImageView) view.findViewById(android.R.id.icon1);
       holder.textView = (CheckedTextView) view.findViewById(android.R.id.text1);

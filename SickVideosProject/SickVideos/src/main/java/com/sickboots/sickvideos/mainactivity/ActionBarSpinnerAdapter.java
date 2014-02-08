@@ -30,14 +30,14 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   private CharSequence mSubtitle;
 
   public ActionBarSpinnerAdapter(Context context, Content content) {
-    super(context, R.layout.action_bar_spinner_item, android.R.id.text1);
+    super(context, R.layout.view_ab_spinner, android.R.id.text1);
 
     mContext = context.getApplicationContext();
     mContent = content;
 
     mBitmapLoader = new BitmapLoader(context);
 
-    setDropDownViewResource(R.layout.channel_spinner_ab_item);
+    setDropDownViewResource(R.layout.view_ab_spinner_item);
 
     updateChannels();
   }
@@ -65,7 +65,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   public View getView(int position, View view, ViewGroup parent) {
     ViewHolder2 holder;
     if (view == null) {
-      view = LayoutInflater.from(mContext).inflate(R.layout.action_bar_spinner_item, parent, false);
+      view = LayoutInflater.from(mContext).inflate(R.layout.view_ab_spinner, parent, false);
       holder = new ViewHolder2();
       holder.subtitle = (TextView) view.findViewById(R.id.action_bar_subtitle);
       holder.title = (TextView) view.findViewById(android.R.id.text1);
@@ -102,7 +102,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
 
     ViewHolder holder;
     if (view == null) {
-      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_ab_item, parent, false);
+      view = LayoutInflater.from(mContext).inflate(R.layout.view_ab_spinner_item, parent, false);
       holder = new ViewHolder();
       holder.imageView = (ImageView) view.findViewById(android.R.id.icon1);
       holder.textView = (CheckedTextView) view.findViewById(android.R.id.text1);
