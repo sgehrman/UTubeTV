@@ -3,12 +3,14 @@ package com.sickboots.sickvideos.mainactivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -17,7 +19,7 @@ import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 
 import java.util.List;
 
-public class ChannelSpinnerAdapter extends ArrayAdapter {
+public class ChannelSpinnerAdapter extends ArrayAdapter<String> {
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
   private Drawable mCheckDrawable;
@@ -41,16 +43,18 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
   }
 
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    return super.getView(position, convertView, parent);
-  }
+  public View getDropDownView(int position, View view, ViewGroup parent) {
+    ViewHolder holder;
+    if (view == null) {
+      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_item, parent, false);
+      holder = new ViewHolder();
+      holder.imageView = (ImageView) view.findViewById(android.R.id.icon1);
+      holder.textView = (CheckedTextView) view.findViewById(android.R.id.text1);
+      view.setTag(holder);
+    } else {
+      holder = (ViewHolder) view.getTag();
+    }
 
-  @Override
-  public View getDropDownView(int position, View convertView, ViewGroup parent) {
-    View result = super.getDropDownView(position, convertView, parent);
-
-    ImageView imageView = (ImageView) result.findViewById(android.R.id.icon1);
-    CheckedTextView textView = (CheckedTextView) result.findViewById(android.R.id.text1);
     final YouTubeData data = mChannels.get(position);
 
     // is this right?  seems crazy
@@ -61,15 +65,17 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
         mCheckDrawable.setAlpha(60);
       }
 
-      textView.setCheckMarkDrawable(mCheckDrawable);
+      holder.textView.setCheckMarkDrawable(mCheckDrawable);
     } else
-      textView.setCheckMarkDrawable(null);
+      holder.textView.setCheckMarkDrawable(null);
+
+    holder.textView.setText(getItem(position));
 
     final int thumbnailSize = 64;
 
     Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
     if (bitmap != null)
-      imageView.setImageBitmap(bitmap);
+      holder.imageView.setImageBitmap(bitmap);
     else {
       mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
         @Override
@@ -80,6 +86,11 @@ public class ChannelSpinnerAdapter extends ArrayAdapter {
       });
     }
 
-    return result;
+    return view;
+  }
+
+  private static class ViewHolder {
+    ImageView imageView;
+    CheckedTextView textView;
   }
 }

@@ -3,6 +3,7 @@ package com.sickboots.sickvideos.mainactivity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -76,49 +77,6 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   }
 
   @Override
-  public View getDropDownView(int position, View convertView, ViewGroup parent) {
-    if (mChannels == null)
-      return super.getDropDownView(position, convertView, parent);
-
-    View result = super.getDropDownView(position, convertView, parent);
-
-    ImageView imageView = (ImageView) result.findViewById(android.R.id.icon1);
-    CheckedTextView textView = (CheckedTextView) result.findViewById(android.R.id.text1);
-    final YouTubeData data = mChannels.get(position);
-
-    // is this right?  seems crazy
-    if (parent instanceof ListView) {
-      if (((ListView) parent).isItemChecked(position)) {
-
-        if (mCheckDrawable == null) {
-          mCheckDrawable = ToolbarIcons.icon(mContext, ToolbarIcons.IconID.CHECK, 0xff000000, 30);
-          mCheckDrawable.setAlpha(60);
-        }
-
-        textView.setCheckMarkDrawable(mCheckDrawable);
-      } else
-        textView.setCheckMarkDrawable(null);
-    }
-
-    final int thumbnailSize = 64;
-
-    Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
-    if (bitmap != null)
-      imageView.setImageBitmap(bitmap);
-    else {
-      mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
-        @Override
-        public void onLoaded(Bitmap bitmap) {
-          if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
-            ActionBarSpinnerAdapter.this.notifyDataSetChanged();
-        }
-      });
-    }
-
-    return result;
-  }
-
-  @Override
   public void update(Observable observable, Object data) {
     if (data instanceof String) {
       String input = (String) data;
@@ -133,4 +91,46 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
     }
   }
 
+  @Override
+  public View getDropDownView(int position, View view, ViewGroup parent) {
+    if (mChannels == null)
+      return super.getDropDownView(position, view, parent);
+
+    ViewHolder holder;
+    if (view == null) {
+      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_item, parent, false);
+      holder = new ViewHolder();
+      holder.imageView = (ImageView) view.findViewById(android.R.id.icon1);
+      holder.textView = (CheckedTextView) view.findViewById(android.R.id.text1);
+      view.setTag(holder);
+    } else {
+      holder = (ViewHolder) view.getTag();
+    }
+
+    final YouTubeData data = mChannels.get(position);
+
+    holder.textView.setText(getItem(position));
+
+    final int thumbnailSize = 64;
+
+    Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
+    if (bitmap != null)
+      holder.imageView.setImageBitmap(bitmap);
+    else {
+      mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
+        @Override
+        public void onLoaded(Bitmap bitmap) {
+          if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
+            ActionBarSpinnerAdapter.this.notifyDataSetChanged();
+        }
+      });
+    }
+
+    return view;
+  }
+
+  private static class ViewHolder {
+    ImageView imageView;
+    CheckedTextView textView;
+  }
 }

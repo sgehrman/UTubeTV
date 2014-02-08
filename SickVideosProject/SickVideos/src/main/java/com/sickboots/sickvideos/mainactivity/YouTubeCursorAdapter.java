@@ -35,6 +35,7 @@ import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.VideoImageView;
 import com.sickboots.sickvideos.youtube.ViewDecorations;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
+import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -312,19 +313,11 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     Cursor cursor = (Cursor) getItem(position);
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
-    int defaultImageResID = 0;
-    UrlImageViewHelper.setUrlDrawable(holder.image, itemMap.mThumbnail, defaultImageResID, new UrlImageViewCallback() {
-
-      @Override
-      public void onLoaded(ImageView imageView, Bitmap loadedBitmap, String url, boolean loadedFromCache) {
-        if (mFadeInLoadedImages && !loadedFromCache) {
-          imageView.setAlpha(mTheme.mTheme_imageAlpha / 2);
-          imageView.animate().setDuration(200).alpha(mTheme.mTheme_imageAlpha);
-        } else
-          imageView.setAlpha(mTheme.mTheme_imageAlpha);
-      }
-
-    });
+    Picasso.with(mContext)
+          .load(itemMap.mThumbnail)
+//          .noFade()
+//          .resize(250, 250) // put into dimens for dp values
+          .into(holder.image);
 
     boolean hidden = itemMap.isHidden();
     holder.image.setDrawHiddenIndicator(hidden);

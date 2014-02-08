@@ -159,6 +159,7 @@ dependencies {
     compile 'com.github.codechimp-org.apprater:library:+'
     compile 'com.github.johnkil.android-appmsg:appmsg:1.1.+'
     compile 'com.jakewharton:disklrucache:2.0.+'
+    compile 'com.squareup.picasso:picasso:2.2.+'
 
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')
