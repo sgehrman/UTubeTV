@@ -62,16 +62,22 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   }
 
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    View result = super.getView(position, convertView, parent);
+  public View getView(int position, View view, ViewGroup parent) {
+    ViewHolder2 holder;
+    if (view == null) {
+      view = LayoutInflater.from(mContext).inflate(R.layout.action_bar_spinner_item, parent, false);
+      holder = new ViewHolder2();
+      holder.subtitle = (TextView) view.findViewById(R.id.action_bar_subtitle);
+      holder.title = (TextView) view.findViewById(android.R.id.text1);
+      view.setTag(holder);
+    } else {
+      holder = (ViewHolder2) view.getTag();
+    }
 
-    TextView title = (TextView) result.findViewById(android.R.id.text1);
-    TextView subtitle = (TextView) result.findViewById(R.id.action_bar_subtitle);
+    holder.title.setText(mTitle);
+    holder.subtitle.setText(mSubtitle);
 
-    title.setText(mTitle);
-    subtitle.setText(mSubtitle);
-
-    return result;
+    return view;
   }
 
   @Override
@@ -96,7 +102,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
 
     ViewHolder holder;
     if (view == null) {
-      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_item, parent, false);
+      view = LayoutInflater.from(mContext).inflate(R.layout.channel_spinner_ab_item, parent, false);
       holder = new ViewHolder();
       holder.imageView = (ImageView) view.findViewById(android.R.id.icon1);
       holder.textView = (CheckedTextView) view.findViewById(android.R.id.text1);
@@ -130,5 +136,10 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
   private static class ViewHolder {
     ImageView imageView;
     CheckedTextView textView;
+  }
+
+  private static class ViewHolder2 {
+    TextView title;
+    TextView subtitle;
   }
 }
