@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <dimen name="action_bar_title_text_size">16dp</dimen>
     <dimen name="action_bar_subtitle_text_size">12dp</dimen>
-    <dimen name="action_bar_subtitle_top_margin">-2dp</dimen>
-    <dimen name="action_bar_subtitle_bottom_margin">4dp</dimen>
+    <dimen name="action_bar_subtitle_top_margin">-5dp</dimen>
 
 </resources>
