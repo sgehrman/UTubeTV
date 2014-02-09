@@ -13,6 +13,7 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,6 +26,8 @@ import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.SearchView;
 
+import com.cocosw.undobar.UndoBarController;
+import com.google.common.primitives.Longs;
 import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
@@ -42,6 +45,8 @@ import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
+
+import java.util.ArrayList;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -151,7 +156,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       int textColor = getActivity().getResources().getColor(android.R.color.primary_text_dark);
       int hintColor = getActivity().getResources().getColor(android.R.color.secondary_text_dark);
 
-      Utils.textViewColorChanger( mSearchView, textColor, hintColor);
+      Utils.textViewColorChanger(mSearchView, textColor, hintColor);
 
       mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override
@@ -259,7 +264,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   // OnDismissCallback
   @Override
   public void onDismiss(AbsListView listView, int[] reverseSortedPositions) {
-    Utils.message(getActivity(), String.format("Item Hidden"));
+    ArrayList<Long> ids = new ArrayList<Long>();
 
     for (int position : reverseSortedPositions) {
       Cursor cursor = (Cursor) mAdapter.getItem(position);
@@ -267,14 +272,35 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
       DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
 
-      // could get from database, but it's the same item
-      // itemMap = database.getItemWithID(itemMap.mID);
+      ids.add(itemMap.mID);
 
       if (itemMap != null) {
         itemMap.setHidden(!itemMap.isHidden());
         database.updateItem(itemMap);
       }
     }
+
+    UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
+      @Override
+      public void onUndo(Parcelable parcelable) {
+
+        DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
+
+        Bundle info = (Bundle) parcelable;
+        long ids[] = info.getLongArray("id_array");
+
+        for (long id : ids) {
+          YouTubeData itemMap = database.getItemWithID(id);
+          if (itemMap != null) {
+            itemMap.setHidden(!itemMap.isHidden());
+            database.updateItem(itemMap);
+          }
+        }
+      }
+    };
+    Bundle info = new Bundle();
+    info.putLongArray("id_array", Longs.toArray(ids));
+    UndoBarController.show(getActivity(), "Undo-bar title", listener, info);
   }
 
   public String getFilter() {
