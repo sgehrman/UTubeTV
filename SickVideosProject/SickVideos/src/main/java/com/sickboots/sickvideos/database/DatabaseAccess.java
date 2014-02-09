@@ -42,7 +42,6 @@ public class DatabaseAccess {
 
     } catch (Exception e) {
       Debug.log("deleteAllRows exception: " + e.getMessage());
-    } finally {
     }
   }
 
@@ -122,7 +121,6 @@ public class DatabaseAccess {
       notifyProviderOfChange();
     } catch (Exception e) {
       Debug.log("updateItem exception: " + e.getMessage());
-    } finally {
     }
 
   }
@@ -168,7 +166,6 @@ public class DatabaseAccess {
       }
     } catch (Exception e) {
       Debug.log("getItems exception: " + e.getMessage());
-    } finally {
     }
 
     return result;

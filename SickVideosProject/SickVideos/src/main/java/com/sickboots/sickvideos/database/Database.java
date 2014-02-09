@@ -79,7 +79,6 @@ public class Database extends SQLiteOpenHelper {
 
     } catch (Exception e) {
       Debug.log("Database.getCursor exception: " + e.getMessage());
-    } finally {
     }
 
     return cursor;
