@@ -151,7 +151,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       int textColor = getActivity().getResources().getColor(android.R.color.primary_text_dark);
       int hintColor = getActivity().getResources().getColor(android.R.color.secondary_text_dark);
 
-      Utils.textViewColorChanger((ViewGroup) mSearchView, textColor, hintColor);
+      Utils.textViewColorChanger( mSearchView, textColor, hintColor);
 
       mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override

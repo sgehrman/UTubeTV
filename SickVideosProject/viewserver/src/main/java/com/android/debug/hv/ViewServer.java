@@ -319,9 +319,6 @@ public class ViewServer implements Runnable {
     /**
      * Invoke this method to register a new view hierarchy.
      * 
-     * @param view A view that belongs to the view hierarchy/window to register
-     * @name name The name of the view hierarchy/window to register
-     * 
      * @see #removeWindow(View)
      */
     public void addWindow(View view, String name) {

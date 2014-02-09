@@ -56,9 +56,6 @@ public class TypefaceManager {
     /**
      * Loads a {@link Typeface} for the given icon font.
      * {@link Typeface} is loaded only once to avoid memory consumption.
-     *
-     * @param context
-     * @return {@link Typeface}
      */
     public Typeface getTypeface(final Context context) {
       if (mTypeface == null) {
