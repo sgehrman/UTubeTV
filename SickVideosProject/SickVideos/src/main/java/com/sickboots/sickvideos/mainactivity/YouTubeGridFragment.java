@@ -143,9 +143,15 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       mSearchItem.setIcon(mSearchDrawable);
 
       mSearchView = new SearchView(getActivity());
-      mSearchView.setSubmitButtonEnabled(true);
+      //      mSearchView.setSubmitButtonEnabled(true);
       mSearchView.setQueryHint("Search");
       mSearchItem.setActionView(mSearchView);
+
+      // change the text color inside the searchView, There is no way to theme this shitty thing
+      int textColor = getActivity().getResources().getColor(android.R.color.primary_text_dark);
+      int hintColor = getActivity().getResources().getColor(android.R.color.secondary_text_dark);
+
+      Utils.textViewColorChanger((ViewGroup) mSearchView, textColor, hintColor);
 
       mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override

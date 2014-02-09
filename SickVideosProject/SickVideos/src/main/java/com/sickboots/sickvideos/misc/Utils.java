@@ -23,7 +23,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devspark.appmsg.AppMsg;
@@ -304,4 +307,16 @@ public class Utils {
       Toast.makeText(activity, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
     }
   }
+
+  public static void textViewColorChanger(ViewGroup group, int textColor, int hintColor) {
+    for (int i = 0; i < group.getChildCount(); i++) {
+      View child = group.getChildAt(i);
+      if (child instanceof TextView) {
+        ((TextView) child).setTextColor(textColor);
+        ((TextView) child).setHintTextColor(hintColor);
+      } else if (child instanceof ViewGroup)
+        textViewColorChanger((ViewGroup) child, textColor, hintColor);
+    }
+  }
+
 }
