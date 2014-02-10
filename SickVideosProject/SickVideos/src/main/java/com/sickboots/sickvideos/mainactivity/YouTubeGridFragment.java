@@ -300,7 +300,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     };
     Bundle info = new Bundle();
     info.putLongArray("id_array", Longs.toArray(ids));
-    UndoBarController.show(getActivity(), "Undo-bar title", listener, info);
+    UndoBarController.show(getActivity(), mRequest.unitName(false) + " hidden", listener, info);
   }
 
   public String getFilter() {
