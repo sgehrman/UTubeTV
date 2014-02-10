@@ -3,6 +3,8 @@ package com.sickboots.sickvideos.mainactivity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -39,6 +41,7 @@ import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
@@ -133,83 +136,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.fragment_menu, menu);
 
-    mSearchItem = menu.findItem(R.id.action_search);
-    if (mSearchItem != null) {
-      if (mSearchDrawable == null) {
-        // seems insane, is this the best way of having a variable drawable resource by theme?
-        int[] attrs = new int[]{R.attr.action_bar_icon_color};
-        TypedArray ta = getActivity().obtainStyledAttributes(attrs);
-        int color = ta.getColor(0, 0);
-        ta.recycle();
-
-        mSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, 32);
-        mSearchDrawable.setAlpha(150);
-      }
-      mSearchItem.setIcon(mSearchDrawable);
-
-      mSearchView = new SearchView(getActivity());
-      //      mSearchView.setSubmitButtonEnabled(true);
-      mSearchView.setQueryHint("Search");
-      mSearchItem.setActionView(mSearchView);
-
-      // change the text color inside the searchView, There is no way to theme this shitty thing
-      int textColor = getActivity().getResources().getColor(android.R.color.primary_text_dark);
-      int hintColor = getActivity().getResources().getColor(android.R.color.secondary_text_dark);
-
-      Utils.textViewColorChanger(mSearchView, textColor, hintColor);
-
-      mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-        @Override
-        public boolean onMenuItemActionExpand(MenuItem item) {
-          // return false and clear the filter if clicked when a filter is set
-          if (!TextUtils.isEmpty(getFilter())) {
-            // this is needed since if the action bar refreshes, it will restore the query, kitkat seems to clear this though
-            mSearchView.setQuery(null, true);
-
-            // added for KitKat, previously setQuery to null would trigger the text listener
-            setFilter(null);
-
-            return false;
-          }
-          return true;
-        }
-
-        @Override
-        public boolean onMenuItemActionCollapse(MenuItem item) {
-          return true;
-        }
-      });
-
-      mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-          if (mSearchItem != null) {
-            return endSearchActionBar();
-          }
-
-          return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-          // Called when the action bar search text has changed.  Update
-          // the search filter, and restart the loader to do a new query
-          // with this filter.
-          String filter = !TextUtils.isEmpty(newText) ? newText : null;
-          boolean setFilter = true;
-
-          if (mSearchSubmitted && filter == null) {
-            // on KitKat collapseActionView call above on submit, sends null for newText, so preventing this from changing
-            // the filter here
-            setFilter = false;
-          }
-
-          mSearchSubmitted = false;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
-
-          return (setFilter && setFilter(filter));
-        }
-      });
-    }
+    setupSearchItem(menu);
   }
 
   @Override
@@ -472,6 +399,119 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
             .unregisterReceiver(mBroadcastReceiver);
 
       }
+    }
+  }
+
+  private void setupSearchItem(Menu menu) {
+    mSearchItem = menu.findItem(R.id.action_search);
+    if (mSearchItem != null) {
+      if (mSearchDrawable == null) {
+        // seems insane, is this the best way of having a variable drawable resource by theme?
+        int[] attrs = new int[]{R.attr.action_bar_icon_color};
+        TypedArray ta = getActivity().obtainStyledAttributes(attrs);
+        int color = ta.getColor(0, 0);
+        ta.recycle();
+
+        mSearchDrawable = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, 32);
+        mSearchDrawable.setAlpha(150);
+      }
+      mSearchItem.setIcon(mSearchDrawable);
+
+      mSearchView = (SearchView) mSearchItem.getActionView();
+      //      mSearchView.setSubmitButtonEnabled(true);
+      mSearchView.setQueryHint("Search");
+
+
+
+
+// http://stackoverflow.com/questions/11491515/turn-autocompletetextview-into-a-searchview-in-actionbar-instead
+
+      // not sure if this is needed or not yet....
+      SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+      SearchableInfo searchableInfo = searchManager.getSearchableInfo(getActivity().getComponentName());
+      mSearchView.setSearchableInfo(searchableInfo);
+
+
+      SearchView.OnSuggestionListener x = new SearchView.OnSuggestionListener() {
+        @Override
+        public boolean onSuggestionSelect(int position) {
+          Debug.log("suck my balls");
+          return false;
+        }
+
+        @Override
+        public boolean onSuggestionClick(int position) {
+          Debug.log("dddd my balls");
+          return false;
+        }
+      };
+
+
+
+
+
+
+
+      mSearchItem.setActionView(mSearchView);
+
+      // change the text color inside the searchView, There is no way to theme this shitty thing
+      int textColor = getActivity().getResources().getColor(android.R.color.primary_text_dark);
+      int hintColor = getActivity().getResources().getColor(android.R.color.secondary_text_dark);
+
+      Utils.textViewColorChanger(mSearchView, textColor, hintColor);
+
+      mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+          // return false and clear the filter if clicked when a filter is set
+          if (!TextUtils.isEmpty(getFilter())) {
+            // this is needed since if the action bar refreshes, it will restore the query, kitkat seems to clear this though
+            mSearchView.setQuery(null, true);
+
+            // added for KitKat, previously setQuery to null would trigger the text listener
+            setFilter(null);
+
+            return false;
+          }
+          return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+          return true;
+        }
+      });
+
+      mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+          if (mSearchItem != null) {
+            return endSearchActionBar();
+          }
+
+          return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+          // Called when the action bar search text has changed.  Update
+          // the search filter, and restart the loader to do a new query
+          // with this filter.
+          String filter = !TextUtils.isEmpty(newText) ? newText : null;
+          boolean setFilter = true;
+
+          if (mSearchSubmitted && filter == null) {
+            // on KitKat collapseActionView call above on submit, sends null for newText, so preventing this from changing
+            // the filter here
+            setFilter = false;
+          }
+
+          mSearchSubmitted = false;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
+
+          return (setFilter && setFilter(filter));
+        }
+      });
     }
   }
 

@@ -6,6 +6,7 @@
         android:title="@string/action_search"
         android:orderInCategory="100"
         android:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView"
         />
 
 </menu>
