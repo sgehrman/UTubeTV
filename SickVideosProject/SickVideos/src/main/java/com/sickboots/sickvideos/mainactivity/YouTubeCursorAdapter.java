@@ -265,7 +265,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
       if (multiColumns) {
         // lowering these to get less wasted space at bottom
-        int titleHeight = 1; // mTheme.mTitleMaxLines;
+        int titleHeight = 2; // mTheme.mTitleMaxLines;
         int descriptionHeight = 2; // mTheme.mDescriptionMaxLines;
 
         holder.description.setMaxLines(descriptionHeight);
