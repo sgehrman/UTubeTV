@@ -421,37 +421,10 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       //      mSearchView.setSubmitButtonEnabled(true);
       mSearchView.setQueryHint("Search");
 
-
-
-
-// http://stackoverflow.com/questions/11491515/turn-autocompletetextview-into-a-searchview-in-actionbar-instead
-
       // not sure if this is needed or not yet....
       SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-
       SearchableInfo searchableInfo = searchManager.getSearchableInfo(getActivity().getComponentName());
       mSearchView.setSearchableInfo(searchableInfo);
-
-
-      SearchView.OnSuggestionListener x = new SearchView.OnSuggestionListener() {
-        @Override
-        public boolean onSuggestionSelect(int position) {
-          Debug.log("suck my balls");
-          return false;
-        }
-
-        @Override
-        public boolean onSuggestionClick(int position) {
-          Debug.log("dddd my balls");
-          return false;
-        }
-      };
-
-
-
-
-
-
 
       mSearchItem.setActionView(mSearchView);
 
