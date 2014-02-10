@@ -2,6 +2,10 @@ package com.sickboots.sickvideos.imageutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.LruCache;
@@ -82,6 +86,43 @@ public class BitmapLoader {
               requestCreator = requestCreator.resize(thumbnailSize, thumbnailSize);
 
             bitmap = requestCreator.get();
+
+            // put thumbnails in a circle
+            if (bitmap != null && thumbnailSize != 0) {
+              int width = thumbnailSize;
+              int height = thumbnailSize;
+
+              Bitmap circleBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+              Canvas canvas = new Canvas(circleBitmap);
+
+              // draw using circle into another bitmap, add shadows and shit
+              int centerX = width / 2, centerY = height / 2, radius = (width / 2);
+
+              BitmapShader s = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+
+              Paint p = new Paint();
+              p.setShader(s);
+              p.setAntiAlias(true);
+
+              canvas.drawCircle(centerX, centerY, radius, p);
+
+              p = new Paint();
+              p.setAntiAlias(true);
+              p.setStyle(Paint.Style.STROKE);
+              p.setStrokeWidth(2.0f);
+              p.setColor(0x99FFFFFF);
+
+              canvas.drawCircle(centerX, centerY, radius - 2, p);
+
+              // gloss
+              //              p = new Paint();
+              //              p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+              //
+              //              canvas.drawCircle(centerX, centerY, radius, p);
+
+
+              bitmap = circleBitmap;
+            }
 
             if (bitmap != null) {
               // save image to our caches

@@ -9,8 +9,6 @@
     <ImageView
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:background="#2000"
-        android:padding="1dp"
         android:id="@android:id/icon1"
         />
 
