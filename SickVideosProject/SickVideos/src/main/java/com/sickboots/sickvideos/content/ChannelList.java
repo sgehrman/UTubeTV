@@ -91,6 +91,7 @@ public class ChannelList {
       mCurrentChannelIndex = index;
 
       saveChannelIndex(index);
+
       return true;
     }
 
