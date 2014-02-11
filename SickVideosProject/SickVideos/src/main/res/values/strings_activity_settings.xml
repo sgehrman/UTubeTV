@@ -24,6 +24,7 @@
     <string name="pref_title_privacy_policy">Privacy policy</string>
     <string name="pref_title_tos">Terms of service</string>
     <string name="pref_title_credits">Credits</string>
+    <string name="pref_title_log">Change log</string>
 
     <string name="pref_rate_app">Rate my app!</string>
     <string name="pref_send_feedback">Send feedback</string>

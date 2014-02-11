@@ -32,6 +32,9 @@
     <Preference
         android:title="@string/pref_title_credits"
         android:key="credits"/>
+    <Preference
+        android:title="@string/pref_title_log"
+        android:key="log"/>
 
 </PreferenceScreen>
 

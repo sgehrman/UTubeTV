@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IconicDroid/IconicDroid.iml" filepath="$PROJECT_DIR$/IconicDroid/IconicDroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Inscription/Inscription.iml" filepath="$PROJECT_DIR$/Inscription/Inscription.iml" />
       <module fileurl="file://$PROJECT_DIR$/SickVideos/SickVideos.iml" filepath="$PROJECT_DIR$/SickVideos/SickVideos.iml" />
       <module fileurl="file://$PROJECT_DIR$/SickVideosProject.iml" filepath="$PROJECT_DIR$/SickVideosProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewserver/viewserver.iml" filepath="$PROJECT_DIR$/viewserver/viewserver.iml" />

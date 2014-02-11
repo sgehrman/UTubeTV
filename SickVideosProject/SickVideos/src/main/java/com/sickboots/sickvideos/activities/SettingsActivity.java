@@ -9,6 +9,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
 
+import com.inscription.ChangeLogDialog;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
 
@@ -97,6 +98,15 @@ public class SettingsActivity extends Activity {
             }
           });
         }
+        pref = findPreference("log");
+        if (pref != null) {
+          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+              return handlePrefClick(preference);
+            }
+          });
+        }
 
       } catch (Throwable throwable) {
         Debug.log("exception: " + throwable.getMessage());
@@ -111,6 +121,10 @@ public class SettingsActivity extends Activity {
         AppRater.rateNow(getActivity());
 
         return true;
+      }
+       else if (preference.getKey().equals("log")) {
+        ChangeLogDialog changelogDialog = new ChangeLogDialog(getActivity());
+        changelogDialog.show();
       }
 
       return false;
