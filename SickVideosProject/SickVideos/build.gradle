@@ -149,17 +149,16 @@ dependencies {
     compile 'com.google.android.gms:play-services:+'
     compile 'com.google.api-client:google-api-client-android:1.17.+'
     compile 'com.google.guava:guava:16.+'
-    compile 'com.cocosw:undobar:0.6@aar'
 
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'joda-time:joda-time:2.3'
     compile 'com.larswerkman:HoloColorPicker:1.1'
-    compile 'com.nhaarman.listviewanimations:library:2.5.+'
+    compile 'com.nhaarman.listviewanimations:library:+'
     compile 'org.ocpsoft.prettytime:prettytime:3.2.+'
     compile 'com.github.codechimp-org.apprater:library:+'
-    compile 'com.github.johnkil.android-appmsg:appmsg:1.1.+'
-    compile 'com.jakewharton:disklrucache:2.0.+'
-    compile 'com.squareup.picasso:picasso:2.2.+'
+    compile 'com.jakewharton:disklrucache:+'
+    compile 'com.squareup.picasso:picasso:+'
+    compile 'com.cocosw:undobar:0.6@aar'
 
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')

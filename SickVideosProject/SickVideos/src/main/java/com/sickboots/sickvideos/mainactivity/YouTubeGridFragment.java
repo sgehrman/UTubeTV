@@ -41,7 +41,6 @@ import com.sickboots.sickvideos.database.YouTubeContentProvider;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;

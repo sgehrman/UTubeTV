@@ -22,14 +22,12 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.devspark.appmsg.AppMsg;
 import com.sickboots.sickvideos.R;
 
 import org.joda.time.Period;

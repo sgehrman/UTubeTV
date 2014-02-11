@@ -34,8 +34,8 @@ class FlappyMsg {
   private FlappyMsg(Context context) {
     super();
 
-    inAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-    outAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
+    inAnimation = AnimationUtils.loadAnimation(context, R.anim.slidedown);
+    outAnimation = AnimationUtils.loadAnimation(context, R.anim.slidedown_rev);
 
     mRemoveHandler = new Handler(Looper.getMainLooper());
     mRemoveRunnable = new Runnable() {
@@ -108,9 +108,9 @@ class FlappyMsg {
       mContext = context;
 
       LayoutInflater inflate = LayoutInflater.from(context);
-      mView = inflate.inflate(R.layout.app_msg, null);
+      mView = inflate.inflate(R.layout.flappy_msg, null);
 
-      mView.setBackgroundResource(R.drawable.app_msg_background);
+      mView.setBackgroundResource(R.drawable.flappy_msg_background);
     }
 
     public Activity getActivity() {
