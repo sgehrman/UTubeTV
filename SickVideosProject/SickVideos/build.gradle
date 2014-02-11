@@ -19,7 +19,7 @@ android {
     buildToolsVersion "19.0.1"
 
     defaultConfig {
-        versionCode 14
+        versionCode 15
         versionName "1.4"
         packageName "com.sickboots.sickvideos"
         minSdkVersion 16

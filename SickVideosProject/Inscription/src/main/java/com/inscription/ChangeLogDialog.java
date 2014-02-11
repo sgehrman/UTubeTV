@@ -41,10 +41,8 @@ import java.util.Date;
 public class ChangeLogDialog {
   private static final String TAG = "ChangeLogDialog";
 
-  private final Activity mActivity;
+  protected final Activity mActivity;
   private String mStyle = "h1 { margin-left: 0px; font-size: 12pt; }" + "li { margin-left: 0px; font-size: 9pt; }" + "ul { padding-left: 30px; }" + ".summary { font-size: 9pt; color: #606060; display: block; clear: left; }" + ".date { font-size: 9pt; color: #606060;  display: block; }";
-
-  protected DialogInterface.OnDismissListener mOnDismissListener;
 
   public static void showChangeLog(Activity activity) {
     new ChangeLogDialog(activity).showDialog(0);
@@ -53,10 +51,6 @@ public class ChangeLogDialog {
   protected ChangeLogDialog(final Activity activity) {
     super();
     mActivity = activity;
-  }
-
-  protected Activity getActivity() {
-    return mActivity;
   }
 
   private String getAppVersion() {
@@ -117,11 +111,6 @@ public class ChangeLogDialog {
 
   private void setStyle(final String style) {
     mStyle = style;
-  }
-
-  public ChangeLogDialog setOnDismissListener(final DialogInterface.OnDismissListener onDismissListener) {
-    mOnDismissListener = onDismissListener;
-    return this;
   }
 
   private String getHTMLChangelog(final int resourceId, final Resources resources, final int version) {
@@ -210,14 +199,7 @@ public class ChangeLogDialog {
           }
         });
     AlertDialog dialog = builder.create();
-    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-      @Override
-      public void onDismiss(final DialogInterface dialog) {
-        if (mOnDismissListener != null) {
-          mOnDismissListener.onDismiss(dialog);
-        }
-      }
-    });
+
     dialog.show();
   }
 

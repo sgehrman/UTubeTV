@@ -17,31 +17,40 @@
 package com.inscription;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 
 public class WhatsNewDialog extends ChangeLogDialog {
+  private static final String WHATS_NEW_FIRST_LAUNCH = "whats_new_first_launch";
   private static final String WHATS_NEW_LAST_SHOWN = "whats_new_last_shown";
+  private SharedPreferences mPrefs;
+  private int mAppVersionCode=-1;
+
+  private WhatsNewDialog(final Activity activity) {
+    super(activity);
+
+    mPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
+  }
 
   public static void showWhatsNew(Activity activity, boolean force) {
     new WhatsNewDialog(activity).show(force);
   }
 
-  private WhatsNewDialog(final Activity activity) {
-    super(activity);
-  }
-
   private int getAppVersionCode() {
-    try {
-      final PackageInfo packageInfo = getActivity().getPackageManager()
-          .getPackageInfo(getActivity().getPackageName(), 0);
-      return packageInfo.versionCode;
-    } catch (NameNotFoundException ignored) {
-      return 0;
+    if (mAppVersionCode == -1) {
+      try {
+        final PackageInfo packageInfo = mActivity.getPackageManager()
+            .getPackageInfo(mActivity.getPackageName(), 0);
+
+        mAppVersionCode = packageInfo.versionCode;
+      } catch (NameNotFoundException ignored) {
+        mAppVersionCode = 0;
+      }
     }
+
+    return mAppVersionCode;
   }
 
   private void show(boolean force) {
@@ -50,16 +59,23 @@ public class WhatsNewDialog extends ChangeLogDialog {
     if (force)
       show = true;
     else {
-      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-      final int versionShown = prefs.getInt(WHATS_NEW_LAST_SHOWN, 0);
-      if (versionShown != getAppVersionCode()) {
-        show = true;
-        final SharedPreferences.Editor edit = prefs.edit();
-        edit.putInt(WHATS_NEW_LAST_SHOWN, getAppVersionCode());
+      final boolean firstLaunch = mPrefs.getBoolean(WHATS_NEW_FIRST_LAUNCH, true);
+
+      // don't show on users first launch, they don't care about what's new, they just got the app
+      if (firstLaunch) {
+        final SharedPreferences.Editor edit = mPrefs.edit();
+        edit.putInt(WHATS_NEW_LAST_SHOWN, getAppVersionCode());  // they will see the next update
+        edit.putBoolean(WHATS_NEW_FIRST_LAUNCH, false);
         edit.commit();
-      }
-      if (mOnDismissListener != null) {
-        mOnDismissListener.onDismiss(null);
+      } else {
+        final int versionShown = mPrefs.getInt(WHATS_NEW_LAST_SHOWN, 0);
+        if (versionShown != getAppVersionCode()) {
+          show = true;
+
+          final SharedPreferences.Editor edit = mPrefs.edit();
+          edit.putInt(WHATS_NEW_LAST_SHOWN, getAppVersionCode());
+          edit.commit();
+        }
       }
     }
 
