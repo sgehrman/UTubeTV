@@ -202,9 +202,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       ids.add(itemMap.mID);
 
       if (itemMap != null) {
-
-        Debug.log("don't ship with this stuffff");
-        boolean deleteOnHide = true;
+        boolean deleteOnHide = false; // true for debugging only
 
         if (deleteOnHide)
           database.deleteItem(itemMap.mID);
@@ -258,7 +256,8 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   public void adapterDataChanged() {
     syncActionBarTitle();
 
-    boolean enabled = false;
+    // ################ KKK remove , testing
+    boolean enabled = true;
 
     if (enabled) {
       int cnt = mAdapter.getCount();

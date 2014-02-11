@@ -74,9 +74,9 @@ public class Utils {
       handler.post(new Runnable() {
         @Override
         public void run() {
-          AppMsg.Style style = new AppMsg.Style(AppMsg.LENGTH_SHORT, R.drawable.app_msg_background);
+          FlappyMsg.Style style = new FlappyMsg.Style(FlappyMsg.LENGTH_SHORT, R.drawable.app_msg_background);
 
-          AppMsg.makeText(activity, message, style).setLayoutGravity(Gravity.BOTTOM).show();
+          FlappyMsg.makeText(activity, message, style).setLayoutGravity(Gravity.TOP).show();
         }
       });
     }
