@@ -74,7 +74,7 @@ class FlappyMsg {
   }
 
   public void startRemoveTimer() {
-    mRemoveHandler.postDelayed(mRemoveRunnable, 3000);
+    mRemoveHandler.postDelayed(mRemoveRunnable, 1000);
   }
 
   private void removeMsg() {

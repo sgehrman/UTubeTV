@@ -255,14 +255,11 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   public void adapterDataChanged() {
     syncActionBarTitle();
 
-    // ################ KKK remove , testing
-    boolean enabled = true;
-
-    if (enabled) {
+    if (!TextUtils.isEmpty(getFilter()) && mSearchItem.isActionViewExpanded()) {
       int cnt = mAdapter.getCount();
 
       if (cnt > 0)
-        Utils.message(getActivity(), String.format("%d items", cnt));
+        Utils.message(getActivity(), String.format("Found: %d items", cnt));
     }
   }
 
