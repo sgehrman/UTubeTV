@@ -2,178 +2,138 @@ package com.sickboots.sickvideos.misc;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 
-public class FlappyMsg {
+class FlappyMsg {
   public static final int LENGTH_SHORT = 3000;
-  private int mDuration = LENGTH_SHORT;
   public static final int LENGTH_LONG = 5000;
-  private final Activity mContext;
-  private View mView;
-  private LayoutParams mLayoutParams;
 
-  public FlappyMsg(Activity context) {
-    mContext = context;
-  }
+  private static final int MESSAGE_DISPLAY = 0xc2007;
+  private static final int MESSAGE_ADD_VIEW = 0xc20074dd;
+  private static final int MESSAGE_REMOVE = 0xc2007de1;
 
-  public static FlappyMsg makeText(Activity context, CharSequence text, Style style) {
-    return makeText(context, text, style, R.layout.app_msg);
-  }
+  private static FlappyMsg mInstance;
+  private Handler mRemoveHandler;
+  private Runnable mRemoveRunnable;
 
-  public static FlappyMsg makeText(Activity context, CharSequence text, Style style, float textSize) {
-    return makeText(context, text, style, R.layout.app_msg, textSize);
-  }
+  private FlappyView mCurrentMsg;
 
-  public static FlappyMsg makeText(Activity context, CharSequence text, Style style, int layoutId) {
-    LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    View v = inflate.inflate(layoutId, null);
+  private Animation inAnimation, outAnimation;
 
-    return makeText(context, text, style, v);
-  }
+  private FlappyMsg(Context context) {
+    super();
 
-  public static FlappyMsg makeText(Activity context, CharSequence text, Style style, int layoutId, float textSize) {
-    LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    View v = inflate.inflate(layoutId, null);
+    inAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+    outAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
 
-    return makeText(context, text, style, v, textSize);
-  }
-
-  public static FlappyMsg makeText(Activity context, CharSequence text, Style style, View customView) {
-    return makeText(context, text, style, customView, 0);
-  }
-
-  private static FlappyMsg makeText(Activity context, CharSequence text, Style style, View view, float textSize) {
-    FlappyMsg result = new FlappyMsg(context);
-
-    view.setBackgroundResource(style.background);
-
-    TextView tv = (TextView) view.findViewById(android.R.id.message);
-    if (textSize > 0)
-      tv.setTextSize(textSize);
-    tv.setText(text);
-
-    result.mView = view;
-    result.mDuration = style.duration;
-
-    return result;
-  }
-
-  public static FlappyMsg makeText(Activity context, int resId, Style style, View customView) {
-    return makeText(context, context.getResources().getText(resId), style, customView);
-  }
-
-  public static FlappyMsg makeText(Activity context, int resId, Style style) throws Resources.NotFoundException {
-    return makeText(context, context.getResources().getText(resId), style);
-  }
-
-  public static FlappyMsg makeText(Activity context, int resId, Style style, int layoutId) throws Resources.NotFoundException {
-    return makeText(context, context.getResources().getText(resId), style, layoutId);
-  }
-
-  public static void cancelAll() {
-    FlappyMsgMgr.getInstance().clearAllMsg();
-  }
-
-  public void show() {
-    FlappyMsgMgr manager = FlappyMsgMgr.getInstance();
-    manager.add(this);
-  }
-
-  public boolean isShowing() {
-      return mView != null && mView.getParent() != null;
-  }
-
-  public void cancel() {
-    FlappyMsgMgr.getInstance().clearMsg(this);
-
-  }
-
-  public Activity getActivity() {
-    return mContext;
-  }
-
-  public View getView() {
-    return mView;
-  }
-
-  public void setView(View view) {
-    mView = view;
-  }
-
-  public int getDuration() {
-    return mDuration;
-  }
-
-  public void setDuration(int duration) {
-    mDuration = duration;
-  }
-
-  public void setText(int resId) {
-    setText(mContext.getText(resId));
-  }
-
-  public void setText(CharSequence s) {
-    if (mView == null) {
-      throw new RuntimeException("This FlappyMsg was not created with FlappyMsg.makeText()");
-    }
-    TextView tv = (TextView) mView.findViewById(android.R.id.message);
-    if (tv == null) {
-      throw new RuntimeException("This FlappyMsg was not created with FlappyMsg.makeText()");
-    }
-    tv.setText(s);
-  }
-
-  public LayoutParams getLayoutParams() {
-    if (mLayoutParams == null) {
-      mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-    }
-    return mLayoutParams;
-  }
-
-  public FlappyMsg setLayoutParams(LayoutParams layoutParams) {
-    mLayoutParams = layoutParams;
-    return this;
-  }
-
-  public FlappyMsg setLayoutGravity(int gravity) {
-    mLayoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, gravity);
-    return this;
-  }
-
-  public static class Style {
-
-    private final int duration;
-    private final int background;
-
-    public Style(int duration, int resId) {
-      this.duration = duration;
-      this.background = resId;
-    }
-
-    public int getDuration() {
-      return duration;
-    }
-
-    public int getBackground() {
-      return background;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (!(o instanceof FlappyMsg.Style)) {
-        return false;
+    mRemoveHandler = new Handler(Looper.getMainLooper());
+    mRemoveRunnable = new Runnable() {
+      @Override
+      public void run() {
+        removeMsg();
       }
-      Style style = (Style) o;
-      return style.duration == duration && style.background == background;
+    };
+  }
+
+  static synchronized FlappyMsg getInstance(Context context) {
+    if (mInstance == null) {
+      mInstance = new FlappyMsg(context);
+    }
+    return mInstance;
+  }
+
+  public static void makeText(Activity activity, CharSequence text) {
+    getInstance(activity).updateText(activity, text);
+  }
+
+  public void updateText(Activity activity, CharSequence text) {
+    if (mCurrentMsg == null) {
+      mCurrentMsg = new FlappyView(activity);
+      mCurrentMsg.setText(text);
+
+      addMsgToView();
+    } else {
+      // stop remove handler
+      mRemoveHandler.removeCallbacks(mRemoveRunnable);
+
+      mCurrentMsg.setText(text);
+    }
+
+    startRemoveTimer();
+  }
+
+  public void startRemoveTimer() {
+    mRemoveHandler.postDelayed(mRemoveRunnable, 3000);
+  }
+
+  private void removeMsg() {
+    ViewGroup parent = ((ViewGroup) mCurrentMsg.mView.getParent());
+    if (parent != null) {
+      mCurrentMsg.mView.startAnimation(outAnimation);
+
+      parent.removeView(mCurrentMsg.mView);
+
+      mCurrentMsg = null;
+    }
+  }
+
+  private void addMsgToView() {
+    View view = mCurrentMsg.mView;
+    if (view.getParent() == null) {
+      mCurrentMsg.getActivity().addContentView(view, mCurrentMsg.getLayoutParams());
+    }
+    view.startAnimation(inAnimation);
+    if (view.getVisibility() != View.VISIBLE) {
+      view.setVisibility(View.VISIBLE);
+    }
+  }
+
+  public static class FlappyView {
+    private final Activity mContext;
+    public View mView;
+    private ViewGroup.LayoutParams mLayoutParams;
+
+    public FlappyView(Activity context) {
+      mContext = context;
+
+      LayoutInflater inflate = LayoutInflater.from(context);
+      mView = inflate.inflate(R.layout.app_msg, null);
+
+      mView.setBackgroundResource(R.drawable.app_msg_background);
+    }
+
+    public Activity getActivity() {
+      return mContext;
+    }
+
+    public void setText(int resId) {
+      setText(mContext.getText(resId));
+    }
+
+    public void setText(CharSequence s) {
+      TextView tv = (TextView) mView.findViewById(android.R.id.message);
+      tv.setText(s);
+    }
+
+    public ViewGroup.LayoutParams getLayoutParams() {
+      if (mLayoutParams == null) {
+        mLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.TOP);
+      }
+      return mLayoutParams;
     }
 
   }
+
 
 }
