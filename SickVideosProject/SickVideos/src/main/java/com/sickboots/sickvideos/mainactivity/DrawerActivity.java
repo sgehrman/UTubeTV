@@ -21,6 +21,7 @@ import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.activities.ViewServerActivity;
 import com.sickboots.sickvideos.content.ChannelList;
 import com.sickboots.sickvideos.content.Content;
+import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Preferences;

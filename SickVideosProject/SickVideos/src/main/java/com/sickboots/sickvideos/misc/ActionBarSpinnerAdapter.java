@@ -1,4 +1,4 @@
-package com.sickboots.sickvideos.mainactivity;
+package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.graphics.Bitmap;
