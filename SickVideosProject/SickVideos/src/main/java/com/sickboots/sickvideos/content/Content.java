@@ -47,7 +47,6 @@ public class Content extends Observable {
   // returns false if that channel is already current
   public boolean changeChannel(int index) {
     if (mChannelList.changeChannel(index)) {
-      notifyForDataUpdate();
       return true;
     }
     return false;

@@ -86,7 +86,6 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
       String input = (String) data;
 
       if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
-
         updateChannels();
 
         // only need this called once
