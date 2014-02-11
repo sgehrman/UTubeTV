@@ -142,6 +142,10 @@ public class YouTubeAPI {
     return new ChannelPlaylistsResults(channelID, addRelatedPlaylists);
   }
 
+  public PlaylistInfoListResults playlistInfoListResults(List<String> playlistIds) {
+    return new PlaylistInfoListResults(playlistIds);
+  }
+
   public SearchListResults searchListResults(String query) {
     return new SearchListResults(query);
   }
@@ -422,10 +426,10 @@ public class YouTubeAPI {
         }
       }
 
-      return playlistItemsToMap(playlistItemList);
+      return itemsToMap(playlistItemList);
     }
 
-    private List<YouTubeData> playlistItemsToMap(List<PlaylistItem> playlistItemList) {
+    private List<YouTubeData> itemsToMap(List<PlaylistItem> playlistItemList) {
       // check parameters
       if (playlistItemList == null)
         return null;
@@ -483,10 +487,10 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return searchResultsToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> searchResultsToMap(List<SearchResult> playlistItemList) {
+    private List<YouTubeData> itemsToMap(List<SearchResult> playlistItemList) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
@@ -539,10 +543,10 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return searchResultsToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> searchResultsToMap(List<Video> playlistItemList) {
+    private List<YouTubeData> itemsToMap(List<Video> playlistItemList) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
@@ -602,10 +606,10 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return searchResultsToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> searchResultsToMap(List<Video> playlistItemList) {
+    private List<YouTubeData> itemsToMap(List<Video> playlistItemList) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
@@ -661,10 +665,10 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return searchResultsToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> searchResultsToMap(List<VideoCategory> itemList) {
+    private List<YouTubeData> itemsToMap(List<VideoCategory> itemList) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
@@ -715,10 +719,10 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return subscriptionListToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> subscriptionListToMap(List<Subscription> subscriptionsList) {
+    private List<YouTubeData> itemsToMap(List<Subscription> subscriptionsList) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info
@@ -747,8 +751,8 @@ public class YouTubeAPI {
       super();
 
       mChannelID = channelID;
-      mPart = "id, snippet, contentDetails";
-      mFields = String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s), nextPageToken", thumbnailField());
+      mPart = "id";
+      mFields = String.format("items(id), nextPageToken");
     }
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
@@ -779,10 +783,69 @@ public class YouTubeAPI {
         handleResultsException(e);
       }
 
-      return playlistItemsToMap(result);
+      return itemsToMap(result);
     }
 
-    private List<YouTubeData> playlistItemsToMap(List<Playlist> playlists) {
+    private List<YouTubeData> itemsToMap(List<Playlist> playlists) {
+      List<YouTubeData> result = new ArrayList<YouTubeData>();
+
+      // convert the list into hash maps of video info
+      for (Playlist playlist : playlists) {
+        YouTubeData map = new YouTubeData();
+
+        map.mPlaylist = playlist.getId();
+
+        result.add(map);
+      }
+
+      return result;
+    }
+  }
+
+  // ========================================================
+  // PlaylistInfoListResults
+
+  public class PlaylistInfoListResults extends BaseListResults {
+    List<String> mPlaylistIds;
+
+    public PlaylistInfoListResults(List<String> playlistIds) {
+      mPlaylistIds = playlistIds;
+
+      if (mPlaylistIds.size() > mYouTubeMaxResultsLimit) {
+        Debug.log("VideoInfoListResults can only handle 50 videos at a time.");
+
+        mPlaylistIds = mPlaylistIds.subList(0, mYouTubeMaxResultsLimit);
+      }
+
+      mPart = "id, snippet, contentDetails";
+      mFields = String.format("items(id, contentDetails/itemCount, snippet/title, snippet/description, snippet/publishedAt, %s)", thumbnailField());
+    }
+
+    protected List<YouTubeData> itemsForNextToken(String tokenNotUsed, long maxResultsNotUsed) {
+      List<Playlist> result = new ArrayList<Playlist>();
+
+      try {
+        YouTube.Playlists.List listRequest = youTube().playlists().list(mPart);
+
+        listRequest.setFields(mFields);
+        listRequest.setKey(Auth.devKey());
+        listRequest.setId(TextUtils.join(",", mPlaylistIds));
+
+        PlaylistListResponse subscriptionListResponse = listRequest.execute();
+
+        response = subscriptionListResponse;
+
+        result.addAll(subscriptionListResponse.getItems());
+      } catch (UserRecoverableAuthIOException e) {
+        handleResultsException(e);
+      } catch (Exception e) {
+        handleResultsException(e);
+      }
+
+      return itemsToMap(result);
+    }
+
+    private List<YouTubeData> itemsToMap(List<Playlist> playlists) {
       List<YouTubeData> result = new ArrayList<YouTubeData>();
 
       // convert the list into hash maps of video info

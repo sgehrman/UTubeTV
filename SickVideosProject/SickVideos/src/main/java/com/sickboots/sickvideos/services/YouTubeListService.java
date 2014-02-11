@@ -158,7 +158,7 @@ public class YouTubeListService extends IntentService {
         playlistID = helper.relatedPlaylistID(type, channelID);
 
         if (playlistID != null) // probably needed authorization and failed
-          resultList = retrieveVideoList(request, helper, playlistID, request.maxResults());
+          resultList = retrieveVideoList(request, helper, playlistID, null, request.maxResults());
 
         removeAllFromDB = false;
         break;
@@ -166,7 +166,7 @@ public class YouTubeListService extends IntentService {
         playlistID = (String) request.getData("playlist");
 
         // can't use request.maxResults() since we have to get everything and sort it
-        resultList = retrieveVideoList(request, helper, playlistID, 0);
+        resultList = retrieveVideoList(request, helper, playlistID, null, 0);
         removeAllFromDB = false;
         break;
       case SEARCH:
@@ -179,7 +179,8 @@ public class YouTubeListService extends IntentService {
       case PLAYLISTS:
         String channel = (String) request.getData("channel");
 
-        listResults = helper.channelPlaylistsResults(channel, false);
+        resultList = retrieveVideoList(request, helper, null, channel, 0);
+        removeAllFromDB = false;
         break;
       case SUBSCRIPTIONS:
         listResults = helper.subscriptionListResults();
@@ -208,10 +209,15 @@ public class YouTubeListService extends IntentService {
     }
   }
 
-  private List<YouTubeData> retrieveVideoList(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, int maxResults) {
+  private List<YouTubeData> retrieveVideoList(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, String channelID, int maxResults) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
+    YouTubeAPI.BaseListResults videoResults;
 
-    YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID);
+    if (playlistID != null)
+        videoResults = helper.videosFromPlaylistResults(playlistID);
+    else
+      videoResults = helper.channelPlaylistsResults(channelID, false);
+
     if (videoResults != null) {
       List<YouTubeData> videoData = videoResults.getAllItems(maxResults);
 
@@ -227,7 +233,11 @@ public class YouTubeListService extends IntentService {
         int chunkSize = Math.min(videoIds.size(), n + limit);
         List<String> chunk = videoIds.subList(n, chunkSize);
 
-        videoResults = helper.videoInfoListResults(chunk);
+        if (playlistID != null)
+          videoResults = helper.videoInfoListResults(chunk);
+        else
+          videoResults = helper.playlistInfoListResults(chunk);
+
         result.addAll(videoResults.getItems(0));
       }
     }
