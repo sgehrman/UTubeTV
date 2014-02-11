@@ -79,7 +79,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
             // ## taking advantage of this feature/bug to set the real value of the actionbar spinner
             // if we don't do this, the spinner defaults to value 0, so selecting the first item
             // in the list will not work since it doesn't respond when selecting the same index as the current value
-            getActionBar().setSelectedNavigationItem(mContent.mChannelList.currentChannelIndex());
+            getActionBar().setSelectedNavigationItem(mContent.currentChannelIndex());
           } else {
             if (mContent.changeChannel(position))
               updateSectionForChannel();
@@ -98,7 +98,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     // enable ActionBar app icon to behave as action to toggle nav drawer
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    selectSection(mContent.mChannelList.savedSectionIndex(), false);
+    selectSection(mContent.savedSectionIndex(), false);
 
     // disabled until polished
     // mPurchaseHelper = new PurchaseHelper(this);
@@ -350,7 +350,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   private void updateSectionForChannel() {
     mCurrentSection = -1; // force it to reload fragment if same position
-    selectSection(mContent.mChannelList.savedSectionIndex(), true);
+    selectSection(mContent.savedSectionIndex(), true);
   }
 
   private void setupDrawer() {

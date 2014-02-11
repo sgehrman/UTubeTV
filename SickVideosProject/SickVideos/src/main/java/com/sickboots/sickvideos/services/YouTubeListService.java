@@ -137,7 +137,7 @@ public class YouTubeListService extends IntentService {
 
   private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
-    boolean removeAllFromDB=true;
+    boolean removeAllFromDB = true;
     List<YouTubeData> resultList = null;
 
     // do we have internet access?
@@ -214,7 +214,7 @@ public class YouTubeListService extends IntentService {
     YouTubeAPI.BaseListResults videoResults;
 
     if (playlistID != null)
-        videoResults = helper.videosFromPlaylistResults(playlistID);
+      videoResults = helper.videosFromPlaylistResults(playlistID);
     else
       videoResults = helper.channelPlaylistsResults(channelID, false);
 

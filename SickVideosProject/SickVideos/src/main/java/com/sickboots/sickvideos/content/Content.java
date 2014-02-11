@@ -19,7 +19,7 @@ import java.util.Observable;
 public class Content extends Observable {
   public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
   private Context mContext;
-  public ChannelList mChannelList;
+  private ChannelList mChannelList;
 
   public Content(Context context, List<ChannelList.ChannelCode> channelCodes) {
     super();
@@ -69,7 +69,6 @@ public class Content extends Observable {
         break;
     }
 
-
     if (fragment != null)
       mChannelList.saveSectionIndex(index);
 
@@ -78,6 +77,18 @@ public class Content extends Observable {
 
   public boolean needsChannelSwitcher() {
     return mChannelList.needsChannelSwitcher();
+  }
+
+  public List<YouTubeData> channels() {
+    return mChannelList.channels();
+  }
+
+  public int currentChannelIndex() {
+    return mChannelList.currentChannelIndex();
+  }
+
+  public int savedSectionIndex() {
+    return mChannelList.savedSectionIndex();
   }
 
   private void notifyForDataUpdate() {

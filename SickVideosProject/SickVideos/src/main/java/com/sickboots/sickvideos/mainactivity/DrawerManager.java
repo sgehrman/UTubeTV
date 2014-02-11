@@ -117,7 +117,7 @@ public class DrawerManager implements Observer {
     if (mContent.channelInfo() == null)
       mContent.addObserver(this);
     else {
-      mChannelSpinnerAdapter.updateChannels(mContent.mChannelList.channels());
+      mChannelSpinnerAdapter.updateChannels(mContent.channels());
 
       // only need this called once
       mContent.deleteObserver(this);

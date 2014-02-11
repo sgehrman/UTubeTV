@@ -48,7 +48,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
     if (mContent.channelInfo() == null)
       mContent.addObserver(this);
     else {
-      mChannels = mContent.mChannelList.channels();
+      mChannels = mContent.channels();
 
       for (YouTubeData data : mChannels)
         add(data.mTitle);
