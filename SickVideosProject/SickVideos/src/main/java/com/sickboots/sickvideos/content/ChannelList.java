@@ -54,6 +54,11 @@ public class ChannelList {
     return mChannels;
   }
 
+  // this is just used to set the initial value of the action bars spinner
+  public int currentChannelIndex() {
+    return mCurrentChannelIndex;
+  }
+
   public String currentChannelId() {
     return channelIdForIndex(mCurrentChannelIndex);
   }

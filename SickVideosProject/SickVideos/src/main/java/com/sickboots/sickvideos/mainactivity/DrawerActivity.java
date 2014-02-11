@@ -73,9 +73,14 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
           // be aware that this call back gets called when the spinner contents are built
           // we need to ignore that one, so not going to do anything if channel not changing
-          if (!mSpinnerSucksBalls)
+          if (!mSpinnerSucksBalls) {
             mSpinnerSucksBalls = true;
-          else {
+
+            // ## taking advantage of this feature/bug to set the real value of the actionbar spinner
+            // if we don't do this, the spinner defaults to value 0, so selecting the first item
+            // in the list will not work since it doesn't respond when selecting the same index as the current value
+            getActionBar().setSelectedNavigationItem(mContent.mChannelList.currentChannelIndex());
+          } else {
             if (mContent.changeChannel(position))
               updateSectionForChannel();
           }
