@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
-import com.inscription.ChangeLogDialog;
 import com.inscription.WhatsNewDialog;
 import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.R;

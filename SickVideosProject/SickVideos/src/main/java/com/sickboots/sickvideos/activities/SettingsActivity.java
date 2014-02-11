@@ -121,10 +121,8 @@ public class SettingsActivity extends Activity {
         AppRater.rateNow(getActivity());
 
         return true;
-      }
-       else if (preference.getKey().equals("log")) {
-        ChangeLogDialog changelogDialog = new ChangeLogDialog(getActivity());
-        changelogDialog.show();
+      } else if (preference.getKey().equals("log")) {
+        new ChangeLogDialog(getActivity()).show();
       }
 
       return false;
