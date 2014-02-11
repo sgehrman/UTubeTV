@@ -12,7 +12,7 @@
         android:padding="8dp"
         android:textColor="?android:textColorPrimaryInverse"
         android:textIsSelectable="false"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"/>
 
 </LinearLayout>
