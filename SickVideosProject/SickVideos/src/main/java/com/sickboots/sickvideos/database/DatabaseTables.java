@@ -9,6 +9,7 @@ public class DatabaseTables {
   public static final int ALL_ITEMS = 0;
   public static final int HIDDEN_ITEMS = 10;
   public static final int VISIBLE_ITEMS = 20;
+  public static final int CONTENT_ONLY = 30;  // video or playlist ids only
 
   private static final String CREATE = "CREATE TABLE ";
   private static final String TEXT_TYPE = " TEXT";
@@ -285,8 +286,9 @@ public class DatabaseTables {
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST, Entry.COLUMN_NAME_HIDDEN};
+      String[] contentProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_PLAYLIST};
 
-      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection);
+      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection, contentProjection);
     }
   }
 
@@ -404,12 +406,13 @@ public class DatabaseTables {
     @Override
     public Database.DatabaseQuery queryParams(int queryID, String requestId, String filter) {
       String[] hiddenProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO, Entry.COLUMN_NAME_HIDDEN};
+      String[] contentProjection = new String[]{Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_VIDEO};
 
-      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection);
+      return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection, contentProjection);
     }
   }
 
-  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter, DatabaseTable table, String HIDDEN_COL, String ID_COL, String REQUEST_COL, String TITLE_COL, String DESC_COL, String[] hiddenProjection) {
+  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter, DatabaseTable table, String HIDDEN_COL, String ID_COL, String REQUEST_COL, String TITLE_COL, String DESC_COL, String[] hiddenProjection, String[] contentProjection) {
     String selection = null;
     String[] selectionArgs = null;
     String[] projection = table.defaultProjection();
@@ -419,6 +422,9 @@ public class DatabaseTables {
         selection = "" + HIDDEN_COL + " IS NOT NULL";
 
         projection = hiddenProjection;
+        break;
+      case CONTENT_ONLY:
+        projection = contentProjection;
         break;
       case VISIBLE_ITEMS:
         selection = "" + HIDDEN_COL + " IS NULL";

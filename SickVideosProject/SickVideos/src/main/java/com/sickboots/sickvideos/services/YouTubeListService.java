@@ -137,6 +137,7 @@ public class YouTubeListService extends IntentService {
 
   private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
     String playlistID;
+    boolean removeAllFromDB=true;
     List<YouTubeData> resultList = null;
 
     // do we have internet access?
@@ -157,13 +158,16 @@ public class YouTubeListService extends IntentService {
         playlistID = helper.relatedPlaylistID(type, channelID);
 
         if (playlistID != null) // probably needed authorization and failed
-          resultList = twoStep(request, helper, playlistID, request.maxResults());
+          resultList = retrieveVideoList(request, helper, playlistID, request.maxResults());
+
+        removeAllFromDB = false;
         break;
       case VIDEOS:
         playlistID = (String) request.getData("playlist");
 
         // can't use request.maxResults() since we have to get everything and sort it
-        resultList = twoStep(request, helper, playlistID, 0);
+        resultList = retrieveVideoList(request, helper, playlistID, 0);
+        removeAllFromDB = false;
         break;
       case SEARCH:
         String query = (String) request.getData("query");
@@ -198,21 +202,26 @@ public class YouTubeListService extends IntentService {
 
       resultList = prepareDataFromNet(resultList, currentListSavedData, request.requestIdentifier());
 
-      database.deleteAllRows(request.requestIdentifier());
+      if (removeAllFromDB)
+        database.deleteAllRows(request.requestIdentifier());
       database.insertItems(resultList);
     }
   }
 
-  private List<YouTubeData> twoStep(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, int maxResults) {
+  private List<YouTubeData> retrieveVideoList(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, int maxResults) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     YouTubeAPI.BaseListResults videoResults = helper.videosFromPlaylistResults(playlistID);
     if (videoResults != null) {
-
       List<YouTubeData> videoData = videoResults.getAllItems(maxResults);
 
       // extract just the video ids from list
       List<String> videoIds = YouTubeData.videoIdsList(videoData);
+
+      // remove videos that we already have...
+      videoIds = removeVideosWeAlreadyHave(request, videoIds);
+
+
 
       final int limit = 50;
 
@@ -228,5 +237,41 @@ public class YouTubeListService extends IntentService {
     return result;
   }
 
+  private List<String> removeVideosWeAlreadyHave(YouTubeServiceRequest request, List<String> newVideoIds) {
+    List<String> result = newVideoIds;  // return same list if not modified
+
+    DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());
+    List<YouTubeData> existingItems = database.getItems(DatabaseTables.CONTENT_ONLY, request.requestIdentifier(), 0);
+
+    if (existingItems != null) {
+      Set existingIds = new HashSet<String>(existingItems.size());
+
+      for (YouTubeData data : existingItems) {
+        String videoId = data.mVideo;
+
+        if (videoId != null) {
+          existingIds.add(videoId);
+        }
+      }
+
+      if (existingIds.size() > 0) {
+        result = new ArrayList<String>(newVideoIds.size());
+
+        for (String videoId : newVideoIds) {
+          if (!existingIds.contains(videoId)) {
+            result.add(videoId);
+          }
+        }
+      }
+    }
+
+    boolean debugging = true;
+    if (debugging) {
+      Debug.log("removed: " + (newVideoIds.size() - result.size()));
+      Debug.log("returning: " + result.size());
+    }
+
+    return result;
+  }
 
 }
