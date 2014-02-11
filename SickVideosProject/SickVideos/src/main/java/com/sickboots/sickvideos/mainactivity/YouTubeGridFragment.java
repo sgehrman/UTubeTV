@@ -202,8 +202,16 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       ids.add(itemMap.mID);
 
       if (itemMap != null) {
-        itemMap.setHidden(!itemMap.isHidden());
-        database.updateItem(itemMap);
+
+        Debug.log("don't ship with this stuffff");
+        boolean deleteOnHide = true;
+
+        if (deleteOnHide)
+          database.deleteItem(itemMap.mID);
+        else {
+          itemMap.setHidden(!itemMap.isHidden());
+          database.updateItem(itemMap);
+        }
       }
     }
 

@@ -45,6 +45,20 @@ public class DatabaseAccess {
     }
   }
 
+  public void deleteItem(Long id) {
+    SQLiteDatabase db = mDB.getWritableDatabase();
+
+    try {
+      int result = db.delete(mTable.tableName(), whereClauseForID(), whereArgsForID(id));
+
+      if (result > 0)
+        notifyProviderOfChange();
+
+    } catch (Exception e) {
+      Debug.log("deleteItem exception: " + e.getMessage());
+    }
+  }
+
   public void insertItems(List<YouTubeData> items) {
     if (items != null) {
       // Gets the data repository in write mode
