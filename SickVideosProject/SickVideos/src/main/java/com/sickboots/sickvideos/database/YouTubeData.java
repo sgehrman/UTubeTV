@@ -56,11 +56,12 @@ public class YouTubeData {
     return videoIDs;
   }
 
-  public static List<String> videoIdsList(List<YouTubeData> videoData) {
+  // video or playlist ids
+  public static List<String> contentIdsList(List<YouTubeData> videoData) {
     List<String> result = new ArrayList<String>(videoData.size());
 
     for (YouTubeData data : videoData) {
-      result.add(data.mVideo);
+      result.add(data.mVideo == null ? data.mPlaylist : data.mVideo);
     }
 
     return result;

@@ -216,12 +216,10 @@ public class YouTubeListService extends IntentService {
       List<YouTubeData> videoData = videoResults.getAllItems(maxResults);
 
       // extract just the video ids from list
-      List<String> videoIds = YouTubeData.videoIdsList(videoData);
+      List<String> videoIds = YouTubeData.contentIdsList(videoData);
 
       // remove videos that we already have...
       videoIds = removeVideosWeAlreadyHave(request, videoIds);
-
-
 
       final int limit = 50;
 
@@ -247,10 +245,10 @@ public class YouTubeListService extends IntentService {
       Set existingIds = new HashSet<String>(existingItems.size());
 
       for (YouTubeData data : existingItems) {
-        String videoId = data.mVideo;
+        String videoOrPl = data.mVideo == null ? data.mPlaylist : data.mVideo;
 
-        if (videoId != null) {
-          existingIds.add(videoId);
+        if (videoOrPl != null) {
+          existingIds.add(videoOrPl);
         }
       }
 
