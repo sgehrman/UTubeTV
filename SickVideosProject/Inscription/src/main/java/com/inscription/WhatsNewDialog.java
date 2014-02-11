@@ -16,6 +16,7 @@
  */
 package com.inscription;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -25,37 +26,44 @@ import android.preference.PreferenceManager;
 public class WhatsNewDialog extends ChangeLogDialog {
   private static final String WHATS_NEW_LAST_SHOWN = "whats_new_last_shown";
 
-  public WhatsNewDialog(final Context context) {
-    super(context);
+  public static void showWhatsNew(Activity activity, boolean force) {
+    new WhatsNewDialog(activity).show(force);
+  }
+
+  private WhatsNewDialog(final Activity activity) {
+    super(activity);
   }
 
   private int getAppVersionCode() {
     try {
-      final PackageInfo packageInfo = getContext().getPackageManager()
-          .getPackageInfo(getContext().getPackageName(), 0);
+      final PackageInfo packageInfo = getActivity().getPackageManager()
+          .getPackageInfo(getActivity().getPackageName(), 0);
       return packageInfo.versionCode;
     } catch (NameNotFoundException ignored) {
       return 0;
     }
   }
 
-  public void forceShow() {
-    show(getAppVersionCode());
-  }
+  private void show(boolean force) {
+    boolean show = false;
 
-  @Override
-  public void show() {
-    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-    final int versionShown = prefs.getInt(WHATS_NEW_LAST_SHOWN, 0);
-    if (versionShown != getAppVersionCode()) {
-      show(getAppVersionCode());
+    if (force)
+      show = true;
+    else {
+      final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+      final int versionShown = prefs.getInt(WHATS_NEW_LAST_SHOWN, 0);
+      if (versionShown != getAppVersionCode()) {
+        show = true;
+        final SharedPreferences.Editor edit = prefs.edit();
+        edit.putInt(WHATS_NEW_LAST_SHOWN, getAppVersionCode());
+        edit.commit();
+      }
+      if (mOnDismissListener != null) {
+        mOnDismissListener.onDismiss(null);
+      }
+    }
 
-      final SharedPreferences.Editor edit = prefs.edit();
-      edit.putInt(WHATS_NEW_LAST_SHOWN, getAppVersionCode());
-      edit.commit();
-    }
-    if (mOnDismissListener != null) {
-      mOnDismissListener.onDismiss(null);
-    }
+    if (show)
+      showDialog(getAppVersionCode());
   }
 }

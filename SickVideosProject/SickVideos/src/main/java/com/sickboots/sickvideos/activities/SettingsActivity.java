@@ -122,7 +122,8 @@ public class SettingsActivity extends Activity {
 
         return true;
       } else if (preference.getKey().equals("log")) {
-        new ChangeLogDialog(getActivity()).show();
+        ChangeLogDialog.showChangeLog(getActivity());
+        return true;
       }
 
       return false;

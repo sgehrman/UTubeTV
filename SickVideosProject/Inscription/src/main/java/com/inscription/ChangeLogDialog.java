@@ -16,6 +16,7 @@
  */
 package com.inscription;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -40,24 +41,29 @@ import java.util.Date;
 public class ChangeLogDialog {
   private static final String TAG = "ChangeLogDialog";
 
-  private final Context mContext;
+  private final Activity mActivity;
   private String mStyle = "h1 { margin-left: 0px; font-size: 12pt; }" + "li { margin-left: 0px; font-size: 9pt; }" + "ul { padding-left: 30px; }" + ".summary { font-size: 9pt; color: #606060; display: block; clear: left; }" + ".date { font-size: 9pt; color: #606060;  display: block; }";
 
   protected DialogInterface.OnDismissListener mOnDismissListener;
 
-  public ChangeLogDialog(final Context context) {
-    mContext = context;
+  public static void showChangeLog(Activity activity) {
+    new ChangeLogDialog(activity).showDialog(0);
   }
 
-  protected Context getContext() {
-    return mContext;
+  protected ChangeLogDialog(final Activity activity) {
+    super();
+    mActivity = activity;
+  }
+
+  protected Activity getActivity() {
+    return mActivity;
   }
 
   private String getAppVersion() {
     String versionName = "";
     try {
-      final PackageInfo packageInfo = mContext.getPackageManager()
-          .getPackageInfo(mContext.getPackageName(), 0);
+      final PackageInfo packageInfo = mActivity.getPackageManager()
+          .getPackageInfo(mActivity.getPackageName(), 0);
       versionName = packageInfo.versionName;
     } catch (NameNotFoundException e) {
       Log.e(TAG, e.getMessage(), e);
@@ -69,7 +75,7 @@ public class ChangeLogDialog {
     final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     try {
       final Date parsedDate = dateFormat.parse(dateString);
-      return DateFormat.getDateFormat(getContext()).format(parsedDate);
+      return DateFormat.getDateFormat(mActivity).format(parsedDate);
     } catch (ParseException ignored) {
       return dateString;
     }
@@ -109,7 +115,7 @@ public class ChangeLogDialog {
     return String.format("<style type=\"text/css\">%s</style>", mStyle);
   }
 
-  public void setStyle(final String style) {
+  private void setStyle(final String style) {
     mStyle = style;
   }
 
@@ -155,35 +161,31 @@ public class ChangeLogDialog {
     }
   }
 
-  public String getHTML() {
-    final String packageName = mContext.getPackageName();
+  private String getHTML(int version) {
+    final String packageName = mActivity.getPackageName();
     final Resources resources;
     try {
-      resources = mContext.getPackageManager().getResourcesForApplication(packageName);
+      resources = mActivity.getPackageManager().getResourcesForApplication(packageName);
     } catch (NameNotFoundException ignored) {
       return "";
     }
 
-    return getHTMLChangelog(R.xml.changelog, resources, 0);
+    return getHTMLChangelog(R.xml.changelog, resources, version);
   }
 
-  public void show() {
-    show(0);
-  }
-
-  protected void show(final int version) {
-    final String packageName = mContext.getPackageName();
+  protected void showDialog(final int version) {
+    final String packageName = mActivity.getPackageName();
     final Resources resources;
     try {
-      resources = mContext.getPackageManager().getResourcesForApplication(packageName);
+      resources = mActivity.getPackageManager().getResourcesForApplication(packageName);
     } catch (NameNotFoundException ignored) {
       return;
     }
 
-    String title = resources.getString(R.string.title_changelog);
+    CharSequence title = mActivity.getText(R.string.title_changelog);
     title = String.format("%s v%s", title, getAppVersion());
 
-    final String htmlChangelog = getHTMLChangelog(R.xml.changelog, resources, version);
+    final String htmlChangelog = getHTML(version);
 
     final String closeString = resources.getString(R.string.changelog_close);
 
@@ -191,9 +193,9 @@ public class ChangeLogDialog {
       return;
     }
 
-    final WebView webView = new WebView(mContext);
+    final WebView webView = new WebView(mActivity);
     webView.loadDataWithBaseURL(null, htmlChangelog, "text/html", "utf-8", null);
-    final AlertDialog.Builder builder = new AlertDialog.Builder(mContext).setTitle(title)
+    final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(title)
         .setView(webView)
         .setPositiveButton(closeString, new Dialog.OnClickListener() {
           public void onClick(final DialogInterface dialogInterface, final int i) {
