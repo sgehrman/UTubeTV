@@ -56,6 +56,16 @@ public class YouTubeData {
     return videoIDs;
   }
 
+  public static List<YouTubeData> sortByTitle(List<YouTubeData> videoIDs) {
+    Collections.sort(videoIDs, new Comparator<YouTubeData>() {
+      public int compare(YouTubeData lhs, YouTubeData rhs) {
+        return lhs.mTitle.compareTo(rhs.mTitle);
+      }
+    });
+
+    return videoIDs;
+  }
+
   // video or playlist ids
   public static List<String> contentIdsList(List<YouTubeData> videoData) {
     List<String> result = new ArrayList<String>(videoData.size());

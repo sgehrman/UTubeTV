@@ -35,7 +35,13 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
     mContext = context.getApplicationContext();
     mContent = content;
 
-    mBitmapLoader = new BitmapLoader(context);
+    mBitmapLoader = new BitmapLoader(context, "actionBarSpinner", 64, new BitmapLoader.GetBitmapCallback() {
+      @Override
+      public void onLoaded(Bitmap bitmap) {
+        if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
+          ActionBarSpinnerAdapter.this.notifyDataSetChanged();
+      }
+    });
 
     setDropDownViewResource(R.layout.view_ab_spinner_item);
 
@@ -114,19 +120,11 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
 
     holder.textView.setText(getItem(position));
 
-    final int thumbnailSize = 64;
-
-    Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
+    Bitmap bitmap = mBitmapLoader.bitmap(data);
     if (bitmap != null)
       holder.imageView.setImageBitmap(bitmap);
     else {
-      mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
-        @Override
-        public void onLoaded(Bitmap bitmap) {
-          if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
-            ActionBarSpinnerAdapter.this.notifyDataSetChanged();
-        }
-      });
+      mBitmapLoader.requestBitmap(data);
     }
 
     if ((position % 2) != 0)

@@ -174,8 +174,8 @@ public class YouTubeAPI {
   }
 
   // pass null for channelid to get our own channel
-  public Map<String, YouTubeData> channelInfo(List<String> channelIds) {
-    Map<String, YouTubeData> result = new HashMap<String, YouTubeData>();
+  public List<YouTubeData> channelInfo(List<String> channelIds) {
+    List<YouTubeData> result = new ArrayList<YouTubeData>();
 
     try {
       YouTube.Channels.List channelRequest = youTube().channels().list("id, snippet");
@@ -200,7 +200,7 @@ public class YouTubeAPI {
           data.mDescription = channel.getSnippet().getDescription();
           data.mThumbnail = thumbnailURL(channel.getSnippet().getThumbnails());
 
-          result.put(data.mChannel, data);
+          result.add(data);
         }
       }
     } catch (UserRecoverableAuthIOException e) {

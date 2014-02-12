@@ -106,20 +106,34 @@ public class ChannelList {
   private void requestChannelInfo(final boolean refresh) {
     (new Thread(new Runnable() {
       public void run() {
-        final List<YouTubeData> channels = new ArrayList<YouTubeData>();
+        List<YouTubeData> channels = new ArrayList<YouTubeData>();
+        final List<String> needToAskYouTube = new ArrayList<String>();
+        DatabaseAccess database = new DatabaseAccess(mContext, DatabaseTables.channelTable());
 
         for (String channelId : mChannelIds) {
-          YouTubeData data = requestChannelInfoForChannel(channelId, refresh);
+          YouTubeData data = requestChannelInfoFromDB(channelId, database, refresh);
 
           if (data != null)
             channels.add(data);
+          else
+            needToAskYouTube.add(channelId);
         }
+
+        // ask youtube for channel info
+        if (needToAskYouTube.size() > 0) {
+          List<YouTubeData> fromYT = requestChannelInfoFromYT(needToAskYouTube, database);
+
+          channels.addAll(fromYT);
+        }
+
+        // sort by title
+        final List<YouTubeData> result = YouTubeData.sortByTitle(channels);
 
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
           @Override
           public void run() {
-            updateChannels(channels);
+            updateChannels(result);
           }
         });
 
@@ -127,9 +141,8 @@ public class ChannelList {
     })).start();
   }
 
-  private YouTubeData requestChannelInfoForChannel(final String channelID, final boolean refresh) {
+  private YouTubeData requestChannelInfoFromDB(final String channelID, final DatabaseAccess database, final boolean refresh) {
     YouTubeData result = null;
-    DatabaseAccess database = new DatabaseAccess(mContext, DatabaseTables.channelTable());
 
     // if refreshing, don't get from database (need to remove existing data?)
     if (refresh) {
@@ -141,7 +154,13 @@ public class ChannelList {
         result = items.get(0);
     }
 
-    if (result == null) {
+    return result;
+  }
+
+  private List<YouTubeData> requestChannelInfoFromYT(final List<String> channelIDs, final DatabaseAccess database) {
+    List<YouTubeData> result = null;
+
+   if (result == null) {
       YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
@@ -149,13 +168,11 @@ public class ChannelList {
         }
       });
 
-      final Map fromYouTubeMap = helper.channelInfo(Arrays.asList(channelID));
+     result = helper.channelInfo(channelIDs);
 
       // save in the db if we got results
-      if (fromYouTubeMap.size() > 0) {
-        result = (YouTubeData) fromYouTubeMap.get(channelID);
-
-        database.insertItems(Arrays.asList(result));
+      if (result.size() > 0) {
+        database.insertItems(result);
       }
     }
 

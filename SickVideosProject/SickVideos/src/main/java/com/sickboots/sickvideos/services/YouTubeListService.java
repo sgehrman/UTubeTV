@@ -273,7 +273,7 @@ public class YouTubeListService extends IntentService {
       }
     }
 
-    boolean debugging = true;
+    boolean debugging = false;
     if (debugging) {
       Debug.log("removed: " + (newVideoIds.size() - result.size()));
       Debug.log("returning: " + result.size());

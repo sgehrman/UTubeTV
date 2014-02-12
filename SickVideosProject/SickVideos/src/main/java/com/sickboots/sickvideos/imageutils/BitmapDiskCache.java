@@ -72,7 +72,7 @@ public class BitmapDiskCache {
       if (writeBitmapToFile(data, editor)) {
         mDiskCache.flush();
         editor.commit();
-        Debug.log("image put on disk cache " + key + "size: " + ((float) mDiskCache.size() / 1024.0f) + "k");
+        Debug.log("image put on disk cache key:" + key + " size: " + ((float) mDiskCache.size() / 1024.0f) + "k");
       } else {
         editor.abort();
         Debug.log("ERROR on: image put on disk cache " + key);

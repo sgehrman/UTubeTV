@@ -11,17 +11,41 @@ import android.os.Looper;
 import android.util.LruCache;
 
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.Debug;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class BitmapLoader {
   private BitmapDiskCache mDiskCache;
   private Context mContext;
+  private String mCacheName;
+  private int mThumbnailSize;
   private LruCache<String, Bitmap> mLruCache = new LruCache<String, Bitmap>(20);  // 20 is arbitrary, may adjust later
+  private Paint mThumbnailFillPaint;
+  private Paint mThumbnailStrokePaint;
+  private Set<String> mProcessingKeys=new HashSet<String>();
+  private GetBitmapCallback mCallback;
 
-  public BitmapLoader(Context context) {
+  public BitmapLoader(Context context, String cacheName, int thumbnailSize, GetBitmapCallback callback) {
+    mCacheName = cacheName;
+    mCallback = callback;
+    mThumbnailSize = thumbnailSize;
     mContext = context.getApplicationContext();
     mDiskCache = newCache();
+
+    if (mThumbnailSize > 0) {
+      mThumbnailFillPaint = new Paint();
+      mThumbnailFillPaint.setAntiAlias(true);
+
+      mThumbnailStrokePaint = new Paint();
+      mThumbnailStrokePaint.setAntiAlias(true);
+      mThumbnailStrokePaint.setStyle(Paint.Style.STROKE);
+      mThumbnailStrokePaint.setStrokeWidth(2.0f);
+      mThumbnailStrokePaint.setColor(0x99FFFFFF);
+    }
   }
 
   public void refresh() {
@@ -34,47 +58,53 @@ public class BitmapLoader {
   private BitmapDiskCache newCache() {
     final long diskCacheSize = 10 * 1024 * 1024;  // 10mb
 
-    return new BitmapDiskCache(mContext, "bitmaps", diskCacheSize, Bitmap.CompressFormat.PNG, 0);
+    return new BitmapDiskCache(mContext, mCacheName, diskCacheSize, Bitmap.CompressFormat.PNG, 0);
   }
 
-  private String keyForChannel(String channelId, int thumbnailSize) {
+  private String keyForChannel(String channelId) {
     // keys must match regex [a-z0-9_-]{1,64}
-    String result = channelId + thumbnailSize;
-    result = result.toLowerCase();
-
-    return result;
+    return channelId.toLowerCase();
   }
 
-  private void callCallbackOnMainThread(final Bitmap bitmap, final GetBitmapCallback callback) {
+  private void callCallbackOnMainThread(final Bitmap bitmap, final String key) {
     Handler handler = new Handler(Looper.getMainLooper());
     handler.post(new Runnable() {
       @Override
       public void run() {
         // on main thread
-        callback.onLoaded(bitmap);
+        mProcessingKeys.remove(key);
+
+        mCallback.onLoaded(bitmap);
       }
     });
   }
 
-  public Bitmap bitmap(YouTubeData data, int thumbnailSize) {
-    final String key = keyForChannel(data.mChannel, thumbnailSize);
+  public Bitmap bitmap(YouTubeData data) {
+    final String key = keyForChannel(data.mChannel);
 
     // in our memory cache?
     return mLruCache.get(key);
   }
 
-  public void requestBitmap(final YouTubeData data, final int thumbnailSize, final GetBitmapCallback callback) {
+  public void requestBitmap(final YouTubeData data) {
+    final String key = keyForChannel(data.mChannel);
+
+    // ignore duplicate request
+    if (mProcessingKeys.contains(key))
+      return;
+
+    mProcessingKeys.add(key);
+
     new Thread(new Runnable() {
       @Override
       public void run() {
-        final String key = keyForChannel(data.mChannel, thumbnailSize);
 
         // is it in our disk cache?
         Bitmap result = mDiskCache.getBitmap(key);
 
         if (result != null) {
           mLruCache.put(key, result);
-          callCallbackOnMainThread(result, callback);
+          callCallbackOnMainThread(result, key);
         } else {
           Bitmap bitmap;
           try {
@@ -82,15 +112,15 @@ public class BitmapLoader {
                 .load(data.mThumbnail)
                 .skipMemoryCache();
 
-            if (thumbnailSize != 0)
-              requestCreator = requestCreator.resize(thumbnailSize, thumbnailSize);
+            if (mThumbnailSize > 0)
+              requestCreator = requestCreator.resize(mThumbnailSize, mThumbnailSize);
 
             bitmap = requestCreator.get();
 
             // put thumbnails in a circle
-            if (bitmap != null && thumbnailSize != 0) {
-              int width = thumbnailSize;
-              int height = thumbnailSize;
+            if (bitmap != null && mThumbnailSize > 0) {
+              int width = mThumbnailSize;
+              int height = mThumbnailSize;
 
               Bitmap circleBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
               Canvas canvas = new Canvas(circleBitmap);
@@ -99,27 +129,10 @@ public class BitmapLoader {
               int centerX = width / 2, centerY = height / 2, radius = (width / 2);
 
               BitmapShader s = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+              mThumbnailFillPaint.setShader(s);
 
-              Paint p = new Paint();
-              p.setShader(s);
-              p.setAntiAlias(true);
-
-              canvas.drawCircle(centerX, centerY, radius, p);
-
-              p = new Paint();
-              p.setAntiAlias(true);
-              p.setStyle(Paint.Style.STROKE);
-              p.setStrokeWidth(2.0f);
-              p.setColor(0x99FFFFFF);
-
-              canvas.drawCircle(centerX, centerY, radius - 2, p);
-
-              // gloss
-              //              p = new Paint();
-              //              p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-              //
-              //              canvas.drawCircle(centerX, centerY, radius, p);
-
+              canvas.drawCircle(centerX, centerY, radius, mThumbnailFillPaint);
+              canvas.drawCircle(centerX, centerY, radius - 2, mThumbnailStrokePaint);
 
               bitmap = circleBitmap;
             }
@@ -130,7 +143,7 @@ public class BitmapLoader {
               mLruCache.put(key, bitmap);
             }
 
-            callCallbackOnMainThread(bitmap, callback);
+            callCallbackOnMainThread(bitmap, key);
 
           } catch (Throwable t) {
           }

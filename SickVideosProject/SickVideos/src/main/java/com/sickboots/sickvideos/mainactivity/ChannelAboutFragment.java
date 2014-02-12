@@ -44,7 +44,14 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
     View rootView = inflater.inflate(R.layout.fragment_channel_about, container, false);
 
     mContent = ((DrawerActivitySupport) getActivity()).getContent();
-    mBitmapLoader = new BitmapLoader(getActivity());
+    mBitmapLoader = new BitmapLoader(getActivity(), "aboutBitmaps", 0, new BitmapLoader.GetBitmapCallback() {
+      @Override
+      public void onLoaded(Bitmap bitmap) {
+        // put in to prevent an endless loop if the thumbnail fails to load the first time
+        if (bitmap != null)
+          ChannelAboutFragment.this.updateUI();
+      }
+    });
 
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
@@ -142,20 +149,12 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
 
       // uncomment to get the thumbnail image for generating icons
       // Debug.log(data.mThumbnail);
-      final int thumbnailSize = 0;
 
-      Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
+      Bitmap bitmap = mBitmapLoader.bitmap(data);
       if (bitmap != null)
         mImage.setImageBitmap(bitmap);
       else {
-        mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
-          @Override
-          public void onLoaded(Bitmap bitmap) {
-            // put in to prevent an endless loop if the thumbnail fails to load the first time
-            if (bitmap != null)
-              ChannelAboutFragment.this.updateUI();
-          }
-        });
+        mBitmapLoader.requestBitmap(data);
       }
 
       DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();

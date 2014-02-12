@@ -28,7 +28,13 @@ public class ChannelSpinnerAdapter extends ArrayAdapter<String> {
     super(context, android.R.layout.simple_spinner_item, android.R.id.text1);
 
     mContext = context.getApplicationContext();
-    mBitmapLoader = new BitmapLoader(context);
+    mBitmapLoader = new BitmapLoader(context, "drawerSpinner", 64, new BitmapLoader.GetBitmapCallback() {
+      @Override
+      public void onLoaded(Bitmap bitmap) {
+        if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
+          ChannelSpinnerAdapter.this.notifyDataSetChanged();
+      }
+    });
 
     setDropDownViewResource(R.layout.view_channel_spinner);
   }
@@ -70,19 +76,11 @@ public class ChannelSpinnerAdapter extends ArrayAdapter<String> {
 
     holder.textView.setText(getItem(position));
 
-    final int thumbnailSize = 64;
-
-    Bitmap bitmap = mBitmapLoader.bitmap(data, thumbnailSize);
+    Bitmap bitmap = mBitmapLoader.bitmap(data);
     if (bitmap != null)
       holder.imageView.setImageBitmap(bitmap);
     else {
-      mBitmapLoader.requestBitmap(data, thumbnailSize, new BitmapLoader.GetBitmapCallback() {
-        @Override
-        public void onLoaded(Bitmap bitmap) {
-          if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
-            ChannelSpinnerAdapter.this.notifyDataSetChanged();
-        }
-      });
+      mBitmapLoader.requestBitmap(data);
     }
 
     return view;
