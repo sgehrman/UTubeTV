@@ -27,7 +27,7 @@ public class ChannelList {
   private List<YouTubeData> mChannels;
   private List<String> mChannelIds;
   private Map<ChannelCode, String> mChannelIDMap;
-  private int mCurrentChannelIndex = 0;
+  private String mCurrentChannelID;
   private Context mContext;
   private OnChannelListUpdateListener mListener;
 
@@ -41,7 +41,7 @@ public class ChannelList {
     for (ChannelList.ChannelCode code : channelCodes)
       mChannelIds.add(channelIDForCode(code));
 
-    mCurrentChannelIndex = savedChannelIndex();
+    mCurrentChannelID = defaultChannelID(mChannelIds.get(0));
 
     requestChannelInfo(false);
   }
@@ -56,11 +56,20 @@ public class ChannelList {
 
   // this is just used to set the initial value of the action bars spinner
   public int currentChannelIndex() {
-    return mCurrentChannelIndex;
+    int i=0;
+    for(YouTubeData data: mChannels) {
+      if (data.mChannel.equals(mCurrentChannelID))
+        return i;
+
+      i++;
+    }
+
+    Debug.log("should not get here: " + Debug.currentMethod());
+    return 0;
   }
 
   public String currentChannelId() {
-    return channelIdForIndex(mCurrentChannelIndex);
+    return mCurrentChannelID;
   }
 
   public boolean needsChannelSwitcher() {
@@ -71,7 +80,7 @@ public class ChannelList {
     YouTubeData result = null;
 
     if (mChannels != null)
-      result = mChannels.get(mCurrentChannelIndex);
+      result = mChannels.get(currentChannelIndex());
 
     return result;
   }
@@ -88,10 +97,10 @@ public class ChannelList {
 
   // returns false if that channel is already current
   public boolean changeChannel(int index) {
-    if (mCurrentChannelIndex != index) {
-      mCurrentChannelIndex = index;
+    if (currentChannelIndex() != index) {
+      mCurrentChannelID = mChannels.get(index).mChannel;
 
-      saveChannelIndex(index);
+      saveDefaultChannelID(mCurrentChannelID);
 
       return true;
     }
@@ -227,19 +236,18 @@ public class ChannelList {
     return "section_index" + currentChannelId();
   }
 
-  public int savedChannelIndex() {
-    return AppUtils.preferences(mContext).getInt(channelIndexPrefsKey(), 0);
+  private String defaultChannelID(String defaultValue) {
+    return AppUtils.preferences(mContext).getString(channelIndexPrefsKey(), defaultValue);
   }
 
   // we save the last requested drawerSelection as requested
-  public void saveChannelIndex(int sectionIndex) {
-    AppUtils.preferences(mContext).setInt(channelIndexPrefsKey(), sectionIndex);
+  private void saveDefaultChannelID(String channelId) {
+    AppUtils.preferences(mContext).setString(channelIndexPrefsKey(), channelId);
   }
 
   private String channelIndexPrefsKey() {
     return "channel_index";
   }
-
 
   public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 

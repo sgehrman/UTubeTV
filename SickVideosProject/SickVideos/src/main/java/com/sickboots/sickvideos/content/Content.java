@@ -91,11 +91,6 @@ public class Content extends Observable {
     return mChannelList.savedSectionIndex();
   }
 
-  private void notifyForDataUpdate() {
-    setChanged();
-    notifyObservers(Content.CONTENT_UPDATED_NOTIFICATION);
-  }
-
   public YouTubeData channelInfo() {
     return mChannelList.currentChannelInfo();
   }
@@ -112,6 +107,11 @@ public class Content extends Observable {
 
   public void refreshChannelInfo() {
     mChannelList.refresh();
+  }
+
+  private void notifyForDataUpdate() {
+    setChanged();
+    notifyObservers(Content.CONTENT_UPDATED_NOTIFICATION);
   }
 
 }
