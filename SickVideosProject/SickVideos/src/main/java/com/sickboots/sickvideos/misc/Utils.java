@@ -280,15 +280,14 @@ public class Utils {
     String result = "";
 
     try {
-      PackageInfo pInfo = context.getPackageManager()
-      .getPackageInfo(context.getPackageName(), 0);
+      PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
 
       result = "v" + pInfo.versionName;
 
       if (includeBuild)
         result += " (" + pInfo.versionCode + ")";
 
-    } catch(Throwable t) {
+    } catch (Throwable t) {
     }
 
     return result;

@@ -1,10 +1,8 @@
 
-
 p,h3,h2,h1,h4 {
     color : #222;
     margin:0px;
     padding:0px;
-    font-family: 'Roboto';
 }
 
 a {
@@ -12,7 +10,8 @@ a {
 }
 
 body {
-    background-color:#eee;
+     font-family: 'Roboto';
+   background-color:#eee;
 }
 
 div.even {
