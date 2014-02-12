@@ -89,11 +89,9 @@ public class BitmapDiskCache {
   }
 
   public Bitmap getBitmap(String key) {
-
     Bitmap bitmap = null;
     DiskLruCache.Snapshot snapshot = null;
     try {
-
       snapshot = mDiskCache.get(key);
       if (snapshot == null) {
         return null;
@@ -117,7 +115,6 @@ public class BitmapDiskCache {
   }
 
   public boolean containsKey(String key) {
-
     boolean contained = false;
     DiskLruCache.Snapshot snapshot = null;
     try {
