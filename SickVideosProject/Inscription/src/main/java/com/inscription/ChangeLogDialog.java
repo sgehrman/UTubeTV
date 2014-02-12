@@ -115,8 +115,10 @@ public class ChangeLogDialog {
 
   private String getHTMLChangelog(final int resourceId, final Resources resources, final int version) {
     boolean releaseFound = false;
+
     final StringBuilder changelogBuilder = new StringBuilder();
     changelogBuilder.append("<html><head>").append(getStyle()).append("</head><body>");
+
     final XmlResourceParser xml = resources.getXml(resourceId);
     try {
       int eventType = xml.getEventType();
@@ -151,25 +153,27 @@ public class ChangeLogDialog {
   }
 
   private String getHTML(int version) {
-    final String packageName = mActivity.getPackageName();
-    final Resources resources;
-    try {
-      resources = mActivity.getPackageManager().getResourcesForApplication(packageName);
-    } catch (NameNotFoundException ignored) {
+    final Resources resources = getResources();
+    if (resources == null)
       return "";
-    }
 
     return getHTMLChangelog(R.xml.changelog, resources, version);
   }
 
-  protected void showDialog(final int version) {
-    final String packageName = mActivity.getPackageName();
-    final Resources resources;
+  private Resources getResources() {
+    String packageName = mActivity.getPackageName();
+    Resources resources=null;
     try {
       resources = mActivity.getPackageManager().getResourcesForApplication(packageName);
     } catch (NameNotFoundException ignored) {
-      return;
     }
+   return resources;
+  }
+
+  protected void showDialog(final int version) {
+    final Resources resources = getResources();
+    if (resources == null)
+      return;
 
     CharSequence title = mActivity.getText(R.string.title_changelog);
     title = String.format("%s v%s", title, getAppVersion());
