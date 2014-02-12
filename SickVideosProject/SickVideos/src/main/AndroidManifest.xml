@@ -44,6 +44,11 @@
             android:name=".activities.InfoActivity"
             android:label="">
         </activity>
+        <activity
+            android:name=".activities.IntroActivity"
+            android:theme="@style/IntroActivityTheme"
+        android:label="">
+        </activity>
 
         <service
             android:name=".services.YouTubeListService"

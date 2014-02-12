@@ -21,6 +21,7 @@
 
     <string name="action_color_picker">Pick a color</string>
     <string name="action_channel_lookup">Channel lookup</string>
+    <string name="action_intro">Intro</string>
 
     <string name="action_show_icons">Show icons</string>
     <string name="action_whats_new">What\'s new</string>
