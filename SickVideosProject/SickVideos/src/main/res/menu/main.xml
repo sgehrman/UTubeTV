@@ -63,6 +63,12 @@
             android:title="@string/action_show_icons"
             android:orderInCategory="100"
             android:showAsAction="never"/>
+
+        <item
+            android:id="@+id/action_whats_new"
+            android:title="@string/action_whats_new"
+            android:orderInCategory="100"
+            android:showAsAction="never"/>
     </group>
 
 </menu>

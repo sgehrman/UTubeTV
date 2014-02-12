@@ -341,6 +341,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         startActivity(intent);
         return true;
 
+      case R.id.action_whats_new:
+        WhatsNewDialog.showWhatsNew(this, true);
+        return true;
+
       case R.id.action_color_picker: {
         Fragment fragment = new ColorPickerFragment();
         Utils.showFragment(this, fragment, R.id.fragment_holder, 0, true);
