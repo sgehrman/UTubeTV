@@ -11,7 +11,6 @@ import android.os.Looper;
 import android.util.LruCache;
 
 import com.sickboots.sickvideos.database.YouTubeData;
-import com.sickboots.sickvideos.misc.Debug;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -26,7 +25,7 @@ public class BitmapLoader {
   private LruCache<String, Bitmap> mLruCache = new LruCache<String, Bitmap>(20);  // 20 is arbitrary, may adjust later
   private Paint mThumbnailFillPaint;
   private Paint mThumbnailStrokePaint;
-  private Set<String> mProcessingKeys=new HashSet<String>();
+  private Set<String> mProcessingKeys = new HashSet<String>();
   private GetBitmapCallback mCallback;
 
   public BitmapLoader(Context context, String cacheName, int thumbnailSize, GetBitmapCallback callback) {

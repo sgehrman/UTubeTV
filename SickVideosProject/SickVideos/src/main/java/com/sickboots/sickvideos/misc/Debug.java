@@ -32,7 +32,7 @@ public class Debug {
   public static void sleep(int milliseconds) {
     try {
       Thread.sleep(milliseconds);
-    } catch(InterruptedException ex) {
+    } catch (InterruptedException ex) {
       Thread.currentThread().interrupt();
     }
   }

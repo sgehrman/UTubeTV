@@ -26,7 +26,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -176,12 +175,12 @@ public class ChangeLogDialog {
 
   private Resources getResources() {
     String packageName = mActivity.getPackageName();
-    Resources resources=null;
+    Resources resources = null;
     try {
       resources = mActivity.getPackageManager().getResourcesForApplication(packageName);
     } catch (NameNotFoundException ignored) {
     }
-   return resources;
+    return resources;
   }
 
   protected void showDialog(final int version) {
@@ -189,7 +188,7 @@ public class ChangeLogDialog {
     if (resources == null)
       return;
 
-   // this creates a thread which shows the dialog if successful
+    // this creates a thread which shows the dialog if successful
     getHTML(resources, version);
   }
 
@@ -213,7 +212,7 @@ public class ChangeLogDialog {
             dialog.dismiss();
           }
         });
-     builder.create().show();
+    builder.create().show();
   }
 
 }

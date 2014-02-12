@@ -26,7 +26,7 @@ public class WhatsNewDialog extends ChangeLogDialog {
   private static final String WHATS_NEW_FIRST_LAUNCH = "whats_new_first_launch";
   private static final String WHATS_NEW_LAST_SHOWN = "whats_new_last_shown";
   private SharedPreferences mPrefs;
-  private int mAppVersionCode=-1;
+  private int mAppVersionCode = -1;
 
   private WhatsNewDialog(final Activity activity) {
     super(activity);

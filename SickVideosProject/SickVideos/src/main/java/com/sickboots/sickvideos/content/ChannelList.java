@@ -13,7 +13,6 @@ import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,8 +55,8 @@ public class ChannelList {
 
   // this is just used to set the initial value of the action bars spinner
   public int currentChannelIndex() {
-    int i=0;
-    for(YouTubeData data: mChannels) {
+    int i = 0;
+    for (YouTubeData data : mChannels) {
       if (data.mChannel.equals(mCurrentChannelID))
         return i;
 
@@ -165,7 +164,7 @@ public class ChannelList {
   private List<YouTubeData> requestChannelInfoFromYT(final List<String> channelIDs, final DatabaseAccess database) {
     List<YouTubeData> result = null;
 
-   if (result == null) {
+    if (result == null) {
       YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
@@ -173,7 +172,7 @@ public class ChannelList {
         }
       });
 
-     result = helper.channelInfo(channelIDs);
+      result = helper.channelInfo(channelIDs);
 
       // save in the db if we got results
       if (result.size() > 0) {
