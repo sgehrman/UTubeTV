@@ -192,7 +192,6 @@ public class ChangeLogDialog {
           }
         })
         .setOnCancelListener(new OnCancelListener() {
-
           @Override
           public void onCancel(DialogInterface dialog) {
             dialog.dismiss();
