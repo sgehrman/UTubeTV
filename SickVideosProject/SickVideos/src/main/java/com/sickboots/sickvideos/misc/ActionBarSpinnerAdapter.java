@@ -129,6 +129,11 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
       });
     }
 
+    if ((position % 2) != 0)
+      view.setBackgroundColor(0x11ffffff);
+    else
+      view.setBackgroundColor(0);
+
     return view;
   }
 
