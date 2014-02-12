@@ -80,10 +80,6 @@ public class ChannelList {
     return mChannelIds.get(index);
   }
 
-  public YouTubeData channelInfoForIndex(int index) {
-    return mChannels.get(index);
-  }
-
   // called on main thread
   private void updateChannels(List<YouTubeData> channels) {
     mChannels = channels;

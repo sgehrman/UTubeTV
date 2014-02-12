@@ -258,8 +258,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     if (!TextUtils.isEmpty(getFilter()) && mSearchItem.isActionViewExpanded()) {
       int cnt = mAdapter.getCount();
 
-      if (cnt > 0)
-        Utils.message(getActivity(), String.format("Found: %d items", cnt));
+      Utils.message(getActivity(), String.format("Found: %d items", cnt));
     }
   }
 
