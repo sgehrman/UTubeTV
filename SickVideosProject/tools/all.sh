@@ -4,11 +4,11 @@ echo ======== building phase ========
 
 ./build_all.sh
 
-echo ======== installing phase ========
+echo ======== uninstalling phase ========
 
 ./uninstall_all.sh
 
-echo ======== uninstalling phase ========
+echo ======== installing phase ========
 
 ./install_all.sh
 
