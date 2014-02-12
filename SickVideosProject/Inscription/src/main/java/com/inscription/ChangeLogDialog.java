@@ -26,6 +26,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.os.Debug;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.webkit.WebView;
@@ -65,24 +69,24 @@ public class ChangeLogDialog {
     return versionName;
   }
 
-  private String parseDate(final String dateString) {
+  private static String parseDate(final Context context, final String dateString) {
     final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
     try {
       final Date parsedDate = dateFormat.parse(dateString);
-      return DateFormat.getDateFormat(mActivity).format(parsedDate);
+      return DateFormat.getDateFormat(context).format(parsedDate);
     } catch (ParseException ignored) {
       return dateString;
     }
   }
 
-  private void parseReleaseTag(final StringBuilder changelogBuilder, final XmlPullParser resourceParser) throws XmlPullParserException, IOException {
+  private static void parseReleaseTag(Context context, final StringBuilder changelogBuilder, final XmlPullParser resourceParser) throws XmlPullParserException, IOException {
     changelogBuilder.append("<h1>Release: ")
         .append(resourceParser.getAttributeValue(null, "version"))
         .append("</h1>");
 
     if (resourceParser.getAttributeValue(null, "date") != null) {
       changelogBuilder.append("<span class='date'>")
-          .append(parseDate(resourceParser.getAttributeValue(null, "date")))
+          .append(parseDate(context, resourceParser.getAttributeValue(null, "date")))
           .append("</span>");
     }
 
@@ -128,7 +132,7 @@ public class ChangeLogDialog {
           // When version is 0 every release tag is parsed.
           final int versioncode = Integer.parseInt(xml.getAttributeValue(null, "versioncode"));
           if ((version == 0) || (versioncode == version)) {
-            parseReleaseTag(changelogBuilder, xml);
+            parseReleaseTag(mActivity, changelogBuilder, xml);
             releaseFound = true; //At lease one release tag has been parsed.
           }
         }
@@ -152,12 +156,22 @@ public class ChangeLogDialog {
     }
   }
 
-  private String getHTML(int version) {
-    final Resources resources = getResources();
-    if (resources == null)
-      return "";
+  private void getHTML(final Resources resources, final int version) {
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        final String result = getHTMLChangelog(R.xml.changelog, resources, version);
 
-    return getHTMLChangelog(R.xml.changelog, resources, version);
+        if (!TextUtils.isEmpty(result)) {
+          new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+              showDialogWithHTML(resources, result);
+            }
+          });
+        }
+      }
+    }).start();
   }
 
   private Resources getResources() {
@@ -175,22 +189,20 @@ public class ChangeLogDialog {
     if (resources == null)
       return;
 
-    CharSequence title = mActivity.getText(R.string.title_changelog);
+   // this creates a thread which shows the dialog if successful
+    getHTML(resources, version);
+  }
+
+  private void showDialogWithHTML(Resources resources, String htmlChangelog) {
+    CharSequence title = resources.getString(R.string.title_changelog);
     title = String.format("%s v%s", title, getAppVersion());
-
-    final String htmlChangelog = getHTML(version);
-
-    final String closeString = resources.getString(R.string.changelog_close);
-
-    if (htmlChangelog.length() == 0) {
-      return;
-    }
 
     final WebView webView = new WebView(mActivity);
     webView.loadDataWithBaseURL(null, htmlChangelog, "text/html", "utf-8", null);
+
     final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity).setTitle(title)
         .setView(webView)
-        .setPositiveButton(closeString, new Dialog.OnClickListener() {
+        .setPositiveButton(resources.getString(R.string.changelog_close), new Dialog.OnClickListener() {
           public void onClick(final DialogInterface dialogInterface, final int i) {
             dialogInterface.dismiss();
           }
@@ -201,9 +213,7 @@ public class ChangeLogDialog {
             dialog.dismiss();
           }
         });
-    AlertDialog dialog = builder.create();
-
-    dialog.show();
+     builder.create().show();
   }
 
 }

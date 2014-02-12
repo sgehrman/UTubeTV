@@ -29,6 +29,14 @@ public class Debug {
     return true;
   }
 
+  public static void sleep(int milliseconds) {
+    try {
+      Thread.sleep(milliseconds);
+    } catch(InterruptedException ex) {
+      Thread.currentThread().interrupt();
+    }
+  }
+
   public static boolean isDebugBuild() {
     return BuildConfig.DEBUG;
   }
