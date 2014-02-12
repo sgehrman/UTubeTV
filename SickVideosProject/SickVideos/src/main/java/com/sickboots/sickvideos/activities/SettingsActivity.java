@@ -76,11 +76,6 @@ public class SettingsActivity extends Activity {
         Preference pref = findPreference("credits");
 
         if (pref != null) {
-          PackageInfo pInfo = getActivity().getPackageManager()
-              .getPackageInfo(getActivity().getPackageName(), 0);
-
-          pref.setSummary("v" + pInfo.versionName + " (" + pInfo.versionCode + ")");
-
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -100,6 +95,11 @@ public class SettingsActivity extends Activity {
         }
         pref = findPreference("log");
         if (pref != null) {
+          PackageInfo pInfo = getActivity().getPackageManager()
+              .getPackageInfo(getActivity().getPackageName(), 0);
+
+          pref.setSummary("v" + pInfo.versionName + " (" + pInfo.versionCode + ")");
+
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
