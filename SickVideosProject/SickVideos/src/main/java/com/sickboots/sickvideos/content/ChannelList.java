@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.common.collect.Lists;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
@@ -149,15 +150,11 @@ public class ChannelList {
         }
       });
 
-      final Map fromYouTubeMap = helper.channelInfo(channelID);
+      final Map fromYouTubeMap = helper.channelInfo(Arrays.asList(channelID));
 
       // save in the db if we got results
       if (fromYouTubeMap.size() > 0) {
-        result = new YouTubeData();
-        result.mThumbnail = (String) fromYouTubeMap.get("thumbnail");
-        result.mTitle = (String) fromYouTubeMap.get("title");
-        result.mDescription = (String) fromYouTubeMap.get("description");
-        result.mChannel = channelID;
+        result = (YouTubeData) fromYouTubeMap.get(channelID);
 
         database.insertItems(Arrays.asList(result));
       }

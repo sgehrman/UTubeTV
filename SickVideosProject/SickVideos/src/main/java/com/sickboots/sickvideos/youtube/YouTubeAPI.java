@@ -174,18 +174,18 @@ public class YouTubeAPI {
   }
 
   // pass null for channelid to get our own channel
-  public Map channelInfo(String channelID) {
-    HashMap result = new HashMap();
+  public Map<String, YouTubeData> channelInfo(List<String> channelIds) {
+    Map<String, YouTubeData> result = new HashMap<String, YouTubeData>();
 
     try {
-      YouTube.Channels.List channelRequest = youTube().channels().list("snippet");
-      if (channelID != null) {
-        channelRequest.setId(channelID);
+      YouTube.Channels.List channelRequest = youTube().channels().list("id, snippet");
+      if (channelIds != null) {
+        channelRequest.setId(TextUtils.join(",", channelIds));
       } else {
         channelRequest.setMine(true);
       }
 
-      channelRequest.setFields(String.format("items(snippet/title, snippet/description, %s)", thumbnailField()));
+      channelRequest.setFields(String.format("items(id, snippet/title, snippet/description, %s)", thumbnailField()));
       channelRequest.setKey(Auth.devKey());
       ChannelListResponse channelResult = channelRequest.execute();
 
@@ -193,9 +193,14 @@ public class YouTubeAPI {
       if (channelsList != null) {
 
         for (Channel channel : channelsList) {
-          result.put("title", channel.getSnippet().getTitle());
-          result.put("description", channel.getSnippet().getDescription());
-          result.put("thumbnail", thumbnailURL(channel.getSnippet().getThumbnails()));
+          YouTubeData data = new YouTubeData();
+
+          data.mChannel = channel.getId();
+          data.mTitle = channel.getSnippet().getTitle();
+          data.mDescription = channel.getSnippet().getDescription();
+          data.mThumbnail = thumbnailURL(channel.getSnippet().getThumbnails());
+
+          result.put(data.mChannel, data);
         }
       }
     } catch (UserRecoverableAuthIOException e) {
