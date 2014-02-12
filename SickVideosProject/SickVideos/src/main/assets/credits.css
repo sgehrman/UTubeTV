@@ -1,9 +1,10 @@
 
 
-p,h3,h2,h1 {
+p,h3,h2,h1,h4 {
     color : #222;
     margin:0px;
     padding:0px;
+    font-family: 'Roboto';
 }
 
 a {
@@ -57,7 +58,7 @@ h3.contact {
 }
 
 .subtitle {
-    margin-top:-4px;
+    margin-top:-8px;
     color:#666;
 }
 
