@@ -3,7 +3,7 @@
     <style name="GridDefaults">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:columnWidth">220dp</item>
+        <item name="android:columnWidth">260dp</item>
         <item name="android:numColumns">auto_fit</item>
         <item name="android:fastScrollEnabled">true</item>
         <item name="android:drawSelectorOnTop">true</item>
