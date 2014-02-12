@@ -30,6 +30,11 @@
         android:key="rate"/>
 
     <Preference
+        android:title="@string/pref_intro_title"
+        android:key="intro"
+        android:summary="@string/pref_intro_summary"
+        />
+    <Preference
         android:title="@string/pref_title_log"
         android:key="log"/>
 

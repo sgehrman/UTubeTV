@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.inscription.ChangeLogDialog;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.IntroDialog;
 import com.sickboots.sickvideos.misc.Utils;
 
 import org.codechimp.apprater.AppRater;
@@ -105,6 +106,16 @@ public class SettingsActivity extends Activity {
           });
         }
 
+        pref = findPreference("intro");
+        if (pref != null) {
+          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+              return handlePrefClick(preference);
+            }
+          });
+        }
+
       } catch (Throwable throwable) {
         Debug.log("exception: " + throwable.getMessage());
       }
@@ -121,7 +132,10 @@ public class SettingsActivity extends Activity {
       } else if (preference.getKey().equals("log")) {
         ChangeLogDialog.showChangeLog(getActivity());
         return true;
-      }
+      } else if (preference.getKey().equals("intro")) {
+      IntroDialog.showDialog(getActivity(), true);
+
+    }
 
       return false;
     }

@@ -122,7 +122,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     WhatsNewDialog.showWhatsNew(this, false);
 
-    IntroDialog.showDialog(this);
+    IntroDialog.showDialog(this, false);
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
