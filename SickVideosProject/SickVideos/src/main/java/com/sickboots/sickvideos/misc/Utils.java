@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -273,6 +274,24 @@ public class Utils {
     }
 
     return bitmap;
+  }
+
+  public static String getApplicationVersion(Context context, boolean includeBuild) {
+    String result = "";
+
+    try {
+      PackageInfo pInfo = context.getPackageManager()
+      .getPackageInfo(context.getPackageName(), 0);
+
+      result = "v" + pInfo.versionName;
+
+      if (includeBuild)
+        result += " (" + pInfo.versionCode + ")";
+
+    } catch(Throwable t) {
+    }
+
+    return result;
   }
 
   public static String getApplicationName(Context context) {

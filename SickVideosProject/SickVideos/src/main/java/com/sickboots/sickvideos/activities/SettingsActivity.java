@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.inscription.ChangeLogDialog;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Utils;
 
 import org.codechimp.apprater.AppRater;
 
@@ -95,10 +96,7 @@ public class SettingsActivity extends Activity {
         }
         pref = findPreference("log");
         if (pref != null) {
-          PackageInfo pInfo = getActivity().getPackageManager()
-              .getPackageInfo(getActivity().getPackageName(), 0);
-
-          pref.setSummary("v" + pInfo.versionName + " (" + pInfo.versionCode + ")");
+          pref.setSummary(Utils.getApplicationVersion(getActivity(), true));
 
           pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

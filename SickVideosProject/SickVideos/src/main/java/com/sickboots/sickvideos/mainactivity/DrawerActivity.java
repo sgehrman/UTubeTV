@@ -25,6 +25,7 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
+import com.sickboots.sickvideos.misc.IntroDialog;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
 import com.sickboots.sickvideos.misc.Utils;
@@ -120,6 +121,8 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     WhatsNewDialog.showWhatsNew(this, false);
+
+    IntroDialog.showDialog(this);
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
