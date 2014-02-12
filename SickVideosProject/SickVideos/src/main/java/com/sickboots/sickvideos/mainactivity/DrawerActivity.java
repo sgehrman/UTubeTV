@@ -119,7 +119,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         playVideo(videoId, title);
     }
 
-     WhatsNewDialog.showWhatsNew(this, false);
+    WhatsNewDialog.showWhatsNew(this, false);
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
