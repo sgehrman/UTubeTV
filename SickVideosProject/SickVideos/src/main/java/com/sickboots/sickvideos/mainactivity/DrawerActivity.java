@@ -26,7 +26,6 @@ import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
-import com.sickboots.sickvideos.misc.IntroDialog;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
 import com.sickboots.sickvideos.misc.Utils;
@@ -123,7 +122,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     WhatsNewDialog.showWhatsNew(this, false);
 
-    IntroDialog.showDialog(this, false);
+    IntroActivity.showIntro(this, false, false);
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
@@ -346,9 +345,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
 
       case R.id.action_intro:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, IntroActivity.class);
-        startActivity(intent);
+        IntroActivity.showIntro(this, false, true);
         return true;
 
       case R.id.action_whats_new:

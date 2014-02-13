@@ -10,8 +10,8 @@ import android.view.MenuItem;
 
 import com.inscription.ChangeLogDialog;
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.IntroDialog;
 import com.sickboots.sickvideos.misc.Utils;
 
 import org.codechimp.apprater.AppRater;
@@ -133,7 +133,7 @@ public class SettingsActivity extends Activity {
         ChangeLogDialog.showChangeLog(getActivity());
         return true;
       } else if (preference.getKey().equals("intro")) {
-        IntroDialog.showDialog(getActivity(), true);
+        IntroActivity.showIntro(getActivity(), true, true);
 
       }
 

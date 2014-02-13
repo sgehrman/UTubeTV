@@ -48,7 +48,7 @@ public class IntroPageFragment extends Fragment {
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, 0xaaffffff, iconSize);
 
         title = "Thanks!";
-        message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  Swipe screen to the next page...";
+        message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  \n\nSwipe screen to the next page...";
         break;
       case 1:
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.YOUTUBE, 0xaaffffff, iconSize);
