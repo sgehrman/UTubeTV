@@ -16,8 +16,7 @@ import com.sickboots.sickvideos.R;
  */
 public class IntroFragment extends Fragment {
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_intro, container, false);
 
     Button button = (Button) rootView.findViewById(R.id.sign_up_button);

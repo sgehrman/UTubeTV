@@ -47,7 +47,7 @@
         <activity
             android:name=".introactivity.IntroActivity"
             android:theme="@style/IntroActivityTheme"
-        android:label="">
+            android:label="">
         </activity>
 
         <service

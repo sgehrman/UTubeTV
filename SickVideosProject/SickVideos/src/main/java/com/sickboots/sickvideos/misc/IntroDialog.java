@@ -12,15 +12,15 @@ import android.webkit.WebView;
  * Created by sgehrman on 2/12/14.
  */
 public class IntroDialog {
-private static String PREF_KEY = "intro_first_launched_pref";
+  private static String PREF_KEY = "intro_first_launched_pref";
 
   public static void showDialog(Activity activity, boolean force) {
-     boolean show = false;
+    boolean show = false;
 
     if (force)
       show = true;
     else {
-      SharedPreferences mPrefs    = PreferenceManager.getDefaultSharedPreferences(activity);
+      SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
       final boolean firstLaunch = mPrefs.getBoolean(PREF_KEY, true);
 

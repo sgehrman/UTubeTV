@@ -40,20 +40,20 @@ public class IntroPageFragment extends Fragment {
 
     switch (mPageNumber) {
       case 0:
-        title = "Dareshare";
-        message = "Dare to beat 'em all!";
+        title = "Thanks!";
+        message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  Swipe screen to the next page...";
         break;
       case 1:
-        title = "Dareshare";
-        message = "What you gonna do?";
+        title = "Why use this app?";
+        message = "YouTube is great, but I find the app to be overwhelming.  This app is like a video magazine.  One subject with the top channels.";
         break;
       case 2:
-        title = "Dareshare";
-        message = "Try to win!";
+        title = "General Usage";
+        message = "Select a channel from the action bar on the top left.  Use the left drawer to navigate within the current channel.  Swipe cards away when your finished watching or not interested.";
         break;
       case 3:
-        title = "Dareshare";
-        message = "It's all about fun!";
+        title = "I need your help!";
+        message = "I'm just getting started and want to create the best app possible, so please send your feedback.  Did I include the BEST channels?  Are there other channels you would want to see in an app?";
         break;
     }
 

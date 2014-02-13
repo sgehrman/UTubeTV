@@ -3,10 +3,10 @@
 
     <style name="IntroActivityTheme" parent="android:Theme.Holo.NoActionBar">
 
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:colorBackgroundCacheHint">@null</item>
-    <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
 
-</style>
+    </style>
 
 </resources>

@@ -133,9 +133,9 @@ public class SettingsActivity extends Activity {
         ChangeLogDialog.showChangeLog(getActivity());
         return true;
       } else if (preference.getKey().equals("intro")) {
-      IntroDialog.showDialog(getActivity(), true);
+        IntroDialog.showDialog(getActivity(), true);
 
-    }
+      }
 
       return false;
     }

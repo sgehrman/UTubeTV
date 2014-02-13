@@ -1,4 +1,3 @@
-
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;

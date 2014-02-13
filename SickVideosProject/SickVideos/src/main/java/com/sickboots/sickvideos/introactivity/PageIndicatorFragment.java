@@ -59,9 +59,7 @@ public class PageIndicatorFragment extends Fragment implements RadioGroup.OnChec
     RadioButton newRadioButton = new RadioButton(getActivity());
     newRadioButton.setText("");
     newRadioButton.setId(radioID + 100);
-    LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(
-        RadioGroup.LayoutParams.WRAP_CONTENT,
-        RadioGroup.LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
     radioGroup.addView(newRadioButton, 0, layoutParams);
   }
 
