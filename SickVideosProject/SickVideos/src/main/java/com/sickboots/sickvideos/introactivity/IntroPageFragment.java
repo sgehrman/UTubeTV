@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,21 +40,28 @@ public class IntroPageFragment extends Fragment {
     if (savedInstanceState != null && mPageNumber == 0) {
       mPageNumber = savedInstanceState.getInt("pageNumber", 0);
     }
+    Drawable icon = null;
+    int iconSize = 64;
 
     switch (mPageNumber) {
       case 0:
+        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, 0xaaffffff, iconSize);
+
         title = "Thanks!";
         message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  Swipe screen to the next page...";
         break;
       case 1:
+        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.YOUTUBE, 0xaaffffff, iconSize);
         title = "Why use this app?";
         message = "YouTube is great, but I find the app to be overwhelming.  This app is like a video magazine.  One subject with the top channels.";
         break;
       case 2:
+        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.UPLOADS, 0xaaffffff, iconSize);
         title = "General Usage";
         message = "Select a channel from the action bar on the top left.  Use the left drawer to navigate within the current channel.  Swipe cards away when your finished watching or not interested.";
         break;
       case 3:
+        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, 0xaaffffff, iconSize);
         title = "I need your help!";
         message = "I'm just getting started and want to create the best app possible, so please send your feedback.  Did I include the BEST channels?  Are there other channels you would want to see in an app?";
         break;
@@ -65,7 +73,7 @@ public class IntroPageFragment extends Fragment {
 
     titleView.setText(title);
     messageView.setText(message);
-    imageView.setImageDrawable(ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.ABOUT, 0xaaffffff, 64));
+    imageView.setImageDrawable(icon);
 
     return rootView;
   }
