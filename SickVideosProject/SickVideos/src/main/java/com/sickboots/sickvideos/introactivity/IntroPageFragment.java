@@ -25,6 +25,10 @@ public class IntroPageFragment extends Fragment {
     super();
   }
 
+  public static int numberOfPages() {
+    return 5;
+  }
+
   @Override
   public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -64,6 +68,11 @@ public class IntroPageFragment extends Fragment {
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, iconSize);
         title = "I need your help!";
         message = "I'm just getting started and want to create the best app possible, so please send your feedback.  Did I include the BEST channels?  Are there other channels you would want to see in an app?";
+        break;
+      case 4:
+        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.FULLSCREEN, color, iconSize);
+        title = "Contact Info";
+        message = "sgehrman@gmail.com \n\n Please rate my app!";
         break;
     }
 

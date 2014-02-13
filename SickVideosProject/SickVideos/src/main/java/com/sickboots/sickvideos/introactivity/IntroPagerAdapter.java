@@ -24,7 +24,7 @@ public class IntroPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return 4;
+    return IntroPageFragment.numberOfPages();
   }
 
   @Override
