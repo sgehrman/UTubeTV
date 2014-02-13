@@ -24,13 +24,14 @@
             />
 
         <RelativeLayout
-            android:id="@+id/fragment_container"
+            android:id="@+id/progress_indicator_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/login_button"
+            android:layout_above="@+id/sign_up_button"
             />
 
         <Button
+            android:layout_marginTop="8dp"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Continue"

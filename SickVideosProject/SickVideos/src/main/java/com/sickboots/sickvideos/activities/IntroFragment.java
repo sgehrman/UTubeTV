@@ -37,7 +37,7 @@ public class IntroFragment extends Fragment {
 
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     PageIndicatorFragment fragment = new PageIndicatorFragment();
-    fragmentTransaction.replace(R.id.fragment_container, fragment);
+    fragmentTransaction.replace(R.id.progress_indicator_fragment, fragment);
     fragmentTransaction.commit();
 
     return rootView;
