@@ -10,6 +10,12 @@
 
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/image_view"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/title"
             android:maxWidth="300dp"
@@ -18,6 +24,9 @@
             android:gravity="center_horizontal"
             android:textColor="#ffc1f8ff"
             android:textSize="22dp"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
             android:textStyle="bold">
         </TextView>
 
@@ -27,8 +36,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:shadowColor="#000"
+            android:shadowDx="1"
+            android:shadowDy="1"
 
-            android:textSize="18dp">
+            android:textSize="16dp">
         </TextView>
 
     </LinearLayout>

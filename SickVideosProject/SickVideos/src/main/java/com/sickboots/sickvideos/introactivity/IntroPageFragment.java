@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 
 public class IntroPageFragment extends Fragment {
   private int mPageNumber;
@@ -59,9 +61,11 @@ public class IntroPageFragment extends Fragment {
 
     TextView titleView = (TextView) rootView.findViewById(R.id.title);
     TextView messageView = (TextView) rootView.findViewById(R.id.message);
+    ImageView imageView = (ImageView) rootView.findViewById(R.id.image_view);
 
     titleView.setText(title);
     messageView.setText(message);
+    imageView.setImageDrawable(ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.ABOUT, 0xaaffffff, 64));
 
     return rootView;
   }
