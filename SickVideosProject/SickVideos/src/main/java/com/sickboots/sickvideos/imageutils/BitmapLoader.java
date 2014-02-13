@@ -36,11 +36,9 @@ public class BitmapLoader {
     mDiskCache = newCache();
 
     if (mThumbnailSize > 0) {
-      mThumbnailFillPaint = new Paint();
-      mThumbnailFillPaint.setAntiAlias(true);
+      mThumbnailFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-      mThumbnailStrokePaint = new Paint();
-      mThumbnailStrokePaint.setAntiAlias(true);
+      mThumbnailStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
       mThumbnailStrokePaint.setStyle(Paint.Style.STROKE);
       mThumbnailStrokePaint.setStrokeWidth(2.0f);
       mThumbnailStrokePaint.setColor(0x99FFFFFF);
