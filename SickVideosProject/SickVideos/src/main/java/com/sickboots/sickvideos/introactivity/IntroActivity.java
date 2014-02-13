@@ -1,5 +1,5 @@
 
-package com.sickboots.sickvideos.activities;
+package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;
 import android.app.FragmentManager;

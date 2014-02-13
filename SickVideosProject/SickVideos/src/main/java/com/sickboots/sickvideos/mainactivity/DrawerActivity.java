@@ -18,7 +18,7 @@ import com.inscription.WhatsNewDialog;
 import com.sickboots.iconicdroid.IconicActivity;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.activities.ChannelLookupActivity;
-import com.sickboots.sickvideos.activities.IntroActivity;
+import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.activities.ViewServerActivity;
 import com.sickboots.sickvideos.content.ChannelList;

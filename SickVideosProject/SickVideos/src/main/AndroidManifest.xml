@@ -45,7 +45,7 @@
             android:label="">
         </activity>
         <activity
-            android:name=".activities.IntroActivity"
+            android:name=".introactivity.IntroActivity"
             android:theme="@style/IntroActivityTheme"
         android:label="">
         </activity>
