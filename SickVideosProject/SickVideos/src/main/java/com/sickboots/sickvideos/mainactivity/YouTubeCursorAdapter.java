@@ -96,8 +96,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
     result.mClickTextToExpand = true;
     result.mTheme_drawImageShadows = false;
-    result.mDescriptionMaxLines = context.getResources()
-        .getInteger(R.integer.description_max_lines);
+    result.mDescriptionMaxLines = 2;
     result.mTitleMaxLines = context.getResources().getInteger(R.integer.title_max_lines);
     result.mSupportsMenuButton = false;
     result.mCardImageFillColor = context.getResources()
