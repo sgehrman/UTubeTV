@@ -41,40 +41,39 @@ public class IntroActivity extends Activity {
     if (show) {
 
       if (dialogStyle)
-     showIntroDialog(activity, force);
-   else
-   {
-     Intent intent = new Intent();
-     intent.setClass(activity, IntroActivity.class);
-     activity.startActivity(intent);
+        showIntroDialog(activity, force);
+      else {
+        Intent intent = new Intent();
+        intent.setClass(activity, IntroActivity.class);
+        activity.startActivity(intent);
 
-   }
+      }
     }
   }
 
   private static void showIntroDialog(Activity activity, boolean force) {
 
 
-      String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
+    String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
 
-      final WebView webview = new WebView(activity);
+    final WebView webview = new WebView(activity);
 
-      webview.loadUrl("file:///android_asset/intro.html");
+    webview.loadUrl("file:///android_asset/intro.html");
 
-      final AlertDialog.Builder builder = new AlertDialog.Builder(activity).setTitle(title)
-          .setView(webview)
-          .setPositiveButton("Close", new Dialog.OnClickListener() {
-            public void onClick(final DialogInterface dialogInterface, final int i) {
-              dialogInterface.dismiss();
-            }
-          })
-          .setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-              dialog.dismiss();
-            }
-          });
-      builder.create().show();
+    final AlertDialog.Builder builder = new AlertDialog.Builder(activity).setTitle(title)
+        .setView(webview)
+        .setPositiveButton("Close", new Dialog.OnClickListener() {
+          public void onClick(final DialogInterface dialogInterface, final int i) {
+            dialogInterface.dismiss();
+          }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            dialog.dismiss();
+          }
+        });
+    builder.create().show();
 
   }
 

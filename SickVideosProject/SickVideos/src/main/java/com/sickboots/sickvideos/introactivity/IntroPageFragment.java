@@ -42,7 +42,7 @@ public class IntroPageFragment extends Fragment {
     }
     Drawable icon = null;
     int iconSize = 64;
-int color = getActivity().getResources().getColor(R.color.intro_drawable_color);
+    int color = getActivity().getResources().getColor(R.color.intro_drawable_color);
     switch (mPageNumber) {
       case 0:
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, color, iconSize);

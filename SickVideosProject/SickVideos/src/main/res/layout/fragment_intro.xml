@@ -23,11 +23,12 @@
             android:layout_alignParentTop="true"
             />
 
-        <RelativeLayout
-            android:id="@+id/progress_indicator_fragment"
+        <com.sickboots.sickvideos.misc.LinePageIndicator
+            android:id="@+id/line_indicator"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/sign_up_button"
+            android:background="#11ffffff"
+            android:layout_height="4dp"
+            android:layout_alignParentBottom="true"
             />
 
         <Button

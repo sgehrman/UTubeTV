@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.misc.LinePageIndicator;
 
 /**
  * Created by sgehrman on 9/11/13.
@@ -34,10 +34,9 @@ public class IntroFragment extends Fragment {
     ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.intro_pager);
     viewPager.setAdapter(introPagerAdapter);
 
-    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    PageIndicatorFragment fragment = new PageIndicatorFragment();
-    fragmentTransaction.replace(R.id.progress_indicator_fragment, fragment);
-    fragmentTransaction.commit();
+    LinePageIndicator ind = (LinePageIndicator) rootView.findViewById(R.id.line_indicator);
+    ind.setViewPager(viewPager);
+
 
     return rootView;
   }
