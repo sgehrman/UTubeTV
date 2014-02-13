@@ -17,6 +17,7 @@ package com.sickboots.iconicdroid;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -48,6 +49,7 @@ public class IconicFontDrawable extends Drawable {
   private int mIntrinsicWidth;
   private int mIntrinsicHeight;
 
+  private int mSavedAlpha=-1;
   private boolean mDrawContour;
 
   private Icon mIcon;
@@ -87,6 +89,8 @@ public class IconicFontDrawable extends Drawable {
    */
   public void setIconColor(int color) {
     mIconPaint.setColor(color);
+    mSavedAlpha = Color.alpha(color);
+
     invalidateSelf();
   }
 
@@ -197,7 +201,13 @@ public class IconicFontDrawable extends Drawable {
 
   @Override
   public void setAlpha(int alpha) {
-    mIconPaint.setAlpha(alpha);
+    // the statelist drawable that this drawable is a part of sets the drawables to match
+    // it's alpha, we don't want that.  It will clobber the color set on the paint previously
+    // so we use the savedalpha if the statelist drawable tries to set us to max alpha by default
+    if (mSavedAlpha != -1 && alpha == 255)
+        mIconPaint.setAlpha(mSavedAlpha);
+    else
+      mIconPaint.setAlpha(alpha);
   }
 
   @Override
