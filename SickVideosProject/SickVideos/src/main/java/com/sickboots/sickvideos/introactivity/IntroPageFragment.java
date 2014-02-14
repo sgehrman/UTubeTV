@@ -44,7 +44,8 @@ public class IntroPageFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_intro_page, container, false);
 
-    String title = "", message = "";
+    String title = "";
+    String message = "";
 
     if (savedInstanceState != null && mPageNumber == 0) {
       mPageNumber = savedInstanceState.getInt("pageNumber", 0);
@@ -94,14 +95,9 @@ public class IntroPageFragment extends Fragment {
     Display display = getActivity().getWindowManager().getDefaultDisplay();
     Point size = new Point();
     display.getSize(size);
-    float offset;
+    int offset = (int) (((float) size.y) * .2f);
 
-    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-      offset = (float) size.y;
-    else
-      offset = (float) size.x;
-
-    spacer.getLayoutParams().height = (int) (offset * .2f);
+    spacer.getLayoutParams().height = offset;
     spacer.setLayoutParams(spacer.getLayoutParams());
 
     return rootView;

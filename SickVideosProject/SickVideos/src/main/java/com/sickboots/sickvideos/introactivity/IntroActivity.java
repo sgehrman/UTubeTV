@@ -63,11 +63,7 @@ public class IntroActivity extends Activity {
     overridePendingTransition(0, R.anim.slidedown_rev);
   }
 
-
-
   private static void showIntroDialog(Activity activity, boolean force) {
-
-
     String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
 
     final WebView webview = new WebView(activity);
@@ -88,9 +84,7 @@ public class IntroActivity extends Activity {
           }
         });
     builder.create().show();
-
   }
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
