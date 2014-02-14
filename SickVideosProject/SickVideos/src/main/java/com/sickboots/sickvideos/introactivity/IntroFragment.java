@@ -15,6 +15,11 @@ import com.sickboots.sickvideos.misc.LinePageIndicator;
  * Created by sgehrman on 9/11/13.
  */
 public class IntroFragment extends Fragment {
+
+  public IntroFragment() {
+    super();
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_intro, container, false);
@@ -28,7 +33,7 @@ public class IntroFragment extends Fragment {
 
     // Create the adapter that will return a fragment for each of the
     // primary sections of the app.
-    IntroPagerAdapter introPagerAdapter = new IntroPagerAdapter(getFragmentManager(), getActivity());
+    IntroPagerAdapter introPagerAdapter = new IntroPagerAdapter(getFragmentManager());
 
     // Set up the ViewPager with the sections adapter.
     ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.intro_pager);

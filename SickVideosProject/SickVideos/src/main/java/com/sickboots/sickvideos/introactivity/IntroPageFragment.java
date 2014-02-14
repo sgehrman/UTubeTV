@@ -1,7 +1,6 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
-import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,16 +13,14 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
-  private int mPageNumber;
-
-  public IntroPageFragment(int pageNumber) {
-    super();
-
-    mPageNumber = pageNumber;
+  public static IntroPageFragment newInstance(int sectionNumber) {
+    IntroPageFragment fragment = new IntroPageFragment();
+    Bundle args = new Bundle();
+    args.putInt("sectionNumber", sectionNumber);
+    fragment.setArguments(args);
+    return fragment;
   }
 
   public IntroPageFragment() {
@@ -35,25 +32,18 @@ public class IntroPageFragment extends Fragment {
   }
 
   @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putInt("pageNumber", mPageNumber);
-  }
-
-  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_intro_page, container, false);
 
     String title = "";
     String message = "";
 
-    if (savedInstanceState != null && mPageNumber == 0) {
-      mPageNumber = savedInstanceState.getInt("pageNumber", 0);
-    }
+    int sectionNumber = getArguments().getInt("sectionNumber");
+
     Drawable icon = null;
     int iconSize = 64;
     int color = getActivity().getResources().getColor(R.color.intro_drawable_color);
-    switch (mPageNumber) {
+    switch (sectionNumber) {
       case 0:
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, color, iconSize);
 

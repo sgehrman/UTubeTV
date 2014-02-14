@@ -2,7 +2,6 @@ package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
 /**
@@ -10,29 +9,17 @@ import android.support.v13.app.FragmentPagerAdapter;
  * one of the sections/tabs/pages.
  */
 public class IntroPagerAdapter extends FragmentPagerAdapter {
-  private final Context context;
-
-  public IntroPagerAdapter(FragmentManager fm, Context context) {
+  public IntroPagerAdapter(FragmentManager fm) {
     super(fm);
-    this.context = context;
   }
 
   @Override
   public Fragment getItem(int position) {
-    return new IntroPageFragment(position);
+    return IntroPageFragment.newInstance(position);
   }
 
   @Override
   public int getCount() {
     return IntroPageFragment.numberOfPages();
-  }
-
-  @Override
-  public CharSequence getPageTitle(int position) {
-    return null;
-  }
-
-  public int getIconResID(int position) {
-    return 0;
   }
 }

@@ -91,13 +91,14 @@ public class IntroActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     // using a fragment at the contents
+    if (savedInstanceState == null) {
+      android.app.Fragment fragment = new IntroFragment();
+      FragmentManager fragmentManager = getFragmentManager();
 
-    android.app.Fragment fragment = new IntroFragment();
-    FragmentManager fragmentManager = getFragmentManager();
-
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(android.R.id.content, fragment);
-    fragmentTransaction.commit();
+      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(android.R.id.content, fragment);
+      fragmentTransaction.commit();
+    }
   }
 
   @Override
