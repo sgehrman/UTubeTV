@@ -29,7 +29,7 @@ public class IntroActivity extends Activity {
       public void run() {
         IntroActivity.showIntro(activity, false, force);
       }
-    }, 1000);
+    }, 2000);
   }
 
   public static void showIntro(Activity activity, boolean dialogStyle, boolean force) {
