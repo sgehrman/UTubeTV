@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -19,6 +22,15 @@ import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroActivity extends Activity {
   private static String PREF_KEY = "intro_first_launched_pref";
+
+  public static void showIntroDelayed(final Activity activity, final boolean force) {
+    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        IntroActivity.showIntro(activity, false, force);
+      }
+    }, 1000);
+  }
 
   public static void showIntro(Activity activity, boolean dialogStyle, boolean force) {
 
