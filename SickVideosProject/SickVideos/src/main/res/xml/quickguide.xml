@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<guide>
+    <page
+        title="Quick Guide"
+        icon="info"
+        >
+        <text>Welcome to my app</text>
+        <bullet>It makes sandwiches</bullet>
+        <bullet>It makes coffee</bullet>
+        <bullet>It makes bacon</bullet>
+        <text>Read more here http://www.sickboots.com</text>
+    </page>
+
+
+    <page
+        title="YouTube channels"
+        icon="youtube"
+        >
+        <text>Contains multiple YouTube channels</text>
+        <bullet>It makes sandwiches</bullet>
+        <bullet>It makes coffee</bullet>
+        <bullet>It makes bacon</bullet>
+        <text>Read more here http://www.sickboots.com</text>
+    </page>
+
+
+</guide>

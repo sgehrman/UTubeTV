@@ -18,7 +18,11 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
+
+import java.util.List;
+import java.util.Map;
 
 public class IntroActivity extends Activity {
   private static String PREF_KEY = "intro_first_launched_pref";
@@ -33,7 +37,6 @@ public class IntroActivity extends Activity {
   }
 
   public static void showIntro(Activity activity, boolean dialogStyle, boolean force) {
-
     boolean show = false;
 
     if (force)
@@ -101,6 +104,24 @@ public class IntroActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+
+
+
+
+
+
+    IntroXMLParser.parseXML(this, new IntroXMLParser.IntroXMLParserListener() {
+      @Override
+      public void parseXMLDone(List<Map> fieldList) {
+        Debug.log(fieldList.toString());
+      }
+    });
+
+
+
+
+
 
     // using a fragment at the contents
     if (savedInstanceState == null) {
