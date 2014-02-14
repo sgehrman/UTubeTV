@@ -100,38 +100,3 @@ public class IntroPageFragment extends Fragment {
 
 }
 
-
-/*
-
-
-
-  switch (sectionNumber) {
-      case 0:
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, color, iconSize);
-
-        title = "Thanks!";
-        message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  \n\nSwipe screen to the next page...";
-        break;
-      case 1:
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.YOUTUBE, color, iconSize);
-        title = "Why use this app?";
-        message = "YouTube is great, but I find the app to be overwhelming.  This app is like a video magazine.  One subject with the top channels.";
-        break;
-      case 2:
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.UPLOADS, color, iconSize);
-        title = "General Usage";
-        message = "Select a channel from the action bar on the top left.  Use the left drawer to navigate within the current channel.  Swipe cards away when your finished watching or not interested.";
-        break;
-      case 3:
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.SEARCH, color, iconSize);
-        title = "I need your help!";
-        message = "I'm just getting started and want to create the best app possible, so please send your feedback.  Did I include the BEST channels?  Are there other channels you would want to see in an app?";
-        break;
-      case 4:
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.FULLSCREEN, color, iconSize);
-        title = "Contact Info";
-        message = "sgehrman@gmail.com \n\n Please rate my app!";
-        break;
-    }
-
- */
