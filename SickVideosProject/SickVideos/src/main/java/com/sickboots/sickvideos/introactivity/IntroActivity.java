@@ -1,12 +1,10 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,18 +12,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.LinePageIndicator;
 import com.sickboots.sickvideos.misc.Utils;
 
-import java.util.List;
-import java.util.Map;
-
-public class IntroActivity extends Activity {
+public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private static String PREF_KEY = "intro_first_launched_pref";
+  private IntroPagerAdapter introPagerAdapter;
+  IntroXMLTaskFragment mTaskFragment;
 
   public static void showIntroDelayed(final Activity activity, final boolean force) {
     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -70,14 +70,6 @@ public class IntroActivity extends Activity {
     }
   }
 
-  @Override
-  public void finish() {
-    super.finish();
-
-    // animate out
-    overridePendingTransition(0, R.anim.slidedown_rev);
-  }
-
   private static void showIntroDialog(Activity activity, boolean force) {
     String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
 
@@ -102,36 +94,53 @@ public class IntroActivity extends Activity {
   }
 
   @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(0, R.anim.slidedown_rev);
+  }
+
+  public IntroXMLParser.IntroPage pageAtIndex(int position) {
+    return introPagerAdapter.pageAtIndex(position);
+  }
+
+  @Override
+  public void onNewPages() {
+    introPagerAdapter.setPages(mTaskFragment.getPages());
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    setContentView(R.layout.fragment_intro);
 
+    FragmentManager fm = getFragmentManager();
+    mTaskFragment = (IntroXMLTaskFragment) fm.findFragmentByTag("task");
 
+    // If the Fragment is non-null, then it is currently being
+    // retained across a configuration change.
+    if (mTaskFragment == null) {
+      mTaskFragment = new IntroXMLTaskFragment();
+      fm.beginTransaction().add(mTaskFragment, "task").commit();
+    }
 
-
-
-
-    IntroXMLParser.parseXML(this, new IntroXMLParser.IntroXMLParserListener() {
-      @Override
-      public void parseXMLDone(List<Map> fieldList) {
-        Debug.log(fieldList.toString());
+    Button button = (Button) findViewById(R.id.sign_up_button);
+    button.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        finish();
       }
     });
 
+    ViewPager viewPager = (ViewPager) findViewById(R.id.intro_pager);
 
+    introPagerAdapter = new IntroPagerAdapter(this, getFragmentManager());
+    introPagerAdapter.setPages(mTaskFragment.getPages());
+    viewPager.setAdapter(introPagerAdapter);
 
-
-
-
-    // using a fragment at the contents
-    if (savedInstanceState == null) {
-      android.app.Fragment fragment = new IntroFragment();
-      FragmentManager fragmentManager = getFragmentManager();
-
-      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(android.R.id.content, fragment);
-      fragmentTransaction.commit();
-    }
+    LinePageIndicator ind = (LinePageIndicator) findViewById(R.id.line_indicator);
+    ind.setViewPager(viewPager);
   }
 
   @Override

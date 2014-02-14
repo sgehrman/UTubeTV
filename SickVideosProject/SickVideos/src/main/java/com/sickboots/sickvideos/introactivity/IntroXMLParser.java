@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos.introactivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -19,21 +18,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class IntroXMLParser {
-  private final Activity mActivity;
+  private final Context mContext;
   private IntroXMLParserListener mCallback;
 
-  private IntroXMLParser(final Activity activity) {
+  private IntroXMLParser(final Context context) {
     super();
-    mActivity = activity;
+    mContext = context.getApplicationContext();
   }
 
-  public static void parseXML(Activity activity, IntroXMLParserListener callback) {
-    new IntroXMLParser(activity).parseXML(callback);
+  public static void parseXML(Context context, IntroXMLParserListener callback) {
+    new IntroXMLParser(context).parseXML(callback);
   }
 
   private static String parseDate(final Context context, final String dateString) {
@@ -46,17 +43,13 @@ public class IntroXMLParser {
     }
   }
 
-  private static List<Map> parseReleaseTag(Context context, final XmlPullParser resourceParser) throws XmlPullParserException, IOException {
-    List<Map> result = new ArrayList<Map>();
-    Map<String, String> map;
+  private static IntroPage parsePageTag(Context context, final XmlPullParser resourceParser) throws XmlPullParserException, IOException {
+    IntroPage result = null;
+    String title, icon;
+    List<IntroPageField> fields = new ArrayList<IntroPageField>();
 
-    map = new HashMap<String, String>();
-    map.put("title", resourceParser.getAttributeValue(null, "title"));
-    result.add(map);
-
-    map = new HashMap<String, String>();
-    map.put("icon", resourceParser.getAttributeValue(null, "icon"));
-    result.add(map);
+    title = resourceParser.getAttributeValue(null, "title");
+    icon = resourceParser.getAttributeValue(null, "icon");
 
     int eventType = resourceParser.getEventType();
     while (!(eventType == XmlPullParser.END_TAG && resourceParser.getName().equals("page"))) {
@@ -67,26 +60,27 @@ public class IntroXMLParser {
         if (name.equals("text")) {
           resourceParser.next();
 
-          map = new HashMap<String, String>();
-          map.put("text", resourceParser.getText());
-          result.add(map);
-        }
-        else if (name.equals("bullet")) {
+          String text = resourceParser.getText();
+
+          IntroPageField field = IntroPageField.newField(text, false);
+          fields.add(field);
+        } else if (name.equals("bullet")) {
           resourceParser.next();
 
-          map = new HashMap<String, String>();
-          map.put("bullet", resourceParser.getText());
-          result.add(map);
+          String text = resourceParser.getText();
+
+          IntroPageField field = IntroPageField.newField(text, true);
+          fields.add(field);
         }
       }
       eventType = resourceParser.next();
     }
 
-    return result;
+    return IntroPage.newPage(title, icon, fields);
   }
 
-  private List<Map> getHTMLChangelog(final int resourceId, final Resources resources) {
-    List<Map> result = new ArrayList();
+  private List<IntroPage> getHTMLChangelog(final int resourceId, final Resources resources) {
+    List<IntroPage> result = new ArrayList();
 
     final XmlResourceParser xml = resources.getXml(resourceId);
     try {
@@ -94,9 +88,9 @@ public class IntroXMLParser {
       while (eventType != XmlPullParser.END_DOCUMENT) {
         if ((eventType == XmlPullParser.START_TAG) && (xml.getName().equals("page"))) {
 
-          List<Map> list = parseReleaseTag(mActivity, xml);
+          IntroPage page = parsePageTag(mContext, xml);
 
-          result.addAll(list);
+          result.add(page);
         }
         eventType = xml.next();
       }
@@ -112,12 +106,12 @@ public class IntroXMLParser {
   }
 
   private void parseXML(final IntroXMLParserListener callback) {
-    final Resources resources = mActivity.getResources();
+    final Resources resources = mContext.getResources();
 
     new Thread(new Runnable() {
       @Override
       public void run() {
-        final List<Map> result = getHTMLChangelog(R.xml.quickguide, resources);
+        final List<IntroPage> result = getHTMLChangelog(R.xml.quickguide, resources);
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
           @Override
@@ -131,8 +125,49 @@ public class IntroXMLParser {
   }
 
   public interface IntroXMLParserListener {
-    public void parseXMLDone(List<Map> fieldList);
+    public void parseXMLDone(List<IntroPage> pages);
   }
 
+
+  public static class IntroPage {
+    public String title;
+    public String icon;
+    public List<IntroPageField> fields;
+
+    public static IntroPage newPage(String title, String icon, List<IntroPageField> fields) {
+      IntroPage result = new IntroPage();
+
+      result.title = title;
+      result.icon = icon;
+      result.fields = fields;
+
+      return result;
+    }
+
+    @Override
+    public String toString() {
+      return title + " icon:" + icon + " fields:" + fields.toString();
+    }
+  }
+
+  public static class IntroPageField {
+    public String text;
+    public boolean isBullet;
+
+    public static IntroPageField newField(String text, boolean isBullet) {
+      IntroPageField result = new IntroPageField();
+
+      result.text = text;
+      result.isBullet = isBullet;
+
+      return result;
+    }
+
+    @Override
+    public String toString() {
+      return text + " bullet:" + (isBullet ? "yes" : "no");
+    }
+
+  }
 }
 
