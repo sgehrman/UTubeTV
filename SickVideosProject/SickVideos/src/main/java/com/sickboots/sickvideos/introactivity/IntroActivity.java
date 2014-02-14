@@ -1,6 +1,7 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroActivity extends Activity {
@@ -43,13 +45,25 @@ public class IntroActivity extends Activity {
       if (dialogStyle)
         showIntroDialog(activity, force);
       else {
+        // add animation, see finish below for the back transition
+        ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.slidedown, 0);
+
         Intent intent = new Intent();
         intent.setClass(activity, IntroActivity.class);
-        activity.startActivity(intent);
-
+        activity.startActivity(intent, opts.toBundle());
       }
     }
   }
+
+  @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(0, R.anim.slidedown_rev);
+  }
+
+
 
   private static void showIntroDialog(Activity activity, boolean force) {
 

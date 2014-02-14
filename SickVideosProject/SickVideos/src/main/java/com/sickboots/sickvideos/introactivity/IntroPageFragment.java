@@ -1,8 +1,11 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
+import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
   private int mPageNumber;
@@ -83,6 +88,21 @@ public class IntroPageFragment extends Fragment {
     titleView.setText(title);
     messageView.setText(message);
     imageView.setImageDrawable(icon);
+
+    // gets the content top centered
+    View spacer = (View) rootView.findViewById(R.id.spacer_view);
+    Display display = getActivity().getWindowManager().getDefaultDisplay();
+    Point size = new Point();
+    display.getSize(size);
+    float offset;
+
+    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+      offset = (float) size.y;
+    else
+      offset = (float) size.x;
+
+    spacer.getLayoutParams().height = (int) (offset * .2f);
+    spacer.setLayoutParams(spacer.getLayoutParams());
 
     return rootView;
   }
