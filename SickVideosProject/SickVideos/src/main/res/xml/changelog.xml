@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        version="1.5"
+        version="1.4"
         versioncode="15">
-        <change>Added Changelog</change>
-        <change>Minor tweaks</change>
-    </release>
-    <release
-        version="1.3"
-        versioncode="14">
-        <change>Added search</change>
-        <change>Minor tweaks</change>
-    </release>
-    <release
-        version="1.2"
-        versioncode="3">
-        <change>Fixed: A bug fix</change>
-        <change>Button appearance changed</change>
-        <change>Small layout change in the view item screen</change>
+        <change>Added changelog dialog</change>
+        <change>Added find button</change>
+        <change>Added quick guide</change>
     </release>
     <release
         version="1.1"
         versioncode="2">
-        <change>Small layout change in the view item screen</change>
+        <change>Added Recent uploads</change>
         <change>Minor tweaks</change>
     </release>
 </changelog>
