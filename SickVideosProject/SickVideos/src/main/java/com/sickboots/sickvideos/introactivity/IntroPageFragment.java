@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
+import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
 
@@ -70,7 +71,11 @@ public class IntroPageFragment extends Fragment {
       for (IntroXMLParser.IntroPageField field : page.fields) {
         TextView textView = new TextView(getActivity());
 
-        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(params);
+        if (field.isBullet)
+          textView.setPadding((int) Utils.dpToPx(30, getActivity()), 0,0,0);
         textView.setAutoLinkMask(Linkify.ALL);
         textView.setTextSize(18);
         textView.setText(field.text);
