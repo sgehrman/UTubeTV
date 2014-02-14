@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="library-1.0.12">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/SickVideos/build/exploded-aar/com.github.codechimp-org.apprater/library/1.0.12/res" />
-      <root url="jar://$PROJECT_DIR$/SickVideos/build/exploded-aar/com.github.codechimp-org.apprater/library/1.0.12/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGithubCodechimpOrgAppraterLibrary1012.aar/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/SickVideos/build/exploded-bundles/ComGithubCodechimpOrgAppraterLibrary1012.aar/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

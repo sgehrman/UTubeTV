@@ -37,7 +37,6 @@ public class IntroFragment extends Fragment {
     LinePageIndicator ind = (LinePageIndicator) rootView.findViewById(R.id.line_indicator);
     ind.setViewPager(viewPager);
 
-
     return rootView;
   }
 }
