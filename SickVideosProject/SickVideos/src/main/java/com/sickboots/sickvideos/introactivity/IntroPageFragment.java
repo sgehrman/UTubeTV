@@ -6,10 +6,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
@@ -69,18 +71,7 @@ public class IntroPageFragment extends Fragment {
       ViewGroup fieldContainer = (ViewGroup) rootView.findViewById(R.id.field_container);
 
       for (IntroXMLParser.IntroPageField field : page.fields) {
-        TextView textView = new TextView(getActivity());
-
-
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textView.setLayoutParams(params);
-        if (field.isBullet)
-          textView.setPadding((int) Utils.dpToPx(30, getActivity()), 0,0,0);
-        textView.setAutoLinkMask(Linkify.ALL);
-        textView.setTextSize(18);
-        textView.setText(field.text);
-
-        fieldContainer.addView(textView);
+        fieldContainer.addView(createFieldView(field));
       }
 
       // gets the content top centered
@@ -101,6 +92,44 @@ public class IntroPageFragment extends Fragment {
   public interface ActivityAccess {
     IntroXMLParser.IntroPage pageAtIndex(int position);
 
+  }
+
+  private View createFieldView(IntroXMLParser.IntroPageField field) {
+    TextView textView = new TextView(getActivity());
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    textView.setLayoutParams(params);
+    textView.setAutoLinkMask(Linkify.ALL);
+    textView.setTextSize(18);
+    textView.setText(field.text);
+
+    ImageView imageView = null;
+    if (field.isBullet) {
+      imageView = new ImageView(getActivity());
+      imageView.setImageResource(R.drawable.white_circle);
+      int imageSize = (int) Utils.dpToPx(12, getActivity());
+
+      LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(imageSize, imageSize);
+      int leftMarginPx = (int) Utils.dpToPx(12, getActivity());
+      int rightMarginPx = (int) Utils.dpToPx(6, getActivity());
+      int topMarginPx = (int) Utils.dpToPx(7, getActivity());
+      imageParams.setMargins(leftMarginPx,topMarginPx,rightMarginPx,0);
+      imageView.setLayoutParams(imageParams);
+
+
+
+//      int textPaddingPx = (int) Utils.dpToPx(12, getActivity());
+//      imageView.setPadding(textPaddingPx, 0, 0, 0);
+
+    }
+
+    LinearLayout linearLayout = new LinearLayout(getActivity());
+    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+    if (imageView != null)
+      linearLayout.addView(imageView);
+    linearLayout.addView(textView);
+
+    return linearLayout;
   }
 
 }
