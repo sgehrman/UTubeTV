@@ -2,6 +2,7 @@ package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.util.Linkify;
@@ -106,6 +107,7 @@ public class IntroPageFragment extends Fragment {
       textView.setTextSize(20);
       textView.setAllCaps(true);
       textView.setTextColor(0xff9988dd);
+      textView.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
       ImageView imageView = null;
