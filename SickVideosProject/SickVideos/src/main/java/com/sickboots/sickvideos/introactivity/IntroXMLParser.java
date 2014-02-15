@@ -57,19 +57,26 @@ public class IntroXMLParser {
 
         String name = resourceParser.getName();
 
-        if (name.equals("text")) {
+        if (name.equals("header")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, false);
+          IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.HEADER);
           fields.add(field);
+        } else if (name.equals("text")) {
+            resourceParser.next();
+
+            String text = resourceParser.getText();
+
+            IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.TEXT);
+            fields.add(field);
         } else if (name.equals("bullet")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, true);
+          IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.BULLET);
           fields.add(field);
         }
       }
@@ -143,31 +150,31 @@ public class IntroXMLParser {
 
       return result;
     }
-
-    @Override
-    public String toString() {
-      return title + " icon:" + icon + " fields:" + fields.toString();
-    }
   }
 
   public static class IntroPageField {
     public String text;
-    public boolean isBullet;
+    public enum FieldType {TEXT, HEADER, BULLET}
+    public FieldType type;
 
-    public static IntroPageField newField(String text, boolean isBullet) {
+    public static IntroPageField newField(String text, FieldType type) {
       IntroPageField result = new IntroPageField();
 
       result.text = text;
-      result.isBullet = isBullet;
+      result.type = type;
 
       return result;
     }
 
-    @Override
-    public String toString() {
-      return text + " bullet:" + (isBullet ? "yes" : "no");
+    public boolean isText() {
+      return type == FieldType.TEXT;
     }
-
+    public boolean isBullet() {
+      return type == FieldType.BULLET;
+    }
+    public boolean isHeader() {
+      return type == FieldType.HEADER;
+    }
   }
 }
 

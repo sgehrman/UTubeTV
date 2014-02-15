@@ -4,7 +4,9 @@
         title="Quick Guide"
         icon="info"
         >
-        <text>Welcome to my app</text>
+        <header>Welcome to my app</header>
+        <text>wat you think?</text>
+
         <bullet>It makes sandwiches</bullet>
         <bullet>It makes coffee</bullet>
         <bullet>It makes bacon</bullet>
@@ -32,6 +34,8 @@
         <bullet>It makes coffee</bullet>
         <bullet>It makes bacon</bullet>
         <text>Read more here http://www.sickboots.com</text>
+        <header>This is a header</header>
+        <text>Read more here</text>
     </page>
 
     <page

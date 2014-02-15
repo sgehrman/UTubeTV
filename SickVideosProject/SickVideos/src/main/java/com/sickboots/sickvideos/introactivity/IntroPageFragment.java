@@ -102,8 +102,14 @@ public class IntroPageFragment extends Fragment {
     textView.setTextSize(18);
     textView.setText(field.text);
 
-    ImageView imageView = null;
-    if (field.isBullet) {
+    if (field.isHeader()) {
+      textView.setTextSize(20);
+      textView.setAllCaps(true);
+      textView.setTextColor(0xff9988dd);
+    }
+
+      ImageView imageView = null;
+    if (field.isBullet()) {
       imageView = new ImageView(getActivity());
       imageView.setImageResource(R.drawable.white_circle);
       int imageSize = (int) Utils.dpToPx(12, getActivity());
