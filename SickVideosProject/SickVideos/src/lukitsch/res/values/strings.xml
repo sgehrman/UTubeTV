@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Lukitsch TV</string>
+    <string name="app_name">Mind the Gap</string>
 
     <string-array name="content_array">
         <item>LUKITSCH</item>

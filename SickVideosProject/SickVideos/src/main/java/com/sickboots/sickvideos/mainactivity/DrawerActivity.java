@@ -121,7 +121,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     WhatsNewDialog.showWhatsNew(this, false);
-
     IntroActivity.showIntroDelayed(this, true);
   }
 
