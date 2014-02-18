@@ -46,7 +46,7 @@ h3.libs {
     margin-top: 20px;
     text-align: center;
     color: white;
-    background-color:#888;
+    background-color:#AAA;
     padding-top:10px;
     padding-bottom:10px;
     border-radius:8px;
@@ -57,7 +57,7 @@ h3.contact {
 }
 
 .subtitle {
-    margin-top:-8px;
+    margin-top:-6px;
     color:#666;
 }
 

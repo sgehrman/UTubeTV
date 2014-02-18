@@ -61,14 +61,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     setContentView(R.layout.activity_drawer);
 
-    String[] channels = getResources().getStringArray(R.array.content_array);
-
-    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
-    for (String c : channels) {
-      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
-    }
-
-    mContent = new Content(this, channelCodes);
+    mContent = Content.instance(this);
 
     if (mContent.needsChannelSwitcher()) {
       mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
@@ -467,13 +460,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   @Override
   public void installFragment(Fragment fragment, boolean animate) {
     Utils.showFragment(this, fragment, R.id.fragment_holder, animate ? 1 : 0, true);
-  }
-
-  // about fragment can't be passed data, it must request it, fragments can get recreated
-  // DrawerActivitySupport
-  @Override
-  public Content getContent() {
-    return mContent;
   }
 
   // DrawerActivitySupport

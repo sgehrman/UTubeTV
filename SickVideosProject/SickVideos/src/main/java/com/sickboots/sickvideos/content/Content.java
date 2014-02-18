@@ -4,10 +4,12 @@ import android.app.Fragment;
 import android.content.Context;
 
 import com.google.common.collect.ImmutableMap;
+import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -22,9 +24,32 @@ import de.greenrobot.event.EventBus;
 public class Content {
   private Context mContext;
   private ChannelList mChannelList;
+  private static Content instance;
 
-  public Content(Context context, List<ChannelList.ChannelCode> channelCodes) {
+  // called once early
+  public static Content instance(Context context) {
+    if (instance == null)
+      instance = new Content(context);
+
+    return instance;
+  }
+
+  public static Content instance() {
+    if (instance == null)
+      Debug.log("Content instance null");
+
+    return instance;
+  }
+
+  private Content(Context context) {
     super();
+
+    String[] channels = context.getResources().getStringArray(R.array.content_array);
+
+    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
+    for (String c : channels) {
+      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
+    }
 
     mChannelList = new ChannelList(context, channelCodes, new ChannelList.OnChannelListUpdateListener() {
       @Override

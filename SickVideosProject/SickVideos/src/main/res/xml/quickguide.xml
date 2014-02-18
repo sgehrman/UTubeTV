@@ -20,7 +20,7 @@
 
         <channels></channels>
 
-        <text>This is the first app of the series, but more apps covering more categories is coming soon.</text>
+        <text>This is the first app of the series, but more apps covering more categories are coming soon.</text>
     </page>
 
     <page
@@ -50,6 +50,19 @@
         <text>To navigate within the current channel. Show the slide out navigation drawer by clicking the top left icon in the action bar, or by swiping from the right side of the screen.</text>
         <text>The navigation drawer contains the About page, Playlists and Recent Uploads page.</text>
         <text>That's basically it, try it out and I'm sure you'll get the hang of it right away.</text>
+    </page>
+
+    <page
+        title="Video player"
+        icon="lightbulb"
+        >
+        <text>When in portrait mode videos play in a custom video player.  You can still scroll the video list while a video is playing.  Turning the phone to landscape mode seemlessly continues playback without rebuffering.</text>
+        <text>Features include:</text>
+        <bullet>Skip 10 seconds ahead</bullet>
+        <bullet>Skip 10 seconds back</bullet>
+        <bullet>Mute button</bullet>
+        <bullet>Clicking duration pops down a custom scrub slider</bullet>
+
     </page>
 
     <page

@@ -47,7 +47,7 @@ public class ChannelAboutFragment extends Fragment implements OnRefreshListener 
 
     EventBus.getDefault().register(this);
 
-    mContent = ((DrawerActivitySupport) getActivity()).getContent();
+    mContent = Content.instance();
     mBitmapLoader = new BitmapLoader(getActivity(), "aboutBitmaps", 0, new BitmapLoader.GetBitmapCallback() {
       @Override
       public void onLoaded(Bitmap bitmap) {

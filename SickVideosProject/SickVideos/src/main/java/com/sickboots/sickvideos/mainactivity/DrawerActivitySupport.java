@@ -11,8 +11,6 @@ public interface DrawerActivitySupport {
   // used in the about fragment when clicking on Watch Now or image
   public void showPlaylistsFragment();
 
-  public Content getContent();
-
   public void playVideo(String videoId, String title);
 
   public boolean isPlayerVisible();

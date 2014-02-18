@@ -4,7 +4,6 @@
             android:layout_height="match_parent"
             android:paddingTop="0dp"
             android:scrollbars="none"
-            android:paddingBottom="40dp"
     >
 
     <LinearLayout

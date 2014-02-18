@@ -20,11 +20,9 @@ import android.widget.Button;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
-import com.sickboots.sickvideos.misc.Events;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.LinePageIndicator;
 import com.sickboots.sickvideos.misc.Utils;
-
-import de.greenrobot.event.EventBus;
 
 public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private static String PREF_KEY = "intro_first_launched_pref";
@@ -32,12 +30,27 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
   private IntroXMLTaskFragment mTaskFragment;
 
   public static void showIntroDelayed(final Activity activity, final boolean force) {
-    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+    Handler handler = new Handler(Looper.getMainLooper());
+
+    // we don't want to show this until our channels have loaded, so wait more if needed
+    // only going to try 10 times, if they don't have internet the whole app is useless anyway
+    retry(handler, activity, force, 0);
+  }
+
+  private static void retry(final Handler handler, final Activity activity, final boolean force, final int count) {
+    handler.postDelayed(new Runnable() {
       @Override
       public void run() {
-        IntroActivity.showIntro(activity, false, force);
+        Content content = Content.instance();
+
+        if (content.channels() != null)
+          IntroActivity.showIntro(activity, false, force);
+        else {
+          if (count < 10)
+            retry(handler, activity, force, count + 1);
+        }
       }
-    }, 2000);
+    }, 1500);
   }
 
   public static void showIntro(Activity activity, boolean dialogStyle, boolean force) {
@@ -50,7 +63,6 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
 
       final boolean firstLaunch = mPrefs.getBoolean(PREF_KEY, true);
 
-      // don't show on users first launch, they don't care about what's new, they just got the app
       if (firstLaunch) {
         final SharedPreferences.Editor edit = mPrefs.edit();
         edit.putBoolean(PREF_KEY, false);
@@ -60,7 +72,6 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
 
     if (show) {
-
       if (dialogStyle)
         showIntroDialog(activity);
       else {
@@ -130,7 +141,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
       fm.beginTransaction().add(mTaskFragment, "task").commit();
     }
 
-    Button button = (Button) findViewById(R.id.sign_up_button);
+    Button button = (Button) findViewById(R.id.close_button);
     button.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         finish();
@@ -147,6 +158,8 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     ind.setViewPager(viewPager);
   }
 
+  // ==================================================================
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
@@ -157,4 +170,5 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
     return super.onOptionsItemSelected(item);
   }
+
 }

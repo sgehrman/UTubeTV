@@ -9,6 +9,8 @@ import android.text.format.DateFormat;
 import android.widget.ScrollView;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.content.Content;
+import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -81,7 +83,22 @@ public class IntroXMLParser {
 
           IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.BULLET);
           fields.add(field);
+        } else if (name.equals("channels")) {
+          resourceParser.next();
+
+          // channels should never be null since we don't start this activity until channels are initialized
+          Content content = Content.instance();
+          List<YouTubeData> channels = content.channels();
+          if (channels != null) {
+            for (YouTubeData channel : channels) {
+              IntroPageField field = IntroPageField.newField(channel.mTitle, topMargin, IntroPageField.FieldType.BULLET);
+              fields.add(field);
+            }
+          }
         }
+
+
+
       }
       eventType = resourceParser.next();
     }
@@ -159,15 +176,6 @@ public class IntroXMLParser {
     public enum FieldType {TEXT, HEADER, BULLET}
     public FieldType type;
     public int topMargin;
-
-//    ScrollView scrollView;
-//
-//    @Override
-//    public int getSolidColor() {
-//      return Color.rgb(0x30, 0x30, 0x30);
-//    }
-
-
 
     public static IntroPageField newField(String text, String topMargin, FieldType type) {
       IntroPageField result = new IntroPageField();

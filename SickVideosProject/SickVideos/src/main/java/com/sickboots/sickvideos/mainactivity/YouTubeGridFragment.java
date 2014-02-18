@@ -34,6 +34,7 @@ import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.Database;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
@@ -93,7 +94,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
           subtitle = String.format("%d ", cnt) + mRequest.unitName(cnt > 1 || cnt == 0);
 
-          String channelName = provider.getContent().channelName();
+          String channelName = Content.instance().channelName();
           if (channelName != null)
             title = channelName;
 
