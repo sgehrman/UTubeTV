@@ -16,15 +16,17 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
+import com.sickboots.sickvideos.misc.Events;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import de.greenrobot.event.EventBus;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class ChannelAboutFragment extends Fragment implements Observer, OnRefreshListener {
+public class ChannelAboutFragment extends Fragment implements OnRefreshListener {
   private TextView mTitle;
   private TextView mDescription;
   private ImageView mImage;
@@ -42,6 +44,8 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_channel_about, container, false);
+
+    EventBus.getDefault().register(this);
 
     mContent = ((DrawerActivitySupport) getActivity()).getContent();
     mBitmapLoader = new BitmapLoader(getActivity(), "aboutBitmaps", 0, new BitmapLoader.GetBitmapCallback() {
@@ -99,8 +103,6 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   public void onRefreshStarted(View view) {
     // empty cache
     mBitmapLoader.refresh();
-
-    mContent.addObserver(this);
     mContent.refreshChannelInfo();
   }
 
@@ -114,33 +116,20 @@ public class ChannelAboutFragment extends Fragment implements Observer, OnRefres
   public void onDestroy() {
     super.onDestroy();
 
-    // make sure we are not going to be notified after we are gone.
-    // our activity will be null and we crash
-    mContent.deleteObserver(this);
+    EventBus.getDefault().unregister(this);
   }
 
-  @Override
-  public void update(Observable observable, Object data) {
-
-    if (data instanceof String) {
-      String input = (String) data;
-
-      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
-
-        updateUI();
-        mPullToRefreshLayout.setRefreshComplete();
-
-        // only need this called once
-        mContent.deleteObserver(this);
-      }
-    }
+  // eventbus event
+  public void onEvent(Events.ContentEvent event) {
+    updateUI();
+    mPullToRefreshLayout.setRefreshComplete();
   }
 
   private void updateUI() {
     final YouTubeData data = mContent.channelInfo();
-    if (data == null) {
-      mContent.addObserver(this);
-    } else {
+
+    // if data == null, we'll wait for the eventbus event to arrive
+    if (data != null) {
       mEmptyListHelper.view().setVisibility(View.GONE);
       mContentView.setVisibility(View.VISIBLE);
 

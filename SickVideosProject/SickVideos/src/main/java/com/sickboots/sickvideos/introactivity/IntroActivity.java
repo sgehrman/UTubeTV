@@ -19,13 +19,17 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 import com.sickboots.sickvideos.R;
+import com.sickboots.sickvideos.content.Content;
+import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.misc.LinePageIndicator;
 import com.sickboots.sickvideos.misc.Utils;
+
+import de.greenrobot.event.EventBus;
 
 public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private static String PREF_KEY = "intro_first_launched_pref";
   private IntroPagerAdapter introPagerAdapter;
-  IntroXMLTaskFragment mTaskFragment;
+  private IntroXMLTaskFragment mTaskFragment;
 
   public static void showIntroDelayed(final Activity activity, final boolean force) {
     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

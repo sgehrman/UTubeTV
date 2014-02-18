@@ -20,7 +20,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implements Observer {
+import de.greenrobot.event.EventBus;
+
+public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
   private Drawable mCheckDrawable;
@@ -52,7 +54,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
     clear();
 
     if (mContent.channelInfo() == null)
-      mContent.addObserver(this);
+      EventBus.getDefault().register(this);
     else {
       mChannels = mContent.channels();
 
@@ -86,18 +88,12 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> implemen
     return view;
   }
 
-  @Override
-  public void update(Observable observable, Object data) {
-    if (data instanceof String) {
-      String input = (String) data;
+  // eventbus event
+  public void onEvent(Events.ContentEvent event) {
+    updateChannels();
 
-      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
-        updateChannels();
-
-        // only need this called once
-        mContent.deleteObserver(this);
-      }
-    }
+    // only need this called once
+    EventBus.getDefault().unregister(this);
   }
 
   @Override

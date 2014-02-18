@@ -24,12 +24,15 @@ import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.ChannelSpinnerAdapter;
+import com.sickboots.sickvideos.misc.Events;
 
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerManager implements Observer {
+import de.greenrobot.event.EventBus;
+
+public class DrawerManager {
 
   public interface DrawerManagerListener {
     public void onChannelClick();
@@ -110,29 +113,22 @@ public class DrawerManager implements Observer {
         mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
       }
     });
-
   }
 
   private void updateChannelSpinner() {
     if (mContent.channelInfo() == null)
-      mContent.addObserver(this);
+      EventBus.getDefault().register(this);
     else {
       mChannelSpinnerAdapter.updateChannels(mContent.channels());
-
-      // only need this called once
-      mContent.deleteObserver(this);
     }
   }
 
-  @Override
-  public void update(Observable observable, Object data) {
-    if (data instanceof String) {
-      String input = (String) data;
+  // eventbus event
+  public void onEvent(Events.ContentEvent event) {
+    updateChannelSpinner();
 
-      if (input.equals(Content.CONTENT_UPDATED_NOTIFICATION)) {
-        updateChannelSpinner();
-      }
-    }
+    // only need this called once
+    EventBus.getDefault().unregister(this);
   }
 
   public void setDrawerIndicatorEnabled(boolean set) {
@@ -170,7 +166,7 @@ public class DrawerManager implements Observer {
   }
 
   private void setupDrawerSpinner(Context context, Spinner spinner) {
-    if (false) { // disabled.  mContent.needsChannelSwitcher()) {
+    if (false) { // disabled mContent.needsChannelSwitcher()) {
       mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
 
       spinner.setAdapter(mChannelSpinnerAdapter);

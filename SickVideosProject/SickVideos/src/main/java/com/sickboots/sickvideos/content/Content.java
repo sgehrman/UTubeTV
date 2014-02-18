@@ -8,6 +8,7 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
+import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
@@ -16,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-public class Content extends Observable {
-  public static final String CONTENT_UPDATED_NOTIFICATION = "CONTENT_UPDATED";
+import de.greenrobot.event.EventBus;
+
+public class Content {
   private Context mContext;
   private ChannelList mChannelList;
 
@@ -110,8 +112,8 @@ public class Content extends Observable {
   }
 
   private void notifyForDataUpdate() {
-    setChanged();
-    notifyObservers(Content.CONTENT_UPDATED_NOTIFICATION);
+    // this only happens once, so make it sticky
+    EventBus.getDefault().post(new Events.ContentEvent(this));
   }
 
 }

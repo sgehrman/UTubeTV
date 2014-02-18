@@ -159,6 +159,7 @@ dependencies {
     compile 'com.jakewharton:disklrucache:+'
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.cocosw:undobar:0.6@aar'
+    compile 'de.greenrobot:eventbus:+'
 
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile project(':IconicDroid')

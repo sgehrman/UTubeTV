@@ -47,6 +47,11 @@
 # https://github.com/square/picasso
 -dontwarn com.squareup.okhttp.**
 
+# https://github.com/greenrobot/EventBus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+
 # ----------------------------------------
 # uncomment to turn off obfucation
 
