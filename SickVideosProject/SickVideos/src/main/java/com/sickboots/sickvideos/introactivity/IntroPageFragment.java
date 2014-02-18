@@ -95,17 +95,20 @@ public class IntroPageFragment extends Fragment {
   }
 
   private View createFieldView(IntroXMLParser.IntroPageField field) {
+    final int headerSize = 20;
+    final int titleSize = 14;
+
     TextView textView = new TextView(getActivity());
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     textView.setLayoutParams(params);
     textView.setAutoLinkMask(Linkify.ALL);
-    textView.setTextSize(18);
+    textView.setTextSize(titleSize);
     textView.setText(field.text);
 
     if (field.isHeader()) {
       int color = getActivity().getResources().getColor(R.color.intro_header_color);
 
-      textView.setTextSize(20);
+      textView.setTextSize(headerSize);
       textView.setTextColor(color);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
 

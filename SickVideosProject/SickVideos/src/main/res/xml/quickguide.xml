@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <guide>
     <page
-        title="Quick Guide"
+        title="Quick Start"
         icon="info"
         >
-        <header>Welcome to my app</header>
-        <text>wat you think?</text>
+        <header>Welcome to TV:TechNews</header>
 
         <bullet>It makes sandwiches</bullet>
         <bullet>It makes coffee</bullet>
@@ -15,7 +14,7 @@
 
 
     <page
-        title="YouTube channels"
+        title="Navigation"
         icon="youtube"
         >
         <text>Contains multiple YouTube channels</text>
@@ -39,34 +38,13 @@
     </page>
 
     <page
-        title="YouTube channels"
-        icon="youtube"
+        title="Why is this better?"
+        icon="lightbulb"
         >
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sanan dadklfj adf alskdfj alskdj flkasd jflka djslfka jsdlkfdwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makeaksld fjlaksdj flkasjd flkaj sdlkfj alksd fjlkasds bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sanan dadklfj adf alskdfj alskdj flkasd jflka djslfka jsdlkfdwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makeaksld fjlaksdj flkasjd flkaj sdlkfj alksd fjlkasds bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sanan dadklfj adf alskdfj alskdj flkasd jflka djslfka jsdlkfdwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makeaksld fjlaksdj flkasjd flkaj sdlkfj alksd fjlkasds bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sanan dadklfj adf alskdfj alskdj flkasd jflka djslfka jsdlkfdwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makeaksld fjlaksdj flkasjd flkaj sdlkfj alksd fjlkasds bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sanan dadklfj adf alskdfj alskdj flkasd jflka djslfka jsdlkfdwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makeaksld fjlaksdj flkasjd flkaj sdlkfj alksd fjlkasds bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
+        <text>YouTube has an incredible selection of interesting videos.  The problem is finding those videos and keeping track of channels you like.</text>
+        <text>Sure there are subscriptions, but after subscribing to dozens of channels, now you have to navigate though a large subscription list every time you feel like watching a video.</text>
+        <text>Launching apps is the simplest most straight forward UI on a mobile device.  It's clear and does one clear task.  Wouldn't it be nice if you were in the mood for tech videos you could just click the tech videos app?</text>
+        <text>This is what this application attempts to do. Make watching videos a little bit simpler.</text>
     </page>
 
     <page

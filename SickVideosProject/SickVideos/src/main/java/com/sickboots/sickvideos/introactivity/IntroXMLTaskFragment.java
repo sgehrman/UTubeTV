@@ -8,12 +8,11 @@ import java.util.List;
 
 public class IntroXMLTaskFragment extends Fragment {
   private List<IntroXMLParser.IntroPage> pages;
+  private Callbacks mCallbacks;
 
   public static interface Callbacks {
     public void onNewPages();
   }
-
-  private Callbacks mCallbacks;
 
   @Override
   public void onAttach(Activity activity) {
@@ -46,5 +45,4 @@ public class IntroXMLTaskFragment extends Fragment {
     super.onDetach();
     mCallbacks = null;
   }
-
 }
