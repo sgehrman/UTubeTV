@@ -20,9 +20,6 @@ public class AppUtils {
   private Preferences mPrefsCache;
   private Context mApplicationContext;
 
-  // public notifications
-  public static final String THEME_CHANGED = "theme_changed";
-
   private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
 
@@ -114,5 +111,4 @@ public class AppUtils {
 
     builder.create().show();
   }
-
 }
