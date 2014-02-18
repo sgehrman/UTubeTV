@@ -1,27 +1,21 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.util.Linkify;
-import android.util.AttributeSet;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
-import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
@@ -117,7 +111,7 @@ public class IntroPageFragment extends Fragment {
       textView.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
-      ImageView imageView = null;
+    ImageView imageView = null;
     if (field.isBullet()) {
       imageView = new ImageView(getActivity());
       imageView.setImageResource(R.drawable.white_circle);
@@ -128,11 +122,11 @@ public class IntroPageFragment extends Fragment {
       int leftMarginPx = (int) Utils.dpToPx(12, getActivity());
       int rightMarginPx = (int) Utils.dpToPx(6, getActivity());
       int topMarginPx = (int) Utils.dpToPx(7, getActivity());
-      imageParams.setMargins(leftMarginPx,topMarginPx,rightMarginPx,0);
+      imageParams.setMargins(leftMarginPx, topMarginPx, rightMarginPx, 0);
       imageView.setLayoutParams(imageParams);
 
-//      int textPaddingPx = (int) Utils.dpToPx(12, getActivity());
-//      imageView.setPadding(textPaddingPx, 0, 0, 0);
+      //      int textPaddingPx = (int) Utils.dpToPx(12, getActivity());
+      //      imageView.setPadding(textPaddingPx, 0, 0, 0);
 
     }
 

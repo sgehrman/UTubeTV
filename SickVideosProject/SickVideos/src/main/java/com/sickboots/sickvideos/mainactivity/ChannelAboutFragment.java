@@ -18,9 +18,6 @@ import com.sickboots.sickvideos.imageutils.BitmapLoader;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Events;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import de.greenrobot.event.EventBus;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;

@@ -2,8 +2,6 @@ package com.sickboots.sickvideos.mainactivity;
 
 import android.app.Fragment;
 
-import com.sickboots.sickvideos.content.Content;
-
 // also used by about fragment, but had to put it somewhere
 public interface DrawerActivitySupport {
   public boolean actionBarTitleHandled();

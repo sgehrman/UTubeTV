@@ -27,8 +27,6 @@ import com.sickboots.sickvideos.misc.ChannelSpinnerAdapter;
 import com.sickboots.sickvideos.misc.Events;
 
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 import de.greenrobot.event.EventBus;
 

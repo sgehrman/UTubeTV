@@ -20,7 +20,6 @@ import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.activities.ChannelLookupActivity;
 import com.sickboots.sickvideos.activities.SettingsActivity;
 import com.sickboots.sickvideos.activities.ViewServerActivity;
-import com.sickboots.sickvideos.content.ChannelList;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
@@ -34,11 +33,6 @@ import com.sickboots.sickvideos.youtube.VideoPlayer;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
 
 import org.codechimp.apprater.AppRater;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import de.greenrobot.event.EventBus;
 

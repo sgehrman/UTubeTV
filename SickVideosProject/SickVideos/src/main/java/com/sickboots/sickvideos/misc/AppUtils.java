@@ -9,9 +9,6 @@ import android.os.Looper;
 
 import com.sickboots.sickvideos.R;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import de.greenrobot.event.EventBus;
 
 public class AppUtils {

@@ -6,7 +6,6 @@ import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateFormat;
-import android.widget.ScrollView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
@@ -70,12 +69,12 @@ public class IntroXMLParser {
           IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.HEADER);
           fields.add(field);
         } else if (name.equals("text")) {
-            resourceParser.next();
+          resourceParser.next();
 
-            String text = resourceParser.getText();
+          String text = resourceParser.getText();
 
-            IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.TEXT);
-            fields.add(field);
+          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.TEXT);
+          fields.add(field);
         } else if (name.equals("bullet")) {
           resourceParser.next();
 
@@ -96,7 +95,6 @@ public class IntroXMLParser {
             }
           }
         }
-
 
 
       }
@@ -173,7 +171,9 @@ public class IntroXMLParser {
 
   public static class IntroPageField {
     public String text;
+
     public enum FieldType {TEXT, HEADER, BULLET}
+
     public FieldType type;
     public int topMargin;
 
@@ -205,9 +205,11 @@ public class IntroXMLParser {
     public boolean isText() {
       return type == FieldType.TEXT;
     }
+
     public boolean isBullet() {
       return type == FieldType.BULLET;
     }
+
     public boolean isHeader() {
       return type == FieldType.HEADER;
     }

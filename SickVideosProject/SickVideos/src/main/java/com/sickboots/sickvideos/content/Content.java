@@ -17,7 +17,6 @@ import com.sickboots.sickvideos.youtube.YouTubeAPI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 

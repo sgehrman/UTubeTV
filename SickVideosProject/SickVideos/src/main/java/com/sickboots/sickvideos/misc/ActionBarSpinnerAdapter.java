@@ -17,8 +17,6 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.BitmapLoader;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import de.greenrobot.event.EventBus;
 
