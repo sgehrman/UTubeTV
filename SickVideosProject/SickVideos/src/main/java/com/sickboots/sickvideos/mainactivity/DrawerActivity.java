@@ -26,6 +26,7 @@ import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
+import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
 import com.sickboots.sickvideos.misc.Utils;
@@ -39,7 +40,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawerActivity extends ViewServerActivity implements DrawerActivitySupport, Observer {
+import de.greenrobot.event.EventBus;
+
+public class DrawerActivity extends ViewServerActivity implements DrawerActivitySupport {
   VideoPlayer mPlayer;
   private int mCurrentSection = -1;
   private DrawerManager mDrawerMgr;
@@ -141,7 +144,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     super.onStop();
 
     // for AppUtils.THEME_CHANGED
-    AppUtils.instance(this).deleteObserver(this);
+    EventBus.getDefault().unregister(this);
   }
 
   @Override
@@ -149,29 +152,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     super.onStart();
 
     // for AppUtils.THEME_CHANGED
-    AppUtils.instance(this).addObserver(this);
-  }
-
-  @Override  // Observer
-  public void update(Observable observable, Object data) {
-    if (data instanceof String) {
-      String input = (String) data;
-
-      if (input.equals(AppUtils.THEME_CHANGED)) {
-        // animate doesn't work, puts new activity in the background.  use recreate instead
-        boolean animate = false;
-        if (animate) {
-          ActivityOptions opts = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
-
-          startActivity(getIntent(), opts.toBundle());
-
-          finish();
-        } else {
-          // not sure how to to get recreate to animate, so we use the above code when animating which is like a recreate
-          recreate();
-        }
-      }
-    }
+    EventBus.getDefault().register(this);
   }
 
   @Override
@@ -205,6 +186,21 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     return false;
+  }
+
+  public void onEvent(Events.ThemeChanged event) {
+    // animate doesn't work, puts new activity in the background.  use recreate instead
+    boolean animate = false;
+    if (animate) {
+      ActivityOptions opts = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out);
+
+      startActivity(getIntent(), opts.toBundle());
+
+      finish();
+    } else {
+      // not sure how to to get recreate to animate, so we use the above code when animating which is like a recreate
+      recreate();
+    }
   }
 
   @Override

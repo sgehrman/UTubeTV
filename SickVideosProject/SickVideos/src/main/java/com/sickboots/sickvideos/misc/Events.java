@@ -9,4 +9,8 @@ public class Events {
     }
   }
 
+  public static class ThemeChanged {
+    public ThemeChanged() {
+    }
+  }
 }

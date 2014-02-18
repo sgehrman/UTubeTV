@@ -12,6 +12,8 @@ import com.sickboots.sickvideos.R;
 import java.util.Observable;
 import java.util.Observer;
 
+import de.greenrobot.event.EventBus;
+
 public class AppUtils {
   private static AppUtils instance = null;
   private Handler mainThreadHandler;
@@ -32,7 +34,7 @@ public class AppUtils {
       @Override
       public void prefChanged(String prefName) {
         if (prefName.equals(Preferences.THEME_STYLE)) {
-          sendNotification(THEME_CHANGED);
+          EventBus.getDefault().post(new Events.ThemeChanged());
         }
       }
     });
@@ -82,24 +84,6 @@ public class AppUtils {
   public void runOnMainThread(Runnable action) {
     if (action != null)
       mainThreadHandler.post(action);
-  }
-
-  public void addObserver(Observer observer) {
-    notificationCenter.addObserver(observer);
-  }
-
-  public void deleteObserver(Observer observer) {
-    notificationCenter.deleteObserver(observer);
-  }
-
-  public void sendNotification(final String message) {
-    // always sends on main thread
-    runOnMainThread(new Runnable() {
-      @Override
-      public void run() {
-        notificationCenter.sendNotification(message);
-      }
-    });
   }
 
   // -------------------------------------
