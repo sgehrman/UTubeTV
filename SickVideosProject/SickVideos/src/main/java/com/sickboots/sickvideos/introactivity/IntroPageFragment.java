@@ -1,11 +1,14 @@
 package com.sickboots.sickvideos.introactivity;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
+import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
@@ -143,6 +148,5 @@ public class IntroPageFragment extends Fragment {
 
     return linearLayout;
   }
-
 }
 

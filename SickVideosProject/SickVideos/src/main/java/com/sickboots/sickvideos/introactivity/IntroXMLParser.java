@@ -6,6 +6,7 @@ import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateFormat;
+import android.widget.ScrollView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.misc.Debug;
@@ -158,6 +159,15 @@ public class IntroXMLParser {
     public enum FieldType {TEXT, HEADER, BULLET}
     public FieldType type;
     public int topMargin;
+
+//    ScrollView scrollView;
+//
+//    @Override
+//    public int getSolidColor() {
+//      return Color.rgb(0x30, 0x30, 0x30);
+//    }
+
+
 
     public static IntroPageField newField(String text, String topMargin, FieldType type) {
       IntroPageField result = new IntroPageField();

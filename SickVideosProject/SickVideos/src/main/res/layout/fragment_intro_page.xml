@@ -1,10 +1,9 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sickboots.sickvideos.introactivity.IntroScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="0dp"
             android:scrollbars="none"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingBottom="40dp"
     >
 
@@ -14,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
 
         android:orientation="vertical">
 
@@ -57,4 +58,4 @@
         </TextView>
 
     </LinearLayout>
-</ScrollView>
+</com.sickboots.sickvideos.introactivity.IntroScrollView>

@@ -127,14 +127,13 @@ public class SettingsActivity extends Activity {
         return true;
       } else if (preference.getKey().equals("rate")) {
         AppRater.rateNow(getActivity());
-
         return true;
       } else if (preference.getKey().equals("log")) {
         ChangeLogDialog.showChangeLog(getActivity());
         return true;
       } else if (preference.getKey().equals("intro")) {
-        IntroActivity.showIntro(getActivity(), true, true);
-
+        IntroActivity.showIntro(getActivity(), false, true);
+        return true;
       }
 
       return false;

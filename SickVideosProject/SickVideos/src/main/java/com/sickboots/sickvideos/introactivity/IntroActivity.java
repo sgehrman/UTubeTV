@@ -62,7 +62,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     if (show) {
 
       if (dialogStyle)
-        showIntroDialog(activity, force);
+        showIntroDialog(activity);
       else {
         // add animation, see finish below for the back transition
         ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.slidedown, 0);
@@ -74,7 +74,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
   }
 
-  private static void showIntroDialog(Activity activity, boolean force) {
+  private static void showIntroDialog(Activity activity) {
     String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
 
     final WebView webview = new WebView(activity);

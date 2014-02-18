@@ -25,15 +25,14 @@
         android:defaultValue="false"/>
 
     <Preference
-        android:title="@string/pref_rate_app"
-        android:summary="@string/pref_rate_app_summary"
-        android:key="rate"/>
-
-    <Preference
         android:title="@string/pref_intro_title"
         android:key="intro"
         android:summary="@string/pref_intro_summary"
         />
+    <Preference
+        android:title="@string/pref_rate_app"
+        android:summary="@string/pref_rate_app_summary"
+        android:key="rate"/>
     <Preference
         android:title="@string/pref_title_log"
         android:key="log"/>
