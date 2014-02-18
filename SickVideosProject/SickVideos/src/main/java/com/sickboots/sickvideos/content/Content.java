@@ -113,7 +113,7 @@ public class Content {
 
   private void notifyForDataUpdate() {
     // this only happens once, so make it sticky
-    EventBus.getDefault().post(new Events.ContentEvent(this));
+    EventBus.getDefault().post(new Events.ContentEvent());
   }
 
 }
