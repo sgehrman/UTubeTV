@@ -124,10 +124,6 @@ public class IntroPageFragment extends Fragment {
       int topMarginPx = (int) Utils.dpToPx(7, getActivity());
       imageParams.setMargins(leftMarginPx, topMarginPx, rightMarginPx, 0);
       imageView.setLayoutParams(imageParams);
-
-      //      int textPaddingPx = (int) Utils.dpToPx(12, getActivity());
-      //      imageView.setPadding(textPaddingPx, 0, 0, 0);
-
     }
 
     LinearLayout linearLayout = new LinearLayout(getActivity());
