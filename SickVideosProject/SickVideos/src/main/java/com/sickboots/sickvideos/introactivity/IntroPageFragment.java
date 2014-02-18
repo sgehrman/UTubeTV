@@ -108,6 +108,10 @@ public class IntroPageFragment extends Fragment {
       textView.setTextSize(20);
       textView.setTextColor(color);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
+
+      // add a top margin
+      int topPaddingPx = (int) Utils.dpToPx(field.topMargin, getActivity());
+      textView.setPadding(0, topPaddingPx, 0, 0);
     }
 
       ImageView imageView = null;

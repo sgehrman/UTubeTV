@@ -57,26 +57,28 @@ public class IntroXMLParser {
 
         String name = resourceParser.getName();
 
+        String topMargin = resourceParser.getAttributeValue(null, "top_margin");
+
         if (name.equals("header")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.HEADER);
+          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.HEADER);
           fields.add(field);
         } else if (name.equals("text")) {
             resourceParser.next();
 
             String text = resourceParser.getText();
 
-            IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.TEXT);
+            IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.TEXT);
             fields.add(field);
         } else if (name.equals("bullet")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, IntroPageField.FieldType.BULLET);
+          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.BULLET);
           fields.add(field);
         }
       }
@@ -155,12 +157,16 @@ public class IntroXMLParser {
     public String text;
     public enum FieldType {TEXT, HEADER, BULLET}
     public FieldType type;
+    public int topMargin;
 
-    public static IntroPageField newField(String text, FieldType type) {
+    public static IntroPageField newField(String text, String topMargin, FieldType type) {
       IntroPageField result = new IntroPageField();
 
       result.text = text;
       result.type = type;
+
+      if (topMargin != null)
+        result.topMargin = Integer.valueOf(topMargin);
 
       return result;
     }

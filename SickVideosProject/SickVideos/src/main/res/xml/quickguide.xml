@@ -34,7 +34,7 @@
         <bullet>It makes coffee</bullet>
         <bullet>It makes bacon</bullet>
         <text>Read more here http://www.sickboots.com</text>
-        <header>This is a header</header>
+        <header top_margin="12">This is a header</header>
         <text>Read more here</text>
     </page>
 
