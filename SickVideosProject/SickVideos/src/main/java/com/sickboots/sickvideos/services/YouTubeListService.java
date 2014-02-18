@@ -10,6 +10,7 @@ import com.sickboots.sickvideos.activities.AuthActivity;
 import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.DatabaseTables;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.YouTubeAPI;
@@ -141,7 +142,7 @@ public class YouTubeListService extends IntentService {
     List<YouTubeData> resultList = null;
 
     // do we have internet access?
-    if (!Utils.hasNetworkConnection(this)) {
+    if (!AppUtils.instance(this).hasNetworkConnection()) {
       Debug.log("No internet connection.  Method: " + Debug.currentMethod());
       return;
     }

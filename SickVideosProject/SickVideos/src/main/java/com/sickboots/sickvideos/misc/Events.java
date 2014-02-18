@@ -11,4 +11,9 @@ public class Events {
     public ThemeChanged() {
     }
   }
+
+  public static class ConnectionChanged {
+    public ConnectionChanged() {
+    }
+  }
 }

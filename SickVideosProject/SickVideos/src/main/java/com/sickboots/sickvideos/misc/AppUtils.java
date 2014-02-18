@@ -16,11 +16,13 @@ public class AppUtils {
   private Handler mainThreadHandler;
   private Preferences mPrefsCache;
   private Context mApplicationContext;
+  private ConnectionMonitor mConnectionMonitor;
 
   private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
 
     mainThreadHandler = new Handler(Looper.getMainLooper());
+    mConnectionMonitor = new ConnectionMonitor(mApplicationContext);
 
     mPrefsCache = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
       @Override
@@ -51,6 +53,10 @@ public class AppUtils {
       instance = new AppUtils(context);
 
     return instance;
+  }
+
+  public boolean hasNetworkConnection() {
+    return mConnectionMonitor.hasNetworkConnection();
   }
 
   public static Preferences preferences(Context context) {

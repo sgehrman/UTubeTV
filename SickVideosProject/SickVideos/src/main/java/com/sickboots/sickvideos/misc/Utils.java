@@ -202,22 +202,6 @@ public class Utils {
     return millisecondsToDuration(s.getSeconds() * 1000);
   }
 
-  public static boolean hasNetworkConnection(Context context) {
-    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-    boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-
-    // could add this later (from dev sample)
-    //    if (isConnected) {
-    //      boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
-    //
-    //      Debug.log("got wifi");
-    //    }
-
-    return isConnected;
-  }
-
   public static Bitmap drawTextToBitmap(Context gContext, int width, int height, String gText, int textColor, int shadowColor, int fontSizeInDP, int fillColor, int fillRadius, int strokeColor, float strokeWidth) {
     Resources resources = gContext.getResources();
     float scale = resources.getDisplayMetrics().density;

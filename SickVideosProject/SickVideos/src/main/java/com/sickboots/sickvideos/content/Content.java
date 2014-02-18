@@ -25,7 +25,7 @@ public class Content {
   private ChannelList mChannelList;
   private static Content instance;
 
-  // called once early
+  // called once early in main activity, but activity could get recreated, so checking for null
   public static Content instance(Context context) {
     if (instance == null)
       instance = new Content(context);

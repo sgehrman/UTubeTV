@@ -90,8 +90,11 @@ public class ChannelList {
 
   // called on main thread
   private void updateChannels(List<YouTubeData> channels) {
-    mChannels = channels;
-    mListener.onUpdate();
+    // keep mChannels null if no results
+    if (channels.size() > 0) {
+      mChannels = channels;
+      mListener.onUpdate();
+    }
   }
 
   // returns false if that channel is already current
