@@ -171,6 +171,19 @@ public class IntroXMLParser {
       return result;
     }
 
+    public int topMargin() {
+      switch (type) {
+        case TEXT:
+          return 12;
+        case BULLET:
+          return 12;
+        case HEADER:
+          return 12;
+      }
+
+      return 0;
+    }
+
     public boolean isText() {
       return type == FieldType.TEXT;
     }

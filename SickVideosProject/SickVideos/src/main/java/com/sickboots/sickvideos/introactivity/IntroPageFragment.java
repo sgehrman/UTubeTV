@@ -91,12 +91,11 @@ public class IntroPageFragment extends Fragment {
 
   public interface ActivityAccess {
     IntroXMLParser.IntroPage pageAtIndex(int position);
-
   }
 
   private View createFieldView(IntroXMLParser.IntroPageField field) {
     final int headerSize = 20;
-    final int titleSize = 14;
+    final int titleSize = 16;
 
     TextView textView = new TextView(getActivity());
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -111,16 +110,13 @@ public class IntroPageFragment extends Fragment {
       textView.setTextSize(headerSize);
       textView.setTextColor(color);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
-
-      // add a top margin
-      int topPaddingPx = (int) Utils.dpToPx(field.topMargin, getActivity());
-      textView.setPadding(0, topPaddingPx, 0, 0);
     }
 
       ImageView imageView = null;
     if (field.isBullet()) {
       imageView = new ImageView(getActivity());
       imageView.setImageResource(R.drawable.white_circle);
+
       int imageSize = (int) Utils.dpToPx(12, getActivity());
 
       LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(imageSize, imageSize);
@@ -130,15 +126,16 @@ public class IntroPageFragment extends Fragment {
       imageParams.setMargins(leftMarginPx,topMarginPx,rightMarginPx,0);
       imageView.setLayoutParams(imageParams);
 
-
-
 //      int textPaddingPx = (int) Utils.dpToPx(12, getActivity());
 //      imageView.setPadding(textPaddingPx, 0, 0, 0);
 
     }
 
     LinearLayout linearLayout = new LinearLayout(getActivity());
-    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    int topPaddingPx = (int) Utils.dpToPx(field.topMargin(), getActivity());
+    duhParams.setMargins(0, topPaddingPx, 0, 0);
+    linearLayout.setLayoutParams(duhParams);
 
     if (imageView != null)
       linearLayout.addView(imageView);

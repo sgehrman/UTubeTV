@@ -5,36 +5,51 @@
         icon="info"
         >
         <header>Welcome to TV:TechNews</header>
-
-        <bullet>It makes sandwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makes bacon</bullet>
-        <text>Read more here http://www.hello.com</text>
+        <text>Here's a quick guide to Help you get started.</text>
+        <text>Swipe left to navigate to the next page.</text>
     </page>
 
+
+    <page
+        title="YouTube Channels"
+        icon="youtube"
+        >
+        <text>This app is a simplified video player for watching YouTube videos.</text>
+        <text>This app contains a collection of the top channels in it's category.</text>
+        <text>This specific app contains these YouTube channels:</text>
+
+        <channels></channels>
+
+        <text>This is the first app of the series, but more apps covering more categories is coming soon.</text>
+    </page>
 
     <page
         title="Navigation"
         icon="youtube"
         >
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sandwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makes bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
+        <text>This app tries to keep things as simple as possible and we try to follow the Android design guidelines so things should be very familiar and easy to learn.</text>
+        <bullet>Scrolling list view</bullet>
+        <bullet>Side out navigation drawer</bullet>
+        <bullet>Action Bar</bullet>
+        <bullet>Swipe to dismiss</bullet>
+        <bullet>Slide down video player</bullet>
+
     </page>
 
     <page
-        title="YouTube channels"
+        title="The Basics"
         icon="youtube"
         >
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sandwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makes bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
-        <header top_margin="12">This is a header</header>
-        <text>Read more here</text>
+        <text>The first thing you'll see is the 'about page' of the default channel</text>
+        <text>Every channel has an about page with an image and a description of the channel</text>
+        <text>Click on the image or the "Watch Now" button.  They both takes you to the channels list of playlists.</text>
+        <text>A playlist is a collection of videos organized by the channel</text>
+        <text>Clicking on a playlist shows a list of videos.  Clicking on the video plays the video</text>
+        <header>Changing channels</header>
+        <text>Changing channels is simple.  Click on the popup menu control on the left side of the action bar at the top of the screen.</text>
+        <text>To navigate within the current channel. Show the slide out navigation drawer by clicking the top left icon in the action bar, or by swiping from the right side of the screen.</text>
+        <text>The navigation drawer contains the About page, Playlists and Recent Uploads page.</text>
+        <text>That's basically it, try it out and I'm sure you'll get the hang of it right away.</text>
     </page>
 
     <page
@@ -45,28 +60,23 @@
         <text>Sure there are subscriptions, but after subscribing to dozens of channels, now you have to navigate though a large subscription list every time you feel like watching a video.</text>
         <text>Launching apps is the simplest most straight forward UI on a mobile device.  It's clear and does one clear task.  Wouldn't it be nice if you were in the mood for tech videos you could just click the tech videos app?</text>
         <text>This is what this application attempts to do. Make watching videos a little bit simpler.</text>
+        <text>And there are additional apps just like this you can download that cover additional topics.</text>
     </page>
 
     <page
-        title="YouTube channels"
+        title="Suggestiongs/Comments"
         icon="youtube"
         >
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sandwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makes bacon</bullet>
-        <text>Read more here http://www.google.com</text>
-    </page>
+        <text>We want to make this app better, but we'll need your help.</text>
+        <bullet>Did I pick the right channels?</bullet>
+        <bullet>Is it pleasant to use?</bullet>
+        <bullet>Feature request?</bullet>
+        <bullet>Bug reports?</bullet>
+        <text>Send us your ideas: mailto:sgehrman@gmail.com</text>
 
-    <page
-        title="YouTube channels"
-        icon="youtube"
-        >
-        <text>Contains multiple YouTube channels</text>
-        <bullet>It makes sandwiches</bullet>
-        <bullet>It makes coffee</bullet>
-        <bullet>It makes bacon</bullet>
-        <text>Read more here http://www.sickboots.com</text>
+        <text>To see this guide again, look in the Settings window and click "Quick Start"</text>
+        <text>Thank you for trying my app!</text>
+
     </page>
 
 
