@@ -60,6 +60,7 @@ Top Gear
 Bill Murray
 WWE
 Greenpeace
+tales of the city
 
 
 /*
@@ -76,7 +77,7 @@ These channels are from YouTube
 icon:youtube
 
 3)
-icon: 
+icon:
 Clicking an app is easier than navigating youtube
 subscriptions become overwhelming
 data is cached for quick viewing
@@ -84,6 +85,26 @@ data is cached for quick viewing
 4) Shortcuts
 Pull down to refresh
 swipe to hide
+
+5) Usage
+
+
+6) Channel list
+disclaimer
+
+7) Need help
+send suggestions
+tell me which channels I should remove or add
+
+8) contact info
+        message = "sgehrman@gmail.com
+
+        Want a custom youtube app for your channel?  send me an email
+
+         Please rate my app!
+         app rate url:
+
+
 
 
 

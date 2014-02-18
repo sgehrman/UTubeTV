@@ -18,4 +18,6 @@
     <color name="dimmer_color">#8000</color>
 
     <color name="intro_drawable_color">#aaffffff</color>
+    <color name="intro_header_color">#ffc1f8ff</color>
+
 </resources>

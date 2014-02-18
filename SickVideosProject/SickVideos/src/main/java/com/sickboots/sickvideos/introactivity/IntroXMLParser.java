@@ -135,7 +135,6 @@ public class IntroXMLParser {
     public void parseXMLDone(List<IntroPage> pages);
   }
 
-
   public static class IntroPage {
     public String title;
     public String icon;

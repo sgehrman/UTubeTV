@@ -20,7 +20,6 @@ import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
-
   public IntroPageFragment() {
     super();
   }
@@ -42,11 +41,9 @@ public class IntroPageFragment extends Fragment {
     ActivityAccess access = (ActivityAccess) getActivity();
     IntroXMLParser.IntroPage page = access.pageAtIndex(sectionNumber);
 
-
     TextView titleView = (TextView) rootView.findViewById(R.id.title);
     TextView messageView = (TextView) rootView.findViewById(R.id.message);
     ImageView imageView = (ImageView) rootView.findViewById(R.id.image_view);
-
 
     if (page != null) {
       String message = "";
@@ -65,6 +62,8 @@ public class IntroPageFragment extends Fragment {
         icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, color, iconSize);
 
       titleView.setText(title);
+      titleView.setTextColor(getResources().getColor(R.color.intro_header_color));
+
       messageView.setText(message);
       imageView.setImageDrawable(icon);
 
@@ -104,9 +103,10 @@ public class IntroPageFragment extends Fragment {
     textView.setText(field.text);
 
     if (field.isHeader()) {
+      int color = getActivity().getResources().getColor(R.color.intro_header_color);
+
       textView.setTextSize(20);
-      textView.setAllCaps(true);
-      textView.setTextColor(0xff9988dd);
+      textView.setTextColor(color);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
