@@ -17,7 +17,6 @@ import de.greenrobot.event.EventBus;
 public class AppUtils {
   private static AppUtils instance = null;
   private Handler mainThreadHandler;
-  private NotificationCenter notificationCenter;
   private Preferences mPrefsCache;
   private Context mApplicationContext;
 
@@ -27,7 +26,6 @@ public class AppUtils {
   private AppUtils(Context context) {
     mApplicationContext = context.getApplicationContext();
 
-    notificationCenter = new NotificationCenter();
     mainThreadHandler = new Handler(Looper.getMainLooper());
 
     mPrefsCache = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
@@ -77,23 +75,9 @@ public class AppUtils {
     return mPrefsCache;
   }
 
-  // -------------------------------------
-  // -------------------------------------
-  // Notification center
-
   public void runOnMainThread(Runnable action) {
     if (action != null)
       mainThreadHandler.post(action);
-  }
-
-  // -------------------------------------
-  // Notification center class
-
-  private class NotificationCenter extends Observable {
-    protected void sendNotification(String message) {
-      setChanged();
-      notifyObservers(message);
-    }
   }
 
   public static void pickViewStyleDialog(final Context context) {
