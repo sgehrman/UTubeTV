@@ -64,6 +64,29 @@ Greenpeace
 
 /*
 
+Outline
+1) Welcome
+Quickstart guide for app name
+swipe to continue
+icon:heart?
+
+
+2) Included Channels
+These channels are from YouTube
+icon:youtube
+
+3)
+icon: 
+Clicking an app is easier than navigating youtube
+subscriptions become overwhelming
+data is cached for quick viewing
+
+4) Shortcuts
+Pull down to refresh
+swipe to hide
+
+
+
 
         title = "Thanks!";
         message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  \n\nSwipe screen to the next page...";
