@@ -72,7 +72,6 @@ public class BitmapDiskCache {
       if (writeBitmapToFile(data, editor)) {
         mDiskCache.flush();
         editor.commit();
-        Debug.log("image put on disk cache key:" + key);
       } else {
         editor.abort();
         Debug.log("ERROR on: image put on disk cache " + key);
@@ -109,8 +108,6 @@ public class BitmapDiskCache {
       }
     }
 
-    Debug.log("bitmap read from cache: " + ((bitmap == null) ? "null" : key));
-
     return bitmap;
   }
 
@@ -132,7 +129,6 @@ public class BitmapDiskCache {
   }
 
   public void clearCache() {
-    Debug.log("disk cache CLEARED");
     try {
       mDiskCache.delete();
     } catch (IOException e) {
