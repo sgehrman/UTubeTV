@@ -11,6 +11,7 @@ import android.text.format.DateFormat;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
+import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -156,7 +157,7 @@ public class IntroXMLParser {
 
   public static class IntroPage {
     public String title;
-    public String icon;
+    private String icon;
     public List<IntroPageField> fields;
 
     public static IntroPage newPage(String title, String icon, List<IntroPageField> fields) {
@@ -168,13 +169,33 @@ public class IntroXMLParser {
 
       return result;
     }
+
+    public ToolbarIcons.IconID icon() {
+      switch (icon) {
+        case "quick":
+          return ToolbarIcons.IconID.COGS;
+        case "youtube":
+          return ToolbarIcons.IconID.YOUTUBE;
+        case "navigation":
+          return ToolbarIcons.IconID.SITE_MAP;
+        case "basics":
+          return ToolbarIcons.IconID.ABOUT;
+        case "video":
+          return ToolbarIcons.IconID.FILM;
+        case "why":
+          return ToolbarIcons.IconID.QUESTION_MARK;
+        case "suggestions":
+          return ToolbarIcons.IconID.COMMENTS;
+      }
+
+      // shouldn't get here
+      return ToolbarIcons.IconID.ABOUT;
+    }
   }
 
   public static class IntroPageField {
     public String text;
-
     public enum FieldType {TEXT, HEADER, BULLET}
-
     public FieldType type;
     public int topMargin;
 
@@ -220,4 +241,3 @@ public class IntroXMLParser {
     }
   }
 }
-

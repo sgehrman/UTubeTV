@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <guide>
     <page
-        icon="info"
+        icon="quick"
         title="Quick Start"
         >
         <header append="app_name">Welcome to</header>
@@ -12,7 +12,6 @@
 
         <text>Swipe left to navigate to the next page.</text>
     </page>
-
 
     <page
         icon="youtube"
@@ -30,7 +29,7 @@
     </page>
 
     <page
-        icon="youtube"
+        icon="navigation"
         title="Navigation"
         >
         <text>This app tries to keep things as simple as possible and we try to follow the Android
@@ -47,7 +46,7 @@
     </page>
 
     <page
-        icon="youtube"
+        icon="basics"
         title="The Basics"
         >
         <text>The first thing you'll see is the 'about page' of the default channel.</text>
@@ -73,7 +72,7 @@
     </page>
 
     <page
-        icon="lightbulb"
+        icon="video"
         title="Video player"
         >
         <text>When in portrait mode videos play in a custom video player. You can still scroll the
@@ -89,7 +88,7 @@
     </page>
 
     <page
-        icon="lightbulb"
+        icon="why"
         title="Why is this better?"
         >
         <text>YouTube has an incredible selection of interesting videos. The problem is finding
@@ -112,7 +111,7 @@
     </page>
 
     <page
-        icon="youtube"
+        icon="suggestions"
         title="Suggestions/Comments"
         >
         <text>We want to make this app better, but we'll need your help.</text>
@@ -125,6 +124,5 @@
         <text>Thank you for trying my app!</text>
 
     </page>
-
 
 </guide>

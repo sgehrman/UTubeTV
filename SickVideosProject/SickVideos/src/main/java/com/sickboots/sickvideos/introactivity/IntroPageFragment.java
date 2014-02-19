@@ -49,16 +49,10 @@ public class IntroPageFragment extends Fragment {
 
       String title = page.title;
 
-      Drawable icon = null;
       int iconSize = 64;
       int color = getActivity().getResources().getColor(R.color.intro_drawable_color);
 
-      if (page.icon.equals("info"))
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.UPLOADS, color, iconSize);
-      else if (page.icon.equals("youtube"))
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.YOUTUBE, color, iconSize);
-      else
-        icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.HEART, color, iconSize);
+      Drawable icon = ToolbarIcons.icon(getActivity(), page.icon(), color, iconSize);
 
       titleView.setText(title);
       titleView.setTextColor(getResources().getColor(R.color.intro_header_color));
