@@ -196,7 +196,7 @@ public class YouTubeAPI {
 
           data.mChannel = channel.getId();
           data.mTitle = channel.getSnippet().getTitle();
-          data.mDescription = channel.getSnippet().getDescription();
+          data.mDescription = channel.getSnippet().getDescription();  // we want the returns, so don't strip
           data.mThumbnail = thumbnailURL(channel.getSnippet().getThumbnails());
 
           result.add(data);
@@ -239,10 +239,6 @@ public class YouTubeAPI {
     }
 
     return result;
-  }
-
-  private String removeNewLinesFromString(String text) {
-    return text.replace('\n', ' ');
   }
 
   private void doHandleAuthIntent(Intent authIntent) {
@@ -503,7 +499,7 @@ public class YouTubeAPI {
 
         map.mVideo = playlistItem.getId().getVideoId();
         map.mTitle = playlistItem.getSnippet().getTitle();
-        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mDescription = Utils.condenseWhiteSpace(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
 
         result.add(map);
@@ -559,7 +555,7 @@ public class YouTubeAPI {
 
         map.mVideo = playlistItem.getId();
         map.mTitle = playlistItem.getSnippet().getTitle();
-        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mDescription = Utils.condenseWhiteSpace(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
         map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails()
             .get("duration"));
@@ -624,7 +620,7 @@ public class YouTubeAPI {
         map.mDuration = Utils.durationToDuration((String) playlistItem.getContentDetails()
             .get("duration"));
         map.mTitle = playlistItem.getSnippet().getTitle();
-        map.mDescription = removeNewLinesFromString(playlistItem.getSnippet().getDescription());
+        map.mDescription = Utils.condenseWhiteSpace(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());
         map.mPublishedDate = playlistItem.getSnippet().getPublishedAt().getValue();
 
@@ -735,7 +731,7 @@ public class YouTubeAPI {
 
         map.mTitle = subscription.getSnippet().getTitle();
         map.mChannel = subscription.getSnippet().getResourceId().getChannelId();
-        map.mDescription = removeNewLinesFromString(subscription.getSnippet().getDescription());
+        map.mDescription = Utils.condenseWhiteSpace(subscription.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
 
         result.add(map);
@@ -859,7 +855,7 @@ public class YouTubeAPI {
         map.mPlaylist = playlist.getId();
         map.mTitle = playlist.getSnippet().getTitle();
         map.mItemCount = playlist.getContentDetails().getItemCount();
-        map.mDescription = removeNewLinesFromString(playlist.getSnippet().getDescription());
+        map.mDescription = Utils.condenseWhiteSpace(playlist.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlist.getSnippet().getThumbnails());
         map.mPublishedDate = playlist.getSnippet().getPublishedAt().getValue();
 

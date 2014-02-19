@@ -5,12 +5,14 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Utils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -95,8 +97,6 @@ public class IntroXMLParser {
             }
           }
         }
-
-
       }
       eventType = resourceParser.next();
     }
@@ -180,7 +180,7 @@ public class IntroXMLParser {
     public static IntroPageField newField(String text, String topMargin, FieldType type) {
       IntroPageField result = new IntroPageField();
 
-      result.text = text;
+      result.text = Utils.condenseWhiteSpace(text);  // xml file can be reformatted by the IDE to add returns
       result.type = type;
 
       if (topMargin != null)

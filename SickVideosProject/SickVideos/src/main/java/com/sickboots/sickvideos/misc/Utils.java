@@ -317,4 +317,10 @@ public class Utils {
     }
   }
 
+  public static String condenseWhiteSpace(String inString) {
+    // trim text and then replace all occurrences of one or more than one whitespace character
+    // (including tabs, line breaks, etc) by one single whitespace
+    return inString.trim().replaceAll("\\s+", " ");
+  }
+
 }

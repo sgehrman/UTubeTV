@@ -6,6 +6,10 @@
         >
         <header>Welcome to TV:TechNews</header>
         <text>Here's a quick guide to Help you get started.</text>
+        <text>If you want to try the app first and read this guide later, look in the Settings
+            window and click the "Quick Start" button.
+        </text>
+
         <text>Swipe left to navigate to the next page.</text>
     </page>
 
@@ -32,11 +36,11 @@
         <text>This app tries to keep things as simple as possible and we try to follow the Android
             design guidelines so things should be very familiar and easy to learn.
         </text>
-        <bullet>Scrolling list view</bullet>
+        <bullet>Scrolling list view with cards UI</bullet>
         <bullet>Side out navigation drawer</bullet>
         <bullet>Action Bar</bullet>
         <bullet>Swipe to dismiss</bullet>
-        <bullet>Slide down video player</bullet>
+        <bullet>Integrated video player</bullet>
 
     </page>
 
@@ -49,9 +53,8 @@
         <text>Click on the image or the "Watch Now" button. They both takes you to the channel's
             list of playlists.
         </text>
-        <text>A playlist is a collection of videos organized by the channel.</text>
-        <text>Clicking on a playlist shows a list of videos. Clicking on the video plays the
-            video.
+        <text>A playlist is a collection of videos organized by the channel administrator.</text>
+        <text>Clicking on a playlist shows a list of videos. Clicking on a video plays the video.
         </text>
         <header>Changing channels</header>
         <text>Changing channels is simple. Click on the popup menu control on the left side of the
@@ -117,7 +120,6 @@
         <bullet>Bug reports?</bullet>
         <text>Send me your ideas: mailto:sgehrman@gmail.com</text>
 
-        <text>To see this guide again, look in the Settings window and click "Quick Start"</text>
         <text>Thank you for trying my app!</text>
 
     </page>
