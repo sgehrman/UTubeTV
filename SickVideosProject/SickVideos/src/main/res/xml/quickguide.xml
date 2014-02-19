@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <guide>
     <page
-        title="Quick Start"
         icon="info"
+        title="Quick Start"
         >
         <header>Welcome to TV:TechNews</header>
         <text>Here's a quick guide to Help you get started.</text>
@@ -11,8 +11,8 @@
 
 
     <page
-        title="YouTube Channels"
         icon="youtube"
+        title="YouTube Channels"
         >
         <text>This app is a minimalist video player for watching YouTube videos.</text>
         <text>This app contains a collection of the top channels in it's category.</text>
@@ -26,8 +26,8 @@
     </page>
 
     <page
-        title="Navigation"
         icon="youtube"
+        title="Navigation"
         >
         <text>This app tries to keep things as simple as possible and we try to follow the Android
             design guidelines so things should be very familiar and easy to learn.
@@ -41,8 +41,8 @@
     </page>
 
     <page
-        title="The Basics"
         icon="youtube"
+        title="The Basics"
         >
         <text>The first thing you'll see is the 'about page' of the default channel.</text>
         <text>Every channel has an about page with an image and a description of the channel.</text>
@@ -68,8 +68,8 @@
     </page>
 
     <page
-        title="Video player"
         icon="lightbulb"
+        title="Video player"
         >
         <text>When in portrait mode videos play in a custom video player. You can still scroll the
             video list while a video is playing. Turning the phone to landscape mode seemlessly
@@ -84,8 +84,8 @@
     </page>
 
     <page
-        title="Why is this better?"
         icon="lightbulb"
+        title="Why is this better?"
         >
         <text>YouTube has an incredible selection of interesting videos. The problem is finding
             those videos and keeping track of channels you like.
@@ -107,8 +107,8 @@
     </page>
 
     <page
-        title="Suggestions/Comments"
         icon="youtube"
+        title="Suggestions/Comments"
         >
         <text>We want to make this app better, but we'll need your help.</text>
         <bullet>Did I pick the right channels?</bullet>
