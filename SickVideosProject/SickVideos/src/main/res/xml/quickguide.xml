@@ -4,7 +4,7 @@
         icon="info"
         title="Quick Start"
         >
-        <header>Welcome to TV:TechNews</header>
+        <header append="app_name">Welcome to</header>
         <text>Here's a quick guide to Help you get started.</text>
         <text>If you want to try the app first and read this guide later, look in the Settings
             window and click the "Quick Start" button.
@@ -42,6 +42,8 @@
         <bullet>Swipe to dismiss</bullet>
         <bullet>Integrated video player</bullet>
 
+        <text>If you swipe to dismiss an item, don't worry it's still there. Just click the action menu in the action bar, choose 'Show hidden items' and click the cards you want to unhide.  Select 'Hide hidden items' in the menu to get back to normal.</text>
+
     </page>
 
     <page
@@ -61,7 +63,7 @@
             action bar at the top of the screen.
         </text>
         <text>To navigate within the current channel. Show the slide out navigation drawer by
-            clicking the top left icon in the action bar, or by swiping from the right side of the
+            clicking the top left icon in the action bar, or by swiping from the left side of the
             screen.
         </text>
         <text>The navigation drawer contains the About page, Playlists and Recent Uploads page.
@@ -97,9 +99,9 @@
             have to navigate though a large subscription list every time you feel like watching a
             video.
         </text>
-        <text>Launching apps is the simplest most straight forward UI on a mobile device. It's clear
-            and does one clear task. Wouldn't it be nice if you were in the mood for tech videos you
-            could just click the tech videos app?
+        <text>Launching apps is the simplest most straight forward UI on a mobile device. It's simple
+            and does one clear task. Wouldn't it be nice if you were in the mood for tech news you
+            could just click the tech news app?
         </text>
         <text>This is what this application attempts to do. Make watching videos a little bit
             simpler.
@@ -118,7 +120,7 @@
         <bullet>Is it pleasant to use?</bullet>
         <bullet>Feature request?</bullet>
         <bullet>Bug reports?</bullet>
-        <text>Send me your ideas: mailto:sgehrman@gmail.com</text>
+        <text>Send me your ideas: sgehrman@gmail.com</text>
 
         <text>Thank you for trying my app!</text>
 

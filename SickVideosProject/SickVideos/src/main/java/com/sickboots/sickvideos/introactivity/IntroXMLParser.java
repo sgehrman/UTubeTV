@@ -62,27 +62,28 @@ public class IntroXMLParser {
         String name = resourceParser.getName();
 
         String topMargin = resourceParser.getAttributeValue(null, "top_margin");
+        String append = resourceParser.getAttributeValue(null, "append");
 
         if (name.equals("header")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.HEADER);
+          IntroPageField field = IntroPageField.newField(context, text, topMargin, append, IntroPageField.FieldType.HEADER);
           fields.add(field);
         } else if (name.equals("text")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.TEXT);
+          IntroPageField field = IntroPageField.newField(context, text, topMargin, append, IntroPageField.FieldType.TEXT);
           fields.add(field);
         } else if (name.equals("bullet")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          IntroPageField field = IntroPageField.newField(text, topMargin, IntroPageField.FieldType.BULLET);
+          IntroPageField field = IntroPageField.newField(context, text, topMargin, append, IntroPageField.FieldType.BULLET);
           fields.add(field);
         } else if (name.equals("channels")) {
           resourceParser.next();
@@ -92,7 +93,7 @@ public class IntroXMLParser {
           List<YouTubeData> channels = content.channels();
           if (channels != null) {
             for (YouTubeData channel : channels) {
-              IntroPageField field = IntroPageField.newField(channel.mTitle, topMargin, IntroPageField.FieldType.BULLET);
+              IntroPageField field = IntroPageField.newField(context, channel.mTitle, topMargin, append, IntroPageField.FieldType.BULLET);
               fields.add(field);
             }
           }
@@ -177,10 +178,14 @@ public class IntroXMLParser {
     public FieldType type;
     public int topMargin;
 
-    public static IntroPageField newField(String text, String topMargin, FieldType type) {
+    public static IntroPageField newField(Context context, String text, String topMargin, String append, FieldType type) {
       IntroPageField result = new IntroPageField();
 
       result.text = Utils.condenseWhiteSpace(text);  // xml file can be reformatted by the IDE to add returns
+
+      if (append != null && append.equals("app_name"))
+        result.text += " " + Utils.getApplicationName(context);
+
       result.type = type;
 
       if (topMargin != null)
