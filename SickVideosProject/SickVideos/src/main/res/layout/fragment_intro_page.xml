@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="0dp"
     android:scrollbars="none"
     >
 
@@ -31,7 +30,7 @@
 
         <TextView
             android:id="@+id/title"
-            android:maxWidth="300dp"
+            android:maxWidth="@dimen/intro_view_max_width"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -40,20 +39,6 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:textStyle="bold">
-        </TextView>
-
-        <TextView
-            android:maxWidth="300dp"
-            android:id="@+id/message"
-            android:autoLink="all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:shadowColor="#000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-
-            android:textSize="16dp">
         </TextView>
 
     </LinearLayout>

@@ -41,12 +41,9 @@ public class IntroPageFragment extends Fragment {
     IntroXMLParser.IntroPage page = access.pageAtIndex(sectionNumber);
 
     TextView titleView = (TextView) rootView.findViewById(R.id.title);
-    TextView messageView = (TextView) rootView.findViewById(R.id.message);
     ImageView imageView = (ImageView) rootView.findViewById(R.id.image_view);
 
     if (page != null) {
-      String message = "";
-
       String title = page.title;
 
       int iconSize = 64;
@@ -57,7 +54,6 @@ public class IntroPageFragment extends Fragment {
       titleView.setText(title);
       titleView.setTextColor(getResources().getColor(R.color.intro_header_color));
 
-      messageView.setText(message);
       imageView.setImageDrawable(icon);
 
       // insert the fields

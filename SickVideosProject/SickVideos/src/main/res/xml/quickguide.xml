@@ -129,9 +129,9 @@
         icon="suggestions"
         title="Suggestions/Comments"
         >
-        <header>Questions:</header>
 
         <text>We want to make this app better, but we'll need your help.</text>
+        <header>Questions:</header>
         <bullet>Did I pick the right channels?</bullet>
         <bullet>Is it pleasant to use?</bullet>
         <bullet>Feature request?</bullet>
