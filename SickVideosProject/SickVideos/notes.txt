@@ -31,6 +31,10 @@ https://developers.google.com/youtube/v3/docs/subscriptions/list
 channel id: "UCCXAzufqBhwf_ib6xLv7gMw"
 items/snippet/title
 
+// use if you want to login and get users videos
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+
 // --------------------------------------------------------
 
 Terrance McKenna
