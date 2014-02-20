@@ -19,7 +19,9 @@
         >
         <text>This app is a minimalist video player for watching YouTube videos.</text>
         <text>This app contains a collection of the top channels in it's category.</text>
-        <text>This specific app contains these YouTube channels:</text>
+        <text>This specific app contains the following YouTube channels.</text>
+
+        <header>Channels:</header>
 
         <channels></channels>
 
@@ -35,6 +37,8 @@
         <text>This app tries to keep things as simple as possible and we try to follow the Android
             design guidelines so things should be very familiar and easy to learn.
         </text>
+        <header>Standard UI elements:</header>
+
         <bullet>Scrolling list view with cards UI</bullet>
         <bullet>Side out navigation drawer</bullet>
         <bullet>Action Bar</bullet>
@@ -79,7 +83,7 @@
             video list while a video is playing. Turning the phone to landscape mode seemlessly
             continues playback without rebuffering.
         </text>
-        <text>Features include:</text>
+        <header>Features:</header>
         <bullet>Skip 10 seconds ahead</bullet>
         <bullet>Skip 10 seconds back</bullet>
         <bullet>Mute button</bullet>
@@ -125,6 +129,8 @@
         icon="suggestions"
         title="Suggestions/Comments"
         >
+        <header>Questions:</header>
+
         <text>We want to make this app better, but we'll need your help.</text>
         <bullet>Did I pick the right channels?</bullet>
         <bullet>Is it pleasant to use?</bullet>
