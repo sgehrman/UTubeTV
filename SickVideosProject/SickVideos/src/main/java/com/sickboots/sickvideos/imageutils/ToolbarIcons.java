@@ -71,7 +71,6 @@ public class ToolbarIcons {
       case CHECK:
         icon = FontAwesomeIcon.CHECK_SQUARE;
         break;
-
       case FILM:
         icon = FontAwesomeIcon.FILM;
         break;
@@ -87,7 +86,6 @@ public class ToolbarIcons {
       case SITE_MAP:
         icon = FontAwesomeIcon.SITEMAP;
         break;
-
       default:
         break;
     }
