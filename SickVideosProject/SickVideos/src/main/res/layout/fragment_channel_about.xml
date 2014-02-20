@@ -36,8 +36,7 @@
                     android:background="@drawable/card_background"
                     android:orientation="vertical"
 
-                    android:padding="20dp">
-
+                    android:padding="16dp">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -75,6 +74,19 @@
                         android:layout_width="match_parent"
                         android:autoLink="all"
                         android:layout_height="wrap_content"/>
+
+
+                    <Button
+                        android:id="@+id/disclaimer"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="right"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:text="@string/disclaimer"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#777"/>
 
                 </LinearLayout>
 
