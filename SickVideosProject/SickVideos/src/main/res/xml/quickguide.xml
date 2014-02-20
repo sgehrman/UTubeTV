@@ -88,6 +88,17 @@
     </page>
 
     <page
+        icon="find"
+        title="Find"
+        >
+        <text>There is a find button in the Action Bar. This searches the current list and will display any matches in the title or description for playlists and videos.</text>
+        <text>The find feature only searches the current list and not every video or playlist contained in all lists or channels.</text>
+        <text>Why doesn't it search everything within the app? That would require downloading everything all at once and the app only downloads data as lists are displayed.  It's more of a filter for the current list rather than a global search. This makes it both fast and efficient.</text>
+        <text>After viewing the find results, click the find button again to clear the current search and display the whole list.</text>
+
+    </page>
+
+    <page
         icon="why"
         title="Why is this better?"
         >
