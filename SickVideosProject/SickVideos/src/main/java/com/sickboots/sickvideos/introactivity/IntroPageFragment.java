@@ -110,9 +110,9 @@ public class IntroPageFragment extends Fragment {
       int imageSize = (int) Utils.dpToPx(12, getActivity());
 
       LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(imageSize, imageSize);
-      int leftMarginPx = (int) Utils.dpToPx(12, getActivity());
+      int leftMarginPx = (int) Utils.dpToPx(20, getActivity());
       int rightMarginPx = (int) Utils.dpToPx(6, getActivity());
-      int topMarginPx = (int) Utils.dpToPx(7, getActivity());
+      int topMarginPx = (int) Utils.dpToPx(6, getActivity());
       imageParams.setMargins(leftMarginPx, topMarginPx, rightMarginPx, 0);
       imageView.setLayoutParams(imageParams);
     }

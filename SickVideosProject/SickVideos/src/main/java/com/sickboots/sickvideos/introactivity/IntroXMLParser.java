@@ -222,7 +222,7 @@ public class IntroXMLParser {
         case TEXT:
           return 12;
         case BULLET:
-          return 12;
+          return 6;
         case HEADER:
           return 12;
       }
