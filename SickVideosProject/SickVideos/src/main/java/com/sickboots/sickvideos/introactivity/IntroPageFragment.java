@@ -87,11 +87,12 @@ public class IntroPageFragment extends Fragment {
     final int titleSize = 16;
 
     TextView textView = new TextView(getActivity());
-    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     textView.setLayoutParams(params);
     textView.setAutoLinkMask(Linkify.ALL);
     textView.setTextSize(titleSize);
     textView.setText(field.text);
+    textView.setMaxWidth((int) Utils.dpToPx(440, getActivity()));
 
     if (field.isHeader()) {
       int color = getActivity().getResources().getColor(R.color.intro_header_color);
@@ -117,7 +118,7 @@ public class IntroPageFragment extends Fragment {
     }
 
     LinearLayout linearLayout = new LinearLayout(getActivity());
-    LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     int topPaddingPx = (int) Utils.dpToPx(field.topMargin(), getActivity());
     duhParams.setMargins(0, topPaddingPx, 0, 0);
     linearLayout.setLayoutParams(duhParams);

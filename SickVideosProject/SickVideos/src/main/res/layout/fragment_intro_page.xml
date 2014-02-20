@@ -30,7 +30,6 @@
 
         <TextView
             android:id="@+id/title"
-            android:maxWidth="@dimen/intro_view_max_width"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
