@@ -131,10 +131,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   private void animateViewForClick(final View theView) {
-
-    // disabled trying them all for now
-    animationID = 1;
-
     switch (animationID) {
       case 0:
         StandardAnimations.dosomething(theView);
