@@ -294,6 +294,7 @@ NEWS
     Max Reiser
     Young Turks
     Aljazera
+    ten
 
 BUSINESS
     businessinsider
