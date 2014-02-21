@@ -377,9 +377,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
 
           // this handles landscape perfectly, nothing more to do
-          int controlFlags = mPlayer.getFullscreenControlFlags();
-          controlFlags |= YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE + YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT;
-          mPlayer.setFullscreenControlFlags(controlFlags);
+          mPlayer.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE | YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
 
 //          if (AppUtils.instance(getActivity()).alwaysPlayFullscreen())
 //            player.setFullscreen(true);

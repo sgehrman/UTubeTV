@@ -324,7 +324,7 @@ public class Utils {
     return inString.trim().replaceAll("\\s+", " ");
   }
 
-  private static boolean isPortrait(Context context) {
+  public static boolean isPortrait(Context context) {
     return (context.getResources()
         .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
