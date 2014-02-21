@@ -40,7 +40,7 @@ public class ChannelList {
     for (ChannelList.ChannelCode code : channelCodes)
       mChannelIds.add(channelIDForCode(code));
 
-    mCurrentChannelID = defaultChannelID(mChannelIds.get(0));
+    mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelIds.get(0));
 
     requestChannelInfo(false);
   }
@@ -102,7 +102,7 @@ public class ChannelList {
     if (currentChannelIndex() != index) {
       mCurrentChannelID = mChannels.get(index).mChannel;
 
-      saveDefaultChannelID(mCurrentChannelID);
+      AppUtils.instance(mContext).saveDefaultChannelID(mCurrentChannelID);
 
       return true;
     }
@@ -224,32 +224,6 @@ public class ChannelList {
 
   // --------------------------------------------------------
   // preferences
-
-  public int savedSectionIndex() {
-    return AppUtils.preferences(mContext).getInt(sectionPrefsKey(), 0);
-  }
-
-  // we save the last requested drawerSelection as requested
-  public void saveSectionIndex(int sectionIndex) {
-    AppUtils.preferences(mContext).setInt(sectionPrefsKey(), sectionIndex);
-  }
-
-  private String sectionPrefsKey() {
-    return "section_index" + currentChannelId();
-  }
-
-  private String defaultChannelID(String defaultValue) {
-    return AppUtils.preferences(mContext).getString(channelIndexPrefsKey(), defaultValue);
-  }
-
-  // we save the last requested drawerSelection as requested
-  private void saveDefaultChannelID(String channelId) {
-    AppUtils.preferences(mContext).setString(channelIndexPrefsKey(), channelId);
-  }
-
-  private String channelIndexPrefsKey() {
-    return "channel_index";
-  }
 
   public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 

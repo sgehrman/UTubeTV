@@ -91,8 +91,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private static Theme newTheme(Context context) {
     Theme result = new Theme();
 
-    String themeStyle = AppUtils.preferences(context)
-        .getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
+    int themeStyle = AppUtils.instance(context).themeId();
 
     result.mClickTextToExpand = true;
     result.mTheme_drawImageShadows = false;
@@ -102,7 +101,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     result.mCardImageFillColor = context.getResources()
         .getColor(R.color.card_image_fill); // an app can set to transparent to turn this off
 
-    switch (Integer.parseInt(themeStyle)) {
+    switch (themeStyle) {
       case 0:
         result.mTheme_itemResId = R.layout.youtube_item_dark;
         result.mTheme_resId = R.layout.fragment_grid_dark;

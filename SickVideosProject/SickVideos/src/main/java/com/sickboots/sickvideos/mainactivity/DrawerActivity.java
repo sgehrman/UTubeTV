@@ -247,7 +247,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
 
-    boolean showDevTools = AppUtils.preferences(this).getBoolean(Preferences.SHOW_DEV_TOOLS, false);
+    boolean showDevTools = AppUtils.instance(this).showDevTools();
     menu.setGroupVisible(R.id.dev_tools_group, showDevTools);
 
     return super.onPrepareOptionsMenu(menu);

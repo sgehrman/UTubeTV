@@ -27,7 +27,7 @@ public class AppUtils {
     mPreferences = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
       @Override
       public void prefChanged(String prefName) {
-        if (prefName.equals(Preferences.THEME_STYLE)) {
+        if (prefName.equals("theme_id")) {
           EventBus.getDefault().post(new Events.ThemeChanged());
         }
       }
@@ -68,29 +68,12 @@ public class AppUtils {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-    String themeStyle = AppUtils.preferences(context)
-        .getString(Preferences.THEME_STYLE, Preferences.THEME_STYLE_DEFAULT);
-    int selectedIndex = Integer.parseInt(themeStyle);
+    int themeStyle = AppUtils.instance(context).themeId();
 
     builder.setTitle("Pick a style")
-        .setSingleChoiceItems(R.array.view_styles, selectedIndex, new DialogInterface.OnClickListener() {
+        .setSingleChoiceItems(R.array.view_styles, themeStyle, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-              case 0:
-                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "0");
-                break;
-              case 1:
-                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "1");
-                break;
-              case 2:
-                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "2");
-                break;
-              case 3:
-                AppUtils.preferences(context).setString(Preferences.THEME_STYLE, "3");
-                break;
-              default:
-                break;
-            }
+              AppUtils.instance(context).setThemeId(which);
 
             dialog.dismiss();
           }
@@ -103,36 +86,70 @@ public class AppUtils {
   // preferences
   // ================================================================
 
-  public static Preferences preferences(Context context) {
-    return instance(context).mPreferences;
-  }
-
   public String getAccountName() {
-    return preferences(mApplicationContext).getString("google_account", null);
+    return mPreferences.getString("google_account", null);
   }
 
   public void setAccountName(String accountName) {
-    preferences(mApplicationContext).setString("google_account", accountName);
+    mPreferences.setString("google_account", accountName);
   }
 
   public boolean alwaysPlayFullscreen() {
-    return preferences(mApplicationContext).getBoolean(Preferences.PLAY_FULLSCREEN, false);
+    return mPreferences.getBoolean("play_fullscreen", false);
   }
 
   public boolean showHiddenItems() {
-    return preferences(mApplicationContext).getBoolean("show_hidden_items", false);
+    return mPreferences.getBoolean("show_hidden_items", false);
   }
 
   public void setShowHiddenItems(boolean set) {
-    preferences(mApplicationContext).setBoolean("show_hidden_items", set);
+    mPreferences.setBoolean("show_hidden_items", set);
   }
 
   public boolean playNext() {
-    return preferences(mApplicationContext).getBoolean("play_next", false);
+    return mPreferences.getBoolean("play_next", false);
   }
 
-  public void setPlayNext(boolean set) {
-    preferences(mApplicationContext).setBoolean("play_next", set);
+  public boolean repeatVideo() {
+    return mPreferences.getBoolean("repeat_video", false);
+  }
+
+  public boolean muteAds() {
+    return mPreferences.getBoolean("mute_ads", false);
+  }
+
+  public boolean showDevTools() {
+    return mPreferences.getBoolean("show_dev_tools", false);
+  }
+
+  public int themeId() {
+    return mPreferences.getInt("theme_id", 3);
+  }
+
+  public void setThemeId(int set) {
+    mPreferences.setInt("theme_id", set);
+  }
+
+  public int savedSectionIndex(String currentChannelId) {
+    return mPreferences.getInt(sectionPrefsKey(currentChannelId), 0);
+  }
+
+  // we save the last requested drawerSelection as requested
+  public void saveSectionIndex(int sectionIndex, String currentChannelId) {
+    mPreferences.setInt(sectionPrefsKey(currentChannelId), sectionIndex);
+  }
+
+  public String sectionPrefsKey(String currentChannelId) {
+    return "section_index" + currentChannelId;
+  }
+
+  public String defaultChannelID(String defaultValue) {
+    return mPreferences.getString("channel_index", defaultValue);
+  }
+
+  // we save the last requested drawerSelection as requested
+  public void saveDefaultChannelID(String channelId) {
+    mPreferences.setString("channel_index", channelId);
   }
 
 }

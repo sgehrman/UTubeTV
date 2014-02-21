@@ -9,6 +9,7 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.mainactivity.ChannelAboutFragment;
 import com.sickboots.sickvideos.mainactivity.YouTubeGridFragment;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
@@ -96,7 +97,7 @@ public class Content {
     }
 
     if (fragment != null)
-      mChannelList.saveSectionIndex(index);
+      AppUtils.instance(mContext).saveSectionIndex(index, mChannelList.currentChannelId());
 
     return fragment;
   }
@@ -114,7 +115,7 @@ public class Content {
   }
 
   public int savedSectionIndex() {
-    return mChannelList.savedSectionIndex();
+    return AppUtils.instance(mContext).savedSectionIndex(mChannelList.currentChannelId());
   }
 
   public YouTubeData channelInfo() {

@@ -225,8 +225,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
       @Override
       public void onAdStarted() {
         if (!isMute()) {
-          boolean muteAds = AppUtils.preferences(VideoPlayerFragment.this.getActivity())
-              .getBoolean(Preferences.MUTE_ADS, false);
+          boolean muteAds = AppUtils.instance(VideoPlayerFragment.this.getActivity()).muteAds();
+
           if (muteAds) {
             mMutedForAd = true;
             mute(true);
@@ -244,8 +244,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onVideoEnded() {
-        boolean autorepeat = AppUtils.preferences(getActivity())
-            .getBoolean(Preferences.REPEAT_VIDEO, false);
+        boolean autorepeat = AppUtils.instance(getActivity()).repeatVideo();
+
         if (autorepeat) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start

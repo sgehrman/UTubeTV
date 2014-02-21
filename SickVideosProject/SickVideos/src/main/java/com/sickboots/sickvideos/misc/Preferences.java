@@ -10,15 +10,6 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
     public void prefChanged(String prefName);
   }
 
-  // public pref keys
-  public static final String REPEAT_VIDEO = "repeat_video";
-  public static final String SHOW_DEV_TOOLS = "show_dev_tools";
-
-  public static final String PLAY_FULLSCREEN = "play_fullscreen";
-  public static final String MUTE_ADS = "mute_ads";
-  public static final String THEME_STYLE = "theme_style";
-  public static final String THEME_STYLE_DEFAULT = "3"; // posters ui
-
   private SharedPreferences sharedPreferences;
   private PreferenceCacheListener mListener;
 
