@@ -10,12 +10,15 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Debug;
+import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.SoundManager;
 import com.sickboots.sickvideos.misc.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
 
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
@@ -32,8 +35,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   private YouTubePlayer mPlayer;
-  private String mVideoId;
-  private String mTitle;
+  private VideoPlayer.PlayerParams mPlayerParams;
   private boolean mMutedForAd = false;
   private Timer mTimer;
   private TimeRemainingListener mTimeRemainingListener;
@@ -67,6 +69,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     destroyPlayer();
   }
 
+  public VideoPlayer.PlayerParams playerParams() {
+    return mPlayerParams;
+  }
+
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
@@ -93,7 +99,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
     stopElapsedTimer();
 
     // fixes case where you start a video, stop it, then replay the same video.  if not reset, it would think the video was already running and ignore it.
-    mVideoId = null;
+    mPlayerParams = null;
 
     if (mPlayer != null) {
       mPlayer.release();
@@ -102,21 +108,20 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   public String getTitle() {
-    return mTitle;
+    return mPlayerParams.title;
   }
 
   public String getVideoId() {
-    return mVideoId;
+    return mPlayerParams.videoId;
   }
 
-  public void setVideo(String videoId, String title) {
-    if (videoId != null && !videoId.equals(mVideoId)) {
+  public void setVideo(VideoPlayer.PlayerParams playerParams) {
+    if (playerParams != null && !playerParams.equals(mPlayerParams)) {
 
-      mVideoId = videoId;
-      mTitle = title;
+      mPlayerParams = playerParams;
 
       if (mPlayer != null)
-        mPlayer.loadVideo(mVideoId);
+        mPlayer.loadVideo(mPlayerParams.videoId);
       else
         initializePlayer();
     }
@@ -244,9 +249,14 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
       @Override
       public void onVideoEnded() {
-        boolean autorepeat = AppUtils.instance(getActivity()).repeatVideo();
-
-        if (autorepeat) {
+        // playnext has precedence over repeat, both could be on if user set them
+        if (AppUtils.instance(getActivity()).playNext()) {
+          if (mPlayer != null)
+            EventBus.getDefault().post(new Events.PlayNextEvent(mPlayerParams));
+          else
+            Debug.log("playnext canceled, player is null");
+        }
+        else if (AppUtils.instance(getActivity()).repeatVideo()) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
           else
@@ -384,8 +394,8 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           setupStateChangeListener();
           setupPlaybackEventListener();
 
-          if (!restored && mVideoId != null) {
-            player.loadVideo(mVideoId);
+          if (!restored && mPlayerParams != null) {
+            player.loadVideo(mPlayerParams.videoId);
           }
 
           mFragmentListener.playerInitialized();

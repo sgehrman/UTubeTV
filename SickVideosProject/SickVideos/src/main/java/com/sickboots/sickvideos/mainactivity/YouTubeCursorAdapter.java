@@ -171,7 +171,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
           itemMap.setHidden(false);
           database.updateItem(itemMap);
         } else {
-          mListener.handleClickFromAdapter(itemMap);
+          mListener.handleClickFromAdapter(position, itemMap);
         }
       } else {
         Debug.log("no holder on click?");
@@ -397,7 +397,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   }
 
   public interface YouTubeCursorAdapterListener {
-    public void handleClickFromAdapter(YouTubeData itemMap);
+    public void handleClickFromAdapter(int position, YouTubeData itemMap);
 
     public void adapterDataChanged();
 

@@ -103,11 +103,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {
-      String videoId = savedInstanceState.getString("videoId");
-      String title = savedInstanceState.getString("title");
+      VideoPlayer.PlayerParams params = (VideoPlayer.PlayerParams) savedInstanceState.getParcelable("player_params");
 
-      if (videoId != null && title != null)
-        playVideo(videoId, title);
+      if (params != null)
+        playVideo(params);
     }
 
     WhatsNewDialog.showWhatsNew(this, false);
@@ -148,12 +147,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     if (mPlayer != null) {
       if (mPlayer.visible()) {
-        String title = mPlayer.title();
-        String videoId = mPlayer.videoId();
+        VideoPlayer.PlayerParams params = mPlayer.playerParams();
 
-        if (title != null && videoId != null) {
-          outState.putString("videoId", videoId);
-          outState.putString("title", title);
+        if (params != null) {
+          outState.putParcelable("player_params", params);
         }
       }
     }
@@ -492,10 +489,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   // DrawerActivitySupport
   @Override
-  public void playVideo(String videoId, String title) {
+  public void playVideo(VideoPlayer.PlayerParams params) {
    // could use this, but we have no control for mute commericals and play next automatically etc.
    // YouTubeAPI.playMovie(this, videoId, true);
-   videoPlayer(true).open(videoId, title);
+   videoPlayer(true).open(params);
   }
 }
 

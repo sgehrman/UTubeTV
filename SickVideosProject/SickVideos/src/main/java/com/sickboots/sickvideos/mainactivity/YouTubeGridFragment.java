@@ -43,14 +43,17 @@ import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
+import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
+import com.sickboots.sickvideos.youtube.VideoPlayer;
 
 import java.util.ArrayList;
 
+import de.greenrobot.event.EventBus;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -265,7 +268,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
   // YouTubeCursorAdapterListener
   @Override
-  public void handleClickFromAdapter(YouTubeData itemMap) {
+  public void handleClickFromAdapter(int position, YouTubeData itemMap) {
     DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
 
     // get rid of the search if still open.  Someone could search
@@ -277,11 +280,10 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       case SEARCH:
       case LIKED:
       case VIDEOS:
-        String videoId = itemMap.mVideo;
-        String title = itemMap.mTitle;
+        VideoPlayer.PlayerParams params = new VideoPlayer.PlayerParams(itemMap.mVideo, itemMap.mTitle, position);
 
         if (provider != null)
-          provider.playVideo(videoId, title);
+          provider.playVideo(params);
 
         break;
       case PLAYLISTS: {
@@ -308,6 +310,8 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   public void onPause() {
     super.onPause();
 
+    EventBus.getDefault().unregister(this);
+
     registerBroadcastReceiver(false);
   }
 
@@ -315,12 +319,43 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   public void onResume() {
     super.onResume();
 
+    EventBus.getDefault().register(this);
+
     registerBroadcastReceiver(true);
 
     // reload if the hidden pref is now how we remember it
     reloadForPrefChange();
 
     syncActionBarTitle();
+  }
+
+  // for EventBus
+  public void onEvent(Events.PlayNextEvent event) {
+    int index = event.params.index;
+    int cnt = mAdapter.getCount();
+
+    index++;  // go to next
+
+    if (index > cnt) {
+      index = 0; // loop around
+    }
+
+    if (index < cnt) {
+      Cursor cursor = (Cursor) mAdapter.getItem(index);
+      YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
+
+      if (itemMap != null) {
+        DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+
+        if (provider != null)
+        {
+          VideoPlayer.PlayerParams params = new VideoPlayer.PlayerParams(itemMap.mVideo, itemMap.mTitle, index);
+
+          provider.playVideo(params);
+      }
+      }
+    }
+
   }
 
   // OnRefreshListener

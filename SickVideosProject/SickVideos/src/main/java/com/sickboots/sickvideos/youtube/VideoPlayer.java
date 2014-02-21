@@ -2,9 +2,10 @@ package com.sickboots.sickvideos.youtube;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -22,6 +23,8 @@ import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoPlayer {
+  private final int mAnimationDuration = 300;
+  private final int mIconSize = 32;
   private View mVideoBox;
   private Context mContext;
   private VideoPlayerFragment mVideoFragment;
@@ -29,13 +32,7 @@ public class VideoPlayer {
   private ImageView mMuteButton;
   private TextView mSeekFlashTextView;
   private TextView mTimeRemainingTextView;
-  private final int mAnimationDuration = 300;
   private View mTopBar;
-  private final int mIconSize = 32;
-
-  abstract public interface VideoPlayerStateListener {
-    abstract public void stateChanged();
-  }
 
   public VideoPlayer(Activity activity, int fragmentContainerResID, VideoPlayerStateListener l) {
     super();
@@ -72,44 +69,48 @@ public class VideoPlayer {
     setupToolbar();
   }
 
-  public void open(final String videoId, final String title) {
+  public void open(final PlayerParams params) {
     if (visible())
-      playerShown(videoId, title);
+      playerShown(params);
     else {
       Utils.vibrate(mContext);
 
-    if (AppUtils.instance(mContext).alwaysPlayFullscreen()) {
-      playerShown(videoId, title);
-    } else {
-      // update mute button since it could still be in mute mode
-      updateMuteButton();
-
-      boolean animate = Utils.isPortrait(mContext);
-      if (animate) {
-        // Initially translate off the screen so that it can be animated in from below.
-        mVideoBox.setTranslationY(-mVideoBox.getHeight());
-        mVideoBox.setAlpha(0f);
-
-        mVideoBox.setVisibility(View.VISIBLE);
-
-        mVideoBox.animate()
-            .translationY(0)
-            .alpha(1f)
-            .setInterpolator(new AccelerateDecelerateInterpolator())
-            .setDuration(mAnimationDuration)
-            .withEndAction(new Runnable() {
-              @Override
-              public void run() {
-                playerShown(videoId, title);
-              }
-            });
+      if (AppUtils.instance(mContext).alwaysPlayFullscreen()) {
+        playerShown(params);
       } else {
-        mVideoBox.setVisibility(View.VISIBLE);
+        // update mute button since it could still be in mute mode
+        updateMuteButton();
 
-        playerShown(videoId, title);
+        boolean animate = Utils.isPortrait(mContext);
+        if (animate) {
+          // Initially translate off the screen so that it can be animated in from below.
+          mVideoBox.setTranslationY(-mVideoBox.getHeight());
+          mVideoBox.setAlpha(0f);
+
+          mVideoBox.setVisibility(View.VISIBLE);
+
+          mVideoBox.animate()
+              .translationY(0)
+              .alpha(1f)
+              .setInterpolator(new AccelerateDecelerateInterpolator())
+              .setDuration(mAnimationDuration)
+              .withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                  playerShown(params);
+                }
+              });
+        } else {
+          mVideoBox.setVisibility(View.VISIBLE);
+
+          playerShown(params);
+        }
       }
     }
-    }
+  }
+
+  public PlayerParams playerParams() {
+    return mVideoFragment.playerParams();
   }
 
   public void close() {
@@ -170,16 +171,13 @@ public class VideoPlayer {
       mMuteButton.setImageDrawable(ToolbarIcons.icon(mContext, ToolbarIcons.IconID.SOUND, Color.WHITE, mIconSize));
   }
 
-  // ------------------------------------------------------------------------------------------------
-  // private
-
-  private void playerShown(String videoId, String title) {
+  private void playerShown(PlayerParams playerParams) {
     // action bar menu needs to update
     Activity host = (Activity) mVideoBox.getContext();
     if (host != null)
       host.invalidateOptionsMenu();
 
-    mVideoFragment.setVideo(videoId, title);
+    mVideoFragment.setVideo(playerParams);
 
     // actionbar subtitle needs a refresh when new video starts playing, so it's not just open/close events
     // that need state changed messages
@@ -187,6 +185,9 @@ public class VideoPlayer {
     if (mListener != null)
       mListener.stateChanged();
   }
+
+  // ------------------------------------------------------------------------------------------------
+  // private
 
   private void playerClosed() {
     // action bar menu needs to update
@@ -347,4 +348,65 @@ public class VideoPlayer {
 
     });
   }
+
+  abstract public interface VideoPlayerStateListener {
+    abstract public void stateChanged();
+  }
+
+  public static class PlayerParams implements Parcelable {
+    public static final Parcelable.Creator<PlayerParams> CREATOR = new Parcelable.Creator<PlayerParams>() {
+      public PlayerParams createFromParcel(Parcel in) {
+        return new PlayerParams(in);
+      }
+
+      public PlayerParams[] newArray(int size) {
+        return new PlayerParams[size];
+      }
+    };
+    public final String videoId;
+    public final String title;
+    public final int index;  // used for the play_next feature if enabled
+
+    public PlayerParams(String videoId, String title, int index) {
+      this.videoId = videoId;
+      this.title = title;
+      this.index = index;
+    }
+
+    // ===================================================================
+    //  Parcelable - we send this to the service inside an intent
+
+    private PlayerParams(Parcel in) {
+      videoId = in.readString();
+      title = in.readString();
+      index = in.readInt();
+    }
+
+    public boolean equals(PlayerParams inParams) {
+      if (inParams == null)
+        return false;
+
+      if (index != inParams.index)
+        return false;
+      if (!videoId.equals(inParams.videoId))
+        return false;
+      if (!title.equals(inParams.title))
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int describeContents() {
+      return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(videoId);
+      dest.writeString(title);
+      dest.writeInt(index);
+    }
+  }
+
 }
