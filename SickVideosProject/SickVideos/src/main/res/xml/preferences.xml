@@ -10,7 +10,7 @@
         android:key="mute_ads"
         android:title="@string/pref_mute_ads"
         android:summary="@string/pref_mute_ads_summary"
-        android:defaultValue="true"/>
+        android:defaultValue="false"/>
 
     <SwitchPreference
         android:key="repeat_video"
@@ -19,9 +19,9 @@
         android:defaultValue="false"/>
 
     <SwitchPreference
-        android:key="show_hidden_items"
-        android:title="@string/pref_show_hidden_items"
-        android:summary="@string/pref_show_hidden_items_summary"
+        android:key="play_next"
+        android:title="@string/pref_play_next_video"
+        android:summary="@string/pref_play_next_video_summary"
         android:defaultValue="false"/>
 
     <Preference

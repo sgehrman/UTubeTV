@@ -331,8 +331,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
   // called by activity on menu item action for show hidden files toggle
   public void reloadForPrefChange() {
-    boolean showHidden = AppUtils.preferences(getActivity())
-        .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    boolean showHidden = AppUtils.instance(getActivity()).showHiddenItems();
 
     if (mCachedHiddenPref != showHidden) {
       mCachedHiddenPref = showHidden;
@@ -348,8 +347,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
 
     String sortOrder = (DatabaseTables.videoTable() == table) ? "vi" : "pl"; // stupid hack
 
-    mCachedHiddenPref = AppUtils.preferences(getActivity())
-        .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+    mCachedHiddenPref = AppUtils.instance(getActivity()).showHiddenItems();
     int queryID = DatabaseTables.VISIBLE_ITEMS;
     if (mCachedHiddenPref)
       queryID = DatabaseTables.ALL_ITEMS;

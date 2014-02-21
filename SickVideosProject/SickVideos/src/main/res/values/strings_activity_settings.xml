@@ -16,6 +16,9 @@
     <string name="pref_repeat_video">Repeat video</string>
     <string name="pref_repeat_video_summary">Repeats video in a loop.</string>
 
+    <string name="pref_play_next_video">Play next video</string>
+    <string name="pref_play_next_video_summary">Automatically start the next video in the list.</string>
+
     <!-- Share Settings -->
     <string name="pref_sharing_facebook">Facebook</string>
     <string name="pref_sharing_twitter">Twitter</string>

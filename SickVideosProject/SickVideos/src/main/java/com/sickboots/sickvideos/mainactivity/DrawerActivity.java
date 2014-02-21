@@ -242,8 +242,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     MenuItem item = menu.findItem(R.id.action_show_hidden);
 
     if (item != null) {
-      boolean showHidden = AppUtils.preferences(this)
-          .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
+      boolean showHidden = AppUtils.instance(this).showHiddenItems();
 
       item.setTitle((showHidden ? R.string.action_hide_hidden : R.string.action_show_hidden));
     }
@@ -277,9 +276,8 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
 
       case R.id.action_show_hidden: {
-        boolean toggle = AppUtils.preferences(this)
-            .getBoolean(Preferences.SHOW_HIDDEN_ITEMS, false);
-        AppUtils.preferences(this).setBoolean(Preferences.SHOW_HIDDEN_ITEMS, !toggle);
+        boolean toggle = AppUtils.instance(this).showHiddenItems();
+        AppUtils.instance(this).setShowHiddenItems(!toggle);
         YouTubeGridFragment fragment = currentYouTubeFragment();
 
         if (fragment != null)

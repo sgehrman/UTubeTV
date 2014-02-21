@@ -14,7 +14,7 @@ import de.greenrobot.event.EventBus;
 public class AppUtils {
   private static AppUtils instance = null;
   private Handler mainThreadHandler;
-  private Preferences mPrefsCache;
+  private Preferences mPreferences;
   private Context mApplicationContext;
   private ConnectionMonitor mConnectionMonitor;
 
@@ -24,7 +24,7 @@ public class AppUtils {
     mainThreadHandler = new Handler(Looper.getMainLooper());
     mConnectionMonitor = new ConnectionMonitor(mApplicationContext);
 
-    mPrefsCache = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
+    mPreferences = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
       @Override
       public void prefChanged(String prefName) {
         if (prefName.equals(Preferences.THEME_STYLE)) {
@@ -57,26 +57,6 @@ public class AppUtils {
 
   public boolean hasNetworkConnection() {
     return mConnectionMonitor.hasNetworkConnection();
-  }
-
-  public static Preferences preferences(Context context) {
-    return instance(context).prefsCache();
-  }
-
-  public String getAccountName() {
-    return preferences(mApplicationContext).getString(Preferences.GOOGLE_ACCOUNT_PREF, null);
-  }
-
-  public void setAccountName(String accountName) {
-    preferences(mApplicationContext).setString(Preferences.GOOGLE_ACCOUNT_PREF, accountName);
-  }
-
-  public boolean alwaysPlayFullscreen() {
-    return preferences(mApplicationContext).getBoolean(Preferences.PLAY_FULLSCREEN, false);
-  }
-
-  private Preferences prefsCache() {
-    return mPrefsCache;
   }
 
   public void runOnMainThread(Runnable action) {
@@ -118,4 +98,41 @@ public class AppUtils {
 
     builder.create().show();
   }
+
+  // ================================================================
+  // preferences
+  // ================================================================
+
+  public static Preferences preferences(Context context) {
+    return instance(context).mPreferences;
+  }
+
+  public String getAccountName() {
+    return preferences(mApplicationContext).getString("google_account", null);
+  }
+
+  public void setAccountName(String accountName) {
+    preferences(mApplicationContext).setString("google_account", accountName);
+  }
+
+  public boolean alwaysPlayFullscreen() {
+    return preferences(mApplicationContext).getBoolean(Preferences.PLAY_FULLSCREEN, false);
+  }
+
+  public boolean showHiddenItems() {
+    return preferences(mApplicationContext).getBoolean("show_hidden_items", false);
+  }
+
+  public void setShowHiddenItems(boolean set) {
+    preferences(mApplicationContext).setBoolean("show_hidden_items", set);
+  }
+
+  public boolean playNext() {
+    return preferences(mApplicationContext).getBoolean("play_next", false);
+  }
+
+  public void setPlayNext(boolean set) {
+    preferences(mApplicationContext).setBoolean("play_next", set);
+  }
+
 }
