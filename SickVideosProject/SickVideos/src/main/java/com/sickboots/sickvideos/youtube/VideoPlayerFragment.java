@@ -379,9 +379,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           // this handles landscape perfectly, nothing more to do
           mPlayer.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE | YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
 
-//          if (AppUtils.instance(getActivity()).alwaysPlayFullscreen())
-//            player.setFullscreen(true);
-
           setupFullscreenListener();
           setupStateChangeListener();
           setupPlaybackEventListener();
@@ -389,6 +386,9 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           if (!restored && mVideoId != null) {
             player.loadVideo(mVideoId);
           }
+
+          if (AppUtils.instance(getActivity()).alwaysPlayFullscreen())
+            player.setFullscreen(true);
 
           mInitializingPlayer = false;
         }
