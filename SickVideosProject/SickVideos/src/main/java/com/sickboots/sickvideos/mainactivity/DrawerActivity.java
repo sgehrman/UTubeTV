@@ -495,12 +495,9 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   // DrawerActivitySupport
   @Override
   public void playVideo(String videoId, String title) {
-    boolean fullScreen = AppUtils.preferences(this).getBoolean(Preferences.PLAY_FULLSCREEN, false);
-
-    if (fullScreen)
-      YouTubeAPI.playMovie(this, videoId, true);
-    else
-      videoPlayer(true).open(videoId, title);
+   // could use this, but we have no control for mute commericals and play next automatically etc.
+   // YouTubeAPI.playMovie(this, videoId, true);
+   videoPlayer(true).open(videoId, title);
   }
 }
 

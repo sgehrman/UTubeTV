@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -321,6 +322,11 @@ public class Utils {
     // trim text and then replace all occurrences of one or more than one whitespace character
     // (including tabs, line breaks, etc) by one single whitespace
     return inString.trim().replaceAll("\\s+", " ");
+  }
+
+  private static boolean isPortrait(Context context) {
+    return (context.getResources()
+        .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
 
 }

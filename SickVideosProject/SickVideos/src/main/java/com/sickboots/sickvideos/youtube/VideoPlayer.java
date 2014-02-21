@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.imageutils.ToolbarIcons;
+import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Utils;
 
 public class VideoPlayer {
@@ -62,11 +63,6 @@ public class VideoPlayer {
     setupToolbar();
   }
 
-  private boolean isPortrait() {
-    return (mContext.getResources()
-        .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
-  }
-
   public void open(final String videoId, final String title) {
     if (visible())
       playerShown(videoId, title);
@@ -76,7 +72,11 @@ public class VideoPlayer {
       // update mute button since it could still be in mute mode
       updateMuteButton();
 
-      boolean animate = isPortrait();
+      boolean animate = Utils.isPortrait(mContext);
+
+      // don't animate if we are going directly to fullscreen anyway
+//      if (animate)
+//        animate = !AppUtils.instance(mContext).alwaysPlayFullscreen();
 
       if (animate) {
         // Initially translate off the screen so that it can be animated in from below.
@@ -110,7 +110,7 @@ public class VideoPlayer {
 
       mVideoFragment.closingPlayer();
 
-      boolean animate = isPortrait();
+      boolean animate = Utils.isPortrait(mContext);
 
       if (animate) {
         mVideoBox.animate()

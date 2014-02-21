@@ -71,6 +71,10 @@ public class AppUtils {
     preferences(mApplicationContext).setString(Preferences.GOOGLE_ACCOUNT_PREF, accountName);
   }
 
+  public boolean alwaysPlayFullscreen() {
+    return preferences(mApplicationContext).getBoolean(Preferences.PLAY_FULLSCREEN, false);
+  }
+
   private Preferences prefsCache() {
     return mPrefsCache;
   }
