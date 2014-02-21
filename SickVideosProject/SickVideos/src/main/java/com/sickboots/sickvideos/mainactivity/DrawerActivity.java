@@ -26,7 +26,6 @@ import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Events;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.youtube.VideoPlayer;
@@ -490,9 +489,9 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   // DrawerActivitySupport
   @Override
   public void playVideo(VideoPlayer.PlayerParams params) {
-   // could use this, but we have no control for mute commericals and play next automatically etc.
-   // YouTubeAPI.playMovie(this, videoId, true);
-   videoPlayer(true).open(params);
+    // could use this, but we have no control for mute commericals and play next automatically etc.
+    // YouTubeAPI.playMovie(this, videoId, true);
+    videoPlayer(true).open(params);
   }
 }
 

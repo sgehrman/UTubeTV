@@ -196,7 +196,8 @@ public class YouTubeAPI {
 
           data.mChannel = channel.getId();
           data.mTitle = channel.getSnippet().getTitle();
-          data.mDescription = channel.getSnippet().getDescription();  // we want the returns, so don't strip
+          data.mDescription = channel.getSnippet()
+              .getDescription();  // we want the returns, so don't strip
           data.mThumbnail = thumbnailURL(channel.getSnippet().getThumbnails());
 
           result.add(data);

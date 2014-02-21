@@ -12,7 +12,7 @@ import de.greenrobot.event.EventBus;
 public class ConnectionMonitor {
   Context mContext;
   ConnectivityManager mConnectivityManager;
-  boolean mConnected=true;  // assume we have a connection, send event if not connected
+  boolean mConnected = true;  // assume we have a connection, send event if not connected
   private BroadcastReceiver mReceiver;
 
   public ConnectionMonitor(Context context) {

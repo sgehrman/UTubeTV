@@ -11,7 +11,6 @@ import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Auth;
 import com.sickboots.sickvideos.misc.Debug;
 import com.sickboots.sickvideos.misc.Events;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.SoundManager;
 import com.sickboots.sickvideos.misc.Utils;
 
@@ -31,6 +30,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public interface VideoFragmentListener {
     public void onFullScreen(boolean fullscreen);
+
     public void playerInitialized();
   }
 
@@ -255,8 +255,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
             EventBus.getDefault().post(new Events.PlayNextEvent(mPlayerParams));
           else
             Debug.log("playnext canceled, player is null");
-        }
-        else if (AppUtils.instance(getActivity()).repeatVideo()) {
+        } else if (AppUtils.instance(getActivity()).repeatVideo()) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
           else

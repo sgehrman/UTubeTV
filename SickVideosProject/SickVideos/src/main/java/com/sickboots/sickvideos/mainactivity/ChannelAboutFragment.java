@@ -1,6 +1,5 @@
 package com.sickboots.sickvideos.mainactivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,21 +145,21 @@ public class ChannelAboutFragment extends Fragment implements OnRefreshListener 
     message += "\n\nInformation shown in this app is obtained through public YouTube APIs.  We are fans of " + channelName + " and we wanted a better viewing experience to watch their videos.";
     message += "\n\nAny copyrighted material belongs to the original owners. If you want changes made to this app, please let us know.";
 
-      final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title)
-          .setMessage(message)
-          .setPositiveButton("Close", new Dialog.OnClickListener() {
-            public void onClick(final DialogInterface dialogInterface, final int i) {
-              dialogInterface.dismiss();
-            }
-          })
-          .setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-              dialog.dismiss();
-            }
-          });
-      builder.create().show();
-    }
+    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title)
+        .setMessage(message)
+        .setPositiveButton("Close", new Dialog.OnClickListener() {
+          public void onClick(final DialogInterface dialogInterface, final int i) {
+            dialogInterface.dismiss();
+          }
+        })
+        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+          @Override
+          public void onCancel(DialogInterface dialog) {
+            dialog.dismiss();
+          }
+        });
+    builder.create().show();
+  }
 
   private void updateUI() {
     final YouTubeData data = mContent.channelInfo();

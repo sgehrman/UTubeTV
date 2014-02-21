@@ -44,7 +44,6 @@ import com.sickboots.sickvideos.imageutils.ToolbarIcons;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.EmptyListHelper;
 import com.sickboots.sickvideos.misc.Events;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.ScrollTriggeredAnimator;
 import com.sickboots.sickvideos.misc.Utils;
 import com.sickboots.sickvideos.services.YouTubeListService;
@@ -347,15 +346,13 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       if (itemMap != null) {
         DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
 
-        if (provider != null)
-        {
+        if (provider != null) {
           VideoPlayer.PlayerParams params = new VideoPlayer.PlayerParams(itemMap.mVideo, itemMap.mTitle, index);
 
           provider.playVideo(params);
-      }
+        }
       }
     }
-
   }
 
   // OnRefreshListener

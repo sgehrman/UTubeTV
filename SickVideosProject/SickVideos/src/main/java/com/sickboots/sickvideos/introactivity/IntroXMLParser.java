@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 
 import com.sickboots.sickvideos.R;
@@ -197,7 +196,9 @@ public class IntroXMLParser {
 
   public static class IntroPageField {
     public String text;
+
     public enum FieldType {TEXT, HEADER, BULLET}
+
     public FieldType type;
     public int topMargin;
 

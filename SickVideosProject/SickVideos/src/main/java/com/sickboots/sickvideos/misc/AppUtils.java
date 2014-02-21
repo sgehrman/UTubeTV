@@ -73,7 +73,7 @@ public class AppUtils {
     builder.setTitle("Pick a style")
         .setSingleChoiceItems(R.array.view_styles, themeStyle, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
-              AppUtils.instance(context).setThemeId(which);
+            AppUtils.instance(context).setThemeId(which);
 
             dialog.dismiss();
           }

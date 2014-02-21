@@ -24,7 +24,6 @@ import com.sickboots.sickvideos.database.DatabaseAccess;
 import com.sickboots.sickvideos.database.YouTubeData;
 import com.sickboots.sickvideos.misc.AppUtils;
 import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Preferences;
 import com.sickboots.sickvideos.misc.StandardAnimations;
 import com.sickboots.sickvideos.misc.VideoMenuView;
 import com.sickboots.sickvideos.services.YouTubeServiceRequest;
