@@ -28,6 +28,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public interface VideoFragmentListener {
     public void onFullScreen(boolean fullscreen);
+    public void playerInitialized();
   }
 
   private YouTubePlayer mPlayer;
@@ -387,8 +388,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
             player.loadVideo(mVideoId);
           }
 
-          if (AppUtils.instance(getActivity()).alwaysPlayFullscreen())
-            player.setFullscreen(true);
+          mFragmentListener.playerInitialized();
 
           mInitializingPlayer = false;
         }

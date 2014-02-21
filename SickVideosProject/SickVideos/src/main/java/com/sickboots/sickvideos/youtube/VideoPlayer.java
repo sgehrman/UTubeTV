@@ -41,6 +41,7 @@ public class VideoPlayer {
     super();
 
     mListener = l;
+    mContext = activity.getApplicationContext();
 
     // install video fragment
     // will already exist if restoring Activity
@@ -55,9 +56,17 @@ public class VideoPlayer {
       public void onFullScreen(boolean fullscreen) {
         mTopBar.setVisibility(fullscreen ? View.GONE : View.VISIBLE);
       }
+
+      @Override
+      public void playerInitialized() {
+        if (AppUtils.instance(mContext).alwaysPlayFullscreen())
+          mVideoFragment.setFullscreen(true);
+
+        // we avoid showing the view until after fullscreen is set after the player is setup
+        mVideoBox.setVisibility(View.VISIBLE);
+      }
     });
 
-    mContext = activity.getApplicationContext();
     mVideoBox = activity.findViewById(R.id.video_player_box);
 
     setupToolbar();
@@ -69,15 +78,13 @@ public class VideoPlayer {
     else {
       Utils.vibrate(mContext);
 
+    if (AppUtils.instance(mContext).alwaysPlayFullscreen()) {
+      playerShown(videoId, title);
+    } else {
       // update mute button since it could still be in mute mode
       updateMuteButton();
 
       boolean animate = Utils.isPortrait(mContext);
-
-      // don't animate if we are going directly to fullscreen anyway
-//      if (animate)
-//        animate = !AppUtils.instance(mContext).alwaysPlayFullscreen();
-
       if (animate) {
         // Initially translate off the screen so that it can be animated in from below.
         mVideoBox.setTranslationY(-mVideoBox.getHeight());
@@ -101,6 +108,7 @@ public class VideoPlayer {
 
         playerShown(videoId, title);
       }
+    }
     }
   }
 
