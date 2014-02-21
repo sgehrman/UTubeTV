@@ -116,6 +116,16 @@ public class SettingsActivity extends Activity {
           });
         }
 
+        pref = findPreference("feedback");
+        if (pref != null) {
+          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+              return handlePrefClick(preference);
+            }
+          });
+        }
+
       } catch (Throwable throwable) {
         Debug.log("exception: " + throwable.getMessage());
       }
@@ -133,6 +143,9 @@ public class SettingsActivity extends Activity {
         return true;
       } else if (preference.getKey().equals("intro")) {
         IntroActivity.showIntro(getActivity(), false, true);
+        return true;
+      } else if (preference.getKey().equals("feedback")) {
+        Utils.sendFeedbackEmail(getActivity());
         return true;
       }
 

@@ -34,6 +34,10 @@
         android:summary="@string/pref_rate_app_summary"
         android:key="rate"/>
     <Preference
+        android:title="@string/pref_send_feedback"
+        android:summary="@string/pref_send_feedback_summary"
+        android:key="feedback"/>
+    <Preference
         android:title="@string/pref_title_log"
         android:key="log"/>
 

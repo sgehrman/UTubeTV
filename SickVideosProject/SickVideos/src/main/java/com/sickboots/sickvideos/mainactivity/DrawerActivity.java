@@ -109,7 +109,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     WhatsNewDialog.showWhatsNew(this, false);
-    IntroActivity.showIntroDelayed(this, true);
+    IntroActivity.showIntroDelayed(this, false);
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
@@ -299,10 +299,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
       case R.id.rate_my_app:
         AppRater.rateNow(this);
-        return true;
-
-      case R.id.send_feedback:
-        Utils.sendFeedbackEmail(this);
         return true;
 
       case R.id.action_show_rate_dialog:
