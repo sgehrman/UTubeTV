@@ -19,6 +19,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -290,6 +291,19 @@ public class Utils {
     }
 
     return appName;
+  }
+
+  public static Uri getCompanyPlayStoreUri() {
+    return Uri.parse("market://search?q=pub:Sick Boots");
+  }
+
+  // using apprater for this, but if we ever get rid of that, this is the code
+  public static Uri getApplicationPlayStoreUri(Context context) {
+    return Uri.parse("market://details?id=" + getApplicationPackageName(context));
+  }
+
+  public static String getApplicationPackageName(Context context) {
+    return context.getApplicationInfo().packageName;
   }
 
   public static void sendFeedbackEmail(Activity activity) {

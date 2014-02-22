@@ -166,7 +166,7 @@ dependencies {
     compile 'com.cocosw:undobar:0.6@aar'
     compile 'de.greenrobot:eventbus:+'
 
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile project(':IconicDroid')
     compile project(':viewserver')
     compile project(':Inscription')

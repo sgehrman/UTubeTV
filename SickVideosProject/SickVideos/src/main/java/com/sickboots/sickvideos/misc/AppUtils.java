@@ -34,14 +34,6 @@ public class AppUtils {
     });
   }
 
-  public static Uri companyPlayStoreUri() {
-    return Uri.parse("market://search?q=pub:Sick Boots");
-  }
-
-  public static Uri applicationPlayStoreUri(Context context) {
-    return Uri.parse("market://details?id=" + context.getApplicationInfo().packageName);
-  }
-
   public static AppUtils instance(Context context) {
     // make sure this is never null
     if (context == null) {
