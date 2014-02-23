@@ -17,11 +17,14 @@ import android.widget.Button;
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.misc.LinePageIndicator;
+import com.sickboots.sickvideos.youtube.VideoPlayer;
 
 public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private static String PREF_KEY = "intro_first_launched_pref";
   private IntroPagerAdapter introPagerAdapter;
   private IntroXMLTaskFragment mTaskFragment;
+  private ViewPager mViewPager;
+  private int mSavedIndex = -1;
 
   public static void showIntroDelayed(final Activity activity, final boolean force) {
     Handler handler = new Handler(Looper.getMainLooper());
@@ -90,6 +93,12 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
   @Override
   public void onNewPages() {
     introPagerAdapter.setPages(mTaskFragment.getPages());
+
+    if (mSavedIndex != -1)
+    {
+      mViewPager.setCurrentItem(mSavedIndex, false);
+      mSavedIndex = -1;
+    }
   }
 
   @Override
@@ -115,14 +124,27 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
       }
     });
 
-    ViewPager viewPager = (ViewPager) findViewById(R.id.intro_pager);
+    mViewPager = (ViewPager) findViewById(R.id.intro_pager);
 
     introPagerAdapter = new IntroPagerAdapter(this, getFragmentManager());
     introPagerAdapter.setPages(mTaskFragment.getPages());
-    viewPager.setAdapter(introPagerAdapter);
+    mViewPager.setAdapter(introPagerAdapter);
 
     LinePageIndicator ind = (LinePageIndicator) findViewById(R.id.line_indicator);
-    ind.setViewPager(viewPager);
+    ind.setViewPager(mViewPager);
+
+    // show player if activity was destroyed and recreated
+    if (savedInstanceState != null) {
+      // must wait for the pages to load before we can restore it, so save it here
+      mSavedIndex = savedInstanceState.getInt("pager_index");
+    }
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+
+    outState.putInt("pager_index", mViewPager.getCurrentItem());
   }
 
   // ==================================================================
@@ -137,4 +159,5 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
     return super.onOptionsItemSelected(item);
   }
+
 }

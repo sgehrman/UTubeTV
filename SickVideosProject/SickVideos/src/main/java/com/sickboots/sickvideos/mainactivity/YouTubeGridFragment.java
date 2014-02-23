@@ -131,7 +131,6 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
         mSearchItem.setVisible(true);
       }
     }
-
   }
 
   @Override
