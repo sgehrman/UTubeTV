@@ -142,7 +142,7 @@ public class SettingsActivity extends Activity {
         ChangeLogDialog.showChangeLog(getActivity());
         return true;
       } else if (preference.getKey().equals("intro")) {
-        IntroActivity.showIntro(getActivity(), false, true);
+        IntroActivity.showIntro(getActivity(), true);
         return true;
       } else if (preference.getKey().equals("feedback")) {
         Utils.sendFeedbackEmail(getActivity());

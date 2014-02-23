@@ -282,7 +282,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
       }
       case R.id.action_more_apps:
         intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(AppUtils.companyPlayStoreUri());
+        intent.setData(Utils.getCompanyPlayStoreUri());
         startActivity(intent);
         return true;
 
@@ -314,10 +314,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         intent = new Intent();
         intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
         startActivity(intent);
-        return true;
-
-      case R.id.action_intro:
-        IntroActivity.showIntro(this, false, true);
         return true;
 
       case R.id.action_whats_new:

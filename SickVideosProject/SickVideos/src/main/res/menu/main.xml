@@ -51,11 +51,6 @@
             android:title="@string/action_channel_lookup"
             android:orderInCategory="100"
             android:showAsAction="never"/>
-        <item
-            android:id="@+id/action_intro"
-            android:title="@string/action_intro"
-            android:orderInCategory="100"
-            android:showAsAction="never"/>
 
         <item
             android:id="@+id/action_show_icons"

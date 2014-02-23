@@ -43,7 +43,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
         Content content = Content.instance();
 
         if (content.channels() != null)
-          IntroActivity.showIntro(activity, false, force);
+          IntroActivity.showIntro(activity, force);
         else {
           if (count < 10)
             retry(handler, activity, force, count + 1);
@@ -52,7 +52,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }, 1500);
   }
 
-  public static void showIntro(Activity activity, boolean dialogStyle, boolean force) {
+  public static void showIntro(Activity activity, boolean force) {
     boolean show = false;
 
     if (force)
@@ -71,9 +71,6 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
 
     if (show) {
-      if (dialogStyle)
-        showIntroDialog(activity);
-      else {
         // add animation, see finish below for the back transition
         ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.slidedown, 0);
 
@@ -81,30 +78,6 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
         intent.setClass(activity, IntroActivity.class);
         activity.startActivity(intent, opts.toBundle());
       }
-    }
-  }
-
-  private static void showIntroDialog(Activity activity) {
-    String title = Utils.getApplicationName(activity) + " - " + Utils.getApplicationVersion(activity, false);
-
-    final WebView webview = new WebView(activity);
-
-    webview.loadUrl("file:///android_asset/intro.html");
-
-    final AlertDialog.Builder builder = new AlertDialog.Builder(activity).setTitle(title)
-        .setView(webview)
-        .setPositiveButton("Close", new Dialog.OnClickListener() {
-          public void onClick(final DialogInterface dialogInterface, final int i) {
-            dialogInterface.dismiss();
-          }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-          @Override
-          public void onCancel(DialogInterface dialog) {
-            dialog.dismiss();
-          }
-        });
-    builder.create().show();
   }
 
   @Override
@@ -169,5 +142,4 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
     return super.onOptionsItemSelected(item);
   }
-
 }
