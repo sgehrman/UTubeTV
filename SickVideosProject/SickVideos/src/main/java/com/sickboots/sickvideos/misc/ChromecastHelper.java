@@ -1,5 +1,3 @@
-
-
 package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
@@ -25,7 +23,6 @@ import com.sickboots.sickvideos.R;
 import java.io.IOException;
 
 public class ChromecastHelper {
-
   private static final String TAG = "MainActivity";
   private Context mContext;
   private MediaRouter mMediaRouter;
@@ -45,7 +42,7 @@ public class ChromecastHelper {
 
     mMediaRouter = MediaRouter.getInstance(mContext);
     mMediaRouteSelector = new MediaRouteSelector.Builder().addControlCategory(CastMediaControlIntent
-        .categoryForCast(mContext.getResources().getString(R.string.chromecast_app_id))).build();
+        .categoryForCast(mContext.getString(R.string.chromecast_app_id))).build();
     mMediaRouterCallback = new MediaRouterCallback();
   }
 
@@ -53,9 +50,6 @@ public class ChromecastHelper {
   public void createOptionsMenu(Menu menu) {
     MenuItem item = menu.findItem(R.id.action_cast);
     if (item != null) {
-      mMediaRouteSelector = new MediaRouteSelector.Builder().addControlCategory(CastMediaControlIntent
-          .categoryForCast(mContext.getString(R.string.chromecast_app_id))).build();
-
       MediaRouteButton button = new MediaRouteButton(mContext);
       button.setRouteSelector(mMediaRouteSelector);
 
