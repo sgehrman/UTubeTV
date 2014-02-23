@@ -171,7 +171,8 @@ dependencies {
     compile project(':viewserver')
     compile project(':Inscription')
 
-    compile 'com.android.support:mediarouter-v7:19.0.+'
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:mediarouter-v7:+'
 }
 
 
