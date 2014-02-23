@@ -7,15 +7,11 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v7.app.MediaRouteButton;
-import android.support.v7.media.*;
 import android.os.Bundle;
-import android.support.v7.media.MediaRouteSelector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.cast.CastMediaControlIntent;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.inscription.WhatsNewDialog;

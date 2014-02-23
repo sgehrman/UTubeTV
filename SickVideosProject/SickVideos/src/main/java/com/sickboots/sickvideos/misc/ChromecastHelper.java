@@ -4,8 +4,6 @@ package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.MediaRouteActionProvider;
 import android.support.v7.app.MediaRouteButton;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
@@ -23,8 +21,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.sickboots.sickvideos.R;
-import com.sickboots.sickvideos.misc.Debug;
-import com.sickboots.sickvideos.misc.Utils;
 
 import java.io.IOException;
 
@@ -57,9 +53,8 @@ public class ChromecastHelper {
   public void createOptionsMenu(Menu menu) {
     MenuItem item = menu.findItem(R.id.action_cast);
     if (item != null) {
-        mMediaRouteSelector = new MediaRouteSelector.Builder()
-          .addControlCategory(CastMediaControlIntent.categoryForCast(mContext.getString(R.string.chromecast_app_id)))
-          .build();
+      mMediaRouteSelector = new MediaRouteSelector.Builder().addControlCategory(CastMediaControlIntent
+          .categoryForCast(mContext.getString(R.string.chromecast_app_id))).build();
 
       MediaRouteButton button = new MediaRouteButton(mContext);
       button.setRouteSelector(mMediaRouteSelector);

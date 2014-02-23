@@ -66,13 +66,13 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     }
 
     if (show) {
-        // add animation, see finish below for the back transition
-        ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.slidedown, 0);
+      // add animation, see finish below for the back transition
+      ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.slidedown, 0);
 
-        Intent intent = new Intent();
-        intent.setClass(activity, IntroActivity.class);
-        activity.startActivity(intent, opts.toBundle());
-      }
+      Intent intent = new Intent();
+      intent.setClass(activity, IntroActivity.class);
+      activity.startActivity(intent, opts.toBundle());
+    }
   }
 
   @Override
