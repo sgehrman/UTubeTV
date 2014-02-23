@@ -2,10 +2,7 @@ package com.sickboots.sickvideos.introactivity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,13 +12,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 
 import com.sickboots.sickvideos.R;
 import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.misc.LinePageIndicator;
-import com.sickboots.sickvideos.misc.Utils;
 
 public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private static String PREF_KEY = "intro_first_launched_pref";
@@ -101,7 +96,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.fragment_intro);
+    setContentView(R.layout.activity_intro);
 
     FragmentManager fm = getFragmentManager();
     mTaskFragment = (IntroXMLTaskFragment) fm.findFragmentByTag("task");
