@@ -49,4 +49,6 @@
     <string name="disclaimer">Disclaimer</string>
     <string name="now_playing">Now Playing</string>
 
+    <string name="chromecast_app_id">6142AE0B</string>
+
 </resources>

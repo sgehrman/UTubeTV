@@ -28,6 +28,7 @@ import com.sickboots.sickvideos.content.Content;
 import com.sickboots.sickvideos.introactivity.IntroActivity;
 import com.sickboots.sickvideos.misc.ActionBarSpinnerAdapter;
 import com.sickboots.sickvideos.misc.AppUtils;
+import com.sickboots.sickvideos.misc.ChromecastHelper;
 import com.sickboots.sickvideos.misc.ColorPickerFragment;
 import com.sickboots.sickvideos.misc.Events;
 import com.sickboots.sickvideos.misc.PurchaseHelper;
@@ -49,6 +50,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   private Content mContent;
   private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
   private boolean mSpinnerSucksBalls;
+  private ChromecastHelper mChromecastHelper;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_drawer);
+
+    mChromecastHelper = new ChromecastHelper(this);
 
     mContent = Content.instance(this);
 
@@ -116,10 +120,26 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     IntroActivity.showIntroDelayed(this, false);
   }
 
+  @Override
+  public void onPause() {
+    super.onPause();
+
+    mChromecastHelper.pause(isFinishing());
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    mChromecastHelper.pause(isFinishing());
+  }
+
   // We're being destroyed. It's important to dispose of the helper here!
   @Override
   public void onDestroy() {
     super.onDestroy();
+
+    mChromecastHelper.destroy();
 
     // very important:
     if (mPurchaseHelper != null) {
@@ -163,17 +183,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-   MenuItem item = menu.findItem(R.id.action_cast);
-    if (item != null) {
-      MediaRouteSelector mMediaRouteSelector = new MediaRouteSelector.Builder()
-          .addControlCategory(CastMediaControlIntent.categoryForCast("6142AE0B"))
-          .build();
-
-      MediaRouteButton button = new MediaRouteButton(this);
-      button.setRouteSelector(mMediaRouteSelector);
-
-      item.setActionView(button);
-    }
+    mChromecastHelper.createOptionsMenu(menu);
 
     return super.onCreateOptionsMenu(menu);
   }
