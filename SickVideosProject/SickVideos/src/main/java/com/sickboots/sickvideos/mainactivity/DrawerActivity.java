@@ -7,11 +7,15 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v7.app.MediaRouteButton;
+import android.support.v7.media.*;
 import android.os.Bundle;
+import android.support.v7.media.MediaRouteSelector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.cast.CastMediaControlIntent;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.inscription.WhatsNewDialog;
@@ -158,6 +162,18 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
+
+   MenuItem item = menu.findItem(R.id.action_cast);
+    if (item != null) {
+      MediaRouteSelector mMediaRouteSelector = new MediaRouteSelector.Builder()
+          .addControlCategory(CastMediaControlIntent.categoryForCast("6142AE0B"))
+          .build();
+
+      MediaRouteButton button = new MediaRouteButton(this);
+      button.setRouteSelector(mMediaRouteSelector);
+
+      item.setActionView(button);
+    }
 
     return super.onCreateOptionsMenu(menu);
   }

@@ -12,6 +12,7 @@
     <string name="title_section3">Subscriptions</string>
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
+    <string name="action_cast">Cast</string>
     <string name="action_more_apps">More TV apps</string>
     <string name="action_show_hidden">Show hidden items</string>
     <string name="action_hide_hidden">Hide hidden items</string>
