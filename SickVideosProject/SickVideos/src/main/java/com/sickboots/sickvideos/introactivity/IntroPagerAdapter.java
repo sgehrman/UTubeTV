@@ -7,12 +7,9 @@ import android.support.v13.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-/**
- * A {@link android.support.v4.app.FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class IntroPagerAdapter extends FragmentPagerAdapter {
-  List<IntroXMLParser.IntroPage> pages;
+  private List<IntroXMLParser.IntroPage> pages;
+  private static int sChangeCount=0;
 
   public IntroPagerAdapter(Context context, FragmentManager fm) {
     super(fm);
@@ -41,5 +38,15 @@ public class IntroPagerAdapter extends FragmentPagerAdapter {
       return pages.size();
 
     return 0;
+  }
+
+  public void notifyDataSetChanged() {
+    sChangeCount += 100;
+
+    super.notifyDataSetChanged();
+  }
+
+  public long getItemId(int position) {
+    return position + sChangeCount;
   }
 }

@@ -368,6 +368,7 @@ EDUCATION
     MIT stanford, etc?
     Google tech talks
     MinutePhysics
+    Smartereveryday
 
 LEARN CODING
     Code.org
