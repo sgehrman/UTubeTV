@@ -2,13 +2,11 @@ package com.sickboots.sickvideos.misc;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.MediaRouteButton;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.RouteInfo;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.Cast.MessageReceivedCallback;
@@ -65,7 +63,6 @@ public class ChromecastHelper {
       item.setActionView(button);
     }
          */
-
   }
 
   // ## must call from activity

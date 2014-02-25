@@ -9,7 +9,7 @@ import java.util.List;
 
 public class IntroPagerAdapter extends FragmentPagerAdapter {
   private List<IntroXMLParser.IntroPage> pages;
-  private static int sChangeCount=0;
+  private static int sChangeCount = 0;
 
   public IntroPagerAdapter(Context context, FragmentManager fm) {
     super(fm);
