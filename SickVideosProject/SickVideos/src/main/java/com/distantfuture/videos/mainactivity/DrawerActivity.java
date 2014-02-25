@@ -96,7 +96,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     selectSection(mContent.savedSectionIndex(), false);
 
     // disabled until polished
-    // mPurchaseHelper = new PurchaseHelper(this);
+    mPurchaseHelper = new PurchaseHelper(this);
 
     AppRater.app_launched(this);
 

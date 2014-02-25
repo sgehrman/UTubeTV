@@ -26,7 +26,7 @@ public class PurchaseHelper {
   int mTank;
   IabHelper mHelper;
 
-  PurchaseHelper(Context context) {
+  public PurchaseHelper(Context context) {
     super();
 
     mContext = context.getApplicationContext();
