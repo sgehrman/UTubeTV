@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <credits>
-    <credit>
+    <credit no_background="true">
         <header
-            large = "true"
+            size = "26"
             link="http://distantfutu.re">
             Distant Future
         </header>
-        <header>
+        <header top_margin="-12">
             App Design Studio
         </header>
 

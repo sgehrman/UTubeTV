@@ -56,24 +56,26 @@ public class CreditsActivity extends Activity {
         boolean alternate=true;
 
         for (CreditsXMLParser.CreditsPage page : newPages) {
-          GradientDrawable background;
+          GradientDrawable background=null;
 
-          int color;
-          if (page.group) {
-            color = 0x88000000;
-          } else {
-            alternate = !alternate;
-            if (alternate) {
-              color = 0x05000000;
+          if (page.alternating_background) {
+            int color;
+            if (page.group) {
+              color = 0x88000000;
             } else {
-              color = 0x10000000;
+              alternate = !alternate;
+              if (alternate) {
+                color = 0x05000000;
+              } else {
+                color = 0x10000000;
+              }
             }
-          }
 
-          background = new GradientDrawable();
-          background.setStroke(1, 0x10000000);
-          background.setCornerRadius(12);
-          background.setColor(color);
+            background = new GradientDrawable();
+            background.setStroke(1, 0x10000000);
+            background.setCornerRadius(12);
+            background.setColor(color);
+          }
 
           LinearLayout linearLayout = new LinearLayout(CreditsActivity.this);
           linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -108,16 +110,21 @@ public class CreditsActivity extends Activity {
   }
 
   private View createFieldView(CreditsXMLParser.CreditsPageField field, boolean group) {
-    final int headerSize = 20;
-    final int titleSize = 16;
+      int textSize = 16;
+
+    if (field.isHeader())
+      textSize = 20;
+
+    if (field.size != null)
+      textSize = Integer.parseInt(field.size);
 
     TextView textView = new TextView(this);
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     textView.setLayoutParams(params);
-    textView.setTextSize(titleSize);
+    textView.setTextSize(textSize);
     textView.setText(field.text);
 
-    int color = 0xbb000000;
+    int color = 0xaa000000;
     if (field.link != null) {
       color = 0xff0000ff;
 
@@ -136,16 +143,17 @@ public class CreditsActivity extends Activity {
     textView.setTextColor(color);
 
     if (field.isHeader()) {
-      textView.setTextSize(headerSize);
+      textView.setTextSize(textSize);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
     }
     textView.setGravity(Gravity.CENTER);
 
     LinearLayout linearLayout = new LinearLayout(this);
     LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    int topPaddingPx = (int) Utils.dpToPx(field.topMargin(), this);
-    duhParams.setMargins(0, topPaddingPx, 0, 0);
+    int topMarginPx = (int) Utils.dpToPx(field.topMargin, this);
+    duhParams.setMargins(0, topMarginPx, 0, 0);
     linearLayout.setLayoutParams(duhParams);
+    linearLayout.setPadding(0,4,0,4);
 
     linearLayout.addView(textView);
 
