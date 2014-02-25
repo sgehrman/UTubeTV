@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name="com.distantfuture.videos.activities.CreditsActivity"
-            android:label="">
+            android:label="@string/pref_title_credits">
         </activity>
 
         <service

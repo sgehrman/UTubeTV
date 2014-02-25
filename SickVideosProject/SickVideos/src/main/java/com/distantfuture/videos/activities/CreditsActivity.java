@@ -57,6 +57,7 @@ public class CreditsActivity extends Activity {
       @Override
       public void parseXMLDone(List<CreditsXMLParser.CreditsPage> newPages) {
         boolean alternate = true;
+        int radius = (int) Utils.dpToPx(8f, CreditsActivity.this);
 
         for (CreditsXMLParser.CreditsPage page : newPages) {
           GradientDrawable background = null;
@@ -76,7 +77,7 @@ public class CreditsActivity extends Activity {
 
             background = new GradientDrawable();
             background.setStroke(1, 0x10000000);
-            background.setCornerRadius(12);
+            background.setCornerRadius(radius);
             background.setColor(color);
           }
 
