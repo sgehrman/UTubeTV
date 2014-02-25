@@ -47,6 +47,10 @@
             android:theme="@style/IntroActivityTheme"
             android:label="">
         </activity>
+        <activity
+            android:name="com.distantfuture.videos.activities.CreditsActivity"
+            android:label="">
+        </activity>
 
         <service
             android:name="com.distantfuture.videos.services.YouTubeListService"

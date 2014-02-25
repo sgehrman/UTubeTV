@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<credits>
+    <credit>
+        <header
+            link="http://distantfutu.re">
+            Distant Future
+        </header>
+        <header
+            link="http://distantfutu.re">
+            Distant Future
+        </header>
+
+        <header>
+            App Design Studio
+        </header>
+
+        <text
+            link="mailto:distantfuturist@gmail.com">
+            Contact us
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="mailto:distantfuturist@gmail.com">
+            ListViewAnimations
+        </header>
+        <text
+            link="mailto:distantfuturist@gmail.com">
+            Copyright 2014 Niek Haarman
+        </text>
+        <text
+            link="mailto:distantfuturist@gmail.com">
+            Apache License
+        </text>
+    </credit>
+
+</credits>
