@@ -17,9 +17,6 @@ import com.distantfuture.videos.misc.Utils;
 
 import java.util.List;
 
-/**
- * Created by sgehrman on 2/24/14.
- */
 public class CreditsActivity extends Activity {
   ViewGroup mContainer;
 
