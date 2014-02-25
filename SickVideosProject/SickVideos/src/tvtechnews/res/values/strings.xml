@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TV TechNews</string>
+    <string name="app_name">TechNews TV</string>
 
     <string-array name="content_array">
         <item>THE_VERGE</item>
