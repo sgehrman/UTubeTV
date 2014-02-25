@@ -56,7 +56,6 @@ public class ChromecastHelper {
         android:orderInCategory="100"
         android:showAsAction="always"/>
 
-     */
 
     MenuItem item = menu.findItem(R.id.action_cast);
     if (item != null) {
@@ -65,6 +64,8 @@ public class ChromecastHelper {
 
       item.setActionView(button);
     }
+         */
+
   }
 
   // ## must call from activity
