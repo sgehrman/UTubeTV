@@ -341,4 +341,10 @@ public class Utils {
         .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
   }
 
+  public static void openWebPage(Activity activity, Uri webpage) {
+    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+    if (intent.resolveActivity(activity.getPackageManager()) != null) {
+      activity.startActivity(intent);
+    }
+  }
 }

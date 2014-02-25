@@ -7,11 +7,11 @@
         </header>
         <header
             link="http://distantfutu.re">
-            Distant Future
+            App Design Studio
         </header>
 
         <header>
-            App Design Studio
+            San Francisco, CA
         </header>
 
         <text
@@ -21,7 +21,7 @@
     </credit>
 
 
-    <credit>
+    <credit group="true">
         <header>
             Included Libraries
         </header>
@@ -236,7 +236,7 @@
         </text>
     </credit>
 
-    <credit>
+    <credit group="true">
         <header>
             Included Resources
         </header>

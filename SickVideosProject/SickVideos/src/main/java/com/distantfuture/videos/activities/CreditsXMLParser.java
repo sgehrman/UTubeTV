@@ -25,7 +25,6 @@ public class CreditsXMLParser {
     public void parseXMLDone(List<CreditsPage> pages);
   }
 
-
   private CreditsXMLParser(final Context context) {
     super();
     mContext = context.getApplicationContext();
@@ -36,39 +35,46 @@ public class CreditsXMLParser {
   }
 
   private static CreditsPage parsePageTag(Context context, final XmlPullParser resourceParser) throws XmlPullParserException, IOException {
-    CreditsPage result = null;
-    String title, icon;
     List<CreditsPageField> fields = new ArrayList<CreditsPageField>();
+
+    String group = resourceParser.getAttributeValue(null, "group");
+
 
     int eventType = resourceParser.getEventType();
     while (!(eventType == XmlPullParser.END_TAG && resourceParser.getName().equals("credit"))) {
       if (eventType == XmlPullParser.START_TAG) {
-
         String name = resourceParser.getName();
 
         String topMargin = resourceParser.getAttributeValue(null, "top_margin");
-        String append = resourceParser.getAttributeValue(null, "append");
+        String link = resourceParser.getAttributeValue(null, "link");
 
         if (name.equals("header")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          CreditsPageField field = CreditsPageField.newField(context, text, topMargin, append, CreditsPageField.FieldType.HEADER);
+          CreditsPageField field = CreditsPageField.newField(context, text, link, topMargin, CreditsPageField.FieldType.HEADER);
           fields.add(field);
         } else if (name.equals("text")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          CreditsPageField field = CreditsPageField.newField(context, text, topMargin, append, CreditsPageField.FieldType.TEXT);
+          CreditsPageField field = CreditsPageField.newField(context, text, link, topMargin, CreditsPageField.FieldType.TEXT);
+          fields.add(field);
+        } else if (name.equals("group")) {
+          resourceParser.next();
+
+          String text = resourceParser.getText();
+
+          CreditsPageField field = CreditsPageField.newField(context, text, link, topMargin, CreditsPageField.FieldType.GROUP);
           fields.add(field);
         }
       }
       eventType = resourceParser.next();
     }
 
-    return CreditsPage.newPage(fields);
+    return CreditsPage.newPage(group, fields);
   }
 
   private List<CreditsPage> getHTMLChangelog(final int resourceId, final Resources resources) {
@@ -116,36 +122,41 @@ public class CreditsXMLParser {
     }).start();
   }
 
+  // ======================================================================
+  // CreditsPage
+
   public static class CreditsPage {
     public String title;
     public List<CreditsPageField> fields;
+    public boolean group;
 
-    public static CreditsPage newPage(List<CreditsPageField> fields) {
+    public static CreditsPage newPage(String group, List<CreditsPageField> fields) {
       CreditsPage result = new CreditsPage();
 
+      result.group = group != null;
       result.fields = fields;
 
       return result;
     }
   }
 
+  // ======================================================================
+  // CreditsPageField
+
   public static class CreditsPageField {
     public String text;
-
-    public enum FieldType {TEXT, HEADER}
-
     public FieldType type;
     public int topMargin;
+    public String link;
 
-    public static CreditsPageField newField(Context context, String text, String topMargin, String append, FieldType type) {
+    public enum FieldType {TEXT, HEADER, GROUP}
+
+    public static CreditsPageField newField(Context context, String text, String link, String topMargin, FieldType type) {
       CreditsPageField result = new CreditsPageField();
 
       result.text = Utils.condenseWhiteSpace(text);  // xml file can be reformatted by the IDE to add returns
-
-      if (append != null && append.equals("app_name"))
-        result.text += " " + Utils.getApplicationName(context);
-
       result.type = type;
+      result.link = link;
 
       if (topMargin != null)
         result.topMargin = Integer.valueOf(topMargin);
@@ -156,9 +167,9 @@ public class CreditsXMLParser {
     public int topMargin() {
       switch (type) {
         case TEXT:
-          return 12;
         case HEADER:
-          return 12;
+        case GROUP:
+          return 0;
       }
 
       return 0;
@@ -170,6 +181,10 @@ public class CreditsXMLParser {
 
     public boolean isHeader() {
       return type == FieldType.HEADER;
+    }
+
+    public boolean isGroupHeader() {
+      return type == FieldType.GROUP;
     }
   }
 }

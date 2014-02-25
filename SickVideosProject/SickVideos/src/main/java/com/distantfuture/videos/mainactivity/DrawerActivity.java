@@ -303,9 +303,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
       }
       case R.id.action_more_apps:
-        intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Utils.getCompanyPlayStoreUri());
-        startActivity(intent);
+        Utils.openWebPage(this, Utils.getCompanyPlayStoreUri());
         return true;
 
       case R.id.action_switch_view:

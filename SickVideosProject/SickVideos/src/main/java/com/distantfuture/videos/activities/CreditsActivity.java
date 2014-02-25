@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -50,15 +53,42 @@ public class CreditsActivity extends Activity {
     CreditsXMLParser.parseXML(this, new CreditsXMLParser.CreditsXMLParserListener() {
       @Override
       public void parseXMLDone(List<CreditsXMLParser.CreditsPage> newPages) {
+        boolean alternate=true;
+
         for (CreditsXMLParser.CreditsPage page : newPages) {
+          GradientDrawable background;
+
+          int color;
+          if (page.group) {
+            color = 0x88000000;
+          } else {
+            alternate = !alternate;
+            if (alternate) {
+              color = 0x05000000;
+            } else {
+              color = 0x10000000;
+            }
+          }
+
+          background = new GradientDrawable();
+          background.setStroke(1, 0x10000000);
+          background.setCornerRadius(12);
+          background.setColor(color);
 
           LinearLayout linearLayout = new LinearLayout(CreditsActivity.this);
           linearLayout.setOrientation(LinearLayout.VERTICAL);
           LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+          int hMargin = (int) Utils.dpToPx(12f, CreditsActivity.this);
+          int vMargin = (int) Utils.dpToPx(3f, CreditsActivity.this);
+          duhParams.setMargins(hMargin, vMargin, hMargin, vMargin);
+          linearLayout.setPadding(hMargin, vMargin, hMargin, vMargin);
+
           linearLayout.setLayoutParams(duhParams);
+          linearLayout.setBackground(background);
 
           for (CreditsXMLParser.CreditsPageField field : page.fields)
-            linearLayout.addView(createFieldView(field));
+            linearLayout.addView(createFieldView(field, page.group));
 
           mContainer.addView(linearLayout);
         }
@@ -77,7 +107,7 @@ public class CreditsActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
-  private View createFieldView(CreditsXMLParser.CreditsPageField field) {
+  private View createFieldView(CreditsXMLParser.CreditsPageField field, boolean group) {
     final int headerSize = 20;
     final int titleSize = 16;
 
@@ -87,14 +117,29 @@ public class CreditsActivity extends Activity {
     textView.setTextSize(titleSize);
     textView.setText(field.text);
 
-    if (field.isHeader()) {
-      int color = 0xff0000ff; // this.getResources().getColor(R.color.intro_header_color);
+    int color = 0xbb000000;
+    if (field.link != null) {
+      color = 0xff0000ff;
 
-      textView.setTextSize(headerSize);
-      textView.setTextColor(color);
-      textView.setTypeface(Typeface.DEFAULT_BOLD);
-      textView.setGravity(Gravity.CENTER);
+      final Uri uri = Uri.parse(field.link);
+      textView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Utils.openWebPage(CreditsActivity.this, uri);
+        }
+      });
     }
+
+    if (group)
+      color = 0xaaffffff;
+
+    textView.setTextColor(color);
+
+    if (field.isHeader()) {
+      textView.setTextSize(headerSize);
+      textView.setTypeface(Typeface.DEFAULT_BOLD);
+    }
+    textView.setGravity(Gravity.CENTER);
 
     LinearLayout linearLayout = new LinearLayout(this);
     LinearLayout.LayoutParams duhParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -106,5 +151,4 @@ public class CreditsActivity extends Activity {
 
     return linearLayout;
   }
-
 }
