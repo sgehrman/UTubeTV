@@ -47,6 +47,7 @@ public class CreditsXMLParser {
 
         String topMargin = resourceParser.getAttributeValue(null, "top_margin");
         String link = resourceParser.getAttributeValue(null, "link");
+        String size = resourceParser.getAttributeValue(null, "size");
 
         if (name.equals("header")) {
           resourceParser.next();

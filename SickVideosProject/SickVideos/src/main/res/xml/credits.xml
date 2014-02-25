@@ -2,15 +2,16 @@
 <credits>
     <credit>
         <header
+            large = "true"
             link="http://distantfutu.re">
             Distant Future
         </header>
-        <header
-            link="http://distantfutu.re">
+        <header>
             App Design Studio
         </header>
 
-        <header>
+        <header
+            link="https://maps.google.com/maps?q=16th+St.+Mission,+Mission+Street,+SF,+CA&amp;hl=en&amp;ll=37.745064,-122.431297&amp;spn=0.139812,0.253029&amp;sll=37.748593,-122.432327&amp;sspn=0.139805,0.253029&amp;oq=+16th+and+mission,+SF&amp;t=k&amp;gl=us&amp;z=13">
             San Francisco, CA
         </header>
 
