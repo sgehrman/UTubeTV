@@ -1,4 +1,4 @@
-Dareshare
+Sick Vids
 =========
 
-Dareshare
+Sick Vids project
