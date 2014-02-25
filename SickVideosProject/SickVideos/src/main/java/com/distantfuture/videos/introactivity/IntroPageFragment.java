@@ -19,6 +19,8 @@ import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.Utils;
 
 public class IntroPageFragment extends Fragment {
+  private int mHeaderTextColor;
+
   public IntroPageFragment() {
     super();
   }
@@ -34,6 +36,8 @@ public class IntroPageFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_intro_page, container, false);
+
+    mHeaderTextColor = getActivity().getResources().getColor(R.color.intro_header_color);
 
     int sectionNumber = getArguments().getInt("sectionNumber");
 
@@ -95,10 +99,8 @@ public class IntroPageFragment extends Fragment {
     textView.setMaxWidth((int) Utils.dpToPx(440, getActivity()));
 
     if (field.isHeader()) {
-      int color = getActivity().getResources().getColor(R.color.intro_header_color);
-
       textView.setTextSize(headerSize);
-      textView.setTextColor(color);
+      textView.setTextColor(mHeaderTextColor);
       textView.setTypeface(Typeface.DEFAULT_BOLD);
     }
 

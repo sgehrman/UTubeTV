@@ -20,19 +20,272 @@
         </text>
     </credit>
 
+
+    <credit>
+        <header>
+            Included Libraries
+        </header>
+
+    </credit>
+
+
     <credit>
         <header
-            link="mailto:distantfuturist@gmail.com">
+            link="https://github.com/nhaarman/ListViewAnimations">
             ListViewAnimations
         </header>
         <text
-            link="mailto:distantfuturist@gmail.com">
+            link="mailto:haarman.niek@gmail.com">
             Copyright 2014 Niek Haarman
         </text>
         <text
-            link="mailto:distantfuturist@gmail.com">
+            link="http://www.apache.org/licenses/LICENSE-2.0">
             Apache License
         </text>
     </credit>
 
+
+    <credit>
+        <header
+            link="https://github.com/chrisbanes/ActionBar-PullToRefresh">
+            ActionBar-PullToRefresh
+        </header>
+        <text
+            link="http://chris.banes.me">
+            Copyright 2014 Chris Banes
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/atermenji/IconicDroid">
+            IconicDroid
+        </header>
+        <text
+            link="mailto:atermenji@gmail.com">
+            Copyright 2014 Artur Termenji
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/square/picasso">
+            Picasso
+        </header>
+        <text
+            link="https://squareup.com">
+            Copyright 2014 Square Inc
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="http://www.joda.org/joda-time">
+            Joda-Time
+        </header>
+        <text
+            link="http://www.joda.org">
+            Copyright 2014 joda.org
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+    <credit>
+        <header
+            link="http://ocpsoft.org/prettytime">
+            PrettyTime
+        </header>
+        <text
+            link="http://ocpsoft.org">
+            Copyright 2014 ocpsoft
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+    <credit>
+        <header
+            link="https://github.com/castorflex/SmoothProgressBar">
+            SmoothProgressBar
+        </header>
+        <text
+            link="mailto:merle.antoine@gmail.com">
+            Copyright 2014 Antoine Merle
+        </text>
+        <text
+            link="http://people.freebsd.org/~phk">
+            BEER-WARE License
+        </text>
+    </credit>
+    <credit>
+        <header
+            link="https://github.com/codechimp-org/AppRater">
+            AppRater
+        </header>
+        <text
+            link="mailto:andrew@codechimp.org">
+            Copyright 2014 Andrew Jackson
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+    <credit>
+        <header
+            link="https://developers.google.com/api-client-library/java/apis/youtube/v3">
+            YouTube Data API
+        </header>
+        <text
+            link="http://google.com">
+            Copyright 2014 Google
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://developers.google.com/youtube/android/player">
+            YouTube Android Player API
+        </header>
+        <text
+            link="http://google.com">
+            Copyright 2014 Google
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/soarcn/UndoBar">
+            UndoBar
+        </header>
+        <text
+            link="https://github.com/soarcn">
+            Copyright 2014 soarcn
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/MartinvanZ/Inscription">
+            Inscription
+        </header>
+        <text
+            link="http://martin.cubeactive.com/inscription">
+            Copyright 2014 Martin van Zuilekom
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/JakeWharton/DiskLruCache">
+            DiskLruCache
+        </header>
+        <text
+            link="mailto:jakewharton@gmail.com">
+            Copyright 2014 Jake Wharton
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="https://github.com/greenrobot/EventBus">
+            EventBus
+        </header>
+        <text
+            link="http://greenrobot.de">
+            Copyright 2014 Markus Junginger
+        </text>
+        <text
+            link="http://www.apache.org/licenses/LICENSE-2.0">
+            Apache License
+        </text>
+    </credit>
+
+    <credit>
+        <header>
+            Included Resources
+        </header>
+    </credit>
+
+    <credit>
+        <header
+            link="http://subtlepatterns.com">
+            subtlepatterns.com
+        </header>
+        <text
+            link="http://www.atlemo.com">
+            Copyright 2014 Atle Mo
+        </text>
+        <text
+            link="http://subtlepatterns.com/about">
+            Free License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="http://www.patterncooler.com">
+            patterncooler.com
+        </header>
+        <text
+            link="mailto:h_@patterncooler.com">
+            Copyright 2014 Pattern Cooler
+        </text>
+        <text
+            link="http://www.patterncooler.com">
+            Free License
+        </text>
+    </credit>
+
+    <credit>
+        <header
+            link="http://www.grsites.com/archive/textures">
+            Free Textures
+        </header>
+        <text
+            link="http://www.grsites.com">
+            Copyright 2014 grsites.com
+        </text>
+        <text
+            link="http://www.grsites.com/terms">
+            Free License
+        </text>
+    </credit>
+
 </credits>
+

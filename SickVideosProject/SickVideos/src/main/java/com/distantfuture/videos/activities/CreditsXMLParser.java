@@ -5,12 +5,8 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.format.DateFormat;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.content.Content;
-import com.distantfuture.videos.database.YouTubeData;
-import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.Utils;
 
@@ -18,10 +14,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CreditsXMLParser {

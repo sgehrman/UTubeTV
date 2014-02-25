@@ -133,7 +133,7 @@ public class SettingsActivity extends Activity {
 
     private boolean handlePrefClick(Preference preference) {
       if (preference.getKey().equals("credits")) {
-//        InfoActivity.show(getActivity(), "cr");
+        //        InfoActivity.show(getActivity(), "cr");
         CreditsActivity.show(getActivity());
         return true;
       } else if (preference.getKey().equals("rate")) {
