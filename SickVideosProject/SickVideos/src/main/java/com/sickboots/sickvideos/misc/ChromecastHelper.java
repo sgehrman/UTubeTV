@@ -1,26 +1,49 @@
 package com.sickboots.sickvideos.misc;
 
+/*
+  // add to menu.xml
+
+  <item
+  android:id="@+id/action_cast"
+  android:title="@string/action_cast"
+  android:orderInCategory="100"
+  android:showAsAction="always"/>
+
+  // add to manifest
+
+  <meta-data
+  android:name="com.google.android.gms.version"
+  android:value="@integer/google_play_services_version"/>
+
+  // add to build.gradle
+
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:mediarouter-v7:+'
+
+*/
+
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.media.MediaRouteSelector;
-import android.support.v7.media.MediaRouter;
-import android.support.v7.media.MediaRouter.RouteInfo;
-import android.util.Log;
 import android.view.Menu;
 
-import com.google.android.gms.cast.Cast;
-import com.google.android.gms.cast.Cast.MessageReceivedCallback;
-import com.google.android.gms.cast.CastDevice;
-import com.google.android.gms.cast.CastMediaControlIntent;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.sickboots.sickvideos.R;
-
-import java.io.IOException;
-
 public class ChromecastHelper {
+
+  // dumb stubs to get it compiling
+  public ChromecastHelper(Context context) {
+  }
+
+  public void createOptionsMenu(Menu menu) {
+  }
+
+  public void resume() {
+  }
+
+  public void pause(boolean isFinishing) {
+  }
+
+  public void destroy() {
+  }
+
+  /*
   private static final String TAG = "MainActivity";
   private Context mContext;
   private MediaRouter mMediaRouter;
@@ -46,23 +69,13 @@ public class ChromecastHelper {
 
   // ## must call from activity
   public void createOptionsMenu(Menu menu) {
+    MenuItem item = menu.findItem(R.id.action_cast);
+    if (item != null) {
+      MediaRouteButton button = new MediaRouteButton(mContext);
+      button.setRouteSelector(mMediaRouteSelector);
 
-    /*
-      <item
-      android:id="@+id/action_cast"
-      android:title="@string/action_cast"
-      android:orderInCategory="100"
-      android:showAsAction="always"/>
-
-      MenuItem item = menu.findItem(R.id.action_cast);
-      if (item != null) {
-        MediaRouteButton button = new MediaRouteButton(mContext);
-        button.setRouteSelector(mMediaRouteSelector);
-
-        item.setActionView(button);
-      }
-
-    */
+      item.setActionView(button);
+    }
   }
 
   // ## must call from activity
@@ -234,5 +247,5 @@ public class ChromecastHelper {
       Debug.log(message);
     }
   }
-
+*/
 }

@@ -170,9 +170,6 @@ dependencies {
     compile project(':IconicDroid')
     compile project(':viewserver')
     compile project(':Inscription')
-
-    compile 'com.android.support:appcompat-v7:+'
-    compile 'com.android.support:mediarouter-v7:+'
 }
 
 
