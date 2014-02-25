@@ -169,7 +169,7 @@ public class Utils {
   }
 
   public static String feedbackEmailAddress() {
-    return "sgehrman@gmail.com";
+    return "distantfuturist@gmail.com";
   }
 
   public static boolean onMainThread() {
