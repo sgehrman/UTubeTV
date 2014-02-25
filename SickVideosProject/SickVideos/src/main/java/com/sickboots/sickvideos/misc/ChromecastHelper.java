@@ -48,21 +48,21 @@ public class ChromecastHelper {
   public void createOptionsMenu(Menu menu) {
 
     /*
-        <item
-        android:id="@+id/action_cast"
-        android:title="@string/action_cast"
-        android:orderInCategory="100"
-        android:showAsAction="always"/>
+      <item
+      android:id="@+id/action_cast"
+      android:title="@string/action_cast"
+      android:orderInCategory="100"
+      android:showAsAction="always"/>
 
+      MenuItem item = menu.findItem(R.id.action_cast);
+      if (item != null) {
+        MediaRouteButton button = new MediaRouteButton(mContext);
+        button.setRouteSelector(mMediaRouteSelector);
 
-    MenuItem item = menu.findItem(R.id.action_cast);
-    if (item != null) {
-      MediaRouteButton button = new MediaRouteButton(mContext);
-      button.setRouteSelector(mMediaRouteSelector);
+        item.setActionView(button);
+      }
 
-      item.setActionView(button);
-    }
-         */
+    */
   }
 
   // ## must call from activity
