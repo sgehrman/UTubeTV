@@ -2,8 +2,8 @@
 <credits>
     <credit no_background="true">
         <header
-            size = "26"
-            link="http://distantfutu.re">
+            link="http://distantfutu.re"
+            size="26">
             Distant Future
         </header>
         <header top_margin="-12">
@@ -34,8 +34,9 @@
             ListViewAnimations
         </header>
         <text
+            copy="2014"
             link="mailto:haarman.niek@gmail.com">
-            Copyright 2014 Niek Haarman
+            Niek Haarman
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -49,8 +50,9 @@
             ActionBar-PullToRefresh
         </header>
         <text
+            copy="2014"
             link="http://chris.banes.me">
-            Copyright 2014 Chris Banes
+            Chris Banes
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -64,8 +66,9 @@
             IconicDroid
         </header>
         <text
+            copy="2014"
             link="mailto:atermenji@gmail.com">
-            Copyright 2014 Artur Termenji
+            Artur Termenji
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -79,8 +82,9 @@
             Picasso
         </header>
         <text
+            copy="2014"
             link="https://squareup.com">
-            Copyright 2014 Square Inc
+            Square Inc
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -94,8 +98,9 @@
             Joda-Time
         </header>
         <text
+            copy="2014"
             link="http://www.joda.org">
-            Copyright 2014 joda.org
+            joda.org
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -109,8 +114,9 @@
             PrettyTime
         </header>
         <text
+            copy="2014"
             link="http://ocpsoft.org">
-            Copyright 2014 ocpsoft
+            ocpsoft
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -124,8 +130,9 @@
             SmoothProgressBar
         </header>
         <text
+            copy="2014"
             link="mailto:merle.antoine@gmail.com">
-            Copyright 2014 Antoine Merle
+            Antoine Merle
         </text>
         <text
             link="http://people.freebsd.org/~phk">
@@ -139,8 +146,9 @@
             AppRater
         </header>
         <text
+            copy="2014"
             link="mailto:andrew@codechimp.org">
-            Copyright 2014 Andrew Jackson
+            Andrew Jackson
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -154,8 +162,9 @@
             YouTube Data API
         </header>
         <text
+            copy="2014"
             link="http://google.com">
-            Copyright 2014 Google
+            Google
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -169,8 +178,9 @@
             YouTube Android Player API
         </header>
         <text
+            copy="2014"
             link="http://google.com">
-            Copyright 2014 Google
+            Google
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -184,8 +194,9 @@
             UndoBar
         </header>
         <text
+            copy="2014"
             link="https://github.com/soarcn">
-            Copyright 2014 soarcn
+            soarcn
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -199,8 +210,9 @@
             Inscription
         </header>
         <text
+            copy="2014"
             link="http://martin.cubeactive.com/inscription">
-            Copyright 2014 Martin van Zuilekom
+            Martin van Zuilekom
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -214,8 +226,9 @@
             DiskLruCache
         </header>
         <text
+            copy="2014"
             link="mailto:jakewharton@gmail.com">
-            Copyright 2014 Jake Wharton
+            Jake Wharton
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -229,8 +242,9 @@
             EventBus
         </header>
         <text
+            copy="2014"
             link="http://greenrobot.de">
-            Copyright 2014 Markus Junginger
+            Markus Junginger
         </text>
         <text
             link="http://www.apache.org/licenses/LICENSE-2.0">
@@ -250,8 +264,9 @@
             subtlepatterns.com
         </header>
         <text
+            copy="2014"
             link="http://www.atlemo.com">
-            Copyright 2014 Atle Mo
+            Atle Mo
         </text>
         <text
             link="http://subtlepatterns.com/about">
@@ -265,8 +280,9 @@
             patterncooler.com
         </header>
         <text
+            copy="2014"
             link="mailto:h_@patterncooler.com">
-            Copyright 2014 Pattern Cooler
+            Pattern Cooler
         </text>
         <text
             link="http://www.patterncooler.com">
@@ -280,8 +296,9 @@
             Free Textures
         </header>
         <text
+            copy="2014"
             link="http://www.grsites.com">
-            Copyright 2014 grsites.com
+            grsites.com
         </text>
         <text
             link="http://www.grsites.com/terms">

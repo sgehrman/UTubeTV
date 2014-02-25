@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +24,7 @@ import com.distantfuture.videos.misc.Utils;
 import java.util.List;
 
 public class CreditsActivity extends Activity {
-  ViewGroup mContainer;
+  private ViewGroup mContainer;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -53,10 +56,10 @@ public class CreditsActivity extends Activity {
     CreditsXMLParser.parseXML(this, new CreditsXMLParser.CreditsXMLParserListener() {
       @Override
       public void parseXMLDone(List<CreditsXMLParser.CreditsPage> newPages) {
-        boolean alternate=true;
+        boolean alternate = true;
 
         for (CreditsXMLParser.CreditsPage page : newPages) {
-          GradientDrawable background=null;
+          GradientDrawable background = null;
 
           if (page.alternating_background) {
             int color;
@@ -110,7 +113,7 @@ public class CreditsActivity extends Activity {
   }
 
   private View createFieldView(CreditsXMLParser.CreditsPageField field, boolean group) {
-      int textSize = 16;
+    int textSize = 16;
 
     if (field.isHeader())
       textSize = 20;
@@ -122,7 +125,6 @@ public class CreditsActivity extends Activity {
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     textView.setLayoutParams(params);
     textView.setTextSize(textSize);
-    textView.setText(field.text);
 
     int color = 0xaa000000;
     if (field.link != null) {
@@ -140,7 +142,12 @@ public class CreditsActivity extends Activity {
     if (group)
       color = 0xaaffffff;
 
-    textView.setTextColor(color);
+    if (field.copyRight != null)
+      textView.setText(copyRightString(field.copyRight, field.text, color));
+    else {
+      textView.setText(field.text);
+      textView.setTextColor(color);
+    }
 
     if (field.isHeader()) {
       textView.setTextSize(textSize);
@@ -153,10 +160,23 @@ public class CreditsActivity extends Activity {
     int topMarginPx = (int) Utils.dpToPx(field.topMargin, this);
     duhParams.setMargins(0, topMarginPx, 0, 0);
     linearLayout.setLayoutParams(duhParams);
-    linearLayout.setPadding(0,4,0,4);
+    linearLayout.setPadding(0, 4, 0, 4);
 
     linearLayout.addView(textView);
 
     return linearLayout;
   }
+
+  private SpannableString copyRightString(String copyRight, String info, int infoColor) {
+//    final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
+    final ForegroundColorSpan mColorSpan = new ForegroundColorSpan(infoColor);
+
+    SpannableString result = new SpannableString(copyRight + info);
+    //  result.setSpan(mBoldSpan, 0, copyRight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    result.setSpan(mBoldSpan, copyRight.length(), copyRight.length() + info.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    result.setSpan(mColorSpan, copyRight.length(), copyRight.length() + info.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+    return result;
+  }
+
 }

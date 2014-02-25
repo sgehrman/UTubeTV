@@ -48,27 +48,28 @@ public class CreditsXMLParser {
         String topMargin = resourceParser.getAttributeValue(null, "top_margin");
         String link = resourceParser.getAttributeValue(null, "link");
         String size = resourceParser.getAttributeValue(null, "size");
+        String copyRight = resourceParser.getAttributeValue(null, "copy");
 
         if (name.equals("header")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          CreditsPageField field = CreditsPageField.newField(context, text, link, size, topMargin, CreditsPageField.FieldType.HEADER);
+          CreditsPageField field = CreditsPageField.newField(context, text, link, size, copyRight, topMargin, CreditsPageField.FieldType.HEADER);
           fields.add(field);
         } else if (name.equals("text")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          CreditsPageField field = CreditsPageField.newField(context, text, link, size, topMargin, CreditsPageField.FieldType.TEXT);
+          CreditsPageField field = CreditsPageField.newField(context, text, link, size, copyRight, topMargin, CreditsPageField.FieldType.TEXT);
           fields.add(field);
         } else if (name.equals("group")) {
           resourceParser.next();
 
           String text = resourceParser.getText();
 
-          CreditsPageField field = CreditsPageField.newField(context, text, link, size, topMargin, CreditsPageField.FieldType.GROUP);
+          CreditsPageField field = CreditsPageField.newField(context, text, link, size, copyRight, topMargin, CreditsPageField.FieldType.GROUP);
           fields.add(field);
         }
       }
@@ -152,16 +153,20 @@ public class CreditsXMLParser {
     public int topMargin;
     public String link;
     public String size;
+    public String copyRight;
 
     public enum FieldType {TEXT, HEADER, GROUP}
 
-    public static CreditsPageField newField(Context context, String text, String link, String size, String topMargin, FieldType type) {
+    public static CreditsPageField newField(Context context, String text, String link, String size, String copyRight, String topMargin, FieldType type) {
       CreditsPageField result = new CreditsPageField();
 
       result.text = Utils.condenseWhiteSpace(text);  // xml file can be reformatted by the IDE to add returns
       result.type = type;
       result.link = link;
       result.size = size;
+
+      if (copyRight != null)
+        result.copyRight = "Copyright " + copyRight + " ";
 
       if (topMargin != null)
         result.topMargin = Integer.parseInt(topMargin);
