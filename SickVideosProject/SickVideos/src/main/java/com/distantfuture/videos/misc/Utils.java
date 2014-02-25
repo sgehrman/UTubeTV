@@ -294,7 +294,7 @@ public class Utils {
   }
 
   public static Uri getCompanyPlayStoreUri() {
-    return Uri.parse("market://search?q=pub:Sick Boots");
+    return Uri.parse("market://search?q=pub:Distant Future");
   }
 
   // using apprater for this, but if we ever get rid of that, this is the code
