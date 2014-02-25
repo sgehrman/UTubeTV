@@ -21,7 +21,7 @@ android {
     defaultConfig {
         versionCode 15
         versionName '1.4'
-        packageName 'com.sickboots.sickvideos'
+        packageName 'com.distantfuture.videos'
         minSdkVersion 16
         targetSdkVersion 19
     }
@@ -60,87 +60,87 @@ android {
 
     productFlavors {
         neurosoup {
-            packageName "com.sickboots.sickvideos.neurosoup"
+            packageName "com.distantfuture.videos.neurosoup"
         }
 
         joerogan {
-            packageName "com.sickboots.sickvideos.joerogan"
+            packageName "com.distantfuture.videos.joerogan"
         }
 
         vice {
-            packageName "com.sickboots.sickvideos.vice"
+            packageName "com.distantfuture.videos.vice"
         }
 
         lukitsch {
-            packageName "com.sickboots.sickvideos.lukitsch"
+            packageName "com.distantfuture.videos.lukitsch"
         }
 
         nerdist {
-            packageName "com.sickboots.sickvideos.nerdist"
+            packageName "com.distantfuture.videos.nerdist"
         }
 
         connections {
-            packageName "com.sickboots.sickvideos.connections"
+            packageName "com.distantfuture.videos.connections"
         }
 
         khan {
-            packageName "com.sickboots.sickvideos.khan"
+            packageName "com.distantfuture.videos.khan"
         }
 
         codeorg {
-            packageName "com.sickboots.sickvideos.codeorg"
+            packageName "com.distantfuture.videos.codeorg"
         }
 
         rt {
-            packageName "com.sickboots.sickvideos.rt"
+            packageName "com.distantfuture.videos.rt"
         }
 
         maxkeiser {
-            packageName "com.sickboots.sickvideos.maxkeiser"
+            packageName "com.distantfuture.videos.maxkeiser"
         }
 
         androiddevs {
-            packageName "com.sickboots.sickvideos.androiddevs"
+            packageName "com.distantfuture.videos.androiddevs"
         }
 
         topgear {
-            packageName "com.sickboots.sickvideos.topgear"
+            packageName "com.distantfuture.videos.topgear"
         }
 
         bigthink {
-            packageName "com.sickboots.sickvideos.bigthink"
+            packageName "com.distantfuture.videos.bigthink"
         }
 
         pewdiepie {
-            packageName "com.sickboots.sickvideos.pewdiepie"
+            packageName "com.distantfuture.videos.pewdiepie"
         }
 
         reasontv {
-            packageName "com.sickboots.sickvideos.reasontv"
+            packageName "com.distantfuture.videos.reasontv"
         }
 
         jetdaisuke {
-            packageName "com.sickboots.sickvideos.jetdaisuke"
+            packageName "com.distantfuture.videos.jetdaisuke"
         }
 
         xda {
-            packageName "com.sickboots.sickvideos.xda"
+            packageName "com.distantfuture.videos.xda"
         }
 
         theverge {
-            packageName "com.sickboots.sickvideos.theverge"
+            packageName "com.distantfuture.videos.theverge"
         }
 
         justinbieber {
-            packageName "com.sickboots.sickvideos.justinbieber"
+            packageName "com.distantfuture.videos.justinbieber"
         }
 
         youtube {
-            packageName "com.sickboots.sickvideos.youtube"
+            packageName "com.distantfuture.videos.youtube"
         }
 
         tvtechnews {
-            packageName "com.sickboots.sickvideos.tvtechnews"
+            packageName "com.distantfuture.videos.tvtechnews"
         }
     }
 }

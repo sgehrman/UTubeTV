@@ -14,7 +14,7 @@
         />
 
     <fragment
-        android:name="com.sickboots.sickvideos.youtube.VideoPlayerFragment"
+        android:name="com.distantfuture.videos.youtube.VideoPlayerFragment"
         android:id="@+id/youtube_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

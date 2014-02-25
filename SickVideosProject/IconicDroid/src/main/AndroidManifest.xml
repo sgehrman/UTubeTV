@@ -1,17 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sickboots.iconicdroid"
+          package="com.distantfuture.iconicdroid"
           android:versionCode="1"
           android:versionName="1.0">
 
     <application android:allowBackup="true">
 
         <activity
-            android:name=".IconicActivity"
+            android:name="com.distantfuture.iconicdroid.IconicActivity"
             android:label="IconicDroid">
         </activity>
 
         <activity
-            android:name=".IconicTypefaceActivity"
+            android:name="com.distantfuture.iconicdroid.IconicTypefaceActivity"
             android:label="Typeface">
         </activity>
 

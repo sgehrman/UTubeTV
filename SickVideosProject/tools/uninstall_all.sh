@@ -4,25 +4,25 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
   do
     echo $DEVICE
 
-    adb -s $DEVICE uninstall com.sickboots.sickvideos.tvtechnews
+    adb -s $DEVICE uninstall com.distantfuture.videos.tvtechnews
 
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.joerogan
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.khan
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.nerdist
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.maxkeiser
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.androiddevs
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.codeorg
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.rt
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.vice
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.neurosoup
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.jetdaisuke
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.topgear
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.bigthink
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.pewdiepie
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.reasontv
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.xda
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.theverge
-#    adb -s $DEVICE uninstall com.sickboots.sickvideos.justinbieber
+#    adb -s $DEVICE uninstall com.distantfuture.videos.joerogan
+#    adb -s $DEVICE uninstall com.distantfuture.videos.khan
+#    adb -s $DEVICE uninstall com.distantfuture.videos.nerdist
+#    adb -s $DEVICE uninstall com.distantfuture.videos.maxkeiser
+#    adb -s $DEVICE uninstall com.distantfuture.videos.androiddevs
+#    adb -s $DEVICE uninstall com.distantfuture.videos.codeorg
+#    adb -s $DEVICE uninstall com.distantfuture.videos.rt
+#    adb -s $DEVICE uninstall com.distantfuture.videos.vice
+#    adb -s $DEVICE uninstall com.distantfuture.videos.neurosoup
+#    adb -s $DEVICE uninstall com.distantfuture.videos.jetdaisuke
+#    adb -s $DEVICE uninstall com.distantfuture.videos.topgear
+#    adb -s $DEVICE uninstall com.distantfuture.videos.bigthink
+#    adb -s $DEVICE uninstall com.distantfuture.videos.pewdiepie
+#    adb -s $DEVICE uninstall com.distantfuture.videos.reasontv
+#    adb -s $DEVICE uninstall com.distantfuture.videos.xda
+#    adb -s $DEVICE uninstall com.distantfuture.videos.theverge
+#    adb -s $DEVICE uninstall com.distantfuture.videos.justinbieber
 
   done
 

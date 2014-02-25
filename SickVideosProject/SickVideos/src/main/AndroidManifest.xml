@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sickboots.sickvideos">
+          package="com.distantfuture.videos">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".mainactivity.DrawerActivity"
+            android:name="com.distantfuture.videos.mainactivity.DrawerActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboard|screenSize"
             android:theme="@style/DrawerActivityStartupTheme">
@@ -25,35 +25,35 @@
 
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="com.distantfuture.videos.activities.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
         <activity
-            android:name=".activities.ChannelLookupActivity"
+            android:name="com.distantfuture.videos.activities.ChannelLookupActivity"
             android:windowSoftInputMode="stateAlwaysVisible"
             android:label="@string/title_activity_channel_lookup">
         </activity>
         <activity
-            android:name=".activities.AuthActivity"
+            android:name="com.distantfuture.videos.activities.AuthActivity"
             android:label="Auth"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <activity
-            android:name=".activities.InfoActivity"
+            android:name="com.distantfuture.videos.activities.InfoActivity"
             android:label="">
         </activity>
         <activity
-            android:name=".introactivity.IntroActivity"
+            android:name="com.distantfuture.videos.introactivity.IntroActivity"
             android:theme="@style/IntroActivityTheme"
             android:label="">
         </activity>
 
         <service
-            android:name=".services.YouTubeListService"
+            android:name="com.distantfuture.videos.services.YouTubeListService"
             android:enabled="true"
             android:exported="false"/>
         <provider
-            android:name="com.sickboots.sickvideos.database.YouTubeContentProvider"
+            android:name="com.distantfuture.videos.database.YouTubeContentProvider"
             android:authorities=".res-auto.provider"
             android:enabled="true"
             android:multiprocess="true"

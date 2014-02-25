@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             />
 
-        <com.sickboots.sickvideos.misc.LinePageIndicator
+        <com.distantfuture.videos.misc.LinePageIndicator
             android:id="@+id/line_indicator"
             android:layout_width="match_parent"
             android:background="#11ffffff"
