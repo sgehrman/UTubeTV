@@ -21,14 +21,12 @@
         </text>
     </credit>
 
-
     <credit group="true">
         <header>
             Included Libraries
         </header>
 
     </credit>
-
 
     <credit>
         <header
@@ -44,7 +42,6 @@
             Apache License
         </text>
     </credit>
-
 
     <credit>
         <header
@@ -105,6 +102,7 @@
             Apache License
         </text>
     </credit>
+
     <credit>
         <header
             link="http://ocpsoft.org/prettytime">
@@ -119,6 +117,7 @@
             Apache License
         </text>
     </credit>
+
     <credit>
         <header
             link="https://github.com/castorflex/SmoothProgressBar">
@@ -133,6 +132,7 @@
             BEER-WARE License
         </text>
     </credit>
+
     <credit>
         <header
             link="https://github.com/codechimp-org/AppRater">
@@ -147,6 +147,7 @@
             Apache License
         </text>
     </credit>
+
     <credit>
         <header
             link="https://developers.google.com/api-client-library/java/apis/youtube/v3">
