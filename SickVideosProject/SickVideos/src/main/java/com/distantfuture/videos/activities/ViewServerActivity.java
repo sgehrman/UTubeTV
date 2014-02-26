@@ -2,11 +2,12 @@ package com.distantfuture.videos.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.android.debug.hv.ViewServer;
 import com.distantfuture.videos.misc.Debug;
 
-public class ViewServerActivity extends Activity {
+public class ViewServerActivity extends FragmentActivity {
   private int mCounter;
 
   @Override

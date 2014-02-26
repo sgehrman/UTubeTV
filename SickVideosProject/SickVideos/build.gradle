@@ -166,6 +166,9 @@ dependencies {
     compile 'com.cocosw:undobar:0.6@aar'
     compile 'de.greenrobot:eventbus:+'
 
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:mediarouter-v7:+'
+
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compile project(':IconicDroid')
     compile project(':viewserver')

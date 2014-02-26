@@ -57,7 +57,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     setContentView(R.layout.activity_drawer);
 
     mChromecastHelper = new ChromecastHelper(this);
-
     mContent = Content.instance(this);
 
     if (mContent.needsChannelSwitcher()) {
@@ -127,7 +126,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   public void onResume() {
     super.onResume();
 
-    mChromecastHelper.pause(isFinishing());
+    mChromecastHelper.resume();
   }
 
   // We're being destroyed. It's important to dispose of the helper here!
@@ -179,7 +178,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-    mChromecastHelper.createOptionsMenu(menu);
+    mChromecastHelper.createOptionsMenu(this, menu);
 
     return super.onCreateOptionsMenu(menu);
   }
