@@ -305,6 +305,20 @@
             Free License
         </text>
     </credit>
+    <credit>
+        <header
+            link="http://www.visualpharm.com">
+            App Icon
+        </header>
+        <text
+            copy="2014"
+            link="http://www.visualpharm.com">
+            visualpharm
+        </text>
+        <text >
+            Linkware
+        </text>
+    </credit>
 
 </credits>
 
