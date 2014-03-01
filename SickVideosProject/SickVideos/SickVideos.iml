@@ -120,6 +120,7 @@
     <orderEntry type="library" exported="" name="undobar-0.6" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.17.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-youtube-v3-rev92-1.17.0-rc" level="project" />
+    <orderEntry type="module" module-name="castlib" exported="" />
     <orderEntry type="module" module-name="viewserver" exported="" />
     <orderEntry type="module" module-name="IconicDroid" exported="" />
     <orderEntry type="module" module-name="Inscription" exported="" />
