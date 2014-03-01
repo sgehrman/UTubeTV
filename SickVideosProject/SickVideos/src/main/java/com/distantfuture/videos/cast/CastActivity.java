@@ -30,7 +30,6 @@ public class CastActivity extends FragmentActivity {
   private MediaInfo mSelectedMedia;
 
 
-
   private static String TAG_MEDIA = "videos";
   private static String THUMB_PREFIX_URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/";
   private static String TAG_CATEGORIES = "categories";
@@ -41,8 +40,6 @@ public class CastActivity extends FragmentActivity {
   private static String TAG_THUMB = "image-480x270"; // "thumb";
   private static String TAG_IMG_780_1200 = "image-780x1200";
   private static String TAG_TITLE = "title";
-
-
 
 
   @Override
@@ -60,20 +57,21 @@ public class CastActivity extends FragmentActivity {
     setupMiniController();
     setupCastListener();
 
-      MediaMetadata movieMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MOVIE);
+    MediaMetadata movieMetadata = new MediaMetadata(MediaMetadata.MEDIA_TYPE_MOVIE);
 
-      movieMetadata.putString(MediaMetadata.KEY_SUBTITLE, "Animal Fats");
-      movieMetadata.putString(MediaMetadata.KEY_TITLE, "Stuff that Sucks");
-      movieMetadata.putString(MediaMetadata.KEY_STUDIO, "Google");
-      movieMetadata.addImage(new WebImage(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images_480x270/ForBiggerEscapes.jpg")));
-      movieMetadata.addImage(new WebImage(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images_780x1200/Escape-780x1200.jpg")));
+    movieMetadata.putString(MediaMetadata.KEY_SUBTITLE, "Animal Fats");
+    movieMetadata.putString(MediaMetadata.KEY_TITLE, "Stuff that Sucks");
+    movieMetadata.putString(MediaMetadata.KEY_STUDIO, "Google");
+    movieMetadata.addImage(new WebImage(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images_480x270/ForBiggerEscapes.jpg")));
+    movieMetadata.addImage(new WebImage(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images_780x1200/Escape-780x1200.jpg")));
 
-    mSelectedMedia =  new  MediaInfo.Builder("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4").setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
-          .setContentType("video/mp4")
-          .setMetadata(movieMetadata)
-          .build();
+    mSelectedMedia = new MediaInfo.Builder("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
+        .setStreamType(MediaInfo.STREAM_TYPE_BUFFERED)
+        .setContentType("video/mp4")
+        .setMetadata(movieMetadata)
+        .build();
 
-View button = findViewById(R.id.play_button);
+    View button = findViewById(R.id.play_button);
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

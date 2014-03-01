@@ -22,9 +22,9 @@ import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.introactivity.IntroActivity;
 import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
 import com.distantfuture.videos.misc.AppUtils;
-import com.distantfuture.videos.misc.ChromecastHelper;
 import com.distantfuture.videos.misc.ColorPickerFragment;
 import com.distantfuture.videos.misc.Events;
+import com.distantfuture.videos.misc.MainApplication;
 import com.distantfuture.videos.misc.PurchaseHelper;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.youtube.VideoPlayer;
@@ -47,7 +47,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   private Content mContent;
   private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
   private boolean mSpinnerSucksBalls;
-  private ChromecastHelper mChromecastHelper;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     setContentView(R.layout.activity_drawer);
 
-    mChromecastHelper = new ChromecastHelper(this);
     mContent = Content.instance(this);
 
     if (mContent.needsChannelSwitcher()) {
@@ -116,26 +114,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     IntroActivity.showIntroDelayed(this, false);
   }
 
-  @Override
-  public void onPause() {
-    super.onPause();
-
-    mChromecastHelper.pause(isFinishing());
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    mChromecastHelper.resume();
-  }
-
   // We're being destroyed. It's important to dispose of the helper here!
   @Override
   public void onDestroy() {
     super.onDestroy();
-
-    mChromecastHelper.destroy();
 
     // very important:
     if (mPurchaseHelper != null) {
@@ -179,7 +161,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-    mChromecastHelper.createOptionsMenu(this, menu);
+    MainApplication.getCastManager(this).addMediaRouterButton(menu, R.id.action_cast, this);
 
     return super.onCreateOptionsMenu(menu);
   }

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,12 +168,12 @@ public class CreditsActivity extends Activity {
   }
 
   private SpannableString copyRightString(String copyRight, String info, int infoColor) {
-//    final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
+    //    final StyleSpan mBoldSpan = new StyleSpan(Typeface.BOLD);
     final ForegroundColorSpan mColorSpan = new ForegroundColorSpan(infoColor);
 
     SpannableString result = new SpannableString(copyRight + info);
     //  result.setSpan(mBoldSpan, 0, copyRight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//    result.setSpan(mBoldSpan, copyRight.length(), copyRight.length() + info.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    //    result.setSpan(mBoldSpan, copyRight.length(), copyRight.length() + info.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     result.setSpan(mColorSpan, copyRight.length(), copyRight.length() + info.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
     return result;

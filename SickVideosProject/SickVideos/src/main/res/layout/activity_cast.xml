@@ -14,7 +14,6 @@
     </com.distantfuture.castcompanionlibrary.lib.utils.MiniController>
 
 
-
     <ImageView
         android:id="@+id/play_button"
         android:layout_width="wrap_content"

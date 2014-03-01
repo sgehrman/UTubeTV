@@ -74,7 +74,6 @@
             android:value="@integer/google_play_services_version"/>
 
 
-
         <activity
             android:name="com.distantfuture.castcompanionlibrary.lib.cast.player.VideoCastControllerActivity"
             android:label="Cast"
@@ -103,7 +102,6 @@
             </intent-filter>
         </service>
 
-        
 
     </application>
 
