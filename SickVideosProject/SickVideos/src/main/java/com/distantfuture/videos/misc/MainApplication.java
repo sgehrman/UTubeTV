@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.distantfuture.castcompanionlibrary.lib.cast.VideoCastManager;
 import com.distantfuture.castcompanionlibrary.lib.utils.CastUtils;
+import com.google.android.gms.cast.CastMediaControlIntent;
 
 public class MainApplication extends Application {
   private static String APPLICATION_ID;
@@ -16,7 +17,7 @@ public class MainApplication extends Application {
   public void onCreate() {
     super.onCreate();
     mAppContext = getApplicationContext();
-    APPLICATION_ID = "6142AE0B"; // "5A3D7A5C";
+    APPLICATION_ID = CastMediaControlIntent.DEFAULT_MEDIA_RECEIVER_APPLICATION_ID; // "6142AE0B"; // "5A3D7A5C";
     CastUtils.saveFloatToPreference(getApplicationContext(), VideoCastManager.PREFS_KEY_VOLUME_INCREMENT, (float) VOLUME_INCREMENT);
   }
 
