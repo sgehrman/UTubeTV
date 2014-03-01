@@ -44,6 +44,10 @@
             android:label="">
         </activity>
         <activity
+            android:name="com.distantfuture.videos.cast.CastActivity"
+            android:label="">
+        </activity>
+        <activity
             android:name="com.distantfuture.videos.introactivity.IntroActivity"
             android:theme="@style/IntroActivityTheme"
             android:label="">
@@ -68,6 +72,38 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
+
+
+
+        <activity
+            android:name="com.distantfuture.castcompanionlibrary.lib.cast.player.VideoCastControllerActivity"
+            android:label="Cast"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.distantfuture.videos.cast.CastActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <receiver android:name="com.distantfuture.castcompanionlibrary.lib.utils.VideoIntentReceiver">
+            <intent-filter>
+                <action android:name="android.media.AUDIO_BECOMING_NOISY"/>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+                <action android:name="com.distantfuture.castcompanionlibrary.lib.action.toggleplayback"/>
+                <action android:name="com.distantfuture.castcompanionlibrary.lib.action.stop"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.distantfuture.castcompanionlibrary.lib.utils.VideoCastNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.distantfuture.castcompanionlibrary.lib.action.toggleplayback"/>
+                <action android:name="com.distantfuture.castcompanionlibrary.lib.action.stop"/>
+                <action android:name="com.distantfuture.castcompanionlibrary.lib.action.notificationvisibility"/>
+            </intent-filter>
+        </service>
+
+        
 
     </application>
 

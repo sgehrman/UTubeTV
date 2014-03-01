@@ -31,6 +31,13 @@
         android:showAsAction="never"/>
 
     <group android:id="@+id/dev_tools_group">
+
+        <item
+            android:id="@+id/action_show_cast"
+            android:title="@string/action_show_cast"
+            android:orderInCategory="100"
+            android:showAsAction="never"/>
+
         <item
             android:id="@+id/action_switch_view"
             android:title="@string/switch_view"

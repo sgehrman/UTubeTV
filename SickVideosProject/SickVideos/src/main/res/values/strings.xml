@@ -18,6 +18,7 @@
     <string name="action_hide_hidden">Hide hidden items</string>
 
     <string name="action_buy_taco">Buy me a taco</string>
+    <string name="action_show_cast">Google Cast</string>
     <string name="action_show_rate_dialog">Rate Dialog</string>
 
     <string name="action_color_picker">Pick a color</string>

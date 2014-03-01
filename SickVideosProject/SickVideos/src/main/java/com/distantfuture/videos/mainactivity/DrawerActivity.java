@@ -17,6 +17,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.ChannelLookupActivity;
 import com.distantfuture.videos.activities.SettingsActivity;
 import com.distantfuture.videos.activities.ViewServerActivity;
+import com.distantfuture.videos.cast.CastActivity;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.introactivity.IntroActivity;
 import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
@@ -322,6 +323,12 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
       case R.id.action_show_rate_dialog:
         AppRater.showRateDialog(this);
+        return true;
+
+      case R.id.action_show_cast:
+        intent = new Intent();
+        intent.setClass(DrawerActivity.this, CastActivity.class);
+        startActivity(intent);
         return true;
 
       case R.id.action_buy_taco:
