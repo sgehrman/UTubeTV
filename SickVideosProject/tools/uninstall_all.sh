@@ -4,7 +4,7 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
   do
     echo $DEVICE
 
-    adb -s $DEVICE uninstall com.distantfuture.videos.tvtechnews
+    adb -s $DEVICE uninstall com.distantfuture.videos.technews
 
 #    adb -s $DEVICE uninstall com.distantfuture.videos.joerogan
 #    adb -s $DEVICE uninstall com.distantfuture.videos.khan

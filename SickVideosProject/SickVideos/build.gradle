@@ -130,8 +130,8 @@ android {
             packageName "com.distantfuture.videos.youtube"
         }
 
-        tvtechnews {
-            packageName "com.distantfuture.videos.tvtechnews"
+        technews {
+            packageName "com.distantfuture.videos.technews"
         }
     }
 }
