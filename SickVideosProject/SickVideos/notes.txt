@@ -67,72 +67,6 @@ Greenpeace
 tales of the city
 
 
-/*
-
-Outline
-1) Welcome
-Quickstart guide for app name
-swipe to continue
-icon:heart?
-
-
-2) Included Channels
-These channels are from YouTube
-icon:youtube
-
-3)
-icon:
-Clicking an app is easier than navigating youtube
-subscriptions become overwhelming
-data is cached for quick viewing
-
-4) Shortcuts
-Pull down to refresh
-swipe to hide
-
-5) Usage
-
-
-6) Channel list
-disclaimer
-
-7) Need help
-send suggestions
-tell me which channels I should remove or add
-
-8) contact info
-        message = "sgehrman@gmail.com
-
-        Want a custom youtube app for your channel?  send me an email
-
-         Please rate my app!
-         app rate url:
-
-
-
-
-
-
-        title = "Thanks!";
-        message = "I'm glad you found my app.  Here's a quick start guide on how to use it.  \n\nSwipe screen to the next page...";
-
-             title = "Why use this app?";
-        message = "YouTube is great, but I find the app to be overwhelming.  This app is like a video magazine.  One subject with the top channels.";
-
-            icon = ToolbarIcons.icon(getActivity(), ToolbarIcons.IconID.UPLOADS, color, iconSize);
-        title = "General Usage";
-        message = "Select a channel from the action bar on the top left.  Use the left drawer to navigate within the current channel.  Swipe cards away when your finished watching or not interested.";
-
-             title = "I need your help!";
-        message = "I'm just getting started and want to create the best app possible, so please send your feedback.  Did I include the BEST channels?  Are there other channels you would want to see in an app?";
-
-              title = "Contact Info";
-        message = "sgehrman@gmail.com \n\n Please rate my app!";
-        break;
-    }
-
- */
-
 // --------------------------------------------------------
 
 private static int cntt = 0;
@@ -141,9 +75,6 @@ private static int cntt = 0;
     super();
     cntt++;
   }
-
-
-
 
  @Override
   protected void finalize()
@@ -160,12 +91,7 @@ private static int cntt = 0;
 
 android:exitFadeDuration="@android:integer/config_mediumAnimTime"
 
-
-
 // --------------------------------------------------------
-
-
-subtlepatterns.com
 
 
 .bashrc
@@ -221,44 +147,6 @@ signingConfigs {
     return result.toArray(new String[0]);
 
 
-Fresh Apps and Salsa
-Sugar High Studios
-Sugar High Labs
-Bacalava digital services
-College dropout Labs
-Giant Red Bridge labs
-Lasers and other cool stuff, Inc.
-Hookah Hut
-Code-Mart
-Sustainable bits
-Harley Stevenson
-Stefan's Code Supply
-Code Surplus
-Digital Surplus
-Above the Fog
-Surplus Code
-OK CODE, Studios
-Banjos and steamboats
-No reason to get excited
-remain calm
-Getting late, labs
-Barbary Coast Nerds
-messages from space studios
-I hear you
-Fresh
-Distant Planet Communications
-Code Fresh
-Durable Code
-Lost Land
-Lost and Found
-Homecooked Code
-Briggs and Stratton
-Quik Kode
-
-
-
-
-
 Channel groups:
 
 Joe Rogan
@@ -277,6 +165,7 @@ ATHEIST TV
     Religion Hurts Humanity
 
 UFOS:
+    sirius disclosure
 
 CONSPIRACY
     Jesse ventura
@@ -296,11 +185,16 @@ NEWS
     Aljazera
     ten
 
+Adventure
+    Gopro
+
 BUSINESS
     businessinsider
     forbes
     wsj
     entrepenour
+    bloomberg tv
+
 
 STARTUPS:
 
@@ -316,6 +210,9 @@ Comedy:
     Comedy Central
     Colbert report
 BuzzFeedYellow
+
+
+DYI
 
 CARTOONS:
     beavis
