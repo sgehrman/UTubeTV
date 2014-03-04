@@ -25,6 +25,12 @@
         android:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_donate"
+        android:title="@string/action_donate"
+        android:orderInCategory="100"
+        android:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_more_apps"
         android:title="@string/action_more_apps"
         android:orderInCategory="100"
@@ -47,11 +53,6 @@
         <item
             android:id="@+id/action_show_rate_dialog"
             android:title="@string/action_show_rate_dialog"
-            android:orderInCategory="100"
-            android:showAsAction="never"/>
-        <item
-            android:id="@+id/action_buy_taco"
-            android:title="@string/action_buy_taco"
             android:orderInCategory="100"
             android:showAsAction="never"/>
         <item

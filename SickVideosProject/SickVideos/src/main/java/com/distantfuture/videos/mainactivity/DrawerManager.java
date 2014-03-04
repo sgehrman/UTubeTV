@@ -164,7 +164,7 @@ public class DrawerManager {
   }
 
   private void setupDrawerSpinner(Context context, Spinner spinner) {
-    if (false) { // disabled mContent.needsChannelSwitcher()) {
+    if (mContent.needsChannelSwitcher()) {
       mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
 
       spinner.setAdapter(mChannelSpinnerAdapter);

@@ -17,7 +17,7 @@
     <string name="action_show_hidden">Show hidden items</string>
     <string name="action_hide_hidden">Hide hidden items</string>
 
-    <string name="action_buy_taco">Buy me a taco</string>
+    <string name="action_donate">Donate</string>
     <string name="action_show_cast">Google Cast</string>
     <string name="action_show_rate_dialog">Rate Dialog</string>
 
@@ -51,5 +51,16 @@
     <string name="now_playing">Now Playing</string>
 
     <string name="chromecast_app_id">6142AE0B</string>
+    <string name="donate_message">
+        Thanks for using my app. As you can see, there are no ads and the app is free.  Donate if you like this app!
+    </string>
+
+    <string-array name="donations_array">
+        <item>Chips and Salsa - $1</item>
+        <item>Mexican Coke - $2</item>
+        <item>Taco - $3</item>
+        <item>Burrito - $7</item>
+        <item>Fajitas - $10</item>
+    </string-array>
 
 </resources>

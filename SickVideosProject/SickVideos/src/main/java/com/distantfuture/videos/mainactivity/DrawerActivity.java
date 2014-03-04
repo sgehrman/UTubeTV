@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.distantfuture.iconicdroid.IconicActivity;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.ChannelLookupActivity;
+import com.distantfuture.videos.activities.DonateActivity;
 import com.distantfuture.videos.activities.SettingsActivity;
 import com.distantfuture.videos.activities.ViewServerActivity;
 import com.distantfuture.videos.cast.CastActivity;
@@ -43,7 +44,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   private DrawerManager mDrawerMgr;
   private Toast backButtonToast;
   private long lastBackPressTime = 0;
-  private PurchaseHelper mPurchaseHelper;
   private Content mContent;
   private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
   private boolean mSpinnerSucksBalls;
@@ -93,9 +93,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     selectSection(mContent.savedSectionIndex(), false);
 
-    // disabled until polished
-    // mPurchaseHelper = new PurchaseHelper(this);
-
     AppRater.app_launched(this);
 
     // general app tweaks
@@ -112,18 +109,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     WhatsNewDialog.showWhatsNew(this, false);
     IntroActivity.showIntroDelayed(this, false);
-  }
-
-  // We're being destroyed. It's important to dispose of the helper here!
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-
-    // very important:
-    if (mPurchaseHelper != null) {
-      mPurchaseHelper.destroy();
-      mPurchaseHelper = null;
-    }
   }
 
   @Override
@@ -213,10 +198,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    // Pass on the activity result to the helper for handling
-    if (mPurchaseHelper != null && mPurchaseHelper.handleActivityResult(requestCode, resultCode, data)) {
-      // handled by helper
-    } else {
       switch (requestCode) {
         // called when playing a movie, could fail and this dialog shows the user how to fix it
         case YouTubeAPI.REQ_PLAYER_CODE:
@@ -235,7 +216,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
           super.onActivityResult(requestCode, resultCode, data);
       }
     }
-  }
+
 
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
@@ -313,9 +294,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         startActivity(intent);
         return true;
 
-      case R.id.action_buy_taco:
-        if (mPurchaseHelper != null)
-          mPurchaseHelper.onBuyGasButtonClicked(null, this);
+      case R.id.action_donate:
+        intent = new Intent();
+        intent.setClass(DrawerActivity.this, DonateActivity.class);
+        startActivity(intent);
         return true;
 
       case R.id.action_channel_lookup:

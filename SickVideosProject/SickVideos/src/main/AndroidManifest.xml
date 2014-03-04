@@ -49,6 +49,10 @@
             android:label="">
         </activity>
         <activity
+            android:name="com.distantfuture.videos.activities.DonateActivity"
+            android:label="@string/action_donate">
+        </activity>
+        <activity
             android:name="com.distantfuture.videos.introactivity.IntroActivity"
             android:theme="@style/IntroActivityTheme"
             android:label="">
