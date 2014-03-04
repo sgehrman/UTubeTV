@@ -93,8 +93,10 @@ public class Inventory {
 
   /**
    * Returns a list of all purchases.
+
+   SNG made public, not sure why this was protected (unspecified)
    */
-  List<Purchase> getAllPurchases() {
+  public List<Purchase> getAllPurchases() {
     return new ArrayList<Purchase>(mPurchaseMap.values());
   }
 
