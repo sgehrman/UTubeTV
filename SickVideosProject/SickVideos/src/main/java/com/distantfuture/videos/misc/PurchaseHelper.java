@@ -79,9 +79,13 @@ public class PurchaseHelper {
         return;
       }
 
-      Purchase donation = inventory.getPurchase(SKU_DONATE_1);
+      String sku = SKU_DONATE_1;
+      if (sku == null)
+        sku = "android.test.purchased";
+
+      Purchase donation = inventory.getPurchase(sku);
       if (donation != null && verifyDeveloperPayload(donation)) {
-        mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_1), mConsumeFinishedListener);
+        mHelper.consumeAsync(inventory.getPurchase(sku), mConsumeFinishedListener);
         return;
       }
 
@@ -90,11 +94,15 @@ public class PurchaseHelper {
   };
 
   // User clicked the "Buy Gas" button
-  public void onBuyGasButtonClicked(View arg0, Activity activity) {
+  public void onDonateButtonClicked(View arg0, Activity activity) {
     setWaitScreen(true);
     Debug.log("Launching purchase flow for gas.");
 
-    mHelper.launchPurchaseFlow(activity, SKU_DONATE_1, RC_REQUEST, mPurchaseFinishedListener, mPurchasePayload);
+    String sku = SKU_DONATE_1;
+    if (sku == null)
+      sku = "android.test.purchased";
+
+    mHelper.launchPurchaseFlow(activity, sku, RC_REQUEST, mPurchaseFinishedListener, mPurchasePayload);
   }
 
   /**
@@ -171,11 +179,13 @@ public class PurchaseHelper {
 
   private String base64EncodedPublicKey() {
     // does breaking it up like this help?  whatever
-    String result = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRK";
-    result += "Pu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5y";
-    result += "DqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2";
-    result += "+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDW";
-    result += "zv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB";
+    String result = null;
+
+//    result += "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRK";
+//    result += "Pu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5y";
+//    result += "DqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2";
+//    result += "+8wMsBO3/N/fEi/cK23sF3QVzNq1GVBJa4Lw0svF0jrrS9uKheflsjBe67iWWUxYcVjK24BaTIJjDzUwuvmUKzz4lDW";
+//    result += "zv8clIDfHXvfGiCI1LpBkYKJ8bX80G/Ywf8ccYXslPBfmMpXwIDAQAB";
 
     return result;
   }

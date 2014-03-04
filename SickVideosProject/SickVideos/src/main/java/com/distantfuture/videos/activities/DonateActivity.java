@@ -13,10 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.PurchaseHelper;
-import com.distantfuture.videos.misc.Utils;
 
 import de.greenrobot.event.EventBus;
 
@@ -38,7 +36,7 @@ public class DonateActivity extends Activity {
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        mPurchaseHelper.onBuyGasButtonClicked(null, DonateActivity.this);
+        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this);
       }
     });
 
