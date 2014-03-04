@@ -15,7 +15,7 @@ import de.greenrobot.event.EventBus;
 
 public class PurchaseHelper {
   private Context mContext;
-  static final String SKU_DONATE_1 = "donate_1";
+  static final String SKU_ONE_DOLLAR = "one_dollar";
   static final int RC_REQUEST = 12001;
   IabHelper mHelper;
   private final String mPurchasePayload="purchase-payload";
@@ -79,7 +79,7 @@ public class PurchaseHelper {
         return;
       }
 
-      String sku = SKU_DONATE_1;
+      String sku = SKU_ONE_DOLLAR;
       if (sku == null)
         sku = "android.test.purchased";
 
@@ -96,9 +96,8 @@ public class PurchaseHelper {
   // User clicked the "Buy Gas" button
   public void onDonateButtonClicked(View arg0, Activity activity) {
     setWaitScreen(true);
-    Debug.log("Launching purchase flow for gas.");
 
-    String sku = SKU_DONATE_1;
+    String sku = SKU_ONE_DOLLAR;
     if (sku == null)
       sku = "android.test.purchased";
 
@@ -140,7 +139,7 @@ public class PurchaseHelper {
         return;
       }
 
-      if (purchase.getSku().equals(SKU_DONATE_1)) {
+      if (purchase.getSku().equals(SKU_ONE_DOLLAR)) {
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
       }
     }
@@ -180,7 +179,7 @@ public class PurchaseHelper {
   private String base64EncodedPublicKey() {
     // does breaking it up like this help?  whatever
     String result = "";
-    
+
     result += "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAscb1icDZU7808OcviDfPzFbimA0+ZKAwgs6W8HpEVaIpnRK";
     result += "Pu4tWN1sId5cb3Ne0pENruUR27lZG9dks4qsiP5e+7R0H+DDOimt9SIpyY+fJ+/k3d5y";
     result += "DqAGO3tpa1NiD9AkN1t5Ni9s6bmJiF0/+raT6cR1wko9OsJqp/7nFr/RRf65OWqKJk1FnieBMt6otXnnEIxnGl2";
