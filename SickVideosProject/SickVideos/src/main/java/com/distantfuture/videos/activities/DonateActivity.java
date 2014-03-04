@@ -1,6 +1,7 @@
 package com.distantfuture.videos.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,10 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.PurchaseHelper;
 import com.distantfuture.videos.misc.Utils;
+
+import de.greenrobot.event.EventBus;
 
 
 public class DonateActivity extends Activity {
@@ -32,16 +38,11 @@ public class DonateActivity extends Activity {
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Utils.toast(DonateActivity.this, "fuckk");
+        mPurchaseHelper.onBuyGasButtonClicked(null, DonateActivity.this);
       }
     });
 
-
     mPurchaseHelper = new PurchaseHelper(this);
-
-    //    if (mPurchaseHelper != null)
-    //      mPurchaseHelper.onBuyGasButtonClicked(null, this);
-
   }
 
   @Override
@@ -55,7 +56,22 @@ public class DonateActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
-  // We're being destroyed. It's important to dispose of the helper here!
+  @Override
+  public void onPause() {
+    super.onPause();
+
+    EventBus.getDefault().unregister(this);
+
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    EventBus.getDefault().register(this);
+  }
+
+    // We're being destroyed. It's important to dispose of the helper here!
   @Override
   public void onDestroy() {
     super.onDestroy();
@@ -64,6 +80,20 @@ public class DonateActivity extends Activity {
     if (mPurchaseHelper != null) {
       mPurchaseHelper.destroy();
       mPurchaseHelper = null;
+    }
+  }
+
+  // eventbus event
+  public void onEvent(Events.PurchaseEvent event) {
+    TextView textView = (TextView) findViewById(R.id.status_message);
+    textView.setVisibility((event.message != null) ? View.VISIBLE : View.GONE);
+    textView.setText(event.message);
+
+    if (event.alert != null) {
+      AlertDialog.Builder bld = new AlertDialog.Builder(this);
+      bld.setMessage(event.alert);
+      bld.setNeutralButton("OK", null);
+      bld.create().show();
     }
   }
 
@@ -97,5 +127,4 @@ public class DonateActivity extends Activity {
 
     });
   }
-
 }

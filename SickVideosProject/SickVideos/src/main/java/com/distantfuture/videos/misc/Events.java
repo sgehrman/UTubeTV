@@ -9,6 +9,16 @@ public class Events {
     }
   }
 
+  public static class PurchaseEvent {
+    public String alert;
+    public String message;
+
+    public PurchaseEvent(String message, String alert) {
+      this.alert = alert;
+      this.message = message;
+    }
+  }
+
   public static class ThemeChanged {
     public ThemeChanged() {
     }
