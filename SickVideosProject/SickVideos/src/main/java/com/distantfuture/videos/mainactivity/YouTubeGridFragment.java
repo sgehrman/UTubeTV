@@ -136,7 +136,6 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.fragment_menu, menu);
-
     setupSearchItem(menu);
   }
 
