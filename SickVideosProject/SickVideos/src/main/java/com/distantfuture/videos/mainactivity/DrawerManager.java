@@ -17,18 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.ChannelSpinnerAdapter;
-import com.distantfuture.videos.misc.Events;
 
 import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 public class DrawerManager {
 
@@ -47,8 +42,6 @@ public class DrawerManager {
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
   private Content mContent;
-  private ChannelSpinnerAdapter mChannelSpinnerAdapter;
-  private boolean mSpinnerSucksBalls;
 
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
@@ -73,9 +66,6 @@ public class DrawerManager {
         closeDrawer();
       }
     });
-
-    Spinner spinner = (Spinner) mDrawerContainer.findViewById(R.id.spinner);
-    setupDrawerSpinner(activity, spinner);
 
     // seems insane, is this the best way of having a variable drawable resource by theme?
     int[] attrs = new int[]{R.attr.nav_drawer_menu_drawable};
@@ -113,22 +103,6 @@ public class DrawerManager {
     });
   }
 
-  private void updateChannelSpinner() {
-    if (mContent.channelInfo() == null)
-      EventBus.getDefault().register(this);
-    else {
-      mChannelSpinnerAdapter.updateChannels(mContent.channels());
-    }
-  }
-
-  // eventbus event
-  public void onEvent(Events.ContentEvent event) {
-    updateChannelSpinner();
-
-    // only need this called once
-    EventBus.getDefault().unregister(this);
-  }
-
   public void setDrawerIndicatorEnabled(boolean set) {
     mDrawerToggle.setDrawerIndicatorEnabled(set);
   }
@@ -161,41 +135,6 @@ public class DrawerManager {
 
   public void onConfigurationChanged(Configuration newConfig) {
     mDrawerToggle.onConfigurationChanged(newConfig);
-  }
-
-  private void setupDrawerSpinner(Context context, Spinner spinner) {
-    if (mContent.needsChannelSwitcher()) {
-      mChannelSpinnerAdapter = new ChannelSpinnerAdapter(context);
-
-      spinner.setAdapter(mChannelSpinnerAdapter);
-
-      updateChannelSpinner();
-
-      spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-          // String title = (String) parent.getItemAtPosition(position);
-
-          // this gets called when the data is first loaded, so checking if channel changes
-          if (!mSpinnerSucksBalls)
-            mSpinnerSucksBalls = true;
-          else {
-            if (mContent.changeChannel(position)) {
-              mListener.onChannelClick();
-
-              closeDrawer();
-            }
-          }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-      });
-    } else {
-      spinner.setVisibility(View.GONE);
-    }
   }
 
   private static class DrawerAdapter extends ArrayAdapter<Map> {

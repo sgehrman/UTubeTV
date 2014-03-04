@@ -38,16 +38,6 @@
         android:layout_gravity="start"
         >
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:paddingTop="12dp"
-            android:paddingBottom="18dp"
-            android:clickable="true"
-            android:prompt="@string/choose_channel"
-            android:spinnerMode="dialog"/>
-
         <ListView
             android:id="@+id/left_drawer"
             android:layout_width="match_parent"

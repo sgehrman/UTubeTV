@@ -17,15 +17,15 @@
         >
     </TextView>
 
-<Spinner
-    android:id="@+id/spinner"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
 
-    android:clickable="true"
-    android:spinnerMode="dropdown"
-    />
+        android:clickable="true"
+        android:spinnerMode="dropdown"
+        />
 
     <Button
         android:id="@+id/donate_button"

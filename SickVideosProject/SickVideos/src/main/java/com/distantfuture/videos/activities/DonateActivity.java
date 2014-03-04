@@ -3,24 +3,16 @@ package com.distantfuture.videos.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.PurchaseHelper;
 import com.distantfuture.videos.misc.Utils;
-import com.distantfuture.videos.youtube.YouTubeAPI;
 
 
 public class DonateActivity extends Activity {
@@ -36,7 +28,6 @@ public class DonateActivity extends Activity {
     setupSpinner();
 
 
-
     Button button = (Button) findViewById(R.id.donate_button);
     button.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -48,8 +39,8 @@ public class DonateActivity extends Activity {
 
     mPurchaseHelper = new PurchaseHelper(this);
 
-//    if (mPurchaseHelper != null)
-//      mPurchaseHelper.onBuyGasButtonClicked(null, this);
+    //    if (mPurchaseHelper != null)
+    //      mPurchaseHelper.onBuyGasButtonClicked(null, this);
 
   }
 
@@ -88,16 +79,14 @@ public class DonateActivity extends Activity {
   private void setupSpinner() {
     Spinner spinner = (Spinner) findViewById(R.id.spinner);
     // Create an ArrayAdapter using the string array and a default spinner layout
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-        R.array.donations_array, android.R.layout.simple_spinner_item);
+    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.donations_array, android.R.layout.simple_spinner_item);
 
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
     spinner.setAdapter(adapter);
 
     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      public void onItemSelected(AdapterView<?> parent, View view,
-                                 int pos, long id) {
+      public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
       }

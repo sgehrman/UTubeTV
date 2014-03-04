@@ -26,7 +26,6 @@ import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.ColorPickerFragment;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.MainApplication;
-import com.distantfuture.videos.misc.PurchaseHelper;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.youtube.VideoPlayer;
 import com.distantfuture.videos.youtube.YouTubeAPI;
@@ -198,24 +197,24 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-      switch (requestCode) {
-        // called when playing a movie, could fail and this dialog shows the user how to fix it
-        case YouTubeAPI.REQ_PLAYER_CODE:
-          if (resultCode != RESULT_OK) {
-            YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
-            if (errorReason.isUserRecoverableError()) {
-              errorReason.getErrorDialog(this, 0).show();
-            } else {
-              String errorMessage = String.format("PLAYER ERROR!! - %s", errorReason.toString());
-              Utils.toast(this, errorMessage);
-            }
+    switch (requestCode) {
+      // called when playing a movie, could fail and this dialog shows the user how to fix it
+      case YouTubeAPI.REQ_PLAYER_CODE:
+        if (resultCode != RESULT_OK) {
+          YouTubeInitializationResult errorReason = YouTubeStandalonePlayer.getReturnedInitializationResult(data);
+          if (errorReason.isUserRecoverableError()) {
+            errorReason.getErrorDialog(this, 0).show();
+          } else {
+            String errorMessage = String.format("PLAYER ERROR!! - %s", errorReason.toString());
+            Utils.toast(this, errorMessage);
           }
+        }
 
-          break;
-        default:
-          super.onActivityResult(requestCode, resultCode, data);
-      }
+        break;
+      default:
+        super.onActivityResult(requestCode, resultCode, data);
     }
+  }
 
 
   @Override
