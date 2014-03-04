@@ -48,8 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/donate_button"
-            style="@style/DonateSpinner"
-
             android:layout_alignParentTop="true"
             android:clickable="true"
             android:spinnerMode="dropdown"
