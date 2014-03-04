@@ -242,9 +242,13 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     }
   }
 
-  public MenuItem addMediaRouterButton(Menu menu, int menuResourceId, Activity activity) {
+  public void addMediaRouterButton(Menu menu, int menuResourceId, Activity activity) {
     MenuItem item = menu.findItem(menuResourceId);
     if (item != null) {
+      boolean disabled = true;
+      if (disabled) {
+        item.setVisible(false);
+      } else {
       MediaRouteButton button = new MediaRouteButton(activity);  // don't pass mContext, it needs a real activity or it's fucked
       button.setRouteSelector(mMediaRouteSelector);
 
@@ -254,8 +258,7 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
 
       item.setActionView(button);
     }
-
-    return item;
+    }
   }
 
   /*************************************************************************/
