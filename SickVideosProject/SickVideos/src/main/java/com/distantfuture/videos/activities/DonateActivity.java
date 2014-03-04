@@ -1,6 +1,7 @@
 package com.distantfuture.videos.activities;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,23 @@ import de.greenrobot.event.EventBus;
 public class DonateActivity extends Activity {
   private PurchaseHelper mPurchaseHelper;
   private Spinner mSpinner;
+
+  public static void show(Activity activity) {
+    // add animation, see finish below for the back transition
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.scale_in, R.anim.scale_out);
+
+    Intent intent = new Intent();
+    intent.setClass(activity, DonateActivity.class);
+    activity.startActivity(intent, opts.toBundle());
+  }
+
+  @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +68,7 @@ public class DonateActivity extends Activity {
     final String SKU_ONE_DOLLAR = "one_dollar";
     final String SKU_TWO_DOLLAR = "two_dollars";
     final String SKU_THREE_DOLLAR = "three_dollars";
+    final String SKU_FIVE_DOLLAR = "five_dollars";
     final String SKU_SEVEN_DOLLAR = "seven_dollars";
     final String SKU_TEN_DOLLAR = "ten_dollars";
 
@@ -61,8 +80,10 @@ public class DonateActivity extends Activity {
       case 2:
         return SKU_THREE_DOLLAR;
       case 3:
-        return SKU_SEVEN_DOLLAR;
+        return SKU_FIVE_DOLLAR;
       case 4:
+        return SKU_SEVEN_DOLLAR;
+      case 5:
         return SKU_TEN_DOLLAR;
     }
 

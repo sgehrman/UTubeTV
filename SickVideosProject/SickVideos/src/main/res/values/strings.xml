@@ -52,13 +52,17 @@
 
     <string name="chromecast_app_id">6142AE0B</string>
     <string name="donate_message">
-        Thanks for using my app. As you can see, there are no ads and the app is free.  Donate if you like this app!
+        Help support development by buying me one of the following delicious items:
+    </string>
+    <string name="donate_thanks">
+        The gods of code smile upon thee...Thanks you!
     </string>
 
     <string-array name="donations_array">
-        <item>Chips and Salsa - $1</item>
+        <item>Chips and salsa - $1</item>
         <item>Mexican Coke - $2</item>
         <item>Taco - $3</item>
+        <item>Nachos - $5</item>
         <item>Burrito - $7</item>
         <item>Fajitas - $10</item>
     </string-array>

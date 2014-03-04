@@ -294,9 +294,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
 
       case R.id.action_donate:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, DonateActivity.class);
-        startActivity(intent);
+        DonateActivity.show(this);
         return true;
 
       case R.id.action_channel_lookup:

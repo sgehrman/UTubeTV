@@ -27,7 +27,7 @@ public class PurchaseHelper {
 
       if (result.isSuccess()) {
         // successfully consumed, so we apply the effects of the item in our
-
+        showAlert("Thank You!");
       } else {
         showErrorAlert("Error while consuming: " + result);
       }
