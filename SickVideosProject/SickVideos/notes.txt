@@ -351,4 +351,33 @@ Rollerskate TV
     D. miles
 
 
+// ------------------------------------------------------
+// .bashrc
+
+
+alias dd='cd ~/github/SickVids'
+
+alias vv='dd; git status'
+alias vvc='dd; git add .; git commit -am "nothing"; git push'
+alias vvrm='git rm $(git ls-files --deleted)'
+
+vun() {
+  adb uninstall com.sickboots.sickvideos.$1
+}
+
+vunn() {
+pack=com.sickboots.sickvideos.$1
+
+for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
+do
+  echo $DEVICE
+  echo $pack
+
+  adb -s $DEVICE uninstall $pack
+done
+}
+
+# git on prompt
+source ~/.git-prompt.sh
+PS1="\u@\h:\w\$(parse_git_branch_or_tag) $ "
 
