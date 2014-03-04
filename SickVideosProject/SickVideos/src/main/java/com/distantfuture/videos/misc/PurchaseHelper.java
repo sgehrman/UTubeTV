@@ -152,8 +152,8 @@ public class PurchaseHelper {
     return true;
   }
 
-  void setWaitScreen(boolean set) {
-    EventBus.getDefault().post(new Events.PurchaseEvent(set ? "Please wait..." : null, null));
+  void setWaitScreen(boolean show) {
+    EventBus.getDefault().post(new Events.PurchaseEvent(show ? "Please wait..." : null, null));
   }
 
   void showErrorAlert(String message) {

@@ -31,6 +31,7 @@ public class DonateActivity extends Activity {
 
     getActionBar().setDisplayHomeAsUpEnabled(true);
     setupSpinner();
+    EventBus.getDefault().register(this);
 
     Button button = (Button) findViewById(R.id.donate_button);
     button.setOnClickListener(new View.OnClickListener() {
@@ -79,31 +80,18 @@ public class DonateActivity extends Activity {
     return super.onOptionsItemSelected(item);
   }
 
-  @Override
-  public void onPause() {
-    super.onPause();
-
-    EventBus.getDefault().unregister(this);
-
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    EventBus.getDefault().register(this);
-  }
-
     // We're being destroyed. It's important to dispose of the helper here!
   @Override
   public void onDestroy() {
-    super.onDestroy();
+    EventBus.getDefault().unregister(this);
 
     // very important:
     if (mPurchaseHelper != null) {
       mPurchaseHelper.destroy();
       mPurchaseHelper = null;
     }
+
+    super.onDestroy();
   }
 
   // eventbus event
