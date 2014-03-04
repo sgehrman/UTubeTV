@@ -18,10 +18,10 @@ public class PurchaseHelper {
   static final int RC_REQUEST = 12001;
   private final String mPurchasePayload = "purchase-payload";
   IabHelper mHelper;
-  // Called when consumption is complete
+  private Context mContext;
+
   IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
     public void onConsumeFinished(Purchase purchase, IabResult result) {
-      // if we were disposed of in the meantime, quit.
       if (mHelper == null)
         return;
 
@@ -41,17 +41,16 @@ public class PurchaseHelper {
     public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
       Debug.log("Purchase finished: " + result + ", purchase: " + purchase);
 
-      // if we were disposed of in the meantime, quit.
       if (mHelper == null)
         return;
 
       if (result.isFailure()) {
-        showErrorAlert("Error purchasing: " + result);
+        // showErrorAlert("Purchasing: " + result);
         setWaitScreen(false);
         return;
       }
       if (!verifyDeveloperPayload(purchase)) {
-        showErrorAlert("Error purchasing. Authenticity verification failed.");
+        // showErrorAlert("Error purchasing. Authenticity verification failed.");
         setWaitScreen(false);
         return;
       }
@@ -59,6 +58,7 @@ public class PurchaseHelper {
       mHelper.consumeAsync(purchase, mConsumeFinishedListener);
     }
   };
+
   // Listener that's called when we finish querying the items and subscriptions we own
   IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -66,7 +66,6 @@ public class PurchaseHelper {
       if (mHelper == null)
         return;
 
-      // Is it a failure?
       if (result.isFailure()) {
         showErrorAlert("Failed to query inventory: " + result);
         return;
@@ -83,7 +82,6 @@ public class PurchaseHelper {
       setWaitScreen(false);
     }
   };
-  private Context mContext;
 
   public PurchaseHelper(Context context) {
     super();
@@ -116,7 +114,6 @@ public class PurchaseHelper {
     mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
       public void onIabSetupFinished(IabResult result) {
         if (!result.isSuccess()) {
-          // Oh noes, there was a problem.
           showErrorAlert("Problem setting up in-app billing: " + result);
           return;
         }
@@ -137,9 +134,6 @@ public class PurchaseHelper {
     mHelper.launchPurchaseFlow(activity, sku, RC_REQUEST, mPurchaseFinishedListener, mPurchasePayload);
   }
 
-  /**
-   * Verifies the developer payload of a purchase.
-   */
   boolean verifyDeveloperPayload(Purchase p) {
     String payload = p.getDeveloperPayload();
 
