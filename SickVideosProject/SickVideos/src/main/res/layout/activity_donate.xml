@@ -62,8 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
-            android:text="Status"
-            android:textSize="22sp"
+            android:textSize="20sp"
             >
         </TextView>
 

@@ -60,6 +60,7 @@ public class DonateActivity extends Activity {
       public void onClick(View v) {
 
         mThanksHelper.install(DonateActivity.this);
+        setMessage(getText(R.string.donate_thanks));
 
         //       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
         //
@@ -71,29 +72,22 @@ public class DonateActivity extends Activity {
   }
 
   private String skuForIndex(int index) {
-    final String SKU_ONE_DOLLAR = "one_dollar";
-    final String SKU_TWO_DOLLAR = "two_dollars";
-    final String SKU_THREE_DOLLAR = "three_dollars";
-    final String SKU_FIVE_DOLLAR = "five_dollars";
-    final String SKU_SEVEN_DOLLAR = "seven_dollars";
-    final String SKU_TEN_DOLLAR = "ten_dollars";
-
     switch (index) {
       case 0:
-        return SKU_ONE_DOLLAR;
+        return  "one_dollar";
       case 1:
-        return SKU_TWO_DOLLAR;
+        return  "two_dollars";
       case 2:
-        return SKU_THREE_DOLLAR;
+        return  "three_dollars";
       case 3:
-        return SKU_FIVE_DOLLAR;
+        return "five_dollars";
       case 4:
-        return SKU_SEVEN_DOLLAR;
+        return "seven_dollars";
       case 5:
-        return SKU_TEN_DOLLAR;
+        return "ten_dollars";
     }
 
-    return SKU_ONE_DOLLAR;
+    return "one_dollar";
   }
 
   @Override
@@ -121,11 +115,15 @@ public class DonateActivity extends Activity {
     super.onDestroy();
   }
 
+  private void setMessage(CharSequence message) {
+    TextView textView = (TextView) findViewById(R.id.status_message);
+    textView.setVisibility((message != null) ? View.VISIBLE : View.GONE);
+    textView.setText(message);
+  }
+
   // eventbus event
   public void onEvent(Events.PurchaseEvent event) {
-    TextView textView = (TextView) findViewById(R.id.status_message);
-    textView.setVisibility((event.message != null) ? View.VISIBLE : View.GONE);
-    textView.setText(event.message);
+    setMessage(event.message);
 
     if (event.alert != null) {
       AlertDialog.Builder bld = new AlertDialog.Builder(this);
