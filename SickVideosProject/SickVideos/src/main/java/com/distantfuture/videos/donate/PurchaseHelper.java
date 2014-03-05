@@ -1,4 +1,4 @@
-package com.distantfuture.videos.misc;
+package com.distantfuture.videos.donate;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,8 @@ import com.distantfuture.videos.billing.IabHelper;
 import com.distantfuture.videos.billing.IabResult;
 import com.distantfuture.videos.billing.Inventory;
 import com.distantfuture.videos.billing.Purchase;
+import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.Events;
 
 import java.util.List;
 
@@ -27,13 +29,11 @@ public class PurchaseHelper {
 
       if (result.isSuccess()) {
         // successfully consumed, so we apply the effects of the item in our
-        showAlert("Thank You!");
+        EventBus.getDefault().post(new Events.PurchaseEvent(null, null, true));
+
       } else {
         showErrorAlert("Error while consuming: " + result);
       }
-
-      setWaitScreen(false);
-      Debug.log("End consumption flow.");
     }
   };
   // Callback for when a purchase is finished
@@ -46,12 +46,10 @@ public class PurchaseHelper {
 
       if (result.isFailure()) {
         // showErrorAlert("Purchasing: " + result);
-        setWaitScreen(false);
         return;
       }
       if (!verifyDeveloperPayload(purchase)) {
         // showErrorAlert("Error purchasing. Authenticity verification failed.");
-        setWaitScreen(false);
         return;
       }
 
@@ -78,8 +76,6 @@ public class PurchaseHelper {
           mHelper.consumeAsync(purchase, mConsumeFinishedListener);
         }
       }
-
-      setWaitScreen(false);
     }
   };
 
@@ -129,8 +125,6 @@ public class PurchaseHelper {
   }
 
   public void onDonateButtonClicked(View arg0, Activity activity, String sku) {
-    setWaitScreen(true);
-
     mHelper.launchPurchaseFlow(activity, sku, RC_REQUEST, mPurchaseFinishedListener, mPurchasePayload);
   }
 
@@ -146,16 +140,12 @@ public class PurchaseHelper {
     return true;
   }
 
-  void setWaitScreen(boolean show) {
-    EventBus.getDefault().post(new Events.PurchaseEvent(show ? "Please wait..." : null, null));
-  }
-
   void showErrorAlert(String message) {
     showAlert("Error: " + message);
   }
 
   void showAlert(String message) {
-    EventBus.getDefault().post(new Events.PurchaseEvent(null, message));
+    EventBus.getDefault().post(new Events.PurchaseEvent(null, message, false));
   }
 
   private String base64EncodedPublicKey() {

@@ -1,4 +1,4 @@
-package com.distantfuture.videos.activities;
+package com.distantfuture.videos.donate;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -14,9 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.DonateThanksHelper;
 import com.distantfuture.videos.misc.Events;
-import com.distantfuture.videos.misc.PurchaseHelper;
 
 import de.greenrobot.event.EventBus;
 
@@ -58,13 +56,9 @@ public class DonateActivity extends Activity {
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+               String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
 
-        mThanksHelper.install(DonateActivity.this);
-        setMessage(getText(R.string.donate_thanks));
-
-        //       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
-        //
-        //        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
+                mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
       }
     });
 
@@ -130,6 +124,11 @@ public class DonateActivity extends Activity {
       bld.setMessage(event.alert);
       bld.setNeutralButton("OK", null);
       bld.create().show();
+    }
+
+    if (event.successfulDonation) {
+      mThanksHelper.install(DonateActivity.this);
+      setMessage(getText(R.string.donate_thanks));
     }
   }
 

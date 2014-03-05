@@ -12,10 +12,12 @@ public class Events {
   public static class PurchaseEvent {
     public String alert;
     public String message;
+    public boolean successfulDonation;
 
-    public PurchaseEvent(String message, String alert) {
+    public PurchaseEvent(String message, String alert, boolean successfulDonation) {
       this.alert = alert;
       this.message = message;
+      this.successfulDonation = successfulDonation;
     }
   }
 

@@ -1,4 +1,4 @@
-package com.distantfuture.videos.misc;
+package com.distantfuture.videos.donate;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.Utils;
 
 public class DonateThanksHelper {
   private Handler mRemoveHandler;

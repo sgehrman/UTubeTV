@@ -49,7 +49,7 @@
             android:label="">
         </activity>
         <activity
-            android:name="com.distantfuture.videos.activities.DonateActivity"
+            android:name=".donate.DonateActivity"
             android:label="@string/action_donate">
         </activity>
         <activity

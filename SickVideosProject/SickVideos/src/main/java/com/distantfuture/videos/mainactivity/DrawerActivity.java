@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.distantfuture.iconicdroid.IconicActivity;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.ChannelLookupActivity;
-import com.distantfuture.videos.activities.DonateActivity;
+import com.distantfuture.videos.donate.DonateActivity;
 import com.distantfuture.videos.activities.SettingsActivity;
 import com.distantfuture.videos.activities.ViewServerActivity;
 import com.distantfuture.videos.cast.CastActivity;
