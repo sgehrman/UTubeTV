@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.misc.DonateThanksHelper;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.PurchaseHelper;
 
@@ -23,6 +24,7 @@ import de.greenrobot.event.EventBus;
 public class DonateActivity extends Activity {
   private PurchaseHelper mPurchaseHelper;
   private Spinner mSpinner;
+private DonateThanksHelper mThanksHelper;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -50,14 +52,18 @@ public class DonateActivity extends Activity {
     getActionBar().setDisplayHomeAsUpEnabled(true);
     setupSpinner();
     EventBus.getDefault().register(this);
+      mThanksHelper = new DonateThanksHelper(DonateActivity.this);
 
     Button button = (Button) findViewById(R.id.donate_button);
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
 
-        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
+        mThanksHelper.install(DonateActivity.this);
+
+//       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
+//
+//        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
       }
     });
 
