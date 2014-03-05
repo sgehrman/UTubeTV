@@ -109,29 +109,26 @@ public class DonateThanksHelper {
     }
 
     private static void animateV(final View theView, int offsetX, int offsetY) {
-      ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 60f);
-      ObjectAnimator rotateBack = ObjectAnimator.ofFloat(theView, "rotationY", 0f);
-      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", .4f);
-      ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", .4f);
+      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", 2f);
+      ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", 2f);
       ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", 1f);
       ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", 1f);
 
-      ObjectAnimator transX = ObjectAnimator.ofFloat(theView, "translationX", offsetX);
-      ObjectAnimator transY = ObjectAnimator.ofFloat(theView, "translationY", offsetY);
+      long startDelay = (long) (Math.random() * 2000);
+
       ObjectAnimator alpha = ObjectAnimator.ofFloat(theView, "alpha", 1.0f);
+      alpha.setStartDelay(startDelay);
+
 
       AnimatorSet bouncer = new AnimatorSet();
       bouncer.setInterpolator(new AnticipateOvershootInterpolator());
+      bouncer.setStartDelay(startDelay);
       bouncer.play(scaleXDown).with(scaleYDown);
       bouncer.play(scaleXBack).with(scaleYBack);
       bouncer.play(scaleXBack).after(scaleXDown);
-      bouncer.play(rotateAnim).after(scaleXBack);
-      bouncer.play(rotateBack).after(rotateAnim);
 
-      transX.setDuration((long) (Math.random() * 2000));
-      transY.setDuration((long) (Math.random() * 2000));
       AnimatorSet animatorSet = new AnimatorSet();
-      animatorSet.play(transY).with(transX).with(alpha).before(bouncer);
+      animatorSet.play(alpha).before(bouncer);
       animatorSet.start();
     }
 
@@ -142,11 +139,25 @@ public class DonateThanksHelper {
       return mLayoutParams;
     }
 
+    private int shift(Activity activity) {
+      float kick = Utils.dpToPx(4, activity);
+      int shift = (int) (Math.random() * kick);
+      int neg = (int) (Math.random() * 100);
+      if (neg < 50)
+        shift *= -1;
+
+      return shift;
+    }
+
     private void addImageView(Activity activity, Bitmap heartBitmap, int offsetX, int offsetY) {
       mImageView = createImageView(activity, heartBitmap);
       mImageView.setAlpha(0.0f);
 
       mView.addView(mImageView);
+
+
+      mImageView.setTranslationY(offsetY + shift(activity));
+      mImageView.setTranslationX(offsetX + shift(activity));
 
       animateV(mImageView, offsetX, offsetY);
     }
