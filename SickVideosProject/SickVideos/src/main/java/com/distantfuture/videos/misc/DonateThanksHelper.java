@@ -122,10 +122,13 @@ public class DonateThanksHelper {
     }
 
     private   void animateV(final View theView, int offsetX, int offsetY) {
-      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", 2f);
-      ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", 2f);
-      ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", 1f);
-      ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", 1f);
+      float randomScale = 1.2f + (float) (Math.random() * 3.0f);
+      float randomScaleBack = .9f + (float) (Math.random() * .8f);
+
+      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", randomScale);
+      ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", randomScale);
+      ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", randomScaleBack);
+      ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", randomScaleBack);
 
       float alphav = .7f + (float) (Math.random() * .3f);
 
