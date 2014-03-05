@@ -111,7 +111,7 @@ public class DonateThanksHelper {
       int offsetX = 0;
       int offsetY = 0;
       View content = activity.getWindow().findViewById(android.R.id.content);
-        mDisplaySize = new Point(content.getWidth(), content.getHeight()); // Utils.getDisplaySize(activity);
+      mDisplaySize = new Point(content.getWidth(), content.getHeight()); // Utils.getDisplaySize(activity);
       int maxY = mDisplaySize.y - mIconSize;
       int maxX = mDisplaySize.x - mIconSize;
 
@@ -141,7 +141,7 @@ public class DonateThanksHelper {
       animatorSet.start();
     }
 
-    private   void animateV(final View theView, int offsetX, int offsetY) {
+    private void animateV(final View theView, int offsetX, int offsetY) {
       float randomScale = 1.2f + (float) (Math.random() * 3.0f);
       float randomScaleBack = .9f + (float) (Math.random() * .8f);
 

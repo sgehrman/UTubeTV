@@ -31,10 +31,14 @@ public class LinePageIndicator extends View {
     mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
       @Override
       public void onPageSelected(int position) {
-        mCurrentPage = position;
-        invalidate();
+        updatePage(position);
       }
     });
+  }
+
+  public void updatePage(int position) {
+    mCurrentPage = position;
+    invalidate();
   }
 
   @Override

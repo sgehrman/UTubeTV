@@ -28,7 +28,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="Read later"
             android:layout_marginBottom="4dp"
             android:textColor="@color/intro_drawable_color"
             android:id="@+id/close_button"

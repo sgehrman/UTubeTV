@@ -24,6 +24,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
   private IntroXMLTaskFragment mTaskFragment;
   private ViewPager mViewPager;
   private int mSavedIndex = -1;
+  private Button mCloseButton;
 
   public static void showIntroDelayed(final Activity activity, final boolean force) {
     Handler handler = new Handler(Looper.getMainLooper());
@@ -115,8 +116,8 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
       fm.beginTransaction().add(mTaskFragment, "task").commit();
     }
 
-    Button button = (Button) findViewById(R.id.close_button);
-    button.setOnClickListener(new View.OnClickListener() {
+    mCloseButton = (Button) findViewById(R.id.close_button);
+    mCloseButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         finish();
       }
@@ -128,8 +129,18 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
     introPagerAdapter.setPages(mTaskFragment.getPages());
     mViewPager.setAdapter(introPagerAdapter);
 
-    LinePageIndicator ind = (LinePageIndicator) findViewById(R.id.line_indicator);
+    final LinePageIndicator ind = (LinePageIndicator) findViewById(R.id.line_indicator);
     ind.setViewPager(mViewPager);
+
+    mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+      @Override
+      public void onPageSelected(int position) {
+        ind.updatePage(position);
+        boolean lastPage = position == introPagerAdapter.getCount() - 1;
+
+        mCloseButton.setText((lastPage) ? "Close" : "Read later");
+      }
+    });
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {

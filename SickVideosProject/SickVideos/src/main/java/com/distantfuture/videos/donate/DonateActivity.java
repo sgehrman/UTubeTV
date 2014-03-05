@@ -56,9 +56,9 @@ public class DonateActivity extends Activity {
     button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-               String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
+        String sku = skuForIndex(mSpinner.getSelectedItemPosition());
 
-                mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
+        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
       }
     });
 
@@ -68,11 +68,11 @@ public class DonateActivity extends Activity {
   private String skuForIndex(int index) {
     switch (index) {
       case 0:
-        return  "one_dollar";
+        return "one_dollar";
       case 1:
-        return  "two_dollars";
+        return "two_dollars";
       case 2:
-        return  "three_dollars";
+        return "three_dollars";
       case 3:
         return "five_dollars";
       case 4:
