@@ -2,6 +2,7 @@ package com.distantfuture.videos.misc;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -62,7 +63,7 @@ public class DonateThanksHelper {
   }
 
   public void startRemoveTimer() {
-    mRemoveHandler.postDelayed(mRemoveRunnable, 3000);
+    mRemoveHandler.postDelayed(mRemoveRunnable, 6000);
   }
 
   private void removeMsg() {
@@ -76,18 +77,30 @@ public class DonateThanksHelper {
     }
   }
 
+  // ===========================================================================================
+  // ===========================================================================================
+
   public static class ContentView {
     private final static int mIconSize = 64;
     private final Activity mActivity;
     public ViewGroup mView;
     private ViewGroup.LayoutParams mLayoutParams;
     private ImageView mImageView;
+    Point mDisplaySize;
 
     public ContentView(Activity activity) {
       mActivity = activity;
 
       LayoutInflater inflate = LayoutInflater.from(activity);
       mView = (ViewGroup) inflate.inflate(R.layout.view_donate_thanks, null);
+
+
+      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(mView, "alpha", .8f);
+      scaleXDown.setRepeatMode(ValueAnimator.REVERSE);
+      scaleXDown.setDuration(1000);
+      scaleXDown.setRepeatCount(ValueAnimator.INFINITE);
+      scaleXDown.start();
+
 
       Drawable heartDrawable = ToolbarIcons.icon(mView.getContext(), ToolbarIcons.IconID.HEART, 0xffffffff, mIconSize);
       heartDrawable.setAlpha(233);
@@ -97,9 +110,9 @@ public class DonateThanksHelper {
       int offsetX = 0;
       int offsetY = 0;
       View content = activity.getWindow().findViewById(android.R.id.content);
-      Point displaySize = new Point(content.getWidth(), content.getHeight()); // Utils.getDisplaySize(activity);
-      int maxY = displaySize.y - mIconSize;
-      int maxX = displaySize.x - mIconSize;
+        mDisplaySize = new Point(content.getWidth(), content.getHeight()); // Utils.getDisplaySize(activity);
+      int maxY = mDisplaySize.y - mIconSize;
+      int maxX = mDisplaySize.x - mIconSize;
 
       for (int y = 0; y < maxY; y += mIconSize) {
         for (int x = 0; x < maxX; x += mIconSize) {
@@ -108,27 +121,36 @@ public class DonateThanksHelper {
       }
     }
 
-    private static void animateV(final View theView, int offsetX, int offsetY) {
+    private   void animateV(final View theView, int offsetX, int offsetY) {
       ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", 2f);
       ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", 2f);
       ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", 1f);
       ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", 1f);
 
+      float alphav = .7f + (float) (Math.random() * .3f);
+
+      ObjectAnimator alpha = ObjectAnimator.ofFloat(theView, "alpha", alphav);
+
       long startDelay = (long) (Math.random() * 2000);
-
-      ObjectAnimator alpha = ObjectAnimator.ofFloat(theView, "alpha", 1.0f);
-      alpha.setStartDelay(startDelay);
-
 
       AnimatorSet bouncer = new AnimatorSet();
       bouncer.setInterpolator(new AnticipateOvershootInterpolator());
       bouncer.setStartDelay(startDelay);
-      bouncer.play(scaleXDown).with(scaleYDown);
+      bouncer.play(scaleXDown).with(scaleYDown).with(alpha);
       bouncer.play(scaleXBack).with(scaleYBack);
       bouncer.play(scaleXBack).after(scaleXDown);
 
+      ObjectAnimator transitionX = ObjectAnimator.ofFloat(theView, "translationX", mDisplaySize.x / 2);
+      ObjectAnimator transitionY = ObjectAnimator.ofFloat(theView, "translationY", mDisplaySize.y + 100);
+
+      AnimatorSet moveOffSet = new AnimatorSet();
+      moveOffSet.setStartDelay(2000);
+      moveOffSet.setDuration(200);
+      moveOffSet.setInterpolator(new AnticipateOvershootInterpolator());
+      moveOffSet.play(transitionX).with(transitionY);
+
       AnimatorSet animatorSet = new AnimatorSet();
-      animatorSet.play(alpha).before(bouncer);
+      animatorSet.play(moveOffSet).after(bouncer);
       animatorSet.start();
     }
 
@@ -154,7 +176,6 @@ public class DonateThanksHelper {
       mImageView.setAlpha(0.0f);
 
       mView.addView(mImageView);
-
 
       mImageView.setTranslationY(offsetY + shift(activity));
       mImageView.setTranslationX(offsetX + shift(activity));
