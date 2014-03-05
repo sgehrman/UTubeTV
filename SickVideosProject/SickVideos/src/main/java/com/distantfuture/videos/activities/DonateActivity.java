@@ -24,7 +24,7 @@ import de.greenrobot.event.EventBus;
 public class DonateActivity extends Activity {
   private PurchaseHelper mPurchaseHelper;
   private Spinner mSpinner;
-private DonateThanksHelper mThanksHelper;
+  private DonateThanksHelper mThanksHelper;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -52,7 +52,7 @@ private DonateThanksHelper mThanksHelper;
     getActionBar().setDisplayHomeAsUpEnabled(true);
     setupSpinner();
     EventBus.getDefault().register(this);
-      mThanksHelper = new DonateThanksHelper(DonateActivity.this);
+    mThanksHelper = new DonateThanksHelper(DonateActivity.this);
 
     Button button = (Button) findViewById(R.id.donate_button);
     button.setOnClickListener(new View.OnClickListener() {
@@ -61,9 +61,9 @@ private DonateThanksHelper mThanksHelper;
 
         mThanksHelper.install(DonateActivity.this);
 
-//       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
-//
-//        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
+        //       String sku =  skuForIndex(mSpinner.getSelectedItemPosition());
+        //
+        //        mPurchaseHelper.onDonateButtonClicked(null, DonateActivity.this, sku);
       }
     });
 
@@ -107,7 +107,7 @@ private DonateThanksHelper mThanksHelper;
     return super.onOptionsItemSelected(item);
   }
 
-    // We're being destroyed. It's important to dispose of the helper here!
+  // We're being destroyed. It's important to dispose of the helper here!
   @Override
   public void onDestroy() {
     EventBus.getDefault().unregister(this);
@@ -165,8 +165,6 @@ private DonateThanksHelper mThanksHelper;
 
     });
   }
-
-
 
 
 }

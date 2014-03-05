@@ -24,11 +24,9 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,7 +137,8 @@ public class Utils {
   }
 
   public static Point getDisplaySize(Context context) {
-    return new Point(context.getResources().getDisplayMetrics().widthPixels, context.getResources().getDisplayMetrics().heightPixels);
+    return new Point(context.getResources().getDisplayMetrics().widthPixels, context.getResources()
+        .getDisplayMetrics().heightPixels);
   }
 
   public static float pxToDp(float px, Context context) {

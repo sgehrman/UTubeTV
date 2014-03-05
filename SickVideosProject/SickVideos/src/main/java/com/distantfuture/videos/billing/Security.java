@@ -52,19 +52,18 @@ public class Security {
    * @param signedData      the signed JSON string (signed, not encrypted)
    * @param signature       the signature for the data, signed with the private key
    */
-//  disabled
-//  why? = http://stackoverflow.com/questions/19732025/android-in-app-billing-purchase-verification-failed
-//  public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
-//    if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
-//        TextUtils.isEmpty(signature)) {
-//      Log.e(TAG, "Purchase verification failed: missing data.");
-//      return false;
-//    }
-//
-//    PublicKey key = Security.generatePublicKey(base64PublicKey);
-//    return Security.verify(key, signedData, signature);
-//  }
-
+  //  disabled
+  //  why? = http://stackoverflow.com/questions/19732025/android-in-app-billing-purchase-verification-failed
+  //  public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
+  //    if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
+  //        TextUtils.isEmpty(signature)) {
+  //      Log.e(TAG, "Purchase verification failed: missing data.");
+  //      return false;
+  //    }
+  //
+  //    PublicKey key = Security.generatePublicKey(base64PublicKey);
+  //    return Security.verify(key, signedData, signature);
+  //  }
   public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
     if (signedData == null) {
       Log.e(TAG, "data is null");

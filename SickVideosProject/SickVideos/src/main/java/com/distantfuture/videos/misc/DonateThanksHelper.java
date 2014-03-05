@@ -1,6 +1,7 @@
 package com.distantfuture.videos.misc;
 
-import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,9 +13,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,16 +96,43 @@ public class DonateThanksHelper {
 
       int offsetX = 0;
       int offsetY = 0;
-      Point displaySize = Utils.getDisplaySize(activity);
+      View content = activity.getWindow().findViewById(android.R.id.content);
+      Point displaySize = new Point(content.getWidth(), content.getHeight()); // Utils.getDisplaySize(activity);
       int maxY = displaySize.y - mIconSize;
       int maxX = displaySize.x - mIconSize;
 
       for (int y = 0; y < maxY; y += mIconSize) {
-        Debug.log("new row");
         for (int x = 0; x < maxX; x += mIconSize) {
           addImageView(activity, heartBitmap, x, y);
         }
       }
+    }
+
+    private static void animateV(final View theView, int offsetX, int offsetY) {
+      ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(theView, "rotationY", 60f);
+      ObjectAnimator rotateBack = ObjectAnimator.ofFloat(theView, "rotationY", 0f);
+      ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(theView, "scaleX", .4f);
+      ObjectAnimator scaleYDown = ObjectAnimator.ofFloat(theView, "scaleY", .4f);
+      ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(theView, "scaleX", 1f);
+      ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(theView, "scaleY", 1f);
+
+      ObjectAnimator transX = ObjectAnimator.ofFloat(theView, "translationX", offsetX);
+      ObjectAnimator transY = ObjectAnimator.ofFloat(theView, "translationY", offsetY);
+      ObjectAnimator alpha = ObjectAnimator.ofFloat(theView, "alpha", 1.0f);
+
+      AnimatorSet bouncer = new AnimatorSet();
+      bouncer.setInterpolator(new AnticipateOvershootInterpolator());
+      bouncer.play(scaleXDown).with(scaleYDown);
+      bouncer.play(scaleXBack).with(scaleYBack);
+      bouncer.play(scaleXBack).after(scaleXDown);
+      bouncer.play(rotateAnim).after(scaleXBack);
+      bouncer.play(rotateBack).after(rotateAnim);
+
+      transX.setDuration((long) (Math.random() * 2000));
+      transY.setDuration((long) (Math.random() * 2000));
+      AnimatorSet animatorSet = new AnimatorSet();
+      animatorSet.play(transY).with(transX).with(alpha).before(bouncer);
+      animatorSet.start();
     }
 
     public ViewGroup.LayoutParams getLayoutParams() {
@@ -120,33 +148,7 @@ public class DonateThanksHelper {
 
       mView.addView(mImageView);
 
-      mImageView.animate().setDuration((long) (Math.random() * 2000));
-      mImageView.animate().translationY(offsetY);
-      mImageView.animate().translationX(offsetX);
-      mImageView.animate().alpha(1.0f);
-      mImageView.animate().setInterpolator(new AccelerateDecelerateInterpolator());
-      mImageView.animate().setListener(new Animator.AnimatorListener() {
-        @Override
-        public void onAnimationStart(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
-        }
-      });
-
+      animateV(mImageView, offsetX, offsetY);
     }
 
     private ImageView createImageView(Activity activity, Bitmap heartBitmap) {
