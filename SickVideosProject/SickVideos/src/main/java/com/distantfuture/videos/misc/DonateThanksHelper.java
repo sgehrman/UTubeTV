@@ -119,6 +119,25 @@ public class DonateThanksHelper {
           addImageView(activity, heartBitmap, x, y);
         }
       }
+
+      showThankYouText();
+    }
+
+    private void showThankYouText() {
+      View theView = mView.findViewById(R.id.thank_you_text);
+
+      ObjectAnimator scaleX = ObjectAnimator.ofFloat(theView, "scaleX", 2.0f);
+      scaleX.setRepeatMode(ValueAnimator.REVERSE);
+      scaleX.setRepeatCount(ValueAnimator.INFINITE);
+
+      ObjectAnimator scaleY = ObjectAnimator.ofFloat(theView, "scaleY", 2.0f);
+      scaleY.setRepeatMode(ValueAnimator.REVERSE);
+      scaleY.setRepeatCount(ValueAnimator.INFINITE);
+
+      AnimatorSet animatorSet = new AnimatorSet();
+      animatorSet.play(scaleX).with(scaleY);
+      animatorSet.setDuration(2000);
+      animatorSet.start();
     }
 
     private   void animateV(final View theView, int offsetX, int offsetY) {
