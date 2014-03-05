@@ -55,7 +55,7 @@
         Help support our late night coding sessions by donating one of the following delicious items:
     </string>
     <string name="donate_thanks">
-        The gods of code smile upon thee...Thank you!
+        The Gods of code smile upon thee...\nThank you!
     </string>
 
     <string-array name="donations_array">
