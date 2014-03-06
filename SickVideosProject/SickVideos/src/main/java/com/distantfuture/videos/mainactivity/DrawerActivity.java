@@ -174,6 +174,14 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
   }
 
+  // FragmentActivity uses some supportFragment garbage
+  // backbutton will close the activity rather than popBack a fragment
+  public void superOnBackPressedHack() {
+    if (!getFragmentManager().popBackStackImmediate()) {
+      finish();
+    }
+  }
+
   @Override
   public void onBackPressed() {
     // hides the video player if visible
@@ -187,10 +195,12 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
           if (backButtonToast != null) {
             backButtonToast.cancel();
           }
-          super.onBackPressed();
+          // this works around FragmentActivity incorrect behavior
+          superOnBackPressedHack();
         }
       } else {
-        super.onBackPressed();
+        // this works around FragmentActivity incorrect behavior
+        superOnBackPressedHack();
       }
     }
   }
