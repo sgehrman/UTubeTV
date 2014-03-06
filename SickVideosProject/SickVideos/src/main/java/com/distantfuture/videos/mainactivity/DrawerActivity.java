@@ -216,7 +216,6 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
   }
 
-
   @Override
   public boolean onPrepareOptionsMenu(Menu menu) {
     MenuItem item = menu.findItem(R.id.action_show_hidden);

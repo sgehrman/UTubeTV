@@ -14,6 +14,3 @@ android {
         targetSdkVersion 19
     }
 }
-
-dependencies {
-}

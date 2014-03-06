@@ -6,7 +6,6 @@
         <option name="SELECTED_BUILD_VARIANT" value="technewsDebug" />
         <option name="ASSEMBLE_TASK_NAME" value="assembleTechnewsDebug" />
         <option name="COMPILE_JAVA_TASK_NAME" value="compileTechnewsDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleTechnewsDebugTest" />
         <option name="SOURCE_GEN_TASK_NAME" value="generateTechnewsDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
@@ -37,11 +36,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/technews/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/technews/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/technews/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/technews/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/technews/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/java" isTestSource="false" />
@@ -49,13 +43,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/technews/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTestTechnews/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
@@ -70,13 +57,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/instrumentTest/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/bundles" />
