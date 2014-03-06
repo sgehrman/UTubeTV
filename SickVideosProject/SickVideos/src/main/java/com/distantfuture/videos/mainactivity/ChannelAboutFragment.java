@@ -18,6 +18,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.BitmapLoader;
+import com.distantfuture.videos.misc.ContractFragment;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.Utils;
@@ -27,7 +28,7 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class ChannelAboutFragment extends Fragment implements OnRefreshListener {
+public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport> implements OnRefreshListener {
   private TextView mTitle;
   private TextView mDescription;
   private ImageView mImage;
@@ -114,9 +115,7 @@ public class ChannelAboutFragment extends Fragment implements OnRefreshListener 
   }
 
   private void showPlaylistsFragment() {
-    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
-
-    provider.showPlaylistsFragment();
+    getContract().showPlaylistsFragment();
   }
 
   @Override
@@ -182,8 +181,7 @@ public class ChannelAboutFragment extends Fragment implements OnRefreshListener 
         mBitmapLoader.requestBitmap(data);
       }
 
-      DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
-      provider.setActionBarTitle(data.mTitle, "About");
+      getContract().setActionBarTitle(data.mTitle, "About");
     }
   }
 }

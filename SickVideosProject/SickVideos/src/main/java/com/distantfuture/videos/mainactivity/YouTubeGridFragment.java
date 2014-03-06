@@ -38,6 +38,7 @@ import com.distantfuture.videos.database.YouTubeContentProvider;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.AppUtils;
+import com.distantfuture.videos.misc.ContractFragment;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
@@ -57,7 +58,7 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class YouTubeGridFragment extends Fragment implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport> implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener, LoaderManager.LoaderCallbacks<Cursor> {
 
   private EmptyListHelper mEmptyListHelper;
   private YouTubeServiceRequest mRequest;
@@ -84,7 +85,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   }
 
   public void syncActionBarTitle() {
-    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+    DrawerActivitySupport provider = getContract();
     if (provider != null) {
       // activity can control the actionbar title, for example the player sets the Now Playing title
       if (!provider.actionBarTitleHandled()) {
@@ -123,7 +124,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
     super.onPrepareOptionsMenu(menu);
 
     // hide the search item if player visible
-    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+    DrawerActivitySupport provider = getContract();
     if (provider != null) {
       if (provider.isPlayerVisible()) {
         mSearchItem.setVisible(false);
@@ -266,7 +267,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
   // YouTubeCursorAdapterListener
   @Override
   public void handleClickFromAdapter(int position, YouTubeData itemMap) {
-    DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+    DrawerActivitySupport provider = getContract();
 
     // get rid of the search if still open.  Someone could search
     // and click a visible item rather than hitting the search button on keyboard
@@ -342,7 +343,7 @@ public class YouTubeGridFragment extends Fragment implements OnRefreshListener, 
       YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, null);
 
       if (itemMap != null) {
-        DrawerActivitySupport provider = (DrawerActivitySupport) getActivity();
+        DrawerActivitySupport provider = getContract();
 
         if (provider != null) {
           VideoPlayer.PlayerParams params = new VideoPlayer.PlayerParams(itemMap.mVideo, itemMap.mTitle, index);
