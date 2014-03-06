@@ -145,7 +145,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main, menu);
 
-    MainApplication.getCastManager(this).addMediaRouterButton(menu, R.id.action_cast, this);
+    MainApplication.getCastManager(this).addMediaRouterButton(menu, R.id.action_cast, this, true);
 
     return super.onCreateOptionsMenu(menu);
   }

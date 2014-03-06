@@ -222,7 +222,7 @@ public class CastActivity extends FragmentActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.cast_menu, menu);
-    mCastManager.addMediaRouterButton(menu, R.id.action_cast, this);
+    mCastManager.addMediaRouterButton(menu, R.id.action_cast, this, false);
     return true;
   }
 

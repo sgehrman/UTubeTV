@@ -117,7 +117,7 @@ public class VideoCastControllerActivity extends FragmentActivity implements IVi
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.cast_player_menu, menu);
-    mCastManager.addMediaRouterButton(menu, R.id.media_route_menu_item, this);
+    mCastManager.addMediaRouterButton(menu, R.id.media_route_menu_item, this, false);
     return true;
   }
 

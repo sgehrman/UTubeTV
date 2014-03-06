@@ -242,10 +242,9 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     }
   }
 
-  public void addMediaRouterButton(Menu menu, int menuResourceId, Activity activity) {
+  public void addMediaRouterButton(Menu menu, int menuResourceId, Activity activity, boolean disabled) {
     MenuItem item = menu.findItem(menuResourceId);
     if (item != null) {
-      boolean disabled = false;
       if (disabled) {
         item.setVisible(false);
       } else {
