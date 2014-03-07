@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.distantfuture.prettytimeandroid.lib.PrettyTime;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.YouTubeData;
@@ -31,8 +32,6 @@ import com.distantfuture.videos.youtube.VideoImageView;
 import com.distantfuture.videos.youtube.ViewDecorations;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 import com.squareup.picasso.Picasso;
-
-import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.Date;
 

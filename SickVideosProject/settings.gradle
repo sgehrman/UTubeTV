@@ -1,1 +1,1 @@
-include ':SickVideos', ':IconicDroid', ':viewserver', ':Inscription', ':castlib'
+include ':SickVideos', ':IconicDroid', ':viewserver', ':Inscription', ':castlib', ':prettytime'
