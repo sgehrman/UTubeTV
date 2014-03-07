@@ -31,11 +31,11 @@
      with the content view. -->
     <LinearLayout
         android:id="@+id/drawer_container"
-        android:orientation="vertical"
         android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:background="@drawable/default_drawer_background"
         android:layout_gravity="start"
+        android:background="@drawable/default_drawer_background"
+        android:orientation="vertical"
         >
 
         <ListView

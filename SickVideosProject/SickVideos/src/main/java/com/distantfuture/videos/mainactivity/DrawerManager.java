@@ -27,27 +27,16 @@ import java.util.Map;
 
 public class DrawerManager {
 
-  public interface DrawerManagerListener {
-    public void onChannelClick();
-
-    public void onDrawerClick(int position);
-
-    public void onDrawerOpen(boolean openOrClose);
-  }
-
   private DrawerLayout mDrawerLayout;
   private View mDrawerContainer;
   private ListView mDrawerList;
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
-  private Content mContent;
-
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 
     mListener = listener;
-    mContent = content;
 
     mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
     mDrawerContainer = activity.findViewById(R.id.drawer_container);
@@ -135,6 +124,14 @@ public class DrawerManager {
 
   public void onConfigurationChanged(Configuration newConfig) {
     mDrawerToggle.onConfigurationChanged(newConfig);
+  }
+
+  public interface DrawerManagerListener {
+    public void onChannelClick();
+
+    public void onDrawerClick(int position);
+
+    public void onDrawerOpen(boolean openOrClose);
   }
 
   private static class DrawerAdapter extends ArrayAdapter<Map> {

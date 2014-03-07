@@ -1,5 +1,3 @@
-
-
 package com.distantfuture.videos.mainactivity;
 
 import android.app.ActionBar;

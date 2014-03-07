@@ -43,19 +43,12 @@ import java.util.Map;
 
 public class YouTubeAPI {
 
-  public interface YouTubeAPIListener {
-    public void handleAuthIntent(final Intent authIntent);
-  }
-
-  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
-
   public static final int REQ_PLAYER_CODE = 334443;
-  private YouTube youTube;
+  private final int mYouTubeMaxResultsLimit = 50;
   boolean highQualityImages = true;
   Context mContext;
   YouTubeAPIListener mListener;
-  private final int mYouTubeMaxResultsLimit = 50;
-
+  private YouTube youTube;
   public YouTubeAPI(Context context, YouTubeAPIListener listener) {
     super();
 
@@ -386,6 +379,12 @@ public class YouTubeAPI {
     }
 
     return result;
+  }
+
+  public enum RelatedPlaylistType {FAVORITES, LIKES, UPLOADS, WATCHED, WATCHLATER}
+
+  public interface YouTubeAPIListener {
+    public void handleAuthIntent(final Intent authIntent);
   }
 
   // ========================================================
@@ -875,12 +874,12 @@ public class YouTubeAPI {
     protected String mPart;
     protected String mFields;
 
-    // subclasses must implement
-    abstract protected List<YouTubeData> itemsForNextToken(String token, long maxResults);
-
     public BaseListResults() {
       super();
     }
+
+    // subclasses must implement
+    abstract protected List<YouTubeData> itemsForNextToken(String token, long maxResults);
 
     public List<YouTubeData> getItems(long maxResults) {
       return getNext(maxResults);

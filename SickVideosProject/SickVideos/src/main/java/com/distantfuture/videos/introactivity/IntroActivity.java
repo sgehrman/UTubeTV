@@ -19,7 +19,6 @@ import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.misc.LinePageIndicator;
 
 public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
-  private static String PREF_KEY = "intro_first_launched_pref";
   private IntroPagerAdapter introPagerAdapter;
   private IntroXMLTaskFragment mTaskFragment;
   private ViewPager mViewPager;
@@ -52,6 +51,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
 
   public static void showIntro(Activity activity, boolean force) {
     boolean show = false;
+    final String PREF_KEY = "intro_first_launched_pref";
 
     if (force)
       show = true;

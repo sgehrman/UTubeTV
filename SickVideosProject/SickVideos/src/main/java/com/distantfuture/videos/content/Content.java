@@ -22,24 +22,9 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 
 public class Content {
+  private static Content instance;
   private Context mContext;
   private ChannelList mChannelList;
-  private static Content instance;
-
-  // called once early in main activity, but activity could get recreated, so checking for null
-  public static Content instance(Context context) {
-    if (instance == null)
-      instance = new Content(context);
-
-    return instance;
-  }
-
-  public static Content instance() {
-    if (instance == null)
-      Debug.log("Content instance null");
-
-    return instance;
-  }
 
   private Content(Context context) {
     super();
@@ -61,6 +46,21 @@ public class Content {
     mContext = context.getApplicationContext();
   }
 
+  // called once early in main activity, but activity could get recreated, so checking for null
+  public static Content instance(Context context) {
+    if (instance == null)
+      instance = new Content(context);
+
+    return instance;
+  }
+
+  public static Content instance() {
+    if (instance == null)
+      Debug.log("Content instance null");
+
+    return instance;
+  }
+
   public ArrayList<Map> drawerTitles() {
     ArrayList<Map> result = new ArrayList<Map>();
 
@@ -73,10 +73,7 @@ public class Content {
 
   // returns false if that channel is already current
   public boolean changeChannel(int index) {
-    if (mChannelList.changeChannel(index)) {
-      return true;
-    }
-    return false;
+    return mChannelList.changeChannel(index);
   }
 
   public Fragment fragmentForIndex(int index) {

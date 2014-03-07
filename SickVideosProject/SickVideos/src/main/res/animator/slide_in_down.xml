@@ -1,11 +1,11 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <objectAnimator
-        android:valueFrom="-1.0"
-        android:valueTo="0"
-        android:propertyName="yFraction"
+        android:duration="@android:integer/config_mediumAnimTime"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:propertyName="yFraction"
+        android:valueFrom="-1.0"
 
-        android:valueType="floatType"
-        android:duration="@android:integer/config_mediumAnimTime"/>
+        android:valueTo="0"
+        android:valueType="floatType"/>
 
 </set>

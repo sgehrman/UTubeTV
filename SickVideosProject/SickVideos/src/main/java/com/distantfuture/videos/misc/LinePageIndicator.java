@@ -13,8 +13,8 @@ import com.distantfuture.videos.R;
  * Created by sgehrman on 2/13/14.
  */
 public class LinePageIndicator extends View {
-  private ViewPager mViewPager;
   private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private ViewPager mViewPager;
   private int mCurrentPage;
 
   public LinePageIndicator(Context context, AttributeSet attrs) {

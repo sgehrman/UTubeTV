@@ -75,7 +75,6 @@ public class VideoCastControllerActivity extends FragmentActivity implements IVi
   private Drawable mPauseDrawable;
   private Drawable mPlayDrawable;
   private Drawable mStopDrawable;
-  private VideoCastControllerFragment mediaAuthFragment;
   private OnVideoCastControllerListener mListener;
   private int mStreamType;
 
@@ -99,7 +98,7 @@ public class VideoCastControllerActivity extends FragmentActivity implements IVi
     }
 
     FragmentManager fm = getFragmentManager();
-    mediaAuthFragment = (VideoCastControllerFragment) fm.findFragmentByTag("task");
+    VideoCastControllerFragment mediaAuthFragment = (VideoCastControllerFragment) fm.findFragmentByTag("task");
 
     // if fragment is null, it means this is the first time, so create it
     if (mediaAuthFragment == null) {

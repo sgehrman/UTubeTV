@@ -20,8 +20,6 @@ public class PurchaseHelper {
   static final int RC_REQUEST = 12001;
   private final String mPurchasePayload = "purchase-payload";
   IabHelper mHelper;
-  private Context mContext;
-
   IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
     public void onConsumeFinished(Purchase purchase, IabResult result) {
       if (mHelper == null)
@@ -56,7 +54,6 @@ public class PurchaseHelper {
       mHelper.consumeAsync(purchase, mConsumeFinishedListener);
     }
   };
-
   // Listener that's called when we finish querying the items and subscriptions we own
   IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -78,6 +75,7 @@ public class PurchaseHelper {
       }
     }
   };
+  private Context mContext;
 
   public PurchaseHelper(Context context) {
     super();
@@ -149,14 +147,11 @@ public class PurchaseHelper {
   }
 
   private String base64EncodedPublicKey() {
-    String result = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxbbmCXO30gPiPWdQwzhnj5I/6S4a4OmQp7f+2qg" +
+    return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxbbmCXO30gPiPWdQwzhnj5I/6S4a4OmQp7f+2qg" +
         "jczTNBMa01lrAQB/uiwfQToQgdkaBTgFw3epZpH4rOBp/p4lfRIfpspL1+qWLJHmD+zUkEhZPq798cLNrXfoiLgnL5s46P" +
         "KEyO8WVHBD3cOnmbQ7NyU1vN0/qJbEwe1MsDyzsHWOBO4TvVrWL14hnQNiTFbZavMtolNjyyZDZC7yRiqz9J0bzCAT1uW9B" +
         "B5+uBMxjLAF/PolgnZfupI9s2smSQuiakEY0ZdWumxYzM8NUGj1A/byBtKUOl+7K92o//k141Gd9vylt6kTwC86Ik4am5EBJcB4makCWbCxP5KyiRwIDAQAB";
-
-    return result;
   }
-
 }
 
 

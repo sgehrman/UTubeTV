@@ -10,10 +10,26 @@ import com.distantfuture.videos.youtube.YouTubeAPI;
 import java.util.HashMap;
 
 public class YouTubeServiceRequest implements Parcelable {
-  public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
+  public static final Parcelable.Creator<YouTubeServiceRequest> CREATOR = new Parcelable.Creator<YouTubeServiceRequest>() {
+    public YouTubeServiceRequest createFromParcel(Parcel in) {
+      return new YouTubeServiceRequest(in);
+    }
 
+    public YouTubeServiceRequest[] newArray(int size) {
+      return new YouTubeServiceRequest[size];
+    }
+  };
   private HashMap data;
   private RequestType type;
+
+  private YouTubeServiceRequest(Parcel in) {
+    type = (RequestType) in.readSerializable();
+    data = (HashMap) in.readSerializable();
+  }
+
+  private YouTubeServiceRequest() {
+    super();
+  }
 
   public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
     YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
@@ -74,6 +90,15 @@ public class YouTubeServiceRequest implements Parcelable {
     result.data.put("maxResults", maxResults);
     result.data.put("containerName", containerName);
     result.data.put("channel", channelID);
+
+    return result;
+  }
+
+  private static YouTubeServiceRequest emptyRequest(RequestType type) {
+    YouTubeServiceRequest result = new YouTubeServiceRequest();
+
+    result.type = type;
+    result.data = new HashMap();
 
     return result;
   }
@@ -155,6 +180,9 @@ public class YouTubeServiceRequest implements Parcelable {
 
     return result;
   }
+
+  // ===================================================================
+  //  Parcelable - we send this to the service inside an intent
 
   private String typeToString() {
     String result = "YouTube";
@@ -253,13 +281,13 @@ public class YouTubeServiceRequest implements Parcelable {
     return null;
   }
 
-  // ===================================================================
-  //  Parcelable - we send this to the service inside an intent
-
   @Override
   public int describeContents() {
     return 0;
   }
+
+  // ===================================================================
+  // private
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
@@ -267,34 +295,5 @@ public class YouTubeServiceRequest implements Parcelable {
     dest.writeSerializable(data);
   }
 
-  public static final Parcelable.Creator<YouTubeServiceRequest> CREATOR = new Parcelable.Creator<YouTubeServiceRequest>() {
-    public YouTubeServiceRequest createFromParcel(Parcel in) {
-      return new YouTubeServiceRequest(in);
-    }
-
-    public YouTubeServiceRequest[] newArray(int size) {
-      return new YouTubeServiceRequest[size];
-    }
-  };
-
-  private YouTubeServiceRequest(Parcel in) {
-    type = (RequestType) in.readSerializable();
-    data = (HashMap) in.readSerializable();
-  }
-
-  // ===================================================================
-  // private
-
-  private YouTubeServiceRequest() {
-    super();
-  }
-
-  private static YouTubeServiceRequest emptyRequest(RequestType type) {
-    YouTubeServiceRequest result = new YouTubeServiceRequest();
-
-    result.type = type;
-    result.data = new HashMap();
-
-    return result;
-  }
+  public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
 }

@@ -13,14 +13,13 @@ public class ConnectionMonitor {
   Context mContext;
   ConnectivityManager mConnectivityManager;
   boolean mConnected = true;  // assume we have a connection, send event if not connected
-  private BroadcastReceiver mReceiver;
 
   public ConnectionMonitor(Context context) {
     mContext = context.getApplicationContext();
 
     mConnectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    mReceiver = new BroadcastReceiver() {
+    BroadcastReceiver receiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
         boolean debug = false;
@@ -44,7 +43,7 @@ public class ConnectionMonitor {
       }
     };
 
-    mContext.registerReceiver(mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    mContext.registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
   }
 
   public boolean hasNetworkConnection() {

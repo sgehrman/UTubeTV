@@ -156,8 +156,8 @@ public class IntroXMLParser {
 
   public static class IntroPage {
     public String title;
-    private String icon;
     public List<IntroPageField> fields;
+    private String icon;
 
     public static IntroPage newPage(String title, String icon, List<IntroPageField> fields) {
       IntroPage result = new IntroPage();
@@ -196,9 +196,6 @@ public class IntroXMLParser {
 
   public static class IntroPageField {
     public String text;
-
-    public enum FieldType {TEXT, HEADER, BULLET}
-
     public FieldType type;
     public int topMargin;
 
@@ -242,5 +239,7 @@ public class IntroXMLParser {
     public boolean isHeader() {
       return type == FieldType.HEADER;
     }
+
+    public enum FieldType {TEXT, HEADER, BULLET}
   }
 }

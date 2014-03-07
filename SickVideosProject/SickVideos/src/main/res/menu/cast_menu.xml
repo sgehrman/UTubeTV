@@ -2,8 +2,8 @@
 
     <item
         android:id="@+id/action_cast"
-        android:title="@string/action_cast"
         android:orderInCategory="100"
-        android:showAsAction="always"/>
+        android:showAsAction="always"
+        android:title="@string/action_cast"/>
 
 </menu>

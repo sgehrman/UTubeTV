@@ -3,19 +3,19 @@
                                               android:layout_height="match_parent">
 
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        android:background="@color/content_background"
         android:id="@+id/grid_frame_layout"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_height="match_parent"
+        android:background="@color/content_background">
 
 
         <FrameLayout
-            android:background="@color/dimmer_color"
             android:id="@+id/dimmer"
-            android:alpha="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:alpha="1"
+            android:background="@color/dimmer_color">
         </FrameLayout>
 
         <GridView

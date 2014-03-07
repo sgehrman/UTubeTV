@@ -10,11 +10,11 @@
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/action_bar_title_top_margin"
         android:ellipsize="end"
         android:singleLine="true"
-        android:layout_marginTop="@dimen/action_bar_title_top_margin"
-        android:textSize="@dimen/action_bar_title_text_size"
         android:textColor="@android:color/primary_text_dark"
+        android:textSize="@dimen/action_bar_title_text_size"
         />
 
     <TextView

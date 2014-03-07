@@ -16,8 +16,6 @@ import com.distantfuture.videos.misc.Utils;
 
 public class ToolbarIcons {
 
-  public static enum IconID {NONE, SOUND, COMMENTS, SITE_MAP, COGS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
-
   public static Drawable icon(Context context, IconID iconID, int iconColor, int sizeInDP) {
     StateListDrawable result = null;
 
@@ -144,5 +142,7 @@ public class ToolbarIcons {
 
     return null;
   }
+
+  public static enum IconID {NONE, SOUND, COMMENTS, SITE_MAP, COGS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
 
 }

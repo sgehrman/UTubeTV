@@ -49,7 +49,6 @@ public class VideoCastNotificationService extends Service {
   private Bitmap mVideoArtBitmap;
   private Uri mVideoArtUri;
   private boolean mIsPlaying;
-  private int mStatus;
   private Notification mNotification;
   private boolean mVisible;
   private BroadcastReceiver mBroadcastReceiver;
@@ -186,8 +185,7 @@ public class VideoCastNotificationService extends Service {
   }
 
   private void onRemoteMediaPlayerStatusUpdated(int mediaStatus) {
-    mStatus = mediaStatus;
-    CastUtils.LOGD(TAG, "onRemoteMediaPlayerMetadataUpdated() reached with status: " + mStatus);
+    CastUtils.LOGD(TAG, "onRemoteMediaPlayerMetadataUpdated() reached with status: " + mediaStatus);
     try {
       switch (mediaStatus) {
         case MediaStatus.PLAYER_STATE_BUFFERING: // (== 4)

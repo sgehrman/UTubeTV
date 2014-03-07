@@ -20,22 +20,22 @@
         <com.distantfuture.videos.misc.LinePageIndicator
             android:id="@+id/line_indicator"
             android:layout_width="match_parent"
-            android:background="#11ffffff"
             android:layout_height="4dp"
             android:layout_alignParentBottom="true"
+            android:background="#11ffffff"
             />
 
         <Button
+            android:id="@+id/close_button"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Read later"
-            android:layout_marginBottom="4dp"
-            android:textColor="@color/intro_drawable_color"
-            android:id="@+id/close_button"
-            android:layout_centerHorizontal="true"
-            style="?android:attr/borderlessButtonStyle"
-            android:textStyle="bold"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:text="Read later"
+            android:textColor="@color/intro_drawable_color"
+            android:textStyle="bold"
             />
 
     </RelativeLayout>

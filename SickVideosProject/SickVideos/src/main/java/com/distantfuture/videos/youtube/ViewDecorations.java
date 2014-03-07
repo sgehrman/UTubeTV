@@ -18,7 +18,6 @@ public class ViewDecorations {
   private int mHeight = 0, mWidth = 0;
   private boolean mDrawShadows = false;
   private int mCachedWidth = 0;
-  private boolean mDrawIcon = true;
   private boolean mIsPlaylist = false;
   private GradientDrawable mStrokeAndFill;
   private GradientDrawable mStrokeAndFill2;
@@ -76,7 +75,8 @@ public class ViewDecorations {
       canvas.translate(0, -y);
     }
 
-    if (mDrawIcon) {
+    boolean drawIcon = true;
+    if (drawIcon) {
       int playButtonSizeDP = 70;
       // draw play button
       if (mPlayBitmap == null) {

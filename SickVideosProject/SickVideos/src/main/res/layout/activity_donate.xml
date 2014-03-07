@@ -19,16 +19,16 @@
     </TextView>
 
     <TextView
+        android:id="@+id/status_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/status_header"
+        android:layout_gravity="center_horizontal"
         android:padding="12dp"
         android:paddingBottom="16dp"
-        android:layout_gravity="center_horizontal"
         android:paddingTop="16dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
         android:text="Menu:"
+        android:textSize="18sp"
+        android:textStyle="bold"
         >
     </TextView>
 
@@ -50,8 +50,8 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/donate_button"
             android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/donate_button"
             android:clickable="true"
             android:spinnerMode="dropdown"
             />

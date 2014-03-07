@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:orientation="vertical"
               android:layout_height="wrap_content"
-              android:padding="14dp"
               android:background="@drawable/card_background"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical"
 
-              android:descendantFocusability="blocksDescendants">
+              android:padding="14dp">
 
     <include
+        layout="@layout/youtube_item_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
 
-        layout="@layout/youtube_item_image"/>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_marginTop="6dp"
+        style="@style/VideoTextTitle_card"
 
         android:layout_width="match_parent"
-        style="@style/VideoTextTitle_card"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"/>
 
     <TextView
-        android:layout_marginTop="2dp"
+        android:id="@+id/description_view"
+        style="@style/VideoTextDescription_card"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-
-        android:id="@+id/description_view"
-        android:layout_width="match_parent"
-        style="@style/VideoTextDescription_card"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="2dp"/>
 
 </LinearLayout>

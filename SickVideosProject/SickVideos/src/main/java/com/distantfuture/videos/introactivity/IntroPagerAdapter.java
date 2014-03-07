@@ -8,8 +8,8 @@ import android.support.v13.app.FragmentPagerAdapter;
 import java.util.List;
 
 public class IntroPagerAdapter extends FragmentPagerAdapter {
-  private List<IntroXMLParser.IntroPage> pages;
   private static int sChangeCount = 0;
+  private List<IntroXMLParser.IntroPage> pages;
 
   public IntroPagerAdapter(Context context, FragmentManager fm) {
     super(fm);

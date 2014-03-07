@@ -2,81 +2,81 @@
 
     <item
         android:id="@+id/action_cast"
-        android:title="@string/action_cast"
         android:orderInCategory="100"
-        android:showAsAction="always"/>
+        android:showAsAction="always"
+        android:title="@string/action_cast"/>
 
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
 
     <item
         android:id="@+id/action_show_hidden"
-        android:title="@string/action_show_hidden"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        android:showAsAction="never"
+        android:title="@string/action_show_hidden"/>
 
     <item
         android:id="@+id/rate_my_app"
-        android:title="@string/pref_rate_app"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        android:showAsAction="never"
+        android:title="@string/pref_rate_app"/>
 
     <item
         android:id="@+id/action_donate"
-        android:title="@string/action_donate"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        android:showAsAction="never"
+        android:title="@string/action_donate"/>
 
     <item
         android:id="@+id/action_more_apps"
-        android:title="@string/action_more_apps"
         android:orderInCategory="100"
-        android:showAsAction="never"/>
+        android:showAsAction="never"
+        android:title="@string/action_more_apps"/>
 
     <group android:id="@+id/dev_tools_group">
 
         <item
             android:id="@+id/action_show_cast"
-            android:title="@string/action_show_cast"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_show_cast"/>
 
         <item
             android:id="@+id/action_switch_view"
-            android:title="@string/switch_view"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/switch_view"/>
 
         <item
             android:id="@+id/action_show_rate_dialog"
-            android:title="@string/action_show_rate_dialog"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_show_rate_dialog"/>
         <item
             android:id="@+id/action_color_picker"
-            android:title="@string/action_color_picker"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_color_picker"/>
         <item
             android:id="@+id/action_channel_lookup"
-            android:title="@string/action_channel_lookup"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_channel_lookup"/>
 
         <item
             android:id="@+id/action_show_icons"
-            android:title="@string/action_show_icons"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_show_icons"/>
 
         <item
             android:id="@+id/action_whats_new"
-            android:title="@string/action_whats_new"
             android:orderInCategory="100"
-            android:showAsAction="never"/>
+            android:showAsAction="never"
+            android:title="@string/action_whats_new"/>
     </group>
 
 </menu>

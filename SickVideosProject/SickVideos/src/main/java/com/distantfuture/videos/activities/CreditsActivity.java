@@ -197,10 +197,6 @@ public class CreditsActivity extends Activity {
     private final Context mContext;
     private CreditsXMLParserListener mCallback;
 
-    public interface CreditsXMLParserListener {
-      public void parseXMLDone(List<CreditsPage> pages);
-    }
-
     private CreditsXMLParser(final Context context) {
       super();
       mContext = context.getApplicationContext();
@@ -300,6 +296,10 @@ public class CreditsActivity extends Activity {
       }).start();
     }
 
+    public interface CreditsXMLParserListener {
+      public void parseXMLDone(List<CreditsPage> pages);
+    }
+
     // ======================================================================
     // CreditsPage
 
@@ -331,8 +331,6 @@ public class CreditsActivity extends Activity {
       public String size;
       public String copyRight;
 
-      public enum FieldType {TEXT, HEADER, GROUP}
-
       public static CreditsPageField newField(Context context, String text, String link, String size, String copyRight, String topMargin, FieldType type) {
         CreditsPageField result = new CreditsPageField();
 
@@ -361,6 +359,8 @@ public class CreditsActivity extends Activity {
       public boolean isGroupHeader() {
         return type == FieldType.GROUP;
       }
+
+      public enum FieldType {TEXT, HEADER, GROUP}
     }
   }
 }

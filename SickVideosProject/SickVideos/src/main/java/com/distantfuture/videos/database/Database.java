@@ -10,20 +10,10 @@ import com.distantfuture.videos.misc.Debug;
 import java.io.File;
 
 public class Database extends SQLiteOpenHelper {
-  private static Database singleton = null;
-
   private static final int DATABASE_VERSION = 5010;
   private static final String DATABASE_NAME = "database.db";
-
+  private static Database singleton = null;
   private final DatabaseTables mTables = new DatabaseTables();
-
-  public static Database instance(Context context) {
-    if (singleton == null) {
-      singleton = new Database(context);
-    }
-
-    return singleton;
-  }
 
   // private, use instance() singleton above
   private Database(Context context) {
@@ -35,6 +25,14 @@ public class Database extends SQLiteOpenHelper {
       File file = new File(path);
       Debug.log(path + " size: " + ((float) (file.length()) / 1024.f) + "k");
     }
+  }
+
+  public static Database instance(Context context) {
+    if (singleton == null) {
+      singleton = new Database(context);
+    }
+
+    return singleton;
   }
 
   public void onCreate(SQLiteDatabase db) {

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:padding="8dp"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:padding="8dp">
 
     <ImageView
+        android:id="@android:id/icon1"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:id="@android:id/icon1"
         />
 
-    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
-                     android:id="@android:id/text1"
-                     android:layout_marginLeft="2dp"
+    <CheckedTextView android:id="@android:id/text1"
                      style="?android:attr/spinnerDropDownItemStyle"
-                     android:singleLine="true"
+                     xmlns:android="http://schemas.android.com/apk/res/android"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:ellipsize="marquee"
-                     android:textSize="18sp"
-                     android:textColor="#fff"
                      android:layout_gravity="center_vertical"
-                     android:textAlignment="inherit"/>
+                     android:layout_marginLeft="2dp"
+                     android:ellipsize="marquee"
+                     android:singleLine="true"
+                     android:textAlignment="inherit"
+                     android:textColor="#fff"
+                     android:textSize="18sp"/>
 
 </LinearLayout>

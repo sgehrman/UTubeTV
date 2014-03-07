@@ -42,6 +42,63 @@ public class DatabaseTables {
     return mChannelTable;
   }
 
+  public static DatabaseTable[] tables() {
+    return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable(), DatabaseTables
+        .channelTable()};
+  }
+
+  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter, DatabaseTable table, String HIDDEN_COL, String ID_COL, String REQUEST_COL, String TITLE_COL, String DESC_COL, String[] hiddenProjection, String[] contentProjection) {
+    String selection = null;
+    String[] selectionArgs = null;
+    String[] projection = table.defaultProjection();
+
+    switch (queryID) {
+      case HIDDEN_ITEMS:
+        selection = "" + HIDDEN_COL + " IS NOT NULL";
+
+        projection = hiddenProjection;
+        break;
+      case CONTENT_ONLY:
+        projection = contentProjection;
+        break;
+      case VISIBLE_ITEMS:
+        selection = "" + HIDDEN_COL + " IS NULL";
+        break;
+      case ALL_ITEMS:
+        break;
+    }
+
+    if (filter != null) {
+      if (selection == null)
+        selection = "";
+      else
+        selection += " AND ";
+
+      // single quotes must be doubled up
+      filter = filter.replace("'", "''");
+
+      selection += "(" + TITLE_COL + " LIKE '%" + filter + "%'";
+      selection += " OR " + DESC_COL + " LIKE '%" + filter + "%'" + ")";
+    }
+
+    if (requestId != null) {
+      selectionArgs = new String[]{requestId};
+
+      if (selection == null)
+        selection = "";
+      else
+        selection += " AND ";
+
+      selection += REQUEST_COL + " = ?";
+    }
+
+    return new Database.DatabaseQuery(table.tableName(), selection, selectionArgs, projection, table
+        .orderBy());
+  }
+
+  // =====================================================================
+  // =====================================================================
+
   public static interface DatabaseTable {
     public String tableName();
 
@@ -61,34 +118,21 @@ public class DatabaseTables {
 
   }
 
-  public static DatabaseTable[] tables() {
-    return new DatabaseTable[]{DatabaseTables.videoTable(), DatabaseTables.playlistTable(), DatabaseTables
-        .channelTable()};
-  }
-
   // =====================================================================
   // =====================================================================
 
   public static class ChannelTable implements DatabaseTable {
-    // stores information about a playlist
-    public class Entry implements BaseColumns {
-      public static final String COLUMN_NAME_CHANNEL = "channel";
-      public static final String COLUMN_NAME_TITLE = "title";
-      public static final String COLUMN_NAME_DESCRIPTION = "description";
-      public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
-    }
-
     private static ChannelTable singleton = null;
+
+    private ChannelTable() {
+      super();
+    }
 
     public static ChannelTable instance() {
       if (singleton == null)
         singleton = new ChannelTable();
 
       return singleton;
-    }
-
-    private ChannelTable() {
-      super();
     }
 
     @Override
@@ -163,35 +207,31 @@ public class DatabaseTables {
 
       return new Database.DatabaseQuery(tableName(), selection, selectionArgs, projection, orderBy());
     }
+
+    // stores information about a playlist
+    public class Entry implements BaseColumns {
+      public static final String COLUMN_NAME_CHANNEL = "channel";
+      public static final String COLUMN_NAME_TITLE = "title";
+      public static final String COLUMN_NAME_DESCRIPTION = "description";
+      public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+    }
   }
 
   // =====================================================================
   // =====================================================================
 
   public static class PlaylistTable implements DatabaseTable {
-    // stores information about a playlist
-    public class Entry implements BaseColumns {
-      public static final String COLUMN_NAME_REQUEST = "request";
-      public static final String COLUMN_NAME_PLAYLIST = "playlist";
-      public static final String COLUMN_NAME_TITLE = "title";
-      public static final String COLUMN_NAME_DESCRIPTION = "description";
-      public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
-      public static final String COLUMN_NAME_ITEM_COUNT = "itemCount";
-      public static final String COLUMN_NAME_PUBLISHED_DATE = "published_date";
-      public static final String COLUMN_NAME_HIDDEN = "hidden";
-    }
-
     private static PlaylistTable singleton = null;
+
+    private PlaylistTable() {
+      super();
+    }
 
     public static PlaylistTable instance() {
       if (singleton == null)
         singleton = new PlaylistTable();
 
       return singleton;
-    }
-
-    private PlaylistTable() {
-      super();
     }
 
     @Override
@@ -290,24 +330,21 @@ public class DatabaseTables {
 
       return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection, contentProjection);
     }
-  }
 
-  // =====================================================================
-  // =====================================================================
-
-  public static class VideoTable implements DatabaseTable {
-    // stores information about a video
+    // stores information about a playlist
     public class Entry implements BaseColumns {
       public static final String COLUMN_NAME_REQUEST = "request";
-      public static final String COLUMN_NAME_VIDEO = "video";
+      public static final String COLUMN_NAME_PLAYLIST = "playlist";
       public static final String COLUMN_NAME_TITLE = "title";
       public static final String COLUMN_NAME_DESCRIPTION = "description";
       public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
-      public static final String COLUMN_NAME_DURATION = "duration";
+      public static final String COLUMN_NAME_ITEM_COUNT = "itemCount";
       public static final String COLUMN_NAME_PUBLISHED_DATE = "published_date";
       public static final String COLUMN_NAME_HIDDEN = "hidden";
     }
+  }
 
+  public static class VideoTable implements DatabaseTable {
     private VideoTable() {
       super();
     }
@@ -410,54 +447,17 @@ public class DatabaseTables {
 
       return standardQueryParams(queryID, requestId, filter, this, Entry.COLUMN_NAME_HIDDEN, Entry._ID, Entry.COLUMN_NAME_REQUEST, Entry.COLUMN_NAME_TITLE, Entry.COLUMN_NAME_DESCRIPTION, hiddenProjection, contentProjection);
     }
-  }
 
-  public static Database.DatabaseQuery standardQueryParams(int queryID, String requestId, String filter, DatabaseTable table, String HIDDEN_COL, String ID_COL, String REQUEST_COL, String TITLE_COL, String DESC_COL, String[] hiddenProjection, String[] contentProjection) {
-    String selection = null;
-    String[] selectionArgs = null;
-    String[] projection = table.defaultProjection();
-
-    switch (queryID) {
-      case HIDDEN_ITEMS:
-        selection = "" + HIDDEN_COL + " IS NOT NULL";
-
-        projection = hiddenProjection;
-        break;
-      case CONTENT_ONLY:
-        projection = contentProjection;
-        break;
-      case VISIBLE_ITEMS:
-        selection = "" + HIDDEN_COL + " IS NULL";
-        break;
-      case ALL_ITEMS:
-        break;
+    // stores information about a video
+    public class Entry implements BaseColumns {
+      public static final String COLUMN_NAME_REQUEST = "request";
+      public static final String COLUMN_NAME_VIDEO = "video";
+      public static final String COLUMN_NAME_TITLE = "title";
+      public static final String COLUMN_NAME_DESCRIPTION = "description";
+      public static final String COLUMN_NAME_THUMBNAIL = "thumbnail";
+      public static final String COLUMN_NAME_DURATION = "duration";
+      public static final String COLUMN_NAME_PUBLISHED_DATE = "published_date";
+      public static final String COLUMN_NAME_HIDDEN = "hidden";
     }
-
-    if (filter != null) {
-      if (selection == null)
-        selection = "";
-      else
-        selection += " AND ";
-
-      // single quotes must be doubled up
-      filter = filter.replace("'", "''");
-
-      selection += "(" + TITLE_COL + " LIKE '%" + filter + "%'";
-      selection += " OR " + DESC_COL + " LIKE '%" + filter + "%'" + ")";
-    }
-
-    if (requestId != null) {
-      selectionArgs = new String[]{requestId};
-
-      if (selection == null)
-        selection = "";
-      else
-        selection += " AND ";
-
-      selection += REQUEST_COL + " = ?";
-    }
-
-    return new Database.DatabaseQuery(table.tableName(), selection, selectionArgs, projection, table
-        .orderBy());
   }
 }

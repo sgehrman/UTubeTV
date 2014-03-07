@@ -82,10 +82,6 @@ public class IntroPageFragment extends Fragment {
     return rootView;
   }
 
-  public interface ActivityAccess {
-    IntroXMLParser.IntroPage pageAtIndex(int position);
-  }
-
   private View createFieldView(IntroXMLParser.IntroPageField field) {
     final int headerSize = 20;
     final int titleSize = 16;
@@ -130,6 +126,10 @@ public class IntroPageFragment extends Fragment {
     linearLayout.addView(textView);
 
     return linearLayout;
+  }
+
+  public interface ActivityAccess {
+    IntroXMLParser.IntroPage pageAtIndex(int position);
   }
 }
 

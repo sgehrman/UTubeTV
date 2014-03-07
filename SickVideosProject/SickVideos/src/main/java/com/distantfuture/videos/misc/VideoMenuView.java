@@ -13,18 +13,8 @@ import com.distantfuture.videos.imageutils.ToolbarIcons;
 
 public class VideoMenuView extends ImageView {
   private static Drawable sharedDrawable;
-
-  public interface VideoMenuViewListener {
-    public void showVideoInfo(Long itemId);
-
-    public void showVideoOnYouTube(Long itemId);
-
-    public void hideVideo(Long itemId);
-  }
-
   public Long mId;
   private VideoMenuViewListener mListener;
-
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
@@ -65,6 +55,14 @@ public class VideoMenuView extends ImageView {
 
   public void setListener(VideoMenuViewListener listener) {
     mListener = listener;
+  }
+
+  public interface VideoMenuViewListener {
+    public void showVideoInfo(Long itemId);
+
+    public void showVideoOnYouTube(Long itemId);
+
+    public void hideVideo(Long itemId);
   }
 
 }

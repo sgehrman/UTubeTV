@@ -22,14 +22,6 @@ import com.google.android.gms.common.images.WebImage;
 
 public class CastActivity extends FragmentActivity {
   private static final String TAG = "CastActivity";
-  protected MediaInfo mRemoteMediaInformation;
-  private VideoCastManager mCastManager;
-  private PlaybackState mPlaybackState = PlaybackState.PAUSED;
-  private MiniController mMini;
-  private VideoCastConsumerImpl mCastConsumer;
-  private MediaInfo mSelectedMedia;
-
-
   private static String TAG_MEDIA = "videos";
   private static String THUMB_PREFIX_URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/";
   private static String TAG_CATEGORIES = "categories";
@@ -40,7 +32,12 @@ public class CastActivity extends FragmentActivity {
   private static String TAG_THUMB = "image-480x270"; // "thumb";
   private static String TAG_IMG_780_1200 = "image-780x1200";
   private static String TAG_TITLE = "title";
-
+  protected MediaInfo mRemoteMediaInformation;
+  private VideoCastManager mCastManager;
+  private PlaybackState mPlaybackState = PlaybackState.PAUSED;
+  private MiniController mMini;
+  private VideoCastConsumerImpl mCastConsumer;
+  private MediaInfo mSelectedMedia;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

@@ -14,16 +14,15 @@ public class AppUtils {
   private static AppUtils instance = null;
   private Handler mainThreadHandler;
   private Preferences mPreferences;
-  private Context mApplicationContext;
   private ConnectionMonitor mConnectionMonitor;
 
   private AppUtils(Context context) {
-    mApplicationContext = context.getApplicationContext();
+    context = context.getApplicationContext();
 
     mainThreadHandler = new Handler(Looper.getMainLooper());
-    mConnectionMonitor = new ConnectionMonitor(mApplicationContext);
+    mConnectionMonitor = new ConnectionMonitor(context);
 
-    mPreferences = new Preferences(mApplicationContext, new Preferences.PreferenceCacheListener() {
+    mPreferences = new Preferences(context, new Preferences.PreferenceCacheListener() {
       @Override
       public void prefChanged(String prefName) {
         if (prefName.equals("theme_id")) {
@@ -46,15 +45,6 @@ public class AppUtils {
     return instance;
   }
 
-  public boolean hasNetworkConnection() {
-    return mConnectionMonitor.hasNetworkConnection();
-  }
-
-  public void runOnMainThread(Runnable action) {
-    if (action != null)
-      mainThreadHandler.post(action);
-  }
-
   public static void pickViewStyleDialog(final Context context) {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -71,6 +61,15 @@ public class AppUtils {
         });
 
     builder.create().show();
+  }
+
+  public boolean hasNetworkConnection() {
+    return mConnectionMonitor.hasNetworkConnection();
+  }
+
+  public void runOnMainThread(Runnable action) {
+    if (action != null)
+      mainThreadHandler.post(action);
   }
 
   // ================================================================

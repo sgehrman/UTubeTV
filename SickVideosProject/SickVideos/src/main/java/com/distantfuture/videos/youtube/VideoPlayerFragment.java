@@ -21,19 +21,6 @@ import de.greenrobot.event.EventBus;
 
 public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
-  public interface TimeRemainingListener {
-    // call this on the main thread
-    public void setTimeRemainingText(final String timeRemaining);
-
-    public void setSeekFlashText(final String seekFlash);
-  }
-
-  public interface VideoFragmentListener {
-    public void onFullScreen(boolean fullscreen);
-
-    public void playerInitialized();
-  }
-
   private YouTubePlayer mPlayer;
   private VideoPlayer.PlayerParams mPlayerParams;
   private boolean mMutedForAd = false;
@@ -43,7 +30,6 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   private VideoFragmentListener mFragmentListener;
   private boolean mInitializingPlayer = false;
   private SoundManager mSoundManager;
-
   // added for debugging, remove this shit once we know it's solid
   private String mLastTimeString;
 
@@ -411,6 +397,19 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         }
       });
     }
+  }
+
+  public interface TimeRemainingListener {
+    // call this on the main thread
+    public void setTimeRemainingText(final String timeRemaining);
+
+    public void setSeekFlashText(final String seekFlash);
+  }
+
+  public interface VideoFragmentListener {
+    public void onFullScreen(boolean fullscreen);
+
+    public void playerInitialized();
   }
 
 }

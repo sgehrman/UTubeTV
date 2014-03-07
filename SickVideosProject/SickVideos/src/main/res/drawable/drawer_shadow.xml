@@ -4,14 +4,14 @@
     >
 
     <size
-        android:height="100dp"
         android:width="10dp"
+        android:height="100dp"
         />
 
     <gradient
-        android:startColor="#00000000"
-        android:endColor="#66000000"
         android:angle="180"
+        android:endColor="#66000000"
+        android:startColor="#00000000"
         android:type="linear"/>
 
 </shape>

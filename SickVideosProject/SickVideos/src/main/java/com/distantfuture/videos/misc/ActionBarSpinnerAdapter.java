@@ -21,11 +21,11 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
+  Content mContent;
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
   private Drawable mCheckDrawable;
   private BitmapLoader mBitmapLoader;
-  Content mContent;
   private CharSequence mTitle;
   private CharSequence mSubtitle;
 

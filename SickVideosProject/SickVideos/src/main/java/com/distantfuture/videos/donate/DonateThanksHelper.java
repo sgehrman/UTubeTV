@@ -85,9 +85,9 @@ public class DonateThanksHelper {
     private final static int mIconSize = 64;
     private final Activity mActivity;
     public ViewGroup mView;
+    Point mDisplaySize;
     private ViewGroup.LayoutParams mLayoutParams;
     private ImageView mImageView;
-    Point mDisplaySize;
 
     public ContentView(Activity activity) {
       mActivity = activity;

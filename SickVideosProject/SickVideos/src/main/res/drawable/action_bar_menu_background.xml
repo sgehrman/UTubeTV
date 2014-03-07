@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     >
-    <item android:state_pressed="false"
+    <item android:drawable="@color/action_bar_end_color"
           android:state_focused="true"
-          android:drawable="@color/action_bar_end_color"/>
-    <item android:state_pressed="true"
-          android:drawable="@color/ggbridge_orange"/>
+          android:state_pressed="false"/>
+    <item android:drawable="@color/ggbridge_orange"
+          android:state_pressed="true"/>
     <item android:drawable="@color/action_bar_end_color"/>
 </selector>

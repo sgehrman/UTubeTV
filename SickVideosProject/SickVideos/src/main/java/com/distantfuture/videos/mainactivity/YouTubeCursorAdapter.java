@@ -40,6 +40,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
 
   private final LayoutInflater inflater;
   private final YouTubeData mReusedData = new YouTubeData(); // avoids a memory alloc when drawing
+  private final PublishedDateCache mDateCache = new PublishedDateCache();
   private int animationID = 0;
   private Context mContext;
   private Theme mTheme;
@@ -48,7 +49,6 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
   private ViewDecorations mDecorations;
-  private final PublishedDateCache mDateCache = new PublishedDateCache();
 
   private YouTubeCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
     super(context, layout, c, from, to, flags);

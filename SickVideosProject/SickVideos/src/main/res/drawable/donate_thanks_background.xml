@@ -9,9 +9,9 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#7fff"
                 android:endColor="#0000"
                 android:gradientRadius="700"
+                android:startColor="#7fff"
                 android:type="radial"/>
         </shape>
 

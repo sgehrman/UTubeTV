@@ -5,20 +5,20 @@
     <objectAnimator
         android:duration="0"
 
-        android:valueTo="0.0"
         android:propertyName="alpha"
+        android:valueTo="0.0"
         android:valueType="floatType"
         />
 
     <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:propertyName="alpha"
         android:startOffset="200"
         android:valueFrom="0.0"
-        android:valueTo="1.0"
-        android:propertyName="alpha"
-        android:interpolator="@android:anim/decelerate_interpolator"
 
-        android:valueType="floatType"
-        android:duration="400"/>
+        android:valueTo="1.0"
+        android:valueType="floatType"/>
 
 
 </set>

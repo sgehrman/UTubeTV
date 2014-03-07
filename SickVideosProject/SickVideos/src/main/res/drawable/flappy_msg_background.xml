@@ -10,13 +10,13 @@
                 android:bottomRightRadius="8dp"/>
 
             <stroke
-                android:color="#2fff"
-                android:width="1dp"/>
+                android:width="1dp"
+                android:color="#2fff"/>
 
             <gradient
-                android:startColor="#b000"
-                android:endColor="#e000"
                 android:angle="270"
+                android:endColor="#e000"
+                android:startColor="#b000"
                 android:type="linear"/>
 
         </shape>

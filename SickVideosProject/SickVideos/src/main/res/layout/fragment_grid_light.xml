@@ -5,9 +5,9 @@
 
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
         android:id="@+id/grid_frame_layout"
-        android:background="#eee"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#eee">
 
 
         <GridView

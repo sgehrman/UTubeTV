@@ -10,10 +10,6 @@ public class IntroXMLTaskFragment extends Fragment {
   private List<IntroXMLParser.IntroPage> pages;
   private Callbacks mCallbacks;
 
-  public static interface Callbacks {
-    public void onNewPages();
-  }
-
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
@@ -44,5 +40,9 @@ public class IntroXMLTaskFragment extends Fragment {
   public void onDetach() {
     super.onDetach();
     mCallbacks = null;
+  }
+
+  public static interface Callbacks {
+    public void onNewPages();
   }
 }

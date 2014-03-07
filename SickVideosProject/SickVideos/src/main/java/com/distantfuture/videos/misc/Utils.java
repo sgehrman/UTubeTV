@@ -45,11 +45,6 @@ public class Utils {
   private static final PeriodFormatter mFormatter = ISOPeriodFormat.standard();
   private static float sScreenDensity = 0;
 
-  // interface for getting results
-  public interface StringResultListener {
-    public void onResults(StringResultListener listener, String result);
-  }
-
   public static void toast(Context context, final String message) {
     // Toasts only work on the main thread
     if (context != null && message != null) {
@@ -352,5 +347,10 @@ public class Utils {
     if (intent.resolveActivity(activity.getPackageManager()) != null) {
       activity.startActivity(intent);
     }
+  }
+
+  // interface for getting results
+  public interface StringResultListener {
+    public void onResults(StringResultListener listener, String result);
   }
 }

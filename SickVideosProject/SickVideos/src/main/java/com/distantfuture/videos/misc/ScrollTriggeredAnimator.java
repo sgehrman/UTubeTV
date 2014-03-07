@@ -7,12 +7,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 
 public class ScrollTriggeredAnimator {
+  private final Handler mHandler = new Handler(Looper.getMainLooper());
   private int mInDuration;
   private int mOutDuration;
   private View mAnimationTarget;
   private boolean mGlowing = false;
-  private final Handler mHandler = new Handler(Looper.getMainLooper());
-
   private final Runnable mBackgroundDimmerFadeRunnable = new Runnable() {
     @Override
     public void run() {

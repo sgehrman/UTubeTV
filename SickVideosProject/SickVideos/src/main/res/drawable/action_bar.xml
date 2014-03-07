@@ -17,9 +17,9 @@
         android:top="1dp">
         <shape>
             <gradient
-                android:startColor="@color/action_bar_start_color"
-                android:endColor="@color/action_bar_end_color"
                 android:angle="270"
+                android:endColor="@color/action_bar_end_color"
+                android:startColor="@color/action_bar_start_color"
                 android:type="linear"/>
         </shape>
 

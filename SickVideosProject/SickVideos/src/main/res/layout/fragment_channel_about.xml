@@ -23,9 +23,9 @@
                 android:layout_height="wrap_content"
 
                 android:orientation="vertical"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="10dp"
                 >
 
                 <LinearLayout
@@ -41,52 +41,52 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#3000"
                         android:layout_marginTop="8dp"
+                        android:background="#3000"
 
                         android:padding="1dp"
                         >
 
                         <com.distantfuture.videos.imageutils.ResizingImageView
                             android:id="@+id/image"
-                            android:background="#fff"
-                            android:scaleType="centerCrop"
-                            android:adjustViewBounds="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:background="#fff"
+                            android:scaleType="centerCrop"
                             />
 
                     </FrameLayout>
 
                     <TextView
-                        android:layout_marginTop="10dp"
                         android:id="@+id/text_view"
                         style="@style/VideoTextTitle_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="2"/>
 
                     <TextView
-                        android:layout_marginTop="10dp"
-
                         android:id="@+id/description_view"
+
                         android:layout_width="match_parent"
-                        android:autoLink="all"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:autoLink="all"/>
 
 
                     <Button
                         android:id="@+id/disclaimer"
 
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_gravity="right"
-                        style="?android:attr/borderlessButtonStyle"
                         android:text="@string/disclaimer"
+                        android:textColor="#777"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#777"/>
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 

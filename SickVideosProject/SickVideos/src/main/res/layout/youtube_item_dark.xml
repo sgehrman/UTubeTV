@@ -9,16 +9,16 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
         style="@style/VideoTextTitle_dark"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/description_view"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/text_view"
         style="@style/VideoTextDescription_dark"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view"/>
 
 </RelativeLayout>

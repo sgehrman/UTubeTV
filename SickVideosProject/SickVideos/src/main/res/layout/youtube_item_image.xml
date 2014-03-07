@@ -17,8 +17,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
 
-        android:paddingLeft="3dp"
         android:paddingBottom="3dp"
+        android:paddingLeft="3dp"
         android:paddingRight="3dp"
         >
 
@@ -44,9 +44,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:padding="6dp"
                 android:textColor="#fff"
-                android:layout_centerVertical="true"
 
                 android:textSize="12sp"
                 android:textStyle="normal"/>

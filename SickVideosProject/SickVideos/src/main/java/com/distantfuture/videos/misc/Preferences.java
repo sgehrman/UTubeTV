@@ -6,13 +6,8 @@ import android.preference.PreferenceManager;
 
 public class Preferences implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-  public interface PreferenceCacheListener {
-    public void prefChanged(String prefName);
-  }
-
   private SharedPreferences sharedPreferences;
   private PreferenceCacheListener mListener;
-
   public Preferences(Context context, PreferenceCacheListener listener) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -54,6 +49,10 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     mListener.prefChanged(key);
+  }
+
+  public interface PreferenceCacheListener {
+    public void prefChanged(String prefName);
   }
 
 }

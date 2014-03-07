@@ -1,49 +1,49 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
+        android:defaultValue="false"
         android:key="play_fullscreen"
-        android:title="@string/pref_play_fullscreen"
         android:summary="@string/pref_play_fullscreen_summary"
-        android:defaultValue="false"/>
+        android:title="@string/pref_play_fullscreen"/>
 
     <SwitchPreference
+        android:defaultValue="false"
         android:key="mute_ads"
-        android:title="@string/pref_mute_ads"
         android:summary="@string/pref_mute_ads_summary"
-        android:defaultValue="false"/>
+        android:title="@string/pref_mute_ads"/>
 
     <SwitchPreference
+        android:defaultValue="false"
         android:key="repeat_video"
-        android:title="@string/pref_repeat_video"
         android:summary="@string/pref_repeat_video_summary"
-        android:defaultValue="false"/>
+        android:title="@string/pref_repeat_video"/>
 
     <SwitchPreference
+        android:defaultValue="false"
         android:key="play_next"
-        android:title="@string/pref_play_next_video"
         android:summary="@string/pref_play_next_video_summary"
-        android:defaultValue="false"/>
+        android:title="@string/pref_play_next_video"/>
 
     <Preference
-        android:title="@string/pref_intro_title"
         android:key="intro"
         android:summary="@string/pref_intro_summary"
+        android:title="@string/pref_intro_title"
         />
     <Preference
-        android:title="@string/pref_rate_app"
+        android:key="rate"
         android:summary="@string/pref_rate_app_summary"
-        android:key="rate"/>
+        android:title="@string/pref_rate_app"/>
     <Preference
-        android:title="@string/pref_send_feedback"
+        android:key="feedback"
         android:summary="@string/pref_send_feedback_summary"
-        android:key="feedback"/>
+        android:title="@string/pref_send_feedback"/>
     <Preference
-        android:title="@string/pref_title_log"
-        android:key="log"/>
+        android:key="log"
+        android:title="@string/pref_title_log"/>
 
     <Preference
-        android:title="@string/pref_title_credits"
-        android:key="credits"/>
+        android:key="credits"
+        android:title="@string/pref_title_credits"/>
 
 </PreferenceScreen>
 

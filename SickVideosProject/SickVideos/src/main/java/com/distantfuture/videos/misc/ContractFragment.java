@@ -10,7 +10,7 @@ public abstract class ContractFragment<T> extends Fragment {
   @Override
   public void onAttach(Activity activity) {
     try {
-      mContract = (T)activity;
+      mContract = (T) activity;
     } catch (ClassCastException e) {
       throw new IllegalStateException(activity.getClass().getSimpleName()
           + " does not implement " + getClass().getSimpleName() + "'s contract interface.", e);
