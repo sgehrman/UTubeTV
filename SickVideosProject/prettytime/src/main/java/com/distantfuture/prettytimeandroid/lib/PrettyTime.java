@@ -60,7 +60,8 @@ public class PrettyTime
 {
    private volatile Date reference;
    private volatile Locale locale = Locale.getDefault();
-   private volatile Map<TimeUnit, TimeFormat> units = new LinkedHashMap<TimeUnit, TimeFormat>();
+   private volatile Map<TimeUnit, TimeFormat> mUnits = new LinkedHashMap<TimeUnit, TimeFormat>();
+  List<TimeUnit> mCachedUnits=null;
 
    /**
     * Default constructor
@@ -146,9 +147,7 @@ public class PrettyTime
    {
       long absoluteDifference = Math.abs(difference);
 
-      // Required for thread-safety
-      List<TimeUnit> units = new ArrayList<TimeUnit>(getUnits().size());
-      units.addAll(getUnits());
+      List<TimeUnit> units = getUnits();
 
       DurationImpl result = new DurationImpl();
 
@@ -236,8 +235,6 @@ public class PrettyTime
     * to perform its calculation. If {@code then} is null, it will default to {@code new Date()}; also decorate for
     * past/future tense.
     * 
-    * @param duration the {@link Date} to be formatted
-    * @return A formatted string representing {@code then}
     */
    public String format(Date then)
    {
@@ -253,8 +250,6 @@ public class PrettyTime
     * to perform its calculation. If {@code then} is null, it will default to {@code new Date()}; also decorate for
     * past/future tense.
     * 
-    * @param duration the {@link Calendar} whose date is to be formatted
-    * @return A formatted string representing {@code then}
     */
    public String format(Calendar then)
    {
@@ -268,8 +263,6 @@ public class PrettyTime
     * to perform its calculation. If {@code then} is null, it will default to {@code new Date()}; also decorate for
     * past/future tense. Rounding rules are ignored.
     * 
-    * @param duration the {@link Date} to be formatted
-    * @return A formatted string representing {@code then}
     */
    public String formatUnrounded(Date then)
    {
@@ -379,9 +372,9 @@ public class PrettyTime
       if (unit == null)
          throw new IllegalArgumentException("Time unit must not be null.");
 
-      if (units.get(unit) != null)
+      if (mUnits.get(unit) != null)
       {
-         return units.get(unit);
+         return mUnits.get(unit);
       }
       return null;
    }
@@ -418,9 +411,13 @@ public class PrettyTime
     */
    public List<TimeUnit> getUnits()
    {
-      List<TimeUnit> result = new ArrayList<TimeUnit>(units.keySet());
-      Collections.sort(result, new TimeUnitComparator());
-      return Collections.unmodifiableList(result);
+     if (mCachedUnits == null) {
+       List<TimeUnit> result = new ArrayList<TimeUnit>(mUnits.keySet());
+       Collections.sort(result, new TimeUnitComparator());
+       mCachedUnits = Collections.unmodifiableList(result);
+     }
+
+     return mCachedUnits;
    }
 
    /**
@@ -434,7 +431,7 @@ public class PrettyTime
        if (unitType == null)
            throw new IllegalArgumentException("Unit type to get must not be null.");
       
-       for (TimeUnit unit : units.keySet()) {
+       for (TimeUnit unit : mUnits.keySet()) {
            if (unitType.isAssignableFrom(unit.getClass()))
            {
               return (UNIT) unit;
@@ -455,7 +452,9 @@ public class PrettyTime
       if (format == null)
          throw new IllegalArgumentException("Format to register must not be null.");
 
-      units.put(unit, format);
+     mCachedUnits = null;
+
+     mUnits.put(unit, format);
       if (unit instanceof LocaleAware)
          ((LocaleAware<?>) unit).setLocale(locale);
       if (format instanceof LocaleAware)
@@ -473,10 +472,11 @@ public class PrettyTime
       if (unitType == null)
          throw new IllegalArgumentException("Unit type to remove must not be null.");
 
-      for (TimeUnit unit : units.keySet()) {
+      for (TimeUnit unit : mUnits.keySet()) {
          if (unitType.isAssignableFrom(unit.getClass()))
          {
-            return units.remove(unit);
+           mCachedUnits = null;
+            return mUnits.remove(unit);
          }
       }
       return null;
@@ -492,7 +492,9 @@ public class PrettyTime
       if (unit == null)
          throw new IllegalArgumentException("Unit to remove must not be null.");
 
-      return units.remove(unit);
+     mCachedUnits = null;
+
+     return mUnits.remove(unit);
    }
 
    /**
@@ -505,16 +507,16 @@ public class PrettyTime
 
    /**
     * Set the the {@link Locale} for this {@link PrettyTime} object. This may be an expensive operation, since this
-    * operation calls {@link TimeUnit#setLocale(Locale)} for each {@link TimeUnit} in {@link #getUnits()}.
+    * operation calls TimeUnit#setLocale(Locale) for each {@link TimeUnit} in {@link #getUnits()}.
     */
    public PrettyTime setLocale(final Locale locale)
    {
       this.locale = locale;
-      for (TimeUnit unit : units.keySet()) {
+      for (TimeUnit unit : mUnits.keySet()) {
          if (unit instanceof LocaleAware)
             ((LocaleAware<?>) unit).setLocale(locale);
       }
-      for (TimeFormat format : units.values()) {
+      for (TimeFormat format : mUnits.values()) {
          if (format instanceof LocaleAware)
             ((LocaleAware<?>) format).setLocale(locale);
       }
@@ -535,7 +537,9 @@ public class PrettyTime
    public List<TimeUnit> clearUnits()
    {
       List<TimeUnit> result = getUnits();
-      units.clear();
+     mCachedUnits = null;
+
+     mUnits.clear();
       return result;
    }
 
