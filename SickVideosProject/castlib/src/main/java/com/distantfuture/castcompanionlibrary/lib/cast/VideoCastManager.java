@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast;
 
 import android.app.PendingIntent;
@@ -16,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.app.MediaRouteDialogFactory;
 import android.support.v7.media.MediaRouter.RouteInfo;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.distantfuture.castcompanionlibrary.lib.R;
@@ -97,30 +95,31 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   public static final String EXTRA_MEDIA = "media";
   public static final String EXTRA_START_POINT = "startPoint";
   public static final String EXTRA_SHOULD_START = "shouldStart";
-
-  /**
-   * Volume can be controlled at two different layers, one is at the "stream" level and one at the
-   * "device" level. <code>VolumeType</code> encapsulates these two types.
-   */
-  public static enum VolumeType {
-    STREAM,
-    DEVICE
-  }
-
   private static final String TAG = CastUtils.makeLogTag(VideoCastManager.class);
   private static VideoCastManager sInstance;
   private final Set<IMiniController> mMiniControllers;
   private final AudioManager mAudioManager;
+  private final ComponentName mMediaButtonReceiverComponent;
+  private final String mDataNamespace;
+  protected Set<IVideoCastConsumer> mVideoConsumers;
   private RemoteMediaPlayer mRemoteMediaPlayer;
   private RemoteControlClient mRemoteControlClient;
   private VolumeType mVolumeType = VolumeType.DEVICE;
   private int mState = MediaStatus.PLAYER_STATE_IDLE;
   private int mIdleReason;
-  private final ComponentName mMediaButtonReceiverComponent;
-  private final String mDataNamespace;
   private Cast.MessageReceivedCallback mDataChannel;
-  protected Set<IVideoCastConsumer> mVideoConsumers;
   private IMediaAuthService mAuthService;
+  private VideoCastManager(Context context, String applicationId, String dataNamespace) {
+    super(context, applicationId);
+    CastUtils.LOGD(TAG, "VideoCastManager is instantiated");
+    mVideoConsumers = new HashSet<IVideoCastConsumer>();
+    mDataNamespace = dataNamespace;
+
+    mMiniControllers = new HashSet<IMiniController>();
+
+    mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+    mMediaButtonReceiverComponent = new ComponentName(context, VideoIntentReceiver.class);
+  }
 
   /**
    * Initializes the VideoCastManager for clients. Before clients can use VideoCastManager, they
@@ -178,22 +177,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     return sInstance;
   }
 
-  private VideoCastManager(Context context, String applicationId, String dataNamespace) {
-    super(context, applicationId);
-    CastUtils.LOGD(TAG, "VideoCastManager is instantiated");
-    mVideoConsumers = new HashSet<IVideoCastConsumer>();
-    mDataNamespace = dataNamespace;
-
-    mMiniControllers = new HashSet<IMiniController>();
-
-    mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-    mMediaButtonReceiverComponent = new ComponentName(context, VideoIntentReceiver.class);
-  }
-
-  /*************************************************************************/
-  /************** MiniControllers management *******************************/
-  /*************************************************************************/
-
   /**
    * Updates the information and state of a MiniController.
    */
@@ -211,6 +194,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
       controller.setIcon(mm.getImages().get(0).getUrl());
     }
   }
+
+  /*************************************************************************/
+  /************** MiniControllers management *******************************/
+  /*************************************************************************/
 
   /*
    * Updates the information and state of all MiniControllers
@@ -272,10 +259,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /*************************************************************************/
-  /************** VideoCastControllerActivity management *******************/
-  /*************************************************************************/
-
   /**
    * Launches the {@link VideoCastControllerActivity} that provides a default Cast Player page.
    *
@@ -291,6 +274,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     intent.putExtra(EXTRA_SHOULD_START, shouldStart);
     context.startActivity(intent);
   }
+
+  /*************************************************************************/
+  /************** VideoCastControllerActivity management *******************/
+  /*************************************************************************/
 
   /**
    * Launches the {@link VideoCastControllerActivity} that provides a default Cast Player page.
@@ -338,10 +325,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     mAuthService = null;
   }
 
-  /*************************************************************************/
-  /************** Utility Methods ******************************************/
-  /*************************************************************************/
-
   /**
    * Returns the active {@link RemoteMediaPlayer} instance. Since there are a number of media
    * control APIs that this library do not provide a wrapper for, client applications can call
@@ -352,6 +335,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   public final RemoteMediaPlayer getRemoteMediaPlayer() {
     return mRemoteMediaPlayer;
   }
+
+  /*************************************************************************/
+  /************** Utility Methods ******************************************/
+  /*************************************************************************/
 
   /**
    * Determines if the media that is loaded remotely is a live stream or not.
@@ -627,8 +614,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /************************************************************/
-  /***** Notification Service *********************************/
   /**
    * ********************************************************
    */
@@ -649,6 +634,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     return null != mContext.startService(service);
   }
 
+  /************************************************************/
+  /***** Notification Service *********************************/
+
   private void stopNotificationService() {
     if (!isFeatureEnabled(FEATURE_NOTIFICATION)) {
       return;
@@ -656,8 +644,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     mContext.stopService(new Intent(mContext, VideoCastNotificationService.class));
   }
 
-  /************************************************************/
-  /*********** Implementing Cast.Listener *********************/
   /**
    * ********************************************************
    */
@@ -682,6 +668,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     updateMiniControllersVisibility(false);
     stopNotificationService();
   }
+
+  /************************************************************/
+  /*********** Implementing Cast.Listener *********************/
 
   private void onApplicationStatusChanged() {
     String appStatus = null;
@@ -847,10 +836,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /*************************************************************************/
-  /************** Playback methods *****************************************/
-  /*************************************************************************/
-
   /**
    * Loads a media. For this to succeed, you need to have successfully launched the application.
    *
@@ -864,6 +849,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   public void loadMedia(MediaInfo media, boolean autoPlay, int position) throws TransientNetworkDisconnectionException, NoConnectionException {
     loadMedia(media, autoPlay, position, null);
   }
+
+  /*************************************************************************/
+  /************** Playback methods *****************************************/
+  /*************************************************************************/
 
   /**
    * Loads a media. For this to succeed, you need to have successfully launched the application.
@@ -1005,7 +994,7 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   /**
    * Seeks to the given point without changing the state of the player, i.e. after seek is
    * completed, it resumes what it was doing before the start of seek.
-   *
+   * <p/>
    * position in milliseconds
    */
   public void seek(int position) throws TransientNetworkDisconnectionException, NoConnectionException {
@@ -1030,7 +1019,7 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
 
   /**
    * Seeks to the given point and starts playback regardless of the starting state.
-   *
+   * <p/>
    * position in milliseconds
    */
   public void seekAndPlay(int position) throws TransientNetworkDisconnectionException, NoConnectionException {
@@ -1155,8 +1144,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     return mIdleReason;
   }
 
-  /*************************************************************************/
-  /************** DataChannel callbacks and methods ************************/
   /**
    * *********************************************************************
    */
@@ -1192,6 +1179,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
       CastUtils.LOGE(TAG, "Failed to add data channel", e);
     }
   }
+
+  /*************************************************************************/
+  /************** DataChannel callbacks and methods ************************/
 
   private void onMessageSendFailed(int errorCode) {
     for (IVideoCastConsumer consumer : mVideoConsumers) {
@@ -1255,8 +1245,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
 
   }
 
-  /*************************************************************************/
-  /************** MediaChannel callbacks ***********************************/
   /**
    * *********************************************************************
    */
@@ -1325,6 +1313,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
 
   }
 
+  /*************************************************************************/
+  /************** MediaChannel callbacks ***********************************/
+
   /*
    * This is called by onMetadataUpdated() of RemoteMediaPlayer
    */
@@ -1348,8 +1339,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /*************************************************************************/
-  /************** RemoteControlClient management ***************************/
   /**
    * *********************************************************************
    */
@@ -1388,6 +1377,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     // update the remote control's metadata
     updateLockScreenMetadata();
   }
+
+  /*************************************************************************/
+  /************** RemoteControlClient management ***************************/
 
   /*
    * Updates lock screen image
@@ -1523,9 +1515,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /*************************************************************/
-  /***** Registering IVideoCastConsumer listeners **************/
-  /*************************************************************/
   /**
    * Registers an {@link IVideoCastConsumer} interface with this class. Registered listeners will
    * be notified of changes to a variety of lifecycle and media status changes through the
@@ -1539,6 +1528,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
+  /*************************************************************/
+  /***** Registering IVideoCastConsumer listeners **************/
+  /*************************************************************/
+
   /**
    * Unregisters an {@link IVideoCastConsumer}.
    */
@@ -1548,10 +1541,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
       mVideoConsumers.remove(listener);
     }
   }
-
-  /*************************************************************/
-  /***** Registering IMiniController listeners *****************/
-  /*************************************************************/
 
   /**
    * Adds a new {@link IMiniController} component. Callers need to provide their own
@@ -1580,6 +1569,10 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
+  /*************************************************************/
+  /***** Registering IMiniController listeners *****************/
+  /*************************************************************/
+
   /**
    * Adds a new {@link IMiniController} component and assigns {@link VideoCastManager} as the
    * {@link OnMiniControllerChangedListener} for this component.
@@ -1597,8 +1590,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     }
   }
 
-  /*************************************************************/
-  /***** Implementing abstract methods of BaseCastManager ******/
   /**
    * *********************************************************
    */
@@ -1609,6 +1600,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     detachMediaChannel();
     removeDataChannel();
   }
+
+  /*************************************************************/
+  /***** Implementing abstract methods of BaseCastManager ******/
 
   @Override
   Builder getCastOptionBuilder(CastDevice device) {
@@ -1640,6 +1634,21 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     return new VideoMediaRouteDialogFactory();
   }
 
+  @Override
+  public void onFailed(int resourceId, int statusCode) {
+    CastUtils.LOGD(TAG, "onFailed: " + mContext.getString(resourceId) + ", code: " + statusCode);
+    super.onFailed(resourceId, statusCode);
+  }
+
+  /**
+   * Volume can be controlled at two different layers, one is at the "stream" level and one at the
+   * "device" level. <code>VolumeType</code> encapsulates these two types.
+   */
+  public static enum VolumeType {
+    STREAM,
+    DEVICE
+  }
+
   class CastListener extends Cast.Listener {
 
     /*
@@ -1664,12 +1673,6 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
     public void onVolumeChanged() {
       VideoCastManager.this.onVolumeChanged();
     }
-  }
-
-  @Override
-  public void onFailed(int resourceId, int statusCode) {
-    CastUtils.LOGD(TAG, "onFailed: " + mContext.getString(resourceId) + ", code: " + statusCode);
-    super.onFailed(resourceId, statusCode);
   }
 
 }

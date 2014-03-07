@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.utils;
 
 import android.app.Activity;
@@ -72,7 +71,7 @@ public class CastUtils {
 
   /**
    * A utility method to show a simple error dialog.
-   *
+   * <p/>
    * param message The message to be shown in the dialog
    */
   public static void showErrorDialog(Context context, String message) {

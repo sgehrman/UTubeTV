@@ -39,33 +39,6 @@ public class TypefaceManager {
   private TypefaceManager() {
   }
 
-  public enum IconicTypeface {
-
-    ENTYPO(R.raw.entypo),
-    ENTYPO_SOCIAL(R.raw.entypo_social),
-    FONT_AWESOME(R.raw.font_awesome),
-    ICONIC(R.raw.iconic);
-
-    private final int mTypefaceResourceId;
-    private Typeface mTypeface;
-
-    private IconicTypeface(int typefaceResourceId) {
-      mTypefaceResourceId = typefaceResourceId;
-    }
-
-    /**
-     * Loads a {@link Typeface} for the given icon font.
-     * {@link Typeface} is loaded only once to avoid memory consumption.
-     */
-    public Typeface getTypeface(final Context context) {
-      if (mTypeface == null) {
-        mTypeface = createTypefaceFromResource(context, mTypefaceResourceId);
-      }
-
-      return mTypeface;
-    }
-  }
-
   private static Typeface createTypefaceFromResource(final Context context, final int resource) {
     Typeface typeface = null;
     InputStream inputStream = null;
@@ -107,5 +80,32 @@ public class TypefaceManager {
     }
 
     return typeface;
+  }
+
+  public enum IconicTypeface {
+
+    ENTYPO(R.raw.entypo),
+    ENTYPO_SOCIAL(R.raw.entypo_social),
+    FONT_AWESOME(R.raw.font_awesome),
+    ICONIC(R.raw.iconic);
+
+    private final int mTypefaceResourceId;
+    private Typeface mTypeface;
+
+    private IconicTypeface(int typefaceResourceId) {
+      mTypefaceResourceId = typefaceResourceId;
+    }
+
+    /**
+     * Loads a {@link Typeface} for the given icon font.
+     * {@link Typeface} is loaded only once to avoid memory consumption.
+     */
+    public Typeface getTypeface(final Context context) {
+      if (mTypeface == null) {
+        mTypeface = createTypefaceFromResource(context, mTypefaceResourceId);
+      }
+
+      return mTypeface;
+    }
   }
 }

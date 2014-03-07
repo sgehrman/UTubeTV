@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast.dialog.video;
 
 import android.content.Context;

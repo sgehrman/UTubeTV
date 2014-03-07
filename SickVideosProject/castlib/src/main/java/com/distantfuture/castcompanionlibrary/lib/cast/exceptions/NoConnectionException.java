@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast.exceptions;
 
 /**

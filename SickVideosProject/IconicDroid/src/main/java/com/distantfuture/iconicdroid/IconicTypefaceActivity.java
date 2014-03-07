@@ -26,12 +26,11 @@ import java.util.Random;
 
 public class IconicTypefaceActivity extends ListActivity {
 
-  private static final String EXTRA_ICON_TYPE = "extra_icon_type";
-
   public static final int ICON_TYPE_ENTYPO = 1001;
   public static final int ICON_TYPE_ENTYPO_SOCIAL = 1002;
   public static final int ICON_TYPE_FONT_AWESOME = 1003;
   public static final int ICON_TYPE_ICONIC = 1004;
+  private static final String EXTRA_ICON_TYPE = "extra_icon_type";
 
   public static Intent createIntent(final Context context, final int iconType) {
     Intent intent = new Intent(context, IconicTypefaceActivity.class);

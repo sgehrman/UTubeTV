@@ -148,20 +148,6 @@ public class IconicFontDrawable extends Drawable {
     invalidateSelf();
   }
 
-  /**
-   * Set intrinsic width, which is used by several controls.
-   */
-  public void setIntrinsicWidth(int intrinsicWidth) {
-    mIntrinsicWidth = intrinsicWidth;
-  }
-
-  /**
-   * Set intrinsic height, which is used by several controls.
-   */
-  public void setIntrinsicHeight(int intrinsicHeight) {
-    mIntrinsicHeight = intrinsicHeight;
-  }
-
   @Override
   public void draw(Canvas canvas) {
     if (mIcon != null) {
@@ -186,9 +172,23 @@ public class IconicFontDrawable extends Drawable {
     return mIntrinsicWidth;
   }
 
+  /**
+   * Set intrinsic width, which is used by several controls.
+   */
+  public void setIntrinsicWidth(int intrinsicWidth) {
+    mIntrinsicWidth = intrinsicWidth;
+  }
+
   @Override
   public int getIntrinsicHeight() {
     return mIntrinsicHeight;
+  }
+
+  /**
+   * Set intrinsic height, which is used by several controls.
+   */
+  public void setIntrinsicHeight(int intrinsicHeight) {
+    mIntrinsicHeight = intrinsicHeight;
   }
 
   @Override

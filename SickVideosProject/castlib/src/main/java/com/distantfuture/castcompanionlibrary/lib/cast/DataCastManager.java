@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast;
 
 import android.content.Context;
@@ -63,6 +62,16 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
   private final Set<String> mNamespaceList = new HashSet<String>();
   protected Set<IDataCastConsumer> mDataConsumers;
 
+  protected DataCastManager(Context context, String applicationId, String... namespaces) {
+    super(context, applicationId);
+    mDataConsumers = new HashSet<IDataCastConsumer>();
+    if (null != namespaces) {
+      for (String namespace : namespaces) {
+        mNamespaceList.add(namespace);
+      }
+    }
+  }
+
   /**
    * Initializes the DataCastManager for clients. Before clients can use DataCastManager, they
    * need to initialize it by calling this static method. Then clients can obtain an instance of
@@ -86,16 +95,6 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
       sCastManager = sInstance;
     }
     return sInstance;
-  }
-
-  protected DataCastManager(Context context, String applicationId, String... namespaces) {
-    super(context, applicationId);
-    mDataConsumers = new HashSet<IDataCastConsumer>();
-    if (null != namespaces) {
-      for (String namespace : namespaces) {
-        mNamespaceList.add(namespace);
-      }
-    }
   }
 
   /**
@@ -260,34 +259,11 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     return builder;
   }
 
-  class CastListener extends Cast.Listener {
-
-    /*
-     * (non-Javadoc)
-     * @see com.google.android.gms.cast.Cast.Listener#onApplicationDisconnected (int)
-     */
-    @Override
-    public void onApplicationDisconnected(int statusCode) {
-      DataCastManager.this.onApplicationDisconnected(statusCode);
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see com.google.android.gms.cast.Cast.Listener#onApplicationStatusChanged ()
-     */
-    @Override
-    public void onApplicationStatusChanged() {
-      DataCastManager.this.onApplicationStatusChanged();
-    }
-  }
-
   @Override
   protected MediaRouteDialogFactory getMediaRouteDialogFactory() {
     return null;
   }
 
-  /*************************************************************************/
-  /************** Cast.Listener callbacks **********************************/
   /**
    * *********************************************************************
    */
@@ -352,6 +328,9 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     }
 
   }
+
+  /*************************************************************************/
+  /************** Cast.Listener callbacks **********************************/
 
   /*
    * Adds namespaces for data channel(s)
@@ -458,8 +437,6 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     // nothing relevant to data
   }
 
-  /*************************************************************************/
-  /************** MessageReceivedCallbacks callbacks ***********************/
   /**
    * *********************************************************************
    */
@@ -476,6 +453,9 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
 
   }
 
+  /*************************************************************************/
+  /************** MessageReceivedCallbacks callbacks ***********************/
+
   public void onMessageSendFailed(Status result) {
     for (IDataCastConsumer consumer : mDataConsumers) {
       try {
@@ -486,9 +466,6 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     }
   }
 
-  /*************************************************************/
-  /***** Registering IDataCastConsumer listeners ***************/
-  /*************************************************************/
   /**
    * Registers an {@link IDataCastConsumer} interface with this class. Registered listeners will
    * be notified of changes to a variety of lifecycle and status changes through the callbacks
@@ -507,6 +484,10 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     }
   }
 
+  /*************************************************************/
+  /***** Registering IDataCastConsumer listeners ***************/
+  /*************************************************************/
+
   /**
    * Unregisters an {@link IDataCastConsumer}.
    */
@@ -514,6 +495,27 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
     if (null != listener) {
       super.removeBaseCastConsumer(listener);
       mDataConsumers.remove(listener);
+    }
+  }
+
+  class CastListener extends Cast.Listener {
+
+    /*
+     * (non-Javadoc)
+     * @see com.google.android.gms.cast.Cast.Listener#onApplicationDisconnected (int)
+     */
+    @Override
+    public void onApplicationDisconnected(int statusCode) {
+      DataCastManager.this.onApplicationDisconnected(statusCode);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.google.android.gms.cast.Cast.Listener#onApplicationStatusChanged ()
+     */
+    @Override
+    public void onApplicationStatusChanged() {
+      DataCastManager.this.onApplicationStatusChanged();
     }
   }
 

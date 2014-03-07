@@ -1,10 +1,8 @@
-
 package com.distantfuture.castcompanionlibrary.lib.utils;
 
 import android.net.Uri;
 
 import com.distantfuture.castcompanionlibrary.lib.utils.MiniController.OnMiniControllerChangedListener;
-import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaStatus;
 
 /**

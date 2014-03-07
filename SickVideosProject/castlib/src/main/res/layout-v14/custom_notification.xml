@@ -7,9 +7,9 @@
         android:id="@+id/iconView"
         android:layout_width="68dp"
         android:layout_height="68dp"
-        android:scaleType="fitXY"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"
         android:src="@drawable/video_placeholder_200x200"/>
 
     <ImageView
@@ -25,19 +25,19 @@
         android:id="@+id/playPauseView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/removeView"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/removeView"
         android:src="@drawable/ic_av_pause_sm_dark"/>
 
     <ProgressBar
         android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/playPauseView"
         android:layout_alignLeft="@+id/playPauseView"
         android:layout_alignRight="@+id/playPauseView"
         android:layout_alignTop="@+id/playPauseView"
-        android:layout_alignBottom="@+id/playPauseView"
         android:visibility="gone"/>
 
     <TextView
@@ -52,8 +52,8 @@
         android:layout_toRightOf="@+id/iconView"
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
-        android:textAppearance="@style/android:TextAppearance.StatusBar.EventContent.Title"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:textAppearance="@style/android:TextAppearance.StatusBar.EventContent.Title"/>
 
     <TextView
         android:id="@+id/subTitleView"
@@ -67,7 +67,7 @@
         android:layout_toRightOf="@+id/iconView"
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
-        android:textAppearance="@style/android:TextAppearance.StatusBar.EventContent"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:textAppearance="@style/android:TextAppearance.StatusBar.EventContent"/>
 
 </RelativeLayout>

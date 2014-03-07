@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast;
 
 import android.support.v7.media.MediaRouter.RouteInfo;

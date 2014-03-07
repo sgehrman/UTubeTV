@@ -80,7 +80,7 @@ public interface IMediaAuthService {
   /**
    * Returns the length of time within which the library expects to have heard back from the
    * authorization service. If it doesn't, it will call abort().
-   *
+   * <p/>
    * Timeout in milliseconds
    */
   public long getTimeout();
@@ -88,7 +88,7 @@ public interface IMediaAuthService {
   /**
    * If authorization times out or user cancels the authorization process, this method will be
    * called.
-   *
+   * <p/>
    * param abortReason One of the MediaAuthStatus#ABORT_* reasons
    */
   public void abort(MediaAuthStatus abortReason);

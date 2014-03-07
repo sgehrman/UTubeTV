@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast.callbacks;
 
 import com.google.android.gms.cast.ApplicationMetadata;
@@ -25,7 +24,7 @@ public interface IVideoCastConsumer extends IBaseCastConsumer {
    * If this method returns <code>true</code>, then the library will provide an error dialog to
    * inform the user. Clients can extend this method and return <code>false</code> to handle the
    * error message themselves.
-   *
+   * <p/>
    * return <code>true</code> if you want the library handle the error message
    */
   public boolean onApplicationConnectionFailed(int errorCode);
@@ -67,10 +66,10 @@ public interface IVideoCastConsumer extends IBaseCastConsumer {
 
   /**
    * Called when there is an error sending a message.
-   *
+   * <p/>
    * param messageId The ID of the message that could not be sent.
    * param errorCode An error code indicating the reason for the disconnect. One of the error
-   *                  constants defined in CastErrors.
+   * constants defined in CastErrors.
    */
   public void onDataMessageSendFailed(int errorCode);
 

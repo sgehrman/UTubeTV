@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.utils;
 
 import android.app.Notification;
@@ -42,9 +41,8 @@ public class VideoCastNotificationService extends Service {
   public static final String ACTION_TOGGLE_PLAYBACK = "com.distantfuture.castcompanionlibrary.lib.action.toggleplayback";
   public static final String ACTION_STOP = "com.distantfuture.castcompanionlibrary.lib.action.stop";
   public static final String ACTION_VISIBILITY = "com.distantfuture.castcompanionlibrary.lib.action.notificationvisibility";
-  private static int NOTIFICATION_ID = 1;
-
   private static final String TAG = CastUtils.makeLogTag(VideoCastNotificationService.class);
+  private static int NOTIFICATION_ID = 1;
   private String mApplicationId;
   private Bitmap mVideoArtBitmap;
   private Uri mVideoArtUri;

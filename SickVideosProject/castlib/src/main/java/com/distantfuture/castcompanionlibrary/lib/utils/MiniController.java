@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.utils;
 
 import android.content.Context;
@@ -68,6 +67,11 @@ public class MiniController extends RelativeLayout implements IMiniController {
     setupCallbacks();
   }
 
+  public MiniController(Context context) {
+    super(context);
+    loadViews();
+  }
+
   /**
    * Sets the listener that should be notified when a relevant event is fired from this component.
    * Clients can register the {@link VideoCastManager} instance to be the default listener so it
@@ -128,11 +132,6 @@ public class MiniController extends RelativeLayout implements IMiniController {
 
       }
     });
-  }
-
-  public MiniController(Context context) {
-    super(context);
-    loadViews();
   }
 
   private void setIcon(Bitmap bm) {

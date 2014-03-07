@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast.dialog.video;
 
 import android.content.Context;
@@ -34,7 +33,7 @@ import java.net.URL;
 public class VideoMediaRouteControllerDialog extends MediaRouteControllerDialog {
 
   private static final String TAG = CastUtils.makeLogTag(VideoMediaRouteControllerDialog.class);
-
+  protected int mState;
   private ImageView mIcon;
   private ImageView mPausePlay;
   private TextView mTitle;
@@ -43,7 +42,6 @@ public class VideoMediaRouteControllerDialog extends MediaRouteControllerDialog 
   private ProgressBar mLoading;
   private Uri mIconUri;
   private VideoCastManager mCastManager;
-  protected int mState;
   private VideoCastConsumerImpl castConsumerImpl;
   private Drawable mPauseDrawable;
   private Drawable mPlayDrawable;
@@ -56,14 +54,6 @@ public class VideoMediaRouteControllerDialog extends MediaRouteControllerDialog 
 
   public VideoMediaRouteControllerDialog(Context context, int theme) {
     super(context, theme);
-  }
-
-  @Override
-  protected void onStop() {
-    if (null != mCastManager) {
-      mCastManager.removeVideoCastConsumer(castConsumerImpl);
-    }
-    super.onStop();
   }
 
   /**
@@ -103,6 +93,14 @@ public class VideoMediaRouteControllerDialog extends MediaRouteControllerDialog 
     } catch (IllegalStateException e) {
       CastUtils.LOGE(TAG, "Failed to update the content of dialog", e);
     }
+  }
+
+  @Override
+  protected void onStop() {
+    if (null != mCastManager) {
+      mCastManager.removeVideoCastConsumer(castConsumerImpl);
+    }
+    super.onStop();
   }
 
   /*

@@ -7,9 +7,9 @@
         android:id="@+id/pageView"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/controllers"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/controllers"
         android:background="@color/black"/>
 
     <RelativeLayout
@@ -67,9 +67,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
-        android:paddingTop="40dp"
         android:layout_toRightOf="@+id/pageView"
         android:background="@color/dark_grey"
+        android:paddingTop="40dp"
         android:visibility="visible">
 
         <TextView

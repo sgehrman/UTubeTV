@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast;
 
 import android.app.Activity;
@@ -19,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.distantfuture.castcompanionlibrary.lib.R;
-import com.distantfuture.castcompanionlibrary.lib.cast.callbacks.BaseCastConsumerImpl;
 import com.distantfuture.castcompanionlibrary.lib.cast.callbacks.IBaseCastConsumer;
 import com.distantfuture.castcompanionlibrary.lib.cast.exceptions.CastException;
 import com.distantfuture.castcompanionlibrary.lib.cast.exceptions.NoConnectionException;
@@ -48,10 +46,6 @@ import java.util.Set;
  * the functionality of this class based on their purpose.
  */
 public abstract class BaseCastManager implements DeviceSelectionListener, ConnectionCallbacks, OnConnectionFailedListener, OnFailedListener {
-  public static enum ReconnectionStatus {
-    STARTED, IN_PROGRESS, FINALIZE, INACTIVE
-  }
-
   public static final int FEATURE_DEBUGGING = 1;
   public static final int FEATURE_NOTIFICATION = 4;
   public static final int FEATURE_LOCKSCREEN = 2;
@@ -59,20 +53,17 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
   public static final String PREFS_KEY_APPLICATION_ID = "application-id";
   public static final String PREFS_KEY_VOLUME_INCREMENT = "volume-increment";
   public static final String PREFS_KEY_ROUTE_ID = "route-id";
-
   public static final int NO_STATUS_CODE = -1;
-
   private static final String TAG = CastUtils.makeLogTag(BaseCastManager.class);
   private static final int SESSION_RECOVERY_TIMEOUT = 5; // in seconds
-
+  protected static BaseCastManager sCastManager;
+  private final Set<IBaseCastConsumer> mBaseCastConsumers = new HashSet<IBaseCastConsumer>();
   protected Context mContext;
   protected MediaRouter mMediaRouter;
   protected MediaRouteSelector mMediaRouteSelector;
   protected CastMediaRouterCallback mMediaRouterCallback;
   protected CastDevice mSelectedCastDevice;
   protected String mDeviceName;
-  private final Set<IBaseCastConsumer> mBaseCastConsumers = new HashSet<IBaseCastConsumer>();
-  private boolean mDestroyOnDisconnect = false;
   protected String mApplicationId;
   protected Handler mHandler;
   protected ReconnectionStatus mReconnectionStatus = ReconnectionStatus.INACTIVE;
@@ -82,12 +73,46 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
   protected AsyncTask<Void, Integer, Integer> mReconnectionTask;
   protected int mCapabilities;
   protected boolean mConnectionSuspened;
+  private boolean mDestroyOnDisconnect = false;
   private boolean mWifiConnectivity = true;
-  protected static BaseCastManager sCastManager;
+  /**
+   * ********************************************************************
+   */
+
+  protected BaseCastManager(Context context, String applicationId) {
+    CastUtils.LOGD(TAG, "BaseCastManager is instantiated");
+    mContext = context;
+    mHandler = new Handler(Looper.getMainLooper());
+    mApplicationId = applicationId;
+    CastUtils.saveStringToPreference(mContext, PREFS_KEY_APPLICATION_ID, applicationId);
+
+    CastUtils.LOGD(TAG, "Application ID is: " + mApplicationId);
+    mMediaRouter = MediaRouter.getInstance(context);
+    mMediaRouteSelector = new MediaRouteSelector.Builder().addControlCategory(CastMediaControlIntent
+        .categoryForCast(mApplicationId)).build();
+
+    mMediaRouterCallback = new CastMediaRouterCallback(this, context);
+    mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_PERFORM_ACTIVE_SCAN);
+  }
 
   /*************************************************************************/
   /************** Abstract Methods *****************************************/
   /*************************************************************************/
+
+  public static BaseCastManager getCastManager() {
+    return sCastManager;
+  }
+
+  /**
+   * A utility method to validate that the appropriate version of the Google Play Services is
+   * available on the device. If not, it will open a dialog to address the issue. The dialog
+   * displays a localized message about the error and upon user confirmation (by tapping on
+   * dialog) will direct them to the Play Store if Google Play services is out of date or missing,
+   * or to system settings if Google Play services is disabled on the device.
+   */
+  public static boolean checkGooglePlayServices(final Activity activity) {
+    return CastUtils.checkGooglePlayServices(activity);
+  }
 
   /**
    * A chance for the subclasses to perform what needs to be done when a route is unselected. Most
@@ -126,26 +151,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
    */
   abstract void onApplicationStopFailed(int statusCode);
 
-  /**
-   * ********************************************************************
-   */
-
-  protected BaseCastManager(Context context, String applicationId) {
-    CastUtils.LOGD(TAG, "BaseCastManager is instantiated");
-    mContext = context;
-    mHandler = new Handler(Looper.getMainLooper());
-    mApplicationId = applicationId;
-    CastUtils.saveStringToPreference(mContext, PREFS_KEY_APPLICATION_ID, applicationId);
-
-    CastUtils.LOGD(TAG, "Application ID is: " + mApplicationId);
-    mMediaRouter = MediaRouter.getInstance(context);
-    mMediaRouteSelector = new MediaRouteSelector.Builder().addControlCategory(CastMediaControlIntent
-        .categoryForCast(mApplicationId)).build();
-
-    mMediaRouterCallback = new CastMediaRouterCallback(this, context);
-    mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_PERFORM_ACTIVE_SCAN);
-  }
-
   public void onWifiConnectivityChanged(boolean connected) {
     CastUtils.LOGD(TAG, "WIFI connectivity changed to " + (connected ? "enabled" : "disabled"));
     if (connected && !mWifiConnectivity) {
@@ -161,10 +166,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     } else {
       mWifiConnectivity = connected;
     }
-  }
-
-  public static BaseCastManager getCastManager() {
-    return sCastManager;
   }
 
   /**
@@ -248,15 +249,15 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
       if (disabled) {
         item.setVisible(false);
       } else {
-      MediaRouteButton button = new MediaRouteButton(activity);  // don't pass mContext, it needs a real activity or it's fucked
-      button.setRouteSelector(mMediaRouteSelector);
+        MediaRouteButton button = new MediaRouteButton(activity);  // don't pass mContext, it needs a real activity or it's fucked
+        button.setRouteSelector(mMediaRouteSelector);
 
-      if (null != getMediaRouteDialogFactory()) {
-        button.setDialogFactory(getMediaRouteDialogFactory());
+        if (null != getMediaRouteDialogFactory()) {
+          button.setDialogFactory(getMediaRouteDialogFactory());
+        }
+
+        item.setActionView(button);
       }
-
-      item.setActionView(button);
-    }
     }
   }
 
@@ -324,17 +325,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
   /*************************************************************************/
   /************** Utility Methods ******************************************/
   /*************************************************************************/
-
-  /**
-   * A utility method to validate that the appropriate version of the Google Play Services is
-   * available on the device. If not, it will open a dialog to address the issue. The dialog
-   * displays a localized message about the error and upon user confirmation (by tapping on
-   * dialog) will direct them to the Play Store if Google Play services is out of date or missing,
-   * or to system settings if Google Play services is disabled on the device.
-   */
-  public static boolean checkGooglePlayServices(final Activity activity) {
-    return CastUtils.checkGooglePlayServices(activity);
-  }
 
   /**
    * can be used to find out if the application is connected to the service or not.
@@ -406,8 +396,16 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
   }
 
   /**
+   * Gets the remote's system volume, a number between 0 and 1, inclusive.
+   */
+  public final double getDeviceVolume() throws TransientNetworkDisconnectionException, NoConnectionException {
+    checkConnectivity();
+    return Cast.CastApi.getVolume(mApiClient);
+  }
+
+  /**
    * Sets the device (system) volume.
-   *
+   * <p/>
    * param volume Should be a value between 0 and 1, inclusive.
    */
   public void setDeviceVolume(double volume) throws CastException, TransientNetworkDisconnectionException, NoConnectionException {
@@ -418,14 +416,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
       CastUtils.LOGE(TAG, "Failed to set volume", e);
       throw new CastException("Failed to set volume");
     }
-  }
-
-  /**
-   * Gets the remote's system volume, a number between 0 and 1, inclusive.
-   */
-  public final double getDeviceVolume() throws TransientNetworkDisconnectionException, NoConnectionException {
-    checkConnectivity();
-    return Cast.CastApi.getVolume(mApiClient);
   }
 
   /**
@@ -461,16 +451,16 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     }
   }
 
-  /*************************************************************************/
-  /************** Session Recovery Methods *********************************/
-  /*************************************************************************/
-
   /**
    * Returns the current {@link ReconnectionStatus}
    */
   public ReconnectionStatus getReconnectionStatus() {
     return mReconnectionStatus;
   }
+
+  /*************************************************************************/
+  /************** Session Recovery Methods *********************************/
+  /*************************************************************************/
 
   /**
    * Sets the {@link ReconnectionStatus}
@@ -685,9 +675,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     reconnectSessionIfPossible(context, showDialog, SESSION_RECOVERY_TIMEOUT);
   }
 
-  /************************************************************/
-  /***** GoogleApiClient.ConnectionCallbacks ******************/
-  /************************************************************/
   /**
    * This is called by the library when a connection is re-established after a transient
    * disconnect. Note: this is not called by SDK.
@@ -701,6 +688,10 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
       }
     }
   }
+
+  /************************************************************/
+  /***** GoogleApiClient.ConnectionCallbacks ******************/
+  /************************************************************/
 
   /*
    * (non-Javadoc)
@@ -878,9 +869,6 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
     });
   }
 
-  /*************************************************************/
-  /***** Registering IBaseCastConsumer listeners ***************/
-  /*************************************************************/
   /**
    * Registers an {@link IBaseCastConsumer} interface with this class. Registered listeners will
    * be notified of changes to a variety of lifecycle callbacks that the interface provides.
@@ -892,6 +880,10 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
       }
     }
   }
+
+  /*************************************************************/
+  /***** Registering IBaseCastConsumer listeners ***************/
+  /*************************************************************/
 
   /**
    * Unregisters an {@link IBaseCastConsumer}.
@@ -928,5 +920,9 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
       }
     }
 
+  }
+
+  public static enum ReconnectionStatus {
+    STARTED, IN_PROGRESS, FINALIZE, INACTIVE
   }
 }

@@ -47,25 +47,13 @@ public class ChangeLogDialog {
   protected final Activity mActivity;
   private String mStyle = "h1 { margin-left: 0px; font-size: 12pt; }" + "li { margin-left: 0px; font-size: 9pt; }" + "ul { padding-left: 30px; }" + ".summary { font-size: 9pt; color: #606060; display: block; clear: left; }" + ".date { font-size: 9pt; color: #606060;  display: block; }";
 
-  public static void showChangeLog(Activity activity) {
-    new ChangeLogDialog(activity).showDialog(0);
-  }
-
   protected ChangeLogDialog(final Activity activity) {
     super();
     mActivity = activity;
   }
 
-  private String getAppVersion() {
-    String versionName = "";
-    try {
-      final PackageInfo packageInfo = mActivity.getPackageManager()
-          .getPackageInfo(mActivity.getPackageName(), 0);
-      versionName = packageInfo.versionName;
-    } catch (NameNotFoundException e) {
-      Log.e(TAG, e.getMessage(), e);
-    }
-    return versionName;
+  public static void showChangeLog(Activity activity) {
+    new ChangeLogDialog(activity).showDialog(0);
   }
 
   private static String parseDate(final Context context, final String dateString) {
@@ -106,6 +94,18 @@ public class ChangeLogDialog {
       eventType = resourceParser.next();
     }
     changelogBuilder.append("</ul>");
+  }
+
+  private String getAppVersion() {
+    String versionName = "";
+    try {
+      final PackageInfo packageInfo = mActivity.getPackageManager()
+          .getPackageInfo(mActivity.getPackageName(), 0);
+      versionName = packageInfo.versionName;
+    } catch (NameNotFoundException e) {
+      Log.e(TAG, e.getMessage(), e);
+    }
+    return versionName;
   }
 
   private String getStyle() {

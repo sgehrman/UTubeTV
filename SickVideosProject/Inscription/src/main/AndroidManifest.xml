@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.inscription"
+<manifest package="com.inscription"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="1002000"
           android:versionName="1.2.0-SNAPSHOT">
 

@@ -1,4 +1,3 @@
-
 package com.distantfuture.castcompanionlibrary.lib.cast.callbacks;
 
 import com.google.android.gms.cast.ApplicationMetadata;
