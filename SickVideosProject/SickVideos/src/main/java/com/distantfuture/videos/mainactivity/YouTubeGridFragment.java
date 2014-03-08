@@ -166,9 +166,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     gridView = (GridView) rootView.findViewById(R.id.gridview);
     gridView.setOnItemClickListener(mAdapter);
 
-    // enable this for swipe to dismiss to hide (TODO)
     SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(mAdapter, this));
-    //    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
     swingBottomInAnimationAdapter.setInitialDelayMillis(200);
     swingBottomInAnimationAdapter.setAbsListView(gridView);
 
