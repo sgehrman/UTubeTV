@@ -61,7 +61,7 @@ public class PrettyTime
    private volatile Date reference;
    private volatile Locale locale = Locale.getDefault();
    private volatile Map<TimeUnit, TimeFormat> mUnits = new LinkedHashMap<TimeUnit, TimeFormat>();
-  List<TimeUnit> mCachedUnits=null;
+   private List<TimeUnit> mCachedUnits=null;
 
    /**
     * Default constructor
