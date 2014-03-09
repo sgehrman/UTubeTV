@@ -30,53 +30,53 @@
       <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/technews/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/rs/technews/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/res/rs/technews/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/technewsDebug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/r/test/technews/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/aidl/test/technews/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/buildConfig/test/technews/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/source/rs/test/technews/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/res/rs/test/technews/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/technews/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/technews/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/technews/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/technews/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/technews/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/aidl" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/assets" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestTechnews/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/bundles" />
