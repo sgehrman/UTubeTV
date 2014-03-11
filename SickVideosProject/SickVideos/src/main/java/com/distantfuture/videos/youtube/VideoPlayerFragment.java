@@ -94,6 +94,10 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
   }
 
   public String getTitle() {
+    // saw it crash here once, not sure how, could not reproduce, added null check
+    if (mPlayerParams == null)
+      return "";
+
     return mPlayerParams.title;
   }
 
