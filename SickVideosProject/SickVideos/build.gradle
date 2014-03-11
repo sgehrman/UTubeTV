@@ -126,6 +126,10 @@ android {
             packageName "com.distantfuture.videos.youtube"
         }
 
+        svb {
+            packageName "com.distantfuture.videos.svb"
+        }
+
         lukitsch {
             packageName "com.distantfuture.videos.lukitsch"
         }

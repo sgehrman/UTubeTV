@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SVB TV</string>
+
+    <string-array name="content_array">
+        <item>SVB</item>
+    </string-array>
+
+</resources>

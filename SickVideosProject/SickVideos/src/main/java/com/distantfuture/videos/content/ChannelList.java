@@ -26,8 +26,14 @@ public class ChannelList {
   private Context mContext;
   private OnChannelListUpdateListener mListener;
 
-  public ChannelList(Context context, List<ChannelList.ChannelCode> channelCodes, OnChannelListUpdateListener listener) {
+  public ChannelList(Context context, int channels_array_resource, OnChannelListUpdateListener listener) {
     super();
+
+    String[] channels = context.getResources().getStringArray(channels_array_resource);
+    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
+    for (String c : channels) {
+      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
+    }
 
     mContext = context.getApplicationContext();
     mListener = listener;
@@ -213,12 +219,13 @@ public class ChannelList {
       mChannelIDMap.put(ChannelCode.TWIT, "UCwY9B5_8QDGP8niZhBtTh8w");
       mChannelIDMap.put(ChannelCode.ENGADGET, "UC-6OW5aJYBFM33zXQlBKPNA");
       mChannelIDMap.put(ChannelCode.VSAUCE, "UC6nSFpj9HTCZ5t-N3Rm3-HA");
+      mChannelIDMap.put(ChannelCode.SVB, "UCJLo-ihNo6sVMPvRzGVPRoQ");
     }
 
     return mChannelIDMap.get(code);
   }
 
-  public static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
+  private static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, SVB, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
 
   // --------------------------------------------------------
   // preferences

@@ -29,14 +29,7 @@ public class Content {
   private Content(Context context) {
     super();
 
-    String[] channels = context.getResources().getStringArray(R.array.content_array);
-
-    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
-    for (String c : channels) {
-      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
-    }
-
-    mChannelList = new ChannelList(context, channelCodes, new ChannelList.OnChannelListUpdateListener() {
+    mChannelList = new ChannelList(context, R.array.content_array, new ChannelList.OnChannelListUpdateListener() {
       @Override
       public void onUpdate() {
         notifyForDataUpdate();
