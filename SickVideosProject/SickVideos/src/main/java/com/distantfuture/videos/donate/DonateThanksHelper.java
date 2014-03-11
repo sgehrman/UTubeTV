@@ -95,17 +95,15 @@ public class DonateThanksHelper {
       LayoutInflater inflate = LayoutInflater.from(activity);
       mView = (ViewGroup) inflate.inflate(R.layout.view_donate_thanks, null);
 
-
       ObjectAnimator scaleXDown = ObjectAnimator.ofFloat(mView, "alpha", .8f);
       scaleXDown.setRepeatMode(ValueAnimator.REVERSE);
       scaleXDown.setDuration(1000);
       scaleXDown.setRepeatCount(ValueAnimator.INFINITE);
       scaleXDown.start();
 
-
       Drawable heartDrawable = ToolbarIcons.icon(mView.getContext(), ToolbarIcons.IconID.HEART, 0xffffffff, mIconSize);
       heartDrawable.setAlpha(233);
-      Bitmap heartBitmap = Utils.drawableToBitmap(heartDrawable, mIconSize);
+      Bitmap heartBitmap = Utils.drawableToBitmap(heartDrawable, mIconSize, mIconSize);
 
 
       int offsetX = 0;

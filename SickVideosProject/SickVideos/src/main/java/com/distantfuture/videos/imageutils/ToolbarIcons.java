@@ -135,7 +135,7 @@ public class ToolbarIcons {
     if (iconDrawable != null) {
       int size = (int) Utils.dpToPx(sizeInDP, context);
 
-      Bitmap map = Utils.drawableToBitmap(iconDrawable, size);
+      Bitmap map = Utils.drawableToBitmap(iconDrawable, size, size);
 
       return new BitmapDrawable(context.getResources(), map);
     }
