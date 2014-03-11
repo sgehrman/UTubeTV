@@ -10,7 +10,7 @@ import com.distantfuture.videos.misc.Debug;
 import java.io.File;
 
 public class Database extends SQLiteOpenHelper {
-  private static final int DATABASE_VERSION = 5010;
+  private static final int DATABASE_VERSION = 5011;
   private static final String DATABASE_NAME = "database.db";
   private static Database singleton = null;
   private final DatabaseTables mTables = new DatabaseTables();

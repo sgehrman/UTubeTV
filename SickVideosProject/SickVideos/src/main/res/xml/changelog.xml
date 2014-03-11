@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release
-        version="1.4"
-        versioncode="15">
+        version="1.5"
+        versioncode="16">
         <change>Added changelog dialog</change>
         <change>Added find button</change>
-        <change>Added quick guide</change>
     </release>
     <release
         version="1.1"

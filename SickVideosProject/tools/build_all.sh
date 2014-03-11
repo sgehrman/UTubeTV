@@ -7,13 +7,13 @@ cd ..
 
 # now build each one
 ./gradlew assembleTechnewsRelease
+./gradlew assembleNerdistRelease
 
 #./gradlew assembleNeurosoupRelease
 #./gradlew assembleMaxkeiserRelease
 #./gradlew assembleViceRelease
 #./gradlew assembleCodeorgRelease
 #./gradlew assembleKhanRelease
-#./gradlew assembleNerdistRelease
 #./gradlew assembleAndroiddevsRelease
 #./gradlew assembleRtRelease
 #./gradlew assembleJoeroganRelease

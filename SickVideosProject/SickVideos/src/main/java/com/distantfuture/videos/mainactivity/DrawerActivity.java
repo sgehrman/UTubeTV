@@ -105,7 +105,10 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     }
 
     WhatsNewDialog.showWhatsNew(this, false);
-    IntroActivity.showIntroDelayed(this, false);
+
+    // only show intro for multi channels
+    if (mContent.needsChannelSwitcher())
+      IntroActivity.showIntroDelayed(this, false);
   }
 
   @Override

@@ -10,8 +10,8 @@ android {
     buildToolsVersion "19.0.3"
 
     defaultConfig {
-        versionCode 15
-        versionName '1.4'
+        versionCode 16
+        versionName '1.5'
         packageName 'com.distantfuture.videos'
         minSdkVersion 16
         targetSdkVersion 19

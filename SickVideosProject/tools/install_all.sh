@@ -7,6 +7,7 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
     echo $DEVICE
 
     adb -s $DEVICE install SickVideos-technews-release.apk
+    adb -s $DEVICE install SickVideos-nerdist-release.apk
 
 #    adb -s $DEVICE install SickVideos-codeorg-release.apk
 #    adb -s $DEVICE install SickVideos-neurosoup-release.apk
@@ -15,7 +16,6 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
 #    adb -s $DEVICE install SickVideos-maxkeiser-release.apk
 #    adb -s $DEVICE install SickVideos-androiddevs-release.apk
 #    adb -s $DEVICE install SickVideos-khan-release.apk
-#    adb -s $DEVICE install SickVideos-nerdist-release.apk
 #    adb -s $DEVICE install SickVideos-joerogan-release.apk
 #    adb -s $DEVICE install SickVideos-jetdaisuke-release.apk
 #    adb -s $DEVICE install SickVideos-topgear-release.apk
