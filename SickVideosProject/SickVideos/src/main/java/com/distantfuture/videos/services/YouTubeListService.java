@@ -179,7 +179,7 @@ public class YouTubeListService extends IntentService {
       case PLAYLISTS:
         String channel = (String) request.getData("channel");
 
-        resultList = retrieveVideoList(request, helper, null, channel, 0);
+        resultList = retrieveVideoList(request, helper, null, channel, request.maxResults());
         removeAllFromDB = false;
         break;
       case SUBSCRIPTIONS:

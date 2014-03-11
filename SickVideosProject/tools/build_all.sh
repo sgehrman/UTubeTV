@@ -7,8 +7,8 @@ cd ..
 
 # now build each one
 #./gradlew assembleTechnewsRelease
-#./gradlew assembleYoutubeRelease
-./gradlew assembleSvbRelease
+./gradlew assembleYoutubeRelease
+#./gradlew assembleSvbRelease
 
 #./gradlew assembleNerdistRelease
 #./gradlew assembleNeurosoupRelease
