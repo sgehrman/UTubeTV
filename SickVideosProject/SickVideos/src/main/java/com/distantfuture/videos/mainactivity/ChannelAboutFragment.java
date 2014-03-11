@@ -172,7 +172,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
       mDescription.setText(data.mDescription);
 
       // uncomment to get the thumbnail image for generating icons
-      Debug.log(data.mThumbnail);
+      // Debug.log(data.mThumbnail);
 
       Bitmap bitmap = mBitmapLoader.bitmap(data);
       if (bitmap != null)
