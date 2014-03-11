@@ -44,7 +44,7 @@ import java.util.Map;
 public class YouTubeAPI {
 
   public static final int REQ_PLAYER_CODE = 334443;
-  private final int mYouTubeMaxResultsLimit = 50;
+  private static final int mYouTubeMaxResultsLimit = 50;
   boolean highQualityImages = true;
   Context mContext;
   YouTubeAPIListener mListener;
@@ -71,6 +71,10 @@ public class YouTubeAPI {
   public static void openPlaylistUsingIntent(Activity activity, String playlistId) {
     Intent intent = YouTubeIntents.createOpenPlaylistIntent(activity, playlistId);
     activity.startActivity(intent);
+  }
+
+  public static int youTubeMaxResultsLimit() {
+    return mYouTubeMaxResultsLimit;
   }
 
   public YouTube youTube() {

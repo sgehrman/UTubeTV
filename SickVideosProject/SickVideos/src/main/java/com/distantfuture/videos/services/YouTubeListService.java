@@ -227,7 +227,7 @@ public class YouTubeListService extends IntentService {
       // remove videos that we already have...
       videoIds = removeVideosWeAlreadyHave(request, videoIds);
 
-      final int limit = 50;
+      final int limit = YouTubeAPI.youTubeMaxResultsLimit();
 
       for (int n = 0; n < videoIds.size(); n += limit) {
         int chunkSize = Math.min(videoIds.size(), n + limit);
