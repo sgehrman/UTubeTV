@@ -6,16 +6,16 @@ cd ..
 ./gradlew clean
 
 # now build each one
-# ./gradlew assembleTechnewsRelease
+./gradlew assembleTechnewsRelease
 # ./gradlew assembleNerdistRelease
-./gradlew assembleNeurosoupRelease
-./gradlew assembleMaxkeiserRelease
-./gradlew assembleAndroiddevsRelease
-./gradlew assembleJoeroganRelease
-./gradlew assembleJetdaisukeRelease
-./gradlew assembleBigthinkRelease
-./gradlew assembleThevergeRelease
-./gradlew assembleReasontvRelease
+# ./gradlew assembleNeurosoupRelease
+# ./gradlew assembleMaxkeiserRelease
+# ./gradlew assembleAndroiddevsRelease
+# ./gradlew assembleJoeroganRelease
+# ./gradlew assembleJetdaisukeRelease
+# ./gradlew assembleBigthinkRelease
+# ./gradlew assembleThevergeRelease
+# ./gradlew assembleReasontvRelease
 
 #./gradlew assembleViceRelease
 #./gradlew assembleCodeorgRelease
