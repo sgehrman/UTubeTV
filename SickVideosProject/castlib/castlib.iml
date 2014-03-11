@@ -74,6 +74,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-4.2.42" level="project" />
     <orderEntry type="library" exported="" name="mediarouter-v7-19.0.1" level="project" />
+    <orderEntry type="library" exported="" name="internal_impl-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
   </component>
 </module>

@@ -35,6 +35,12 @@ items/snippet/title
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
+
+// --------------------------------------------------------
+// dump manifest
+
+/home/sgehrman/Applications/android-studio/sdk/build-tools/19.0.3/aapt dump badging SickVideos-technews-debug-unaligned.apk
+
 // --------------------------------------------------------
 
 Terrance McKenna
