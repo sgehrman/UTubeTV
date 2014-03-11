@@ -33,6 +33,7 @@ public class DrawerManager {
   private ActionBarDrawerToggle mDrawerToggle;
   private DrawerManagerListener mListener;
   private FragmentManager mFragmentManager;
+
   public DrawerManager(Activity activity, Content content, DrawerManagerListener listener) {
     super();
 

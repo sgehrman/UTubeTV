@@ -25,6 +25,7 @@ public class ChannelList {
   private String mCurrentChannelID;
   private Context mContext;
   private OnChannelListUpdateListener mListener;
+
   public ChannelList(Context context, List<ChannelList.ChannelCode> channelCodes, OnChannelListUpdateListener listener) {
     super();
 

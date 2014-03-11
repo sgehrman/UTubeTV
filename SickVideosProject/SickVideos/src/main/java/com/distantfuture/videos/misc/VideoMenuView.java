@@ -15,6 +15,7 @@ public class VideoMenuView extends ImageView {
   private static Drawable sharedDrawable;
   public Long mId;
   private VideoMenuViewListener mListener;
+
   public VideoMenuView(Context context, AttributeSet attrs) {
     super(context, attrs);
 

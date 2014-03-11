@@ -1,10 +1,11 @@
-<LinearLayout android:id="@+id/video_player_box"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+<LinearLayout
+    android:id="@+id/video_player_box"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
 
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:visibility="invisible">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="invisible">
 
     <FrameLayout
         android:id="@+id/top_bar"

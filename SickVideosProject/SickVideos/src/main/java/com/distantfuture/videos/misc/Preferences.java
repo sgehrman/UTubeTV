@@ -8,6 +8,7 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
 
   private SharedPreferences sharedPreferences;
   private PreferenceCacheListener mListener;
+
   public Preferences(Context context, PreferenceCacheListener listener) {
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
