@@ -1,24 +1,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
+    <com.distantfuture.videos.misc.SwitchPref
         android:defaultValue="false"
         android:key="play_fullscreen"
         android:summary="@string/pref_play_fullscreen_summary"
         android:title="@string/pref_play_fullscreen"/>
 
-    <SwitchPreference
+    <com.distantfuture.videos.misc.SwitchPref
         android:defaultValue="false"
         android:key="mute_ads"
         android:summary="@string/pref_mute_ads_summary"
         android:title="@string/pref_mute_ads"/>
 
-    <SwitchPreference
+    <com.distantfuture.videos.misc.SwitchPref
         android:defaultValue="false"
         android:key="repeat_video"
         android:summary="@string/pref_repeat_video_summary"
         android:title="@string/pref_repeat_video"/>
 
-    <SwitchPreference
+    <com.distantfuture.videos.misc.SwitchPref
         android:defaultValue="false"
         android:key="play_next"
         android:summary="@string/pref_play_next_video_summary"

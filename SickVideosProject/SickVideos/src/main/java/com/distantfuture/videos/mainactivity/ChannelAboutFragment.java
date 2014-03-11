@@ -18,6 +18,7 @@ import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.BitmapLoader;
 import com.distantfuture.videos.misc.ContractFragment;
+import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.Utils;
@@ -171,7 +172,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
       mDescription.setText(data.mDescription);
 
       // uncomment to get the thumbnail image for generating icons
-      // Debug.log(data.mThumbnail);
+      Debug.log(data.mThumbnail);
 
       Bitmap bitmap = mBitmapLoader.bitmap(data);
       if (bitmap != null)
