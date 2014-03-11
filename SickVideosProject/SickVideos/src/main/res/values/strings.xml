@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Duh TV</string>
-
+    <string name="supports_donate"></string>
     <string-array name="content_array">
         <item>DUH</item>
     </string-array>

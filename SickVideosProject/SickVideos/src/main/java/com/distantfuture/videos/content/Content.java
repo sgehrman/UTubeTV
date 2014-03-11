@@ -104,7 +104,8 @@ public class Content {
   }
 
   public boolean supportsDonate() {
-    return false;
+    String string = mContext.getText(R.string.supports_donate).toString();
+    return !string.isEmpty();
   }
 
   public List<YouTubeData> channels() {
