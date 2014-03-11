@@ -103,6 +103,10 @@ public class Content {
     return mChannelList.needsChannelSwitcher();
   }
 
+  public boolean supportsDonate() {
+    return false;
+  }
+
   public List<YouTubeData> channels() {
     return mChannelList.channels();
   }

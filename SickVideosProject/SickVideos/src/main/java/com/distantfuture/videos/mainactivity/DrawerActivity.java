@@ -148,6 +148,11 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     MainApplication.getCastManager(this).addMediaRouterButton(menu, R.id.action_cast, this, true);
 
+
+    MenuItem item = menu.findItem(R.id.action_donate);
+    if (!mContent.supportsDonate())
+      item.setVisible(false);
+
     return super.onCreateOptionsMenu(menu);
   }
 
