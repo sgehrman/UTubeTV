@@ -1,4 +1,4 @@
-package com.distantfuture.videos.activities;
+package com.distantfuture.videos.channellookup;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

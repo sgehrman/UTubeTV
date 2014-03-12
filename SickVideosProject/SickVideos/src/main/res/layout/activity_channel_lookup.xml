@@ -8,7 +8,7 @@
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/enter_user_name"
+        android:hint="@string/search_channels"
         android:imeOptions="actionDone"
         android:inputType="textNoSuggestions"
         android:singleLine="true">
@@ -19,5 +19,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"
-        class="com.distantfuture.videos.activities.ChannelLookupListFragment"/>
+        class="com.distantfuture.videos.channellookup.ChannelLookupListFragment"/>
 </LinearLayout>

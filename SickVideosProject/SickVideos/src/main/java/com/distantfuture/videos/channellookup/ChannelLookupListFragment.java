@@ -1,4 +1,4 @@
-package com.distantfuture.videos.activities;
+package com.distantfuture.videos.channellookup;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.distantfuture.videos.channellookup.ChannelLookupAdapter;
+import com.distantfuture.videos.channellookup.ChannelLookupItemLoader;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Debug;
 
