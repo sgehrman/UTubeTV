@@ -13,16 +13,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/default_video"/>
+       />
+
+    <ImageView
+        android:id="@+id/add_remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:paddingRight="0dp"
+        android:layout_centerVertical="true"
+       />
 
     <LinearLayout
         android:id="@+id/text_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/imageView1"
+        android:layout_toLeftOf="@+id/add_remove_button"
         android:orientation="vertical">
 
         <TextView
