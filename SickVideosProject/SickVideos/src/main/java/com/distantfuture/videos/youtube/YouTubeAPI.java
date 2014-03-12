@@ -483,6 +483,7 @@ public class YouTubeAPI {
 
         listRequest.setQ(query);
         listRequest.setKey(Auth.devKey());
+        listRequest.setOrder("videoCount");
         listRequest.setType(searchChannels ? "channel" : "video");
         listRequest.setFields(mFields);
         listRequest.setMaxResults(maxResults);
