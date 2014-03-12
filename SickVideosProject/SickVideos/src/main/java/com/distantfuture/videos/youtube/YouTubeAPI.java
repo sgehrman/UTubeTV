@@ -143,8 +143,8 @@ public class YouTubeAPI {
     return new PlaylistInfoListResults(playlistIds);
   }
 
-  public SearchListResults searchListResults(String query) {
-    return new SearchListResults(query);
+  public SearchListResults searchListResults(String query, boolean searchChannels) {
+    return new SearchListResults(query, searchChannels);
   }
 
   public SubscriptionListResults subscriptionListResults() {
@@ -459,11 +459,19 @@ public class YouTubeAPI {
 
   public class SearchListResults extends BaseListResults {
     private String query;
+    private boolean searchChannels=false;
 
-    public SearchListResults(String q) {
-      query = q;
+    public SearchListResults(String query, boolean searchChannels) {
+      this.searchChannels = searchChannels;
+      this.query = query;
+
       mPart = "id, snippet";
-      mFields = String.format("items(id/videoId, snippet/title, snippet/description, %s), nextPageToken", thumbnailField());
+
+      String idType = "videoId";
+      if (searchChannels)
+        idType = "channelId";
+
+      mFields = String.format("items(id/%s, snippet/title, snippet/description, %s), nextPageToken", idType, thumbnailField());
     }
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
@@ -475,7 +483,7 @@ public class YouTubeAPI {
 
         listRequest.setQ(query);
         listRequest.setKey(Auth.devKey());
-        listRequest.setType("video");
+        listRequest.setType(searchChannels ? "channel" : "video");
         listRequest.setFields(mFields);
         listRequest.setMaxResults(maxResults);
 
@@ -502,7 +510,11 @@ public class YouTubeAPI {
       for (SearchResult playlistItem : playlistItemList) {
         YouTubeData map = new YouTubeData();
 
-        map.mVideo = playlistItem.getId().getVideoId();
+        if (searchChannels)
+          map.mChannel = playlistItem.getId().getChannelId();
+        else
+          map.mVideo = playlistItem.getId().getVideoId();
+
         map.mTitle = playlistItem.getSnippet().getTitle();
         map.mDescription = Utils.condenseWhiteSpace(playlistItem.getSnippet().getDescription());
         map.mThumbnail = thumbnailURL(playlistItem.getSnippet().getThumbnails());

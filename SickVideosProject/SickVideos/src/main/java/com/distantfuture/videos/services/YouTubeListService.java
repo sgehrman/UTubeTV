@@ -171,7 +171,7 @@ public class YouTubeListService extends IntentService {
         break;
       case SEARCH:
         String query = (String) request.getData("query");
-        listResults = helper.searchListResults(query);
+        listResults = helper.searchListResults(query, false);
         break;
       case LIKED:
         listResults = helper.likedVideosListResults();

@@ -1,23 +1,40 @@
 package com.distantfuture.videos.activities;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.distantfuture.castcompanionlibrary.lib.utils.CastUtils;
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.youtube.YouTubeAPI;
+
+import java.util.List;
 
 public class ChannelLookupActivity extends Activity {
   TextView mTextView;
   EditText mEditText;
+  String mCurrentQuery="";
+  ChannelLookupListFragment fragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +46,30 @@ public class ChannelLookupActivity extends Activity {
 
     mTextView = (TextView) findViewById(R.id.result_text);
     mEditText = (EditText) findViewById(R.id.edit_text);
+    fragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
+
+    mEditText.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
+        Debug.log(s.toString());
+
+        new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            newQuery();
+          }
+        }, 200);
+
+      }
+    });
 
     mEditText.requestFocus();
 
@@ -37,12 +78,22 @@ public class ChannelLookupActivity extends Activity {
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-          // ask youtube to look up this name and output to log and screen
-          askYouTubeForChannelInfo(mEditText.getText().toString());
+          // return key
+          newQuery();
         }
         return true;
       }
     });
+  }
+
+  private void newQuery() {
+    String newQuery = mEditText.getText().toString();
+
+    if (!newQuery.equals(mCurrentQuery)) {
+      mCurrentQuery = newQuery;
+
+      fragment.query(mCurrentQuery);
+    }
   }
 
   @Override
@@ -54,31 +105,6 @@ public class ChannelLookupActivity extends Activity {
         return true;
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  private void askYouTubeForChannelInfo(final String userName) {
-    (new Thread(new Runnable() {
-      public void run() {
-
-        YouTubeAPI helper = new YouTubeAPI(ChannelLookupActivity.this, new YouTubeAPI.YouTubeAPIListener() {
-          @Override
-          public void handleAuthIntent(final Intent authIntent) {
-            Debug.log("handleAuthIntent inside update Service.  not handled here");
-          }
-        });
-
-        final String result = helper.channelIdFromUsername(userName);
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-          @Override
-          public void run() {
-            Debug.log(result);
-            mTextView.setText(result);
-          }
-        });
-      }
-    })).start();
   }
 
 }
