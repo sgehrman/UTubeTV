@@ -31,7 +31,6 @@ import com.distantfuture.videos.youtube.YouTubeAPI;
 import java.util.List;
 
 public class ChannelLookupActivity extends Activity {
-  TextView mTextView;
   EditText mEditText;
   String mCurrentQuery="";
   ChannelLookupListFragment fragment;
@@ -44,7 +43,6 @@ public class ChannelLookupActivity extends Activity {
 
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
-    mTextView = (TextView) findViewById(R.id.result_text);
     mEditText = (EditText) findViewById(R.id.edit_text);
     fragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
 
