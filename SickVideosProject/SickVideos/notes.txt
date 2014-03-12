@@ -155,9 +155,10 @@ signingConfigs {
 
 Channel groups:
 
-Joe Rogan
-Vice
-
+cool
+    Joe Rogan
+    Vice
+    WatchMojo
 
 SCIENCE:
     Cosmos
@@ -168,7 +169,7 @@ SCIENCE:
 
 ATHEIST TV
    the gang
-    Religion Hurts Humanity
+   Religion Hurts Humanity
 
 UFOS:
     sirius disclosure
@@ -176,7 +177,7 @@ UFOS:
 CONSPIRACY
     Jesse ventura
     austin guy
-Documentary Media
+    Documentary Media
     zeitgiest
     culture in decline
 
@@ -185,8 +186,8 @@ FOX NEWS
     Oreily?
 
 Movie trailers
-  Screen Junkies
-  WatchMojo
+    Screen Junkies
+    IFC
 
 NEWS
     RT
@@ -211,7 +212,6 @@ STARTUPS:
 PRANKS:
     stuart edge
 
-
 SPORTS:
     Espn
     Sports Illustrated Swimsuit
@@ -219,10 +219,12 @@ SPORTS:
 Comedy:
     Comedy Central
     Colbert report
-BuzzFeedYellow
-
+    BuzzFeedYellow
+    teamcoco
 
 DYI
+    Make
+    craft
 
 CARTOONS:
     beavis
@@ -256,7 +258,6 @@ TECH REVIEWS
     Unbox Therapy
     newegg
 
-
 THINK:
     Big Think
     Ted, Tedx, Ted_ed
@@ -264,12 +265,14 @@ THINK:
     Penn point
     Bullshit
 
-
 GOOGLE DEVS:
     gOOGLE devs
     android devs
     youtube devs
     Android developers
+    JetBrainsTV
+    Twitter University
+    OreillyMedia
 
 EDUCATION
     Khan
@@ -285,7 +288,6 @@ LEARN CODING
 POLITICS
     jfk
     ronald reagan
-
 
 CARS:
     Top Gear
@@ -333,7 +335,6 @@ WEIRD SCIENCE
     The Slow Mo Guys
     HIGH speed filming
 
-
 MUSIC
    play guitar?
 
@@ -356,9 +357,6 @@ HOME SHIT
 
 SAVE THE PLANET
     Beard lady
-
-Rollerskate TV
-    D. miles
 
 
 // ------------------------------------------------------
