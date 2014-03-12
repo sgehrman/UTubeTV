@@ -23,18 +23,22 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   private final Context mContext;
   private final float mAspectRatio = 9f / 16f;
   private BitmapDrawable mPlusButtonBitmap;
+  private BitmapDrawable mMinusButtonBitmap;
   View.OnClickListener mButtonListener;
 
   public ChannelLookupAdapter(Context context) {
     super(context, 0);
     this.mContext = context;
 
-    mPlusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.CLOSE, Color.RED, 36);
+    mPlusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.ADD, Color.GREEN, 36);
+    mMinusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
 
     mButtonListener = new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Debug.log("fuck you");
+        YouTubeData data = (YouTubeData) v.getTag();
+
+        Debug.log("ssdf" + data.mChannel);
       }
     };
   }
@@ -44,7 +48,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     ViewHolder holder;
     LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    YouTubeData mm = getItem(position);
+    YouTubeData data = getItem(position);
 
     if (convertView == null) {
       convertView = inflater.inflate(R.layout.channel_lookup_list_item, null);
@@ -62,11 +66,13 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     AQuery aq = new AQuery(convertView);
     aq.id(holder.imgView)
-        .width(110)
-        .image(mm.mThumbnail, true, true, 0, 0, null, 0, mAspectRatio);
-    aq.id(holder.titleView).text(mm.mTitle);
-    aq.id(holder.descrView).text(mm.mDescription);
+        .width(100)
+        .image(data.mThumbnail, true, true, 0, 0, null, 0, mAspectRatio);
+    aq.id(holder.titleView).text(data.mTitle);
+    aq.id(holder.descrView).text(data.mDescription);
 
+    // used for clicks
+    holder.addButton.setTag(data);
     holder.addButton.setImageDrawable(mPlusButtonBitmap);
 
     return convertView;
