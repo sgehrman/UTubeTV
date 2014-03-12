@@ -33,7 +33,7 @@
         <activity
             android:name=".channellookup.ChannelLookupActivity"
             android:label="@string/title_activity_channel_lookup"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            >
         </activity>
         <activity
             android:name="com.distantfuture.videos.activities.AuthActivity"

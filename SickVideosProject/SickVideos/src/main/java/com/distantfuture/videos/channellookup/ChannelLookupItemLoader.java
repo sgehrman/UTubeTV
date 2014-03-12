@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelLookupItemLoader extends AsyncTaskLoader<List<YouTubeData>> {
@@ -38,7 +40,14 @@ public class ChannelLookupItemLoader extends AsyncTaskLoader<List<YouTubeData>> 
         }
       });
 
-      if (query != null) {
+      if (query == null) {
+        result = new ArrayList<YouTubeData>();
+
+        List<YouTubeData> list = Content.instance().channels();
+        for (YouTubeData data : list) {
+          result.add(data);
+        }
+      } else {
         YouTubeAPI.SearchListResults searchList = helper.searchListResults(query, true);
         result = searchList.getAllItems(50);
       }

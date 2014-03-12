@@ -89,7 +89,6 @@ public class ChannelLookupActivity extends Activity {
     return super.onCreateOptionsMenu(menu);
   }
 
-
   private void setupSearchItem(Menu menu) {
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
