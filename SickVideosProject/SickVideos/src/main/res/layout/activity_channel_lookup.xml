@@ -2,22 +2,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="12dp">
-
-    <EditText
-        android:id="@+id/edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_channels"
-        android:imeOptions="actionDone"
-        android:inputType="textNoSuggestions"
-        android:singleLine="true">
-    </EditText>
+              >
 
     <fragment
         android:id="@+id/channel_list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         class="com.distantfuture.videos.channellookup.ChannelLookupListFragment"/>
 </LinearLayout>

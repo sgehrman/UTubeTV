@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
@@ -34,6 +35,10 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   @Override
   public void onLoadFinished(Loader<List<YouTubeData>> arg0, List<YouTubeData> data) {
     mAdapter.setData(data);
+
+    ChannelLookupActivity activity = (ChannelLookupActivity) getActivity();
+    activity.adapterDataChanged();
+
     if (isResumed()) {
       setListShown(true);
     } else {
@@ -41,9 +46,19 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
     }
   }
 
-  public void query(String query) {
-    this.query = query;
-    getLoaderManager().restartLoader(0, null, this);
+  public int getCount() {
+    return mAdapter.getCount();
+  }
+
+  public String getQuery() {
+    return query;
+  }
+
+  public void setQuery(String query) {
+    if (!TextUtils.equals(this.query, query)) {
+      this.query = query;
+      getLoaderManager().restartLoader(0, null, this);
+    }
   }
 
   @Override

@@ -136,7 +136,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.fragment_menu, menu);
+    inflater.inflate(R.menu.search_menu, menu);
     setupSearchItem(menu);
   }
 
