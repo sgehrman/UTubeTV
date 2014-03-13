@@ -459,7 +459,7 @@ public class YouTubeAPI {
 
   public class SearchListResults extends BaseListResults {
     private String query;
-    private boolean searchChannels=false;
+    private boolean searchChannels = false;
 
     public SearchListResults(String query, boolean searchChannels) {
       this.searchChannels = searchChannels;

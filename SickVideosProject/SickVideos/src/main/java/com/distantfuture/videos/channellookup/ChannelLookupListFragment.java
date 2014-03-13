@@ -8,8 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
-import com.distantfuture.videos.channellookup.ChannelLookupAdapter;
-import com.distantfuture.videos.channellookup.ChannelLookupItemLoader;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Debug;
 

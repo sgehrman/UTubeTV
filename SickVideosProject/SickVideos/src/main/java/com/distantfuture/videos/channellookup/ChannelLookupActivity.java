@@ -7,22 +7,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.Utils;
 
 public class ChannelLookupActivity extends Activity {
@@ -55,11 +46,11 @@ public class ChannelLookupActivity extends Activity {
   }
 
   public String getQuery() {
-   return listFragment.getQuery();
+    return listFragment.getQuery();
   }
 
   public void setQuery(String filter) {
-      listFragment.setQuery(filter);
+    listFragment.setQuery(filter);
   }
 
   // called from adapter

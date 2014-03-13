@@ -2,11 +2,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              >
+    >
 
     <fragment
         android:id="@+id/channel_list_fragment"
+        class="com.distantfuture.videos.channellookup.ChannelLookupListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.distantfuture.videos.channellookup.ChannelLookupListFragment"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -16,7 +16,6 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.Debug;
 
 import java.util.List;
 
@@ -84,18 +83,11 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     Drawable image = mPlusButtonBitmap;
     if (mContent.hasChannel(data.mChannel))
-        image = mMinusButtonBitmap;
+      image = mMinusButtonBitmap;
 
     holder.addButton.setImageDrawable(image);
 
     return convertView;
-  }
-
-  private class ViewHolder {
-    TextView titleView;
-    TextView descrView;
-    ImageView imgView;
-    ImageView addButton;
   }
 
   public void setData(List<YouTubeData> data) {
@@ -106,5 +98,12 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
       }
     }
 
+  }
+
+  private class ViewHolder {
+    TextView titleView;
+    TextView descrView;
+    ImageView imgView;
+    ImageView addButton;
   }
 }

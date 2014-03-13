@@ -8,7 +8,6 @@ import android.util.Log;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Debug;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
