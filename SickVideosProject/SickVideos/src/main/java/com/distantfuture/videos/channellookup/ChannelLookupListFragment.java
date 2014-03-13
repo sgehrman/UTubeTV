@@ -38,7 +38,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
 
     mAdapter = new ChannelLookupAdapter(getActivity());
 
-    setEmptyText("Empty");
+    setEmptyText("Nothing found");
     setListAdapter(mAdapter);
     setListShown(false);
     getLoaderManager().initLoader(0, null, this);

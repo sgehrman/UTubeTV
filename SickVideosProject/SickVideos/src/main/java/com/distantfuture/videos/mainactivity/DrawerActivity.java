@@ -144,14 +144,19 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    MenuItem item;
+
     getMenuInflater().inflate(R.menu.main, menu);
 
     MainApplication.getCastManager(this).addMediaRouterButton(menu, R.id.action_cast, this, true);
 
-
-    MenuItem item = menu.findItem(R.id.action_donate);
-    if (!mContent.supportsDonate())
+    if (!mContent.supportsDonate()) {
+      item = menu.findItem(R.id.action_donate);
       item.setVisible(false);
+
+      item = menu.findItem(R.id.action_channel_lookup);
+      item.setVisible(false);
+    }
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -313,9 +318,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
 
       case R.id.action_channel_lookup:
-        intent = new Intent();
-        intent.setClass(DrawerActivity.this, ChannelLookupActivity.class);
-        startActivity(intent);
+        ChannelLookupActivity.show(this);
         return true;
 
       case R.id.action_whats_new:

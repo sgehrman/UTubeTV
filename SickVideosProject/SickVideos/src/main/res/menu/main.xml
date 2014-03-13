@@ -13,6 +13,12 @@
         android:title="@string/action_settings"/>
 
     <item
+        android:id="@+id/action_channel_lookup"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_channel_lookup"/>
+
+    <item
         android:id="@+id/action_show_hidden"
         android:orderInCategory="100"
         android:showAsAction="never"
@@ -43,13 +49,11 @@
             android:orderInCategory="100"
             android:showAsAction="never"
             android:title="@string/action_show_cast"/>
-
         <item
             android:id="@+id/action_switch_view"
             android:orderInCategory="100"
             android:showAsAction="never"
             android:title="@string/switch_view"/>
-
         <item
             android:id="@+id/action_show_rate_dialog"
             android:orderInCategory="100"
@@ -60,12 +64,6 @@
             android:orderInCategory="100"
             android:showAsAction="never"
             android:title="@string/action_color_picker"/>
-        <item
-            android:id="@+id/action_channel_lookup"
-            android:orderInCategory="100"
-            android:showAsAction="never"
-            android:title="@string/action_channel_lookup"/>
-
         <item
             android:id="@+id/action_show_icons"
             android:orderInCategory="100"

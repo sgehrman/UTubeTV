@@ -1,9 +1,11 @@
 package com.distantfuture.videos.channellookup;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -22,6 +24,24 @@ public class ChannelLookupActivity extends Activity {
   private SearchView mSearchView;
   private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
+
+
+  public static void show(Activity activity) {
+    // add animation, see finish below for the back transition
+    ActivityOptions opts = ActivityOptions.makeCustomAnimation(activity, R.anim.scale_in, R.anim.scale_out);
+
+    Intent intent = new Intent();
+    intent.setClass(activity, ChannelLookupActivity.class);
+    activity.startActivity(intent, opts.toBundle());
+  }
+
+  @Override
+  public void finish() {
+    super.finish();
+
+    // animate out
+    overridePendingTransition(R.anim.scale_out_rev, R.anim.scale_in_rev);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
