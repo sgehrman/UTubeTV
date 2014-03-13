@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
@@ -15,7 +16,8 @@ import java.util.List;
 
 public class ChannelLookupListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<YouTubeData>> {
   private ChannelLookupAdapter mAdapter;
-  private String query;
+  private String mQuery;
+  private String mPendingQuery;
 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
@@ -49,13 +51,23 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   }
 
   public String getQuery() {
-    return query;
+    return mQuery;
   }
 
-  public void setQuery(String query) {
-    if (!TextUtils.equals(this.query, query)) {
-      this.query = query;
-      getLoaderManager().restartLoader(0, null, this);
+  public void setQuery(String inQuery) {
+    if (!TextUtils.equals(mPendingQuery, inQuery)) {
+       mPendingQuery = inQuery;
+
+      new Handler().postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          if (!TextUtils.equals(mPendingQuery, mQuery)) {
+            mQuery = mPendingQuery;
+            ChannelLookupListFragment.this.getLoaderManager().restartLoader(0, null, ChannelLookupListFragment.this);
+          }
+        }
+      }, 100);
+
     }
   }
 
@@ -76,7 +88,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
 
   @Override
   public Loader<List<YouTubeData>> onCreateLoader(int arg0, Bundle arg1) {
-    return new ChannelLookupItemLoader(getActivity(), query);
+    return new ChannelLookupItemLoader(getActivity(), mQuery);
   }
 }
 
