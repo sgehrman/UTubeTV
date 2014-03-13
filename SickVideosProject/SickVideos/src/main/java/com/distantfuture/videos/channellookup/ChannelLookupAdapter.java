@@ -41,6 +41,9 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
           mContent.removeChannel(data.mChannel);
         else
           mContent.addChannel(data.mChannel);
+
+        // needed to update buttons when doing a search
+        notifyDataSetChanged();
       }
     };
   }

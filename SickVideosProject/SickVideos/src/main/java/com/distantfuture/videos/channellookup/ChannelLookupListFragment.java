@@ -26,7 +26,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    getListView().setFastScrollEnabled(true);
+    getListView().setFastScrollEnabled(false);  // true made it difficult to hit add and remove buttons
     EventBus.getDefault().register(this);
 
     mAdapter = new ChannelLookupAdapter(getActivity());
@@ -59,8 +59,10 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
 
   // eventbus event
   public void onEvent(BusEvents.ContentEvent event) {
-    // refresh list if channels update
-    getLoaderManager().restartLoader(0, null, this);
+    // refresh list if channels update if not doing a search
+    // search will have to refresh itself in the adapter to refresh the plus minus buttons
+    if (TextUtils.isEmpty(mQuery))
+      getLoaderManager().restartLoader(0, null, this);
   }
 
   public int getCount() {
