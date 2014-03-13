@@ -146,8 +146,6 @@ public class YouTubeListService extends IntentService {
       return;
     }
 
-    Debug.log("getting list from net...");
-
     YouTubeAPI.BaseListResults listResults = null;
 
     switch (request.type()) {
