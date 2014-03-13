@@ -47,27 +47,31 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
         if (mContent.hasChannel(data.mChannel)) {
           mContent.removeChannel(data.mChannel);
 
-          UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
-            @Override
-            public void onUndo(Parcelable parcelable) {
-              Bundle info = (Bundle) parcelable;
-              String channelId = info.getString("channelId");
-
-              mContent.addChannel(channelId);
-            }
-          };
-          Bundle info = new Bundle();
-          info.putString("channelId", data.mChannel);
-          UndoBarController.show(mActivity, "Channel removed", listener, info);
+          showUndoBar(data.mChannel);
 
         }
         else
           mContent.addChannel(data.mChannel);
 
-        // needed to update buttons when doing a search
-        notifyDataSetChanged();
+        notifyDataSetChanged();  // needed to refresh find results
       }
     };
+  }
+
+  private void showUndoBar(String channelId) {
+    UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
+      @Override
+      public void onUndo(Parcelable parcelable) {
+        Bundle info = (Bundle) parcelable;
+        String channelId = info.getString("channelId");
+
+        mContent.addChannel(channelId);
+        notifyDataSetChanged();  // needed to refresh find results
+      }
+    };
+    Bundle info = new Bundle();
+    info.putString("channelId", channelId);
+    UndoBarController.show(mActivity, "Channel removed", listener, info);
   }
 
   @Override
