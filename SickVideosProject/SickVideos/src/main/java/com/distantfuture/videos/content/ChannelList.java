@@ -109,6 +109,9 @@ public class ChannelList {
       mChannelIds.remove(channelId);
     }
 
+    // saved list in prefs
+    AppUtils.instance(mContext).saveChannelIds(mChannelIds);
+
     // refresh data
     requestChannelInfo(false);
   }
@@ -194,13 +197,19 @@ public class ChannelList {
   }
 
   private List<String> channelIds(Context context, int channels_array_resource) {
+    List<String> result = AppUtils.instance(context).channelIds();
+
+    if (result != null && result.size() > 0)
+      return result;
+
+    // get the hard coded defaults if nothing found in prefs above
     String[] channels = context.getResources().getStringArray(channels_array_resource);
     List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
     for (String c : channels) {
       channelCodes.add(ChannelList.ChannelCode.valueOf(c));
     }
 
-    ArrayList<String> result = new ArrayList<String>();
+    result = new ArrayList<String>();
     for (ChannelList.ChannelCode code : channelCodes)
       result.add(channelIDForCode(code));
 

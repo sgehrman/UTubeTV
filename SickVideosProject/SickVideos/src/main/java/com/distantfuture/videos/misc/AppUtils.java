@@ -8,6 +8,11 @@ import android.os.Looper;
 
 import com.distantfuture.videos.R;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import de.greenrobot.event.EventBus;
 
 public class AppUtils {
@@ -140,6 +145,24 @@ public class AppUtils {
   // we save the last requested drawerSelection as requested
   public void saveDefaultChannelID(String channelId) {
     mPreferences.setString("channel_index", channelId);
+  }
+
+  public List<String> channelIds() {
+    Set<String> stringSet =  mPreferences.getStringSet("channel_ids");
+
+    if (stringSet != null && stringSet.size() > 0)
+      return new ArrayList<String>(stringSet);
+
+    return null;
+  }
+
+  public void saveChannelIds(List<String> list) {
+    Set<String> stringSet=null;
+
+    if (list != null)
+       stringSet =  new HashSet<String>(list);
+
+    mPreferences.setStringSet("channel_ids", stringSet);
   }
 
 }

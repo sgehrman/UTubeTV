@@ -29,7 +29,7 @@ import java.util.List;
 public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
   private final Activity mActivity;
-  private final float mAspectRatio = 9f / 16f;
+  private final float mAspectRatio = 4f / 5f;
   private View.OnClickListener mButtonListener;
   private Content mContent;
 
@@ -46,9 +46,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
         if (mContent.hasChannel(data.mChannel)) {
           mContent.removeChannel(data.mChannel);
-
           showUndoBar(data.mChannel);
-
         }
         else
           mContent.addChannel(data.mChannel);
@@ -97,7 +95,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     AQuery aq = new AQuery(convertView);
     aq.id(holder.imgView)
-        .width(100)
+        .width(90)
         .image(data.mThumbnail, true, true, 0, 0, null, 0, mAspectRatio);
     aq.id(holder.titleView).text(data.mTitle);
     aq.id(holder.descrView).text(data.mDescription);
