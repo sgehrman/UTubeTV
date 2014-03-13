@@ -119,9 +119,8 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
 
   @Override
   public void onDestroy() {
-    super.onDestroy();
-
     EventBus.getDefault().unregister(this);
+    super.onDestroy();
   }
 
   // eventbus event

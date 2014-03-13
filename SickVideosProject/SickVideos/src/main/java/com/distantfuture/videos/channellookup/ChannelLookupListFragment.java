@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.distantfuture.videos.database.YouTubeData;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.Debug;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class ChannelLookupListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<YouTubeData>> {
   private ChannelLookupAdapter mAdapter;
@@ -24,6 +27,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
     super.onActivityCreated(savedInstanceState);
 
     getListView().setFastScrollEnabled(true);
+    EventBus.getDefault().register(this);
 
     mAdapter = new ChannelLookupAdapter(getActivity());
     setEmptyText("Empty");
@@ -44,6 +48,19 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
     } else {
       setListShownNoAnimation(true);
     }
+  }
+
+  @Override
+  public void onDestroy() {
+    EventBus.getDefault().unregister(this);
+
+    super.onDestroy();
+  }
+
+  // eventbus event
+  public void onEvent(BusEvents.ContentEvent event) {
+    // refresh list if channels update
+    getLoaderManager().restartLoader(0, null, this);
   }
 
   public int getCount() {

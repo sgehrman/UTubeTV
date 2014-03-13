@@ -48,7 +48,7 @@ public class ChannelLookupItemLoader extends AsyncTaskLoader<List<YouTubeData>> 
         }
       } else {
         YouTubeAPI.SearchListResults searchList = helper.searchListResults(query, true);
-        result = searchList.getAllItems(50);
+        result = searchList.getAllItems(80);
       }
     } catch (Exception e) {
       Log.e(TAG, "Failed to fetch media data", e);

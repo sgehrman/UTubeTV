@@ -23,8 +23,6 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
   private final Context mContext;
   private final float mAspectRatio = 9f / 16f;
-  private BitmapDrawable mPlusButtonBitmap;
-  private BitmapDrawable mMinusButtonBitmap;
   private View.OnClickListener mButtonListener;
   private Content mContent;
 
@@ -33,9 +31,6 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     this.mContext = context;
 
     this.mContent = Content.instance();
-
-    mPlusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.ADD, Color.GREEN, 36);
-    mMinusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
 
     mButtonListener = new View.OnClickListener() {
       @Override
@@ -81,11 +76,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     // used for clicks
     holder.addButton.setTag(data);
 
-    Drawable image = mPlusButtonBitmap;
-    if (mContent.hasChannel(data.mChannel))
-      image = mMinusButtonBitmap;
-
-    holder.addButton.setImageDrawable(image);
+    holder.addButton.setImageDrawable(buttonDrawable(mContext, !mContent.hasChannel(data.mChannel)));
 
     return convertView;
   }
@@ -97,7 +88,6 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
         add(item);
       }
     }
-
   }
 
   private class ViewHolder {
@@ -105,5 +95,12 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     TextView descrView;
     ImageView imgView;
     ImageView addButton;
+  }
+
+  private Drawable buttonDrawable(Context context, boolean plusButton) {
+    if (plusButton)
+      return ToolbarIcons.icon(context, ToolbarIcons.IconID.ADD, Color.GREEN, 36);
+
+    return ToolbarIcons.icon(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
   }
 }
