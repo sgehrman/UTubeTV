@@ -110,7 +110,7 @@ public class ChannelLookupActivity extends Activity {
         int color = ta.getColor(0, 0);
         ta.recycle();
 
-        mSearchDrawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH, color, 32);
+        mSearchDrawable = ToolbarIcons.icon(this, ToolbarIcons.IconID.SEARCH_PLUS, color, 32);
         mSearchDrawable.setAlpha(150);
       }
       mSearchItem.setIcon(mSearchDrawable);

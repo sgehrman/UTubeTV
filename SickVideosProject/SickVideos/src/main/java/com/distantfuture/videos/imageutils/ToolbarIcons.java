@@ -69,6 +69,9 @@ public class ToolbarIcons {
       case SEARCH:
         icon = EntypoIcon.SEARCH;
         break;
+      case SEARCH_PLUS:
+        icon = FontAwesomeIcon.SEARCH_PLUS;
+        break;
       case UPLOADS:
         icon = FontAwesomeIcon.UPLOAD;
         break;
@@ -149,6 +152,6 @@ public class ToolbarIcons {
     return null;
   }
 
-  public static enum IconID {NONE, SOUND, ADD, REMOVE, COMMENTS, SITE_MAP, COGS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
+  public static enum IconID {NONE, SOUND, ADD, REMOVE, COMMENTS, SITE_MAP, COGS, SEARCH_PLUS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
 
 }
