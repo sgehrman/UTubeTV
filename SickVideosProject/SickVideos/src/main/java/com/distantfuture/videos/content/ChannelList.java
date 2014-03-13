@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.DatabaseTables;
@@ -106,7 +107,13 @@ public class ChannelList {
     if (addChannel) {
       mChannelIds.add(channelId);
     } else {
-      mChannelIds.remove(channelId);
+      // don't allow removing the last channel
+      if (mChannelIds.size() > 1) {
+        mChannelIds.remove(channelId);
+
+        if (TextUtils.equals(mCurrentChannelID, channelId))
+          mCurrentChannelID = mChannelIds.get(0);
+      }
     }
 
     // saved list in prefs
