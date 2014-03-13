@@ -3,6 +3,7 @@ package com.distantfuture.videos.channellookup;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.Debug;
@@ -24,11 +26,14 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   private final float mAspectRatio = 9f / 16f;
   private BitmapDrawable mPlusButtonBitmap;
   private BitmapDrawable mMinusButtonBitmap;
-  View.OnClickListener mButtonListener;
+  private View.OnClickListener mButtonListener;
+  private Content mContent;
 
   public ChannelLookupAdapter(Context context) {
     super(context, 0);
     this.mContext = context;
+
+    this.mContent = Content.instance();
 
     mPlusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.ADD, Color.GREEN, 36);
     mMinusButtonBitmap = ToolbarIcons.iconBitmap(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
@@ -38,7 +43,10 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
       public void onClick(View v) {
         YouTubeData data = (YouTubeData) v.getTag();
 
-        Debug.log("ssdf" + data.mChannel);
+        if (mContent.hasChannel(data.mChannel))
+          mContent.removeChannel(data.mChannel);
+        else
+          mContent.addChannel(data.mChannel);
       }
     };
   }
@@ -73,7 +81,12 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     // used for clicks
     holder.addButton.setTag(data);
-    holder.addButton.setImageDrawable(mPlusButtonBitmap);
+
+    Drawable image = mPlusButtonBitmap;
+    if (mContent.hasChannel(data.mChannel))
+        image = mMinusButtonBitmap;
+
+    holder.addButton.setImageDrawable(image);
 
     return convertView;
   }

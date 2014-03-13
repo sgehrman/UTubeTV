@@ -102,6 +102,21 @@ public class ChannelList {
     return false;
   }
 
+  public void editChannel(String channelId, boolean addChannel) {
+    if (addChannel) {
+      mChannelIds.add(channelId);
+    } else {
+      mChannelIds.remove(channelId);
+    }
+
+    // refresh data
+    requestChannelInfo(false);
+  }
+
+  public boolean hasChannel(String channelId) {
+    return mChannelIds.contains(channelId);
+  }
+
   private void requestChannelInfo(final boolean refresh) {
     (new Thread(new Runnable() {
       public void run() {

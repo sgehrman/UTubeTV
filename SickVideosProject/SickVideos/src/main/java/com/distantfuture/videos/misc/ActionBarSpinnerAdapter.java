@@ -34,6 +34,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
 
     mContext = context.getApplicationContext();
     mContent = content;
+    EventBus.getDefault().register(this);
 
     mBitmapLoader = new BitmapLoader(context, "actionBarSpinner", 64, new BitmapLoader.GetBitmapCallback() {
       @Override
@@ -48,14 +49,19 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
     updateChannels();
   }
 
+  @Override
+  protected void finalize() throws Throwable {
+    EventBus.getDefault().unregister(this);
+
+    super.finalize();
+  }
+
   public void updateChannels() {
     clear();
 
-    if (mContent.channelInfo() == null)
-      EventBus.getDefault().register(this);
-    else {
-      mChannels = mContent.channels();
+    mChannels = mContent.channels();
 
+    if (mChannels != null) {
       for (YouTubeData data : mChannels)
         add(data.mTitle);
     }
@@ -89,9 +95,6 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
   // eventbus event
   public void onEvent(Events.ContentEvent event) {
     updateChannels();
-
-    // only need this called once
-    EventBus.getDefault().unregister(this);
   }
 
   @Override

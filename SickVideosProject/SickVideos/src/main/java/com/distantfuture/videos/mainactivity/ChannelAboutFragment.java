@@ -135,7 +135,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
     String title = "Disclaimer";
     String channelName = "channel";
 
-    final YouTubeData data = mContent.channelInfo();
+    final YouTubeData data = mContent.currentChannelInfo();
     if (data != null)
       channelName = data.mTitle;
 
@@ -161,7 +161,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
   }
 
   private void updateUI() {
-    final YouTubeData data = mContent.channelInfo();
+    final YouTubeData data = mContent.currentChannelInfo();
 
     // if data == null, we'll wait for the eventbus event to arrive
     if (data != null) {

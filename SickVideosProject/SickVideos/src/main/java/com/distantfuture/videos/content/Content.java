@@ -108,14 +108,14 @@ public class Content {
     return AppUtils.instance(mContext).savedSectionIndex(mChannelList.currentChannelId());
   }
 
-  public YouTubeData channelInfo() {
+  public YouTubeData currentChannelInfo() {
     return mChannelList.currentChannelInfo();
   }
 
   public String channelName() {
     String result = null;
 
-    YouTubeData data = channelInfo();
+    YouTubeData data = currentChannelInfo();
     if (data != null)
       result = data.mTitle;
 
@@ -126,4 +126,15 @@ public class Content {
     mChannelList.refresh();
   }
 
+  public boolean hasChannel(String channelId) {
+    return mChannelList.hasChannel(channelId);
+  }
+
+  public void addChannel(String channelId) {
+    mChannelList.editChannel(channelId, true);
+  }
+
+  public void removeChannel(String channelId) {
+    mChannelList.editChannel(channelId, false);
+  }
 }
