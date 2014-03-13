@@ -25,6 +25,7 @@ public class ChannelList {
 
   private List<YouTubeData> mChannels;
   private List<String> mChannelIds;
+  private List<String> mDefaultChannelIds;
   private Map<ChannelCode, String> mChannelIDMap;
   private String mCurrentChannelID;
   private Context mContext;
@@ -34,7 +35,8 @@ public class ChannelList {
 
     mContext = context.getApplicationContext();
 
-    mChannelIds = channelIds(context, channels_array_resource);
+    mDefaultChannelIds = defaultChannelIds(context, channels_array_resource);
+    mChannelIds = channelIds(context);
     mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelIds.get(0));
 
     requestChannelInfo(false);
@@ -67,7 +69,9 @@ public class ChannelList {
   }
 
   public boolean needsChannelSwitcher() {
-    return mChannelIds.size() > 1;
+    // using the default ids since a user could edit his list to one item
+    // then relaunch and be unable to switch
+    return mDefaultChannelIds.size() > 1;
   }
 
   public YouTubeData currentChannelInfo() {
@@ -103,24 +107,37 @@ public class ChannelList {
     return false;
   }
 
-  public void editChannel(String channelId, boolean addChannel) {
+  public boolean editChannel(String channelId, boolean addChannel) {
+    boolean modifiedList = false;
+
     if (addChannel) {
-      mChannelIds.add(channelId);
+      if (!mChannelIds.contains(channelId)) {
+        mChannelIds.add(channelId);
+        modifiedList = true;
+      }
     } else {
       // don't allow removing the last channel
       if (mChannelIds.size() > 1) {
-        mChannelIds.remove(channelId);
+        if (mChannelIds.contains(channelId)) {
 
-        if (TextUtils.equals(mCurrentChannelID, channelId))
-          mCurrentChannelID = mChannelIds.get(0);
+          mChannelIds.remove(channelId);
+          modifiedList = true;
+
+          if (TextUtils.equals(mCurrentChannelID, channelId))
+            mCurrentChannelID = mChannelIds.get(0);
+        }
       }
     }
 
-    // saved list in prefs
-    AppUtils.instance(mContext).saveChannelIds(mChannelIds);
+    if (modifiedList) {
+      // saved list in prefs
+      AppUtils.instance(mContext).saveChannelIds(mChannelIds);
 
-    // refresh data
-    requestChannelInfo(false);
+      // refresh data
+      requestChannelInfo(false);
+    }
+
+    return modifiedList;
   }
 
   public boolean hasChannel(String channelId) {
@@ -203,20 +220,25 @@ public class ChannelList {
     return result;
   }
 
-  private List<String> channelIds(Context context, int channels_array_resource) {
+  private List<String> channelIds(Context context) {
     List<String> result = AppUtils.instance(context).channelIds();
 
     if (result != null && result.size() > 0)
       return result;
 
+    return mDefaultChannelIds;
+  }
+
+  private List<String> defaultChannelIds(Context context, int channels_array_resource) {
+    List<String> result = new ArrayList<String>();
+
     // get the hard coded defaults if nothing found in prefs above
-    String[] channels = context.getResources().getStringArray(channels_array_resource);
+    String[] defaultChannels = context.getResources().getStringArray(channels_array_resource);
     List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
-    for (String c : channels) {
+    for (String c : defaultChannels) {
       channelCodes.add(ChannelList.ChannelCode.valueOf(c));
     }
 
-    result = new ArrayList<String>();
     for (ChannelList.ChannelCode code : channelCodes)
       result.add(channelIDForCode(code));
 

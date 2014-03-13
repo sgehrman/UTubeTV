@@ -127,11 +127,11 @@ public class Content {
     return mChannelList.hasChannel(channelId);
   }
 
-  public void addChannel(String channelId) {
-    mChannelList.editChannel(channelId, true);
+  public boolean addChannel(String channelId) {
+    return mChannelList.editChannel(channelId, true);
   }
 
-  public void removeChannel(String channelId) {
-    mChannelList.editChannel(channelId, false);
+  public boolean removeChannel(String channelId) {
+    return mChannelList.editChannel(channelId, false);
   }
 }

@@ -45,8 +45,8 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
         YouTubeData data = (YouTubeData) v.getTag();
 
         if (mContent.hasChannel(data.mChannel)) {
-          mContent.removeChannel(data.mChannel);
-          showUndoBar(data.mChannel);
+          if (mContent.removeChannel(data.mChannel))
+            showUndoBar(data.mChannel);
         }
         else
           mContent.addChannel(data.mChannel);
