@@ -29,12 +29,7 @@ public class Content {
   private Content(Context context) {
     super();
 
-    mChannelList = new ChannelList(context, R.array.content_array, new ChannelList.OnChannelListUpdateListener() {
-      @Override
-      public void onUpdate() {
-        notifyForDataUpdate();
-      }
-    });
+    mChannelList = new ChannelList(context, R.array.content_array);
 
     mContext = context.getApplicationContext();
   }
@@ -129,11 +124,6 @@ public class Content {
 
   public void refreshChannelInfo() {
     mChannelList.refresh();
-  }
-
-  private void notifyForDataUpdate() {
-    // this only happens once, so make it sticky
-    EventBus.getDefault().post(new Events.ContentEvent());
   }
 
 }

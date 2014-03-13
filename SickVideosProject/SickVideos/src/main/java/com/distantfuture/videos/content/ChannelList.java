@@ -10,12 +10,15 @@ import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 public class ChannelList {
 
@@ -24,24 +27,13 @@ public class ChannelList {
   private Map<ChannelCode, String> mChannelIDMap;
   private String mCurrentChannelID;
   private Context mContext;
-  private OnChannelListUpdateListener mListener;
 
-  public ChannelList(Context context, int channels_array_resource, OnChannelListUpdateListener listener) {
+  public ChannelList(Context context, int channels_array_resource) {
     super();
 
-    String[] channels = context.getResources().getStringArray(channels_array_resource);
-    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
-    for (String c : channels) {
-      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
-    }
-
     mContext = context.getApplicationContext();
-    mListener = listener;
 
-    mChannelIds = new ArrayList<String>();
-    for (ChannelList.ChannelCode code : channelCodes)
-      mChannelIds.add(channelIDForCode(code));
-
+    mChannelIds = channelIds(context, channels_array_resource);
     mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelIds.get(0));
 
     requestChannelInfo(false);
@@ -86,16 +78,14 @@ public class ChannelList {
     return result;
   }
 
-  public String channelIdForIndex(int index) {
-    return mChannelIds.get(index);
-  }
-
   // called on main thread
   private void updateChannels(List<YouTubeData> channels) {
     // keep mChannels null if no results
     if (channels.size() > 0) {
       mChannels = channels;
-      mListener.onUpdate();
+
+      // notify anyone who cares
+      EventBus.getDefault().post(new Events.ContentEvent());
     }
   }
 
@@ -188,6 +178,20 @@ public class ChannelList {
     return result;
   }
 
+  private List<String> channelIds(Context context, int channels_array_resource) {
+    String[] channels = context.getResources().getStringArray(channels_array_resource);
+    List<ChannelList.ChannelCode> channelCodes = new ArrayList<ChannelList.ChannelCode>();
+    for (String c : channels) {
+      channelCodes.add(ChannelList.ChannelCode.valueOf(c));
+    }
+
+    ArrayList<String> result = new ArrayList<String>();
+    for (ChannelList.ChannelCode code : channelCodes)
+      result.add(channelIDForCode(code));
+
+    return result;
+  }
+
   private String channelIDForCode(ChannelCode code) {
     if (mChannelIDMap == null) {
       mChannelIDMap = new HashMap<ChannelCode, String>();
@@ -226,12 +230,5 @@ public class ChannelList {
   }
 
   private static enum ChannelCode {NEURO_SOUP, KHAN_ACADEMY, VSAUCE, SVB, ENGADGET, TWIT, TECH_CRUNCH, YOUNG_TURKS, XDA, CONNECTIONS, CODE_ORG, JUSTIN_BIEBER, THE_VERGE, REASON_TV, BIG_THINK, ANDROID_DEVELOPERS, PEWDIEPIE, YOUTUBE, VICE, TOP_GEAR, COLLEGE_HUMOR, ROGAN, LUKITSCH, NERDIST, RT, JET_DAISUKE, MAX_KEISER, GATES_FOUNDATION}
-
-  // --------------------------------------------------------
-  // preferences
-
-  public interface OnChannelListUpdateListener {
-    public void onUpdate();
-  }
 
 }
