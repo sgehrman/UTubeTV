@@ -93,7 +93,7 @@ public class ChannelLookupActivity extends Activity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.search_menu, menu);
+    getMenuInflater().inflate(R.menu.edit_channels_menu, menu);
 
     setupSearchItem(menu);
 

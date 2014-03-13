@@ -40,7 +40,6 @@ import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ContractFragment;
-import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
@@ -137,7 +136,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    inflater.inflate(R.menu.search_menu, menu);
+    inflater.inflate(R.menu.youtube_fragment_menu, menu);
     setupSearchItem(menu);
   }
 
