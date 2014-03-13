@@ -60,6 +60,11 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
       @Override
       public void onUndo(Parcelable parcelable) {
+        // was getting crashes here, this fixed it.  I think quickly double tapping the undo button triggers this
+        if (parcelable == null) {
+          return;
+        }
+
         Bundle info = (Bundle) parcelable;
         String channelId = info.getString("channelId");
 

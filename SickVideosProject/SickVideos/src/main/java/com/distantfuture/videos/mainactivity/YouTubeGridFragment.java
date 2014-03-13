@@ -40,6 +40,7 @@ import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ContractFragment;
+import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
@@ -215,6 +216,10 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
       @Override
       public void onUndo(Parcelable parcelable) {
+        // was getting crashes here, this fixed it.  I think quickly double tapping the undo button triggers this
+        if (parcelable == null) {
+          return;
+        }
 
         DatabaseAccess database = new DatabaseAccess(getActivity(), mRequest);
 
