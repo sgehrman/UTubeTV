@@ -1,9 +1,12 @@
 package com.distantfuture.videos.channellookup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +15,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.cocosw.undobar.UndoBarController;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
+import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.Debug;
+import com.google.common.primitives.Longs;
 
 import java.util.List;
 
 public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
-  private final Context mContext;
+  private final Activity mActivity;
   private final float mAspectRatio = 9f / 16f;
   private View.OnClickListener mButtonListener;
   private Content mContent;
 
-  public ChannelLookupAdapter(Context context) {
-    super(context, 0);
-    this.mContext = context;
+  public ChannelLookupAdapter(Activity activity) {
+    super(activity, 0);
+    this.mActivity = activity;
 
     this.mContent = Content.instance();
 
@@ -38,8 +44,23 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
       public void onClick(View v) {
         YouTubeData data = (YouTubeData) v.getTag();
 
-        if (mContent.hasChannel(data.mChannel))
+        if (mContent.hasChannel(data.mChannel)) {
           mContent.removeChannel(data.mChannel);
+
+          UndoBarController.UndoListener listener = new UndoBarController.UndoListener() {
+            @Override
+            public void onUndo(Parcelable parcelable) {
+              Bundle info = (Bundle) parcelable;
+              String channelId = info.getString("channelId");
+
+              mContent.addChannel(channelId);
+            }
+          };
+          Bundle info = new Bundle();
+          info.putString("channelId", data.mChannel);
+          UndoBarController.show(mActivity, "Channel removed", listener, info);
+
+        }
         else
           mContent.addChannel(data.mChannel);
 
@@ -53,7 +74,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   public View getView(int position, View convertView, ViewGroup parent) {
 
     ViewHolder holder;
-    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     YouTubeData data = getItem(position);
 
     if (convertView == null) {
@@ -80,7 +101,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     // used for clicks
     holder.addButton.setTag(data);
 
-    holder.addButton.setImageDrawable(buttonDrawable(mContext, !mContent.hasChannel(data.mChannel)));
+    holder.addButton.setImageDrawable(buttonDrawable(mActivity, !mContent.hasChannel(data.mChannel)));
 
     return convertView;
   }

@@ -5,13 +5,20 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.cocosw.undobar.UndoBarController;
+import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.Debug;
+import com.google.common.primitives.Longs;
+import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 
 import java.util.List;
 
@@ -30,6 +37,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
     EventBus.getDefault().register(this);
 
     mAdapter = new ChannelLookupAdapter(getActivity());
+
     setEmptyText("Empty");
     setListAdapter(mAdapter);
     setListShown(false);
