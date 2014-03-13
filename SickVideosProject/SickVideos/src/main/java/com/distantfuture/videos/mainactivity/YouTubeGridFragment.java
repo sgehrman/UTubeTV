@@ -38,9 +38,9 @@ import com.distantfuture.videos.database.YouTubeContentProvider;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.AppUtils;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ContractFragment;
 import com.distantfuture.videos.misc.EmptyListHelper;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.services.YouTubeListService;
@@ -326,7 +326,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   }
 
   // for EventBus
-  public void onEvent(Events.PlayNextEvent event) {
+  public void onEvent(BusEvents.PlayNextEvent event) {
     int index = event.params.index;
     int cnt = mAdapter.getCount();
 

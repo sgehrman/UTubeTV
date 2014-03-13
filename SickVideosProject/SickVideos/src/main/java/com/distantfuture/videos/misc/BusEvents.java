@@ -2,7 +2,7 @@ package com.distantfuture.videos.misc;
 
 import com.distantfuture.videos.youtube.VideoPlayer;
 
-public class Events {
+public class BusEvents {
 
   public static class ContentEvent {
     public ContentEvent() {

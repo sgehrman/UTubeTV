@@ -9,8 +9,8 @@ import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.Debug;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class ChannelList {
       mChannels = channels;
 
       // notify anyone who cares
-      EventBus.getDefault().post(new Events.ContentEvent());
+      EventBus.getDefault().post(new BusEvents.ContentEvent());
     }
   }
 

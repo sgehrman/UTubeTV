@@ -21,8 +21,8 @@ import com.distantfuture.videos.donate.DonateActivity;
 import com.distantfuture.videos.introactivity.IntroActivity;
 import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
 import com.distantfuture.videos.misc.AppUtils;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ColorPickerFragment;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.MainApplication;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.youtube.VideoPlayer;
@@ -165,7 +165,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     return false;
   }
 
-  public void onEvent(Events.ThemeChanged event) {
+  public void onEvent(BusEvents.ThemeChanged event) {
     // animate doesn't work, puts new activity in the background.  use recreate instead
     boolean animate = false;
     if (animate) {

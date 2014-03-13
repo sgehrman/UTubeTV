@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Events;
+import com.distantfuture.videos.misc.BusEvents;
 
 import de.greenrobot.event.EventBus;
 
@@ -116,7 +116,7 @@ public class DonateActivity extends Activity {
   }
 
   // eventbus event
-  public void onEvent(Events.PurchaseEvent event) {
+  public void onEvent(BusEvents.PurchaseEvent event) {
     setMessage(event.message);
 
     if (event.alert != null) {

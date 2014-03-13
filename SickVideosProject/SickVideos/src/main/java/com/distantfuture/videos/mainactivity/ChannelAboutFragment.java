@@ -17,10 +17,9 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.BitmapLoader;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ContractFragment;
-import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.EmptyListHelper;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.Utils;
 
 import de.greenrobot.event.EventBus;
@@ -126,7 +125,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
   }
 
   // eventbus event
-  public void onEvent(Events.ContentEvent event) {
+  public void onEvent(BusEvents.ContentEvent event) {
     updateUI();
     mPullToRefreshLayout.setRefreshComplete();
   }

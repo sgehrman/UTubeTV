@@ -38,7 +38,7 @@ public class ConnectionMonitor {
         if (mConnected != isConnected) {
           mConnected = isConnected;
 
-          EventBus.getDefault().post(new Events.ConnectionChanged());
+          EventBus.getDefault().post(new BusEvents.ConnectionChanged());
         }
       }
     };

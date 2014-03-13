@@ -10,7 +10,6 @@ import com.distantfuture.videos.mainactivity.ChannelAboutFragment;
 import com.distantfuture.videos.mainactivity.YouTubeGridFragment;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Debug;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 import com.google.common.collect.ImmutableMap;
@@ -18,8 +17,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 public class Content {
   private static Content instance;

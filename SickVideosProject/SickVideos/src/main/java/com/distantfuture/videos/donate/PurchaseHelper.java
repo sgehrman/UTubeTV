@@ -9,8 +9,8 @@ import com.distantfuture.videos.billing.IabHelper;
 import com.distantfuture.videos.billing.IabResult;
 import com.distantfuture.videos.billing.Inventory;
 import com.distantfuture.videos.billing.Purchase;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.Debug;
-import com.distantfuture.videos.misc.Events;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class PurchaseHelper {
 
       if (result.isSuccess()) {
         // successfully consumed, so we apply the effects of the item in our
-        EventBus.getDefault().post(new Events.PurchaseEvent(null, null, true));
+        EventBus.getDefault().post(new BusEvents.PurchaseEvent(null, null, true));
 
       } else {
         showErrorAlert("Error while consuming: " + result);
@@ -143,7 +143,7 @@ public class PurchaseHelper {
   }
 
   void showAlert(String message) {
-    EventBus.getDefault().post(new Events.PurchaseEvent(null, message, false));
+    EventBus.getDefault().post(new BusEvents.PurchaseEvent(null, message, false));
   }
 
   private String base64EncodedPublicKey() {

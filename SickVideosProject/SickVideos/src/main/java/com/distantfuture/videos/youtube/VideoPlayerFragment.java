@@ -6,8 +6,8 @@ import android.content.res.Configuration;
 
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Auth;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.Debug;
-import com.distantfuture.videos.misc.Events;
 import com.distantfuture.videos.misc.SoundManager;
 import com.distantfuture.videos.misc.Utils;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -242,7 +242,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
         // playnext has precedence over repeat, both could be on if user set them
         if (AppUtils.instance(getActivity()).playNext()) {
           if (mPlayer != null)
-            EventBus.getDefault().post(new Events.PlayNextEvent(mPlayerParams));
+            EventBus.getDefault().post(new BusEvents.PlayNextEvent(mPlayerParams));
           else
             Debug.log("playnext canceled, player is null");
         } else if (AppUtils.instance(getActivity()).repeatVideo()) {

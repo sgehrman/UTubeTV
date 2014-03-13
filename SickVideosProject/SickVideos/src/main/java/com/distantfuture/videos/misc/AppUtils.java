@@ -26,7 +26,7 @@ public class AppUtils {
       @Override
       public void prefChanged(String prefName) {
         if (prefName.equals("theme_id")) {
-          EventBus.getDefault().post(new Events.ThemeChanged());
+          EventBus.getDefault().post(new BusEvents.ThemeChanged());
         }
       }
     });
