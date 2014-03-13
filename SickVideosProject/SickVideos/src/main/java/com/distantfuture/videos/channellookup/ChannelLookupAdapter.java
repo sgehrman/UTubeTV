@@ -16,6 +16,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.Debug;
 
 import java.util.List;
 
@@ -84,12 +85,11 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     return convertView;
   }
 
-  public void setData(List<YouTubeData> data) {
+  public void setData(List<YouTubeData> dataList) {
     clear();
-    if (data != null) {
-      for (YouTubeData item : data) {
-        add(item);
-      }
+
+    if (dataList != null) {
+      addAll(dataList);
     }
   }
 
