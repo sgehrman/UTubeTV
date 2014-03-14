@@ -24,6 +24,7 @@ import de.greenrobot.event.EventBus;
 public class ChannelList {
 
   private List<YouTubeData> mChannels;
+  private ChannelSetStore mChannelSetStore;
   private ChannelSet mChannelSet;
   private String mCurrentChannelID;
   private Context mContext;
@@ -33,7 +34,8 @@ public class ChannelList {
 
     mContext = context.getApplicationContext();
 
-    mChannelSet = new ChannelSet(context, channels_array_resource);
+    mChannelSetStore = new ChannelSetStore(context, channels_array_resource);
+    mChannelSet = mChannelSetStore.channelSet(null);
     mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelSet.get(0));
 
     requestChannelInfo(false);
@@ -66,7 +68,7 @@ public class ChannelList {
   }
 
   public boolean needsChannelSwitcher() {
-    return mChannelSet.needsChannelSwitcher();
+    return mChannelSetStore.needsChannelSwitcher();
   }
 
   public YouTubeData currentChannelInfo() {
@@ -103,7 +105,7 @@ public class ChannelList {
   }
 
   public boolean editChannel(String channelId, boolean addChannel) {
-    boolean modifiedList = mChannelSet.editChannel(channelId, addChannel);
+    boolean modifiedList = mChannelSet.editChannel(mContext, channelId, addChannel);
 
     if (modifiedList) {
       if (TextUtils.equals(mCurrentChannelID, channelId))
