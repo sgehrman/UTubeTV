@@ -62,6 +62,12 @@
             android:label="@string/pref_title_credits">
         </activity>
 
+        <activity
+            android:name=".channellookup.ChannelDetailActivity"
+            android:label="Channel Info"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+
         <service
             android:name="com.distantfuture.videos.services.YouTubeListService"
             android:enabled="true"
