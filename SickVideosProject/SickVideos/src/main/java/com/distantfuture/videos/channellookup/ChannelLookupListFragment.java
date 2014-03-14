@@ -105,7 +105,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   private void handleNavigation(YouTubeData info, boolean autoStart) {
     Debug.log(info.mChannel);
 
-    ChannelDetailActivity.show(getActivity());
+    ChannelDetailsActivity.show(getActivity());
   }
 
   @Override

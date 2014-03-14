@@ -63,9 +63,9 @@
         </activity>
 
         <activity
-            android:name=".channellookup.ChannelDetailActivity"
-            android:label="Channel Info"
-            android:theme="@android:style/Theme.Dialog">
+            android:name=".channellookup.ChannelDetailsActivity"
+            android:label="Channel Details"
+            android:theme="@style/ChannelDetailsDialogStyle">
         </activity>
 
         <service
