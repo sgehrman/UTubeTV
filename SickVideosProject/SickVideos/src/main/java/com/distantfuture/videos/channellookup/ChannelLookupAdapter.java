@@ -130,7 +130,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
   private Drawable buttonDrawable(Context context, boolean plusButton) {
     if (plusButton)
-      return ToolbarIcons.icon(context, ToolbarIcons.IconID.ADD, Color.GREEN, 36);
+      return ToolbarIcons.icon(context, ToolbarIcons.IconID.ADD, 0xff009900, 36);
 
     return ToolbarIcons.icon(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
   }
