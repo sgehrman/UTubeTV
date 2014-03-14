@@ -232,6 +232,9 @@ CARTOONS:
     Archer
     StitchOtaku626
 
+Learn Magic
+    SchoolOfCardistry
+
 PSYCHONAUT
     neurosoup
     dmt
