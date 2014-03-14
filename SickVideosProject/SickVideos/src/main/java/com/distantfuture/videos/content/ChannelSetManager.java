@@ -9,12 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChannelSetStore {
+public class ChannelSetManager {
   private Context context;
+  private List<String> channelSetNames;
   private List<String> defaultChannelIds;
   private Map<ChannelCode, String> mChannelIDMap;
 
-  public ChannelSetStore(Context context, int channels_array_resource) {
+  public ChannelSetManager(Context context, int channels_array_resource) {
     super();
 
     this.context = context.getApplicationContext();
@@ -45,13 +46,35 @@ public class ChannelSetStore {
   }
 
   public ChannelSet channelSet(String name) {
+    ChannelSet result = loadChannelSet(context, name);
+
+    if (result == null)
+      result = new ChannelSet(null, defaultChannelIds);
+
+    return result;
+  }
+
+  // -------------------------------------------------------------
+  // static prefs stuff
+
+  public static void saveChannelSet(Context context, ChannelSet set) {
+    // don't save the default set
+    if (set.getName() == null)
+      return;
+
+    AppUtils.instance(context).saveChannelIds(set.getName(), set.getChannelIds());
+  }
+
+  public static ChannelSet loadChannelSet(Context context, String name) {
     List<String> result = AppUtils.instance(context).channelIds(name);
 
     if (result != null && result.size() > 0)
       return new ChannelSet(name, result);
 
-    return new ChannelSet(null, defaultChannelIds);
+    return null;
   }
+
+  // -------------------------------------------------------------
 
   private String channelIDForCode(ChannelCode code) {
     if (mChannelIDMap == null) {

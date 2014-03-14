@@ -15,16 +15,14 @@ import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
 public class ChannelList {
 
   private List<YouTubeData> mChannels;
-  private ChannelSetStore mChannelSetStore;
+  private ChannelSetManager mChannelSetStore;
   private ChannelSet mChannelSet;
   private String mCurrentChannelID;
   private Context mContext;
@@ -34,7 +32,7 @@ public class ChannelList {
 
     mContext = context.getApplicationContext();
 
-    mChannelSetStore = new ChannelSetStore(context, channels_array_resource);
+    mChannelSetStore = new ChannelSetManager(context, channels_array_resource);
     mChannelSet = mChannelSetStore.channelSet(null);
     mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelSet.get(0));
 

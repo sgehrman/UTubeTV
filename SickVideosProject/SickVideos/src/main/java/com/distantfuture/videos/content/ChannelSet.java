@@ -1,14 +1,8 @@
 package com.distantfuture.videos.content;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.distantfuture.videos.misc.AppUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChannelSet {
   private List<String> channelIds;
@@ -45,8 +39,7 @@ public class ChannelSet {
     }
 
     if (modifiedList) {
-      // saved list in prefs
-      AppUtils.instance(context).saveChannelIds(name, channelIds);
+      ChannelSetManager.saveChannelSet(context, this);
     }
 
     return modifiedList;
