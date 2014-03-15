@@ -3,7 +3,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <objectAnimator
-        android:duration="400"
+        android:duration="300"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:propertyName="alpha"
         android:valueFrom="1.0"
@@ -13,7 +13,7 @@
 
 
     <objectAnimator
-        android:duration="400"
+        android:duration="300"
 
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:propertyName="xFraction"
