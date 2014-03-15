@@ -1,5 +1,6 @@
 package com.distantfuture.videos.channellookup;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -81,5 +82,4 @@ public class ChannelDetailsActivity extends Activity {
     }
     return super.onOptionsItemSelected(item);
   }
-
 }

@@ -1,5 +1,6 @@
 package com.distantfuture.videos.channellookup;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.SearchManager;
@@ -15,7 +16,9 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
 import com.distantfuture.videos.misc.Utils;
 
 public class ChannelLookupActivity extends Activity {
@@ -24,7 +27,9 @@ public class ChannelLookupActivity extends Activity {
   private SearchView mSearchView;
   private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
-
+  private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
+  private boolean mSpinnerSucksBalls=false;
+  private Content mContent;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -52,6 +57,39 @@ public class ChannelLookupActivity extends Activity {
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
     listFragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
+
+    // add spinner
+    mContent = Content.instance();
+    if (true) {
+      mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
+      ActionBar.OnNavigationListener listener = new ActionBar.OnNavigationListener() {
+        @Override
+        public boolean onNavigationItemSelected(int position, long itemId) {
+
+          // be aware that this call back gets called when the spinner contents are built
+          // we need to ignore that one, so not going to do anything if channel not changing
+          if (!mSpinnerSucksBalls) {
+            mSpinnerSucksBalls = true;
+
+            // ## taking advantage of this feature/bug to set the real value of the actionbar spinner
+            // if we don't do this, the spinner defaults to value 0, so selecting the first item
+            // in the list will not work since it doesn't respond when selecting the same index as the current value
+            getActionBar().setSelectedNavigationItem(mContent.currentChannelIndex());
+          } else {
+            if (mContent.changeChannel(position)) {
+              // updateSectionForChannel();
+            }
+          }
+          return true;
+        }
+      };
+
+      getActionBar().setDisplayShowTitleEnabled(false);
+      getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+      getActionBar().setListNavigationCallbacks(mActionBarSpinnerAdapter, listener);
+    }
+
+    setActionBarTitle("Edit Channels", "Default");
   }
 
   @Override
@@ -186,6 +224,19 @@ public class ChannelLookupActivity extends Activity {
           return setFilter;
         }
       });
+    }
+  }
+
+  public void setActionBarTitle(CharSequence title, CharSequence subtitle) {
+    if (mActionBarSpinnerAdapter != null) {
+      mActionBarSpinnerAdapter.setTitleAndSubtitle(title, subtitle);
+    } else {
+      ActionBar bar = getActionBar();
+
+      if (bar != null) {
+        bar.setTitle(title);
+        bar.setSubtitle(subtitle);
+      }
     }
   }
 
