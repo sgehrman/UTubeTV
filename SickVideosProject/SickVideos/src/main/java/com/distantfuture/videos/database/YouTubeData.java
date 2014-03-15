@@ -1,5 +1,7 @@
 package com.distantfuture.videos.database;
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,12 +24,24 @@ public class YouTubeData {
   public String mChannel;
   // used for playlists
   public String mPlaylist;
-  public Long mItemCount;  // number of videos in a playlist
+  public long mItemCount;  // number of videos in a playlist
   // use convenience methods
   private String mHidden;
 
   // ----------------------------------------------------
   // public methods
+
+  // hidden string is either '' or null,
+  public boolean isHidden() {
+    return mHidden != null;
+  }
+
+  public void setHidden(boolean hidden) {
+    mHidden = hidden ? mNotNull : null;
+  }
+
+// ----------------------------------------------------
+  // static helper functions
 
   public static List<YouTubeData> sortByDate(List<YouTubeData> videoIDs) {
     Collections.sort(videoIDs, new Comparator<YouTubeData>() {
@@ -49,9 +63,6 @@ public class YouTubeData {
     return videoIDs;
   }
 
-  // ----------------------------------------------------
-  // static helper functions
-
   // video or playlist ids
   public static List<String> contentIdsList(List<YouTubeData> videoData) {
     List<String> result = new ArrayList<String>(videoData.size());
@@ -63,13 +74,43 @@ public class YouTubeData {
     return result;
   }
 
-  // hidden string is either '' or null,
-  public boolean isHidden() {
-    return mHidden != null;
+  public static Bundle toBundle(YouTubeData data) {
+    Bundle result = new Bundle();
+    result.putString("title", data.mTitle);
+    result.putString("description", data.mDescription);
+    result.putString("channel", data.mChannel);
+    result.putString("thumbnail", data.mThumbnail);
+    result.putString("hidden", data.mHidden);
+    result.putString("request", data.mRequest);
+    result.putString("video", data.mVideo);
+    result.putString("duration", data.mDuration);
+    result.putString("playlist", data.mPlaylist);
+
+    result.putLong("itemCount", data.mItemCount);
+    result.putLong("id", data.mID);
+    result.putLong("publishedDate", data.mPublishedDate);
+
+    return result;
   }
 
-  public void setHidden(boolean hidden) {
-    mHidden = hidden ? mNotNull : null;
+  public static YouTubeData fromBundle(Bundle bundle) {
+    YouTubeData result = new YouTubeData();
+
+    result.mTitle = bundle.getString("title");
+    result.mDescription = bundle.getString("description");
+    result.mChannel = bundle.getString("channel");
+    result.mThumbnail = bundle.getString("thumbnail");
+    result.mHidden = bundle.getString("hidden");
+    result.mRequest = bundle.getString("request");
+    result.mVideo = bundle.getString("video");
+    result.mDuration = bundle.getString("duration");
+    result.mPlaylist = bundle.getString("playlist");
+
+    result.mItemCount = bundle.getLong("itemCount");
+    result.mID = bundle.getLong("id");
+    result.mPublishedDate = bundle.getLong("publishedDate");
+
+    return result;
   }
 
 }

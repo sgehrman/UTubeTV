@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/dialog_shadow"/>
+
+    <item android:top="14dp" android:left="14dp" android:right="14dp" android:bottom="14dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:radius="8dp"
+                />
+            <solid
+                android:color="#a000"
+                />
+            <stroke
+                android:color="#000"
+                android:width="4dp"
+                />
+            <padding
+                android:left="18dp"
+                android:top="18dp"
+                android:right="18dp"
+                android:bottom="18dp" />
+        </shape>
+    </item>
+
+</layer-list>
