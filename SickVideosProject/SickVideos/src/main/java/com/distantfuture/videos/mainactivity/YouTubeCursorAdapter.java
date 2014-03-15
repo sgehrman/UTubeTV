@@ -339,12 +339,8 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     if (duration != null) {
       holder.duration.setText(duration);
     } else {
-      Long count = itemMap.mItemCount;
-      if (count != null) {
-        holder.duration.setText(count.toString() + (count == 1 ? " video" : " videos"));
-      } else {
-        holder.duration.setText("");
-      }
+      long count = itemMap.mItemCount;
+      holder.duration.setText(Long.toString(count) + (count == 1 ? " video" : " videos"));
     }
 
     Spannable date = mDateCache.spannable(itemMap.mPublishedDate);
