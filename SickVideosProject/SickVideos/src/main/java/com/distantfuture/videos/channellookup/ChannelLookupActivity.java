@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
+import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.Utils;
 
 public class ChannelLookupActivity extends Activity {
@@ -30,6 +33,8 @@ public class ChannelLookupActivity extends Activity {
   private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
   private boolean mSpinnerSucksBalls=false;
   private Content mContent;
+  private static final int IMPORT_FILE =889;
+  private static final int EXPORT_FILE =829;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -98,6 +103,14 @@ public class ChannelLookupActivity extends Activity {
       // Respond to the action bar's Up/Home button
       case android.R.id.home:
         finish();
+        return true;
+
+      case R.id.action_show_import_dialog:
+        importFile();
+        return true;
+
+      case R.id.action_show_export_dialog:
+        exportFile();
         return true;
     }
     return super.onOptionsItemSelected(item);
@@ -237,6 +250,53 @@ public class ChannelLookupActivity extends Activity {
         bar.setTitle(title);
         bar.setSubtitle(subtitle);
       }
+    }
+  }
+
+  public void exportFile() {
+
+  }
+
+  public void importFile() {
+
+    // ACTION_OPEN_DOCUMENT is the new API 19 action for the Android file manager
+    Intent intent;
+    if (Build.VERSION.SDK_INT >= 19) {
+      intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    } else {
+      intent = new Intent(Intent.ACTION_GET_CONTENT);
+    }
+
+    // Filter to only show results that can be "opened", such as a
+    // file (as opposed to a list of contacts or timezones)
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+    // Currently no recognized epub MIME type
+    intent.setType("*/*");
+
+    startActivityForResult(intent, IMPORT_FILE);
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+      case EXPORT_FILE:
+        break;
+      case IMPORT_FILE:
+
+        if (data != null) {
+          Uri uri = data.getData();
+          if (Build.VERSION.SDK_INT >= 19) {
+            final int takeFlags = data.getFlags()
+                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+          }
+          Debug.log(uri.toString());
+        }
+        break;
+      default:
+        super.onActivityResult(requestCode, resultCode, data);
     }
   }
 
