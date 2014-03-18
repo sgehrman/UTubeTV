@@ -24,14 +24,14 @@ public class ChannelSetManager {
   }
 
   public static void saveChannelSet(Context context, ChannelSet set) {
-    AppUtils.instance(context).saveChannelIds(set.getName(), set.getChannelIds());
+    AppUtils.instance(context).saveChannelIds(set.getChannelIds());
   }
 
-  public static ChannelSet loadChannelSet(Context context, String name) {
-    List<String> result = AppUtils.instance(context).channelIds(name);
+  public static ChannelSet loadChannelSet(Context context) {
+    List<String> result = AppUtils.instance(context).channelIds();
 
     if (result != null && result.size() > 0)
-      return new ChannelSet(name, result);
+      return new ChannelSet(null, result);
 
     return null;
   }
@@ -61,13 +61,17 @@ public class ChannelSetManager {
     return defaultChannelIds.size() > 1;
   }
 
-  public ChannelSet channelSet(String name) {
-    ChannelSet result = loadChannelSet(context, name);
+  public ChannelSet channelSet() {
+    ChannelSet result = loadChannelSet(context);
 
     if (result == null)
       result = new ChannelSet(null, defaultChannelIds);
 
     return result;
+  }
+
+  public void resetToDefaults() {
+    AppUtils.instance(context).saveChannelIds(null);
   }
 
   // -------------------------------------------------------------

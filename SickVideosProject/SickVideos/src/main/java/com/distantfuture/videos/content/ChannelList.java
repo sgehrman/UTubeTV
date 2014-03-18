@@ -33,7 +33,7 @@ public class ChannelList {
     mContext = context.getApplicationContext();
 
     mChannelSetStore = new ChannelSetManager(context, channels_array_resource);
-    mChannelSet = mChannelSetStore.channelSet(null);
+    mChannelSet = mChannelSetStore.channelSet();
     mCurrentChannelID = AppUtils.instance(mContext).defaultChannelID(mChannelSet.get(0));
 
     requestChannelInfo(false);
@@ -62,7 +62,10 @@ public class ChannelList {
   }
 
   public void resetToDefaults() {
+    mChannelSetStore.resetToDefaults();
+    mChannelSet = mChannelSetStore.channelSet();
 
+    requestChannelInfo(false);
   }
 
   public String currentChannelId() {

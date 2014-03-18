@@ -147,17 +147,14 @@ public class AppUtils {
     mPreferences.setString("channel_index", channelId);
   }
 
-  private String prefKeyForChannelIds(String name) {
+  private String prefKeyForChannelIds() {
     String base = "channel_ids_";
-
-    if (name != null)
-      return base + name;
 
     return base + "default";
   }
 
-  public List<String> channelIds(String name) {
-    Set<String> stringSet = mPreferences.getStringSet(prefKeyForChannelIds(name));
+  public List<String> channelIds() {
+    Set<String> stringSet = mPreferences.getStringSet(prefKeyForChannelIds());
 
     if (stringSet != null && stringSet.size() > 0)
       return new ArrayList<String>(stringSet);
@@ -165,13 +162,12 @@ public class AppUtils {
     return null;
   }
 
-  public void saveChannelIds(String name, List<String> list) {
+  public void saveChannelIds( List<String> list) {
     Set<String> stringSet = null;
 
     if (list != null)
       stringSet = new HashSet<String>(list);
 
-    mPreferences.setStringSet(prefKeyForChannelIds(name), stringSet);
+    mPreferences.setStringSet(prefKeyForChannelIds(), stringSet);
   }
-
 }
