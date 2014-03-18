@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<LinearLayout
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:padding="12dp"
-
-              android:layout_height="match_parent">
-
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/channel_thumbnail"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/channel_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/channel_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:textStyle="bold"
             android:paddingBottom="12dp"
+            android:text="Title"
             android:textSize="28sp"
-            android:text="Title"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:paddingBottom="12dp"
-            android:textColor="#a00"
+            android:textStyle="bold"/>
 
+        <TextView
             android:id="@+id/channel_id"
-            android:text="id"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/channel_description"
-            android:autoLink="all"
-            android:paddingBottom="12dp"
             android:gravity="center"
-            android:textSize="18sp"
-            android:text="description"/>
+            android:paddingBottom="12dp"
+            android:text="id"
+
+            android:textColor="#a00"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/channel_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:text="description"
+            android:textSize="18sp"/>
 
 
-
-</LinearLayout>        </ScrollView>
+    </LinearLayout>
+</ScrollView>

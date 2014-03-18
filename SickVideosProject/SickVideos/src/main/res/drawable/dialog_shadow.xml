@@ -5,44 +5,68 @@
     <!-- shadow layers -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0a000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0a000000"/>
         </shape>
     </item>
-    <item android:top="2dp" android:left="2dp" android:bottom="2dp" android:right="2dp">
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
-    <item android:top="4dp" android:left="4dp" android:bottom="4dp" android:right="4dp">
+    <item
+        android:bottom="4dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
-    <item android:top="6dp" android:left="6dp" android:bottom="6dp" android:right="6dp">
+    <item
+        android:bottom="6dp"
+        android:left="6dp"
+        android:right="6dp"
+        android:top="6dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
-    <item android:top="8dp" android:left="8dp" android:bottom="8dp" android:right="8dp">
+    <item
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="8dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
-    <item android:top="10dp" android:left="10dp" android:bottom="10dp" android:right="10dp">
+    <item
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
-    <item android:top="12dp" android:left="12dp" android:bottom="12dp" android:right="12dp">
+    <item
+        android:bottom="12dp"
+        android:left="12dp"
+        android:right="12dp"
+        android:top="12dp">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp" />
-            <solid android:color="#0f000000" />
+            <corners android:radius="8dp"/>
+            <solid android:color="#0f000000"/>
         </shape>
     </item>
 

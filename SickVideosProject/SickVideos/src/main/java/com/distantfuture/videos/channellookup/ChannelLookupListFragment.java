@@ -76,7 +76,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
 
   public void setQuery(String inQuery) {
     if (!TextUtils.equals(mPendingQuery, inQuery)) {
-       mPendingQuery = inQuery;
+      mPendingQuery = inQuery;
 
       new Handler().postDelayed(new Runnable() {
         @Override

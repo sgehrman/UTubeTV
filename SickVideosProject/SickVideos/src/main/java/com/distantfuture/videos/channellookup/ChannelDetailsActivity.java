@@ -1,6 +1,5 @@
 package com.distantfuture.videos.channellookup;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -64,7 +63,7 @@ public class ChannelDetailsActivity extends Activity {
     aq.id(descriptionView).text(data.mDescription);
     aq.id(channelIdView).text(data.mChannel);
 
-    imageView.setOnClickListener(new View.OnClickListener(){
+    imageView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

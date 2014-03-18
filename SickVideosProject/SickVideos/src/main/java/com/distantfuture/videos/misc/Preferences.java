@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.List;
 import java.util.Set;
 
 public class Preferences implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -55,15 +54,15 @@ public class Preferences implements SharedPreferences.OnSharedPreferenceChangeLi
     mListener.prefChanged(key);
   }
 
-  public interface PreferenceCacheListener {
-    public void prefChanged(String prefName);
-  }
-
   public Set<String> getStringSet(String key) {
     return sharedPreferences.getStringSet(key, null);
   }
 
   public void setStringSet(String key, Set<String> set) {
     sharedPreferences.edit().putStringSet(key, set).commit();
+  }
+
+  public interface PreferenceCacheListener {
+    public void prefChanged(String prefName);
   }
 }

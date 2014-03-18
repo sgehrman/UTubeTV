@@ -2,7 +2,6 @@ package com.distantfuture.videos.misc;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.os.Build;
 
 public class SoundManager {
   private boolean mMuteState = false;

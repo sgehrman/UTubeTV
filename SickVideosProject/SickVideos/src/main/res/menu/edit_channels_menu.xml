@@ -2,13 +2,13 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item
-            android:id="@+id/action_search"
-            android:actionViewClass="android.widget.SearchView"
-            android:orderInCategory="100"
-            android:showAsAction="collapseActionView|always"
-            android:title="@string/action_search_channels"
-            />
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:orderInCategory="100"
+        android:showAsAction="collapseActionView|always"
+        android:title="@string/action_search_channels"
+        />
 
     <item
         android:id="@+id/action_rename_channel"
@@ -24,19 +24,19 @@
 
     <group android:id="@+id/kitkat_group">
 
-    <item
-        android:id="@+id/action_show_import_dialog"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_show_import_dialog"/>
+        <item
+            android:id="@+id/action_show_import_dialog"
+            android:orderInCategory="100"
+            android:showAsAction="never"
+            android:title="@string/action_show_import_dialog"/>
 
 
-    <item
-        android:id="@+id/action_show_export_dialog"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_show_export_dialog"/>
+        <item
+            android:id="@+id/action_show_export_dialog"
+            android:orderInCategory="100"
+            android:showAsAction="never"
+            android:title="@string/action_show_export_dialog"/>
 
-</group>
+    </group>
 
 </menu>

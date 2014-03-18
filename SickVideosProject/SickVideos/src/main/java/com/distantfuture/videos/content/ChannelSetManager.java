@@ -23,6 +23,23 @@ public class ChannelSetManager {
     defaultChannelIds = defaultChannelIds(context, channels_array_resource);
   }
 
+  public static void saveChannelSet(Context context, ChannelSet set) {
+    // don't save the default set
+    if (set.getName() == null)
+      return;
+
+    AppUtils.instance(context).saveChannelIds(set.getName(), set.getChannelIds());
+  }
+
+  public static ChannelSet loadChannelSet(Context context, String name) {
+    List<String> result = AppUtils.instance(context).channelIds(name);
+
+    if (result != null && result.size() > 0)
+      return new ChannelSet(name, result);
+
+    return null;
+  }
+
   private List<String> defaultChannelIds(Context context, int channels_array_resource) {
     List<String> result = new ArrayList<String>();
 
@@ -39,6 +56,9 @@ public class ChannelSetManager {
     return result;
   }
 
+  // -------------------------------------------------------------
+  // static prefs stuff
+
   public boolean needsChannelSwitcher() {
     // using the default ids since a user could edit his list to one item
     // then relaunch and be unable to switch
@@ -52,26 +72,6 @@ public class ChannelSetManager {
       result = new ChannelSet(null, defaultChannelIds);
 
     return result;
-  }
-
-  // -------------------------------------------------------------
-  // static prefs stuff
-
-  public static void saveChannelSet(Context context, ChannelSet set) {
-    // don't save the default set
-    if (set.getName() == null)
-      return;
-
-    AppUtils.instance(context).saveChannelIds(set.getName(), set.getChannelIds());
-  }
-
-  public static ChannelSet loadChannelSet(Context context, String name) {
-    List<String> result = AppUtils.instance(context).channelIds(name);
-
-    if (result != null && result.size() > 0)
-      return new ChannelSet(name, result);
-
-    return null;
   }
 
   // -------------------------------------------------------------

@@ -3,7 +3,6 @@ package com.distantfuture.videos.channellookup;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -18,11 +17,8 @@ import com.androidquery.AQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
-import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.Debug;
-import com.google.common.primitives.Longs;
 
 import java.util.List;
 
@@ -47,8 +43,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
         if (mContent.hasChannel(data.mChannel)) {
           if (mContent.removeChannel(data.mChannel))
             showUndoBar(data.mChannel);
-        }
-        else
+        } else
           mContent.addChannel(data.mChannel);
 
         notifyDataSetChanged();  // needed to refresh find results
@@ -121,17 +116,17 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     }
   }
 
-  private class ViewHolder {
-    TextView titleView;
-    TextView descrView;
-    ImageView imgView;
-    ImageView addButton;
-  }
-
   private Drawable buttonDrawable(Context context, boolean plusButton) {
     if (plusButton)
       return ToolbarIcons.icon(context, ToolbarIcons.IconID.ADD, 0xff009900, 36);
 
     return ToolbarIcons.icon(context, ToolbarIcons.IconID.REMOVE, Color.RED, 36);
+  }
+
+  private class ViewHolder {
+    TextView titleView;
+    TextView descrView;
+    ImageView imgView;
+    ImageView addButton;
   }
 }

@@ -220,7 +220,7 @@ public class StorageAccessActivity extends Activity {
           String inputStr;
           while ((inputStr = streamReader.readLine()) != null)
             responseStrBuilder.append(inputStr);
-          JSONObject jsonObj=null;
+          JSONObject jsonObj = null;
 
           try {
             jsonObj = new JSONObject(responseStrBuilder.toString());
@@ -232,9 +232,6 @@ public class StorageAccessActivity extends Activity {
           } catch (Throwable t) {
             Debug.log("exception " + t.toString());
           }
-
-
-
 
 
           in.close();

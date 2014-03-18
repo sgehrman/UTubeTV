@@ -350,16 +350,16 @@ public class Utils {
     }
   }
 
-  // interface for getting results
-  public interface StringResultListener {
-    public void onResults(StringResultListener listener, String result);
-  }
-
   public static boolean isKitKatOrNewer() {
     return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
   }
 
   public static boolean isJellyBean() {
     return (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN);
+  }
+
+  // interface for getting results
+  public interface StringResultListener {
+    public void onResults(StringResultListener listener, String result);
   }
 }

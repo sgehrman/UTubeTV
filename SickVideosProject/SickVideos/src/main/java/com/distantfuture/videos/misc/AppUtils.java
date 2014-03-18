@@ -157,7 +157,7 @@ public class AppUtils {
   }
 
   public List<String> channelIds(String name) {
-    Set<String> stringSet =  mPreferences.getStringSet(prefKeyForChannelIds(name));
+    Set<String> stringSet = mPreferences.getStringSet(prefKeyForChannelIds(name));
 
     if (stringSet != null && stringSet.size() > 0)
       return new ArrayList<String>(stringSet);
@@ -166,10 +166,10 @@ public class AppUtils {
   }
 
   public void saveChannelIds(String name, List<String> list) {
-    Set<String> stringSet=null;
+    Set<String> stringSet = null;
 
     if (list != null)
-       stringSet =  new HashSet<String>(list);
+      stringSet = new HashSet<String>(list);
 
     mPreferences.setStringSet(prefKeyForChannelIds(name), stringSet);
   }

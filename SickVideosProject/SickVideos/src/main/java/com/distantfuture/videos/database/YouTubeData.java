@@ -31,18 +31,6 @@ public class YouTubeData {
   // ----------------------------------------------------
   // public methods
 
-  // hidden string is either '' or null,
-  public boolean isHidden() {
-    return mHidden != null;
-  }
-
-  public void setHidden(boolean hidden) {
-    mHidden = hidden ? mNotNull : null;
-  }
-
-// ----------------------------------------------------
-  // static helper functions
-
   public static List<YouTubeData> sortByDate(List<YouTubeData> videoIDs) {
     Collections.sort(videoIDs, new Comparator<YouTubeData>() {
       public int compare(YouTubeData lhs, YouTubeData rhs) {
@@ -62,6 +50,9 @@ public class YouTubeData {
 
     return videoIDs;
   }
+
+// ----------------------------------------------------
+  // static helper functions
 
   // video or playlist ids
   public static List<String> contentIdsList(List<YouTubeData> videoData) {
@@ -111,6 +102,15 @@ public class YouTubeData {
     result.mPublishedDate = bundle.getLong("publishedDate");
 
     return result;
+  }
+
+  // hidden string is either '' or null,
+  public boolean isHidden() {
+    return mHidden != null;
+  }
+
+  public void setHidden(boolean hidden) {
+    mHidden = hidden ? mNotNull : null;
   }
 
 }

@@ -18,7 +18,6 @@ import android.widget.SearchView;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
@@ -229,13 +228,13 @@ public class ChannelLookupActivity extends Activity {
     map.put("hello", "world");
     map.put("heldddlo", dap);
 
-    String json="";
+    String json = "";
 
     try {
       json = JSONHelper.toJSON(map).toString();
-    } catch(Throwable t) {
+    } catch (Throwable t) {
       Debug.log("exception " + t.toString());
-      json="";
+      json = "";
     }
 
     if (json.length() > 0)
