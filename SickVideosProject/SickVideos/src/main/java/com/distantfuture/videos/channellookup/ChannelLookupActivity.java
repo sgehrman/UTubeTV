@@ -180,9 +180,6 @@ public class ChannelLookupActivity extends Activity {
 
         @Override
         public boolean onMenuItemActionCollapse(MenuItem item) {
-          // added for JellyBean, kitkat seems to trigger an onQueryTextChange when collapsing, but JB does not
-          setQuery(null);
-
           return true;
         }
       });
