@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class ChannelSetManager {
   private Context context;
-  private List<String> channelSetNames;
   private List<String> defaultChannelIds;
   private Map<ChannelCode, String> mChannelIDMap;
 

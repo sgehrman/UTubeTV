@@ -2,6 +2,7 @@ package com.distantfuture.videos.content;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelSet {
@@ -12,6 +13,10 @@ public class ChannelSet {
     super();
 
     setName(name);
+
+    // copy the array so we don't modify the original
+    channelIds = new ArrayList<String>(channelIds);
+
     setChannelIds(channelIds);
   }
 
