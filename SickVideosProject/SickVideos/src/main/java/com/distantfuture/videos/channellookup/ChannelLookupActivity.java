@@ -17,6 +17,7 @@ import android.widget.SearchView;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
+import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
@@ -72,6 +73,10 @@ public class ChannelLookupActivity extends Activity {
       case android.R.id.home:
         finish();
         return true;
+
+      case R.id.action_default_channels:
+        Content.instance().resetToDefaults();
+        break;
 
       case R.id.action_show_import_dialog:
         importFile();

@@ -61,6 +61,10 @@ public class ChannelList {
     return 0;
   }
 
+  public void resetToDefaults() {
+
+  }
+
   public String currentChannelId() {
     return mCurrentChannelID;
   }

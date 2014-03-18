@@ -24,10 +24,6 @@ public class ChannelSetManager {
   }
 
   public static void saveChannelSet(Context context, ChannelSet set) {
-    // don't save the default set
-    if (set.getName() == null)
-      return;
-
     AppUtils.instance(context).saveChannelIds(set.getName(), set.getChannelIds());
   }
 

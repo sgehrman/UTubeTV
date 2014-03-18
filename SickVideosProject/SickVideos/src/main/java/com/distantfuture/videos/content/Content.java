@@ -56,6 +56,10 @@ public class Content {
     return result;
   }
 
+  public void resetToDefaults() {
+    mChannelList.resetToDefaults();
+  }
+
   // returns false if that channel is already current
   public boolean changeChannel(int index) {
     return mChannelList.changeChannel(index);
