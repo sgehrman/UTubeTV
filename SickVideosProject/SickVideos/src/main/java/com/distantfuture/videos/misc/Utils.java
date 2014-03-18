@@ -21,6 +21,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -352,5 +353,13 @@ public class Utils {
   // interface for getting results
   public interface StringResultListener {
     public void onResults(StringResultListener listener, String result);
+  }
+
+  public static boolean isKitKat() {
+    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
+  }
+
+  public static boolean isJellyBean() {
+    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN);
   }
 }

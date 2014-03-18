@@ -36,7 +36,7 @@ public class SoundManager {
       AudioManager manager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
       // setStreamMute is broken on my 4.1 (16) galaxy nexus, so using volume instead
-      if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
+      if (Utils.isJellyBean()) {
         int saved = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         manager.setStreamVolume(AudioManager.STREAM_MUSIC, (mMuteState ? 0 : mSavedVolume), 0);

@@ -61,6 +61,10 @@
             android:name="com.distantfuture.videos.activities.CreditsActivity"
             android:label="@string/pref_title_credits">
         </activity>
+        <activity
+            android:name=".activities.StorageAccessActivity"
+            android:label="">
+        </activity>
 
         <activity
             android:name=".channellookup.ChannelDetailsActivity"

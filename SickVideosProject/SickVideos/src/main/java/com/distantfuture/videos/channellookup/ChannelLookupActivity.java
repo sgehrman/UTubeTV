@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,23 +16,23 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.content.Content;
+import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
 import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ChannelLookupActivity extends Activity {
+  private static final int IMPORT_FILE = 889;
+  private static final int EXPORT_FILE = 829;
   private ChannelLookupListFragment listFragment;
   private MenuItem mSearchItem;
   private SearchView mSearchView;
   private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
-  private ActionBarSpinnerAdapter mActionBarSpinnerAdapter;
-  private boolean mSpinnerSucksBalls=false;
-  private Content mContent;
-  private static final int IMPORT_FILE =889;
-  private static final int EXPORT_FILE =829;
 
   public static void show(Activity activity) {
     // add animation, see finish below for the back transition
@@ -62,37 +60,6 @@ public class ChannelLookupActivity extends Activity {
     getActionBar().setDisplayHomeAsUpEnabled(true);
 
     listFragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
-
-    // add spinner
-    mContent = Content.instance();
-    if (true) {
-      mActionBarSpinnerAdapter = new ActionBarSpinnerAdapter(this, mContent);
-      ActionBar.OnNavigationListener listener = new ActionBar.OnNavigationListener() {
-        @Override
-        public boolean onNavigationItemSelected(int position, long itemId) {
-
-          // be aware that this call back gets called when the spinner contents are built
-          // we need to ignore that one, so not going to do anything if channel not changing
-          if (!mSpinnerSucksBalls) {
-            mSpinnerSucksBalls = true;
-
-            // ## taking advantage of this feature/bug to set the real value of the actionbar spinner
-            // if we don't do this, the spinner defaults to value 0, so selecting the first item
-            // in the list will not work since it doesn't respond when selecting the same index as the current value
-            getActionBar().setSelectedNavigationItem(mContent.currentChannelIndex());
-          } else {
-            if (mContent.changeChannel(position)) {
-              // updateSectionForChannel();
-            }
-          }
-          return true;
-        }
-      };
-
-      getActionBar().setDisplayShowTitleEnabled(false);
-      getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-      getActionBar().setListNavigationCallbacks(mActionBarSpinnerAdapter, listener);
-    }
 
     setActionBarTitle("Edit Channels", "Default");
   }
@@ -135,7 +102,7 @@ public class ChannelLookupActivity extends Activity {
   }
 
   private boolean endSearchActionBar() {
-    mSearchSubmitted = true;  // had to add this for KitKat?  Maybe I'm doing something slightly non standard?
+    mSearchSubmitted = true;  // had to add this for KitKat?  Maybe 19I'm doing something slightly non standard?
     if (mSearchItem.isActionViewExpanded())
       return mSearchItem.collapseActionView();
 
@@ -241,63 +208,40 @@ public class ChannelLookupActivity extends Activity {
   }
 
   public void setActionBarTitle(CharSequence title, CharSequence subtitle) {
-    if (mActionBarSpinnerAdapter != null) {
-      mActionBarSpinnerAdapter.setTitleAndSubtitle(title, subtitle);
-    } else {
-      ActionBar bar = getActionBar();
+    ActionBar bar = getActionBar();
 
-      if (bar != null) {
-        bar.setTitle(title);
-        bar.setSubtitle(subtitle);
-      }
+    if (bar != null) {
+      bar.setTitle(title);
+      bar.setSubtitle(subtitle);
     }
   }
 
   public void exportFile() {
 
+
+    Map dap = new HashMap();
+
+    dap.put("dddd", "sdf");
+    dap.put("dddddd", "sdddf");
+
+    Map map = new HashMap();
+    map.put("hello", "world");
+    map.put("heldddlo", dap);
+
+    String json="";
+
+    try {
+      json = JSONHelper.toJSON(map).toString();
+    } catch(Throwable t) {
+      Debug.log("exception " + t.toString());
+      json="";
+    }
+
+    if (json.length() > 0)
+      StorageAccessActivity.save(this, null, json, "*/*");
   }
 
   public void importFile() {
-
-    // ACTION_OPEN_DOCUMENT is the new API 19 action for the Android file manager
-    Intent intent;
-    if (Build.VERSION.SDK_INT >= 19) {
-      intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-    } else {
-      intent = new Intent(Intent.ACTION_GET_CONTENT);
-    }
-
-    // Filter to only show results that can be "opened", such as a
-    // file (as opposed to a list of contacts or timezones)
-    intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-    // Currently no recognized epub MIME type
-    intent.setType("*/*");
-
-    startActivityForResult(intent, IMPORT_FILE);
+    StorageAccessActivity.load(this, "*/*");
   }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      case EXPORT_FILE:
-        break;
-      case IMPORT_FILE:
-
-        if (data != null) {
-          Uri uri = data.getData();
-          if (Build.VERSION.SDK_INT >= 19) {
-            final int takeFlags = data.getFlags()
-                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            getContentResolver().takePersistableUriPermission(uri, takeFlags);
-          }
-          Debug.log(uri.toString());
-        }
-        break;
-      default:
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-  }
-
 }
