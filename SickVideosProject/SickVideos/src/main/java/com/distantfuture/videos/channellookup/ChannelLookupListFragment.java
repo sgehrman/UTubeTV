@@ -13,6 +13,7 @@ import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -67,7 +68,24 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   }
 
   public int getCount() {
+    if (mAdapter != null)
     return mAdapter.getCount();
+
+    return 0;
+  }
+
+  public List<String> getChannels() {
+    int cnt = mAdapter.getCount();
+    List<String> result = new ArrayList<String>();
+
+    for (int i=0; i<cnt;i++) {
+      YouTubeData data = mAdapter.getItem(i);
+
+      if (data != null)
+        result.add(data.mChannel);
+    }
+
+    return result;
   }
 
   public String getQuery() {

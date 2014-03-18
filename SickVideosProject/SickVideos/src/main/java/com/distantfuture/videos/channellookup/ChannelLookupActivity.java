@@ -23,6 +23,7 @@ import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChannelLookupActivity extends Activity {
@@ -61,7 +62,7 @@ public class ChannelLookupActivity extends Activity {
 
     listFragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
 
-    setActionBarTitle("Edit Channels", "Default");
+    setActionBarTitle();
   }
 
   @Override
@@ -99,6 +100,8 @@ public class ChannelLookupActivity extends Activity {
 
       Utils.message(this, String.format("Found: %d items", cnt));
     }
+
+    setActionBarTitle();
   }
 
   private boolean endSearchActionBar() {
@@ -207,7 +210,10 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
-  public void setActionBarTitle(CharSequence title, CharSequence subtitle) {
+  public void setActionBarTitle() {
+    CharSequence title = "Channel Editor";
+    CharSequence subtitle = "" + listFragment.getCount() + " Channels";
+
     ActionBar bar = getActionBar();
 
     if (bar != null) {
@@ -217,28 +223,27 @@ public class ChannelLookupActivity extends Activity {
   }
 
   public void exportFile() {
-
-
-    Map dap = new HashMap();
-
-    dap.put("dddd", "sdf");
-    dap.put("dddddd", "sdddf");
-
     Map map = new HashMap();
-    map.put("hello", "world");
-    map.put("heldddlo", dap);
 
-    String json = "";
+    List<String> channels = listFragment.getChannels();
 
-    try {
-      json = JSONHelper.toJSON(map).toString();
-    } catch (Throwable t) {
-      DUtils.log("exception " + t.toString());
-      json = "";
+    if (channels != null && channels.size() > 0) {
+
+      map.put("channels", channels);
+      map.put("version", "1");
+
+      String json = "";
+
+      try {
+        json = JSONHelper.toJSON(map).toString();
+      } catch (Throwable t) {
+        DUtils.log("exception " + t.toString());
+        json = "";
+      }
+
+      if (json.length() > 0)
+        StorageAccessActivity.save(this, null, json, "*/*");
     }
-
-    if (json.length() > 0)
-      StorageAccessActivity.save(this, null, json, "*/*");
   }
 
   public void importFile() {
