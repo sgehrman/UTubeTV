@@ -247,12 +247,12 @@ public class ChannelLookupActivity extends Activity {
       }
 
       if (json.length() > 0)
-        StorageAccessActivity.save(this, null, json, "*/*");
+        StorageAccessActivity.save(this, null, json, "application/json");
     }
   }
 
   public void importFile() {
-    StorageAccessActivity.load(this, "*/*");
+    StorageAccessActivity.load(this, "application/json");
   }
 
   @Override
