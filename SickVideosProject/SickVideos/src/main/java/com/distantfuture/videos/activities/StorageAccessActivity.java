@@ -12,6 +12,7 @@ import android.os.ParcelFileDescriptor;
 import android.view.Window;
 
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
@@ -26,6 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class StorageAccessActivity extends Activity {
@@ -227,12 +230,10 @@ public class StorageAccessActivity extends Activity {
 
             Map result = JSONHelper.toMap(jsonObj);
 
-            DUtils.log(result.toString());
-
+            EventBus.getDefault().post(new BusEvents.JSONImportEvent(result));
           } catch (Throwable t) {
             DUtils.log("exception " + t.toString());
           }
-
 
           in.close();
           fdIn.close();

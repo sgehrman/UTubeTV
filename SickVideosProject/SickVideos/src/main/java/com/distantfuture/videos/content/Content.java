@@ -138,4 +138,8 @@ public class Content {
   public boolean removeChannel(String channelId) {
     return mChannelList.editChannel(channelId, false);
   }
+
+  public void editChannels(List<String> channels) {
+      mChannelList.editChannels(channels);
+  }
 }

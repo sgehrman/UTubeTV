@@ -2,6 +2,8 @@ package com.distantfuture.videos.misc;
 
 import com.distantfuture.videos.youtube.VideoPlayer;
 
+import java.util.Map;
+
 public class BusEvents {
 
   public static class ContentEvent {
@@ -28,6 +30,14 @@ public class BusEvents {
 
   public static class ConnectionChanged {
     public ConnectionChanged() {
+    }
+  }
+
+  public static class JSONImportEvent {
+    public Map channels;
+
+    public JSONImportEvent(Map channels) {
+      this.channels = channels;
     }
   }
 

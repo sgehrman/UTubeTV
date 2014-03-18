@@ -19,6 +19,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
@@ -26,6 +27,8 @@ import com.distantfuture.videos.misc.Utils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 public class ChannelLookupActivity extends Activity {
   private static final int IMPORT_FILE = 889;
@@ -60,6 +63,7 @@ public class ChannelLookupActivity extends Activity {
     setContentView(R.layout.activity_channel_lookup);
 
     getActionBar().setDisplayHomeAsUpEnabled(true);
+    EventBus.getDefault().register(this);
 
     listFragment = (ChannelLookupListFragment) getFragmentManager().findFragmentById(R.id.channel_list_fragment);
 
@@ -227,6 +231,28 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
+  @Override
+  public void onDestroy() {
+    EventBus.getDefault().unregister(this);
+    super.onDestroy();
+  }
+
+  // eventbus event
+  public void onEvent(BusEvents.JSONImportEvent event) {
+    Map map = event.channels;
+    if (map != null && map.size() > 0) {
+      String version = (String) map.get("version");
+
+      if (version.equals("1")) {
+        List<String> channels = (List<String>) map.get("channels");
+
+        if (channels != null && channels.size() > 0) {
+          Content.instance().editChannels(channels);
+        }
+      }
+    }
+  }
+
   public void exportFile() {
     Map map = new HashMap();
 
@@ -252,6 +278,7 @@ public class ChannelLookupActivity extends Activity {
   }
 
   public void importFile() {
+    // we get notified when the file is loaded, EventBus
     StorageAccessActivity.load(this, "application/json");
   }
 

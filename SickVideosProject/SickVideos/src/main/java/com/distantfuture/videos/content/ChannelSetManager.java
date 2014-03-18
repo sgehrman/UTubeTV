@@ -69,6 +69,10 @@ public class ChannelSetManager {
     return result;
   }
 
+  public ChannelSet channelSet(List<String> channels) {
+    return new ChannelSet(null, channels);
+  }
+
   public void resetToDefaults() {
     AppUtils.instance(context).saveChannelIds(null);
   }
