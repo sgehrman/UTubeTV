@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.Utils;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -267,9 +267,9 @@ public class CreditsActivity extends Activity {
           eventType = xml.next();
         }
       } catch (XmlPullParserException e) {
-        Debug.log(e.getMessage() + e);
+        DUtils.log(e.getMessage() + e);
       } catch (IOException e) {
-        Debug.log(e.getMessage() + e);
+        DUtils.log(e.getMessage() + e);
       } finally {
         xml.close();
       }

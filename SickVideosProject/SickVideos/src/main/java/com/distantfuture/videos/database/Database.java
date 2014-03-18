@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
     if (debugInfo) {
       final String path = context.getDatabasePath(DATABASE_NAME).getPath();
       File file = new File(path);
-      Debug.log(path + " size: " + ((float) (file.length()) / 1024.f) + "k");
+      DUtils.log(path + " size: " + ((float) (file.length()) / 1024.f) + "k");
     }
   }
 
@@ -76,7 +76,7 @@ public class Database extends SQLiteOpenHelper {
       );
 
     } catch (Exception e) {
-      Debug.log("Database.getCursor exception: " + e.getMessage());
+      DUtils.log("Database.getCursor exception: " + e.getMessage());
     }
 
     return cursor;

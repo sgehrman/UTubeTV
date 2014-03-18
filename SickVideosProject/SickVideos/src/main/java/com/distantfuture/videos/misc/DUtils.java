@@ -11,7 +11,7 @@ import com.distantfuture.videos.BuildConfig;
 
 import java.util.Date;
 
-public class Debug {
+public class DUtils {
 
   public static void log(String message) {
     if (isDebugBuild())
@@ -105,7 +105,7 @@ public class Debug {
 
   public static void timeLog(String message, Date startTime) {
     Date now = new Date();
-    Debug.log("message: " + (now.getTime() - startTime.getTime()) / 1000);
+    DUtils.log("message: " + (now.getTime() - startTime.getTime()) / 1000);
   }
 
 }

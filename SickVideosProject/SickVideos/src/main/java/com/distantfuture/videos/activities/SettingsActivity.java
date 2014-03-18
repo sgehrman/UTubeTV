@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.introactivity.IntroActivity;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.Utils;
 import com.inscription.ChangeLogDialog;
 
@@ -70,7 +70,7 @@ public class SettingsActivity extends Activity {
       // Load the preferences from an XML resource
       addPreferencesFromResource(R.xml.preferences);
 
-      if (Debug.isDebugBuild())
+      if (DUtils.isDebugBuild())
         addPreferencesFromResource(R.xml.preferences_debug);
 
       try {
@@ -127,7 +127,7 @@ public class SettingsActivity extends Activity {
         }
 
       } catch (Throwable throwable) {
-        Debug.log("exception: " + throwable.getMessage());
+        DUtils.log("exception: " + throwable.getMessage());
       }
     }
 

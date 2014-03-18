@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.BusEvents;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 import java.util.List;
 
@@ -103,7 +103,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   }
 
   private void handleNavigation(YouTubeData info, boolean autoStart) {
-    Debug.log(info.mChannel);
+    DUtils.log(info.mChannel);
 
     ChannelDetailsActivity.show(getActivity(), info);
   }

@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 public class YouTubeContentProvider extends ContentProvider {
   private static String sAUTHORITY;
@@ -75,7 +75,7 @@ public class YouTubeContentProvider extends ContentProvider {
       cursor.setNotificationUri(getContext().getContentResolver(), YouTubeContentProvider.contentsURI(getContext()));
     } else if (uri.toString().startsWith(CONTENT_BASE)) {
       final long id = Long.parseLong(uri.getLastPathSegment());
-      Debug.log("" + id);
+      DUtils.log("" + id);
     }
 
     return cursor;

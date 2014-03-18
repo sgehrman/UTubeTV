@@ -29,9 +29,9 @@ public class ConnectionMonitor {
           String reason = intent.getStringExtra(ConnectivityManager.EXTRA_REASON);
           boolean isFailover = intent.getBooleanExtra(ConnectivityManager.EXTRA_IS_FAILOVER, false);
 
-          Debug.log("noConnectivity: " + (noConnectivity ? "true" : "false"));
-          Debug.log("reason: " + reason);
-          Debug.log("isFailover: " + (isFailover ? "true" : "false"));
+          DUtils.log("noConnectivity: " + (noConnectivity ? "true" : "false"));
+          DUtils.log("reason: " + reason);
+          DUtils.log("isFailover: " + (isFailover ? "true" : "false"));
         }
 
         boolean isConnected = hasNetworkConnection();

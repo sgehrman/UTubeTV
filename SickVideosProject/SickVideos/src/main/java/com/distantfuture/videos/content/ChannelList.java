@@ -11,7 +11,7 @@ import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.BusEvents;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ChannelList {
       i++;
     }
 
-    Debug.log("should not get here: " + Debug.currentMethod());
+    DUtils.log("should not get here: " + DUtils.currentMethod());
     return 0;
   }
 
@@ -182,7 +182,7 @@ public class ChannelList {
       YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
-          Debug.log("handleAuthIntent inside update Service.  not handled here");
+          DUtils.log("handleAuthIntent inside update Service.  not handled here");
         }
       });
 

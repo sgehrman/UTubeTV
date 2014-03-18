@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.Auth;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.Utils;
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
@@ -594,7 +594,7 @@ public class YouTubeAPI {
       mVideoIds = videoIds;
 
       if (mVideoIds.size() > mYouTubeMaxResultsLimit) {
-        Debug.log("VideoInfoListResults can only handle 50 videos at a time.");
+        DUtils.log("VideoInfoListResults can only handle 50 videos at a time.");
 
         mVideoIds = videoIds.subList(0, mYouTubeMaxResultsLimit);
       }
@@ -829,7 +829,7 @@ public class YouTubeAPI {
       mPlaylistIds = playlistIds;
 
       if (mPlaylistIds.size() > mYouTubeMaxResultsLimit) {
-        Debug.log("VideoInfoListResults can only handle 50 videos at a time.");
+        DUtils.log("VideoInfoListResults can only handle 50 videos at a time.");
 
         mPlaylistIds = mPlaylistIds.subList(0, mYouTubeMaxResultsLimit);
       }

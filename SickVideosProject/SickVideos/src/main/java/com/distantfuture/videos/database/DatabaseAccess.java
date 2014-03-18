@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class DatabaseAccess {
         notifyProviderOfChange();
 
     } catch (Exception e) {
-      Debug.log("deleteAllRows exception: " + e.getMessage());
+      DUtils.log("deleteAllRows exception: " + e.getMessage());
     }
   }
 
@@ -55,7 +55,7 @@ public class DatabaseAccess {
         notifyProviderOfChange();
 
     } catch (Exception e) {
-      Debug.log("deleteItem exception: " + e.getMessage());
+      DUtils.log("deleteItem exception: " + e.getMessage());
     }
   }
 
@@ -73,7 +73,7 @@ public class DatabaseAccess {
 
         notifyProviderOfChange();
       } catch (Exception e) {
-        Debug.log("Insert item exception: " + e.getMessage());
+        DUtils.log("Insert item exception: " + e.getMessage());
       } finally {
         db.endTransaction();
       }
@@ -90,7 +90,7 @@ public class DatabaseAccess {
     if (cursor.moveToFirst()) {
       result = mTable.cursorToItem(cursor, null);
     } else {
-      Debug.log("getItemWithID not found or too many results?");
+      DUtils.log("getItemWithID not found or too many results?");
     }
 
     cursor.close();
@@ -129,12 +129,12 @@ public class DatabaseAccess {
         int result = db.update(mTable.tableName(), mTable.contentValuesForItem(theItem), whereClauseForID(), whereArgsForID(theItem.mID));
 
         if (result != 1)
-          Debug.log("updateItem didn't return 1");
+          DUtils.log("updateItem didn't return 1");
       }
 
       notifyProviderOfChange();
     } catch (Exception e) {
-      Debug.log("updateItem exception: " + e.getMessage());
+      DUtils.log("updateItem exception: " + e.getMessage());
     }
 
   }
@@ -179,7 +179,7 @@ public class DatabaseAccess {
         }
       }
     } catch (Exception e) {
-      Debug.log("getItems exception: " + e.getMessage());
+      DUtils.log("getItems exception: " + e.getMessage());
     }
 
     return result;

@@ -92,7 +92,7 @@ public class Utils {
   public static void showFragment(Activity activity, Fragment fragment, int resID, int animationType, boolean addToBackStack) {
     // check params and bail if necessary
     if (fragment == null || activity == null) {
-      Debug.log("bad params: " + Debug.currentMethod());
+      DUtils.log("bad params: " + DUtils.currentMethod());
       return;
     }
 

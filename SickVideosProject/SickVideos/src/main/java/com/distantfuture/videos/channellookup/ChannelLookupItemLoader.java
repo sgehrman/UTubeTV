@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ChannelLookupItemLoader extends AsyncTaskLoader<List<YouTubeData>> 
       YouTubeAPI helper = new YouTubeAPI(getContext(), new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
-          Debug.log("handleAuthIntent inside update Service.  not handled here");
+          DUtils.log("handleAuthIntent inside update Service.  not handled here");
         }
       });
 

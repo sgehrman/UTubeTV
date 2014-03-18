@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.distantfuture.videos.database.DatabaseTables;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
@@ -276,7 +276,7 @@ public class YouTubeServiceRequest implements Parcelable {
         break;
     }
 
-    Debug.log("databaseTable null");
+    DUtils.log("databaseTable null");
 
     return null;
   }

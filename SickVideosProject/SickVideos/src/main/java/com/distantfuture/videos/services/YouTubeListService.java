@@ -11,7 +11,7 @@ import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class YouTubeListService extends IntentService {
 
     } catch (Exception e) {
       e.printStackTrace();
-      Debug.log(String.format("%s exception: %s", Debug.currentMethod(), e.getMessage()));
+      DUtils.log(String.format("%s exception: %s", DUtils.currentMethod(), e.getMessage()));
     }
   }
 
@@ -142,7 +142,7 @@ public class YouTubeListService extends IntentService {
 
     // do we have internet access?
     if (!AppUtils.instance(this).hasNetworkConnection()) {
-      Debug.log("No internet connection.  Method: " + Debug.currentMethod());
+      DUtils.log("No internet connection.  Method: " + DUtils.currentMethod());
       return;
     }
 
@@ -273,8 +273,8 @@ public class YouTubeListService extends IntentService {
 
     boolean debugging = false;
     if (debugging) {
-      Debug.log("removed: " + (newVideoIds.size() - result.size()));
-      Debug.log("returning: " + result.size());
+      DUtils.log("removed: " + (newVideoIds.size() - result.size()));
+      DUtils.log("returning: " + result.size());
     }
 
     return result;

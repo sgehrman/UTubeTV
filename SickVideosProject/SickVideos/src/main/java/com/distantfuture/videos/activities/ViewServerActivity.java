@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.android.debug.hv.ViewServer;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 public class ViewServerActivity extends FragmentActivity {
   private int mCounter;
@@ -13,7 +13,7 @@ public class ViewServerActivity extends FragmentActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (Debug.isDebugBuild())
+    if (DUtils.isDebugBuild())
       ViewServer.get(this).addWindow(this);
   }
 
@@ -21,7 +21,7 @@ public class ViewServerActivity extends FragmentActivity {
   public void onDestroy() {
     super.onDestroy();
 
-    if (Debug.isDebugBuild())
+    if (DUtils.isDebugBuild())
       ViewServer.get(this).removeWindow(this);
   }
 
@@ -29,7 +29,7 @@ public class ViewServerActivity extends FragmentActivity {
   public void onResume() {
     super.onResume();
 
-    if (Debug.isDebugBuild())
+    if (DUtils.isDebugBuild())
       ViewServer.get(this).setFocusedWindow(this);
   }
 }

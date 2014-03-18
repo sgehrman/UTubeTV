@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteCursorDriver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQuery;
 
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 public class CursorFactoryDebugger implements SQLiteDatabase.CursorFactory {
 
@@ -21,7 +21,7 @@ public class CursorFactoryDebugger implements SQLiteDatabase.CursorFactory {
   @Override
   public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery, String editTable, SQLiteQuery query) {
     if (debugQueries) {
-      Debug.log(query.toString());
+      DUtils.log(query.toString());
     }
     return new SQLiteCursor(masterQuery, editTable, query);
   }

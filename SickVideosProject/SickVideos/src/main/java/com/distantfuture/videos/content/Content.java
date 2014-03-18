@@ -9,7 +9,7 @@ import com.distantfuture.videos.imageutils.ToolbarIcons;
 import com.distantfuture.videos.mainactivity.ChannelAboutFragment;
 import com.distantfuture.videos.mainactivity.YouTubeGridFragment;
 import com.distantfuture.videos.misc.AppUtils;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 import com.google.common.collect.ImmutableMap;
@@ -41,7 +41,7 @@ public class Content {
 
   public static Content instance() {
     if (instance == null)
-      Debug.log("Content instance null");
+      DUtils.log("Content instance null");
 
     return instance;
   }

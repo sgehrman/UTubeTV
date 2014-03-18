@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Auth;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.YouTubeListService;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -39,7 +39,7 @@ public class AuthActivity extends Activity {
     Intent authIntent = getIntent().getParcelableExtra(REQUEST_AUTHORIZATION_INTENT_PARAM);
 
     if (authIntent != null) {
-      Debug.log("Request auth received - executing the intent");
+      DUtils.log("Request auth received - executing the intent");
 
       startActivityForResult(authIntent, INTENT_REQUEST_AUTHORIZATION);
     } else

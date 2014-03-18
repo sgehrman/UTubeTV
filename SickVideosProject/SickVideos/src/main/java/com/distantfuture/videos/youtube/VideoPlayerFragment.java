@@ -7,7 +7,7 @@ import android.content.res.Configuration;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Auth;
 import com.distantfuture.videos.misc.BusEvents;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.SoundManager;
 import com.distantfuture.videos.misc.Utils;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -119,7 +119,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void pause() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -136,7 +136,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void setFullscreen(boolean state) {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -145,7 +145,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void seekRelativeSeconds(int seconds) {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -158,13 +158,13 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   private void setupFullscreenListener() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
     mPlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
       public void onFullscreen(boolean isFullscreen) {
-        Debug.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
+        DUtils.log("setOnFullscreenListener: " + (isFullscreen ? "yes" : "no"));
         VideoPlayerFragment.this.mFullscreen = isFullscreen;
 
         mFragmentListener.onFullScreen(isFullscreen);
@@ -175,7 +175,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public int getCurrentTimeMillis() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return 0;
     }
 
@@ -184,7 +184,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public int getDurationMillis() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return 0;
     }
 
@@ -193,7 +193,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   public void seekToMillis(int i) {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -202,7 +202,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   private void setupStateChangeListener() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -244,12 +244,12 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           if (mPlayer != null)
             EventBus.getDefault().post(new BusEvents.PlayNextEvent(mPlayerParams));
           else
-            Debug.log("playnext canceled, player is null");
+            DUtils.log("playnext canceled, player is null");
         } else if (AppUtils.instance(getActivity()).repeatVideo()) {
           if (mPlayer != null)
             mPlayer.play();  // back to the start
           else
-            Debug.log("repeat canceled, player is null");
+            DUtils.log("repeat canceled, player is null");
         }
       }
 
@@ -262,7 +262,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
 
   private void setupPlaybackEventListener() {
     if (mPlayer == null) {
-      Debug.log("mPlayer is null inside: " + Debug.currentMethod());
+      DUtils.log("mPlayer is null inside: " + DUtils.currentMethod());
       return;
     }
 
@@ -326,7 +326,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
             // added for debugging, remove this shit once we know it's solid
             mLastTimeString = (mLastTimeString == null) ? "" : mLastTimeString;
             if (timeString.equals(mLastTimeString))
-              Debug.log("equal to last");
+              DUtils.log("equal to last");
             else {
               mLastTimeString = timeString;
             }
@@ -397,7 +397,7 @@ public final class VideoPlayerFragment extends YouTubePlayerFragment {
           mPlayer = null;
           mInitializingPlayer = false;
 
-          Debug.log("initializePlayer: failed" + result);
+          DUtils.log("initializePlayer: failed" + result);
         }
       });
     }

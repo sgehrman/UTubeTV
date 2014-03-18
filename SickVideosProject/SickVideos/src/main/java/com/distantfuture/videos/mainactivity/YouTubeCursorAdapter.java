@@ -24,7 +24,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.StandardAnimations;
 import com.distantfuture.videos.misc.VideoMenuView;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
@@ -172,7 +172,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
           mListener.handleClickFromAdapter(position, itemMap);
         }
       } else {
-        Debug.log("no holder on click?");
+        DUtils.log("no holder on click?");
       }
     }
   }
@@ -214,7 +214,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     if (convertView != null) {
       ViewGroup.LayoutParams lp = convertView.getLayoutParams();
       if (lp != null && lp.height == 0) {
-        Debug.log("not reusing dismissed view");
+        DUtils.log("not reusing dismissed view");
         convertView = null;
       }
     }
@@ -360,7 +360,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     YouTubeData videoMap = database.getItemWithID(itemId);
 
     if (videoMap != null) {
-      Debug.log("fix me");
+      DUtils.log("fix me");
     }
   }
 

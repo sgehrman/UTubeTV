@@ -10,7 +10,7 @@ import com.distantfuture.videos.billing.IabResult;
 import com.distantfuture.videos.billing.Inventory;
 import com.distantfuture.videos.billing.Purchase;
 import com.distantfuture.videos.misc.BusEvents;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class PurchaseHelper {
   // Callback for when a purchase is finished
   IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
     public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-      Debug.log("Purchase finished: " + result + ", purchase: " + purchase);
+      DUtils.log("Purchase finished: " + result + ", purchase: " + purchase);
 
       if (mHelper == null)
         return;
@@ -103,7 +103,7 @@ public class PurchaseHelper {
     // Create the helper, passing it our context and the public key to verify signatures with
     mHelper = new IabHelper(mContext, base64EncodedPublicKey());
 
-    mHelper.enableDebugLogging(Debug.isDebugBuild());
+    mHelper.enableDebugLogging(DUtils.isDebugBuild());
 
     mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
       public void onIabSetupFinished(IabResult result) {
@@ -131,7 +131,7 @@ public class PurchaseHelper {
 
     // lame security check but not needed for donation
     if (!payload.equals(mPurchasePayload)) {
-      Debug.log("mPurchasePayload didn't match?");
+      DUtils.log("mPurchasePayload didn't match?");
       return false;
     }
 

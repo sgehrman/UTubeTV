@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.BufferedInputStream;
@@ -58,7 +58,7 @@ public class BitmapDiskCache {
 
   public void put(String key, Bitmap data) {
     if (key == null || data == null) {
-      Debug.log("bad params: " + Debug.currentMethod());
+      DUtils.log("bad params: " + DUtils.currentMethod());
       return;
     }
 
@@ -74,10 +74,10 @@ public class BitmapDiskCache {
         editor.commit();
       } else {
         editor.abort();
-        Debug.log("ERROR on: image put on disk cache " + key);
+        DUtils.log("ERROR on: image put on disk cache " + key);
       }
     } catch (IOException e) {
-      Debug.log("ERROR on: image put on disk cache " + key);
+      DUtils.log("ERROR on: image put on disk cache " + key);
       try {
         if (editor != null) {
           editor.abort();

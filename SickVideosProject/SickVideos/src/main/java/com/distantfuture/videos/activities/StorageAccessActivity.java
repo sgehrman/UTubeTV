@@ -12,7 +12,7 @@ import android.os.ParcelFileDescriptor;
 import android.view.Window;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
 
@@ -192,7 +192,7 @@ public class StorageAccessActivity extends Activity {
           }
           fdOut.close();
         } catch (final IOException e) {
-          Debug.log("Could not save file!" + e.toString());
+          DUtils.log("Could not save file!" + e.toString());
         }
         finish();
       }
@@ -227,17 +227,17 @@ public class StorageAccessActivity extends Activity {
 
             Map result = JSONHelper.toMap(jsonObj);
 
-            Debug.log(result.toString());
+            DUtils.log(result.toString());
 
           } catch (Throwable t) {
-            Debug.log("exception " + t.toString());
+            DUtils.log("exception " + t.toString());
           }
 
 
           in.close();
           fdIn.close();
         } catch (final IOException e) {
-          Debug.log("Could not save file!" + e.toString());
+          DUtils.log("Could not save file!" + e.toString());
         }
         finish();
       }

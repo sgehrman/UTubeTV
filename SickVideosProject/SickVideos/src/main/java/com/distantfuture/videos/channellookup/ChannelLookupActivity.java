@@ -18,7 +18,7 @@ import android.widget.SearchView;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
 
@@ -233,7 +233,7 @@ public class ChannelLookupActivity extends Activity {
     try {
       json = JSONHelper.toJSON(map).toString();
     } catch (Throwable t) {
-      Debug.log("exception " + t.toString());
+      DUtils.log("exception " + t.toString());
       json = "";
     }
 

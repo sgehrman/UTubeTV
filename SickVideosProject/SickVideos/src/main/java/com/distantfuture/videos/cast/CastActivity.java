@@ -12,7 +12,7 @@ import com.distantfuture.castcompanionlibrary.lib.cast.VideoCastManager;
 import com.distantfuture.castcompanionlibrary.lib.cast.callbacks.VideoCastConsumerImpl;
 import com.distantfuture.castcompanionlibrary.lib.utils.MiniController;
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.misc.Debug;
+import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.MainApplication;
 import com.distantfuture.videos.misc.Utils;
 import com.google.android.gms.cast.ApplicationMetadata;
@@ -89,7 +89,7 @@ public class CastActivity extends FragmentActivity {
               loadRemoteMedia(0, true);
               finish();
             } catch (Exception e) {
-              Debug.log(e.getMessage());
+              DUtils.log(e.getMessage());
             }
           } else {
           }
@@ -146,7 +146,7 @@ public class CastActivity extends FragmentActivity {
           loadRemoteMedia(0, true);
           finish();
         } catch (Exception e) {
-          Debug.log("Exception: " + e.getMessage());
+          DUtils.log("Exception: " + e.getMessage());
           return;
         }
         break;
