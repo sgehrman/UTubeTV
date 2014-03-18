@@ -50,7 +50,7 @@ public class StorageAccessActivity extends Activity {
   private static Intent saveIntent(final Context context, final Uri uri, final String text, final String type) {
     Intent intent = null;
 
-    if (Utils.isKitKat()) {
+    if (Utils.isKitKatOrNewer()) {
       intent = new Intent()
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
           .setType(type)
@@ -71,7 +71,7 @@ public class StorageAccessActivity extends Activity {
   private static Intent loadIntent(final Context context, final String type) {
     Intent intent = null;
 
-    if (Utils.isKitKat()) {
+    if (Utils.isKitKatOrNewer()) {
       intent = new Intent()
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
           .setType(type)

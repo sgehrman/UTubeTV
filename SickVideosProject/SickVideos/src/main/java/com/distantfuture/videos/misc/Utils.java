@@ -355,11 +355,11 @@ public class Utils {
     public void onResults(StringResultListener listener, String result);
   }
 
-  public static boolean isKitKat() {
+  public static boolean isKitKatOrNewer() {
     return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
   }
 
   public static boolean isJellyBean() {
-    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN);
+    return (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN);
   }
 }

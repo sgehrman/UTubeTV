@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Debug;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
@@ -244,4 +245,12 @@ public class ChannelLookupActivity extends Activity {
   public void importFile() {
     StorageAccessActivity.load(this, "*/*");
   }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    menu.setGroupVisible(R.id.kitkat_group, Utils.isKitKatOrNewer());
+
+    return super.onPrepareOptionsMenu(menu);
+  }
+
 }
