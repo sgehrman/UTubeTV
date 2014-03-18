@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.activities.StorageAccessActivity;
@@ -128,6 +129,18 @@ public class ChannelLookupActivity extends Activity {
     setupSearchItem(menu);
 
     return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public void onBackPressed() {
+   String query = getQuery();
+
+    // using back button to clear query
+    if (query != null && getQuery().length() > 0) {
+      setQuery(null);
+    }
+    else
+      super.onBackPressed();
   }
 
   private void setupSearchItem(Menu menu) {
