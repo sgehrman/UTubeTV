@@ -140,6 +140,6 @@ public class Content {
   }
 
   public void editChannels(List<String> channels) {
-      mChannelList.editChannels(channels);
+    mChannelList.editChannels(channels);
   }
 }

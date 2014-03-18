@@ -123,14 +123,14 @@ public class ChannelList {
     return modifiedList;
   }
 
-  public void editChannels(List<String>  channels) {
+  public void editChannels(List<String> channels) {
 
     mChannelSet = mChannelSetStore.channelSet(channels);
 
     mCurrentChannelID = mChannelSet.get(0);
 
-      // refresh data
-      requestChannelInfo(false);
+    // refresh data
+    requestChannelInfo(false);
   }
 
   public boolean hasChannel(String channelId) {

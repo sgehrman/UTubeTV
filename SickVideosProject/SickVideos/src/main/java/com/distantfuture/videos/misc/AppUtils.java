@@ -162,7 +162,7 @@ public class AppUtils {
     return null;
   }
 
-  public void saveChannelIds( List<String> list) {
+  public void saveChannelIds(List<String> list) {
     Set<String> stringSet = null;
 
     if (list != null)
