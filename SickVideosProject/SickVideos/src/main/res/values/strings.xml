@@ -18,8 +18,7 @@
     <string name="action_show_hidden">Show hidden items</string>
     <string name="action_hide_hidden">Hide hidden items</string>
 
-    <string name="action_rename_channel">Rename Channel</string>
-    <string name="action_default_channels">Default Channels</string>
+    <string name="action_default_channels">Restore Defaults</string>
     <string name="action_donate">Donate</string>
     <string name="action_show_cast">Google Cast</string>
     <string name="action_show_rate_dialog">Rate Dialog</string>
