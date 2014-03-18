@@ -86,7 +86,7 @@ public class StorageAccessActivity extends Activity {
     return intent;
   }
 
-  private static void copyStream(final InputStream inStream, final OutputStream outStream, final boolean closeOutput)
+  private static void copyStream(final InputStream inStream, final OutputStream outStream)
       throws IOException {
     // in case Android includes Apache commons IO in the future, this function should be replaced by IOUtils.copy
     final int bufferSize = 4096;
@@ -97,9 +97,8 @@ public class StorageAccessActivity extends Activity {
       while ((len = inStream.read(buffer)) != -1) {
         outStream.write(buffer, 0, len);
       }
-    } finally {
-      if (outStream != null && closeOutput)
-        outStream.close();
+    } catch (Throwable t) {
+      DUtils.log("exception: " + t.toString());
     }
   }
 
@@ -188,12 +187,19 @@ public class StorageAccessActivity extends Activity {
             final Uri src = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             final ParcelFileDescriptor fdIn = getContentResolver().openFileDescriptor(src, "r");
             final FileInputStream is = new FileInputStream(fdIn.getFileDescriptor());
-            copyStream(is, os, true);
+
+            copyStream(is, os);
+
+            is.close();
+            fdIn.close();
           } else if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             os.write(intent.getStringExtra(Intent.EXTRA_TEXT).getBytes());
-            os.close();
           }
+
+          os.close();
           fdOut.close();
+
+          Utils.toast(StorageAccessActivity.this, "Export successful");
         } catch (final IOException e) {
           DUtils.log("Could not save file!" + e.toString());
         }
@@ -216,7 +222,6 @@ public class StorageAccessActivity extends Activity {
           final ParcelFileDescriptor fdIn = getContentResolver().openFileDescriptor(sourceUri, "r");
           final FileInputStream in = new FileInputStream(fdIn.getFileDescriptor());
 
-
           BufferedReader streamReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
           StringBuilder responseStrBuilder = new StringBuilder();
 
@@ -237,6 +242,7 @@ public class StorageAccessActivity extends Activity {
 
           in.close();
           fdIn.close();
+
         } catch (final IOException e) {
           DUtils.log("Could not save file!" + e.toString());
         }

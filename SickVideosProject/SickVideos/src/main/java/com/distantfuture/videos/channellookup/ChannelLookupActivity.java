@@ -248,6 +248,8 @@ public class ChannelLookupActivity extends Activity {
 
         if (channels != null && channels.size() > 0) {
           Content.instance().editChannels(channels);
+
+          Utils.toast(this, "Import successful");
         }
       }
     }
