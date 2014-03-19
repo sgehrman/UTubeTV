@@ -71,6 +71,10 @@ public class ChannelList {
   public String currentChannelId() {
     return mCurrentChannelID;
   }
+  private void setCurrentChannelId(String channelId) {
+    mCurrentChannelID = channelId;
+    AppUtils.instance(mContext).saveDefaultChannelID(mCurrentChannelID);
+  }
 
   public boolean needsChannelSwitcher() {
     return mChannelSetStore.needsChannelSwitcher();
@@ -99,9 +103,7 @@ public class ChannelList {
   // returns false if that channel is already current
   public boolean changeChannel(int index) {
     if (currentChannelIndex() != index) {
-      mCurrentChannelID = mChannels.get(index).mChannel;
-
-      AppUtils.instance(mContext).saveDefaultChannelID(mCurrentChannelID);
+      setCurrentChannelId(mChannels.get(index).mChannel);
 
       return true;
     }
@@ -114,7 +116,7 @@ public class ChannelList {
 
     if (modifiedList) {
       if (TextUtils.equals(mCurrentChannelID, channelId))
-        mCurrentChannelID = mChannelSet.get(0);
+        setCurrentChannelId(mChannelSet.get(0));
 
       // refresh data
       requestChannelInfo(false);
@@ -126,7 +128,7 @@ public class ChannelList {
   public void replaceChannels(List<String> channels) {
     mChannelSet = mChannelSetStore.channelSet(channels);
 
-    mCurrentChannelID = mChannelSet.get(0);
+    setCurrentChannelId(mChannelSet.get(0));
 
     // refresh data
     requestChannelInfo(false);
