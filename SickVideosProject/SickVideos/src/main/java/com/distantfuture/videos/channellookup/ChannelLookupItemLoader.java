@@ -32,7 +32,7 @@ public class ChannelLookupItemLoader extends AsyncTaskLoader<List<YouTubeData>> 
     List<YouTubeData> result = null;
 
     try {
-      YouTubeAPI helper = new YouTubeAPI(getContext(), new YouTubeAPI.YouTubeAPIListener() {
+      YouTubeAPI helper = new YouTubeAPI(getContext(), false, true, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
           DUtils.log("handleAuthIntent inside update Service.  not handled here");

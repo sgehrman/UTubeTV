@@ -45,16 +45,20 @@ public class YouTubeAPI {
 
   public static final int REQ_PLAYER_CODE = 334443;
   private static final int mYouTubeMaxResultsLimit = 50;
-  boolean highQualityImages = true;
-  Context mContext;
-  YouTubeAPIListener mListener;
+  private boolean highQualityImages = true;
+  private Context mContext;
+  private YouTubeAPIListener mListener;
   private YouTube youTube;
+  private boolean mUseAuthCredentials = false; // needs to check Content or something to get this for realz
+  private boolean mUseDefaultAccount;
 
-  public YouTubeAPI(Context context, YouTubeAPIListener listener) {
+  public YouTubeAPI(Context context, boolean useAuthCredentials, boolean useDefaultAccount, YouTubeAPIListener listener) {
     super();
 
     mListener = listener;
     mContext = context.getApplicationContext();
+    mUseAuthCredentials = useAuthCredentials;
+    mUseDefaultAccount = useDefaultAccount;
   }
 
   public static void playMovie(Activity activity, String movieID, boolean fullScreen) {
@@ -80,11 +84,10 @@ public class YouTubeAPI {
   public YouTube youTube() {
     if (youTube == null) {
       try {
-        boolean needsAuth = false; // needs to check Content or something to get this for realz
         HttpRequestInitializer credentials;
 
-        if (needsAuth)
-          credentials = Auth.getCredentials(mContext);
+        if (mUseAuthCredentials)
+          credentials = Auth.getCredentials(mContext, mUseDefaultAccount);
         else
           credentials = Auth.nullCredentials(mContext);
 

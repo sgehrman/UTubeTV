@@ -69,7 +69,7 @@ public class YouTubeService extends IntentService {
 
   private void handleSubscriptionRequest(final SubscriptionsServiceRequest subscriptionsServiceRequest) {
 
-    YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+    YouTubeAPI helper = new YouTubeAPI(this, true, false, new YouTubeAPI.YouTubeAPIListener() {
       @Override
       public void handleAuthIntent(final Intent authIntent) {
         AuthActivity.show(YouTubeService.this, authIntent, subscriptionsServiceRequest.toBundle());
@@ -103,7 +103,7 @@ public class YouTubeService extends IntentService {
     }
 
     if (refresh) {
-      YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+      YouTubeAPI helper = new YouTubeAPI(this, false, true, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
           AuthActivity.show(YouTubeService.this, authIntent, request.toBundle());

@@ -22,14 +22,17 @@ public class Auth {
     return "AIzaSyD0gRStgO5O0hBRp4UeAxtsLFFw9bMinOI";
   }
 
-  public static GoogleAccountCredential getCredentials(Context ctx) {
+  public static GoogleAccountCredential getCredentials(Context ctx, boolean useDefaultAccount) {
     if (credential == null) {
       List<String> scopes = Arrays.asList(YouTubeScopes.YOUTUBE);
 
       credential = GoogleAccountCredential.usingOAuth2(ctx.getApplicationContext(), scopes);
 
       // add account name if we have it
-      String accountName = accountName(ctx);
+      String accountName = null;
+
+      if (useDefaultAccount)
+        accountName = accountName(ctx);
 
       if (accountName != null)
         credential.setSelectedAccountName(accountName);

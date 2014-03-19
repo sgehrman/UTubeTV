@@ -38,7 +38,7 @@ public class AuthActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    credential = Auth.getCredentials(this);
+    credential = Auth.getCredentials(this, true);
 
     String accountName = credential.getSelectedAccountName();
 

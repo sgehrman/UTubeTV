@@ -198,7 +198,7 @@ public class ChannelList {
     List<YouTubeData> result = null;
 
     if (result == null) {
-      YouTubeAPI helper = new YouTubeAPI(mContext, new YouTubeAPI.YouTubeAPIListener() {
+      YouTubeAPI helper = new YouTubeAPI(mContext, false, true, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
           DUtils.log("handleAuthIntent inside update Service.  not handled here");

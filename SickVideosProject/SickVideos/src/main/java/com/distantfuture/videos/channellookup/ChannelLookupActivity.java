@@ -274,10 +274,12 @@ public class ChannelLookupActivity extends Activity {
 
   // eventbus event
   public void onEventMainThread(BusEvents.SubscriptionServiceResult event) {
+    List<String> channels = event.channels;
 
-    for (String data : event.channels)
-      DUtils.log(data);
-
+    if (channels != null && channels.size() > 0) {
+      Utils.toast(this, "Import successful");
+      Content.instance().replaceChannels(channels);
+    }
   }
 
 
