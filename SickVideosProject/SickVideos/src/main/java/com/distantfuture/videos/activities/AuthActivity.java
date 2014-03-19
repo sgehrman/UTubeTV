@@ -2,6 +2,7 @@ package com.distantfuture.videos.activities;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,14 +12,26 @@ import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.YouTubeListService;
 import com.distantfuture.videos.services.YouTubeServiceRequest;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.services.youtube.YouTubeRequest;
 
 public class AuthActivity extends Activity {
-  public static final String REQUEST_AUTHORIZATION_INTENT = "com.sickboots.sickvideos.RequestAuth";
-  public static final String REQUEST_AUTHORIZATION_REQUEST_PARAM = "com.sickboots.sickvideos.Request.param";
-  public static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.sickboots.sickvideos.Intent.param";
+  private static final String REQUEST_AUTHORIZATION_REQUEST_PARAM = "com.sickboots.sickvideos.Request.param";
+  private static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.sickboots.sickvideos.Intent.param";
   private static final int INTENT_REQUEST_AUTHORIZATION = 3;
   private static final int INTENT_REQUEST_ACCOUNT_PICKER = 2;
   private GoogleAccountCredential credential;
+
+  public static void show(Context context, Intent authIntent, YouTubeServiceRequest currentRequest) {
+    Intent intent = new Intent(context, AuthActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
+
+    if (authIntent != null)
+      intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
+
+    intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest);
+
+    context.startActivity(intent);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

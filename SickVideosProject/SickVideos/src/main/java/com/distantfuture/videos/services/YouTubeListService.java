@@ -64,16 +64,7 @@ public class YouTubeListService extends IntentService {
         YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
           @Override
           public void handleAuthIntent(final Intent authIntent) {
-
-            Intent intent = new Intent(YouTubeListService.this, AuthActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
-
-            if (authIntent != null)
-              intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
-            intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest);
-
-            YouTubeListService.this.startActivity(intent);
-
+            AuthActivity.show(YouTubeListService.this, authIntent, currentRequest);
           }
         });
 
