@@ -81,16 +81,12 @@ public class YouTubeListService extends IntentService {
       }
 
       // notify that we handled an intent so pull to refresh can stop it's animation and other stuff
-      sendServiceDoneBroadcast();
+      EventBus.getDefault().post(new BusEvents.YouTubeFragmentDataReady());
 
     } catch (Exception e) {
       e.printStackTrace();
       DUtils.log(String.format("%s exception: %s", DUtils.currentMethod(), e.getMessage()));
     }
-  }
-
-  private void sendServiceDoneBroadcast() {
-    EventBus.getDefault().post(new BusEvents.YouTubeFragmentDataReady());
   }
 
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
