@@ -136,8 +136,8 @@ public class YouTubeListService extends IntentService {
 
     switch (request.type()) {
       case RELATED:
-        YouTubeAPI.RelatedPlaylistType type = (YouTubeAPI.RelatedPlaylistType) request.getData("type");
-        String channelID = (String) request.getData("channel");
+        YouTubeAPI.RelatedPlaylistType type = request.relatedType();
+        String channelID = (String) request.channel();
 
         playlistID = helper.relatedPlaylistID(type, channelID);
 
@@ -147,21 +147,21 @@ public class YouTubeListService extends IntentService {
         removeAllFromDB = false;
         break;
       case VIDEOS:
-        playlistID = (String) request.getData("playlist");
+        playlistID = (String) request.playlist();
 
         // can't use request.maxResults() since we have to get everything and sort it
         resultList = retrieveVideoList(request, helper, playlistID, null, 0);
         removeAllFromDB = false;
         break;
       case SEARCH:
-        String query = (String) request.getData("query");
+        String query = (String) request.query();
         listResults = helper.searchListResults(query, false);
         break;
       case LIKED:
         listResults = helper.likedVideosListResults();
         break;
       case PLAYLISTS:
-        String channel = (String) request.getData("channel");
+        String channel = (String) request.channel();
 
         resultList = retrieveVideoList(request, helper, null, channel, request.maxResults());
         removeAllFromDB = false;

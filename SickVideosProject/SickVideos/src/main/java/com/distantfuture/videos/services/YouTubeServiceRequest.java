@@ -36,7 +36,7 @@ public class YouTubeServiceRequest implements Parcelable {
 
     result.data.put("maxResults", maxResults);
     result.data.put("containerName", containerName);
-    result.data.put("type", relatedPlayListType);
+    result.data.put("relatedType", relatedPlayListType);
     result.data.put("channel", channelID);
 
     return result;
@@ -118,7 +118,7 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public Object getData(String key) {
+  private Object getData(String key) {
     Object result = null;
 
     if (data.containsKey(key))
@@ -129,6 +129,22 @@ public class YouTubeServiceRequest implements Parcelable {
 
   public String containerName() {
     return (String) getData("containerName");
+  }
+
+  public String channel() {
+    return (String) getData("channel");
+  }
+
+  public String playlist() {
+    return (String) getData("playlist");
+  }
+
+  public String query() {
+    return (String) getData("query");
+  }
+
+  public YouTubeAPI.RelatedPlaylistType relatedType() {
+    return (YouTubeAPI.RelatedPlaylistType) getData("relatedType");
   }
 
   public String unitName(boolean plural) {
@@ -146,8 +162,7 @@ public class YouTubeServiceRequest implements Parcelable {
         break;
       case RELATED:
         result = (plural) ? "Videos" : "Video";
-        YouTubeAPI.RelatedPlaylistType playlistType = (YouTubeAPI.RelatedPlaylistType) getData("type");
-        switch (playlistType) {
+        switch (relatedType()) {
           case UPLOADS:
             result = (plural) ? "Recent Uploads" : "Recent Upload";
             break;
@@ -192,8 +207,7 @@ public class YouTubeServiceRequest implements Parcelable {
       case RELATED:
         result = "Related Playlists";
 
-        YouTubeAPI.RelatedPlaylistType playlistType = (YouTubeAPI.RelatedPlaylistType) getData("type");
-        switch (playlistType) {
+        switch (relatedType()) {
           case FAVORITES:
             result = "Favorites";
             break;
