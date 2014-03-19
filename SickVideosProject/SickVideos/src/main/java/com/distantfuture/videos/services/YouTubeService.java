@@ -80,9 +80,10 @@ public class YouTubeService extends IntentService {
 
     List<YouTubeData> items = results.getItems(0);
 
-    for (YouTubeData data : items)
-      DUtils.log(data.mChannel);
+    List<String> channelIds = YouTubeData.contentIdsList(items);
 
+    // notify that we handled an intent so pull to refresh can stop it's animation and other stuff
+    EventBus.getDefault().post(new BusEvents.SubscriptionServiceResult(channelIds));
   }
 
   private void handleListRequest(final ListServiceRequest request, boolean refresh) {

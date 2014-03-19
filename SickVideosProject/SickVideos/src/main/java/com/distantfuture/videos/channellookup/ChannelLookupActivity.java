@@ -272,6 +272,15 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
+  // eventbus event
+  public void onEvent(BusEvents.SubscriptionServiceResult event) {
+
+    for (String data : event.channels)
+      DUtils.log(data);
+
+  }
+
+
   private void exportFile() {
     Map map = new HashMap();
 

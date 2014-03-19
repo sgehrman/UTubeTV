@@ -54,13 +54,18 @@ public class YouTubeData {
 // ----------------------------------------------------
   // static helper functions
 
-  // video or playlist ids
+  // video, channel or playlist ids
   public static List<String> contentIdsList(List<YouTubeData> videoData) {
     List<String> result = new ArrayList<String>(videoData.size());
 
     for (YouTubeData data : videoData) {
-      result.add(data.mVideo == null ? data.mPlaylist : data.mVideo);
-    }
+      if (data.mVideo != null)
+        result.add(data.mVideo);
+      else if (data.mPlaylist != null)
+        result.add(data.mPlaylist);
+      else if (data.mChannel != null)
+        result.add(data.mChannel);
+      }
 
     return result;
   }

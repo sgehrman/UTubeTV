@@ -2,6 +2,7 @@ package com.distantfuture.videos.misc;
 
 import com.distantfuture.videos.youtube.VideoPlayer;
 
+import java.util.List;
 import java.util.Map;
 
 public class BusEvents {
@@ -35,6 +36,16 @@ public class BusEvents {
 
   public static class YouTubeFragmentDataReady {
     public YouTubeFragmentDataReady() {
+    }
+  }
+
+  public static class SubscriptionServiceResult {
+    public List<String> channels;
+
+    public SubscriptionServiceResult(List<String> channels) {
+      super();
+
+      this.channels = channels;
     }
   }
 
