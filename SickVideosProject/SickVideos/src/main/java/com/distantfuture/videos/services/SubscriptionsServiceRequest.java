@@ -26,8 +26,9 @@ public class SubscriptionsServiceRequest {
     return ServiceRequest.toBundle(serviceRequest);
   }
 
-  public static SubscriptionsServiceRequest fromServiceRequest(ServiceRequest request) {
+  public static SubscriptionsServiceRequest fromBundle(Bundle bundle) {
     SubscriptionsServiceRequest result = null;
+    ServiceRequest request = ServiceRequest.fromBundle(bundle);
 
     Integer intValue = (Integer) request.getData(ServiceRequest.REQUEST_CLASS_TYPE_KEY);
 

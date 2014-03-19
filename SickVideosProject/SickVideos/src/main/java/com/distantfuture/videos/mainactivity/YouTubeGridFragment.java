@@ -149,9 +149,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     GridView gridView;
-    ServiceRequest serviceRequest = ServiceRequest.fromBundle(getArguments().getBundle("request"));
-
-    mRequest = ListServiceRequest.fromServiceRequest(serviceRequest);
+    mRequest = ListServiceRequest.fromBundle(getArguments().getBundle("request"));
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
 
     ViewGroup rootView = mAdapter.rootView(container);

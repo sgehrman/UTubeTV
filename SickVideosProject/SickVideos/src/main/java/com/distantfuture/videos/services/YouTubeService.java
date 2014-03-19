@@ -49,15 +49,13 @@ public class YouTubeService extends IntentService {
   @Override
   protected void onHandleIntent(Intent intent) {
     try {
-      ServiceRequest request = ServiceRequest.fromBundle(intent.getBundleExtra("request"));
-
-      ListServiceRequest listServiceRequest = ListServiceRequest.fromServiceRequest(request);
+      ListServiceRequest listServiceRequest = ListServiceRequest.fromBundle(intent.getBundleExtra("request"));
       if (listServiceRequest != null) {
         boolean refresh = intent.getBooleanExtra("refresh", false);
 
         handleListRequest(listServiceRequest, refresh);
       } else {
-        SubscriptionsServiceRequest subscriptionsServiceRequest = SubscriptionsServiceRequest.fromServiceRequest(request);
+        SubscriptionsServiceRequest subscriptionsServiceRequest = SubscriptionsServiceRequest.fromBundle(intent.getBundleExtra("request"));
 
         if (subscriptionsServiceRequest != null) {
           handleSubscriptionRequest(subscriptionsServiceRequest);

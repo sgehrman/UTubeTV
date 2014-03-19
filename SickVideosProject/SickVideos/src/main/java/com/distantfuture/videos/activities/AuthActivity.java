@@ -11,6 +11,7 @@ import com.distantfuture.videos.misc.Auth;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.ListServiceRequest;
 import com.distantfuture.videos.services.ServiceRequest;
+import com.distantfuture.videos.services.SubscriptionsServiceRequest;
 import com.distantfuture.videos.services.YouTubeService;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
@@ -60,13 +61,17 @@ public class AuthActivity extends Activity {
   }
 
   private void doLastStep() {
-    // refetch the request
-    ServiceRequest serviceRequest = ServiceRequest.fromBundle(getIntent().getBundleExtra(REQUEST_AUTHORIZATION_REQUEST_PARAM));
-    ListServiceRequest request = ListServiceRequest.fromServiceRequest(serviceRequest);
+    ListServiceRequest listServiceRequest = ListServiceRequest.fromBundle(getIntent().getBundleExtra(REQUEST_AUTHORIZATION_REQUEST_PARAM));
 
-    if (request != null) {
+    if (listServiceRequest != null) {
       // forcing a refresh since it is flagged as received in the service to avoid double attempts at a request
-      YouTubeService.startListRequest(this, request, true);
+      YouTubeService.startListRequest(this, listServiceRequest, true);
+    } else {
+      SubscriptionsServiceRequest subscriptionsServiceRequest = SubscriptionsServiceRequest.fromBundle(getIntent().getBundleExtra(REQUEST_AUTHORIZATION_REQUEST_PARAM));
+
+      if (subscriptionsServiceRequest != null) {
+        YouTubeService.startSubscriptionRequest(this, subscriptionsServiceRequest);
+      }
     }
 
     finish();

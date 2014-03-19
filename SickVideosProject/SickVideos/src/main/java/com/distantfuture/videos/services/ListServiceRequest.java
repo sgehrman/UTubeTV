@@ -24,8 +24,9 @@ public class ListServiceRequest {
     this.serviceRequest = serviceRequest;
   }
 
-  public static ListServiceRequest fromServiceRequest(ServiceRequest request) {
+  public static ListServiceRequest fromBundle(Bundle bundle) {
     ListServiceRequest result = null;
+    ServiceRequest request = ServiceRequest.fromBundle(bundle);
 
     Integer intValue = (Integer) request.getData(ServiceRequest.REQUEST_CLASS_TYPE_KEY);
 
