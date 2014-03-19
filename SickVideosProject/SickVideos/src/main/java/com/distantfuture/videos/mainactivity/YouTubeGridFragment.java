@@ -141,10 +141,16 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    GridView gridView;
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
     setHasOptionsMenu(true);
+    EventBus.getDefault().register(this);
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    GridView gridView;
 
     mRequest = getArguments().getParcelable("request");
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
@@ -307,21 +313,15 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   }
 
   @Override
-  public void onPause() {
-    super.onPause();
-
+  public void onDestroy() {
     EventBus.getDefault().unregister(this);
 
-    registerBroadcastReceiver(false);
+    super.onDestroy();
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
-    EventBus.getDefault().register(this);
-
-    registerBroadcastReceiver(true);
 
     // reload if the hidden pref is now how we remember it
     reloadForPrefChange();
@@ -354,6 +354,16 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
         }
       }
     }
+  }
+
+  public void onEvent(BusEvents.YouTubeFragmentDataReady event) {
+    // stop the pull to refresh indicator
+    // Notify PullToRefreshLayout that the refresh has finished
+    mPullToRefreshLayout.setRefreshComplete();
+
+    // in the case of no results, we need to update the emptylist view to reflect that
+    // This only shows up at launch, or the first time a list is requested
+    mEmptyListHelper.updateEmptyListView("List is Empty", true);
   }
 
   // OnRefreshListener
@@ -403,37 +413,6 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   @Override
   public void onLoaderReset(Loader<Cursor> arg0) {
     mAdapter.swapCursor(null);
-  }
-
-  private void registerBroadcastReceiver(boolean onResume) {
-    if (onResume) {
-      if (mBroadcastReceiver == null) {
-        mBroadcastReceiver = new BroadcastReceiver() {
-          @Override
-          public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(YouTubeListService.DATA_READY_INTENT)) {
-              // stop the pull to refresh indicator
-              // Notify PullToRefreshLayout that the refresh has finished
-              mPullToRefreshLayout.setRefreshComplete();
-
-              // in the case of no results, we need to update the emptylist view to reflect that
-              // This only shows up at launch, or the first time a list is requested
-              mEmptyListHelper.updateEmptyListView("List is Empty", true);
-            }
-          }
-        };
-      }
-
-      IntentFilter intentFilter = new IntentFilter(YouTubeListService.DATA_READY_INTENT);
-      LocalBroadcastManager.getInstance(this.getActivity())
-          .registerReceiver(mBroadcastReceiver, intentFilter);
-    } else {
-      if (mBroadcastReceiver != null) {
-        LocalBroadcastManager.getInstance(this.getActivity())
-            .unregisterReceiver(mBroadcastReceiver);
-
-      }
-    }
   }
 
   private void setupSearchItem(Menu menu) {

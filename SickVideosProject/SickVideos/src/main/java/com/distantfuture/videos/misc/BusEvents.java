@@ -33,6 +33,11 @@ public class BusEvents {
     }
   }
 
+  public static class YouTubeFragmentDataReady {
+    public YouTubeFragmentDataReady() {
+    }
+  }
+
   public static class JSONImportEvent {
     public Map channels;
 

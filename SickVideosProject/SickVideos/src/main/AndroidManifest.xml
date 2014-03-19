@@ -26,7 +26,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.distantfuture.videos.activities.SettingsActivity"
@@ -67,13 +66,11 @@
             android:name=".activities.StorageAccessActivity"
             android:label="">
         </activity>
-
         <activity
             android:name=".channellookup.ChannelDetailsActivity"
             android:label="Channel Details"
             android:theme="@style/ChannelDetailsDialogStyle">
         </activity>
-
         <service
             android:name="com.distantfuture.videos.services.YouTubeListService"
             android:enabled="true"
@@ -85,12 +82,9 @@
             android:exported="false"
             android:multiprocess="true">
         </provider>
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
-
-
         <activity
             android:name="com.distantfuture.castcompanionlibrary.lib.cast.player.VideoCastControllerActivity"
             android:label="Cast"
@@ -98,8 +92,6 @@
             android:parentActivityName="com.distantfuture.videos.cast.CastActivity"
             android:screenOrientation="portrait">
         </activity>
-
-
         <receiver android:name="com.distantfuture.castcompanionlibrary.lib.utils.VideoIntentReceiver">
             <intent-filter>
                 <action android:name="android.media.AUDIO_BECOMING_NOISY"/>
@@ -108,7 +100,6 @@
                 <action android:name="com.distantfuture.castcompanionlibrary.lib.action.stop"/>
             </intent-filter>
         </receiver>
-
         <service
             android:name="com.distantfuture.castcompanionlibrary.lib.utils.VideoCastNotificationService"
             android:exported="false">
@@ -118,8 +109,6 @@
                 <action android:name="com.distantfuture.castcompanionlibrary.lib.action.notificationvisibility"/>
             </intent-filter>
         </service>
-
-
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import com.distantfuture.videos.database.DatabaseAccess;
 import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.AppUtils;
+import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
@@ -19,8 +20,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.greenrobot.event.EventBus;
+
 public class YouTubeListService extends IntentService {
-  public static final String DATA_READY_INTENT = "com.sickboots.sickvideos.DataReady";
   private Set mHasFetchedDataMap = new HashSet<String>();
 
   public YouTubeListService() {
@@ -88,10 +90,7 @@ public class YouTubeListService extends IntentService {
   }
 
   private void sendServiceDoneBroadcast() {
-    Intent messageIntent = new Intent(DATA_READY_INTENT);
-
-    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
-    manager.sendBroadcast(messageIntent);
+    EventBus.getDefault().post(new BusEvents.YouTubeFragmentDataReady());
   }
 
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {
