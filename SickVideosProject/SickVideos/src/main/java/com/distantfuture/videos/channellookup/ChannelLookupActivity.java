@@ -23,6 +23,8 @@ import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
+import com.distantfuture.videos.services.SubscriptionsServiceRequest;
+import com.distantfuture.videos.services.YouTubeService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -307,7 +309,7 @@ public class ChannelLookupActivity extends Activity {
   }
 
   private void importSubscriptions() {
-
+    YouTubeService.startSubscriptionRequest(this, new SubscriptionsServiceRequest());
   }
 
 }

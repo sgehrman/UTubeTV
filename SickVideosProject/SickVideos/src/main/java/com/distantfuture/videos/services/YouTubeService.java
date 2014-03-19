@@ -67,10 +67,25 @@ public class YouTubeService extends IntentService {
     }
   }
 
-  private void handleSubscriptionRequest(SubscriptionsServiceRequest subscriptionsServiceRequest) {
+  private void handleSubscriptionRequest(final SubscriptionsServiceRequest subscriptionsServiceRequest) {
+
+    YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+      @Override
+      public void handleAuthIntent(final Intent authIntent) {
+        AuthActivity.show(YouTubeService.this, authIntent, subscriptionsServiceRequest.toBundle());
+      }
+    });
+
+    YouTubeAPI.SubscriptionListResults results = helper.subscriptionListResults(true);
+
+    List<YouTubeData> items = results.getItems(0);
+
+    for (YouTubeData data : items)
+      DUtils.log(data.mChannel);
+
   }
 
-  private void handleListRequest(ListServiceRequest request, boolean refresh) {
+  private void handleListRequest(final ListServiceRequest request, boolean refresh) {
     boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
     mHasFetchedDataMap.add(request.requestIdentifier());
 
@@ -87,11 +102,10 @@ public class YouTubeService extends IntentService {
     }
 
     if (refresh) {
-      final ListServiceRequest currentRequest = request;
       YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
         @Override
         public void handleAuthIntent(final Intent authIntent) {
-          AuthActivity.show(YouTubeService.this, authIntent, currentRequest);
+          AuthActivity.show(YouTubeService.this, authIntent, request.toBundle());
         }
       });
 

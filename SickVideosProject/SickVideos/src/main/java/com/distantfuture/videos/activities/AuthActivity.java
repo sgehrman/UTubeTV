@@ -22,14 +22,14 @@ public class AuthActivity extends Activity {
   private static final int INTENT_REQUEST_ACCOUNT_PICKER = 2;
   private GoogleAccountCredential credential;
 
-  public static void show(Context context, Intent authIntent, ListServiceRequest currentRequest) {
+  public static void show(Context context, Intent authIntent, Bundle requestBundle) {
     Intent intent = new Intent(context, AuthActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
 
     if (authIntent != null)
       intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_INTENT_PARAM, authIntent);
 
-    intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, currentRequest.toBundle());
+    intent.putExtra(AuthActivity.REQUEST_AUTHORIZATION_REQUEST_PARAM, requestBundle);
 
     context.startActivity(intent);
   }
