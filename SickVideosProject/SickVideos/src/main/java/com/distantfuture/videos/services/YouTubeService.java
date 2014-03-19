@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 
 import com.distantfuture.videos.activities.AuthActivity;
 import com.distantfuture.videos.database.DatabaseAccess;
@@ -28,11 +29,19 @@ public class YouTubeService extends IntentService {
     super("YouTubeListService");
   }
 
-  public static void startRequest(Context context, ListServiceRequest request, boolean refresh) {
+  public static void startListRequest(Context context, ListServiceRequest request, boolean refresh) {
+    startRequest(context, request.toBundle(), refresh);
+  }
+
+  public static void startSubscriptionRequest(Context context, SubscriptionsServiceRequest request) {
+    startRequest(context, request.toBundle(), false);
+  }
+
+  public static void startRequest(Context context, Bundle requestBundle, boolean refresh) {
     context = context.getApplicationContext();
 
     Intent i = new Intent(context, YouTubeService.class);
-    i.putExtra("request", request);
+    i.putExtra("request", requestBundle);
     i.putExtra("refresh", refresh);
     context.startService(i);
   }
@@ -40,43 +49,59 @@ public class YouTubeService extends IntentService {
   @Override
   protected void onHandleIntent(Intent intent) {
     try {
-      ListServiceRequest request = intent.getParcelableExtra("request");
-      boolean refresh = intent.getBooleanExtra("refresh", false);
+      ServiceRequest request = ServiceRequest.fromBundle(intent.getBundleExtra("request"));
 
-      boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
-      mHasFetchedDataMap.add(request.requestIdentifier());
+      ListServiceRequest listServiceRequest = ListServiceRequest.fromServiceRequest(request);
+      if (listServiceRequest != null) {
+        boolean refresh = intent.getBooleanExtra("refresh", false);
 
-      if (!refresh) {
-        if (!hasFetchedData) {
-          DatabaseAccess access = new DatabaseAccess(this, request.databaseTable());
+        handleListRequest(listServiceRequest, refresh);
+      } else {
+        SubscriptionsServiceRequest subscriptionsServiceRequest = SubscriptionsServiceRequest.fromServiceRequest(request);
 
-          Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS, request.requestIdentifier());
-          if (!cursor.moveToFirst())
-            refresh = true;
-
-          cursor.close();
+        if (subscriptionsServiceRequest != null) {
+          handleSubscriptionRequest(subscriptionsServiceRequest);
         }
       }
-
-      if (refresh) {
-        final ListServiceRequest currentRequest = request;
-        YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
-          @Override
-          public void handleAuthIntent(final Intent authIntent) {
-            AuthActivity.show(YouTubeService.this, authIntent, currentRequest);
-          }
-        });
-
-        updateDataFromInternet(request, helper);
-      }
-
-      // notify that we handled an intent so pull to refresh can stop it's animation and other stuff
-      EventBus.getDefault().post(new BusEvents.YouTubeFragmentDataReady());
-
     } catch (Exception e) {
       e.printStackTrace();
       DUtils.log(String.format("%s exception: %s", DUtils.currentMethod(), e.getMessage()));
     }
+  }
+
+  private void handleSubscriptionRequest(SubscriptionsServiceRequest subscriptionsServiceRequest) {
+  }
+
+  private void handleListRequest(ListServiceRequest request, boolean refresh) {
+    boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
+    mHasFetchedDataMap.add(request.requestIdentifier());
+
+    if (!refresh) {
+      if (!hasFetchedData) {
+        DatabaseAccess access = new DatabaseAccess(this, request.databaseTable());
+
+        Cursor cursor = access.getCursor(DatabaseTables.ALL_ITEMS, request.requestIdentifier());
+        if (!cursor.moveToFirst())
+          refresh = true;
+
+        cursor.close();
+      }
+    }
+
+    if (refresh) {
+      final ListServiceRequest currentRequest = request;
+      YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
+        @Override
+        public void handleAuthIntent(final Intent authIntent) {
+          AuthActivity.show(YouTubeService.this, authIntent, currentRequest);
+        }
+      });
+
+      updateDataFromInternet(request, helper);
+    }
+
+    // notify that we handled an intent so pull to refresh can stop it's animation and other stuff
+    EventBus.getDefault().post(new BusEvents.YouTubeFragmentDataReady());
   }
 
   private List<YouTubeData> prepareDataFromNet(List<YouTubeData> inList, Set<String> currentListSavedData, String requestID) {

@@ -41,6 +41,7 @@ import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.services.ListServiceRequest;
+import com.distantfuture.videos.services.ServiceRequest;
 import com.distantfuture.videos.services.YouTubeService;
 import com.distantfuture.videos.youtube.VideoPlayer;
 import com.google.common.primitives.Longs;
@@ -74,7 +75,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
 
     Bundle args = new Bundle();
 
-    args.putParcelable("request", request);
+    args.putBundle("request", request.toBundle());
 
     fragment.setArguments(args);
 
@@ -148,8 +149,9 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     GridView gridView;
+    ServiceRequest serviceRequest = ServiceRequest.fromBundle(getArguments().getBundle("request"));
 
-    mRequest = getArguments().getParcelable("request");
+    mRequest = ListServiceRequest.fromServiceRequest(serviceRequest);
     mAdapter = YouTubeCursorAdapter.newAdapter(getActivity(), mRequest, this);
 
     ViewGroup rootView = mAdapter.rootView(container);
@@ -366,7 +368,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   // OnRefreshListener
   @Override
   public void onRefreshStarted(View view) {
-    YouTubeService.startRequest(getActivity(), mRequest, true);
+    YouTubeService.startListRequest(getActivity(), mRequest, true);
   }
 
   // called by activity on menu item action for show hidden files toggle
@@ -397,7 +399,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     // startRequest below will notify when done and we hide the progress bar
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
 
-    YouTubeService.startRequest(getActivity(), mRequest, false);
+    YouTubeService.startListRequest(getActivity(), mRequest, false);
 
     return new CursorLoader(getActivity(), YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
   }

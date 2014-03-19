@@ -1,5 +1,6 @@
 package com.distantfuture.videos.services;
 
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,35 +10,44 @@ import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 
-public class ListServiceRequest implements Parcelable {
-  public static final Parcelable.Creator<ListServiceRequest> CREATOR = new Parcelable.Creator<ListServiceRequest>() {
-    public ListServiceRequest createFromParcel(Parcel in) {
-      return new ListServiceRequest(in);
-    }
-
-    public ListServiceRequest[] newArray(int size) {
-      return new ListServiceRequest[size];
-    }
-  };
-  private HashMap data;
-  private RequestType type;
-
-  private ListServiceRequest(Parcel in) {
-    type = (RequestType) in.readSerializable();
-    data = (HashMap) in.readSerializable();
-  }
+public class ListServiceRequest {
+  private ServiceRequest serviceRequest;
+  private static final int CLASS_TYPE_KEY = 1887;
 
   private ListServiceRequest() {
     super();
   }
 
+  private ListServiceRequest(ServiceRequest serviceRequest) {
+    super();
+
+    this.serviceRequest = serviceRequest;
+  }
+
+  public static ListServiceRequest fromServiceRequest(ServiceRequest request) {
+    ListServiceRequest result = null;
+
+    Integer intValue = (Integer) request.getData(ServiceRequest.REQUEST_CLASS_TYPE_KEY);
+
+    if (intValue != null) {
+      if (intValue == CLASS_TYPE_KEY)
+        result = new ListServiceRequest(request);
+    }
+
+    return result;
+  }
+
+  public Bundle toBundle() {
+    return ServiceRequest.toBundle(serviceRequest);
+  }
+
   public static ListServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
     ListServiceRequest result = emptyRequest(RequestType.RELATED);
 
-    result.data.put("maxResults", maxResults);
-    result.data.put("containerName", containerName);
-    result.data.put("relatedType", relatedPlayListType);
-    result.data.put("channel", channelID);
+    result.serviceRequest.putInt("maxResults", maxResults);
+    result.serviceRequest.putString("containerName", containerName);
+    result.serviceRequest.putString("relatedType", relatedPlayListType.toString());
+    result.serviceRequest.putString("channel", channelID);
 
     return result;
   }
@@ -45,8 +55,8 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest videosRequest(String playlistID, String containerName) {
     ListServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
-    result.data.put("containerName", containerName);
-    result.data.put("playlist", playlistID);
+    result.serviceRequest.putString("containerName", containerName);
+    result.serviceRequest.putString("playlist", playlistID);
 
     return result;
   }
@@ -54,8 +64,8 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest searchRequest(String query, String containerName) {
     ListServiceRequest result = emptyRequest(RequestType.SEARCH);
 
-    result.data.put("containerName", containerName);
-    result.data.put("query", query);
+    result.serviceRequest.putString("containerName", containerName);
+    result.serviceRequest.putString("query", query);
 
     return result;
   }
@@ -63,7 +73,7 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest subscriptionsRequest(String containerName) {
     ListServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
-    result.data.put("containerName", containerName);
+    result.serviceRequest.putString("containerName", containerName);
 
     return result;
   }
@@ -71,7 +81,7 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest categoriesRequest(String containerName) {
     ListServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
-    result.data.put("containerName", containerName);
+    result.serviceRequest.putString("containerName", containerName);
 
     return result;
   }
@@ -79,7 +89,7 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest likedRequest(String containerName) {
     ListServiceRequest result = emptyRequest(RequestType.LIKED);
 
-    result.data.put("containerName", containerName);
+    result.serviceRequest.putString("containerName", containerName);
 
     return result;
   }
@@ -87,9 +97,9 @@ public class ListServiceRequest implements Parcelable {
   public static ListServiceRequest playlistsRequest(String channelID, String containerName, int maxResults) {
     ListServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
-    result.data.put("maxResults", maxResults);
-    result.data.put("containerName", containerName);
-    result.data.put("channel", channelID);
+    result.serviceRequest.putInt("maxResults", maxResults);
+    result.serviceRequest.putString("containerName", containerName);
+    result.serviceRequest.putString("channel", channelID);
 
     return result;
   }
@@ -97,20 +107,22 @@ public class ListServiceRequest implements Parcelable {
   private static ListServiceRequest emptyRequest(RequestType type) {
     ListServiceRequest result = new ListServiceRequest();
 
-    result.type = type;
-    result.data = new HashMap();
+    result.serviceRequest = new ServiceRequest();
+    result.serviceRequest.putInt(ServiceRequest.REQUEST_CLASS_TYPE_KEY, CLASS_TYPE_KEY);
+
+    result.serviceRequest.putString("type", type.toString());
 
     return result;
   }
 
   public RequestType type() {
-    return type;
+    return RequestType.valueOf((String) serviceRequest.getData("type"));
   }
 
   public int maxResults() {
     int result = 0;
 
-    Integer intObject = (Integer) getData("maxResults");
+    Integer intObject = (Integer) serviceRequest.getData("maxResults");
 
     if (intObject != null)
       result = intObject;
@@ -118,39 +130,30 @@ public class ListServiceRequest implements Parcelable {
     return result;
   }
 
-  private Object getData(String key) {
-    Object result = null;
-
-    if (data.containsKey(key))
-      result = data.get(key);
-
-    return result;
-  }
-
   public String containerName() {
-    return (String) getData("containerName");
+    return (String) serviceRequest.getData("containerName");
   }
 
   public String channel() {
-    return (String) getData("channel");
+    return (String) serviceRequest.getData("channel");
   }
 
   public String playlist() {
-    return (String) getData("playlist");
+    return (String) serviceRequest.getData("playlist");
   }
 
   public String query() {
-    return (String) getData("query");
+    return (String) serviceRequest.getData("query");
   }
 
   public YouTubeAPI.RelatedPlaylistType relatedType() {
-    return (YouTubeAPI.RelatedPlaylistType) getData("relatedType");
+    return YouTubeAPI.RelatedPlaylistType.valueOf((String) serviceRequest.getData("relatedType"));
   }
 
   public String unitName(boolean plural) {
     String result = (plural) ? "Items" : "Item";
 
-    switch (type) {
+    switch (type()) {
       case SUBSCRIPTIONS:
         result = (plural) ? "Subscriptions" : "Subscription";
         break;
@@ -191,7 +194,7 @@ public class ListServiceRequest implements Parcelable {
   private String typeToString() {
     String result = "YouTube";
 
-    switch (type) {
+    switch (type()) {
       case SUBSCRIPTIONS:
         result = "Subscriptions";
         break;
@@ -240,24 +243,24 @@ public class ListServiceRequest implements Parcelable {
   public String requestIdentifier() {
     String result = typeToString();
 
-    switch (type) {
+    switch (type()) {
       case SUBSCRIPTIONS:
         break;
       case PLAYLISTS:
-        result += getData("channel");
+        result += serviceRequest.getData("channel");
         break;
       case CATEGORIES:
         break;
       case LIKED:
         break;
       case RELATED:
-        result += getData("channel");
+        result += serviceRequest.getData("channel");
         break;
       case VIDEOS:
-        result += getData("playlist");
+        result += serviceRequest.getData("playlist");
         break;
       case SEARCH:
-        result += getData("query");
+        result += serviceRequest.getData("query");
         break;
     }
 
@@ -283,20 +286,6 @@ public class ListServiceRequest implements Parcelable {
     DUtils.log("databaseTable null");
 
     return null;
-  }
-
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  // ===================================================================
-  // private
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeSerializable(type);
-    dest.writeSerializable(data);
   }
 
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}
