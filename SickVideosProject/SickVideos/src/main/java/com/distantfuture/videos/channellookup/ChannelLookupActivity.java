@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.distantfuture.videos.R;
-import com.distantfuture.videos.activities.AuthActivity;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
@@ -24,7 +23,6 @@ import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
-import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 import java.util.List;

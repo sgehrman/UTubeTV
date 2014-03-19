@@ -71,6 +71,7 @@ public class ChannelList {
   public String currentChannelId() {
     return mCurrentChannelID;
   }
+
   private void setCurrentChannelId(String channelId) {
     mCurrentChannelID = channelId;
     AppUtils.instance(mContext).saveDefaultChannelID(mCurrentChannelID);

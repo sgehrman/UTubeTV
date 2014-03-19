@@ -71,6 +71,7 @@
             android:label="Channel Details"
             android:theme="@style/ChannelDetailsDialogStyle">
         </activity>
+
         <service
             android:name=".services.YouTubeService"
             android:enabled="true"
