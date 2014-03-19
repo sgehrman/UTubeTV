@@ -124,7 +124,7 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
   }
 
   // eventbus event
-  public void onEvent(BusEvents.ContentEvent event) {
+  public void onEventMainThread(BusEvents.ContentEvent event) {
     updateUI();
     mPullToRefreshLayout.setRefreshComplete();
   }

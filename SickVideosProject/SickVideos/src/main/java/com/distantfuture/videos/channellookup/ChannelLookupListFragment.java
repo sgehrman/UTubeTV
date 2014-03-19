@@ -60,7 +60,7 @@ public class ChannelLookupListFragment extends ListFragment implements LoaderMan
   }
 
   // eventbus event
-  public void onEvent(BusEvents.ContentEvent event) {
+  public void onEventMainThread(BusEvents.ContentEvent event) {
     // refresh list if channels update if not doing a search
     // search will have to refresh itself in the adapter to refresh the plus minus buttons
     if (TextUtils.isEmpty(mQuery))

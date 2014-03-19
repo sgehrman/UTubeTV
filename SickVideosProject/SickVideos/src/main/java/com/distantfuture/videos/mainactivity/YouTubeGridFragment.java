@@ -327,7 +327,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   }
 
   // for EventBus
-  public void onEvent(BusEvents.PlayNextEvent event) {
+  public void onEventMainThread(BusEvents.PlayNextEvent event) {
     int index = event.params.index;
     int cnt = mAdapter.getCount();
 
@@ -353,7 +353,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     }
   }
 
-  public void onEvent(BusEvents.YouTubeFragmentDataReady event) {
+  public void onEventMainThread(BusEvents.YouTubeFragmentDataReady event) {
     // stop the pull to refresh indicator
     // Notify PullToRefreshLayout that the refresh has finished
     mPullToRefreshLayout.setRefreshComplete();

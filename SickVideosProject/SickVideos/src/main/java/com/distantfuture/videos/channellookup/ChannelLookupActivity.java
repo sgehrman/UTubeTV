@@ -255,7 +255,7 @@ public class ChannelLookupActivity extends Activity {
   }
 
   // eventbus event
-  public void onEvent(BusEvents.JSONImportEvent event) {
+  public void onEventMainThread(BusEvents.JSONImportEvent event) {
     Map map = event.channels;
     if (map != null && map.size() > 0) {
       String version = (String) map.get("version");
@@ -273,7 +273,7 @@ public class ChannelLookupActivity extends Activity {
   }
 
   // eventbus event
-  public void onEvent(BusEvents.SubscriptionServiceResult event) {
+  public void onEventMainThread(BusEvents.SubscriptionServiceResult event) {
 
     for (String data : event.channels)
       DUtils.log(data);

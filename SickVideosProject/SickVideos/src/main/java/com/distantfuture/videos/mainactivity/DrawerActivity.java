@@ -170,7 +170,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     return false;
   }
 
-  public void onEvent(BusEvents.ThemeChanged event) {
+  public void onEventMainThread(BusEvents.ThemeChanged event) {
     // animate doesn't work, puts new activity in the background.  use recreate instead
     boolean animate = false;
     if (animate) {

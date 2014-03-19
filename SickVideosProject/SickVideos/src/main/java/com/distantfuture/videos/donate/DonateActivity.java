@@ -116,7 +116,7 @@ public class DonateActivity extends Activity {
   }
 
   // eventbus event
-  public void onEvent(BusEvents.PurchaseEvent event) {
+  public void onEventMainThread(BusEvents.PurchaseEvent event) {
     setMessage(event.message);
 
     if (event.alert != null) {

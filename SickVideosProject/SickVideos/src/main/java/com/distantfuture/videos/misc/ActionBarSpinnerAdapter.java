@@ -93,7 +93,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
   }
 
   // eventbus event
-  public void onEvent(BusEvents.ContentEvent event) {
+  public void onEventMainThread(BusEvents.ContentEvent event) {
     updateChannels();
   }
 
