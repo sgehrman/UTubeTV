@@ -78,7 +78,7 @@ public class Content {
         break;
       case 2:
         fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
-            .currentChannelId(), null, 100));
+            .currentChannelId(), null, 50));
         break;
     }
 
