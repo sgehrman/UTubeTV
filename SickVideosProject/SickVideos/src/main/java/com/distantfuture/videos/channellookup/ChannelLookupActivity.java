@@ -33,8 +33,6 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 
 public class ChannelLookupActivity extends Activity {
-  private static final int IMPORT_FILE = 889;
-  private static final int EXPORT_FILE = 829;
   private ChannelLookupListFragment listFragment;
   private MenuItem mSearchItem;
   private SearchView mSearchView;
@@ -77,7 +75,8 @@ public class ChannelLookupActivity extends Activity {
     switch (item.getItemId()) {
       // Respond to the action bar's Up/Home button
       case android.R.id.home:
-        finish();
+        if (!endFindOnBackButton())
+          finish();
         return true;
 
       case R.id.action_default_channels:
@@ -136,14 +135,25 @@ public class ChannelLookupActivity extends Activity {
     return super.onCreateOptionsMenu(menu);
   }
 
-  @Override
-  public void onBackPressed() {
+  private boolean endFindOnBackButton() {
     String query = getQuery();
 
     // using back button to clear query
     if (query != null && getQuery().length() > 0) {
       setQuery(null);
-    } else
+
+      return true;
+    }
+
+    return false;
+  }
+
+  @Override
+  public void onBackPressed() {
+    String query = getQuery();
+
+    // using back button to clear query
+    if (!endFindOnBackButton())
       super.onBackPressed();
   }
 
