@@ -264,7 +264,7 @@ public class ChannelLookupActivity extends Activity {
         List<String> channels = (List<String>) map.get("channels");
 
         if (channels != null && channels.size() > 0) {
-          Content.instance().editChannels(channels);
+          Content.instance().replaceChannels(channels);
 
           Utils.toast(this, "Import successful");
         }

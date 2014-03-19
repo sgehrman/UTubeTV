@@ -49,7 +49,7 @@ public class Content {
   public ArrayList<Map> drawerTitles() {
     ArrayList<Map> result = new ArrayList<Map>();
 
-    result.add(ImmutableMap.of("title", "About", "icon", ToolbarIcons.IconID.ABOUT));
+    result.add(ImmutableMap.of("title", "About Channel", "icon", ToolbarIcons.IconID.ABOUT));
     result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
     result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
 
@@ -83,7 +83,7 @@ public class Content {
     }
 
     if (fragment != null)
-      AppUtils.instance(mContext).saveSectionIndex(index, mChannelList.currentChannelId());
+      AppUtils.instance(mContext).saveSectionIndexForChannel(index, mChannelList.currentChannelId());
 
     return fragment;
   }
@@ -106,7 +106,7 @@ public class Content {
   }
 
   public int savedSectionIndex() {
-    return AppUtils.instance(mContext).savedSectionIndex(mChannelList.currentChannelId());
+    return AppUtils.instance(mContext).savedSectionIndexForChannel(mChannelList.currentChannelId());
   }
 
   public YouTubeData currentChannelInfo() {
@@ -139,7 +139,7 @@ public class Content {
     return mChannelList.editChannel(channelId, false);
   }
 
-  public void editChannels(List<String> channels) {
-    mChannelList.editChannels(channels);
+  public void replaceChannels(List<String> channels) {
+    mChannelList.replaceChannels(channels);
   }
 }

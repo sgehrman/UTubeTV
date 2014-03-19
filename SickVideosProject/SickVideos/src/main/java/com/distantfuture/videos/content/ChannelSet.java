@@ -13,10 +13,6 @@ public class ChannelSet {
     super();
 
     setName(name);
-
-    // copy the array so we don't modify the original
-    channelIds = new ArrayList<String>(channelIds);
-
     setChannelIds(channelIds);
   }
 
@@ -58,7 +54,10 @@ public class ChannelSet {
     return channelIds;
   }
 
-  public void setChannelIds(List<String> channelIds) {
+  private void setChannelIds(List<String> channelIds) {
+    // copy the array so we don't modify the original, could be default list
+    channelIds = new ArrayList<String>(channelIds);
+
     this.channelIds = channelIds;
   }
 
@@ -66,7 +65,7 @@ public class ChannelSet {
     return name;
   }
 
-  public void setName(String name) {
+  private void setName(String name) {
     this.name = name;
   }
 }

@@ -125,12 +125,12 @@ public class AppUtils {
     mPreferences.setInt("theme_id", set);
   }
 
-  public int savedSectionIndex(String currentChannelId) {
+  public int savedSectionIndexForChannel(String currentChannelId) {
     return mPreferences.getInt(sectionPrefsKey(currentChannelId), 0);
   }
 
   // we save the last requested drawerSelection as requested
-  public void saveSectionIndex(int sectionIndex, String currentChannelId) {
+  public void saveSectionIndexForChannel(int sectionIndex, String currentChannelId) {
     mPreferences.setInt(sectionPrefsKey(currentChannelId), sectionIndex);
   }
 

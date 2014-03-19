@@ -123,8 +123,7 @@ public class ChannelList {
     return modifiedList;
   }
 
-  public void editChannels(List<String> channels) {
-
+  public void replaceChannels(List<String> channels) {
     mChannelSet = mChannelSetStore.channelSet(channels);
 
     mCurrentChannelID = mChannelSet.get(0);
