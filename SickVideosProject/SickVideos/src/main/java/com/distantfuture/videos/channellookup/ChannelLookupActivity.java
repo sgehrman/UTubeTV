@@ -182,16 +182,6 @@ public class ChannelLookupActivity extends Activity {
       mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
-          // return false and clear the filter if clicked when a filter is set
-          if (!TextUtils.isEmpty(getQuery())) {
-            // this is needed since if the action bar refreshes, it will restore the query, kitkat seems to clear this though
-            mSearchView.setQuery(null, true);
-
-            // added for KitKat, previously setQuery to null would trigger the text listener
-            setQuery(null);
-
-            return false;
-          }
           return true;
         }
 

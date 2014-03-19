@@ -18,16 +18,16 @@
     <string name="action_show_hidden">Show hidden items</string>
     <string name="action_hide_hidden">Hide hidden items</string>
 
-    <string name="action_default_channels">Restore Defaults</string>
+    <string name="action_default_channels">Restore defaults</string>
     <string name="action_donate">Donate</string>
-    <string name="action_show_cast">Google Cast</string>
-    <string name="action_show_rate_dialog">Rate Dialog</string>
-    <string name="action_show_import_dialog">Import File</string>
-    <string name="action_import_subscriptions">Import Subscriptions</string>
-    <string name="action_show_export_dialog">Export File</string>
+    <string name="action_show_cast">Google cast</string>
+    <string name="action_show_rate_dialog">Rate dialog</string>
+    <string name="action_show_import_dialog">Import file</string>
+    <string name="action_import_subscriptions">Import subscriptions</string>
+    <string name="action_show_export_dialog">Export file</string>
 
     <string name="action_color_picker">Pick a color</string>
-    <string name="action_channel_lookup">Edit Channels</string>
+    <string name="action_channel_lookup">Edit channels</string>
     <string name="action_intro">Intro</string>
 
     <string name="action_show_icons">Show icons</string>
