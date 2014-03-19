@@ -27,7 +27,7 @@ import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.StandardAnimations;
 import com.distantfuture.videos.misc.VideoMenuView;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
+import com.distantfuture.videos.services.ListServiceRequest;
 import com.distantfuture.videos.youtube.VideoImageView;
 import com.distantfuture.videos.youtube.ViewDecorations;
 import com.distantfuture.videos.youtube.YouTubeAPI;
@@ -43,7 +43,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
   private int animationID = 0;
   private Context mContext;
   private Theme mTheme;
-  private YouTubeServiceRequest mRequest;
+  private ListServiceRequest mRequest;
   private YouTubeCursorAdapterListener mListener;
   private boolean mFadeInLoadedImages = false; // turned off for speed
   private boolean mClickAnimationsEnabled = false; // off for now
@@ -63,10 +63,10 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     registerDataSetObserver(dataSetObserver);
   }
 
-  public static YouTubeCursorAdapter newAdapter(Context context, YouTubeServiceRequest request, YouTubeCursorAdapterListener listener) {
+  public static YouTubeCursorAdapter newAdapter(Context context, ListServiceRequest request, YouTubeCursorAdapterListener listener) {
     Theme theme = newTheme(context);
 
-    ViewDecorations decorations = new ViewDecorations(context, request.type() == YouTubeServiceRequest.RequestType.PLAYLISTS);
+    ViewDecorations decorations = new ViewDecorations(context, request.type() == ListServiceRequest.RequestType.PLAYLISTS);
     decorations.setDrawShadows(theme.mTheme_drawImageShadows);
 
     int strokeColor = context.getResources().getColor(R.color.card_fill_color);

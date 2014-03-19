@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.distantfuture.videos.misc.DUtils;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
+import com.distantfuture.videos.services.ListServiceRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class DatabaseAccess {
   private String mRequestIdentifier;
   private Context mContext;
 
-  public DatabaseAccess(Context context, YouTubeServiceRequest request) {
+  public DatabaseAccess(Context context, ListServiceRequest request) {
     this(context, request.databaseTable());
   }
 

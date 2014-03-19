@@ -10,7 +10,7 @@ import com.distantfuture.videos.mainactivity.ChannelAboutFragment;
 import com.distantfuture.videos.mainactivity.YouTubeGridFragment;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.DUtils;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
+import com.distantfuture.videos.services.ListServiceRequest;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 import com.google.common.collect.ImmutableMap;
 
@@ -73,11 +73,11 @@ public class Content {
         fragment = new ChannelAboutFragment();
         break;
       case 1:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.playlistsRequest(mChannelList
+        fragment = YouTubeGridFragment.newInstance(ListServiceRequest.playlistsRequest(mChannelList
             .currentChannelId(), null, 150));
         break;
       case 2:
-        fragment = YouTubeGridFragment.newInstance(YouTubeServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
+        fragment = YouTubeGridFragment.newInstance(ListServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
             .currentChannelId(), null, 50));
         break;
     }

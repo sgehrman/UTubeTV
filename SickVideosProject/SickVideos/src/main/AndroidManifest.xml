@@ -72,7 +72,7 @@
             android:theme="@style/ChannelDetailsDialogStyle">
         </activity>
         <service
-            android:name="com.distantfuture.videos.services.YouTubeListService"
+            android:name=".services.YouTubeService"
             android:enabled="true"
             android:exported="false"/>
         <provider

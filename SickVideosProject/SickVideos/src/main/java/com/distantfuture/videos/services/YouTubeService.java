@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.distantfuture.videos.activities.AuthActivity;
 import com.distantfuture.videos.database.DatabaseAccess;
@@ -22,17 +21,17 @@ import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 
-public class YouTubeListService extends IntentService {
+public class YouTubeService extends IntentService {
   private Set mHasFetchedDataMap = new HashSet<String>();
 
-  public YouTubeListService() {
+  public YouTubeService() {
     super("YouTubeListService");
   }
 
-  public static void startRequest(Context context, YouTubeServiceRequest request, boolean refresh) {
+  public static void startRequest(Context context, ListServiceRequest request, boolean refresh) {
     context = context.getApplicationContext();
 
-    Intent i = new Intent(context, YouTubeListService.class);
+    Intent i = new Intent(context, YouTubeService.class);
     i.putExtra("request", request);
     i.putExtra("refresh", refresh);
     context.startService(i);
@@ -41,7 +40,7 @@ public class YouTubeListService extends IntentService {
   @Override
   protected void onHandleIntent(Intent intent) {
     try {
-      YouTubeServiceRequest request = intent.getParcelableExtra("request");
+      ListServiceRequest request = intent.getParcelableExtra("request");
       boolean refresh = intent.getBooleanExtra("refresh", false);
 
       boolean hasFetchedData = mHasFetchedDataMap.contains(request.requestIdentifier());
@@ -60,11 +59,11 @@ public class YouTubeListService extends IntentService {
       }
 
       if (refresh) {
-        final YouTubeServiceRequest currentRequest = request;
+        final ListServiceRequest currentRequest = request;
         YouTubeAPI helper = new YouTubeAPI(this, new YouTubeAPI.YouTubeAPIListener() {
           @Override
           public void handleAuthIntent(final Intent authIntent) {
-            AuthActivity.show(YouTubeListService.this, authIntent, currentRequest);
+            AuthActivity.show(YouTubeService.this, authIntent, currentRequest);
           }
         });
 
@@ -121,7 +120,7 @@ public class YouTubeListService extends IntentService {
     return result;
   }
 
-  private void updateDataFromInternet(YouTubeServiceRequest request, YouTubeAPI helper) {
+  private void updateDataFromInternet(ListServiceRequest request, YouTubeAPI helper) {
     String playlistID;
     boolean removeAllFromDB = true;
     List<YouTubeData> resultList = null;
@@ -193,7 +192,7 @@ public class YouTubeListService extends IntentService {
     }
   }
 
-  private List<YouTubeData> retrieveVideoList(YouTubeServiceRequest request, YouTubeAPI helper, String playlistID, String channelID, int maxResults) {
+  private List<YouTubeData> retrieveVideoList(ListServiceRequest request, YouTubeAPI helper, String playlistID, String channelID, int maxResults) {
     List<YouTubeData> result = new ArrayList<YouTubeData>();
     YouTubeAPI.BaseListResults videoResults;
 
@@ -229,7 +228,7 @@ public class YouTubeListService extends IntentService {
     return result;
   }
 
-  private List<String> removeVideosWeAlreadyHave(YouTubeServiceRequest request, List<String> newVideoIds) {
+  private List<String> removeVideosWeAlreadyHave(ListServiceRequest request, List<String> newVideoIds) {
     List<String> result = newVideoIds;  // return same list if not modified
 
     DatabaseAccess database = new DatabaseAccess(this, request.databaseTable());

@@ -8,15 +8,12 @@ import android.app.SearchableInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,8 +40,8 @@ import com.distantfuture.videos.misc.ContractFragment;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
-import com.distantfuture.videos.services.YouTubeListService;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
+import com.distantfuture.videos.services.ListServiceRequest;
+import com.distantfuture.videos.services.YouTubeService;
 import com.distantfuture.videos.youtube.VideoPlayer;
 import com.google.common.primitives.Longs;
 import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
@@ -61,7 +58,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport> implements OnRefreshListener, OnDismissCallback, YouTubeCursorAdapter.YouTubeCursorAdapterListener, LoaderManager.LoaderCallbacks<Cursor> {
 
   private EmptyListHelper mEmptyListHelper;
-  private YouTubeServiceRequest mRequest;
+  private ListServiceRequest mRequest;
   private YouTubeCursorAdapter mAdapter;
   private PullToRefreshLayout mPullToRefreshLayout;
   private boolean mCachedHiddenPref;
@@ -72,7 +69,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
 
-  public static YouTubeGridFragment newInstance(YouTubeServiceRequest request) {
+  public static YouTubeGridFragment newInstance(ListServiceRequest request) {
     YouTubeGridFragment fragment = new YouTubeGridFragment();
 
     Bundle args = new Bundle();
@@ -296,7 +293,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
         String playlistID = itemMap.mPlaylist;
 
         if (playlistID != null) {
-          Fragment frag = YouTubeGridFragment.newInstance(YouTubeServiceRequest.videosRequest(playlistID, itemMap.mTitle));
+          Fragment frag = YouTubeGridFragment.newInstance(ListServiceRequest.videosRequest(playlistID, itemMap.mTitle));
 
           if (provider != null)
             provider.installFragment(frag, true);
@@ -369,7 +366,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
   // OnRefreshListener
   @Override
   public void onRefreshStarted(View view) {
-    YouTubeListService.startRequest(getActivity(), mRequest, true);
+    YouTubeService.startRequest(getActivity(), mRequest, true);
   }
 
   // called by activity on menu item action for show hidden files toggle
@@ -400,7 +397,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     // startRequest below will notify when done and we hide the progress bar
     mEmptyListHelper.updateEmptyListView("Talking to YouTube...", false);
 
-    YouTubeListService.startRequest(getActivity(), mRequest, false);
+    YouTubeService.startRequest(getActivity(), mRequest, false);
 
     return new CursorLoader(getActivity(), YouTubeContentProvider.contentsURI(getActivity()), queryParams.mProjection, queryParams.mSelection, queryParams.mSelectionArgs, sortOrder);
   }

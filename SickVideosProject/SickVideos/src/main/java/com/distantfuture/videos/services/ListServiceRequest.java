@@ -9,30 +9,30 @@ import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 
-public class YouTubeServiceRequest implements Parcelable {
-  public static final Parcelable.Creator<YouTubeServiceRequest> CREATOR = new Parcelable.Creator<YouTubeServiceRequest>() {
-    public YouTubeServiceRequest createFromParcel(Parcel in) {
-      return new YouTubeServiceRequest(in);
+public class ListServiceRequest implements Parcelable {
+  public static final Parcelable.Creator<ListServiceRequest> CREATOR = new Parcelable.Creator<ListServiceRequest>() {
+    public ListServiceRequest createFromParcel(Parcel in) {
+      return new ListServiceRequest(in);
     }
 
-    public YouTubeServiceRequest[] newArray(int size) {
-      return new YouTubeServiceRequest[size];
+    public ListServiceRequest[] newArray(int size) {
+      return new ListServiceRequest[size];
     }
   };
   private HashMap data;
   private RequestType type;
 
-  private YouTubeServiceRequest(Parcel in) {
+  private ListServiceRequest(Parcel in) {
     type = (RequestType) in.readSerializable();
     data = (HashMap) in.readSerializable();
   }
 
-  private YouTubeServiceRequest() {
+  private ListServiceRequest() {
     super();
   }
 
-  public static YouTubeServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.RELATED);
+  public static ListServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
+    ListServiceRequest result = emptyRequest(RequestType.RELATED);
 
     result.data.put("maxResults", maxResults);
     result.data.put("containerName", containerName);
@@ -42,8 +42,8 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest videosRequest(String playlistID, String containerName) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.VIDEOS);
+  public static ListServiceRequest videosRequest(String playlistID, String containerName) {
+    ListServiceRequest result = emptyRequest(RequestType.VIDEOS);
 
     result.data.put("containerName", containerName);
     result.data.put("playlist", playlistID);
@@ -51,8 +51,8 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest searchRequest(String query, String containerName) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.SEARCH);
+  public static ListServiceRequest searchRequest(String query, String containerName) {
+    ListServiceRequest result = emptyRequest(RequestType.SEARCH);
 
     result.data.put("containerName", containerName);
     result.data.put("query", query);
@@ -60,32 +60,32 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  public static YouTubeServiceRequest subscriptionsRequest(String containerName) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
+  public static ListServiceRequest subscriptionsRequest(String containerName) {
+    ListServiceRequest result = emptyRequest(RequestType.SUBSCRIPTIONS);
 
     result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest categoriesRequest(String containerName) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.CATEGORIES);
+  public static ListServiceRequest categoriesRequest(String containerName) {
+    ListServiceRequest result = emptyRequest(RequestType.CATEGORIES);
 
     result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest likedRequest(String containerName) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.LIKED);
+  public static ListServiceRequest likedRequest(String containerName) {
+    ListServiceRequest result = emptyRequest(RequestType.LIKED);
 
     result.data.put("containerName", containerName);
 
     return result;
   }
 
-  public static YouTubeServiceRequest playlistsRequest(String channelID, String containerName, int maxResults) {
-    YouTubeServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
+  public static ListServiceRequest playlistsRequest(String channelID, String containerName, int maxResults) {
+    ListServiceRequest result = emptyRequest(RequestType.PLAYLISTS);
 
     result.data.put("maxResults", maxResults);
     result.data.put("containerName", containerName);
@@ -94,8 +94,8 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  private static YouTubeServiceRequest emptyRequest(RequestType type) {
-    YouTubeServiceRequest result = new YouTubeServiceRequest();
+  private static ListServiceRequest emptyRequest(RequestType type) {
+    ListServiceRequest result = new ListServiceRequest();
 
     result.type = type;
     result.data = new HashMap();

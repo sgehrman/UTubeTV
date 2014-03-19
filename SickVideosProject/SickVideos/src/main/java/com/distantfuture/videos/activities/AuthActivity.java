@@ -9,10 +9,9 @@ import android.os.Bundle;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Auth;
 import com.distantfuture.videos.misc.DUtils;
-import com.distantfuture.videos.services.YouTubeListService;
-import com.distantfuture.videos.services.YouTubeServiceRequest;
+import com.distantfuture.videos.services.ListServiceRequest;
+import com.distantfuture.videos.services.YouTubeService;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.services.youtube.YouTubeRequest;
 
 public class AuthActivity extends Activity {
   private static final String REQUEST_AUTHORIZATION_REQUEST_PARAM = "com.sickboots.sickvideos.Request.param";
@@ -21,7 +20,7 @@ public class AuthActivity extends Activity {
   private static final int INTENT_REQUEST_ACCOUNT_PICKER = 2;
   private GoogleAccountCredential credential;
 
-  public static void show(Context context, Intent authIntent, YouTubeServiceRequest currentRequest) {
+  public static void show(Context context, Intent authIntent, ListServiceRequest currentRequest) {
     Intent intent = new Intent(context, AuthActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  // need this to start activity from service
 
@@ -61,11 +60,11 @@ public class AuthActivity extends Activity {
 
   private void doLastStep() {
     // refetch the request
-    YouTubeServiceRequest request = getIntent().getParcelableExtra(REQUEST_AUTHORIZATION_REQUEST_PARAM);
+    ListServiceRequest request = getIntent().getParcelableExtra(REQUEST_AUTHORIZATION_REQUEST_PARAM);
 
     if (request != null) {
       // forcing a refresh since it is flagged as received in the service to avoid double attempts at a request
-      YouTubeListService.startRequest(this, request, true);
+      YouTubeService.startRequest(this, request, true);
     }
 
     finish();
