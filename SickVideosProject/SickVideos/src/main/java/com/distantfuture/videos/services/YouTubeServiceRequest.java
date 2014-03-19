@@ -170,17 +170,6 @@ public class YouTubeServiceRequest implements Parcelable {
     return result;
   }
 
-  // just used for debugging
-  @Override
-  public String toString() {
-    String result = ((Object) this).getClass().getName();
-
-    result += "\ntype: " + type().toString();
-    result += "\ndata: " + data.toString();
-
-    return result;
-  }
-
   // ===================================================================
   //  Parcelable - we send this to the service inside an intent
 
@@ -272,6 +261,7 @@ public class YouTubeServiceRequest implements Parcelable {
       case PLAYLISTS:
         return DatabaseTables.playlistTable();
 
+      case SUBSCRIPTIONS:
       case CATEGORIES:
         break;
     }
