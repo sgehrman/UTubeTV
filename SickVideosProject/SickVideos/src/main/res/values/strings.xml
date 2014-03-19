@@ -22,8 +22,9 @@
     <string name="action_donate">Donate</string>
     <string name="action_show_cast">Google Cast</string>
     <string name="action_show_rate_dialog">Rate Dialog</string>
-    <string name="action_show_import_dialog">Import</string>
-    <string name="action_show_export_dialog">Export</string>
+    <string name="action_show_import_dialog">Import File</string>
+    <string name="action_import_subscriptions">Import Subscriptions</string>
+    <string name="action_show_export_dialog">Export File</string>
 
     <string name="action_color_picker">Pick a color</string>
     <string name="action_channel_lookup">Edit Channels</string>

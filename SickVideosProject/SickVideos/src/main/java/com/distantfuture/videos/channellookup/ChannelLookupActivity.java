@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.distantfuture.videos.R;
+import com.distantfuture.videos.activities.AuthActivity;
 import com.distantfuture.videos.activities.StorageAccessActivity;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
@@ -23,6 +24,7 @@ import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.JSONHelper;
 import com.distantfuture.videos.misc.Utils;
+import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +86,10 @@ public class ChannelLookupActivity extends Activity {
 
       case R.id.action_show_import_dialog:
         importFile();
+        return true;
+
+      case R.id.action_import_subscriptions:
+        importSubscriptions();
         return true;
 
       case R.id.action_show_export_dialog:
@@ -266,7 +272,7 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
-  public void exportFile() {
+  private void exportFile() {
     Map map = new HashMap();
 
     List<String> channels = listFragment.getChannels();
@@ -290,7 +296,7 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
-  public void importFile() {
+  private void importFile() {
     // we get notified when the file is loaded, EventBus
     StorageAccessActivity.load(this, "application/json");
   }
@@ -300,6 +306,10 @@ public class ChannelLookupActivity extends Activity {
     menu.setGroupVisible(R.id.kitkat_group, Utils.isKitKatOrNewer());
 
     return super.onPrepareOptionsMenu(menu);
+  }
+
+  private void importSubscriptions() {
+
   }
 
 }

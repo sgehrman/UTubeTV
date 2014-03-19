@@ -15,6 +15,12 @@
         android:showAsAction="never"
         android:title="@string/action_default_channels"/>
 
+    <item
+        android:id="@+id/action_import_subscriptions"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_import_subscriptions"/>
+
     <group android:id="@+id/kitkat_group">
 
         <item

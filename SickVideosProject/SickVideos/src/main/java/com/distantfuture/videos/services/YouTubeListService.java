@@ -181,7 +181,7 @@ public class YouTubeListService extends IntentService {
         removeAllFromDB = false;
         break;
       case SUBSCRIPTIONS:
-        listResults = helper.subscriptionListResults();
+        listResults = helper.subscriptionListResults(false);
         break;
       case CATEGORIES:
         listResults = helper.categoriesListResults("US");

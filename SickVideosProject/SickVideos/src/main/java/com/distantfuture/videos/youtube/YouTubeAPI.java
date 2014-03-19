@@ -147,8 +147,8 @@ public class YouTubeAPI {
     return new SearchListResults(query, searchChannels);
   }
 
-  public SubscriptionListResults subscriptionListResults() {
-    return new SubscriptionListResults();
+  public SubscriptionListResults subscriptionListResults(boolean channelOnly) {
+    return new SubscriptionListResults(channelOnly);
   }
 
   public CategoriesListResults categoriesListResults(String regionCode) {
@@ -706,11 +706,18 @@ public class YouTubeAPI {
   // SubscriptionListResults
 
   public class SubscriptionListResults extends BaseListResults {
-    public SubscriptionListResults() {
+    private boolean channelOnly;
+
+    public SubscriptionListResults(boolean channelOnly) {
       super();
+
+      this.channelOnly = channelOnly;
 
       mPart = "snippet";
       mFields = String.format("items(snippet/title, snippet/resourceId, snippet/description, %s), nextPageToken", thumbnailField());
+
+      if (channelOnly)
+        mFields = String.format("items(snippet/resourceId), nextPageToken");
     }
 
     protected List<YouTubeData> itemsForNextToken(String token, long maxResults) {
@@ -746,10 +753,14 @@ public class YouTubeAPI {
       for (Subscription subscription : subscriptionsList) {
         YouTubeData map = new YouTubeData();
 
-        map.mTitle = subscription.getSnippet().getTitle();
-        map.mChannel = subscription.getSnippet().getResourceId().getChannelId();
-        map.mDescription = Utils.condenseWhiteSpace(subscription.getSnippet().getDescription());
-        map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
+        if (channelOnly) {
+          map.mChannel = subscription.getSnippet().getResourceId().getChannelId();
+        } else {
+          map.mTitle = subscription.getSnippet().getTitle();
+          map.mChannel = subscription.getSnippet().getResourceId().getChannelId();
+          map.mDescription = Utils.condenseWhiteSpace(subscription.getSnippet().getDescription());
+          map.mThumbnail = thumbnailURL(subscription.getSnippet().getThumbnails());
+        }
 
         result.add(map);
       }
