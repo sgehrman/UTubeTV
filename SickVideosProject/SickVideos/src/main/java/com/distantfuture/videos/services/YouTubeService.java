@@ -17,6 +17,7 @@ import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -201,6 +202,17 @@ public class YouTubeService extends IntentService {
         String channel = (String) request.channel();
 
         resultList = retrieveVideoList(request, helper, null, channel, request.maxResults());
+
+        // remove any playlists with 0 videos
+        Iterator<YouTubeData> iterator = resultList.iterator();
+        while (iterator.hasNext()){
+          YouTubeData data = iterator.next();
+
+          if (data.mItemCount == 0) {
+            iterator.remove();
+          }
+        }
+
         removeAllFromDB = false;
         break;
       case SUBSCRIPTIONS:
