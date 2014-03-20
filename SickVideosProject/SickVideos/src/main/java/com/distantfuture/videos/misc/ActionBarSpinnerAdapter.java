@@ -48,7 +48,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
     super.finalize();
   }
 
-  public void updateChannels() {
+  private void updateChannels() {
     clear();
 
     mChannels = mContent.channels();

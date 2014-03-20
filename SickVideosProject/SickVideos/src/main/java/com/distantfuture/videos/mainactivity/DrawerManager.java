@@ -148,13 +148,6 @@ public class DrawerManager {
 
       mContent = content;
 
-      rebuild();
-    }
-
-    private void rebuild() {
-      // clear existing items
-      clear();
-
       for (Map item : mContent.drawerTitles()) {
         add(item);
       }
