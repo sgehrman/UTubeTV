@@ -31,7 +31,6 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   private View.OnClickListener mButtonListener;
   private Content mContent;
   private CircleImageTransformation mCircleTransform;
-  private int mIconSizeInPX;
 
   public ChannelLookupAdapter(Activity activity) {
     super(activity, 0);
@@ -39,7 +38,6 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
 
     this.mContent = Content.instance();
     mCircleTransform = new CircleImageTransformation();
-    mIconSizeInPX = (int) Utils.dpToPx(64, activity);
 
     mButtonListener = new View.OnClickListener() {
       @Override
@@ -100,7 +98,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     }
 
     Picasso.with(mActivity).load(data.mThumbnail)
-        .resize(mIconSizeInPX, mIconSizeInPX)
+        .fit()
         .transform(mCircleTransform)
         .into(holder.imgView);
 
