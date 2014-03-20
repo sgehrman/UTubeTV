@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:clickable="false"
+        android:background="#000"
         android:scaleType="centerCrop"
         />
 
