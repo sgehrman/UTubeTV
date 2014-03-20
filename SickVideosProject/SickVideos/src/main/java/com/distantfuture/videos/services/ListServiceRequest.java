@@ -1,5 +1,6 @@
 package com.distantfuture.videos.services;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.distantfuture.videos.database.DatabaseTables;
@@ -283,6 +284,10 @@ public class ListServiceRequest {
     DUtils.log("databaseTable null");
 
     return null;
+  }
+
+  public void runTask(Context context, boolean hasFetchedData, boolean refresh) {
+    new ListServiceTask(context, this, hasFetchedData, refresh);
   }
 
   public enum RequestType {RELATED, SUBSCRIPTIONS, SEARCH, CATEGORIES, LIKED, PLAYLISTS, VIDEOS}

@@ -1,5 +1,6 @@
 package com.distantfuture.videos.services;
 
+import android.content.Context;
 import android.os.Bundle;
 
 /**
@@ -34,6 +35,10 @@ public class SubscriptionsServiceRequest {
     }
 
     return result;
+  }
+
+  public void runTask(Context context) {
+    new SubscriptionsServiceTask(context, this);
   }
 
   public Bundle toBundle() {
