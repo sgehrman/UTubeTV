@@ -187,6 +187,8 @@ public class IntroXMLParser {
           return ToolbarIcons.IconID.COMMENTS;
         case "find":
           return ToolbarIcons.IconID.SEARCH;
+        case "editing":
+          return ToolbarIcons.IconID.YOUTUBE;
       }
 
       // shouldn't get here

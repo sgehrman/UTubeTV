@@ -17,16 +17,15 @@
         icon="youtube"
         title="YouTube Channels"
         >
-        <text>This app is a minimalist video player for watching YouTube videos.</text>
-        <text>This app contains a collection of the top channels in it's category.</text>
-        <text>This specific app contains the following YouTube channels.</text>
+        <text>This app is a video player for watching YouTube videos.</text>
+        <text>This app contains a collection of the top channels in it's category to get started, but you can customize the list to contain your favorites. </text>
+        <text>This specific app contains the following default YouTube channels.</text>
 
         <header>Channels:</header>
 
         <channels></channels>
 
-        <text>This is the first app of the series, but more apps covering more categories are coming
-            soon.
+        <text>Check the google play store for more apps like this covering other categories.
         </text>
     </page>
 
@@ -39,10 +38,11 @@
         </text>
         <header>Standard UI elements:</header>
 
-        <bullet>Scrolling list view with cards UI</bullet>
+        <bullet>Scrolling cards UI</bullet>
         <bullet>Side out navigation drawer</bullet>
         <bullet>Action Bar</bullet>
         <bullet>Swipe to dismiss</bullet>
+        <bullet>Pull to refresh</bullet>
         <bullet>Integrated video player</bullet>
 
         <text>If you swipe to dismiss an item, don't worry it's still there. Just click the action
@@ -91,6 +91,21 @@
         <bullet>Skip 10 seconds back</bullet>
         <bullet>Mute button</bullet>
         <bullet>Clicking duration pops down a custom scrub slider</bullet>
+
+    </page>
+
+    <page
+        icon="editing"
+        title="Editing the channels"
+        >
+        <text>The list of channels is only a default list to get you started.  You can add or remove any channels you like.
+        </text>
+        <text>Open the overflow menu on the right of the action bar and choose 'Edit channels'. To remove a channel just hit the red minus button on any of the items.  To add channels, choose the find button in the action bar and search for channels.  Hit the plus
+            button on the right of an item to add it.
+        </text>
+        <text>You can import your YouTube subscriptions if you already have a bunch of favorite channels in there.  Import and add or remove any channels as needed.  Don't worry, removing a channel here does not change your subscriptions on YouTube.  This app simply imports
+            the channel list from YouTube and doesn't edit your account in any way.
+        </text>
 
     </page>
 
@@ -146,7 +161,7 @@
 
         <text>We want to make this app better, but we'll need your help.</text>
         <header>Questions:</header>
-        <bullet>Did I pick the right channels?</bullet>
+        <bullet>Did I pick the best default channels?</bullet>
         <bullet>Is it pleasant to use?</bullet>
         <bullet>Feature request?</bullet>
         <bullet>YouTube channel requests?</bullet>
