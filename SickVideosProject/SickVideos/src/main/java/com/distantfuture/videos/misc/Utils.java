@@ -76,6 +76,10 @@ public class Utils {
     }
   }
 
+  public static String companyURL() {
+    return "http://distantfutu.re";
+  }
+
   public static void ignoreObsoleteCapacitiveMenuButton(Context context) {
     try {
       ViewConfiguration config = ViewConfiguration.get(context);

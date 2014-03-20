@@ -32,7 +32,7 @@ public class ServiceRequest {
       else if (value instanceof Long)
         result.putLong(key, (Long) value);
       else if (value != null)  // null is OK, so don't flag that
-        DUtils.log("you fd up : " + value.getClass().toString());
+        DUtils.log("toBundle not handled : " + value.getClass().toString());
     }
 
     return result;

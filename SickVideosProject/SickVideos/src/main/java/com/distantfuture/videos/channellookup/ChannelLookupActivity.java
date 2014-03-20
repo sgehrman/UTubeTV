@@ -289,9 +289,11 @@ public class ChannelLookupActivity extends Activity {
     List<String> channels = listFragment.getChannels();
 
     if (channels != null && channels.size() > 0) {
+      String appInfo = Utils.getApplicationName(this) + " : " + Utils.companyURL();
 
       map.put("channels", channels);
       map.put("version", "1");
+      map.put("created_by", appInfo);
 
       String json = "";
 
