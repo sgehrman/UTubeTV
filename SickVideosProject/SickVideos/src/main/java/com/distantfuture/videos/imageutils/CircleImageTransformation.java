@@ -25,7 +25,7 @@ public class CircleImageTransformation implements Transformation {
       mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
       mStrokePaint.setStyle(Paint.Style.STROKE);
       mStrokePaint.setStrokeWidth(2.0f);
-      mStrokePaint.setColor(0x99FFFFFF);
+      mStrokePaint.setColor(0x99000000);
     }
 
     int width = source.getWidth();
@@ -41,7 +41,7 @@ public class CircleImageTransformation implements Transformation {
     mFillPaint.setShader(s);
 
     canvas.drawCircle(centerX, centerY, radius, mFillPaint);
-    canvas.drawCircle(centerX, centerY, radius - 2, mStrokePaint);
+    canvas.drawCircle(centerX, centerY, radius - 1, mStrokePaint);
 
     source.recycle();
 
