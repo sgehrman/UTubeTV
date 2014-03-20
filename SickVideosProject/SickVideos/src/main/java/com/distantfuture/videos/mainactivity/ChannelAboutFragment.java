@@ -16,11 +16,11 @@ import android.widget.TextView;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
-import com.distantfuture.videos.imageutils.BitmapLoader;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ContractFragment;
 import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.Utils;
+import com.squareup.picasso.Picasso;
 
 import de.greenrobot.event.EventBus;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -35,7 +35,6 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
   private PullToRefreshLayout mPullToRefreshLayout;
   private EmptyListHelper mEmptyListHelper;
   private View mContentView;
-  private BitmapLoader mBitmapLoader;
 
   // can't add params! fragments can be recreated randomly
   public ChannelAboutFragment() {
@@ -49,14 +48,6 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
     EventBus.getDefault().register(this);
 
     mContent = Content.instance();
-    mBitmapLoader = new BitmapLoader(getActivity(), "aboutBitmaps", 0, new BitmapLoader.GetBitmapCallback() {
-      @Override
-      public void onLoaded(Bitmap bitmap) {
-        // put in to prevent an endless loop if the thumbnail fails to load the first time
-        if (bitmap != null)
-          ChannelAboutFragment.this.updateUI();
-      }
-    });
 
     mTitle = (TextView) rootView.findViewById(R.id.text_view);
     mDescription = (TextView) rootView.findViewById(R.id.description_view);
@@ -108,8 +99,6 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
   // OnRefreshListener
   @Override
   public void onRefreshStarted(View view) {
-    // empty cache
-    mBitmapLoader.refresh();
     mContent.refreshChannelInfo();
   }
 
@@ -172,12 +161,10 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
       // uncomment to get the thumbnail image for generating icons
       // Debug.log(data.mThumbnail);
 
-      Bitmap bitmap = mBitmapLoader.bitmap(data);
-      if (bitmap != null)
-        mImage.setImageBitmap(bitmap);
-      else {
-        mBitmapLoader.requestBitmap(data);
-      }
+      Picasso.with(getActivity()).load(data.mThumbnail)
+              //          .noFade()
+              //          .resize(250, 250) // put into dimens for dp values
+          .into(mImage);
 
       getContract().setActionBarTitle(data.mTitle, "About");
     }

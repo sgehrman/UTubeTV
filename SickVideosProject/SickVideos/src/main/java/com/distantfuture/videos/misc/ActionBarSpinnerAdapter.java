@@ -14,7 +14,8 @@ import android.widget.TextView;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
-import com.distantfuture.videos.imageutils.BitmapLoader;
+import com.distantfuture.videos.imageutils.CircleImageTransformation;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -24,25 +25,18 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
   Content mContent;
   private List<YouTubeData> mChannels;  // we save this to get thumbnails in getView()
   private Context mContext;
-  private Drawable mCheckDrawable;
-  private BitmapLoader mBitmapLoader;
   private CharSequence mTitle;
   private CharSequence mSubtitle;
+  private CircleImageTransformation mCircleTransform;
 
   public ActionBarSpinnerAdapter(Context context, Content content) {
     super(context, R.layout.view_ab_spinner, android.R.id.text1);
 
     mContext = context.getApplicationContext();
     mContent = content;
-    EventBus.getDefault().register(this);
+    mCircleTransform = new CircleImageTransformation();
 
-    mBitmapLoader = new BitmapLoader(context, "actionBarSpinner", 64, new BitmapLoader.GetBitmapCallback() {
-      @Override
-      public void onLoaded(Bitmap bitmap) {
-        if (bitmap != null)  // avoid and endless loop update if bitmap is null, don't refresh
-          ActionBarSpinnerAdapter.this.notifyDataSetChanged();
-      }
-    });
+    EventBus.getDefault().register(this);
 
     setDropDownViewResource(R.layout.view_ab_spinner_item);
 
@@ -117,12 +111,13 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
 
     holder.textView.setText(getItem(position));
 
-    Bitmap bitmap = mBitmapLoader.bitmap(data);
-    if (bitmap != null)
-      holder.imageView.setImageBitmap(bitmap);
-    else {
-      mBitmapLoader.requestBitmap(data);
-    }
+    Picasso.with(mContext).load(data.mThumbnail)
+        .fit()
+        .transform(mCircleTransform)
+
+            //          .noFade()
+            //          .resize(250, 250) // put into dimens for dp values
+        .into(holder.imageView);
 
     if ((position % 2) != 0)
       view.setBackgroundColor(0x11ffffff);

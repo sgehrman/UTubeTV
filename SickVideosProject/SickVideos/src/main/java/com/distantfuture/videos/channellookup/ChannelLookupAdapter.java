@@ -18,7 +18,10 @@ import com.cocosw.undobar.UndoBarController;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
+import com.distantfuture.videos.imageutils.CircleImageTransformation;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
+import com.distantfuture.videos.misc.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -28,12 +31,16 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   private final float mAspectRatio = 4f / 5f;
   private View.OnClickListener mButtonListener;
   private Content mContent;
+   private CircleImageTransformation mCircleTransform;
+  private int mIconSizeInPX;
 
   public ChannelLookupAdapter(Activity activity) {
     super(activity, 0);
     this.mActivity = activity;
 
     this.mContent = Content.instance();
+    mCircleTransform = new CircleImageTransformation();
+    mIconSizeInPX = (int) Utils.dpToPx(64, activity);
 
     mButtonListener = new View.OnClickListener() {
       @Override
@@ -93,12 +100,13 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
       holder = (ViewHolder) convertView.getTag();
     }
 
-    AQuery aq = new AQuery(convertView);
-    aq.id(holder.imgView)
-        .width(90)
-        .image(data.mThumbnail, true, true, 0, 0, null, 0, mAspectRatio);
-    aq.id(holder.titleView).text(data.mTitle);
-    aq.id(holder.descrView).text(data.mDescription);
+    Picasso.with(mActivity).load(data.mThumbnail)
+        .resize(mIconSizeInPX, mIconSizeInPX)
+        .transform(mCircleTransform)
+        .into(holder.imgView);
+
+    holder.titleView.setText(data.mTitle);
+    holder.descrView.setText(data.mDescription);
 
     // used for clicks
     holder.addButton.setTag(data);
