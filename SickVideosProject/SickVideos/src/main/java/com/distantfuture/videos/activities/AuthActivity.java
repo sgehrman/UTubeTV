@@ -104,7 +104,8 @@ public class AuthActivity extends Activity {
           credential.setSelectedAccountName(accountName);
 
           showAuthIntent();
-        }
+        } else
+          finish();  // user hit cancel or back button
     }
     super.onActivityResult(requestCode, resultCode, data);
   }
