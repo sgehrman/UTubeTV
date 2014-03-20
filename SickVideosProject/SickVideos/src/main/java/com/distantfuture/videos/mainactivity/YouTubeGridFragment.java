@@ -362,6 +362,13 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     mEmptyListHelper.updateEmptyListView("List is Empty", true);
   }
 
+  // eventbus event
+  public void onEventMainThread(BusEvents.ContentEvent event) {
+    // need to update the channel name in the action bar once ready
+    syncActionBarTitle();
+  }
+
+
   // OnRefreshListener
   @Override
   public void onRefreshStarted(View view) {

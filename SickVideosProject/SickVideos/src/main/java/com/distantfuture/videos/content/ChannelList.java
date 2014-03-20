@@ -129,6 +129,9 @@ public class ChannelList {
   public void replaceChannels(List<String> channels) {
     mChannelSet = mChannelSetStore.channelSet(channels);
 
+    // need to save the pref for these new channels
+    ChannelSetManager.saveChannelSet(mContext, mChannelSet);
+
     setCurrentChannelId(mChannelSet.get(0));
 
     // refresh data
