@@ -10,10 +10,13 @@
 
         android:padding="12dp">
 
-        <ImageView
+        <com.distantfuture.videos.imageutils.ResizingImageView
             android:id="@+id/channel_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+
             />
 
 
@@ -28,17 +31,6 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/channel_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="12dp"
-            android:text="id"
-
-            android:textColor="#a00"
-            android:textSize="18sp"/>
-
-        <TextView
             android:id="@+id/channel_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +40,33 @@
             android:text="description"
             android:textSize="18sp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
 
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:text="id: "
+
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/channel_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:text="id"
+
+                android:textColor="#a00"
+                android:textSize="18sp"/>
+
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

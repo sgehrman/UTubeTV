@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidquery.AQuery;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.database.YouTubeData;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by sgehrman on 3/13/14.
@@ -55,13 +55,14 @@ public class ChannelDetailsActivity extends Activity {
     Bundle paramsBundle = getIntent().getBundleExtra("params");
     YouTubeData data = YouTubeData.fromBundle(paramsBundle);
 
-    AQuery aq = new AQuery(this);
-    aq.id(imageView)
-        .height(200)
-        .image(data.mThumbnail, true, true, 0, 0, null, 0, mAspectRatio);
-    aq.id(titleView).text(data.mTitle);
-    aq.id(descriptionView).text(data.mDescription);
-    aq.id(channelIdView).text(data.mChannel);
+    Picasso.with(this).load(data.mThumbnail)
+        //          .noFade()
+        //          .resize(250, 250) // put into dimens for dp values
+        .into(imageView);
+
+    titleView.setText(data.mTitle);
+    descriptionView.setText(data.mDescription);
+    channelIdView.setText(data.mChannel);
 
     imageView.setOnClickListener(new View.OnClickListener() {
       @Override

@@ -159,7 +159,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.cocosw:undobar:0.6@aar'
     compile 'de.greenrobot:eventbus:+'
-    compile 'com.googlecode.android-query:android-query:0.25.+'
 
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.android.support:mediarouter-v7:+'
