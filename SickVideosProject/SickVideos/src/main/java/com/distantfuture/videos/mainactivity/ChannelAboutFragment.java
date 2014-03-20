@@ -59,12 +59,12 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
 
     card.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        showPlaylistsFragment();
+        showDefaultFragment();
       }
     });
     button.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        showPlaylistsFragment();
+        showDefaultFragment();
       }
     });
     disclaimer.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +101,8 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
     mContent.refreshChannelInfo();
   }
 
-  private void showPlaylistsFragment() {
-    getContract().showPlaylistsFragment();
+  private void showDefaultFragment() {
+    getContract().showDefaultFragment();
   }
 
   @Override

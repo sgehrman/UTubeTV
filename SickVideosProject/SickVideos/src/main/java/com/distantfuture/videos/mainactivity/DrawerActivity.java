@@ -433,7 +433,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
   // DrawerActivitySupport
   @Override
-  public void showPlaylistsFragment() {
+  public void showDefaultFragment() {
     selectSection(1, true);
   }
 

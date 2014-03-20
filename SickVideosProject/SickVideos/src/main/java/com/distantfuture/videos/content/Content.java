@@ -50,8 +50,9 @@ public class Content {
     ArrayList<Map> result = new ArrayList<Map>();
 
     result.add(ImmutableMap.of("title", "About Channel", "icon", ToolbarIcons.IconID.ABOUT));
-    result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
     result.add(ImmutableMap.of("title", "Recent Uploads", "icon", ToolbarIcons.IconID.UPLOADS));
+    result.add(ImmutableMap.of("title", "Playlists", "icon", ToolbarIcons.IconID.PLAYLISTS));
+    result.add(ImmutableMap.of("title", "Liked by Channel", "icon", ToolbarIcons.IconID.THUMBS_UP));
 
     return result;
   }
@@ -73,11 +74,15 @@ public class Content {
         fragment = new ChannelAboutFragment();
         break;
       case 1:
+        fragment = YouTubeGridFragment.newInstance(ListServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
+            .currentChannelId(), null, 50));
+        break;
+      case 2:
         fragment = YouTubeGridFragment.newInstance(ListServiceRequest.playlistsRequest(mChannelList
             .currentChannelId(), null, 150));
         break;
-      case 2:
-        fragment = YouTubeGridFragment.newInstance(ListServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.UPLOADS, mChannelList
+      case 3:
+        fragment = YouTubeGridFragment.newInstance(ListServiceRequest.relatedRequest(YouTubeAPI.RelatedPlaylistType.LIKES, mChannelList
             .currentChannelId(), null, 50));
         break;
     }

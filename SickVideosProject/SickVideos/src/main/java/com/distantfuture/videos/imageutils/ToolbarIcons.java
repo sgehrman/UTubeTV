@@ -36,6 +36,9 @@ public class ToolbarIcons {
       case HEART:
         icon = FontAwesomeIcon.HEART;
         break;
+      case THUMBS_UP:
+        icon = FontAwesomeIcon.THUMBS_O_UP;
+        break;
       case CLOSE:
         icon = FontAwesomeIcon.TIMES_CIRCLE;
         break;
@@ -152,6 +155,6 @@ public class ToolbarIcons {
     return null;
   }
 
-  public static enum IconID {NONE, SOUND, ADD, REMOVE, COMMENTS, SITE_MAP, COGS, SEARCH_PLUS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
+  public static enum IconID {NONE, SOUND, ADD, REMOVE, COMMENTS, SITE_MAP, COGS, SEARCH_PLUS, STEP_FORWARD, QUESTION_MARK, STEP_BACK, FULLSCREEN, FILM, LIST, CLOSE, HEART, THUMBS_UP, OVERFLOW, VIDEO_PLAY, ABOUT, UPLOADS, PLAYLISTS, YOUTUBE, CHECK, SEARCH, SETTINGS}
 
 }

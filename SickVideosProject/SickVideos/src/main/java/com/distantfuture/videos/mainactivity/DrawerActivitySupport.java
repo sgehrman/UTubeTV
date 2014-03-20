@@ -9,7 +9,7 @@ public interface DrawerActivitySupport {
   public boolean actionBarTitleHandled();
 
   // used in the about fragment when clicking on Watch Now or image
-  public void showPlaylistsFragment();
+  public void showDefaultFragment();
 
   public void playVideo(VideoPlayer.PlayerParams params);
 

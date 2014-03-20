@@ -167,9 +167,11 @@ public class ListServiceRequest {
           case UPLOADS:
             result = (plural) ? "Recent Uploads" : "Recent Upload";
             break;
+          case LIKES:
+            result = (plural) ? "Liked Videos" : "Liked Video";
+            break;
           case FAVORITES:
           case WATCHED:
-          case LIKES:
           case WATCHLATER:
           default:
             break;
