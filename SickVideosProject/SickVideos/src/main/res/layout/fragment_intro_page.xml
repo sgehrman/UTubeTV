@@ -36,7 +36,7 @@
             android:shadowColor="#000"
             android:shadowDx="1"
             android:shadowDy="1"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="bold">
         </TextView>
 

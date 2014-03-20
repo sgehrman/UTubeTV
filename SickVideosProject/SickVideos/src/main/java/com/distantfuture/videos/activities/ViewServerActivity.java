@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import com.android.debug.hv.ViewServer;
 import com.distantfuture.videos.misc.DUtils;
 
-public class ViewServerActivity extends FragmentActivity {
+public abstract class ViewServerActivity extends FragmentActivity {
   private int mCounter;
 
   @Override

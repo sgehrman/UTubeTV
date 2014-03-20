@@ -84,7 +84,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
     YouTubeData data = getItem(position);
 
     if (convertView == null) {
-      convertView = inflater.inflate(R.layout.channel_lookup_list_item, null);
+      convertView = inflater.inflate(R.layout.channel_lookup_list_item, parent, false);
       holder = new ViewHolder();
       holder.imgView = (ImageView) convertView.findViewById(R.id.imageView1);
       holder.addButton = (ImageView) convertView.findViewById(R.id.add_remove_button);

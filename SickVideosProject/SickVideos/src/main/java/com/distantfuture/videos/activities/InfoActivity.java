@@ -11,7 +11,7 @@ import com.distantfuture.videos.R;
 
 /*
    <Preference android:title="@string/pref_title_privacy_policy">
-        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
+        <intent android:action="rs.distantfuture.videos.activities.InfoActivity">
             <extra
                 android:name="infoID"
                 android:value="pp"/>
@@ -19,7 +19,7 @@ import com.distantfuture.videos.R;
     </Preference>
 
     <Preference android:title="@string/pref_title_tos">
-        <intent android:action="rs.sickboots.sickvideos.InfoActivity">
+        <intent android:action="rs.distantfuture.videos.activities.InfoActivity">
             <extra
                 android:name="infoID"
                 android:value="tos"/>

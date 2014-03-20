@@ -39,6 +39,8 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="choose_channel">Choose a channel</string>
+    <string name="read_later">Read later</string>
+    <string name="thank_you">Thank You!</string>
 
     <string-array name="view_styles">
         <item>Dark</item>
@@ -60,7 +62,7 @@
         Help support our late night coding sessions by donating one of the following delicious items:
     </string>
     <string name="donate_thanks">
-        The Gods of code smile upon thee...\nThank you!
+        The Gods of code smile upon thee&#8230;\nThank you!
     </string>
 
     <string-array name="donations_array">

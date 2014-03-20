@@ -115,7 +115,7 @@ public class IconicTypefaceActivity extends ListActivity {
       ViewHolder holder;
 
       if (convertView == null) {
-        convertView = mInflater.inflate(R.layout.list_item_iconic, null);
+        convertView = mInflater.inflate(R.layout.list_item_iconic, parent, false);
         holder = new ViewHolder();
         holder.title = (TextView) convertView.findViewById(R.id.tv_title);
         holder.icon = convertView.findViewById(R.id.view_icon);

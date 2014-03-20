@@ -17,7 +17,7 @@
         android:shadowColor="@android:color/black"
         android:shadowDy="10"
         android:shadowRadius="5"
-        android:text="Thank You"
+        android:text="@string/thank_you"
         android:textColor="#fff"
         android:textSize="40sp"
         android:textStyle="bold"

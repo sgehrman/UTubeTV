@@ -93,7 +93,7 @@ public class IconicActivity extends ListActivity {
       final SampleItem sampleItem = mSamples.get(position);
 
       if (convertView == null) {
-        convertView = mInflater.inflate(R.layout.list_item_group, null);
+        convertView = mInflater.inflate(R.layout.list_item_group, parent, false);
       }
 
       ((TextView) convertView.findViewById(R.id.tv_title)).setText(sampleItem.title);

@@ -40,11 +40,9 @@
     <Preference
         android:key="log"
         android:title="@string/pref_title_log"/>
-
     <Preference
         android:key="credits"
         android:title="@string/pref_title_credits"/>
-
 </PreferenceScreen>
 
 
