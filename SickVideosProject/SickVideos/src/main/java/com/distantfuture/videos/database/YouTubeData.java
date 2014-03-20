@@ -65,7 +65,7 @@ public class YouTubeData {
         result.add(data.mPlaylist);
       else if (data.mChannel != null)
         result.add(data.mChannel);
-      }
+    }
 
     return result;
   }

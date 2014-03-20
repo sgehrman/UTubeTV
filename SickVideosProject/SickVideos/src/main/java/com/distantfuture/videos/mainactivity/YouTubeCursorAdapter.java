@@ -301,9 +301,9 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     YouTubeData itemMap = mRequest.databaseTable().cursorToItem(cursor, mReusedData);
 
     Picasso.with(mContext).load(itemMap.mThumbnail)
-                  .fit()
-        //          .noFade()
-        //          .resize(250, 250) // put into dimens for dp values
+        .fit()
+            //          .noFade()
+            //          .resize(250, 250) // put into dimens for dp values
         .into(holder.image);
 
     boolean hidden = itemMap.isHidden();

@@ -1,18 +1,14 @@
 package com.distantfuture.videos.services;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.youtube.YouTubeAPI;
 
-import java.util.HashMap;
-
 public class ListServiceRequest {
-  private ServiceRequest serviceRequest;
   private static final int CLASS_TYPE_KEY = 1887;
+  private ServiceRequest serviceRequest;
 
   private ListServiceRequest() {
     super();
@@ -36,10 +32,6 @@ public class ListServiceRequest {
     }
 
     return result;
-  }
-
-  public Bundle toBundle() {
-    return ServiceRequest.toBundle(serviceRequest);
   }
 
   public static ListServiceRequest relatedRequest(YouTubeAPI.RelatedPlaylistType relatedPlayListType, String channelID, String containerName, int maxResults) {
@@ -114,6 +106,10 @@ public class ListServiceRequest {
     result.serviceRequest.putString("type", type.toString());
 
     return result;
+  }
+
+  public Bundle toBundle() {
+    return ServiceRequest.toBundle(serviceRequest);
   }
 
   public RequestType type() {

@@ -41,7 +41,6 @@ import com.distantfuture.videos.misc.EmptyListHelper;
 import com.distantfuture.videos.misc.ScrollTriggeredAnimator;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.services.ListServiceRequest;
-import com.distantfuture.videos.services.ServiceRequest;
 import com.distantfuture.videos.services.YouTubeService;
 import com.distantfuture.videos.youtube.VideoPlayer;
 import com.google.common.primitives.Longs;

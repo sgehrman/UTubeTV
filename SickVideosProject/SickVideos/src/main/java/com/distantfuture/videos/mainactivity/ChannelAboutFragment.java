@@ -3,7 +3,6 @@ package com.distantfuture.videos.mainactivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,8 +161,8 @@ public class ChannelAboutFragment extends ContractFragment<DrawerActivitySupport
       // Debug.log(data.mThumbnail);
 
       Picasso.with(getActivity()).load(data.mThumbnail)
-              //          .noFade()
-              //          .resize(250, 250) // put into dimens for dp values
+          //          .noFade()
+          //          .resize(250, 250) // put into dimens for dp values
           .into(mImage);
 
       getContract().setActionBarTitle(data.mTitle, "About");

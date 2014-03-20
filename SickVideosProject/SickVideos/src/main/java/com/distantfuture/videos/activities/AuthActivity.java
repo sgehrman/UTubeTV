@@ -10,7 +10,6 @@ import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.Auth;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.services.ListServiceRequest;
-import com.distantfuture.videos.services.ServiceRequest;
 import com.distantfuture.videos.services.SubscriptionsServiceRequest;
 import com.distantfuture.videos.services.YouTubeService;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;

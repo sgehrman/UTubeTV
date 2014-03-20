@@ -1,42 +1,21 @@
 package com.distantfuture.videos.services;
 
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import com.distantfuture.videos.database.DatabaseTables;
 import com.distantfuture.videos.misc.DUtils;
-import com.distantfuture.videos.youtube.YouTubeAPI;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class ServiceRequest {
-  private HashMap<String, Object> map;
   public static final String REQUEST_CLASS_TYPE_KEY = "rct_key";
+  private HashMap<String, Object> map;
 
   protected ServiceRequest() {
     super();
 
     map = new HashMap();
-  }
-
-  protected Object getData(String key) {
-    Object result = null;
-
-    if (map.containsKey(key))
-      result = map.get(key);
-
-    return result;
-  }
-
-  protected void putString(String key, String value) {
-    map.put(key, value);
-  }
-
-  protected void putInt(String key, int value) {
-    map.put(key, value);
   }
 
   public static Bundle toBundle(ServiceRequest request) {
@@ -70,5 +49,22 @@ public class ServiceRequest {
     }
 
     return result;
+  }
+
+  protected Object getData(String key) {
+    Object result = null;
+
+    if (map.containsKey(key))
+      result = map.get(key);
+
+    return result;
+  }
+
+  protected void putString(String key, String value) {
+    map.put(key, value);
+  }
+
+  protected void putInt(String key, int value) {
+    map.put(key, value);
   }
 }

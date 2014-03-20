@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.androidquery.AQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
@@ -31,7 +30,7 @@ public class ChannelLookupAdapter extends ArrayAdapter<YouTubeData> {
   private final float mAspectRatio = 4f / 5f;
   private View.OnClickListener mButtonListener;
   private Content mContent;
-   private CircleImageTransformation mCircleTransform;
+  private CircleImageTransformation mCircleTransform;
   private int mIconSizeInPX;
 
   public ChannelLookupAdapter(Activity activity) {

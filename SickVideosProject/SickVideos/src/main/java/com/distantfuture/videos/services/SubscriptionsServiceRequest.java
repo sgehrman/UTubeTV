@@ -6,8 +6,8 @@ import android.os.Bundle;
  * Created by sgehrman on 3/19/14.
  */
 public class SubscriptionsServiceRequest {
-  ServiceRequest serviceRequest;
   private static final int CLASS_TYPE_KEY = 5544;
+  ServiceRequest serviceRequest;
 
   private SubscriptionsServiceRequest(ServiceRequest serviceRequest) {
     super();
@@ -22,10 +22,6 @@ public class SubscriptionsServiceRequest {
     serviceRequest.putInt(ServiceRequest.REQUEST_CLASS_TYPE_KEY, CLASS_TYPE_KEY);
   }
 
-  public Bundle toBundle() {
-    return ServiceRequest.toBundle(serviceRequest);
-  }
-
   public static SubscriptionsServiceRequest fromBundle(Bundle bundle) {
     SubscriptionsServiceRequest result = null;
     ServiceRequest request = ServiceRequest.fromBundle(bundle);
@@ -38,5 +34,9 @@ public class SubscriptionsServiceRequest {
     }
 
     return result;
+  }
+
+  public Bundle toBundle() {
+    return ServiceRequest.toBundle(serviceRequest);
   }
 }
