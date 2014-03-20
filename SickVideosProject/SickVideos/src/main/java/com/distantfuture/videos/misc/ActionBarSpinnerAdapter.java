@@ -118,7 +118,7 @@ public class ActionBarSpinnerAdapter extends ArrayAdapter<CharSequence> {
         .into(holder.imageView);
 
     if ((position % 2) != 0)
-      view.setBackgroundColor(0x11ffffff);
+      view.setBackgroundColor(0x05ffffff);
     else
       view.setBackgroundColor(0);
 
