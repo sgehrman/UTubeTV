@@ -18,7 +18,9 @@
         title="YouTube Channels"
         >
         <text>This app is a video player for watching YouTube videos.</text>
-        <text>This app contains a collection of the top channels in it's category to get started, but you can customize the list to contain your favorites. </text>
+        <text>This app contains a collection of the top channels in it's category to get started,
+            but you can customize the list to contain your favorites.
+        </text>
         <text>This specific app contains the following default YouTube channels.</text>
 
         <header>Channels:</header>
@@ -98,12 +100,18 @@
         icon="editing"
         title="Editing the channels"
         >
-        <text>The list of channels is only a default list to get you started.  You can add or remove any channels you like.
+        <text>The list of channels is only a default list to get you started. You can add or remove
+            any channels you like.
         </text>
-        <text>Open the overflow menu on the right of the action bar and choose 'Edit channels'. To remove a channel just hit the red minus button on any of the items.  To add channels, choose the find button in the action bar and search for channels.  Hit the plus
+        <text>Open the overflow menu on the right of the action bar and choose 'Edit channels'. To
+            remove a channel just hit the red minus button on any of the items. To add channels,
+            choose the find button in the action bar and search for channels. Hit the plus
             button on the right of an item to add it.
         </text>
-        <text>You can import your YouTube subscriptions if you already have a bunch of favorite channels in there.  Import and add or remove any channels as needed.  Don't worry, removing a channel here does not change your subscriptions on YouTube.  This app simply imports
+        <text>You can import your YouTube subscriptions if you already have a bunch of favorite
+            channels in there. Import and add or remove any channels as needed. Don't worry,
+            removing a channel here does not change your subscriptions on YouTube. This app simply
+            imports
             the channel list from YouTube and doesn't edit your account in any way.
         </text>
 

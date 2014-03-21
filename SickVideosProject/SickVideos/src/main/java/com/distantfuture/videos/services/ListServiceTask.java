@@ -24,7 +24,7 @@ import de.greenrobot.event.EventBus;
 public class ListServiceTask {
   private Context context;
 
-  public ListServiceTask(  Context context, final ListServiceRequest request, final  boolean hasFetchedData,   boolean refresh) {
+  public ListServiceTask(Context context, final ListServiceRequest request, final boolean hasFetchedData, boolean refresh) {
     this.context = context;
 
     if (!refresh) {

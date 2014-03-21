@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
             android:paddingBottom="12dp"
+            android:scaleType="centerCrop"
 
             />
 
@@ -45,13 +45,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
- >
+            >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Channel id:"
                 android:gravity="center"
+                android:text="Channel id:"
 
                 android:textSize="16sp"/>
 
@@ -59,8 +59,8 @@
                 android:id="@+id/channel_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="12dp"
                 android:gravity="center"
+                android:paddingBottom="12dp"
 
                 android:textColor="#a00"
                 android:textSize="18sp"/>

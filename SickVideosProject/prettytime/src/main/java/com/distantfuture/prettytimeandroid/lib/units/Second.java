@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Second extends ResourcesTimeUnit implements TimeUnit {
 
-   public Second()
-   {
-      setMillisPerUnit(1000L);
-   }
+  public Second() {
+    setMillisPerUnit(1000L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Second";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Second";
+  }
 
 }

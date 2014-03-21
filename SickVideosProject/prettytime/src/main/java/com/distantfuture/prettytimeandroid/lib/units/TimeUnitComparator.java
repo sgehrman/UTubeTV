@@ -15,27 +15,27 @@
  */
 package com.distantfuture.prettytimeandroid.lib.units;
 
+import com.distantfuture.prettytimeandroid.lib.TimeUnit;
+
 import java.io.Serializable;
 import java.util.Comparator;
-
-import com.distantfuture.prettytimeandroid.lib.TimeUnit;
 
 
 /**
  * Compares two {@link TimeUnit} objects
- * 
+ *
  * @author lb3
  */
 public class TimeUnitComparator implements Comparator<TimeUnit>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public int compare(final TimeUnit left, final TimeUnit right) {
-		if (left.getMillisPerUnit() < right.getMillisPerUnit()) {
-			return -1;
-		} else if (left.getMillisPerUnit() > right.getMillisPerUnit()) {
-			return 1;
-		}
-		return 0;
-	}
+  public int compare(final TimeUnit left, final TimeUnit right) {
+    if (left.getMillisPerUnit() < right.getMillisPerUnit()) {
+      return -1;
+    } else if (left.getMillisPerUnit() > right.getMillisPerUnit()) {
+      return 1;
+    }
+    return 0;
+  }
 }

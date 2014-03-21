@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Decade extends ResourcesTimeUnit implements TimeUnit {
 
-   public Decade()
-   {
-      setMillisPerUnit(315569259747L);
-   }
+  public Decade() {
+    setMillisPerUnit(315569259747L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Decade";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Decade";
+  }
 
 }

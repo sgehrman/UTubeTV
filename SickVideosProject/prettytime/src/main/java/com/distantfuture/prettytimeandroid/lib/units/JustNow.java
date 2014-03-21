@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class JustNow extends ResourcesTimeUnit implements TimeUnit {
 
-   public JustNow()
-   {
-      setMaxQuantity(1000L * 60L * 5L);
-   }
+  public JustNow() {
+    setMaxQuantity(1000L * 60L * 5L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "JustNow";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "JustNow";
+  }
 
 }

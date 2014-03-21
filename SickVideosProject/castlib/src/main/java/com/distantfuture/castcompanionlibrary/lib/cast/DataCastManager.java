@@ -330,7 +330,9 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
   }
 
   /*************************************************************************/
-  /************** Cast.Listener callbacks **********************************/
+  /**
+   * *********** Cast.Listener callbacks *********************************
+   */
 
   /*
    * Adds namespaces for data channel(s)
@@ -454,7 +456,9 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
   }
 
   /*************************************************************************/
-  /************** MessageReceivedCallbacks callbacks ***********************/
+  /**
+   * *********** MessageReceivedCallbacks callbacks **********************
+   */
 
   public void onMessageSendFailed(Status result) {
     for (IDataCastConsumer consumer : mDataConsumers) {

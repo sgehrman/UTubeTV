@@ -109,6 +109,7 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   private int mIdleReason;
   private Cast.MessageReceivedCallback mDataChannel;
   private IMediaAuthService mAuthService;
+
   private VideoCastManager(Context context, String applicationId, String dataNamespace) {
     super(context, applicationId);
     CastUtils.LOGD(TAG, "VideoCastManager is instantiated");
@@ -197,7 +198,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
 
   /*************************************************************************/
   /************** MiniControllers management *******************************/
-  /*************************************************************************/
+  /**
+   * *********************************************************************
+   */
 
   /*
    * Updates the information and state of all MiniControllers
@@ -635,7 +638,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /************************************************************/
-  /***** Notification Service *********************************/
+  /**
+   * ** Notification Service ********************************
+   */
 
   private void stopNotificationService() {
     if (!isFeatureEnabled(FEATURE_NOTIFICATION)) {
@@ -670,7 +675,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /************************************************************/
-  /*********** Implementing Cast.Listener *********************/
+  /**
+   * ******** Implementing Cast.Listener ********************
+   */
 
   private void onApplicationStatusChanged() {
     String appStatus = null;
@@ -1181,7 +1188,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /*************************************************************************/
-  /************** DataChannel callbacks and methods ************************/
+  /**
+   * *********** DataChannel callbacks and methods ***********************
+   */
 
   private void onMessageSendFailed(int errorCode) {
     for (IVideoCastConsumer consumer : mVideoConsumers) {
@@ -1314,7 +1323,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /*************************************************************************/
-  /************** MediaChannel callbacks ***********************************/
+  /**
+   * *********** MediaChannel callbacks **********************************
+   */
 
   /*
    * This is called by onMetadataUpdated() of RemoteMediaPlayer
@@ -1379,7 +1390,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /*************************************************************************/
-  /************** RemoteControlClient management ***************************/
+  /**
+   * *********** RemoteControlClient management **************************
+   */
 
   /*
    * Updates lock screen image
@@ -1602,7 +1615,9 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   }
 
   /*************************************************************/
-  /***** Implementing abstract methods of BaseCastManager ******/
+  /**
+   * ** Implementing abstract methods of BaseCastManager *****
+   */
 
   @Override
   Builder getCastOptionBuilder(CastDevice device) {

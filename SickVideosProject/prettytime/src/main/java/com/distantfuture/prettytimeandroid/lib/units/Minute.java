@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Minute extends ResourcesTimeUnit implements TimeUnit {
 
-   public Minute()
-   {
-      setMillisPerUnit(1000L * 60L);
-   }
+  public Minute() {
+    setMillisPerUnit(1000L * 60L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Minute";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Minute";
+  }
 
 }

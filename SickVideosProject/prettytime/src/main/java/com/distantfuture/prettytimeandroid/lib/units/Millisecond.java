@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Millisecond extends ResourcesTimeUnit implements TimeUnit {
 
-   public Millisecond()
-   {
-      setMillisPerUnit(1);
-   }
+  public Millisecond() {
+    setMillisPerUnit(1);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Millisecond";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Millisecond";
+  }
 
 }

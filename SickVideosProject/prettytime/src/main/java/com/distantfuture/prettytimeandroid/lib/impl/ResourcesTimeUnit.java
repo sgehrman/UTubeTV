@@ -21,41 +21,35 @@ import com.distantfuture.prettytimeandroid.lib.TimeUnit;
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
  */
-public abstract class ResourcesTimeUnit implements TimeUnit
-{
-   private long maxQuantity = 0;
-   private long millisPerUnit = 1;
+public abstract class ResourcesTimeUnit implements TimeUnit {
+  private long maxQuantity = 0;
+  private long millisPerUnit = 1;
 
-   /**
-    * Return the name of the resource bundle from which this unit's format should be loaded.
-    */
-   abstract protected String getResourceKeyPrefix();
+  /**
+   * Return the name of the resource bundle from which this unit's format should be loaded.
+   */
+  abstract protected String getResourceKeyPrefix();
 
-   protected String getResourceBundleName()
-   {
-      return "com.distantfuture.prettytimeandroid.lib.i18n.Resources";
-   }
+  protected String getResourceBundleName() {
+    return "com.distantfuture.prettytimeandroid.lib.i18n.Resources";
+  }
 
-   @Override
-   public long getMaxQuantity()
-   {
-      return maxQuantity;
-   }
+  @Override
+  public long getMaxQuantity() {
+    return maxQuantity;
+  }
 
-   public void setMaxQuantity(long maxQuantity)
-   {
-      this.maxQuantity = maxQuantity;
-   }
+  public void setMaxQuantity(long maxQuantity) {
+    this.maxQuantity = maxQuantity;
+  }
 
-   @Override
-   public long getMillisPerUnit()
-   {
-      return millisPerUnit;
-   }
+  @Override
+  public long getMillisPerUnit() {
+    return millisPerUnit;
+  }
 
-   public void setMillisPerUnit(long millisPerUnit)
-   {
-      this.millisPerUnit = millisPerUnit;
-   }
+  public void setMillisPerUnit(long millisPerUnit) {
+    this.millisPerUnit = millisPerUnit;
+  }
 
 }

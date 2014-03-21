@@ -45,9 +45,9 @@
             android:name="com.distantfuture.videos.activities.InfoActivity"
             android:label="">
             <intent-filter>
-                <action android:name="rs.distantfuture.videos.activities.InfoActivity" />
+                <action android:name="rs.distantfuture.videos.activities.InfoActivity"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity

@@ -3,25 +3,12 @@ package com.distantfuture.videos.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 
-import com.distantfuture.videos.activities.AuthActivity;
-import com.distantfuture.videos.database.DatabaseAccess;
-import com.distantfuture.videos.database.DatabaseTables;
-import com.distantfuture.videos.database.YouTubeData;
-import com.distantfuture.videos.misc.AppUtils;
-import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.DUtils;
-import com.distantfuture.videos.youtube.YouTubeAPI;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-
-import de.greenrobot.event.EventBus;
 
 public class YouTubeService extends IntentService {
   private Set mHasFetchedDataMap = new HashSet<String>();

@@ -75,22 +75,22 @@ public class ViewDecorations {
       canvas.translate(0, -y);
     }
 
-      int playButtonSizeDP = 70;
-      // draw play button
-      if (mPlayBitmap == null) {
-        if (mIsPlaylist)
-          mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.LIST, Color.WHITE, playButtonSizeDP);
-        else
-          mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSizeDP);
+    int playButtonSizeDP = 70;
+    // draw play button
+    if (mPlayBitmap == null) {
+      if (mIsPlaylist)
+        mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.LIST, Color.WHITE, playButtonSizeDP);
+      else
+        mPlayBitmap = ToolbarIcons.iconBitmap(view.getContext(), ToolbarIcons.IconID.VIDEO_PLAY, Color.WHITE, playButtonSizeDP);
 
-        mPlayBitmap.setAlpha(100);  // 0 - 255
-      }
+      mPlayBitmap.setAlpha(100);  // 0 - 255
+    }
 
-      int playButtonSizePX = (int) Utils.dpToPx(playButtonSizeDP, view.getContext());
-      int x = (view.getWidth() - playButtonSizePX) / 2;
-      int y = (view.getHeight() - playButtonSizePX) / 2;
-      mPlayBitmap.setBounds(x, y, x + playButtonSizePX, y + playButtonSizePX);
-      mPlayBitmap.draw(canvas);
+    int playButtonSizePX = (int) Utils.dpToPx(playButtonSizeDP, view.getContext());
+    int x = (view.getWidth() - playButtonSizePX) / 2;
+    int y = (view.getHeight() - playButtonSizePX) / 2;
+    mPlayBitmap.setBounds(x, y, x + playButtonSizePX, y + playButtonSizePX);
+    mPlayBitmap.draw(canvas);
 
     if (drawHiddenIndicator)
       drawHiddenIndicator(view, canvas);

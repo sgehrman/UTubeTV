@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Millennium extends ResourcesTimeUnit implements TimeUnit {
 
-   public Millennium()
-   {
-      setMillisPerUnit(31556926000000L);
-   }
+  public Millennium() {
+    setMillisPerUnit(31556926000000L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Millennium";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Millennium";
+  }
 
 }

@@ -75,6 +75,7 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
   protected boolean mConnectionSuspened;
   private boolean mDestroyOnDisconnect = false;
   private boolean mWifiConnectivity = true;
+
   /**
    * ********************************************************************
    */
@@ -97,7 +98,9 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
 
   /*************************************************************************/
   /************** Abstract Methods *****************************************/
-  /*************************************************************************/
+  /**
+   * *********************************************************************
+   */
 
   public static BaseCastManager getCastManager() {
     return sCastManager;
@@ -691,7 +694,9 @@ public abstract class BaseCastManager implements DeviceSelectionListener, Connec
 
   /************************************************************/
   /***** GoogleApiClient.ConnectionCallbacks ******************/
-  /************************************************************/
+  /**
+   * ********************************************************
+   */
 
   /*
    * (non-Javadoc)

@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Month extends ResourcesTimeUnit implements TimeUnit {
 
-   public Month()
-   {
-      setMillisPerUnit(2629743830L);
-   }
+  public Month() {
+    setMillisPerUnit(2629743830L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Month";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Month";
+  }
 
 }

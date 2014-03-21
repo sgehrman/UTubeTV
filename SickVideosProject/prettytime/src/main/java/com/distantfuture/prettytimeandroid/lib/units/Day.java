@@ -21,14 +21,13 @@ import com.distantfuture.prettytimeandroid.lib.impl.ResourcesTimeUnit;
 
 public class Day extends ResourcesTimeUnit implements TimeUnit {
 
-   public Day()
-   {
-      setMillisPerUnit(1000L * 60L * 60L * 24L);
-   }
+  public Day() {
+    setMillisPerUnit(1000L * 60L * 60L * 24L);
+  }
 
-   @Override
-   protected String getResourceKeyPrefix() {
-      return "Day";
-   }
+  @Override
+  protected String getResourceKeyPrefix() {
+    return "Day";
+  }
 
 }
