@@ -3,9 +3,6 @@ package com.distantfuture.videos.services;
 import android.content.Context;
 import android.os.Bundle;
 
-/**
- * Created by sgehrman on 3/19/14.
- */
 public class SubscriptionsServiceRequest {
   private static final int CLASS_TYPE_KEY = 5544;
   ServiceRequest serviceRequest;

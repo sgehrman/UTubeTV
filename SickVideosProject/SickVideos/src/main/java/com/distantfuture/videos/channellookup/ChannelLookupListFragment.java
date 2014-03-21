@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.misc.BusEvents;
-import com.distantfuture.videos.misc.DUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,7 +19,6 @@ import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.database.YouTubeData;
 import com.distantfuture.videos.imageutils.CircleImageTransformation;
 import com.distantfuture.videos.imageutils.ToolbarIcons;
-import com.distantfuture.videos.misc.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

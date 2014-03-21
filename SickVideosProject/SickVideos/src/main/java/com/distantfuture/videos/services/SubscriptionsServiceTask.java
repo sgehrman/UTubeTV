@@ -12,9 +12,6 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * Created by sgehrman on 3/20/14.
- */
 public class SubscriptionsServiceTask {
 
   public SubscriptionsServiceTask(final Context context, final SubscriptionsServiceRequest request) {

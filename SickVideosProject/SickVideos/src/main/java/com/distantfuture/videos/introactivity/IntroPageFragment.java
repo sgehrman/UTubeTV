@@ -68,7 +68,7 @@ public class IntroPageFragment extends Fragment {
       }
 
       // gets the content top centered
-      View spacer = (View) rootView.findViewById(R.id.spacer_view);
+      View spacer = rootView.findViewById(R.id.spacer_view);
       Display display = getActivity().getWindowManager().getDefaultDisplay();
       Point size = new Point();
       display.getSize(size);

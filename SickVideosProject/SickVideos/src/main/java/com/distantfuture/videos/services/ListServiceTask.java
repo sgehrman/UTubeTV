@@ -111,7 +111,7 @@ public class ListServiceTask {
     switch (request.type()) {
       case RELATED:
         YouTubeAPI.RelatedPlaylistType type = request.relatedType();
-        String channelID = (String) request.channel();
+        String channelID = request.channel();
 
         playlistID = helper.relatedPlaylistID(type, channelID);
 
@@ -121,21 +121,21 @@ public class ListServiceTask {
         removeAllFromDB = false;
         break;
       case VIDEOS:
-        playlistID = (String) request.playlist();
+        playlistID = request.playlist();
 
         // can't use request.maxResults() since we have to get everything and sort it
         resultList = retrieveVideoList(request, helper, playlistID, null, 0);
         removeAllFromDB = false;
         break;
       case SEARCH:
-        String query = (String) request.query();
+        String query = request.query();
         listResults = helper.searchListResults(query, false);
         break;
       case LIKED:
         listResults = helper.likedVideosListResults();
         break;
       case PLAYLISTS:
-        String channel = (String) request.channel();
+        String channel = request.channel();
 
         resultList = retrieveVideoList(request, helper, null, channel, request.maxResults());
 

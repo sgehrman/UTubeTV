@@ -14,9 +14,6 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.database.YouTubeData;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by sgehrman on 3/13/14.
- */
 public class ChannelDetailsActivity extends Activity {
   private final float mAspectRatio = 4f / 5f;
 

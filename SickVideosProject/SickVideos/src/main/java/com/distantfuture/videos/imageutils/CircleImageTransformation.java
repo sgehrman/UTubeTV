@@ -8,9 +8,6 @@ import android.graphics.Shader;
 
 import com.squareup.picasso.Transformation;
 
-/**
- * Created by sgehrman on 3/19/14.
- */
 public class CircleImageTransformation implements Transformation {
   Paint mFillPaint;
   Paint mStrokePaint;

@@ -35,7 +35,6 @@ import de.greenrobot.event.EventBus;
 public class ChannelLookupActivity extends Activity {
   private ChannelLookupListFragment listFragment;
   private MenuItem mSearchItem;
-  private SearchView mSearchView;
   private Drawable mSearchDrawable;
   private boolean mSearchSubmitted = false;
 
@@ -158,6 +157,8 @@ public class ChannelLookupActivity extends Activity {
   }
 
   private void setupSearchItem(Menu menu) {
+    SearchView searchView;
+
     mSearchItem = menu.findItem(R.id.action_search);
     if (mSearchItem != null) {
       if (mSearchDrawable == null) {
@@ -172,22 +173,22 @@ public class ChannelLookupActivity extends Activity {
       }
       mSearchItem.setIcon(mSearchDrawable);
 
-      mSearchView = (SearchView) mSearchItem.getActionView();
+      searchView = (SearchView) mSearchItem.getActionView();
       //      mSearchView.setSubmitButtonEnabled(true);
-      mSearchView.setQueryHint("Search");
+      searchView.setQueryHint("Search");
 
       // not sure if this is needed or not yet....
       SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
       SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
-      mSearchView.setSearchableInfo(searchableInfo);
+      searchView.setSearchableInfo(searchableInfo);
 
-      mSearchItem.setActionView(mSearchView);
+      mSearchItem.setActionView(searchView);
 
       // change the text color inside the searchView, There is no way to theme this shitty thing
       int textColor = getResources().getColor(android.R.color.primary_text_dark);
       int hintColor = getResources().getColor(android.R.color.secondary_text_dark);
 
-      Utils.textViewColorChanger(mSearchView, textColor, hintColor);
+      Utils.textViewColorChanger(searchView, textColor, hintColor);
 
       mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
         @Override
@@ -201,7 +202,7 @@ public class ChannelLookupActivity extends Activity {
         }
       });
 
-      mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
           if (mSearchItem != null) {

@@ -98,7 +98,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     // show player if activity was destroyed and recreated
     if (savedInstanceState != null) {
-      VideoPlayer.PlayerParams params = (VideoPlayer.PlayerParams) savedInstanceState.getParcelable("player_params");
+      VideoPlayer.PlayerParams params = savedInstanceState.getParcelable("player_params");
 
       if (params != null)
         playVideo(params);

@@ -75,8 +75,6 @@ public class ViewDecorations {
       canvas.translate(0, -y);
     }
 
-    boolean drawIcon = true;
-    if (drawIcon) {
       int playButtonSizeDP = 70;
       // draw play button
       if (mPlayBitmap == null) {
@@ -93,7 +91,6 @@ public class ViewDecorations {
       int y = (view.getHeight() - playButtonSizePX) / 2;
       mPlayBitmap.setBounds(x, y, x + playButtonSizePX, y + playButtonSizePX);
       mPlayBitmap.draw(canvas);
-    }
 
     if (drawHiddenIndicator)
       drawHiddenIndicator(view, canvas);
