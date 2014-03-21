@@ -52,6 +52,7 @@ import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
@@ -156,12 +157,16 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
     // Now find the PullToRefreshLayout to setup
     mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.grid_frame_layout);
 
+    Options.Builder options = new Options.Builder();
+    options.scrollDistance(0.4f);
+
     // Now setup the PullToRefreshLayout
     ActionBarPullToRefresh.from(this.getActivity())
         // Mark All Children as pullable
         .allChildrenArePullable()
             // Set the OnRefreshListener
         .listener(this)
+            .options(options.build())
             // Finally commit the setup to our PullToRefreshLayout
         .setup(mPullToRefreshLayout);
 
