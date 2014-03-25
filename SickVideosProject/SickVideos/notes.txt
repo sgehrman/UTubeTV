@@ -49,6 +49,10 @@ https://drive.google.com/uc?export=download&id=FILE_ID
 
 // -------------------------------------------------------------------------------
 
+keytool -genkey -v -keystore release.keystore -alias releasekey -keyalg RSA -keysize 2048 -validity 10000
+
+// -------------------------------------------------------------------------------
+
 Terrance McKenna
 Cosmos
 Neil DeGrasse
