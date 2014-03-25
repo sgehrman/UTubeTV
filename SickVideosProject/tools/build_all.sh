@@ -6,10 +6,10 @@ cd ..
 ./gradlew clean
 
 # now build each one
-#./gradlew assembleTechnewsRelease
-./gradlew assembleYoutubeRelease
-#./gradlew assembleSvbRelease
+./gradlew assembleTechnewsRelease
 
+#./gradlew assembleYoutubeRelease
+#./gradlew assembleSvbRelease
 #./gradlew assembleNerdistRelease
 #./gradlew assembleNeurosoupRelease
 #./gradlew assembleMaxkeiserRelease

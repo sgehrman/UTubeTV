@@ -43,6 +43,12 @@ items/snippet/title
 
 // --------------------------------------------------------
 
+Basic drive download url
+
+https://drive.google.com/uc?export=download&id=FILE_ID
+
+// -------------------------------------------------------------------------------
+
 Terrance McKenna
 Cosmos
 Neil DeGrasse
