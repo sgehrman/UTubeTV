@@ -166,7 +166,7 @@ public class YouTubeGridFragment extends ContractFragment<DrawerActivitySupport>
         .allChildrenArePullable()
             // Set the OnRefreshListener
         .listener(this)
-            .options(options.build())
+        .options(options.build())
             // Finally commit the setup to our PullToRefreshLayout
         .setup(mPullToRefreshLayout);
 
