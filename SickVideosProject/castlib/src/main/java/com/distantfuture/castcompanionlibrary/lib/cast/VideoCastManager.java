@@ -973,7 +973,8 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
             }
           }
 
-        });
+        }
+    );
   }
 
   /**
