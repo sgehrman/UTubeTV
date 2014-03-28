@@ -143,16 +143,16 @@ android {
 dependencies {
 	compile 'com.android.support:support-v13:+'
 
-    compile 'com.google.apis:google-api-services-youtube:v3-rev92-1.17.+'
-    compile 'com.google.http-client:google-http-client-jackson2:1.17.+'
-    compile 'com.google.api-client:google-api-client:1.17.+'
+    compile 'com.google.apis:google-api-services-youtube:+'
+    compile 'com.google.http-client:google-http-client-jackson2:+'
+    compile 'com.google.api-client:google-api-client:+'
     compile 'com.google.android.gms:play-services:+'
-    compile 'com.google.api-client:google-api-client-android:1.17.+'
-    compile 'com.google.guava:guava:16.+'
+    compile 'com.google.api-client:google-api-client-android:+'
+    compile 'com.google.guava:guava:+'
 
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
-    compile 'joda-time:joda-time:2.3'
-    compile 'com.larswerkman:HoloColorPicker:1.1'
+    compile 'joda-time:joda-time:+'
+    compile 'com.larswerkman:HoloColorPicker:+'
     compile 'com.nhaarman.listviewanimations:library:+'
     compile 'com.github.codechimp-org.apprater:library:+'
     compile 'com.jakewharton:disklrucache:+'
