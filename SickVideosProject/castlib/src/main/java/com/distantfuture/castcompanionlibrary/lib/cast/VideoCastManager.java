@@ -916,24 +916,29 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   /**
    * Resumes the playback from where it was left (can be the beginning).
    *
-   * @param customData Optional JSONObject data to be passed to the cast device
-   * @throws CastException
+   * @param customData Optional {@link JSONObject} data to be passed to the cast device
    * @throws NoConnectionException
    * @throws TransientNetworkDisconnectionException
    */
-  public void play(JSONObject customData) throws CastException, TransientNetworkDisconnectionException, NoConnectionException {
+  public void play(JSONObject customData) throws
+      TransientNetworkDisconnectionException, NoConnectionException {
     CastUtils.LOGD(TAG, "play()");
     checkConnectivity();
-    try {
-      if (mRemoteMediaPlayer == null) {
-        CastUtils.LOGE(TAG, "Trying to play a video with no active media session");
-        throw new NoConnectionException();
-      }
-      mRemoteMediaPlayer.play(mApiClient);
-    } catch (IOException e) {
-      CastUtils.LOGE(TAG, "Failed to play media", e);
-      throw new CastException(mContext.getString(R.string.failed_to_play), e);
+    if (mRemoteMediaPlayer == null) {
+      CastUtils.LOGE(TAG, "Trying to play a video with no active media session");
+      throw new NoConnectionException();
     }
+    mRemoteMediaPlayer.play(mApiClient)
+        .setResultCallback(new ResultCallback<MediaChannelResult>() {
+
+          @Override
+          public void onResult(MediaChannelResult result) {
+            if (!result.getStatus().isSuccess()) {
+              onFailed(R.string.failed_to_play, result.getStatus().getStatusCode());
+            }
+          }
+
+        });
   }
 
   /**
@@ -945,20 +950,30 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
 
   /**
    * Stops the playback of media/stream
+   *
+   * @param customData Optional {@link JSONObject}
+   * @throws TransientNetworkDisconnectionException
+   * @throws NoConnectionException
    */
-  public void stop(JSONObject customData) throws CastException, TransientNetworkDisconnectionException, NoConnectionException {
+  public void stop(JSONObject customData) throws
+      TransientNetworkDisconnectionException, NoConnectionException {
     CastUtils.LOGD(TAG, "stop()");
     checkConnectivity();
-    try {
-      if (mRemoteMediaPlayer == null) {
-        CastUtils.LOGE(TAG, "Trying to stop a stream with no active media session");
-        throw new NoConnectionException();
-      }
-      mRemoteMediaPlayer.stop(mApiClient, customData);
-    } catch (IOException e) {
-      CastUtils.LOGE(TAG, "Failed to stop media", e);
-      throw new CastException(mContext.getString(R.string.failed_to_stop), e);
+    if (mRemoteMediaPlayer == null) {
+      CastUtils.LOGE(TAG, "Trying to stop a stream with no active media session");
+      throw new NoConnectionException();
     }
+    mRemoteMediaPlayer.stop(mApiClient, customData).setResultCallback(
+        new ResultCallback<MediaChannelResult>() {
+
+          @Override
+          public void onResult(MediaChannelResult result) {
+            if (!result.getStatus().isSuccess()) {
+              onFailed(R.string.failed_to_stop, result.getStatus().getStatusCode());
+            }
+          }
+
+        });
   }
 
   /**
@@ -978,24 +993,29 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   /**
    * Pauses the playback.
    *
-   * @param customData Optional JSONObject data to be passed to the cast device
-   * @throws CastException
+   * @param customData Optional {@link JSONObject} data to be passed to the cast device
    * @throws NoConnectionException
    * @throws TransientNetworkDisconnectionException
    */
-  public void pause(JSONObject customData) throws CastException, TransientNetworkDisconnectionException, NoConnectionException {
+  public void pause(JSONObject customData) throws
+      TransientNetworkDisconnectionException, NoConnectionException {
     CastUtils.LOGD(TAG, "attempting to pause media");
     checkConnectivity();
     if (mRemoteMediaPlayer == null) {
       CastUtils.LOGE(TAG, "Trying to pause a video with no active media session");
       throw new NoConnectionException();
     }
-    try {
-      mRemoteMediaPlayer.pause(mApiClient, customData);
-    } catch (IOException e) {
-      CastUtils.LOGE(TAG, "Failed to pause media", e);
-      throw new CastException(mContext, R.string.failed_to_pause, e);
-    }
+    mRemoteMediaPlayer.pause(mApiClient, customData)
+        .setResultCallback(new ResultCallback<MediaChannelResult>() {
+
+          @Override
+          public void onResult(MediaChannelResult result) {
+            if (!result.getStatus().isSuccess()) {
+              onFailed(R.string.failed_to_pause, result.getStatus().getStatusCode());
+            }
+          }
+
+        });
   }
 
   /**
@@ -1623,7 +1643,7 @@ public class VideoCastManager extends BaseCastManager implements OnMiniControlle
   Builder getCastOptionBuilder(CastDevice device) {
     Builder builder = Cast.CastOptions.builder(mSelectedCastDevice, new CastListener());
     if (isFeatureEnabled(FEATURE_DEBUGGING)) {
-      builder.setDebuggingEnabled();
+      builder.setVerboseLoggingEnabled(true);
     }
     return builder;
   }

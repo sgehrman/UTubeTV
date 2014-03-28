@@ -254,7 +254,7 @@ public class DataCastManager extends BaseCastManager implements Cast.MessageRece
 
     Builder builder = Cast.CastOptions.builder(mSelectedCastDevice, new CastListener());
     if (isFeatureEnabled(FEATURE_DEBUGGING)) {
-      builder.setDebuggingEnabled();
+      builder.setVerboseLoggingEnabled(true);
     }
     return builder;
   }
