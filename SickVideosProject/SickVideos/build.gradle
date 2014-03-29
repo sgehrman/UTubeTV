@@ -157,7 +157,7 @@ dependencies {
     compile 'com.github.codechimp-org.apprater:library:+'
     compile 'com.jakewharton:disklrucache:+'
     compile 'com.squareup.picasso:picasso:+'
-    compile 'com.cocosw:undobar:0.6@aar'
+    compile 'com.cocosw:undobar:1.+@aar'
     compile 'de.greenrobot:eventbus:+'
 
     compile 'com.android.support:appcompat-v7:+'
