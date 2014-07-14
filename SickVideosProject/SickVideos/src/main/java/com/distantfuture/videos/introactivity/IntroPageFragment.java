@@ -1,10 +1,10 @@
 package com.distantfuture.videos.introactivity;
 
-import android.app.Fragment;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.util.Linkify;
 import android.view.Display;
 import android.view.LayoutInflater;

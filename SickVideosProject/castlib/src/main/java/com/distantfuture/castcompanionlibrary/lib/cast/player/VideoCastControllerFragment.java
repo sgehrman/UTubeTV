@@ -666,7 +666,7 @@ public class VideoCastControllerFragment extends Fragment implements OnVideoCast
 
         @Override
         public void run() {
-          int currentPos = 0;
+          int currentPos;
           if (mPlaybackState == MediaStatus.PLAYER_STATE_BUFFERING) {
             return;
           }

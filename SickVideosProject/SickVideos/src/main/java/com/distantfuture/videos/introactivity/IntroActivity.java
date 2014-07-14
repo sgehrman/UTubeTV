@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.distantfuture.videos.R;
 import com.distantfuture.videos.content.Content;
 import com.distantfuture.videos.misc.LinePageIndicator;
 
-public class IntroActivity extends Activity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
+public class IntroActivity extends FragmentActivity implements IntroPageFragment.ActivityAccess, IntroXMLTaskFragment.Callbacks {
   private IntroPagerAdapter introPagerAdapter;
   private IntroXMLTaskFragment mTaskFragment;
   private ViewPager mViewPager;
@@ -125,7 +126,7 @@ public class IntroActivity extends Activity implements IntroPageFragment.Activit
 
     mViewPager = (ViewPager) findViewById(R.id.intro_pager);
 
-    introPagerAdapter = new IntroPagerAdapter(this, getFragmentManager());
+    introPagerAdapter = new IntroPagerAdapter(this, getSupportFragmentManager());
     introPagerAdapter.setPages(mTaskFragment.getPages());
     mViewPager.setAdapter(introPagerAdapter);
 
