@@ -4,18 +4,18 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <application android:allowBackup="true">
+  <application android:allowBackup="true">
 
-        <activity
-            android:name="com.distantfuture.iconicdroid.IconicActivity"
-            android:label="IconicDroid">
-        </activity>
+    <activity
+        android:name="com.distantfuture.iconicdroid.IconicActivity"
+        android:label="IconicDroid">
+    </activity>
 
-        <activity
-            android:name="com.distantfuture.iconicdroid.IconicTypefaceActivity"
-            android:label="Typeface">
-        </activity>
+    <activity
+        android:name="com.distantfuture.iconicdroid.IconicTypefaceActivity"
+        android:label="Typeface">
+    </activity>
 
-    </application>
+  </application>
 
 </manifest>

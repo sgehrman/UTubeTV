@@ -1,11 +1,11 @@
 apply plugin: 'android-library'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion '20'
+  compileSdkVersion 20
+  buildToolsVersion '20'
 }
 

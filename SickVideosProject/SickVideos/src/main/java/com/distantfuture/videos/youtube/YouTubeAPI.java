@@ -35,7 +35,6 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
