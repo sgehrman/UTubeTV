@@ -9,8 +9,8 @@ android {
     buildToolsVersion '20'
 
     defaultConfig {
-        versionCode 16
-        versionName '1.5'
+        versionCode 17
+        versionName '1.7'
         minSdkVersion 16
         targetSdkVersion 20
     }
@@ -40,7 +40,7 @@ android {
 
     buildTypes {
         release {
-            runProguard true
+            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
 
             signingConfig signingConfigs.release
