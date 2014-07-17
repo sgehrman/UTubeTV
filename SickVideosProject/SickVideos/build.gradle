@@ -1,5 +1,4 @@
 apply plugin: 'android'
-apply from: './build_extras.gradle'
 
 repositories {
     mavenCentral()

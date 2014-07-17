@@ -83,7 +83,7 @@
             android:exported="false"/>
         <provider
             android:name="com.distantfuture.videos.database.YouTubeContentProvider"
-            android:authorities=".res-auto.provider"
+            android:authorities="${packageName}.provider"
             android:enabled="true"
             android:exported="false"
             android:multiprocess="true">
