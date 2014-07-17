@@ -11,12 +11,12 @@ import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.Utils;
 import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAuthIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelContentDetails;
@@ -35,6 +35,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoCategory;
 import com.google.api.services.youtube.model.VideoCategoryListResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -91,7 +92,7 @@ public class YouTubeAPI {
         else
           credentials = Auth.nullCredentials(mContext);
 
-        youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), credentials).setApplicationName("YouTubeAPI")
+        youTube = new YouTube.Builder(new NetHttpTransport(), new AndroidJsonFactory(), credentials).setApplicationName("YouTubeAPI")
             .build();
       } catch (Exception e) {
         e.printStackTrace();

@@ -40,7 +40,7 @@ android {
 
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
 
             signingConfig signingConfigs.release
@@ -49,91 +49,91 @@ android {
 
     productFlavors {
         neurosoup {
-            packageName "re.distantfutu.videos.neurosoup"
+            applicationId "re.distantfutu.videos.neurosoup"
         }
 
         joerogan {
-            packageName "re.distantfutu.videos.joerogan"
+            applicationId "re.distantfutu.videos.joerogan"
         }
 
         vice {
-            packageName "re.distantfutu.videos.vice"
+            applicationId "re.distantfutu.videos.vice"
         }
 
         nerdist {
-            packageName "re.distantfutu.videos.nerdist"
+            applicationId "re.distantfutu.videos.nerdist"
         }
 
         connections {
-            packageName "re.distantfutu.videos.connections"
+            applicationId "re.distantfutu.videos.connections"
         }
 
         khan {
-            packageName "re.distantfutu.videos.khan"
+            applicationId "re.distantfutu.videos.khan"
         }
 
         codeorg {
-            packageName "re.distantfutu.videos.codeorg"
+            applicationId "re.distantfutu.videos.codeorg"
         }
 
         rt {
-            packageName "re.distantfutu.videos.rt"
+            applicationId "re.distantfutu.videos.rt"
         }
 
         maxkeiser {
-            packageName "re.distantfutu.videos.maxkeiser"
+            applicationId "re.distantfutu.videos.maxkeiser"
         }
 
         androiddevs {
-            packageName "re.distantfutu.videos.androiddevs"
+            applicationId "re.distantfutu.videos.androiddevs"
         }
 
         topgear {
-            packageName "re.distantfutu.videos.topgear"
+            applicationId "re.distantfutu.videos.topgear"
         }
 
         bigthink {
-            packageName "re.distantfutu.videos.bigthink"
+            applicationId "re.distantfutu.videos.bigthink"
         }
 
         pewdiepie {
-            packageName "re.distantfutu.videos.pewdiepie"
+            applicationId "re.distantfutu.videos.pewdiepie"
         }
 
         reasontv {
-            packageName "re.distantfutu.videos.reasontv"
+            applicationId "re.distantfutu.videos.reasontv"
         }
 
         jetdaisuke {
-            packageName "re.distantfutu.videos.jetdaisuke"
+            applicationId "re.distantfutu.videos.jetdaisuke"
         }
 
         xda {
-            packageName "re.distantfutu.videos.xda"
+            applicationId "re.distantfutu.videos.xda"
         }
 
         theverge {
-            packageName "re.distantfutu.videos.theverge"
+            applicationId "re.distantfutu.videos.theverge"
         }
 
         justinbieber {
-            packageName "re.distantfutu.videos.justinbieber"
+            applicationId "re.distantfutu.videos.justinbieber"
         }
 
         youtube {
-            packageName "re.distantfutu.videos.youtube"
+            applicationId "re.distantfutu.videos.youtube"
         }
 
         svb {
-            packageName "re.distantfutu.videos.svb"
+            applicationId "re.distantfutu.videos.svb"
         }
 
         lukitsch {
-            packageName "re.distantfutu.videos.lukitsch"
+            applicationId "re.distantfutu.videos.lukitsch"
         }
 
         technews {
-            packageName "re.distantfutu.videos.technews"
+            applicationId "re.distantfutu.videos.technews"
         }
     }
 }
@@ -142,7 +142,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.+'
 
     compile 'com.google.apis:google-api-services-youtube:+'
-    compile 'com.google.http-client:google-http-client-jackson2:+'
+    compile 'com.google.code.gson:gson:+'
     compile 'com.google.api-client:google-api-client:+'
     compile 'com.google.android.gms:play-services:+'
     compile 'com.google.api-client:google-api-client-android:+'
