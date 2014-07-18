@@ -229,6 +229,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder.duration = (TextView) convertView.findViewById(R.id.duration);
       holder.pubDate = (TextView) convertView.findViewById(R.id.pub_date);
       holder.menuButton = (VideoMenuView) convertView.findViewById(R.id.menu_button);
+      holder.cardNumber = (TextView) convertView.findViewById(R.id.card_number);
 
       holder.image.setDecorations(mDecorations);
 
@@ -343,6 +344,9 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
       holder.duration.setText(Long.toString(count) + (count == 1 ? " video" : " videos"));
     }
 
+    // card number
+    holder.cardNumber.setText(Long.toString(position+1));
+
     Spannable date = mDateCache.spannable(itemMap.mPublishedDate);
     if (date != null) {
       holder.pubDate.setText(date);
@@ -413,6 +417,7 @@ public class YouTubeCursorAdapter extends SimpleCursorAdapter implements Adapter
     TextView title;
     TextView description;
     TextView duration;
+    TextView cardNumber;
     VideoImageView image;
     VideoMenuView menuButton;
     TextView pubDate;

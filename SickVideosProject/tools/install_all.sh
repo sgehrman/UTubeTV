@@ -27,6 +27,7 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
     adb -s $DEVICE install SickVideos-pewdiepie-release.apk
     adb -s $DEVICE install SickVideos-xda-release.apk
     adb -s $DEVICE install SickVideos-justinbieber-release.apk
+    adb -s $DEVICE install SickVideos-lukitsch-release.apk
 
   done
 

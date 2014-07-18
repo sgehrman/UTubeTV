@@ -27,5 +27,6 @@ cd ..
 ./gradlew assemblePewdiepieRelease
 ./gradlew assembleXdaRelease
 ./gradlew assembleJustinbieberRelease
+./gradlew assembleLukitschRelease
 
 

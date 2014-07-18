@@ -25,6 +25,7 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
     adb -s $DEVICE uninstall re.distantfutu.videos.pewdiepie
     adb -s $DEVICE uninstall re.distantfutu.videos.xda
     adb -s $DEVICE uninstall re.distantfutu.videos.justinbieber
+    adb -s $DEVICE uninstall re.distantfutu.videos.lukitsch
 
   done
 

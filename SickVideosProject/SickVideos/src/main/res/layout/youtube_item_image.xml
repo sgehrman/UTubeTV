@@ -13,7 +13,24 @@
         android:scaleType="centerCrop"
         />
 
-    <FrameLayout
+
+  <TextView
+      android:id="@+id/card_number"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="6dp"
+      android:layout_alignParentTop="true"
+      android:paddingTop="6dp"
+      android:paddingBottom="3dp"
+      android:paddingLeft="12dp"
+      android:paddingRight="12dp"
+      android:textColor="#fff"
+      android:background="@drawable/text_overlay_background"
+
+      android:textSize="16sp"
+      android:textStyle="normal"/>
+
+  <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"

@@ -1,4 +1,4 @@
-#!/bin/s
+#!/bin/sh
 
 ./build_all.sh
 ./uninstall_all.sh

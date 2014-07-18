@@ -175,7 +175,7 @@ public class Utils {
   }
 
   public static String feedbackEmailAddress() {
-    return "distantfuturist@gmail.com";
+    return "steve@distantfutu.re";
   }
 
   public static boolean onMainThread() {
