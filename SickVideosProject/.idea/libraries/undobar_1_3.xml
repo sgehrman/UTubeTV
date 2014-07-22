@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="undobar-1.3">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.cocosw/undobar/1.3/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.cocosw/undobar/1.3/res" />
+      <root url="file://$PROJECT_DIR$/SickVideos/build/intermediates/exploded-aar/com.cocosw/undobar/1.3/res" />
+      <root url="jar://$PROJECT_DIR$/SickVideos/build/intermediates/exploded-aar/com.cocosw/undobar/1.3/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
