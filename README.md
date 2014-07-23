@@ -18,7 +18,7 @@ This app uses many popular third party libraries, so it contains many real world
 
 Feel free to build your own variants of these apps and share them with your friends. 
 
-If you plan on using this code to build your own apps, you will want to get your own YouTube Developer id for "Public API access".  It's free and easy to obtain. See this page: <a href="https://code.google.com/apis/console" target="_blank">https://code.google.com/apis/console</a>.
+If you plan on using this code to build your own apps, you will want to get your own YouTube Developer id for "Public API access".  It's free and easy to obtain. See this page: <a href="https://code.google.com/apis/console" target="_blank">code.google.com/apis/console</a>.
 
 The technews build variant allow you to access a users YouTube subcription list, so set up your own OAuth 2 client id on that same page above if you want to use that feature, but it's not required to build and run the app if you don't care about that feature.  Email me if you need help setting this up.
 
