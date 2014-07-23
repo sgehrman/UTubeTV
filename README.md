@@ -1,4 +1,4 @@
-Sick Videos YouTube client for Android
+Sick Videos: YouTube client for Android
 =========
 
 This is a full featured YouTube client for Android that lets the user view either one or a custom list of YouTube channels.
