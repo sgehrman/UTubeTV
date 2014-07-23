@@ -2,12 +2,14 @@
 
 cd ../UTubeTV/build/outputs/apk
 
+# sometimes this needs to be called once to get it's server started
+adb devices
+
 for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
   do
     echo $DEVICE
 
     adb -s $DEVICE install UTubeTV-technews-release.apk
-
     adb -s $DEVICE install UTubeTV-youtube-release.apk
     adb -s $DEVICE install UTubeTV-svb-release.apk
     adb -s $DEVICE install UTubeTV-nerdist-release.apk

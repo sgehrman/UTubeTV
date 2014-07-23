@@ -7,7 +7,6 @@ for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
     adb -s $DEVICE uninstall re.distantfutu.videos.technews
     adb -s $DEVICE uninstall re.distantfutu.videos.youtube
     adb -s $DEVICE uninstall re.distantfutu.videos.svb
-
     adb -s $DEVICE uninstall re.distantfutu.videos.nerdist
     adb -s $DEVICE uninstall re.distantfutu.videos.neurosoup
     adb -s $DEVICE uninstall re.distantfutu.videos.maxkeiser
