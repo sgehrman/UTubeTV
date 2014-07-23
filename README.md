@@ -2,7 +2,7 @@
 
 ### YouTube client for Android
 
-Prebuild apks found [here](htpp://distantfutu.re/page/portfolio.html).
+Prebuild apks [found here](http://distantfutu.re/page/portfolio.html).
 
 This is a full featured YouTube client for Android that lets the user view either a single or a custom list of YouTube channels. 
 
