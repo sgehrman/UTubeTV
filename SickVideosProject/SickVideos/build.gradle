@@ -146,7 +146,6 @@ dependencies {
     compile 'com.google.api-client:google-api-client:+'
     compile 'com.google.android.gms:play-services:+'
     compile 'com.google.api-client:google-api-client-android:+'
-    compile 'com.google.guava:guava:+'
 
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'joda-time:joda-time:+'
