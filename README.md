@@ -3,6 +3,8 @@ Sick Videos
 YouTube client for Android
 ---------
 
+
+
 This is a full featured YouTube client for Android that lets the user view either one or a custom list of YouTube channels.
 
 This project is setup for Android Studio.
@@ -22,3 +24,7 @@ I did some work months ago on Chromecast support, so it's 99% there.  Fixing thi
 This app uses many popular third party libraries, so it contains many real world working examples of using these libraries.
 
 I welcome your pull requests!
+
+Developed by: [Distant Future Technologies](http://distantfutu.re/).
+
+
