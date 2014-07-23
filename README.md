@@ -1,4 +1,4 @@
-## Sick Videos
+## UTubeTV
 
 ### YouTube client for Android
 
@@ -11,6 +11,9 @@ There are many build variants for single channeled apps, but you probably would 
 The single channel apps were an experiment in UI. Currnently you can open up the Android YouTube app and click on a subscribed channel in the navigation drawer to view a favorite channel.  That's great, but since I already use the app launcher to launch content I'm interested in, why not make that also launch YouTube channels directly?  Why does the user need 2 ways of navigating content when the application launcher already serves this purpose?  
 
 I did some work months ago on Chromecast support, so it's 99% there.  Fixing this would be great.  Last I checked YouTube clients were not supported for Chromecast, so please confirm this has been changed before working on this.
+
+The bulk of the code is in /UTubeTVProject/UTubeTV/main/
+There are lots of subfolders in UTubeTV for the different build variants.
 
 This app uses many popular third party libraries, so it contains many real world working examples of using these libraries.
 
