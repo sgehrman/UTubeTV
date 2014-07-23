@@ -4,7 +4,7 @@
 
 This is a full featured YouTube client for Android that lets the user view either a single or a custom list of YouTube channels. 
 
-There are many build variants for single channeled apps, but you probably would be most interested in the 'technews' build variant as that enables you to customize the list of YouTube channels.  The default set of channels for technews is tech related news channels, but these can be edited to your own favorites.  Each build variant contains a subfolder with only style and string differences.  The code is 100% shared for all variants.  To build your own variant, just copy the examples already there.
+There are many build variants for single channeled apps, but you probably would be most interested in the 'technews' build variant as that enables you to customize the list of YouTube channels.  The default set of channels for technews is tech related channels, but these can be edited to your own favorites.  Each build variant contains a subfolder with only style and string differences.  The core code shared for all variants.  To build your own variant, just copy the examples already there, modify the styles and edit grade.build to add the new variant.
 
 The single channel apps were an experiment in UI. Currnently you can open up the Android YouTube app and click on a subscribed channel in the navigation drawer to view a favorite channel.  That's great, but since I already use the app launcher to launch content I'm interested in, why not make that also launch YouTube channels directly?  Why does the user need 2 ways of navigating content when the application launcher already serves this purpose?  
 
@@ -14,7 +14,7 @@ This app uses many popular third party libraries, so it contains many real world
 
 ### Building your own custom apps
 
-Feel free to build your own variants of this code and share them with your friends. 
+Feel free to build your own variants of these apps and share them with your friends. 
 
 If you plan on using this code to build your own apps, you will want to get your own YouTube Developer id for "Public API access".  It's free and easy to obtain. See this page: [https://code.google.com/apis/console](https://code.google.com/apis/console). 
 
