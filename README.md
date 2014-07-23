@@ -2,11 +2,11 @@
 
 ### YouTube client for Android
 
-This is a full featured YouTube client for Android that lets the user view either one or a custom list of YouTube channels.
+This is a full featured YouTube client for Android that lets the user view either one or a custom list of YouTube channels. [https://code.google.com/apis/console](https://code.google.com/apis/console).  The technews build variant allow you to access a users YouTube subcription list, so set up your own OAuth 2 client id on that page too, but it's not required to build and run the app.
 
 This project is setup for Android Studio.
 
-You will need a valid YouTube client ID to build this app.  It's free and easy to obtain. 
+You will need a valid YouTube developer id for "Public API access" to build this app.  It's free and easy to obtain. 
 
 There are many build variants for single channeled apps, but you probably would be most interested in the 'technews' build variant as that enables you to customize the list of YouTube channels.  The default set of channels is tech related news channels, but these can be edited to your own favorites.  Each build variant contains a subfolder with only style and string differences.  The code is 100% shared for all variants.
 
