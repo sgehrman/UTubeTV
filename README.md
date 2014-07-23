@@ -29,3 +29,17 @@ Posting these apps to the Google Play Store got me banned for life, so be aware 
 Developed by: [Distant Future Technologies](http://distantfutu.re/).
 
 
+<script>
+
+function addBlankTargetForLinks () {
+  $('a[href^="http"]').each(function(){
+		$(this).attr('target', '_blank');
+	});
+}
+ 
+$(document).bind('DOMNodeInserted', function(event) {
+	addBlankTargetForLinks();
+});
+
+</script>
+
