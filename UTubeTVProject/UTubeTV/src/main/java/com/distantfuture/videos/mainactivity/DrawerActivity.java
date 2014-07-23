@@ -286,8 +286,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         return true;
       }
       case R.id.action_more_apps:
-        Utils.openWebPage(this, Uri.parse("http://distantfutu.re/page/portfolio.html"));
-//        Utils.openWebPage(this, Utils.getCompanyPlayStoreUri());
+        Utils.openWebPage(this, Utils.getCompanyPlayStoreUri());
         return true;
 
       case R.id.action_switch_view:

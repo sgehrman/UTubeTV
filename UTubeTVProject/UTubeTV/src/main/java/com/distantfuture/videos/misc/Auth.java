@@ -17,9 +17,8 @@ public class Auth {
   private static GoogleAccountCredential credential;
   private static String accountName;
 
-  // Register an API key here: https://code.google.com/apis/console
   public static String devKey() {
-    return "AIzaSyD0gRStgO5O0hBRp4UeAxtsLFFw9bMinOI";
+    return Constants.youTubeClientAPIKey;
   }
 
   public static GoogleAccountCredential getCredentials(Context ctx, boolean useDefaultAccount) {
