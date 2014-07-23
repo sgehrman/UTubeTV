@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IconicDroid/IconicDroid.iml" filepath="$PROJECT_DIR$/IconicDroid/IconicDroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/Inscription/Inscription.iml" filepath="$PROJECT_DIR$/Inscription/Inscription.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SickVideos/UTubeTV.iml" filepath="$PROJECT_DIR$/SickVideos/UTubeTV.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UTubeTV/UTubeTV.iml" filepath="$PROJECT_DIR$/UTubeTV/UTubeTV.iml" />
       <module fileurl="file://$PROJECT_DIR$/UTubeTVProject.iml" filepath="$PROJECT_DIR$/UTubeTVProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/castlib/castlib.iml" filepath="$PROJECT_DIR$/castlib/castlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/prettytime/prettytime.iml" filepath="$PROJECT_DIR$/prettytime/prettytime.iml" />

@@ -39,7 +39,7 @@ items/snippet/title
 // --------------------------------------------------------
 // dump manifest
 
-/home/sgehrman/Applications/android-studio/sdk/build-tools/19.0.3/aapt dump badging SickVideos-technews-debug-unaligned.apk
+/home/sgehrman/Applications/android-studio/sdk/build-tools/19.0.3/aapt dump badging UTubeTV-technews-debug-unaligned.apk
 
 // --------------------------------------------------------
 

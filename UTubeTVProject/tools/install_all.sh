@@ -1,33 +1,33 @@
 #!/bin/sh
 
-cd ../SickVideos/build/outputs/apk
+cd ../UTubeTV/build/outputs/apk
 
 for DEVICE in `adb devices | grep -v "List" | awk '{print $1}'`
   do
     echo $DEVICE
 
-    adb -s $DEVICE install SickVideos-technews-release.apk
+    adb -s $DEVICE install UTubeTV-technews-release.apk
 
-    adb -s $DEVICE install SickVideos-youtube-release.apk
-    adb -s $DEVICE install SickVideos-svb-release.apk
-    adb -s $DEVICE install SickVideos-nerdist-release.apk
-    adb -s $DEVICE install SickVideos-neurosoup-release.apk
-    adb -s $DEVICE install SickVideos-maxkeiser-release.apk
-    adb -s $DEVICE install SickVideos-androiddevs-release.apk
-    adb -s $DEVICE install SickVideos-joerogan-release.apk
-    adb -s $DEVICE install SickVideos-jetdaisuke-release.apk
-    adb -s $DEVICE install SickVideos-bigthink-release.apk
-    adb -s $DEVICE install SickVideos-theverge-release.apk
-    adb -s $DEVICE install SickVideos-reasontv-release.apk
-    adb -s $DEVICE install SickVideos-codeorg-release.apk
-    adb -s $DEVICE install SickVideos-rt-release.apk
-    adb -s $DEVICE install SickVideos-vice-release.apk
-    adb -s $DEVICE install SickVideos-khan-release.apk
-    adb -s $DEVICE install SickVideos-topgear-release.apk
-    adb -s $DEVICE install SickVideos-pewdiepie-release.apk
-    adb -s $DEVICE install SickVideos-xda-release.apk
-    adb -s $DEVICE install SickVideos-justinbieber-release.apk
-    adb -s $DEVICE install SickVideos-lukitsch-release.apk
+    adb -s $DEVICE install UTubeTV-youtube-release.apk
+    adb -s $DEVICE install UTubeTV-svb-release.apk
+    adb -s $DEVICE install UTubeTV-nerdist-release.apk
+    adb -s $DEVICE install UTubeTV-neurosoup-release.apk
+    adb -s $DEVICE install UTubeTV-maxkeiser-release.apk
+    adb -s $DEVICE install UTubeTV-androiddevs-release.apk
+    adb -s $DEVICE install UTubeTV-joerogan-release.apk
+    adb -s $DEVICE install UTubeTV-jetdaisuke-release.apk
+    adb -s $DEVICE install UTubeTV-bigthink-release.apk
+    adb -s $DEVICE install UTubeTV-theverge-release.apk
+    adb -s $DEVICE install UTubeTV-reasontv-release.apk
+    adb -s $DEVICE install UTubeTV-codeorg-release.apk
+    adb -s $DEVICE install UTubeTV-rt-release.apk
+    adb -s $DEVICE install UTubeTV-vice-release.apk
+    adb -s $DEVICE install UTubeTV-khan-release.apk
+    adb -s $DEVICE install UTubeTV-topgear-release.apk
+    adb -s $DEVICE install UTubeTV-pewdiepie-release.apk
+    adb -s $DEVICE install UTubeTV-xda-release.apk
+    adb -s $DEVICE install UTubeTV-justinbieber-release.apk
+    adb -s $DEVICE install UTubeTV-lukitsch-release.apk
 
   done
 

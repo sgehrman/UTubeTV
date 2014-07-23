@@ -25,9 +25,9 @@ android {
             storeFile file("debug.keystore")
         }
 
-        if (project.hasProperty("SickVideos.properties") && file(project.property("SickVideos.properties")).exists()) {
+        if (project.hasProperty("UTubeTV.properties") && file(project.property("UTubeTV.properties")).exists()) {
             Properties props = new Properties()
-            props.load(new FileInputStream(file(project.property("SickVideos.properties"))))
+            props.load(new FileInputStream(file(project.property("UTubeTV.properties"))))
 
             release {
                 storeFile file(props['keystore'])
