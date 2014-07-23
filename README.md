@@ -2,6 +2,8 @@
 
 ### YouTube client for Android
 
+Prebuild apks found [here](htpp://distantfutu.re/page/portfolio.html).
+
 This is a full featured YouTube client for Android that lets the user view either a single or a custom list of YouTube channels. 
 
 There are many build variants for single channeled apps, but you probably would be most interested in the 'technews' build variant as that enables you to customize the list of YouTube channels.  The default set of channels for technews is tech related channels, but these can be edited to your own favorites.  Each build variant contains a subfolder with only style and string differences.  The core code shared for all variants.  To build your own variant, just copy the examples already there, modify the styles and edit grade.build to add the new variant.
