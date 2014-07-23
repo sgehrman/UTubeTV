@@ -2,7 +2,7 @@
 
 ### YouTube client for Android
 
-Prebuild apks [found here](http://distantfutu.re/page/portfolio.html).
+Prebuild apks <a href="http://distantfutu.re/page/portfolio.html" target="_blank">found here</a>.
 
 This is a full featured YouTube client for Android that lets the user view either a single or a custom list of YouTube channels. 
 
@@ -29,17 +29,4 @@ Posting these apps to the Google Play Store got me banned for life, so be aware 
 Developed by: [Distant Future Technologies](http://distantfutu.re/).
 
 
-<script>
-
-function addBlankTargetForLinks () {
-  $('a[href^="http"]').each(function(){
-		$(this).attr('target', '_blank');
-	});
-}
- 
-$(document).bind('DOMNodeInserted', function(event) {
-	addBlankTargetForLinks();
-});
-
-</script>
 
