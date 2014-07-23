@@ -15,8 +15,8 @@ import com.distantfuture.videos.services.YouTubeService;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 public class AuthActivity extends Activity {
-  private static final String REQUEST_AUTHORIZATION_REQUEST_PARAM = "com.sickboots.sickvideos.Request.param";
-  private static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.sickboots.sickvideos.Intent.param";
+  private static final String REQUEST_AUTHORIZATION_REQUEST_PARAM = "com.distantfuture.utubetv.Request.param";
+  private static final String REQUEST_AUTHORIZATION_INTENT_PARAM = "com.distantfuture.utubetv.Intent.param";
   private static final int INTENT_REQUEST_AUTHORIZATION = 3;
   private static final int INTENT_REQUEST_ACCOUNT_PICKER = 2;
   private GoogleAccountCredential credential;
