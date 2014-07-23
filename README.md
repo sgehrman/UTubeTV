@@ -4,8 +4,6 @@
 
 This is a full featured YouTube client for Android that lets the user view either one or a custom list of YouTube channels. 
 
-This project is setup for Android Studio.
-
 There are many build variants for single channeled apps, but you probably would be most interested in the 'technews' build variant as that enables you to customize the list of YouTube channels.  The default set of channels is tech related news channels, but these can be edited to your own favorites.  Each build variant contains a subfolder with only style and string differences.  The code is 100% shared for all variants.
 
 The single channel apps were an experiment in UI. Currnently you can open up the Android YouTube app and click on a subscribed channel in the navigation drawer to view a favorite channel.  That's great, but since I already use the app launcher to launch content I'm interested in, why not make that also launch YouTube channels?  Why does the user need two ways of navigating content when the application launcher already serves this purpose.  
