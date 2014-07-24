@@ -25,8 +25,6 @@ If you plan on using this code to build your own apps, you will want to get your
 
 The technews build variant allow you to access a users YouTube subcription list, so set up your own OAuth 2 client id on that same page above if you want to use that feature, but it's not required to build and run the app if you don't care about that feature.  Email me if you need help setting this up.
 
-Posting these apps to the Google Play Store got me banned for life, so be aware of this if you plan on posting your apps to the store.  Google should not ban developers for innovating, but they do.
-
 ### I welcome your pull requests!
 
 Developed by: <a href="http://distantfutu.re/" target="_blank">Distant Future Technologies</a>.
