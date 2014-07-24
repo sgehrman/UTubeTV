@@ -99,12 +99,14 @@ public class Content {
 
   public boolean supportsDonate() {
     String string = mContext.getText(R.string.supports_donate).toString();
-    return !string.isEmpty();
+
+    return Boolean.parseBoolean(string);
   }
 
   public boolean supportsChannelEditing() {
     String string = mContext.getText(R.string.supports_channel_editing).toString();
-    return !string.isEmpty();
+
+    return Boolean.parseBoolean(string);
   }
 
   public List<YouTubeData> channels() {
