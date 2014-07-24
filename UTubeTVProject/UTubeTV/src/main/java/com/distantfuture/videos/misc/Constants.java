@@ -16,4 +16,6 @@ public class Constants {
 
   // set to true to enable AppRater for ratings on Google Play
   public static final boolean showAppRater=false;
+
+  public static final String feedbackEmailAddress = "steve@distantfutu.re";
 }
