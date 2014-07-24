@@ -156,6 +156,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.cocosw:undobar:1.+@aar'
     compile 'de.greenrobot:eventbus:+'
+    compile 'org.ocpsoft.prettytime:prettytime:+'
 
     compile 'com.android.support:mediarouter-v7:20.+'
 
@@ -164,9 +165,6 @@ dependencies {
     compile project(':viewserver')
     compile project(':Inscription')
     compile project(':castlib')
-
-    // compile 'org.ocpsoft.prettytime:prettytime:3.2.+'
-    compile project(':prettytime')
 }
 
 

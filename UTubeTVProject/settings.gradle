@@ -1,1 +1,1 @@
-include ':UTubeTV', ':IconicDroid', ':viewserver', ':Inscription', ':castlib', ':prettytime'
+include ':UTubeTV', ':IconicDroid', ':viewserver', ':Inscription', ':castlib'

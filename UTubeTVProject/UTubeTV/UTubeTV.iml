@@ -103,6 +103,7 @@
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.6.0" level="project" />
+    <orderEntry type="library" exported="" name="prettytime-3.2.5.Final" level="project" />
     <orderEntry type="library" exported="" name="undobar-1.3" level="project" />
     <orderEntry type="library" exported="" name="play-services-5.0.77" level="project" />
     <orderEntry type="library" exported="" name="disklrucache-2.0.2" level="project" />
@@ -112,7 +113,6 @@
     <orderEntry type="library" exported="" name="library-0.4.0" level="project" />
     <orderEntry type="module" module-name="castlib" exported="" />
     <orderEntry type="module" module-name="viewserver" exported="" />
-    <orderEntry type="module" module-name="prettytime" exported="" />
     <orderEntry type="module" module-name="IconicDroid" exported="" />
     <orderEntry type="module" module-name="Inscription" exported="" />
   </component>
