@@ -283,7 +283,6 @@ public class ChannelLookupActivity extends Activity {
     }
   }
 
-
   private void exportFile() {
     Map map = new HashMap();
 

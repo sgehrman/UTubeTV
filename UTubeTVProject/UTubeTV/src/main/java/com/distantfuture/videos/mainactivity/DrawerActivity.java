@@ -157,7 +157,9 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
     if (!mContent.supportsDonate()) {
       item = menu.findItem(R.id.action_donate);
       item.setVisible(false);
+    }
 
+    if (!mContent.supportsChannelEditing()) {
       item = menu.findItem(R.id.action_channel_lookup);
       item.setVisible(false);
     }

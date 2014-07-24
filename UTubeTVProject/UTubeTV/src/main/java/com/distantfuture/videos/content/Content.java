@@ -102,6 +102,11 @@ public class Content {
     return !string.isEmpty();
   }
 
+  public boolean supportsChannelEditing() {
+    String string = mContext.getText(R.string.supports_channel_editing).toString();
+    return !string.isEmpty();
+  }
+
   public List<YouTubeData> channels() {
     return mChannelList.channels();
   }
