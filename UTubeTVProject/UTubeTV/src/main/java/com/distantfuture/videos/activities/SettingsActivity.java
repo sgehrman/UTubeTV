@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 
 import com.distantfuture.videos.R;
 import com.distantfuture.videos.introactivity.IntroActivity;
+import com.distantfuture.videos.misc.Constants;
 import com.distantfuture.videos.misc.DUtils;
 import com.distantfuture.videos.misc.Utils;
 import com.inscription.ChangeLogDialog;
@@ -87,12 +89,20 @@ public class SettingsActivity extends Activity {
 
         pref = findPreference("rate");
         if (pref != null) {
-          pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-              return handlePrefClick(preference);
-            }
-          });
+
+          if (!Constants.showAppRater) {
+            // hide the app rater pref button
+            PreferenceScreen screen = getPreferenceScreen();
+            screen.removePreference(pref);
+          }
+          else {
+            pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+              @Override
+              public boolean onPreferenceClick(Preference preference) {
+                return handlePrefClick(preference);
+              }
+            });
+          }
         }
         pref = findPreference("log");
         if (pref != null) {

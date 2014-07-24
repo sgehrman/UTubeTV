@@ -24,6 +24,7 @@ import com.distantfuture.videos.misc.ActionBarSpinnerAdapter;
 import com.distantfuture.videos.misc.AppUtils;
 import com.distantfuture.videos.misc.BusEvents;
 import com.distantfuture.videos.misc.ColorPickerFragment;
+import com.distantfuture.videos.misc.Constants;
 import com.distantfuture.videos.misc.MainApplication;
 import com.distantfuture.videos.misc.Utils;
 import com.distantfuture.videos.youtube.VideoPlayer;
@@ -91,7 +92,9 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
 
     selectSection(mContent.savedSectionIndex(), false);
 
-    AppRater.app_launched(this);
+    if (Constants.showAppRater) {
+      AppRater.app_launched(this);
+    }
 
     // general app tweaks
     //    Debug.activateStrictMode();
@@ -300,6 +303,7 @@ public class DrawerActivity extends ViewServerActivity implements DrawerActivity
         startActivity(intent);
         return true;
 
+      // this is only used for the debug tools menu, so no need to hide if (!Constants.showAppRater)
       case R.id.action_show_rate_dialog:
         AppRater.showRateDialog(this);
         return true;
