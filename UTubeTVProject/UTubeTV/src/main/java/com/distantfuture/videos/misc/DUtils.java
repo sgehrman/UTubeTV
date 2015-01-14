@@ -38,7 +38,8 @@ public class DUtils {
   }
 
   public static boolean isDebugBuild() {
-    return BuildConfig.DEBUG;
+      // this was crashing, disabled for now
+    return false; // BuildConfig.DEBUG;
   }
 
   public static void activateStrictMode() {
